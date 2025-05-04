@@ -1,1 +1,109 @@
-body{font-family:"Trebuchet MS",Arial,Helvetica,sans-serif}table{table-layout:fixed;border-collapse:collapse;width:100%}td,th{border:1px solid #ddd;padding:8px}tr:nth-child(2n){background-color:#f2f2f2}tr:hover{background-color:#ddd}p,th{padding-top:2px;padding-bottom:2px;text-align:left;background-color:#3264af;color:#fff}
+body {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif
+}
+
+table {
+    table-layout: fixed;
+    border-collapse: collapse;
+    width: 100%
+}
+
+td, th {
+    border: 1px solid #ddd;
+    padding: 8px
+}
+
+tr:nth-child(2n) {
+    background-color: #f2f2f2
+}
+
+tr:hover {
+    background-color: #ddd
+}
+
+p, th {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    text-align: left;
+    background-color: #3264af;
+    color: #fff
+}
+/* --- Styling for the List Container --- */
+.actions-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.actions-list li {
+    margin-bottom: 0.75rem;
+}
+
+/* --- Modern Button Style (Applied to <a> tags now) --- */
+.modern-button {
+    /* Basic Appearance & Reset */
+    display: inline-block; /* Important for padding/sizing on <a> */
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none; /* Remove default link underline */
+    outline: none;
+
+    /* Sizing and Spacing */
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+
+    /* Colors & Background */
+    background-color: #007bff;
+    color: #ffffff !important; /* Use !important ONLY if needed to override default link colors */
+
+    /* Shape & Typography */
+    border-radius: 6px;
+    font-weight: 600;
+
+    /* Smooth Transitions */
+    transition: background-color 0.2s ease-in-out,
+    transform 0.1s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+
+    /* Optional: Subtle Shadow */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* --- States --- */
+
+/* Hover State */
+.modern-button:hover:not(.is-disabled) { /* Don't apply hover if disabled */
+    background-color: #0056b3;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    color: #ffffff !important; /* Ensure text color remains */
+    text-decoration: none; /* Ensure underline doesn't reappear */
+}
+
+/* Focus State (Accessibility) */
+.modern-button:focus-visible:not(.is-disabled) { /* Use :focus-visible */
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+    color: #ffffff !important; /* Ensure text color remains */
+}
+
+/* Active State */
+.modern-button:active:not(.is-disabled) {
+    transform: scale(0.98);
+    background-color: #004085;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    color: #ffffff !important; /* Ensure text color remains */
+}
+
+/* --- Disabled State Styling for Links --- */
+.modern-button.is-disabled,
+.modern-button[aria-disabled="true"] { /* Target class and ARIA attribute */
+    background-color: #cccccc;
+    color: #666666 !important; /* Ensure text color overrides link defaults */
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+    opacity: 0.7;
+    pointer-events: none; /* Prevent clicks visually */
+}

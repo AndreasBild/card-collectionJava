@@ -12,20 +12,33 @@ public class FileGenerator {
 
 
     // constants: base paths for input and output
-    private static final String pathSource = "../cardCollection/content/";
-    private static final String pathOutput = "../cardCollection/output/";
+    private static final String pathSource = "../card-CollectionJava/content/";
+    private static final String pathOutput = "../card-CollectionJava/output/";
     private static final String generatedFileLocation = pathOutput + "index.html";
     private static final String[] nameOfInputFile = getFileNamesFromDirectory();
 
     // constants for static page parts
-    public static final String footer= """
+    public static final String footer = """
             <h3>Other Collections</h3>
-                <ul>
-                <li><a href=index.html title="Juwan Howard Cards Collection">Juwan Howard Basketball Cards Collection</a></li>
-                <li><a href=Wantlist.html title="Juwan Howard Collection Wantlist">Juwan Howard Basketball Cards Wantlist</a></li>
-                <li><a href=Baseball.html title="Upper Deck Baseball Cards">Upper Deck Baseball Cards</a></li>
-                <li><a href=Flawless.html title="2008 Upper Deck Flawless Basketball">2008 Upper Deck Flawless Basketball</a></li>
-                <li><a href=Panini.html title="2012-13 Panini Flawless Basketball">2012-13 Panini Flawless Basketball</a></li>
+             <ul class="actions-list">
+                <li>
+                 <a href="index.html" title="Juwan Howard Cards Collection" class="modern-button">
+                   Juwan Howard Basketball Cards Collection</a>
+                </li>
+                <li>
+                <a href=Wantlist.html title="Juwan Howard Collection Wantlist" class="modern-button">
+                Juwan Howard Basketball Cards Wantlist</a>
+                </li>
+                <li>
+                <a href=Baseball.html title="Upper Deck Baseball Cards" class="modern-button">
+                Upper Deck Baseball Cards</a>
+                </li>
+                <li>
+                <a href=Flawless.html title="2008 Upper Deck Flawless Basketball" class="modern-button">
+                2008 Upper Deck Flawless Basketball</a></li>
+                <li>
+                <a href=Panini.html title="2012-13 Panini Flawless Basketball"class="modern-button">
+                2012-13 Panini Flawless Basketball</a></li>
                 </ul>
             """;
     private static final String templateBegin =
@@ -67,7 +80,7 @@ public class FileGenerator {
                     """;
 
     private static final String tableHead = "<table>";
-    private static final String templateEnd = footer+"List Created: " + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date())+"</body></html>";
+    private static final String templateEnd = footer + "List Created: " + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()) + "</body></html>";
 
 
     public static void main(String[] args) throws IOException {
@@ -81,10 +94,10 @@ public class FileGenerator {
 
         int counterAll = 0;
         for (final String fileName : nameOfInputFile) {
-            System.out.println("Filename: "+fileName);
+            System.out.println("Filename: " + fileName);
             // iterate over all file names in the given directory
             final String sourceFile = pathSource + fileName + ".html";
-            System.out.println("Source: "+sourceFile);
+            System.out.println("Source: " + sourceFile);
             counterAll = appendFileContent(sourceFile, fileName, counterAll);
 
         }
@@ -146,7 +159,7 @@ public class FileGenerator {
      */
     private static String[] getFileNamesFromDirectory() {
         File directory = new File("./");
-        System.out.println("################ AbsolutePath: " +directory.getAbsolutePath());
+        System.out.println("################ AbsolutePath: " + directory.getAbsolutePath());
 
         final File folder = new File(pathSource);
         final File[] listOfFilesInDirectory = folder.listFiles();
@@ -165,7 +178,7 @@ public class FileGenerator {
                 System.out.println("Subdirectory in Directory: " + aListOfFilesInDirectory.getName());
             }
         }
-        System.out.println("result "+result.size());
+        System.out.println("result " + result.size());
         return result.toArray(new String[0]);
     }
 
@@ -244,7 +257,6 @@ public class FileGenerator {
 
         }
     }
-
 
 
     private static void formatFileContent(final String source, String target) throws IOException {

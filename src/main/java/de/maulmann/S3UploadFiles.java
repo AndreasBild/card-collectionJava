@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class S3UploadFiles {
-    private static final String pathOutput = "../cardCollection/output/";
+    private static final String pathOutput = "../card-CollectionJava/output/";
     private static final String generatedFileLocation = pathOutput + "index.html";
     private static final File file = new File(generatedFileLocation);
     // Specify the bucket name
