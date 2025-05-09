@@ -76,7 +76,7 @@ public class FileGenerator {
                           <meta name="robots" content="index,follow">
                     </head>
                     <body>
-                    <h1><a id="top" title='Top of the list'>List of Juwan Howard Basketball Trading Cards</a></h1>
+                    <h1 id="top" title='Top of the list'>List of Juwan Howard Basketball Trading Cards</h1>
                     """;
 
     private static final String tableHead = "<table>";
@@ -114,9 +114,9 @@ public class FileGenerator {
         final StringBuilder internalAnchorList = new StringBuilder();
 
         for (final String fileName : nameOfInputFile) {
-            internalAnchorList.append(" | <a href=").append('#').append(fileName).append(" title='Juwan Howard Trading Cards from Season: ").append(fileName).append("'>").append(fileName).append("</a> ");
+            internalAnchorList.append(" <a class='modern-button' href=").append('#').append(fileName).append(" title='Juwan Howard Trading Cards from Season: ").append(fileName).append("'>").append(fileName).append("</a> ");
         }
-        internalAnchorList.append(" |");
+        internalAnchorList.append(" ");
 
 
         return internalAnchorList.toString();
@@ -217,8 +217,8 @@ public class FileGenerator {
     }
 
     private static int appendFileContent(final String source, final String name, int counterIn) throws IOException {
-        final String anchorName = "<a title='Juwan Howard Trading Cards for Season " + name + "' id=" + name + ">" + name + "</a>";
-        final StringBuffer result = new StringBuffer("<h2>").append(anchorName).append("</h2>").append('\n').append(tableHead);
+        final String anchorName = " title='Juwan Howard Trading Cards for Season " + name + "' id='" + name + "'>" + name ;
+        final StringBuffer result = new StringBuffer("<h2").append(anchorName).append("</h2>").append('\n').append(tableHead);
 
 
         try (BufferedReader inputStream = new BufferedReader(new FileReader(source)); PrintWriter outputStream = new PrintWriter(new FileWriter(FileGenerator.generatedFileLocation, true))) {
@@ -248,7 +248,7 @@ public class FileGenerator {
 
             final int offset = result.lastIndexOf("</h2>");
 
-            result.replace(offset, offset + 5, " [This Season: " + counter + " | Total: " + counterAll + "]</h2><a href=\"#top\" title='Back to the top of the list'>top</a>");
+            result.replace(offset, offset + 5, " [This Season: " + counter + " | Total: " + counterAll + "]</h2><div> <a href=\"#top\" title='Back to the top of the list' class='s'>top</a></div>");
 
 
             out.append(result.append('\n'));
