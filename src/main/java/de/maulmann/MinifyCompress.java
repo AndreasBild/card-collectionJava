@@ -59,7 +59,7 @@ public class MinifyCompress {
 
     // Compress with GZIP
     public static void compressFile(File inputFile, File outputFile) throws IOException {
-        GZIPCompressor.compressFile(inputFile, outputFile);
+        GZIPCompressor.compressFile(inputFile, outputFile, 9);
 
     }
 }

@@ -1,5 +1,8 @@
 package de.maulmann;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,6 +19,9 @@ public class FileGenerator {
     private static final String pathOutput = "../card-CollectionJava/output/";
     private static final String generatedFileLocation = pathOutput + "index.html";
     private static final String[] nameOfInputFile = getFileNamesFromDirectory();
+
+    private static final Logger logger = LoggerFactory.getLogger(FileGenerator.class);
+
 
     // constants for static page parts
     public static final String footer = """
@@ -37,7 +43,7 @@ public class FileGenerator {
                 <a href=Flawless.html title="2008 Upper Deck Flawless Basketball" class="modern-button">
                 2008 Upper Deck Flawless Basketball</a></li>
                 <li>
-                <a href=Panini.html title="2012-13 Panini Flawless Basketball"class="modern-button">
+                <a href=Panini.html title="2012-13 Panini Flawless Basketball" class="modern-button">
                 2012-13 Panini Flawless Basketball</a></li>
                 </ul>
             """;
@@ -87,7 +93,7 @@ public class FileGenerator {
 
         //formatFile();
 
-        // create a new file or use existing file with the same name
+        // create a new file or use an existing file with the same name
         createTargetFile(generatedFileLocation);
         // add document header as first part of the file content
         addTemplateComponent(templateBegin, false);
@@ -105,7 +111,7 @@ public class FileGenerator {
     }
 
     /**
-     * creates an internal anchor in the
+     * creates an internal anchor in the file
      *
      * @return String an anchor element with all internal anchors
      */
@@ -124,7 +130,7 @@ public class FileGenerator {
     }
 
     /**
-     * formats a list of files in a given directory by removing whitespaces.
+     * Formats a list of files in a given directory by removing whitespaces.
      * Writes the formatted files in a separate directory
      */
 
@@ -138,7 +144,10 @@ public class FileGenerator {
         for (File aListOfFilesInDirectory : listOfFilesInDirectory) {
             if (aListOfFilesInDirectory.isFile()) {
                 final String fileName = aListOfFilesInDirectory.getName();
-                System.out.println("FileName: " + fileName);
+                if (logger.isInfoEnabled()) {
+                    logger.info("Logger FileName: " + fileName);
+                }
+                //  System.out.println("FileName: " + fileName);
                 try {
                     createTargetFile(pathOutput + fileName);
                     formatFileContent(pathSource + fileName, pathOutput + fileName);
@@ -172,8 +181,9 @@ public class FileGenerator {
         Arrays.sort(listOfFilesInDirectory);
         for (File aListOfFilesInDirectory : listOfFilesInDirectory) {
             if (aListOfFilesInDirectory.isFile()) {
-                System.out.println("File in Directory : " + aListOfFilesInDirectory.getName().substring(0, aListOfFilesInDirectory.getName().lastIndexOf('.')));
-                result.add(aListOfFilesInDirectory.getName().substring(0, aListOfFilesInDirectory.getName().lastIndexOf('.')));
+                final String substring = aListOfFilesInDirectory.getName().substring(0, aListOfFilesInDirectory.getName().lastIndexOf('.'));
+                System.out.println("File in Directory : " + substring);
+                result.add(substring);
             } else if (aListOfFilesInDirectory.isDirectory()) {
                 System.out.println("Subdirectory in Directory: " + aListOfFilesInDirectory.getName());
             }
@@ -199,9 +209,9 @@ public class FileGenerator {
     }
 
     /**
-     * Method for adding content to a given file. First a header with doctype definition is added. In a later step the rest of the content is appended at the end
+     * Method for adding content to a given file. First, a header with doctype definition is added. In a later step, the rest of the content is appended at the end
      *
-     * @param templateBegin  String, that contains the basic file header template
+     * @param templateBegin  String, which contains the basic file header template
      * @param appendAtTheEnd boolean, that indicated if the provided content shall be added at the end or the beginning of the file
      * @throws IOException, thrown if a file operation did not work out as planned
      */
@@ -232,7 +242,7 @@ public class FileGenerator {
             int counter = -1; // needs to be -1 because of the table header, we count only the content rows
 
             while ((line = inputStream.readLine()) != null) {
-                //every line that is a row or column, goes to the resulting file
+                //every line, which is a row or column, goes to the resulting file
                 if (line.contains("</t") || line.contains("<td") || line.contains("<tr") || line.contains("<th")) {
                     result.append(line.trim());
                     // we simply count the rows, but do not consider the first one as it is the table header
