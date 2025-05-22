@@ -3,6 +3,7 @@ package de.maulmann;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -41,7 +42,7 @@ class HTMLMinifierTest {
                              "</html>";
         Files.write(sourceFile, htmlContent.getBytes());
 
-        HTMLMinifier.minifyHTML(sourceFile.toString(), outputFile.toString());
+        HTMLMinifier.minifyHTML(new File(sourceFile.toString()), new File(outputFile.toString()));
 
         assertTrue(Files.exists(outputFile));
         String minifiedContent = Files.readString(outputFile);

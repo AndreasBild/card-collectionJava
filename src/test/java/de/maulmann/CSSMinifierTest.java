@@ -3,6 +3,7 @@ package de.maulmann;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -22,7 +23,7 @@ class CSSMinifierTest {
         String cssContent = "body {\n  color: red;\n  font-size: 12px;\n}\n\na {\n  text-decoration: none;\n}";
         Files.write(sourceFile, cssContent.getBytes());
 
-        CSSMinifier.minifyCSS(sourceFile.toString(), outputFile.toString());
+        CSSMinifier.minifyCSS(new File(sourceFile.toString()), new File(outputFile.toString()));
 
         assertTrue(Files.exists(outputFile));
         String minifiedContent = Files.readString(outputFile);

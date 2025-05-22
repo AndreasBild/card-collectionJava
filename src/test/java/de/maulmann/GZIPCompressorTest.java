@@ -3,10 +3,7 @@ package de.maulmann;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.zip.GZIPInputStream;
@@ -48,7 +45,7 @@ class GZIPCompressorTest {
         Files.write(sourceFile, originalContent.getBytes());
 
         // Test with default compression level
-        GZIPCompressor.compressFile(sourceFile.toString(), outputFile.toString());
+        GZIPCompressor.compressFile(new File(sourceFile.toString()), new File(outputFile.toString()));
 
         assertTrue(Files.exists(outputFile), "Compressed file should exist.");
         String decompressedContent = readGzipFile(outputFile);
@@ -60,7 +57,7 @@ class GZIPCompressorTest {
 
         // Test with specific compression level (e.g., BEST_COMPRESSION)
         Path outputFileBestCompression = tempDir.resolve("testCompress.txt.gz.best");
-        GZIPCompressor.compressFile(sourceFile.toString(), outputFileBestCompression.toString(), Deflater.BEST_COMPRESSION);
+        GZIPCompressor.compressFile(new File(sourceFile.toString()), new File(outputFileBestCompression.toString()), Deflater.BEST_COMPRESSION);
         assertTrue(Files.exists(outputFileBestCompression), "Compressed file (best compression) should exist.");
         String decompressedContentBest = readGzipFile(outputFileBestCompression);
         assertEquals(originalContent, decompressedContentBest, "Decompressed content (best compression) should match original.");

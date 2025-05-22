@@ -5,11 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -60,7 +56,7 @@ class MinifyCompressTest {
         String htmlContent = "<!DOCTYPE html>\n<html>\n  <head>\n    <title>Test</title>\n  </head>\n  <body>\n    <h1>Hello World</h1>\n  </body>\n</html>";
         Files.write(sourceFile, htmlContent.getBytes());
 
-        MinifyCompress.minifyHTML(sourceFile.toString(), outputFile.toString());
+        MinifyCompress.minifyHTML(new File(sourceFile.toString()), new File(outputFile.toString()));
 
         assertTrue(Files.exists(outputFile));
         String minifiedContent = Files.readString(outputFile);
@@ -78,7 +74,7 @@ class MinifyCompressTest {
         String cssContent = "body {\n  color: red;\n  font-size: 12px;\n}\n\na {\n  text-decoration: none;\n}";
         Files.write(sourceFile, cssContent.getBytes());
 
-        MinifyCompress.minifyCSS(sourceFile.toString(), outputFile.toString());
+        MinifyCompress.minifyCSS(new File(sourceFile.toString()), new File(outputFile.toString()));
 
         assertTrue(Files.exists(outputFile));
         String minifiedContent = Files.readString(outputFile);
@@ -94,7 +90,7 @@ class MinifyCompressTest {
         String originalContent = "This is a test file for GZIP compression. It has some content.";
         Files.write(sourceFile, originalContent.getBytes());
 
-        MinifyCompress.compressFile(sourceFile.toString(), outputFile.toString());
+        MinifyCompress.compressFile(new File(sourceFile.toString()), new File(outputFile.toString()));
 
         assertTrue(Files.exists(outputFile));
         // Verify it's a GZIP file by trying to read it
