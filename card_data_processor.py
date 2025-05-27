@@ -1,4 +1,5 @@
 import re
+import os # Added for directory creation
 import html_parser # To get raw card data
 import data_preparation # For lookups and PLAYER_ID
 
@@ -67,12 +68,17 @@ def parse_limited_string(limited_str: str) -> tuple[int, int]:
     return 0, 0
 
 def parse_brand_string(raw_brand_str: str, season: str) -> dict:
+    original_raw_brand = raw_brand_str # Store original raw brand string
     working_str_lower = raw_brand_str.lower().replace("'", "") # Normalize input
+    
+    confidence = 'low' # Initialize confidence
+    remaining_string_after_parsing = working_str_lower # Initialize remaining string
 
     attributes = {
         'rookie_card': False, 'autograph': False, 'game_used_material': False,
         'manufacturer_id': UNKNOWN_MANUFACTURER_ID, 'brand_id': UNKNOWN_BRAND_ID,
         'variant_id': DEFAULT_VARIANT_ID, 'theme_id': UNKNOWN_THEME_ID,
+        # New fields to be added later
     }
 
     for keyword in ROOKIE_KEYWORDS:
@@ -86,118 +92,285 @@ def parse_brand_string(raw_brand_str: str, season: str) -> dict:
 
     identified_manufacturer_id = UNKNOWN_MANUFACTURER_ID
     identified_brand_id = UNKNOWN_BRAND_ID
-    identified_variant_id = DEFAULT_VARIANT_ID
+    identified_variant_id = DEFAULT_VARIANT_ID # Base variant by default
     identified_theme_id = UNKNOWN_THEME_ID
     
-    str_after_brand_match = working_str_lower
+    # Tentative string state after parts are removed.
+    # Starts as the full normalized string, and parts are removed.
+    # The final state of this will be the 'remaining_string_after_parsing'.
+    current_parse_string = working_str_lower 
+    
     found_brand_details = None
-
+    
+    # 1. Brand Identification
     sorted_brands_by_len = sorted(data_preparation.brand_lookup.keys(), key=len, reverse=True)
-    for brand_name_key in sorted_brands_by_len: # brand_name_key is already normalized
-        if re.search(r'\b' + re.escape(brand_name_key) + r'\b', working_str_lower):
+    for brand_name_key in sorted_brands_by_len:
+        # Using a regex pattern that ensures brand_name_key is a whole word.
+        # \b checks for word boundaries.
+        pattern = r'\b' + re.escape(brand_name_key) + r'\b'
+        if re.search(pattern, current_parse_string):
             brand_data = data_preparation.brand_lookup[brand_name_key]
             found_brand_details = {'name': brand_name_key, 'id': brand_data['id'], 'manufacturer_id': brand_data.get('manufacturer_id')}
             identified_brand_id = found_brand_details['id']
             if found_brand_details['manufacturer_id']:
                 identified_manufacturer_id = found_brand_details['manufacturer_id']
-            str_after_brand_match = re.sub(r'\b' + re.escape(brand_name_key) + r'\b', '', working_str_lower, count=1).strip()
-            str_after_brand_match = " ".join(str_after_brand_match.split())
-            break
+            
+            # Remove found brand from current_parse_string
+            current_parse_string = re.sub(pattern, '', current_parse_string, count=1).strip()
+            current_parse_string = " ".join(current_parse_string.split()) # Normalize spaces
+            break 
+            # Once a brand is found, we assume it's the correct one and stop searching for other brands.
 
-    string_for_variant_search = str_after_brand_match if found_brand_details else working_str_lower
-    sorted_variants_by_len = sorted([v for v in data_preparation.variant_lookup.keys() if v != "base"], key=len, reverse=True)
-    identified_v_name_str = None
-    if string_for_variant_search:
-        for variant_name_key in sorted_variants_by_len: # variant_name_key is normalized
-            if re.search(r'\b' + re.escape(variant_name_key) + r'\b', string_for_variant_search):
+    # 2. Variant Identification (searches in the remainder string after brand removal)
+    # Only search for non-base variants. Base is default.
+    string_for_variant_search = current_parse_string 
+    identified_v_name_str = None # To store the name of the identified variant
+    if string_for_variant_search: # Only search if there's something left
+        # Sort variants by length, excluding 'base' which is default.
+        sorted_variants_by_len = sorted([v for v in data_preparation.variant_lookup.keys() if v.lower() != "base"], key=len, reverse=True)
+        for variant_name_key in sorted_variants_by_len:
+            pattern = r'\b' + re.escape(variant_name_key) + r'\b'
+            if re.search(pattern, string_for_variant_search):
                 identified_variant_id = data_preparation.variant_lookup[variant_name_key]
                 identified_v_name_str = variant_name_key
-                if found_brand_details: # If brand was found, update str_after_brand_match
-                    str_after_brand_match = re.sub(r'\b' + re.escape(variant_name_key) + r'\b', '', str_after_brand_match, count=1).strip()
-                    str_after_brand_match = " ".join(str_after_brand_match.split())
-                break
-    
-    string_for_theme_search = ""
-    if found_brand_details: string_for_theme_search = str_after_brand_match
-    elif identified_v_name_str: # No brand, but variant found. Remove variant from full working_str_lower for theme search.
-        string_for_theme_search = re.sub(r'\b' + re.escape(identified_v_name_str) + r'\b', '', working_str_lower, count=1).strip()
-        string_for_theme_search = " ".join(string_for_theme_search.split())
-    elif not found_brand_details and not identified_v_name_str: string_for_theme_search = working_str_lower
+                # Remove found variant from current_parse_string
+                current_parse_string = re.sub(pattern, '', string_for_variant_search, count=1).strip()
+                current_parse_string = " ".join(current_parse_string.split())
+                break 
+                # Stop after finding the first (longest) matching variant.
 
+    # 3. Theme Identification (searches in remainder after brand and variant)
+    string_for_theme_search = current_parse_string
+    # Only attempt to find a theme if a brand has been identified
     if identified_brand_id != UNKNOWN_BRAND_ID and string_for_theme_search:
-        sorted_themes_for_brand = sorted([t_name for t_name, t_info in data_preparation.theme_lookup.items() if t_info['brand_id'] == identified_brand_id], key=len, reverse=True)
-        for theme_name_key in sorted_themes_for_brand: # theme_name_key is normalized
-            if re.search(r'\b' + re.escape(theme_name_key) + r'\b', string_for_theme_search):
+        # Filter themes for the identified brand and sort by length.
+        sorted_themes_for_brand = sorted(
+            [t_name for t_name, t_info in data_preparation.theme_lookup.items() if t_info.get('brand_id') == identified_brand_id],
+            key=len, reverse=True
+        )
+        for theme_name_key in sorted_themes_for_brand:
+            pattern = r'\b' + re.escape(theme_name_key) + r'\b'
+            if re.search(pattern, string_for_theme_search):
+                # Theme name matches, and it's for the correct brand.
                 identified_theme_id = data_preparation.theme_lookup[theme_name_key]['id']
-                break
+                # Remove found theme from current_parse_string
+                current_parse_string = re.sub(pattern, '', string_for_theme_search, count=1).strip()
+                current_parse_string = " ".join(current_parse_string.split())
+                break 
+                # Stop after finding the first (longest) matching theme for this brand.
     
+    # Update remaining_string_after_parsing with the final state of current_parse_string
+    remaining_string_after_parsing = current_parse_string
+
+    # 4. Fallback for Manufacturer if brand is still unknown
+    # This part might need adjustment if the goal is to reduce its scope or integrate it
+    # more cleanly with the confidence logic. For now, it's kept similar to original.
     identified_m_name_from_fallback = None
-    if identified_brand_id == UNKNOWN_BRAND_ID: # Fallback if no brand found by name
-        string_after_mfr_removal_fb = working_str_lower
+    if identified_brand_id == UNKNOWN_BRAND_ID and not found_brand_details: # Only if primary brand search failed
+        temp_search_str_for_mfr_fb = working_str_lower # Start with original normalized string for mfr fallback
+        
+        # Try to remove already identified variant if any, from this temp string
+        if identified_v_name_str:
+             pattern_v_fb = r'\b' + re.escape(identified_v_name_str) + r'\b'
+             temp_search_str_for_mfr_fb = re.sub(pattern_v_fb, '', temp_search_str_for_mfr_fb, count=1).strip()
+             temp_search_str_for_mfr_fb = " ".join(temp_search_str_for_mfr_fb.split())
+
+        string_after_mfr_removal_fb = temp_search_str_for_mfr_fb
         sorted_mfrs_by_len = sorted(data_preparation.manufacturer_lookup.keys(), key=len, reverse=True)
-        for mfr_name_key in sorted_mfrs_by_len: # mfr_name_key is normalized
-            if re.search(r'\b' + re.escape(mfr_name_key) + r'\b', working_str_lower):
-                if identified_manufacturer_id == UNKNOWN_MANUFACTURER_ID:
+        
+        for mfr_name_key in sorted_mfrs_by_len:
+            pattern_mfr = r'\b' + re.escape(mfr_name_key) + r'\b'
+            if re.search(pattern_mfr, temp_search_str_for_mfr_fb):
+                if identified_manufacturer_id == UNKNOWN_MANUFACTURER_ID: # Only set if not already set by a brand
                      identified_manufacturer_id = data_preparation.manufacturer_lookup[mfr_name_key]
                 identified_m_name_from_fallback = mfr_name_key
-                string_after_mfr_removal_fb = re.sub(r'\b' + re.escape(mfr_name_key) + r'\b', '', working_str_lower, count=1).strip()
+                # Update string_after_mfr_removal_fb by removing mfr name
+                string_after_mfr_removal_fb = re.sub(pattern_mfr, '', temp_search_str_for_mfr_fb, count=1).strip()
                 string_after_mfr_removal_fb = " ".join(string_after_mfr_removal_fb.split())
                 break
         
-        if identified_m_name_from_fallback and identified_m_name_from_fallback in data_preparation.brand_lookup: # Mfr is also a brand
-            # Variant was already searched on working_str_lower (string_for_variant_search if no brand found).
-            # If string_after_mfr_removal_fb is empty or was exactly the variant name.
-            if not string_after_mfr_removal_fb or \
-               (identified_v_name_str and string_after_mfr_removal_fb == identified_v_name_str):
-                identified_brand_id = data_preparation.brand_lookup[identified_m_name_from_fallback]['id']
-                # Theme search for mfr-as-brand
-                theme_search_str_fb = working_str_lower
-                theme_search_str_fb = re.sub(r'\b' + re.escape(identified_m_name_from_fallback) + r'\b', '', theme_search_str_fb, count=1).strip()
-                if identified_v_name_str:
-                    theme_search_str_fb = re.sub(r'\b' + re.escape(identified_v_name_str) + r'\b', '', theme_search_str_fb, count=1).strip()
-                theme_search_str_fb = " ".join(theme_search_str_fb.split())
-                if theme_search_str_fb and identified_brand_id != UNKNOWN_BRAND_ID:
-                    sorted_themes_fb = sorted([t_name for t_name, t_info in data_preparation.theme_lookup.items() if t_info['brand_id'] == identified_brand_id], key=len, reverse=True)
-                    for theme_key_fb in sorted_themes_fb:
-                        if re.search(r'\b' + re.escape(theme_key_fb) + r'\b', theme_search_str_fb):
-                            identified_theme_id = data_preparation.theme_lookup[theme_key_fb]['id']; break
-            elif string_after_mfr_removal_fb: # Mfr is brand, but remainder is not empty/variant -> unlisted brand part
-                log_issue(f"Warning: Brand candidate '{string_after_mfr_removal_fb}' (after Mfr '{identified_m_name_from_fallback}' removed) not in lookup. Raw: '{raw_brand_str}'")
-        elif string_after_mfr_removal_fb: # Mfr not a brand (or no mfr found), remainder is unlisted brand
-            log_issue(f"Warning: Brand candidate '{string_after_mfr_removal_fb}' (after Mfr if any) not in lookup. Raw: '{raw_brand_str}'")
+        # If manufacturer was also a brand (e.g., "Topps", "Upper Deck")
+        if identified_m_name_from_fallback and identified_m_name_from_fallback in data_preparation.brand_lookup:
+            # Check if the remaining part of string_after_mfr_removal_fb is empty or just noise
+            # This implies the mfr name itself was the brand.
+            if not string_after_mfr_removal_fb: # Nothing left after mfr name removal
+                brand_data_fb = data_preparation.brand_lookup[identified_m_name_from_fallback]
+                identified_brand_id = brand_data_fb['id']
+                if identified_manufacturer_id == UNKNOWN_MANUFACTURER_ID and brand_data_fb.get('manufacturer_id'):
+                    identified_manufacturer_id = brand_data_fb['manufacturer_id']
+                elif identified_manufacturer_id == UNKNOWN_MANUFACTURER_ID: # Mfr name is brand, but brand has no explicit mfr_id
+                     identified_manufacturer_id = data_preparation.manufacturer_lookup[identified_m_name_from_fallback]
+
+
+                remaining_string_after_parsing = string_after_mfr_removal_fb # Should be empty
+
+                # Attempt theme search for this fallback brand
+                # No need to re-search variant as it was done on working_str_lower initially if no brand was found
+                # string_for_theme_search for this case would be an empty string if mfr was brand and nothing else.
+                # This means if a theme existed, it should have been part of string_after_mfr_removal_fb
+                # This section might need more refinement based on expected raw strings.
+                # For now, if mfr is brand and string_after_mfr_removal_fb is empty, assume no theme unless it was part of a complex name.
+            else: # Mfr found, and it's a brand, but there's still text left. This implies a more complex brand name not in brand_lookup.
+                log_issue(f"Warning (FB-MfrAsBrand): Brand candidate '{string_after_mfr_removal_fb}' (after Mfr '{identified_m_name_from_fallback}' removed) not in lookup. Raw: '{raw_brand_str}'")
+                # In this case, brand remains unknown for confidence, remaining_string is string_after_mfr_removal_fb
+                remaining_string_after_parsing = string_after_mfr_removal_fb
+        elif string_after_mfr_removal_fb and identified_m_name_from_fallback : # Mfr found, not a brand, but text remains
+            log_issue(f"Warning (FB-MfrOnly): Brand candidate '{string_after_mfr_removal_fb}' (after Mfr '{identified_m_name_from_fallback}') not in lookup. Raw: '{raw_brand_str}'")
+            remaining_string_after_parsing = string_after_mfr_removal_fb
         elif not string_after_mfr_removal_fb and identified_m_name_from_fallback: # Only Mfr, not a brand, nothing left.
-             log_issue(f"Info: Raw string seems to be only Manufacturer ('{identified_m_name_from_fallback}') not listed as brand. Raw: '{raw_brand_str}'")
+             log_issue(f"Info (FB-MfrOnlyEmpty): Raw string seems to be only Manufacturer ('{identified_m_name_from_fallback}') not listed as brand. Raw: '{raw_brand_str}'")
+             remaining_string_after_parsing = string_after_mfr_removal_fb # Should be empty
+        elif not identified_m_name_from_fallback and string_after_mfr_removal_fb: # No Mfr found, text remains (original variant-stripped string)
+            # This is the case where no brand, no mfr was found. `remaining_string_after_parsing` was set after variant attempt.
+            pass # remaining_string_after_parsing is already set from before this fallback block
+
+    # 5. Confidence Logic
+    if identified_brand_id != UNKNOWN_BRAND_ID:
+        # Stricter condition for 'high' confidence:
+        # Brand must be known, remaining string must be empty,
+        # AND either a theme or a non-default variant must have been identified.
+        if not remaining_string_after_parsing.strip() and \
+           (identified_theme_id != UNKNOWN_THEME_ID or identified_variant_id != DEFAULT_VARIANT_ID):
+            confidence = 'high'
+        else:
+            # Covers:
+            # 1. Brand known, but remaining string is not empty.
+            # 2. Brand known, remaining string empty, but no theme and no non-default variant found.
+            confidence = 'low'
+    else: # No brand identified
+        confidence = 'low'
+        # If no brand, any theme_id found is invalid (theme must belong to a brand)
+        # This was already done implicitly as theme search requires identified_brand_id.
+        # To be absolutely sure, and if theme logic were different:
+        identified_theme_id = UNKNOWN_THEME_ID
+        # remaining_string_after_parsing was set based on initial working_str_lower minus any variant found.
+        # If no brand and no variant, it's still the full working_str_lower.
+
+    # Ensure theme_id is None if it's UNKNOWN_THEME_ID for the final attribute dictionary
+    final_theme_id = identified_theme_id if identified_theme_id != UNKNOWN_THEME_ID else None
+    
+    # If confidence is 'low', and a theme was identified (i.e. final_theme_id is not None),
+    # it should be treated as if no theme was found (set to None).
+    # This covers cases where a theme was found for the correct brand, but other issues cause low confidence
+    # (e.g. remaining string, or brand known but no theme/variant for high confidence).
+    if confidence == 'low' and final_theme_id is not None:
+        # Log if we are nullifying a theme that was initially identified.
+        if identified_theme_id != UNKNOWN_THEME_ID : # Check original before it became final_theme_id
+             log_issue(f"Info: Low confidence ('{confidence}') for raw: '{raw_brand_str}'. Nullifying originally identified theme_id '{identified_theme_id}'. Remaining: '{remaining_string_after_parsing.strip()}'")
+        final_theme_id = None
 
     attributes.update({
-        'manufacturer_id': identified_manufacturer_id, 'brand_id': identified_brand_id,
-        'variant_id': identified_variant_id, 
-        'theme_id': identified_theme_id if identified_theme_id != UNKNOWN_THEME_ID else None
+        'manufacturer_id': identified_manufacturer_id,
+        'brand_id': identified_brand_id,
+        'variant_id': identified_variant_id,
+        'theme_id': final_theme_id,
+        'confidence': confidence,
+        'original_raw_brand': original_raw_brand,
+        'remaining_string_after_parsing': remaining_string_after_parsing.strip()
     })
 
+    # Final MFR ID fixup if not set by brand but brand is known (from original logic)
     if attributes['manufacturer_id'] == UNKNOWN_MANUFACTURER_ID and attributes['brand_id'] != UNKNOWN_BRAND_ID:
+        # This loop is inefficient, better to use a reverse lookup if available or build one.
+        # For now, keeping structure but acknowledging inefficiency.
         brand_name_for_mfr_fc = [bname for bname, binfo in data_preparation.brand_lookup.items() if binfo['id'] == attributes['brand_id']]
-        if brand_name_for_mfr_fc and data_preparation.brand_lookup[brand_name_for_mfr_fc[0]].get('manufacturer_id'):
-            attributes['manufacturer_id'] = data_preparation.brand_lookup[brand_name_for_mfr_fc[0]]['manufacturer_id']
+        if brand_name_for_mfr_fc:
+            brand_detail = data_preparation.brand_lookup.get(brand_name_for_mfr_fc[0])
+            if brand_detail and brand_detail.get('manufacturer_id'):
+                attributes['manufacturer_id'] = brand_detail['manufacturer_id']
 
     if attributes['brand_id'] == UNKNOWN_BRAND_ID and raw_brand_str.strip():
-        log_issue(f"FinalReport: Brand UNRESOLVED for raw_brand: '{raw_brand_str}'")
+        log_issue(f"FinalReport: Brand UNRESOLVED (Confidence: {confidence}) for raw_brand: '{raw_brand_str}', Remaining: '{remaining_string_after_parsing.strip()}'")
     if attributes['manufacturer_id'] == UNKNOWN_MANUFACTURER_ID and attributes['brand_id'] == UNKNOWN_BRAND_ID and raw_brand_str.strip():
-        log_issue(f"FinalReport: Manufacturer UNRESOLVED for raw_brand: '{raw_brand_str}' (Brand also unknown).")
+        log_issue(f"FinalReport: Manufacturer UNRESOLVED (Confidence: {confidence}) for raw_brand: '{raw_brand_str}' (Brand also unknown).")
+    
     return attributes
 
-def process_raw_card_data(raw_cards_list: list[dict]) -> list[dict]:
-    structured_cards = []
-    if not data_preparation.manufacturer_lookup: log_issue("Critical: Lookups not populated in process_raw_card_data."); return []
+def process_raw_card_data(raw_cards_list: list[dict]) -> tuple[list[dict], list[dict]]:
+    high_confidence_cards = []
+    questionable_cards_log_entries = []
+
+    if not data_preparation.manufacturer_lookup: 
+        log_issue("Critical: Lookups not populated in process_raw_card_data.")
+        # Return empty lists as per expected tuple output type
+        return [], [] 
+        
     for raw_card in raw_cards_list:
         print_run, serial_number = parse_limited_string(raw_card['limited_string'])
         brand_parse_results = parse_brand_string(raw_card['raw_brand'], raw_card['season'])
-        structured_cards.append({
-            'player_id': PLAYER_ID_JUWAN_HOWARD, 'season': raw_card['season'], 
-            'card_number': raw_card['card_number'], 'print_run': print_run, 'serial_number': serial_number,
-            **brand_parse_results, # Includes mfr, brand, variant, theme, and attributes
-            'raw_brand_for_debug': raw_card['raw_brand']
-        })
-    return structured_cards
+
+        if brand_parse_results['confidence'] == 'high':
+            high_confidence_card_dict = {
+                'player_id': PLAYER_ID_JUWAN_HOWARD,
+                'season': raw_card['season'],
+                'card_number': raw_card['card_number'],
+                'print_run': print_run,
+                'serial_number': serial_number,
+                'manufacturer_id': brand_parse_results['manufacturer_id'],
+                'brand_id': brand_parse_results['brand_id'],
+                'variant_id': brand_parse_results['variant_id'],
+                'theme_id': brand_parse_results['theme_id'], # Will be None if no high-confidence theme
+                'rookie_card': brand_parse_results['rookie_card'],
+                'autograph': brand_parse_results['autograph'],
+                'game_used_material': brand_parse_results['game_used_material']
+            }
+            high_confidence_cards.append(high_confidence_card_dict)
+        else: # confidence == 'low'
+            reason_for_low_confidence = "No brand identified" if brand_parse_results['brand_id'] == UNKNOWN_BRAND_ID else "Unparsed text remaining or ambiguous parse" # Reverted to local UNKNOWN_BRAND_ID
+            questionable_card_dict = {
+                'original_raw_brand': brand_parse_results['original_raw_brand'],
+                'season': raw_card['season'],
+                'card_number': raw_card['card_number'],
+                'parsed_brand_id': brand_parse_results['brand_id'], # Key updated
+                'parsed_theme_id': brand_parse_results['theme_id'], # Key updated. Value is None if low confidence nullified it.
+                'parsed_variant_id': brand_parse_results['variant_id'], # Key updated
+                'parsed_manufacturer_id': brand_parse_results['manufacturer_id'], # Key is correct as per prompt
+                'remaining_string': brand_parse_results['remaining_string_after_parsing'], # Key updated
+                'reason': reason_for_low_confidence
+            }
+            questionable_cards_log_entries.append(questionable_card_dict)
+            
+    return high_confidence_cards, questionable_cards_log_entries
+
+def write_questionable_cards_to_file(questionable_cards_log_entries: list[dict]):
+    """
+    Writes low-confidence parsing results to a log file.
+    """
+    output_filepath = "output/questionable_parses.txt"
+    
+    try:
+        # Ensure the output directory exists
+        os.makedirs("output", exist_ok=True)
+        
+        with open(output_filepath, 'w', encoding='utf-8') as f:
+            if not questionable_cards_log_entries:
+                f.write("No questionable card parses to log.\n")
+                return
+
+            for entry in questionable_cards_log_entries:
+                # Helper to convert None to "None" string for display
+                def val_to_str(val):
+                    return str(val) if val is not None else "None"
+
+                f.write("----------------------------------------\n")
+                f.write(f"Original Raw Brand: {entry.get('original_raw_brand', 'N/A')}\n")
+                f.write(f"Season: {entry.get('season', 'N/A')}\n")
+                f.write(f"Card Number: {entry.get('card_number', 'N/A')}\n")
+                f.write(f"Reason for Low Confidence: {entry.get('reason', 'N/A')}\n")
+                f.write("--- Parsing Details ---\n")
+                f.write(f"Remaining Unparsed Text: \"{entry.get('remaining_string', '')}\"\n") # Ensure quotes for clarity
+                f.write(f"Identified Brand ID: {val_to_str(entry.get('parsed_brand_id'))}\n")
+                f.write(f"Identified Theme ID: {val_to_str(entry.get('parsed_theme_id'))}\n")
+                f.write(f"Identified Variant ID: {val_to_str(entry.get('parsed_variant_id'))}\n")
+                f.write(f"Identified Manufacturer ID: {val_to_str(entry.get('parsed_manufacturer_id'))}\n")
+                f.write("----------------------------------------\n\n")
+        
+        print(f"Questionable card parse log written to {output_filepath}")
+
+    except IOError as e:
+        log_issue(f"Error writing questionable cards to file: {e}")
+        print(f"Error: Could not write questionable cards to {output_filepath}. Check logs.")
+
 
 def main_processing_logic():
     """Wraps the main processing logic of card_data_processor.py to be callable."""
@@ -242,11 +415,18 @@ def main_processing_logic():
     log_issue.__globals__['log_issue'] = original_log_handler # Restore global logger
     processing_logs.extend(current_run_logs) # Add local logs to global list
 
-    return structured_card_list, current_run_logs
+    # structured_card_list is now a tuple: (high_confidence_cards, questionable_cards_log_entries)
+    # Return this tuple along with the general current_run_logs
+    return structured_card_list, current_run_logs 
 
 # This exposed function will be called by sql_generator
-def get_structured_card_data():
-    """Public function to get structured card data. Ensures SQL content is loaded if run as part of a sequence."""
+def get_structured_card_data() -> list[dict]: # Explicitly list of dict for high-confidence cards
+    """
+    Public function to get structured card data.
+    It processes raw card data, writes questionable parses to a file,
+    and returns only the list of high-confidence card data.
+    Ensures SQL content is loaded if run as part of a sequence.
+    """
     # If this module's __main__ already ran (e.g. direct execution), SQL_CONTENTs are set.
     # If imported, the importer or a main orchestrator should ensure they are set.
     # For now, we assume if __main__ of THIS SCRIPT hasn't run, SQL_CONTENTs might be empty
@@ -261,11 +441,22 @@ def get_structured_card_data():
         print("Info: get_structured_card_data: Lookups empty, initializing with current SQL_CONTENTs.")
         initialize_lookups(SQL_CONTENT_MANUFACTURER, SQL_CONTENT_BRAND, SQL_CONTENT_THEME, SQL_CONTENT_VARIANT)
         
-    processed_data, logs = main_processing_logic()
-    # For external callers, we might not want to print all these logs directly here.
-    # The caller can decide what to do with the logs.
-    # For now, let sql_generator print its own summary if needed.
-    return processed_data 
+    # main_processing_logic now returns ((high_conf_cards, questionable_entries), general_logs_from_run)
+    card_data_tuple, general_logs_from_run = main_processing_logic()
+    
+    high_confidence_cards, questionable_cards_log_entries = card_data_tuple
+    
+    # Write questionable cards to file
+    write_questionable_cards_to_file(questionable_cards_log_entries)
+    
+    # Handle general logs if necessary (e.g., print summary or add to global logs)
+    # For now, the prompt implies focusing on the primary data flow.
+    # These logs are already added to global processing_logs within main_processing_logic.
+    if general_logs_from_run:
+        print(f"Info: get_structured_card_data: main_processing_logic produced {len(general_logs_from_run)} general log entries.")
+
+    # Return only the high-confidence cards list
+    return high_confidence_cards
 
 
 def temp_initialize_with_example_sql_if_empty():

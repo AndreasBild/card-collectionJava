@@ -1,65 +1,49 @@
-import datetime
-import sql_generator # To get the list of INSERT INTO card statements
+import os
+import sql_generator # To get the list of SQL UPDATE statements
 
-def assemble_final_sql_script():
+def main():
     """
-    Assembles the complete SQL import script.
+    Main function to orchestrate the card data processing and SQL generation.
     """
-    current_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    
-    sql_output_parts = []
+    print("Starting card data processing and SQL generation...")
 
-    # 1. Initialization
-    sql_output_parts.append("USE cardcollection;\n")
-    sql_output_parts.append("-- SQL Import script for Juwan Howard trading card collection")
-    sql_output_parts.append(f"-- Generated on {current_date}\n")
-    sql_output_parts.append("-- This script assumes that card_manufacturer, card_brand, card_theme,")
-    sql_output_parts.append("-- and variant tables are already populated correctly.\n")
+    # 1. Get SQL UPDATE statements from sql_generator
+    # This call triggers the entire chain:
+    # sql_generator -> card_data_processor -> html_parser
+    # card_data_processor will also write the questionable_parses.txt file.
+    sql_update_statements = sql_generator.get_card_update_statements()
 
-    # 2. Fetch INSERT INTO card statements
-    print("Fetching INSERT INTO card statements from sql_generator...")
-    
-    # This requires sql_generator.py to have a function that returns the SQL list.
-    # Let's assume sql_generator.get_card_insert_statements() will be that function.
+    # 2. Define output directory and file path for the SQL update script
+    output_dir = "output"
+    sql_output_filepath = os.path.join(output_dir, "update_script.sql")
+
+    # 3. Ensure the output directory exists
     try:
-        # This function will need to be created in sql_generator.py
-        card_insert_statements = sql_generator.get_card_insert_statements() 
-    except AttributeError:
-        print("Error: `get_card_insert_statements` function not found in `sql_generator.py`.")
-        print("Please refactor `sql_generator.py` to make its output accessible.")
-        card_insert_statements = [] # Fallback
-    except Exception as e:
-        print(f"An error occurred while trying to get data from sql_generator: {e}")
-        card_insert_statements = []
+        os.makedirs(output_dir, exist_ok=True)
+    except OSError as e:
+        print(f"Error creating directory {output_dir}: {e}")
+        # Depending on desired behavior, might exit or try to proceed if dir already exists.
+        # exist_ok=True should prevent error if dir exists. This is more for other OSErrors.
+        return 
 
-
-    if not card_insert_statements:
-        print("Warning: No card INSERT statements received from sql_generator.")
-    else:
-        print(f"Received {len(card_insert_statements)} card INSERT statements.")
-    
-    # 3. Add Card INSERT Statements
-    if card_insert_statements:
-        sql_output_parts.append("\n-- Inserting card data --")
-        for stmt in card_insert_statements:
-            sql_output_parts.append(stmt)
-    
-    # 4. Finalization (optional footer comments)
-    sql_output_parts.append("\n-- End of Juwan Howard trading card collection import script --")
-
-    final_sql_script_content = "\n".join(sql_output_parts)
-    
-    # 5. Output to file
-    output_filename = "juwan_howard_collection_import.sql"
+    # 4. Write the SQL UPDATE statements to the file
     try:
-        with open(output_filename, "w") as f:
-            f.write(final_sql_script_content)
-        print(f"\nSuccessfully generated SQL import script: {output_filename}")
+        with open(sql_output_filepath, "w", encoding='utf-8') as f:
+            if not sql_update_statements:
+                f.write("-- No SQL update statements were generated.\n")
+                print("No SQL update statements were generated.")
+            else:
+                for stmt in sql_update_statements:
+                    f.write(stmt + "\n")
+                print(f"Successfully wrote {len(sql_update_statements)} SQL update statements to {sql_output_filepath}")
     except IOError as e:
-        print(f"Error writing SQL script to file {output_filename}: {e}")
-        
-    return output_filename, final_sql_script_content
+        print(f"Error writing SQL update script to file {sql_output_filepath}: {e}")
+        return
 
+    # 5. Print final completion message
+    print("\nProcess complete.")
+    print(f"SQL update script saved to: {sql_output_filepath}")
+    print(f"Questionable parses logged to: output/questionable_parses.txt")
 
-if __name__ == '__main__':
-    assemble_final_sql_script()
+if __name__ == "__main__":
+    main()
