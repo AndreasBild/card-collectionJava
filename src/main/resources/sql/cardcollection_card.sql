@@ -25,23 +25,28 @@ DROP TABLE IF EXISTS `card`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `card` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `print_run` int NOT NULL,
-  `serial_number` int NOT NULL,
-  `season` varchar(10) NOT NULL,
-  `number` varchar(10) NOT NULL,
-  `rookie_card` tinyint(1) NOT NULL DEFAULT '0',
-  `game_used_material` tinyint(1) NOT NULL DEFAULT '0',
-  `player_id` bigint DEFAULT NULL,
-  `theme_id` bigint DEFAULT NULL,
-  `autograph` tinyint(1) NOT NULL DEFAULT '0',
-  `variant_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FKbyb0u8pl0bms3a11dql17ut0b` (`player_id`),
-  KEY `FKrhm60fo96t7r89farfjnmg0n9` (`theme_id`),
-  CONSTRAINT `FKbyb0u8pl0bms3a11dql17ut0b` FOREIGN KEY (`player_id`) REFERENCES `player` (`id`),
-  CONSTRAINT `FKrhm60fo96t7r89farfjnmg0n9` FOREIGN KEY (`theme_id`) REFERENCES `card_theme` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                        `id` bigint NOT NULL AUTO_INCREMENT,
+                        `print_run` int NOT NULL,
+                        `serial_number` int NOT NULL,
+                        `number` varchar(255) DEFAULT NULL,
+                        `rookie_card` tinyint(1) NOT NULL DEFAULT '0',
+                        `game_used_material` tinyint(1) NOT NULL DEFAULT '0',
+                        `player_id` bigint DEFAULT NULL,
+                        `theme_id` bigint DEFAULT NULL,
+                        `autograph` tinyint(1) NOT NULL DEFAULT '0',
+                        `season_id` bigint DEFAULT NULL,
+                        `variant_id` bigint DEFAULT NULL,
+                        `season` varchar(255) DEFAULT NULL,
+                        PRIMARY KEY (`id`),
+                        KEY `FKbyb0u8pl0bms3a11dql17ut0b` (`player_id`),
+                        KEY `FKrhm60fo96t7r89farfjnmg0n9` (`theme_id`),
+                        KEY `FK6xhb82f364llei3se8shqvxoa` (`variant_id`),
+                        KEY `FK_card_season` (`season_id`),
+                        CONSTRAINT `FK6xhb82f364llei3se8shqvxoa` FOREIGN KEY (`variant_id`) REFERENCES `variant` (`id`),
+                        CONSTRAINT `FK_card_season` FOREIGN KEY (`season_id`) REFERENCES `season` (`id`),
+                        CONSTRAINT `FKbyb0u8pl0bms3a11dql17ut0b` FOREIGN KEY (`player_id`) REFERENCES `player` (`id`),
+                        CONSTRAINT `FKrhm60fo96t7r89farfjnmg0n9` FOREIGN KEY (`theme_id`) REFERENCES `card_theme` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1047 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -50,7 +55,7 @@ CREATE TABLE `card` (
 
 LOCK TABLES `card` WRITE;
 /*!40000 ALTER TABLE `card` DISABLE KEYS */;
-INSERT INTO `card` VALUES (1,1,1,'1994-95','278',1,0,1,1,0,1),(2,1,1,'1994-95','278',1,0,1,1,0,1),(3,1,1,'1994-95','278',1,0,1,1,0,1),(4,1,1,'1994-95','S4',1,0,1,1,0,1),(5,1,1,'1994-95','S4',1,0,1,1,0,1),(6,1,1,'1994-95','S4',1,0,1,1,0,1);
+INSERT INTO `card` VALUES (1,0,0,'278',1,0,1,51,1,1,6,NULL),(2,0,0,'278',1,0,1,51,1,1,5,NULL),(3,750,689,'278',1,1,1,51,1,1,1,NULL);
 /*!40000 ALTER TABLE `card` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -63,4 +68,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-25 13:18:11
+-- Dump completed on 2025-05-27 16:44:59
