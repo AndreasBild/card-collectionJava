@@ -31,12 +31,17 @@ public class MinifyCompress {
                     compressFile(tempFile, compressedFile);
 
                     // Rename file to original name
-                    File finalFile = new File(file.getPath());
-                    compressedFile.renameTo(finalFile);
+                    File finalFile = new File(file.getPath()); // This is the original file path
+                    if (finalFile.exists()) {
+                        finalFile.delete(); // Delete original before renaming, to ensure rename works on Windows
+                    }
+                    if (!compressedFile.renameTo(finalFile)) {
+                        System.err.println("Failed to rename compressed file to: " + finalFile.getAbsolutePath());
+                    }
 
-                    // Delete the original uncompressed or minified file
-                    if (!tempFile.equals(file)) {
-                        tempFile.delete();
+                    // Delete the temporary minified file (if it was created and is not the original file)
+                    if (!tempFile.equals(file) && tempFile.exists() && !tempFile.delete()) {
+                        System.err.println("Failed to delete temporary minified file: " + tempFile.getAbsolutePath());
                     }
 
                 } catch (IOException e) {

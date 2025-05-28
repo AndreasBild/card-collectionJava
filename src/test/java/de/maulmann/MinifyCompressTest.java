@@ -128,7 +128,7 @@ class MinifyCompressTest {
         java.lang.reflect.Field pathField = null;
         String originalPath = null;
         try {
-            pathField = MinifyCompress.class.getDeclaredField("path");
+            pathField = MinifyCompress.class.getDeclaredField("pathSource");
             pathField.setAccessible(true);
             originalPath = (String) pathField.get(null);
             pathField.set(null, outputDir.toString());
@@ -139,28 +139,27 @@ class MinifyCompressTest {
         MinifyCompress.main(new String[]{}); // Call main
 
         // Assertions
-        // Original files should be replaced by .gz versions
-        Path minHtmlFile = outputDir.resolve("index.html.gz"); // Original is replaced
-        Path minCssFile = outputDir.resolve("style.css.gz");   // Original is replaced
-        Path minHtmlFileInSubDir = subDir.resolve("another.html.gz");
+        // Original files should be overwritten with GZIPped content.
+        Path processedHtmlFile = outputDir.resolve("index.html");
+        Path processedCssFile = outputDir.resolve("style.css");
+        Path processedHtmlFileInSubDir = subDir.resolve("another.html");
 
-        assertTrue(Files.exists(minHtmlFile), "Minified and compressed HTML file (index.html.gz) should exist.");
-        assertTrue(Files.exists(minCssFile), "Minified and compressed CSS file (style.css.gz) should exist.");
-        assertTrue(Files.exists(minHtmlFileInSubDir), "Minified and compressed HTML file in subdirectory (another.html.gz) should exist.");
+        assertTrue(Files.exists(processedHtmlFile), "Processed HTML file (index.html) should exist, overwritten with GZIP content.");
+        assertTrue(Files.exists(processedCssFile), "Processed CSS file (style.css) should exist, overwritten with GZIP content.");
+        assertTrue(Files.exists(processedHtmlFileInSubDir), "Processed HTML file in subdirectory (another.html) should exist, overwritten with GZIP content.");
 
-        assertFalse(Files.exists(htmlFile), "Original HTML file (index.html) should have been deleted.");
-        assertFalse(Files.exists(cssFile), "Original CSS file (style.css) should have been deleted.");
-        assertFalse(Files.exists(htmlFileInSubDir), "Original HTML file in subdirectory (another.html) should have been deleted.");
+        // Original files are overwritten, so no separate deletion check is needed.
+        // The assertFalse checks for original files (htmlFile, cssFile, htmlFileInSubDir if they were different Path objects) are removed.
 
-        // Verify content of compressed files
-        String decompressedHtml = readGzipFile(minHtmlFile);
-        assertTrue(decompressedHtml.length() <= htmlContent.length()); // Minified before compression
-        assertTrue(decompressedHtml.contains("<h1>Test</h1>"));
+        // Verify content of the processed (GZIPed) files
+        String decompressedHtml = readGzipFile(processedHtmlFile);
+        assertTrue(decompressedHtml.length() <= htmlContent.length(), "Minified content should generally be smaller or equal.");
+        assertTrue(decompressedHtml.contains("<h1>Test</h1>"), "Essential HTML content should remain.");
 
-        String decompressedCss = readGzipFile(minCssFile);
-        assertEquals("body{color:blue}", decompressedCss.replaceAll("\\s", ""));
+        String decompressedCss = readGzipFile(processedCssFile);
+        assertEquals("body{color:blue}", decompressedCss.replaceAll("\\s", ""), "CSS content should be minified.");
 
-        String decompressedHtmlSubDir = readGzipFile(minHtmlFileInSubDir);
+        String decompressedHtmlSubDir = readGzipFile(processedHtmlFileInSubDir);
         assertTrue(decompressedHtmlSubDir.length() <= htmlContentSubDir.length());
         assertTrue(decompressedHtmlSubDir.contains("<h2>Test 2</h2>"));
 

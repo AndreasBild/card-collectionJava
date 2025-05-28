@@ -16,28 +16,30 @@ UNKNOWN_BRAND_ID = 0
 UNKNOWN_THEME_ID = 0 
 DEFAULT_VARIANT_ID = 1 # Will be updated with actual 'Base' ID
 
-# Global SQL content strings - to be populated by __main__ or an external caller
-SQL_CONTENT_MANUFACTURER = ""
-SQL_CONTENT_BRAND = ""
-SQL_CONTENT_THEME = ""
-SQL_CONTENT_VARIANT = ""
-
 # Logging list for issues
 processing_logs = []
 
 def log_issue(message):
     processing_logs.append(message)
 
-def initialize_lookups(sql_manufacturer, sql_brand, sql_theme, sql_variant):
+def initialize_lookups(manufacturer_sql_path: str, brand_sql_path: str, theme_sql_path: str, variant_sql_path: str):
     global DEFAULT_VARIANT_ID
+
+    # Load SQL content from files
+    sql_manufacturer = data_preparation.load_sql_insert_statements_from_file(manufacturer_sql_path)
+    sql_brand = data_preparation.load_sql_insert_statements_from_file(brand_sql_path)
+    sql_theme = data_preparation.load_sql_insert_statements_from_file(theme_sql_path)
+    sql_variant = data_preparation.load_sql_insert_statements_from_file(variant_sql_path)
+
     # Ensure data_preparation's global lookups are cleared and repopulated
     data_preparation.manufacturer_lookup.clear()
     data_preparation.brand_lookup.clear()
     data_preparation.theme_lookup.clear()
     data_preparation.variant_lookup.clear()
-    
+
+    # Populate lookups with the loaded content
     data_preparation.populate_lookups(sql_manufacturer, sql_brand, sql_theme, sql_variant)
-    
+
     base_variant_id = data_preparation.variant_lookup.get("base") # Keys are normalized now
     if base_variant_id is not None:
         DEFAULT_VARIANT_ID = base_variant_id
@@ -397,11 +399,11 @@ def main_processing_logic():
     # This is a simple way to isolate logs for a specific call if the module is long-lived.
     # More robust logging would use a logging instance.
     original_log_handler = log_issue.__globals__['log_issue']
-    
+
     def local_log_issue(message):
         current_run_logs.append(message)
     log_issue.__globals__['log_issue'] = local_log_issue
-    
+
     raw_card_data_list = html_parser.parse_seasons_from_html('output/index.html')
 
     if not raw_card_data_list:
@@ -410,14 +412,15 @@ def main_processing_logic():
         processing_logs.extend(current_run_logs) # Add local logs to global
         return [], current_run_logs
 
-    structured_card_list = process_raw_card_data(raw_card_data_list)
-    
+    # process_raw_card_data now returns a tuple: (high_confidence_cards, questionable_cards_log_entries)
+    high_confidence_cards, questionable_cards_log_entries = process_raw_card_data(raw_card_data_list)
+
     log_issue.__globals__['log_issue'] = original_log_handler # Restore global logger
     processing_logs.extend(current_run_logs) # Add local logs to global list
 
-    # structured_card_list is now a tuple: (high_confidence_cards, questionable_cards_log_entries)
     # Return this tuple along with the general current_run_logs
-    return structured_card_list, current_run_logs 
+    return (high_confidence_cards, questionable_cards_log_entries), current_run_logs
+
 
 # This exposed function will be called by sql_generator
 def get_structured_card_data() -> list[dict]: # Explicitly list of dict for high-confidence cards
@@ -425,32 +428,24 @@ def get_structured_card_data() -> list[dict]: # Explicitly list of dict for high
     Public function to get structured card data.
     It processes raw card data, writes questionable parses to a file,
     and returns only the list of high-confidence card data.
-    Ensures SQL content is loaded if run as part of a sequence.
+    Assumes that initialize_lookups has been called by the orchestrator (e.g. sql_generator).
     """
-    # If this module's __main__ already ran (e.g. direct execution), SQL_CONTENTs are set.
-    # If imported, the importer or a main orchestrator should ensure they are set.
-    # For now, we assume if __main__ of THIS SCRIPT hasn't run, SQL_CONTENTs might be empty
-    # unless set by an importer.
-    if not (SQL_CONTENT_MANUFACTURER and SQL_CONTENT_BRAND and SQL_CONTENT_THEME and SQL_CONTENT_VARIANT) \
-            and __name__ != "__main__": # Only try example if imported AND not set.
-        print("Warning: get_structured_card_data() called (likely imported), SQL_CONTENTs not set. Using example SQL.")
-        temp_initialize_with_example_sql_if_empty()
-
-    # If lookups are still not populated (e.g. SQL_CONTENTs were set by importer but init not called)
     if not data_preparation.manufacturer_lookup:
-        print("Info: get_structured_card_data: Lookups empty, initializing with current SQL_CONTENTs.")
-        initialize_lookups(SQL_CONTENT_MANUFACTURER, SQL_CONTENT_BRAND, SQL_CONTENT_THEME, SQL_CONTENT_VARIANT)
-        
+        log_issue("Critical: get_structured_card_data called but lookups are not populated. Ensure initialize_lookups(paths...) was called first.")
+        print("CRITICAL ERROR: get_structured_card_data called but lookups are not populated. Ensure initialize_lookups(paths...) was called first.")
+        # Depending on desired strictness, could raise an exception or return empty.
+        # For now, consistent with previous behavior if lookups were empty, it would effectively fail.
+        return []
+
     # main_processing_logic now returns ((high_conf_cards, questionable_entries), general_logs_from_run)
     card_data_tuple, general_logs_from_run = main_processing_logic()
-    
+
     high_confidence_cards, questionable_cards_log_entries = card_data_tuple
-    
+
     # Write questionable cards to file
     write_questionable_cards_to_file(questionable_cards_log_entries)
-    
+
     # Handle general logs if necessary (e.g., print summary or add to global logs)
-    # For now, the prompt implies focusing on the primary data flow.
     # These logs are already added to global processing_logs within main_processing_logic.
     if general_logs_from_run:
         print(f"Info: get_structured_card_data: main_processing_logic produced {len(general_logs_from_run)} general log entries.")
@@ -459,53 +454,33 @@ def get_structured_card_data() -> list[dict]: # Explicitly list of dict for high
     return high_confidence_cards
 
 
-def temp_initialize_with_example_sql_if_empty():
-    """A temporary helper to initialize with example SQL if lookups are empty.
-       ONLY FOR unblocking dependent modules when card_data_processor is imported
-       and its own __main__ hasn't run to set up proper SQL.
-    """
-    global SQL_CONTENT_MANUFACTURER, SQL_CONTENT_BRAND, SQL_CONTENT_THEME, SQL_CONTENT_VARIANT
-    print("DEVELOPMENT FALLBACK in card_data_processor: Initializing lookups with EXAMPLE SQL.")
-    SQL_CONTENT_MANUFACTURER = "INSERT INTO `card_manufacturer` VALUES (1,'Upper Deck'),(2,'Topps');" # Simplified
-    SQL_CONTENT_BRAND = "INSERT INTO `card_brand` VALUES (1,'Collectors Choice',1),(4,'Upper Deck',1),(50,'Topps',2), (56,'Bowman''s Best	',2);" # Simplified
-    SQL_CONTENT_THEME = "INSERT INTO `card_theme` VALUES (1,'You Crash The Game Rookie Scoring',1),(3,'Signature',1);" # Simplified
-    SQL_CONTENT_VARIANT = "INSERT INTO `variant` VALUES (1,'Base'),(2,'Refractor'),(5,'Gold'),(6,'Silver');" # Simplified
-    initialize_lookups(SQL_CONTENT_MANUFACTURER, SQL_CONTENT_BRAND, SQL_CONTENT_THEME, SQL_CONTENT_VARIANT)
-
+# temp_initialize_with_example_sql_if_empty has been removed.
 
 if __name__ == '__main__':
-    # Populate global SQL content strings for direct execution
-    SQL_CONTENT_MANUFACTURER = """
-CREATE DATABASE  IF NOT EXISTS `cardcollection` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `cardcollection`;
-INSERT INTO `card_manufacturer` VALUES (1,'Upper Deck'),(2,'Topps'),(3,'Fleer'),(4,'Leaf'),(5,'Panini'),(6,'Classic'),(7,'Score Board');
-    """
-    SQL_CONTENT_BRAND = """
-USE `cardcollection`;
-INSERT INTO `card_brand` VALUES (1,'Collectors Choice',1),(2,'Exquisite',1),(3,'SP Authentic',1),(4,'Upper Deck',1),(5,'SP',1),(6,'SP Championship	',1),(7,'UD3	',1),(8,'SPx',1),(9,'Hardcourt',1),(10,'Black Diamond',1),(11,'SPx Finite',1),(12,'Choice',1),(13,'Ionix',1),(14,'Ovation',1),(15,'Encore',1),(16,'HoloGrFX',1),(17,'Retro',1),(18,'MVP',1),(19,'Gold Reserve',1),(20,'Victory',1),(21,'Reserve',1),(22,'UDx',1),(23,'SLAM',1),(24,'SP Game Used',1),(25,'Glass',1),(26,'Authentics ',1),(27,'Sweet Shot',1),(28,'Ultimate Victory',1),(29,'Honor Roll',1),(30,'Inspiration',1),(31,'SP Authentic Limited',1),(32,'Flight Team',1),(33,'Finite',1),(34,'Ultimate Collection',1),(35,'Championship Drive ',1),(36,'Exclusives',1),(37,'Standing O',1),(38,'Legends',1),(39,'R-Class',1),(40,'Trilogy',1),(41,'Reflections',1),(42,'ESPN',1),(43,'Rookie Debut',1),(44,'Signature Edition',1),(50,'Topps',2),(51,'Embossed',2),(52,'Finest',2),(53,'Stadium Club',2),(54,'Stadium Club Members Only',2),(55,'Gallery',2),(56,'Bowman\'s Best	',2),(57,'Chrome',2),(58,'Gold Label',2),(59,'Tip Off',2),(60,'Heritage',2),(61,'Stars',2),(62,'Reserve',2),(63,'Pristine',2),(64,'Jersey Edition',2),(65,'Bazooka',2),(66,'Turkey Red',2),(67,'Contemporary Collection',2),(68,'Rookie Matrix',2),(69,'First Edition',2),(70,'Luxury Box',2),(71,'Total',2),(80,'Flair',3),(81,'Fleer',3),(82,'Jam Session',3);
-    """
-    SQL_CONTENT_THEME = """
-USE `cardcollection`;
-INSERT INTO `card_theme` VALUES (1,'You Crash The Game Rookie Scoring',1),(2,'You Crash The Game Rookie Scoring Redemption',1),(3,'Signature',1),(4,'Lottery Pick',1),(5,'Embossed',51),(6,'Collegiate Best',51),(7,'Rack Pack',NULL);
-    """
-    SQL_CONTENT_VARIANT = """
-USE `cardcollection`;
-INSERT INTO `variant` VALUES (1,'Base'),(2,'Refractor'),(3,'Die Cut'),(5,'Gold'),(6,'Silver'),(7,'Bronze'),(8,'Platinum'),(9,'Diamond'),(10,'Emerald'),(11,'Ruby'),(12,'Black'),(13,'White'),(14,'Yellow'),(15,'Cyan'),(16,'Magenta'),(17,'Red'),(18,'Blue'),(19,'Grean');
-    """
-    
-    # Initialize lookups using the full SQL content defined above for direct script run
-    initialize_lookups(SQL_CONTENT_MANUFACTURER, SQL_CONTENT_BRAND, SQL_CONTENT_THEME, SQL_CONTENT_VARIANT)
+    # Define file paths for SQL lookup data
+    BASE_SQL_PATH = "src/main/resources/sql/"
+    MANUFACTURER_SQL_FILE = os.path.join(BASE_SQL_PATH, "cardcollection_card_manufacturer.sql")
+    BRAND_SQL_FILE = os.path.join(BASE_SQL_PATH, "cardcollection_card_brand.sql")
+    THEME_SQL_FILE = os.path.join(BASE_SQL_PATH, "cardcollection_card_theme.sql")
+    VARIANT_SQL_FILE = os.path.join(BASE_SQL_PATH, "cardcollection_variant.sql")
+
+    # Initialize lookups using file paths
+    initialize_lookups(MANUFACTURER_SQL_FILE, BRAND_SQL_FILE, THEME_SQL_FILE, VARIANT_SQL_FILE)
 
     print("Executing card_data_processor.py as main script...")
-    # Call main_processing_logic which now returns logs too
-    structured_cards, logs_from_run = main_processing_logic() 
+    # main_processing_logic returns a tuple:
+    # ((high_confidence_cards, questionable_cards_log_entries), general_logs_from_run)
+    (structured_cards_data, questionable_entries), logs_from_run = main_processing_logic()
     
-    print(f"Main script execution: Successfully processed {len(structured_cards)} cards.")
-    if structured_cards:
+    # Write questionable cards from this main run to file
+    write_questionable_cards_to_file(questionable_entries)
+
+    print(f"Main script execution: Successfully processed {len(structured_cards_data)} high-confidence cards.")
+    if structured_cards_data:
         print("\nFirst 5 structured cards (from __main__):")
-        for i, card in enumerate(structured_cards[:5]):
+        for i, card in enumerate(structured_cards_data[:5]):
             print(f"{i+1}: {card}")
-    
+
     # Use the returned logs for printing in __main__
     if logs_from_run:
         print("\n--- Processing Issues Logged (from __main__ run) ---")
@@ -514,9 +489,9 @@ INSERT INTO `variant` VALUES (1,'Base'),(2,'Refractor'),(3,'Die Cut'),(5,'Gold')
             log_counts[log_entry] = log_counts.get(log_entry, 0) + 1
         sorted_log_counts = sorted(log_counts.items(), key=lambda item: item[1], reverse=True)
         print(f"Total unique issues from this run: {len(sorted_log_counts)}")
-        for log_entry, count in sorted_log_counts[:20]:
+        for log_entry, count in sorted_log_counts[:20]: # Print top 20 unique issues
             print(f"({count} times) {log_entry}")
     else:
         print("\nNo processing issues logged from this __main__ run.")
-            
+
     print("\nCard data processing (direct script run) finished.")
