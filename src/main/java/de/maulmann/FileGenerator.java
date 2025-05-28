@@ -91,6 +91,11 @@ public class FileGenerator {
 
     public static void main(String[] args) throws IOException {
 
+        // These lines ensure that generatedFileLocation and nameOfInputFile are updated
+        // if pathSource or pathOutput were changed (e.g., by tests).
+        generatedFileLocation = pathOutput + "index.html";
+        nameOfInputFile = getFileNamesFromDirectory();
+
         //formatFile();
 
         // create a new file or use an existing file with the same name

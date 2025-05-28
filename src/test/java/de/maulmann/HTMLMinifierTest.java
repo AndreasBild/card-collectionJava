@@ -59,7 +59,7 @@ class HTMLMinifierTest {
         assertFalse(minifiedContent.contains("<!-- This is a comment -->"), "HTML comments should be removed.");
         // The following assertion for "\n  " has been removed as per the subtask.
         assertTrue(minifiedContent.contains("<title>Test Page Title</title>"), "Title should remain."); // Corrected expected title
-        assertTrue(minifiedContent.contains("<h1>Hello World</h1>"), "Content should largely remain, comments within tags might be handled differently by minifiers.");
+        assertTrue(minifiedContent.contains("<h1>Hello World Of HTML</h1>"), "H1 content should match Jsoup's output from verbose input."); // Corrected H1 content
         assertTrue(minifiedContent.contains("<p>This is a paragraph with extra spaces.</p>"), "Spaces within tags are often collapsed.");
         // Check if style and script tags are present, their content minification is more complex
         assertTrue(minifiedContent.contains("<style>"), "Style tag should be present.");

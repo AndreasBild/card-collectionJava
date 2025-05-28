@@ -92,7 +92,7 @@ class MinifyCompressTest {
         assertTrue(minifiedContent.length() <= htmlContent.length(), "Minified content should be smaller or equal.");
         // The following assertion for "\n  " has been removed as per the subtask.
         assertTrue(minifiedContent.contains("<title>Test Page Title</title>"), "Title should remain."); // Added assertion for title
-        assertTrue(minifiedContent.contains("<h1>Hello World Of HTML</h1>")); // Adjusted to match new content
+        assertTrue(minifiedContent.contains("<h1>Hello World Of HTML</h1>"), "H1 content should match Jsoup's output from verbose input."); // Standardized H1 content
         assertTrue(minifiedContent.contains("// Script comment"), "JS comments should be preserved by Jsoup.");
         assertTrue(minifiedContent.contains("font-family: Arial, sans-serif;") || minifiedContent.contains("font-family:Arial,sans-serif;"), "CSS rule should be present; Jsoup may not deeply minify content within the rule itself.");
     }
@@ -137,7 +137,34 @@ class MinifyCompressTest {
     void testMain() throws IOException {
         // Create dummy HTML and CSS files in the temporary output/ directory
         Path htmlFile = outputDir.resolve("index.html");
-        String htmlContent = "<!DOCTYPE html><html><body><h1>Test</h1></body></html>";
+        // Use the verbose HTML content
+        String htmlContent = "<!DOCTYPE html>\n" +
+                             "<!-- Top level comment -->\n" +
+                             "<html>\n\n" +
+                             "  <head>\n" +
+                             "    <title>Test Page Title</title>\n\n" +
+                             "    <!-- Another comment -->\n" +
+                             "    <style>\n" +
+                             "      body {\n" +
+                             "        font-family: Arial, sans-serif;\n" +
+                             "        color: #333333; /* style comment */ \n" +
+                             "      }\n" +
+                             "    </style>\n" +
+                             "  </head>\n\n" +
+                             "  <body>\n\n" +
+                             "    <h1>Hello <!-- inline comment --> World Of HTML</h1>\n\n" +
+                             "    <p>\n" +
+                             "      This is a paragraph with   lots of   extra   spaces and\n" +
+                             "      multiple lines.\n" +
+                             "    </p>\n\n" +
+                             "    <script>\n" +
+                             "      // Script comment that Jsoup might keep\n" +
+                             "      var x = 10; \n" +
+                             "      var y = 20; // another script comment \n" +
+                             "      function add(a, b) { return a + b; }\n" +
+                             "    </script>\n\n" +
+                             "  </body>\n" +
+                             "</html>";
         Files.write(htmlFile, htmlContent.getBytes());
 
         Path cssFile = outputDir.resolve("style.css");
@@ -188,7 +215,7 @@ class MinifyCompressTest {
         // Verify content of the processed (GZIPed) files
         String decompressedHtml = readGzipFile(processedHtmlFile);
         assertTrue(decompressedHtml.length() <= htmlContent.length(), "Minified content should generally be smaller or equal.");
-        assertTrue(decompressedHtml.contains("<h1>Test</h1>"), "Essential HTML content should remain.");
+        assertTrue(decompressedHtml.contains("<h1>Hello World Of HTML</h1>"), "H1 content should be present and match expected."); // Standardized H1 content
 
         String decompressedCss = readGzipFile(processedCssFile);
         assertEquals("body{color:blue}", decompressedCss.replaceAll("\\s", ""), "CSS content should be minified.");
