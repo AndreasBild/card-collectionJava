@@ -2,7 +2,7 @@ package de.maulmann;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
+// import org.junit.jupiter.api.Disabled; // Removed as it's no longer used
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -91,7 +91,10 @@ class MinifyCompressTest {
         // A more robust check would involve an HTML parser or comparing against expected minified output
         assertTrue(minifiedContent.length() <= htmlContent.length(), "Minified content should be smaller or equal.");
         // The following assertion for "\n  " has been removed as per the subtask.
+        assertTrue(minifiedContent.contains("<title>Test Page Title</title>"), "Title should remain."); // Added assertion for title
         assertTrue(minifiedContent.contains("<h1>Hello World Of HTML</h1>")); // Adjusted to match new content
+        assertTrue(minifiedContent.contains("// Script comment"), "JS comments should be preserved by Jsoup.");
+        assertTrue(minifiedContent.contains("font-family: Arial, sans-serif;") || minifiedContent.contains("font-family:Arial,sans-serif;"), "CSS rule should be present; Jsoup may not deeply minify content within the rule itself.");
     }
 
     @Test
@@ -130,7 +133,7 @@ class MinifyCompressTest {
     }
 
     @Test
-    @Disabled("Skipping test: Cannot modify static final pathSource field in MinifyCompress.java via reflection.")
+    // @Disabled annotation removed from this method
     void testMain() throws IOException {
         // Create dummy HTML and CSS files in the temporary output/ directory
         Path htmlFile = outputDir.resolve("index.html");

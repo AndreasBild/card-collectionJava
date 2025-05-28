@@ -6,7 +6,7 @@ import java.util.Objects;
 
 
 public class MinifyCompress {
-    private static final String pathSource = "../card-CollectionJava/output";
+    private static String pathSource = "../card-CollectionJava/output";
 
     public static void main(String[] args) {
         File directory = new File(pathSource);

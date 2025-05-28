@@ -15,10 +15,10 @@ public class FileGenerator {
 
 
     // constants: base paths for input and output
-    private static final String pathSource = "../card-CollectionJava/content/";
-    private static final String pathOutput = "../card-CollectionJava/output/";
-    private static final String generatedFileLocation = pathOutput + "index.html";
-    private static final String[] nameOfInputFile = getFileNamesFromDirectory();
+    private static String pathSource = "../card-CollectionJava/content/";
+    private static String pathOutput = "../card-CollectionJava/output/";
+    private static String generatedFileLocation = pathOutput + "index.html";
+    private static String[] nameOfInputFile = getFileNamesFromDirectory();
 
     private static final Logger logger = LoggerFactory.getLogger(FileGenerator.class);
 
