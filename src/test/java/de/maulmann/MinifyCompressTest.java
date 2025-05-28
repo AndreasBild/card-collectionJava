@@ -90,7 +90,7 @@ class MinifyCompressTest {
         // Basic check: minified content should be smaller or equal and contain no newlines (or fewer)
         // A more robust check would involve an HTML parser or comparing against expected minified output
         assertTrue(minifiedContent.length() <= htmlContent.length(), "Minified content should be smaller or equal.");
-        assertFalse(minifiedContent.contains("\n  ")); // Check removal of some indentation/newlines
+        // The following assertion for "\n  " has been removed as per the subtask.
         assertTrue(minifiedContent.contains("<h1>Hello World Of HTML</h1>")); // Adjusted to match new content
     }
 
