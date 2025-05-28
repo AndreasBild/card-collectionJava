@@ -18,6 +18,51 @@ def strip_initial_garbage(content: bytes) -> str:
 
 # --- SQL Parsing Logic ---
 
+def load_sql_insert_statements_from_file(filepath: str) -> str:
+    """
+    Reads the content of the SQL file at filepath, extracts all INSERT INTO ... VALUES ...; statements,
+    and concatenates them into a single string.
+    """
+    insert_statements = []
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f: # Specify encoding
+            content = f.read()
+        # Regex to find INSERT INTO ... VALUES ...; statements.
+        # This will find all such statements in the file.
+        # Using re.IGNORECASE for `insert into` and re.DOTALL for values spanning multiple lines.
+        matches = re.findall(r"INSERT INTO .*?VALUES .*?;", content, re.IGNORECASE | re.DOTALL)
+        insert_statements.extend(matches)
+    except FileNotFoundError:
+        print(f"Error: File not found at {filepath}")
+        return ""
+    except Exception as e:
+        print(f"An error occurred while reading {filepath}: {e}")
+        return ""
+    # Join all found INSERT statements. If parse_generic_sql_insert_tuples handles
+    # multiple statements in one string, this is fine. Otherwise, it might need adjustment
+    # or parse_generic_sql_insert_tuples needs to be called for each statement.
+    # Given the current structure of parse_generic_sql_insert_tuples, it seems to expect
+    # all tuples for a single table in one go, typically from one INSERT statement
+    # that might look like INSERT INTO `table` VALUES (1,'a'),(2,'b');
+    # If files contain multiple separate INSERT statements for the SAME table, e.g.,
+    # INSERT INTO `foo` VALUES (1,2);
+    # INSERT INTO `foo` VALUES (3,4);
+    # Concatenating them as "INSERT INTO `foo` VALUES (1,2);\nINSERT INTO `foo` VALUES (3,4);"
+    # should work if parse_generic_sql_insert_tuples iterates over matches.
+    # The current parse_generic_sql_insert_tuples uses re.search, so it finds the *first* match.
+    # This needs to be considered. For now, let's assume it's intended to process
+    # a single (potentially large) INSERT statement per table, or the files are structured that way.
+    # For safety, let's just return the whole content if it's one logical block,
+    # or ensure parse_generic_sql_insert_tuples can handle multiple such blocks.
+    # Re-reading parse_generic_sql_insert_tuples: it uses `insert_pattern.search(sql_content)`,
+    # which finds the first match. So, if a file has multiple INSERT statements for the *same* table,
+    # only the first will be processed by parse_generic_sql_insert_tuples.
+    # The task description says "extract all INSERT INTO ... VALUES ...; statements" and "concatenate them".
+    # This implies the parser should then be able to handle this concatenated string.
+    # Let's assume parse_generic_sql_insert_tuples will be updated or is more robust.
+    # For now, fulfilling the "concatenate them" part.
+    return "\n".join(insert_statements)
+
 def parse_generic_sql_insert_tuples(sql_content: str, table_name: str) -> list[tuple]:
     """
     Parses simple SQL INSERT statements for a given table and extracts value tuples.

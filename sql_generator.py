@@ -124,11 +124,29 @@ INSERT INTO `variant` VALUES (1,'Base'),(2,'Refractor'),(3,'Die Cut'),(5,'Gold')
     # Let's assume for this step, structured_data_result IS the high_confidence_cards_list.
     # (This implies that get_structured_card_data() was modified to return just that, or we're taking the first part of a tuple)
 
-    # card_data_processor.get_structured_card_data() now returns only the high-confidence list.
-    high_confidence_cards_list = card_data_processor.get_structured_card_data() 
+    # Define file paths for SQL lookup data
+    import os # Make sure os is imported if not already
+    BASE_SQL_PATH = "src/main/resources/sql/"
+    MANUFACTURER_SQL_FILE = os.path.join(BASE_SQL_PATH, "cardcollection_card_manufacturer.sql")
+    BRAND_SQL_FILE = os.path.join(BASE_SQL_PATH, "cardcollection_card_brand.sql")
+    THEME_SQL_FILE = os.path.join(BASE_SQL_PATH, "cardcollection_card_theme.sql")
+    VARIANT_SQL_FILE = os.path.join(BASE_SQL_PATH, "cardcollection_variant.sql")
+
+    # Initialize lookups in card_data_processor using these file paths
+    print("Initializing lookups in card_data_processor...")
+    card_data_processor.initialize_lookups(
+        MANUFACTURER_SQL_FILE,
+        BRAND_SQL_FILE,
+        THEME_SQL_FILE,
+        VARIANT_SQL_FILE
+    )
+    
+    # Now, call get_structured_card_data, which should use the initialized lookups
+    print("Fetching structured card data after initializing lookups...")
+    high_confidence_cards_list = card_data_processor.get_structured_card_data()
 
     print(f"Received {len(high_confidence_cards_list)} high-confidence card entries for UPDATE.")
-    
+
     sql_update_statements = generate_sql_updates(high_confidence_cards_list)
     
     print(f"\nGenerated {len(sql_update_statements)} SQL UPDATE statements.")

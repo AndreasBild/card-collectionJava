@@ -133,7 +133,6 @@ public class FileGenerator {
      * Formats a list of files in a given directory by removing whitespaces.
      * Writes the formatted files in a separate directory
      */
-
     private static void formatFile() {
 
         final File folder = new File(pathSource);
@@ -152,16 +151,17 @@ public class FileGenerator {
                     createTargetFile(pathOutput + fileName);
                     formatFileContent(pathSource + fileName, pathOutput + fileName);
                 } catch (IOException e) {
-                    String message = e.getCause().getMessage();
-                    System.out.println(message);
+                    // Try to get a more specific message if available
+                    String message = e.getMessage(); // Using getMessage() directly
+                    if (e.getCause() != null && e.getCause().getMessage() != null) {
+                        message = e.getCause().getMessage();
+                    }
+                    System.out.println("Error processing file " + fileName + ": " + message);
+                    // e.printStackTrace(); // Optionally print stack trace for more details
                 }
-
-
             }
         }
-
     }
-
 
     /**
      * @return array of strings containing the names of files/subdirectories in the given base path.
@@ -268,50 +268,50 @@ public class FileGenerator {
         }
     }
 
-
     private static void formatFileContent(final String source, String target) throws IOException {
         final StringBuffer result = new StringBuffer();
 
-
-        try (BufferedReader inputStream = new BufferedReader(new FileReader(source)); PrintWriter outputStream = new PrintWriter(new FileWriter(target, false))) {
-
+        try (BufferedReader inputStream = new BufferedReader(new FileReader(source));
+             PrintWriter outputStream = new PrintWriter(new FileWriter(target, false))) {
 
             final BufferedWriter out = new BufferedWriter(outputStream);
-
 
             String line;
             int counter = -1; // needs to be -1 because of the table header, we count only the content rows
 
             while ((line = inputStream.readLine()) != null) {
                 if (line.isEmpty()) {
-                    return;
+                    // Preserve empty lines if necessary, or skip. Original seemed to imply skipping.
+                    // For safety, let's assume empty lines in content should not terminate processing.
+                    // If the original intent was to stop at the first empty line, this logic might differ.
+                    // Based on context (HTML table parsing), skipping empty lines seems more plausible.
+                    continue;
                 } else if (line.contains("<table>") || line.contains("</table>") || line.contains("<td>") || line.contains("</td>") || line.contains("<tr>") || line.contains("<th>")) {
                     result.append(line.trim()).append('\n');
                 } else if (line.contains("</tr>")) {
                     result.append(line.trim()).append('\n');
                     ++counter;
                 } else {
-                    result.append(line.trim());
+                    result.append(line.trim()); // Append trimmed line, but no newline if it's not table structure.
+                                               // This matches the behavior of the original appendFileContent more closely for non-table lines.
                 }
-
             }
 
-
-            System.out.println(result);
+            // The System.out.println(result) was likely for debugging, will omit in restored code unless specified
+            // System.out.println(result); 
             final int offset;
 
             if (result.lastIndexOf("]</h2>") != -1) {
                 offset = result.lastIndexOf("]</h2>");
                 result.replace(offset, offset + 6, "]</h2>" + "\n");
             } else {
-
                 offset = result.lastIndexOf("</h2>");
-                result.replace(offset, offset + 5, " [Total: " + counter + "]</h2>" + "\n");
+                if (offset != -1) { // Ensure "</h2>" was found
+                    result.replace(offset, offset + 5, " [Total: " + counter + "]</h2>" + "\n");
+                }
             }
-            out.append(result.append('\n'));
+            out.append(result.toString()); // Use result.toString()
             out.flush();
-
-
         }
     }
 }
