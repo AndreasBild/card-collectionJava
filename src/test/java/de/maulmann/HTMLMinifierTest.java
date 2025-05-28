@@ -58,7 +58,7 @@ class HTMLMinifierTest {
         assertTrue(minifiedContent.length() <= htmlContent.length(), "Minified content should be smaller or equal in size for this input.");
         assertFalse(minifiedContent.contains("<!-- This is a comment -->"), "HTML comments should be removed.");
         // The following assertion for "\n  " has been removed as per the subtask.
-        assertTrue(minifiedContent.contains("<title>Test Page</title>"), "Title should remain.");
+        assertTrue(minifiedContent.contains("<title>Test Page Title</title>"), "Title should remain."); // Corrected expected title
         assertTrue(minifiedContent.contains("<h1>Hello World</h1>"), "Content should largely remain, comments within tags might be handled differently by minifiers.");
         assertTrue(minifiedContent.contains("<p>This is a paragraph with extra spaces.</p>"), "Spaces within tags are often collapsed.");
         // Check if style and script tags are present, their content minification is more complex
