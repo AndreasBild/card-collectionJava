@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,8 +16,8 @@ public class FileGenerator {
 
 
     // constants: base paths for input and output
-    private static String pathSource = "../card-CollectionJava/content/";
-    private static String pathOutput = "../card-CollectionJava/output/";
+    private static String pathSource = "content/";
+    private static String pathOutput = "output/";
     private static String generatedFileLocation = pathOutput + "index.html";
     private static String[] nameOfInputFile = getFileNamesFromDirectory();
 
@@ -64,22 +65,35 @@ public class FileGenerator {
                           <meta charset="UTF-8">
                           <meta http-equiv="X-UA-Compatible" content="IE=edge">
                           <meta name="theme-color" content="#317EFB">
-                          <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-                          <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-                          <link rel="icon" type="image/png" sizes="194x194" href="/favicon-194x194.png">
-                          <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
-                          <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-                          <link rel="manifest" href="/site.webmanifest">
-                          <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#317EFB">
+                          <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+                          <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+                          <link rel="icon" type="image/png" sizes="194x194" href="/favicon/favicon-194x194.png">
+                          <link rel="icon" type="image/png" sizes="192x192" href="/favicon/android-chrome-192x192.png">
+                          <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+                          <link rel="manifest" href="/manifest.json">
+                          <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#317EFB">
                           <meta name="apple-mobile-web-app-title" content="Maulmann.de">
                           <meta name="application-name" content="Maulmann.de">
                           <meta name="msapplication-TileColor" content="#317EFB">
-                          <link href="/favicon.ico" rel="icon"  sizes="32x32">
-                          <link href="/apple-touch-icon.png" rel="apple-touch-icon">
+                          <link href="/favicon/favicon.ico" rel="icon"  sizes="32x32">
+                          <link href="/favicon/apple-touch-icon.png" rel="apple-touch-icon">
                           <meta name="description" content="Private Collection of Juwan Howard Basketball Trading Cards. Containing many 1/1 and rare Trading Cards from companies like: Panini, Fleer, Topps and Upper Deck. Including Super rare cards like Precious Metal Gems from the 90s">
                           <meta name="viewport" content="width=device-width, initial-scale=1">
-                          <link href="../css/main.css" rel="stylesheet" type="text/css">
+                          <link href="css/main.css" rel="stylesheet" type="text/css">
                           <meta name="robots" content="index,follow">
+                    <script>
+                      if ('serviceWorker' in navigator) {
+                        window.addEventListener('load', () => {
+                          navigator.serviceWorker.register('/serviceWorker.js')
+                            .then(registration => {
+                              console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                            })
+                            .catch(error => {
+                              console.log('ServiceWorker registration failed: ', error);
+                            });
+                        });
+                      }
+                    </script>
                     </head>
                     <body>
                     <h1 id="top" title='Top of the list'>List of Juwan Howard Basketball Trading Cards</h1>
@@ -221,26 +235,21 @@ public class FileGenerator {
      * @throws IOException, thrown if a file operation did not work out as planned
      */
     private static void addTemplateComponent(String templateBegin, boolean appendAtTheEnd) throws IOException {
-        PrintWriter printWriter = new PrintWriter(new java.io.FileWriter(FileGenerator.generatedFileLocation, appendAtTheEnd));
-
-        final BufferedWriter out = new BufferedWriter(printWriter);
-
-        out.append(templateBegin);
-        if (!appendAtTheEnd) out.append(createAnchorList());
-        out.flush();
-        out.close();
+        try (OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(FileGenerator.generatedFileLocation, appendAtTheEnd), StandardCharsets.UTF_8);
+             BufferedWriter out = new BufferedWriter(osw)) {
+            out.append(templateBegin);
+            if (!appendAtTheEnd) out.append(createAnchorList());
+            out.flush();
+        }
     }
 
     private static int appendFileContent(final String source, final String name, int counterIn) throws IOException {
         final String anchorName = " title='Juwan Howard Trading Cards for Season " + name + "' id='" + name + "'>" + name ;
         final StringBuffer result = new StringBuffer("<h2").append(anchorName).append("</h2>").append('\n').append(tableHead);
 
-
-        try (BufferedReader inputStream = new BufferedReader(new FileReader(source)); PrintWriter outputStream = new PrintWriter(new FileWriter(FileGenerator.generatedFileLocation, true))) {
-
-
-            final BufferedWriter out = new BufferedWriter(outputStream);
-
+        try (BufferedReader inputStream = new BufferedReader(new InputStreamReader(new FileInputStream(source), StandardCharsets.UTF_8));
+             OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(FileGenerator.generatedFileLocation, true), StandardCharsets.UTF_8);
+             BufferedWriter out = new BufferedWriter(osw)) {
 
             String line;
             int counterAll = counterIn; // keep track of all rows
@@ -276,10 +285,9 @@ public class FileGenerator {
     private static void formatFileContent(final String source, String target) throws IOException {
         final StringBuffer result = new StringBuffer();
 
-        try (BufferedReader inputStream = new BufferedReader(new FileReader(source));
-             PrintWriter outputStream = new PrintWriter(new FileWriter(target, false))) {
-
-            final BufferedWriter out = new BufferedWriter(outputStream);
+        try (BufferedReader inputStream = new BufferedReader(new InputStreamReader(new FileInputStream(source), StandardCharsets.UTF_8));
+             OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(target, false), StandardCharsets.UTF_8);
+             BufferedWriter out = new BufferedWriter(osw)) {
 
             String line;
             int counter = -1; // needs to be -1 because of the table header, we count only the content rows

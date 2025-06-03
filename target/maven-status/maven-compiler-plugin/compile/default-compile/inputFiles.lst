@@ -1,0 +1,7 @@
+/app/src/main/java/de/maulmann/CSSMinifier.java
+/app/src/main/java/de/maulmann/FileGenerator.java
+/app/src/main/java/de/maulmann/GZIPCompressor.java
+/app/src/main/java/de/maulmann/HTMLMinifier.java
+/app/src/main/java/de/maulmann/MinifyCompress.java
+/app/src/main/java/de/maulmann/S3ListFiles.java
+/app/src/main/java/de/maulmann/S3UploadFiles.java
