@@ -79,7 +79,7 @@ public class FileGenerator {
                           <link href="/favicon/apple-touch-icon.png" rel="apple-touch-icon">
                           <meta name="description" content="Private Collection of Juwan Howard Basketball Trading Cards. Containing many 1/1 and rare Trading Cards from companies like: Panini, Fleer, Topps and Upper Deck. Including Super rare cards like Precious Metal Gems from the 90s">
                           <meta name="viewport" content="width=device-width, initial-scale=1">
-                          <link href="css/main.css" rel="stylesheet" type="text/css">
+                          <link href="/css/main.css" rel="stylesheet" type="text/css">
                           <meta name="robots" content="index,follow">
                     <script>
                       if ('serviceWorker' in navigator) {
