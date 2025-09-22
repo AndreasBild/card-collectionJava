@@ -81,7 +81,7 @@ public class FileGenerator {
                           <meta name="viewport" content="width=device-width, initial-scale=1">
                           <link href="/css/main.css" rel="stylesheet" type="text/css">
                           <meta name="robots" content="index,follow">
-                          <meta name="robots" content="max-snippet:-1, max-image-preview:large">                 
+                          <meta name="robots" content="max-snippet:-1, max-image-preview:large">
                     <script>
                       if ('serviceWorker' in navigator) {
                         window.addEventListener('load', () => {
@@ -100,7 +100,7 @@ public class FileGenerator {
                     <h1 id="top" title='Top of the list'>List of Juwan Howard Basketball Trading Cards</h1>
                      <p>This page contains my Private Collection of all Juwan Howard Basketball Trading Cards i own. 
                      Including many 1/1 and rare Basketball Trading Cards from companies like: Panini, 
-                     Fleer, Topps, Leaf and Upper Deck. Including super rare cards like Fleer Precious Metal Gems from the 90's <p>
+                     Fleer, Topps, Leaf and Upper Deck. Including super rare cards like Fleer Precious Metal Gems from the 90's </p>
                     """;
 
     private static final String tableHead = "<table>";
