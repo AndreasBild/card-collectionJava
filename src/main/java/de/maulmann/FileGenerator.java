@@ -98,6 +98,9 @@ public class FileGenerator {
                     </head>
                     <body>
                     <h1 id="top" title='Top of the list'>List of Juwan Howard Basketball Trading Cards</h1>
+                     <p>This page contains my Private Collection of all Juwan Howard Basketball Trading Cards i own. 
+                     Including many 1/1 and rare Basketball Trading Cards from companies like: Panini, 
+                     Fleer, Topps, Leaf and Upper Deck. Including super rare cards like Fleer Precious Metal Gems from the 90's <p>
                     """;
 
     private static final String tableHead = "<table>";
