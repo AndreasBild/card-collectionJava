@@ -53,7 +53,9 @@ public class FileGenerator {
                     <!DOCTYPE html>
                     <html lang="en">
                     <head>
-                    <script async src="https://www.googletagmanager.com/gtag/js?id=G-535TKYRZTR"></script>
+                        <title>Juwan Howard Basketball Trading Card Collection</title>
+                        <meta charset="UTF-8">
+                        <script async src="https://www.googletagmanager.com/gtag/js?id=G-535TKYRZTR"></script>
                                     <script>
                                       window.dataLayer = window.dataLayer || [];
                                       function gtag(){dataLayer.push(arguments);}
@@ -61,10 +63,11 @@ public class FileGenerator {
                                       gtag('config', 'G-535TKYRZTR');
                                     </script>
                           <meta name="google-site-verification" content="Ev1ZxTPJs2GMFNQ6FyItlCYAKUWscL3jDFS_mVXH6IQ">
-                          <title>Juwan Howard Basketball Trading Card Collection</title>
-                          <meta charset="UTF-8">
+                          <link href="/css/main.css" rel="stylesheet" type="text/css">
                           <meta http-equiv="X-UA-Compatible" content="IE=edge">
                           <meta name="theme-color" content="#317EFB">
+                          <link href="/favicon/favicon.ico" rel="icon"  sizes="32x32">
+                          <link href="/favicon/apple-touch-icon.png" rel="apple-touch-icon">
                           <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
                           <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
                           <link rel="icon" type="image/png" sizes="194x194" href="/favicon/favicon-194x194.png">
@@ -75,11 +78,9 @@ public class FileGenerator {
                           <meta name="apple-mobile-web-app-title" content="Maulmann.de">
                           <meta name="application-name" content="Maulmann.de">
                           <meta name="msapplication-TileColor" content="#317EFB">
-                          <link href="/favicon/favicon.ico" rel="icon"  sizes="32x32">
-                          <link href="/favicon/apple-touch-icon.png" rel="apple-touch-icon">
+                          <link rel=“canonical“ href=”https://www.maulmann.de/”>
                           <meta name="description" content="Private Collection of Juwan Howard Basketball Trading Cards. Containing many 1/1 and rare Trading Cards from companies like: Panini, Fleer, Topps and Upper Deck. Including Super rare cards like Precious Metal Gems from the 90s">
                           <meta name="viewport" content="width=device-width, initial-scale=1">
-                          <link href="/css/main.css" rel="stylesheet" type="text/css">
                           <meta name="robots" content="index,follow">
                           <meta name="robots" content="max-snippet:-1, max-image-preview:large">
                           <link rel="canonical" href="https://www.maulmann.de/"/>
