@@ -81,7 +81,9 @@ public class FileGenerator {
                           <meta name="viewport" content="width=device-width, initial-scale=1">
                           <link href="/css/main.css" rel="stylesheet" type="text/css">
                           <meta name="robots" content="index,follow">
-                          <meta name="robots" content="max-snippet:-1, max-image-preview:large">                 
+                          <meta name="robots" content="max-snippet:-1, max-image-preview:large">
+                          <link rel="canonical" href="https://www.maulmann.de/"/>
+              
                     <script>
                       if ('serviceWorker' in navigator) {
                         window.addEventListener('load', () => {
