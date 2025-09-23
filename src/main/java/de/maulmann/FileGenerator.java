@@ -80,6 +80,8 @@ public class FileGenerator {
                           <meta name="msapplication-TileColor" content="#317EFB">
                           <link rel=“canonical“ href=”https://www.maulmann.de/”>
                           <meta name="description" content="Private Collection of Juwan Howard Basketball Trading Cards. Containing many 1/1 and rare Trading Cards from companies like: Panini, Fleer, Topps and Upper Deck. Including Super rare cards like Precious Metal Gems from the 90s">
+                          <meta name="author" content="Mauli Maulmann - Content Creator">
+                          <meta name="publisher" content="Mauli Maulmann - Card Collector">
                           <meta name="viewport" content="width=device-width, initial-scale=1">
                           <meta name="robots" content="index,follow">
                           <meta name="robots" content="max-snippet:-1, max-image-preview:large">
