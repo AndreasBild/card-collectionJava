@@ -11,11 +11,10 @@ import software.amazon.awssdk.core.sync.RequestBody;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class S3UploadFiles {
-    private static final String pathOutput = "../card-CollectionJava/output/";
-    private static final String generatedFileLocation = pathOutput + "index.html";
-    private static final File file = new File(generatedFileLocation);
+    private static final String pathSource = "../card-CollectionJava/output";
     // Specify the bucket name
     private static final String bucketName = "maulmann.de";
 
@@ -23,44 +22,55 @@ public class S3UploadFiles {
         // Define the AWS region where your bucket is located
         Region region = Region.EU_CENTRAL_1;
 
-
         // Create S3 client using credentials from the specified profile (JavaSDKUser)
         S3Client s3Client = S3Client.builder()
                 .region(region)
                 .credentialsProvider(ProfileCredentialsProvider.create("JavaSDKUser"))
                 .build();
 
+        File directory = new File(pathSource);
 
-        // List objects in the specified bucket
-        uploadFile(s3Client);
+        for (File file : Objects.<File[]>requireNonNull(directory.listFiles())) {
+            if (file.isFile()) {
+                try {
+                    if (file.getName().endsWith(".html")) {
+                        uploadFile(s3Client,file, "text/html");
 
-        // Close the S3 client
-        s3Client.close();
+                    } else if (file.getName().endsWith(".css")) {
+                        uploadFile(s3Client,file, "text/css");
+
+                    } else {
+                        System.err.println("Failed to decide on filetype: " + file.getAbsolutePath());
+                    }
+                } catch (Exception e) {
+                    e.getCause().printStackTrace();
+                }
+            }
+        }
     }
 
 
-    private static void uploadFile(S3Client s3Client) {
+    private static void uploadFile(S3Client s3Client, File file, String fileType) {
         try {
             // Custom metadata using a Map
             final Map<String, String> customMetadata = new HashMap<>();
-            customMetadata.put("Content-Type", "text/html");  // setting content-type
-            customMetadata.put("Content-Encoding", "gzip");  // setting content-encoding
-            customMetadata.put("Content-Language", "en-US");  // setting content-language
-
+            customMetadata.put("Content-Type", fileType);
+            customMetadata.put("Content-Encoding", "gzip");
+            customMetadata.put("Content-Language", "en-US");
 
             // Create a PutObjectRequest with the bucket name, key (file name), file, and metadata
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                     .bucket(S3UploadFiles.bucketName)
-                    .key(S3UploadFiles.file.getName())  // You can modify this to include a folder structure in the bucket
+                    .key(file.getName())  // You can modify this to include a folder structure in the bucket
                     .contentEncoding(customMetadata.get("Content-Encoding"))
                     .contentType(customMetadata.get("Content-Type"))
                     .contentLanguage(customMetadata.get("Content-Language"))
                     .build();
 
             // Upload the file to S3 with metadata
-            PutObjectResponse response = s3Client.putObject(putObjectRequest, RequestBody.fromFile(S3UploadFiles.file));
+            PutObjectResponse response = s3Client.putObject(putObjectRequest, RequestBody.fromFile(file));
 
-            System.out.println("Successfully uploaded: " + S3UploadFiles.file.getName() + " with ETag: " + response.eTag());
+            System.out.println("Successfully uploaded: " + file.getName() + " with ETag: " + response.eTag());
 
         } catch (S3Exception e) {
             e.printStackTrace();
