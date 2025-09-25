@@ -52,7 +52,12 @@ a {
 
 .s {
     font-size: 12px;
+    text-decoration: none;
 }
+.s:hover {
+    background-color: #77df14;
+}
+
 
 
 .actions-list {
@@ -85,7 +90,7 @@ a {
     transition: background-color 0.2s ease-in-out,
     transform 0.1s ease-in-out,
     box-shadow 0.2s ease-in-out;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)
 }
 
 .modern-button:hover:not(.is-disabled) {

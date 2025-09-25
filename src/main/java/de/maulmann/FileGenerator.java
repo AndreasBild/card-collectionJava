@@ -16,8 +16,8 @@ public class FileGenerator {
 
 
     // constants: base paths for input and output
-    private static String pathSource = "content/";
-    private static String pathOutput = "output/";
+    private static final String pathSource = "content/";
+    private static final String pathOutput = "output/";
     private static String generatedFileLocation = pathOutput + "index.html";
     private static String[] nameOfInputFile = getFileNamesFromDirectory();
 
@@ -110,8 +110,8 @@ public class FileGenerator {
                     </head>
                     <body>
                     <h1 id="top" title='Top of the list'>List of Juwan Howard Basketball Trading Cards</h1>
-                     <p>This page contains my Private Collection of all Juwan Howard Basketball Trading Cards i own. 
-                     Including many 1/1 and rare Basketball Trading Cards from companies like: Panini, 
+                     <p>This page contains my Private Collection of all Juwan Howard Basketball Trading Cards i own.
+                     Including many 1/1 and rare Basketball Trading Cards from companies like: Panini,
                      Fleer, Topps, Leaf and Upper Deck. Including super rare cards like Fleer Precious Metal Gems from the 90's <p>
                     """;
 
@@ -123,7 +123,7 @@ public class FileGenerator {
 
         // These lines ensure that generatedFileLocation and nameOfInputFile are updated
         // if pathSource or pathOutput were changed (e.g., by tests).
-        generatedFileLocation = pathOutput + "index.html";
+        generatedFileLocation = "output/index.html";
         nameOfInputFile = getFileNamesFromDirectory();
 
         //formatFile();
@@ -299,7 +299,7 @@ public class FileGenerator {
     }
 
     private static void formatFileContent(final String source, String target) throws IOException {
-        final StringBuffer result = new StringBuffer();
+        final StringBuilder result = new StringBuilder();
 
         try (BufferedReader inputStream = new BufferedReader(new InputStreamReader(new FileInputStream(source), StandardCharsets.UTF_8));
              OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(target, false), StandardCharsets.UTF_8);
