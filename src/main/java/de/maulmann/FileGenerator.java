@@ -47,6 +47,13 @@ public class FileGenerator {
                 <a href=Panini.html title="2012-13 Panini Flawless Basketball" class="modern-button">
                 2012-13 Panini Flawless Basketball</a></li>
                 </ul>
+                <p>
+                    <a class="plain" href="https://jigsaw.w3.org/css-validator/check/referer" title="CSS Validation Label">
+                        <img style="border:0;width:88px;height:31px"
+                             src="https://jigsaw.w3.org/css-validator/images/vcss"
+                             alt="Valid CSS!" />
+                    </a>
+                </p>
             """;
     private static final String templateBegin =
             """
@@ -109,7 +116,7 @@ public class FileGenerator {
                     """;
 
     private static final String tableHead = "<table>";
-    private static final String templateEnd = footer + "List Created: " + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()) + "</body></html>";
+    private static final String templateEnd = footer + "<p>List Created: " + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()) + "</p></body></html>";
 
 
     public static void main(String[] args) throws IOException {
