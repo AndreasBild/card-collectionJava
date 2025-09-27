@@ -55,6 +55,53 @@ public class FileGenerator {
                     </a>
                 </p>
             """;
+
+    private static final String faqSection = """
+            <h2 title="Frequently Asked Questions">Frequently Asked Questions</h2>
+            <details>
+            <summary>What is the focus of this collection?</summary>
+            <p>This collection is focused on Juwan Howard basketball trading cards, spanning his entire career from college to the NBA. It includes a wide variety of cards, from base sets to rare inserts, parallels, and autographed cards.</p>
+            </details>
+            <details>
+            <summary>Are any of the cards for sale?</summary>
+            <p>Currently, the cards listed on this site are part of a private collection and are not for sale. The purpose of this page is to showcase the collection to fellow enthusiasts.</p>
+            </details>
+            <details>
+            <summary>How often is the collection updated?</summary>
+            <p>The collection is updated regularly as new cards are acquired. Check back often to see the latest additions!</p>
+            </details>
+            """;
+
+    private static final String faqJsonLd = """
+            <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "mainEntity": [{
+                "@type": "Question",
+                "name": "What is the focus of this collection?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "This collection is focused on Juwan Howard basketball trading cards, spanning his entire career from college to the NBA. It includes a wide variety of cards, from base sets to rare inserts, parallels, and autographed cards."
+                }
+              },{
+                "@type": "Question",
+                "name": "Are any of the cards for sale?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Currently, the cards listed on this site are part of a private collection and are not for sale. The purpose of this page is to showcase the collection to fellow enthusiasts."
+                }
+              },{
+                "@type": "Question",
+                "name": "How often is the collection updated?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "The collection is updated regularly as new cards are acquired. Check back often to see the latest additions!"
+                }
+              }]
+            }
+            </script>
+            """;
     private static final String templateBegin =
             """
                     <!DOCTYPE html>
@@ -93,6 +140,7 @@ public class FileGenerator {
                           <meta name="robots" content="index,follow">
                           <meta name="robots" content="max-snippet:-1, max-image-preview:large">
                           <link rel="canonical" href="https://www.maulmann.de/"/>
+                          """ + faqJsonLd + """
               
                     <script>
                       if ('serviceWorker' in navigator) {
@@ -116,7 +164,7 @@ public class FileGenerator {
                     """;
 
     private static final String tableHead = "<table>";
-    private static final String templateEnd = footer + "<p>List Created: " + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()) + "</p></body></html>";
+    private static final String templateEnd = faqSection + footer + "<p>List Created: " + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()) + "</p></body></html>";
 
 
     public static void main(String[] args) throws IOException {
