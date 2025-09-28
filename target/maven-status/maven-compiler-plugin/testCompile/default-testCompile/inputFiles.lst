@@ -1,0 +1,5 @@
+/app/src/test/java/de/maulmann/CSSMinifierTest.java
+/app/src/test/java/de/maulmann/FileGeneratorTest.java
+/app/src/test/java/de/maulmann/GZIPCompressorTest.java
+/app/src/test/java/de/maulmann/HTMLMinifierTest.java
+/app/src/test/java/de/maulmann/MinifyCompressTest.java

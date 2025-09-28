@@ -16,8 +16,8 @@ public class FileGenerator {
 
 
     // constants: base paths for input and output
-    private static final String pathSource = "content/";
-    private static final String pathOutput = "output/";
+    private static String pathSource = "content/";
+    private static String pathOutput = "output/";
     private static String generatedFileLocation = pathOutput + "index.html";
     private static String[] nameOfInputFile = getFileNamesFromDirectory();
 

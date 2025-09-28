@@ -1,0 +1,75 @@
+-------------------------------------------------------------------------------
+Test set: de.maulmann.FileGeneratorTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 0, Errors: 4, Skipped: 0, Time elapsed: 0.148 s <<< FAILURE! -- in de.maulmann.FileGeneratorTest
+de.maulmann.FileGeneratorTest.testFormatFileContent -- Time elapsed: 0.123 s <<< ERROR!
+java.lang.IllegalAccessException: Can not set static final java.lang.String field de.maulmann.FileGenerator.pathSource to java.lang.String
+	at java.base/jdk.internal.reflect.FieldAccessorImpl.throwFinalFieldIllegalAccessException(FieldAccessorImpl.java:137)
+	at java.base/jdk.internal.reflect.FieldAccessorImpl.throwFinalFieldIllegalAccessException(FieldAccessorImpl.java:141)
+	at java.base/jdk.internal.reflect.MethodHandleObjectFieldAccessorImpl.set(MethodHandleObjectFieldAccessorImpl.java:103)
+	at java.base/java.lang.reflect.Field.set(Field.java:836)
+	at de.maulmann.FileGeneratorTest.setUp(FileGeneratorTest.java:48)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	Suppressed: java.lang.IllegalAccessException: Can not set static final java.lang.String field de.maulmann.FileGenerator.pathSource to java.lang.String
+		at java.base/jdk.internal.reflect.FieldAccessorImpl.throwFinalFieldIllegalAccessException(FieldAccessorImpl.java:137)
+		at java.base/jdk.internal.reflect.FieldAccessorImpl.throwFinalFieldIllegalAccessException(FieldAccessorImpl.java:141)
+		at java.base/jdk.internal.reflect.MethodHandleObjectFieldAccessorImpl.set(MethodHandleObjectFieldAccessorImpl.java:103)
+		at java.base/java.lang.reflect.Field.set(Field.java:836)
+		at de.maulmann.FileGeneratorTest.tearDown(FileGeneratorTest.java:73)
+		... 3 more
+
+de.maulmann.FileGeneratorTest.testAppendFileContent -- Time elapsed: 0.006 s <<< ERROR!
+java.lang.IllegalAccessException: Can not set static final java.lang.String field de.maulmann.FileGenerator.pathSource to java.lang.String
+	at java.base/jdk.internal.reflect.FieldAccessorImpl.throwFinalFieldIllegalAccessException(FieldAccessorImpl.java:137)
+	at java.base/jdk.internal.reflect.FieldAccessorImpl.throwFinalFieldIllegalAccessException(FieldAccessorImpl.java:141)
+	at java.base/jdk.internal.reflect.MethodHandleObjectFieldAccessorImpl.set(MethodHandleObjectFieldAccessorImpl.java:103)
+	at java.base/java.lang.reflect.Field.set(Field.java:836)
+	at de.maulmann.FileGeneratorTest.setUp(FileGeneratorTest.java:48)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	Suppressed: java.lang.IllegalAccessException: Can not set static final java.lang.String field de.maulmann.FileGenerator.pathSource to java.lang.String
+		at java.base/jdk.internal.reflect.FieldAccessorImpl.throwFinalFieldIllegalAccessException(FieldAccessorImpl.java:137)
+		at java.base/jdk.internal.reflect.FieldAccessorImpl.throwFinalFieldIllegalAccessException(FieldAccessorImpl.java:141)
+		at java.base/jdk.internal.reflect.MethodHandleObjectFieldAccessorImpl.set(MethodHandleObjectFieldAccessorImpl.java:103)
+		at java.base/java.lang.reflect.Field.set(Field.java:836)
+		at de.maulmann.FileGeneratorTest.tearDown(FileGeneratorTest.java:73)
+		... 3 more
+
+de.maulmann.FileGeneratorTest.testMain -- Time elapsed: 0.005 s <<< ERROR!
+java.lang.IllegalAccessException: Can not set static final java.lang.String field de.maulmann.FileGenerator.pathSource to java.lang.String
+	at java.base/jdk.internal.reflect.FieldAccessorImpl.throwFinalFieldIllegalAccessException(FieldAccessorImpl.java:137)
+	at java.base/jdk.internal.reflect.FieldAccessorImpl.throwFinalFieldIllegalAccessException(FieldAccessorImpl.java:141)
+	at java.base/jdk.internal.reflect.MethodHandleObjectFieldAccessorImpl.set(MethodHandleObjectFieldAccessorImpl.java:103)
+	at java.base/java.lang.reflect.Field.set(Field.java:836)
+	at de.maulmann.FileGeneratorTest.setUp(FileGeneratorTest.java:48)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	Suppressed: java.lang.IllegalAccessException: Can not set static final java.lang.String field de.maulmann.FileGenerator.pathSource to java.lang.String
+		at java.base/jdk.internal.reflect.FieldAccessorImpl.throwFinalFieldIllegalAccessException(FieldAccessorImpl.java:137)
+		at java.base/jdk.internal.reflect.FieldAccessorImpl.throwFinalFieldIllegalAccessException(FieldAccessorImpl.java:141)
+		at java.base/jdk.internal.reflect.MethodHandleObjectFieldAccessorImpl.set(MethodHandleObjectFieldAccessorImpl.java:103)
+		at java.base/java.lang.reflect.Field.set(Field.java:836)
+		at de.maulmann.FileGeneratorTest.tearDown(FileGeneratorTest.java:73)
+		... 3 more
+
+de.maulmann.FileGeneratorTest.testCreateAnchorList -- Time elapsed: 0.005 s <<< ERROR!
+java.lang.IllegalAccessException: Can not set static final java.lang.String field de.maulmann.FileGenerator.pathSource to java.lang.String
+	at java.base/jdk.internal.reflect.FieldAccessorImpl.throwFinalFieldIllegalAccessException(FieldAccessorImpl.java:137)
+	at java.base/jdk.internal.reflect.FieldAccessorImpl.throwFinalFieldIllegalAccessException(FieldAccessorImpl.java:141)
+	at java.base/jdk.internal.reflect.MethodHandleObjectFieldAccessorImpl.set(MethodHandleObjectFieldAccessorImpl.java:103)
+	at java.base/java.lang.reflect.Field.set(Field.java:836)
+	at de.maulmann.FileGeneratorTest.setUp(FileGeneratorTest.java:48)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	Suppressed: java.lang.IllegalAccessException: Can not set static final java.lang.String field de.maulmann.FileGenerator.pathSource to java.lang.String
+		at java.base/jdk.internal.reflect.FieldAccessorImpl.throwFinalFieldIllegalAccessException(FieldAccessorImpl.java:137)
+		at java.base/jdk.internal.reflect.FieldAccessorImpl.throwFinalFieldIllegalAccessException(FieldAccessorImpl.java:141)
+		at java.base/jdk.internal.reflect.MethodHandleObjectFieldAccessorImpl.set(MethodHandleObjectFieldAccessorImpl.java:103)
+		at java.base/java.lang.reflect.Field.set(Field.java:836)
+		at de.maulmann.FileGeneratorTest.tearDown(FileGeneratorTest.java:73)
+		... 3 more
