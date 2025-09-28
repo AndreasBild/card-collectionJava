@@ -1,4 +1,5 @@
 /app/src/main/java/de/maulmann/CSSMinifier.java
+/app/src/main/java/de/maulmann/CloudFrontInvalidator.java
 /app/src/main/java/de/maulmann/FileGenerator.java
 /app/src/main/java/de/maulmann/GZIPCompressor.java
 /app/src/main/java/de/maulmann/HTMLMinifier.java

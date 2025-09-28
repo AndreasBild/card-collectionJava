@@ -1,6 +1,5 @@
 package de.maulmann;
 
-import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
@@ -22,10 +21,9 @@ public class S3UploadFiles {
         // Define the AWS region where your bucket is located
         Region region = Region.EU_CENTRAL_1;
 
-        // Create S3 client using credentials from the specified profile (JavaSDKUser)
+        // Create S3 client using the default credential provider chain
         S3Client s3Client = S3Client.builder()
                 .region(region)
-                .credentialsProvider(ProfileCredentialsProvider.create("JavaSDKUser"))
                 .build();
 
         File directory = new File(pathSource);
@@ -47,6 +45,9 @@ public class S3UploadFiles {
                 }
             }
         }
+
+        CloudFrontInvalidator invalidator = new CloudFrontInvalidator();
+        invalidator.invalidate();
     }
 
 
