@@ -4,6 +4,7 @@ de/maulmann/MinifyCompress.class
 de/maulmann/FileGenerator$1.class
 de/maulmann/CSSMinifier.class
 de/maulmann/S3ListFiles.class
+de/maulmann/CloudFrontInvalidator.class
 de/maulmann/S3UploadFiles.class
 de/maulmann/HTMLMinifier.class
 de/maulmann/GZIPCompressor$1.class
