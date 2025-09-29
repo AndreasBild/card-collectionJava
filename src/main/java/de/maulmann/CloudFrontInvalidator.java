@@ -8,39 +8,60 @@ import software.amazon.awssdk.services.cloudfront.model.CreateInvalidationReques
 import software.amazon.awssdk.services.cloudfront.model.InvalidationBatch;
 import software.amazon.awssdk.services.cloudfront.model.Paths;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 import java.util.UUID;
 
 public class CloudFrontInvalidator {
 
     private static final Logger logger = LoggerFactory.getLogger(CloudFrontInvalidator.class);
-    private static final String DISTRIBUTION_ID = "E2R4RQKEX6C6Y6";
+
+    private String getDistributionId() throws IOException {
+        Properties prop = new Properties();
+        try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
+            if (input == null) {
+                logger.error("Sorry, unable to find config.properties");
+                throw new IOException("config.properties not found in classpath");
+            }
+            prop.load(input);
+            return prop.getProperty("cloudfront.distribution.id");
+        }
+    }
 
     public void invalidate() {
-        logger.info("Starting CloudFront invalidation for distribution ID: {}", DISTRIBUTION_ID);
+        try {
+            String distributionId = getDistributionId();
+            if (distributionId == null || distributionId.isEmpty()) {
+                logger.error("CloudFront Distribution ID is not set in config.properties");
+                return;
+            }
+            logger.info("Starting CloudFront invalidation for distribution ID: {}", distributionId);
 
-        try (CloudFrontClient cloudFrontClient = CloudFrontClient.builder()
-                .region(Region.AWS_GLOBAL)
-                .build()) {
+            try (CloudFrontClient cloudFrontClient = CloudFrontClient.builder()
+                    .region(Region.AWS_GLOBAL)
+                    .build()) {
 
-            Paths invalidationPaths = Paths.builder()
-                    .items("/*")
-                    .quantity(1)
-                    .build();
+                Paths invalidationPaths = Paths.builder()
+                        .items("/*")
+                        .quantity(1)
+                        .build();
 
-            InvalidationBatch invalidationBatch = InvalidationBatch.builder()
-                    .paths(invalidationPaths)
-                    .callerReference(UUID.randomUUID().toString())
-                    .build();
+                InvalidationBatch invalidationBatch = InvalidationBatch.builder()
+                        .paths(invalidationPaths)
+                        .callerReference(UUID.randomUUID().toString())
+                        .build();
 
-            CreateInvalidationRequest invalidationRequest = CreateInvalidationRequest.builder()
-                    .distributionId(DISTRIBUTION_ID)
-                    .invalidationBatch(invalidationBatch)
-                    .build();
+                CreateInvalidationRequest invalidationRequest = CreateInvalidationRequest.builder()
+                        .distributionId(distributionId)
+                        .invalidationBatch(invalidationBatch)
+                        .build();
 
-            cloudFrontClient.createInvalidation(invalidationRequest);
+                cloudFrontClient.createInvalidation(invalidationRequest);
 
-            logger.info("Successfully created CloudFront invalidation request.");
+                logger.info("Successfully created CloudFront invalidation request.");
 
+            }
         } catch (Exception e) {
             logger.error("Error during CloudFront invalidation", e);
         }
