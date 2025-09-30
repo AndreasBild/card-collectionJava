@@ -71,6 +71,8 @@ public class S3UploadFiles {
             PutObjectResponse response = s3Client.putObject(putObjectRequest, RequestBody.fromFile(file));
 
             System.out.println("Successfully uploaded: " + file.getName() + " with ETag: " + response.eTag());
+       //     CloudFrontInvalidator invalidator = new CloudFrontInvalidator();
+       //     invalidator.invalidate();
 
         } catch (S3Exception e) {
             e.printStackTrace();

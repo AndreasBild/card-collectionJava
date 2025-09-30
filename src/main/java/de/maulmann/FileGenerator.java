@@ -51,7 +51,8 @@ public class FileGenerator {
                     <a class="plain" href="https://jigsaw.w3.org/css-validator/check/referer" title="CSS Validation Label">
                         <img style="border:0;width:88px;height:31px"
                              src="https://jigsaw.w3.org/css-validator/images/vcss"
-                             alt="Valid CSS!" />
+                             alt="Valid CSS!"
+                             title="CSS validator label"/>
                     </a>
                 </p>
             """;
@@ -140,8 +141,8 @@ public class FileGenerator {
                           <meta name="robots" content="index,follow">
                           <meta name="robots" content="max-snippet:-1, max-image-preview:large">
                           <link rel="canonical" href="https://www.maulmann.de/"/>
-                          """ + faqJsonLd + """
-              
+                    """ + faqJsonLd + """
+   
                     <script>
                       if ('serviceWorker' in navigator) {
                         window.addEventListener('load', () => {
