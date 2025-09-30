@@ -110,6 +110,7 @@ public class FileGenerator {
                     <head>
                         <title>Juwan Howard Basketball Trading Card Collection</title>
                         <meta charset="UTF-8">
+                        <link rel="preconnect" href="https://www.googletagmanager.com">
                         <script async src="https://www.googletagmanager.com/gtag/js?id=G-535TKYRZTR"></script>
                                     <script>
                                       window.dataLayer = window.dataLayer || [];
