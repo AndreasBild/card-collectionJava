@@ -77,33 +77,12 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>3.5.0</version>
+                <version>3.5.1</version>
                 <configuration>
                     <mainClass>de.maulmann.FileGenerator</mainClass>
+                    <mainClass>de.maulmann.MinifyCompress</mainClass>
+                    <mainClass>de.maulmann.S3UploadFiles</mainClass>
                 </configuration>
-            </plugin>
-            <!-- Shade plugin for creating a fat JAR (optional, if needed) -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.6.0</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <artifactSet>
-                                <includes>
-                                    <include>software.amazon.awssdk:*</include>
-                                    <include>org.slf4j:*</include>
-                                </includes>
-                            </artifactSet>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
 
