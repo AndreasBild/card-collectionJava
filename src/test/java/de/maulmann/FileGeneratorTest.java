@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -121,9 +122,9 @@ class FileGeneratorTest {
         // Content with <tr> elements to be counted
         Files.write(sourceFile, Arrays.asList("<table>", "<tr><td>Data 1</td></tr>", "<tr><td>Data 2</td></tr>", "</table>"));
 
-        // Create a dummy target file (index.html in outputDir, as per FileGenerator logic)
-        // FileGenerator.generatedFileLocation uses pathOutput + "index.html"
-        Path targetFile = outputDir.resolve("index.html");
+        // Create a dummy target file (C.html in outputDir, as per FileGenerator logic)
+        // FileGenerator.generatedFileLocation uses pathOutput + "C.html"
+        Path targetFile = outputDir.resolve("C.html");
         // Ensure targetFile is created by createTargetFile method or manually,
         // as appendFileContent appends to it.
         // For this test, we'll let appendFileContent be called by main or a similar wrapper,
@@ -198,9 +199,9 @@ class FileGeneratorTest {
         // It should use the overridden pathSource and pathOutput
         assertDoesNotThrow(() -> FileGenerator.main(new String[]{}));
 
-        // Assert that the index.html file is generated in the output directory
-        Path indexPath = outputDir.resolve("index.html");
-        assertTrue(Files.exists(indexPath), "index.html was not generated.");
+        // Assert that the C.html file is generated in the output directory
+        Path indexPath = outputDir.resolve("C.html");
+        assertTrue(Files.exists(indexPath), "C.html was not generated.");
 
         // Assert its content is as expected
         List<String> lines = Files.readAllLines(indexPath);
