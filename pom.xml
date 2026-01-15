@@ -85,6 +85,7 @@
                 <configuration>
                     <mainClass>de.maulmann.FileGenerator</mainClass>
                     <mainClass>de.maulmann.MinifyCompress</mainClass>
+                    <mainClass>de.maulmann.S3ListFiles</mainClass>
                     <mainClass>de.maulmann.S3UploadFiles</mainClass>
                 </configuration>
             </plugin>
