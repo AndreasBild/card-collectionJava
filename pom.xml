@@ -14,7 +14,11 @@
         <maven.compiler.release>19</maven.compiler.release>
         <aws.sdk.version>2.41.5</aws.sdk.version>
         <org.slf4j.version>2.0.17</org.slf4j.version>
-        <org.junit.jupiter.version>5.13.4</org.junit.jupiter.version>
+        <org.junit.jupiter.version>6.0.2</org.junit.jupiter.version>
+        <org.apache.maven.plugins.version>3.14.1</org.apache.maven.plugins.version>
+        <org.codehaus.mojo.version>3.6.3</org.codehaus.mojo.version>
+        <org.jsoup.version>1.22.1</org.jsoup.version>
+        <com.yahoo.platform.yui.version>2.4.8</com.yahoo.platform.yui.version>
     </properties>
 
     <dependencies>
@@ -47,18 +51,17 @@
         <dependency>
             <groupId>com.yahoo.platform.yui</groupId>
             <artifactId>yuicompressor</artifactId>
-            <version>2.4.8</version>
+            <version>${com.yahoo.platform.yui.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
-            <version>1.22.1</version>
+            <version>${org.jsoup.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>6.0.2</version>
+            <version>${org.junit.jupiter.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -68,7 +71,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.14.1</version>
+                <version>${org.apache.maven.plugins.version}</version>
                 <configuration>
                     <source>19</source>
                     <target>19</target>
@@ -78,7 +81,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>3.6.3</version>
+                <version>${org.codehaus.mojo.version}</version>
                 <configuration>
                     <mainClass>de.maulmann.FileGenerator</mainClass>
                     <mainClass>de.maulmann.MinifyCompress</mainClass>
