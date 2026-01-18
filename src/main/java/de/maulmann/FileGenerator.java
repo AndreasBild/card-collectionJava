@@ -101,33 +101,99 @@ public class FileGenerator {
                 }
               }]
             }
-            </script>
             <script type="application/ld+json">
-                {
-                  "@context": "https://schema.org",
-                  "@type": "CollectionPage",
-                  "name": "Juwan Howard Basketball Trading Card Collection",
-                  "description": "Private Collection of Juwan Howard Basketball Trading Cards including 1/1s, Autographs and rare inserts.",
-                  "mainEntity": {
-                    "@type": "ItemList",
-                    "itemListElement": [
-                      {
-                        "@type": "ListItem",
-                        "position": 1,
-                        "item": {
-                          "@type": "Product",
-                          "name": "1994-95 Collector's Choice #278",
-                          "description": "Rookie Card"
-                        }
-                      }
-                    ]
-                  },
-                  "author": {
-                    "@type": "Person",
-                    "name": "Maulmann"
-                  }
-                }
-                </script>
+                         {
+                           "@context": "https://schema.org",
+                           "@type": "CollectionPage",
+                           "name": "Juwan Howard Basketball Trading Card Collection",
+                           "description": "Private Collection of Juwan Howard Basketball Trading Cards.",
+                           "mainEntity": {
+                             "@type": "ItemList",
+                             "itemListElement": [
+                               {
+                                 "@type": "ListItem",
+                                 "position": 1,
+                                 "item": {
+                                   "@type": "Product",
+                                   "name": "1998-99 Fleer Brilliants 24K Gold 14/24 #97TG",
+                                   "description": "Limited Parallel",
+                                   "brand": {
+                                     "@type": "Brand",
+                                     "name": "Fleer Brilliants"
+                                   },
+                                   "offers": {
+                                     "@type": "Offer",
+                                     "availability": "https://schema.org/SoldOut",
+                                     "price": "0",
+                                     "priceCurrency": "EUR",
+                                     "description": "Private Collection - Not for Sale"
+                                   }
+                                 }
+                               }
+                               {
+                                 "@type": "ListItem",
+                                 "position": 2,
+                                 "item": {
+                                   "@type": "Product",
+                                   "name": "1997-98 Fleer Metal Universe Precious Metal Gems Red 047/100 #33",
+                                   "description": "Limited Parallel",
+                                   "brand": {
+                                     "@type": "Brand",
+                                     "name": "Fleer Metal Universe"
+                                   },
+                                   "offers": {
+                                     "@type": "Offer",
+                                     "availability": "https://schema.org/SoldOut",
+                                     "price": "0",
+                                     "priceCurrency": "EUR",
+                                     "description": "Private Collection - Not for Sale"
+                                   }
+                                 }
+                               }
+                               {
+                                 "@type": "ListItem",
+                                 "position": 3,
+                                 "item": {
+                                   "@type": "Product",
+                                   "name": "1997-98 Fleer Metal Universe Precious Metal Gems Green 007/100 #33",
+                                   "description": "Limited Parallel",
+                                   "brand": {
+                                     "@type": "Brand",
+                                     "name": "Fleer Metal Universe"
+                                   },
+                                   "offers": {
+                                     "@type": "Offer",
+                                     "availability": "https://schema.org/SoldOut",
+                                     "price": "0",
+                                     "priceCurrency": "EUR",
+                                     "description": "Private Collection - Not for Sale"
+                                   }
+                                 }
+                               }
+                               {
+                                 "@type": "ListItem",
+                                 "position": 4,
+                                 "item": {
+                                   "@type": "Product",
+                                   "name": "1998-99 Fleer Metal Universe PMG 33/50 #5",
+                                   "description": "Limited Parallel",
+                                   "brand": {
+                                     "@type": "Brand",
+                                     "name": "Fleer Metal Universe"
+                                   },
+                                   "offers": {
+                                     "@type": "Offer",
+                                     "availability": "https://schema.org/SoldOut",
+                                     "price": "0",
+                                     "priceCurrency": "EUR",
+                                     "description": "Private Collection - Not for Sale"
+                                   }
+                                 }
+                               }
+                             ]
+                           }
+                         }
+                         </script>
             """;
     private static final String templateBegin =
             """

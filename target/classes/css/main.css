@@ -1,24 +1,31 @@
 body {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+    color: #222;
+    margin: 0;
+    padding: 8px;
 }
 
 table {
     table-layout: fixed;
     border-collapse: collapse;
-    width: 100%
+    width: 100%;
+    content-visibility: auto;
+    contain-intrinsic-size: 800px;
 }
 
 td, th {
     border: 1px solid #ddd;
-    padding: 8px
+    padding: 8px;
+    vertical-align: middle;
 }
 
 tr:nth-child(2n) {
-    background-color: #f2f2f2
+    background-color: #f2f2f2;
 }
 
 tr:hover {
-    background-color: #ddd
+    background-color: #ddd;
 }
 
 p {
@@ -26,15 +33,15 @@ p {
     padding-bottom: 2px;
     text-align: left;
     background-color: #ffffff;
-    color: #000000
+    color: #222;
 }
 
 th {
-    padding-top: 2px;
-    padding-bottom: 2px;
+    padding-top: 12px;
+    padding-bottom: 12px;
     text-align: left;
     background-color: #3264af;
-    color: #fff
+    color: #fff;
 }
 
 div {
@@ -46,19 +53,25 @@ a {
     padding: 0.4em 2em;
     background-color: #4f9e06;
     color: white;
-}
-
-
-
-.s {
-    font-size: 12px;
     text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.2s;
 }
-.s:hover {
+
+a:hover {
     background-color: #77df14;
 }
 
+a:focus, button:focus, .modern-button:focus-visible {
+    outline: 3px solid #000;
+    outline-offset: 2px;
+    background-color: #ffeb3b !important;
+    color: #000 !important;
+}
 
+.s {
+    font-size: 12px;
+}
 
 .actions-list {
     list-style: none;
@@ -77,36 +90,24 @@ a {
     text-align: center;
     text-decoration: none;
     outline: none;
-
     padding: 0.75rem 1.5rem;
     font-size: 1rem;
     line-height: 1.5;
     width: fit-content;
-
     background-color: #4f9e06;
     color: #ffffff !important;
     border-radius: 6px;
     font-weight: 600;
-    transition: background-color 0.2s ease-in-out,
-    transform 0.1s ease-in-out,
-    box-shadow 0.2s ease-in-out;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out, box-shadow 0.2s ease-in-out;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .modern-button:hover:not(.is-disabled) {
     background-color: #77df14;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     color: #ffffff !important;
-    text-decoration: none;
 }
 
-.modern-button:focus-visible:not(.is-disabled) {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
-    color: #ffffff !important;
-}
-
-/* Active State */
 .modern-button:active:not(.is-disabled) {
     transform: scale(0.98);
     background-color: #004085;
@@ -121,10 +122,4 @@ a {
     cursor: not-allowed;
     box-shadow: none;
     transform: none;
-    opacity: 0.7;
-    pointer-events: none;
-}
-
-.plain {
-    background-color: white;
-}
+    opacity: 0}
