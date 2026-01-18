@@ -102,6 +102,32 @@ public class FileGenerator {
               }]
             }
             </script>
+            <script type="application/ld+json">
+                {
+                  "@context": "https://schema.org",
+                  "@type": "CollectionPage",
+                  "name": "Juwan Howard Basketball Trading Card Collection",
+                  "description": "Private Collection of Juwan Howard Basketball Trading Cards including 1/1s, Autographs and rare inserts.",
+                  "mainEntity": {
+                    "@type": "ItemList",
+                    "itemListElement": [
+                      {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "item": {
+                          "@type": "Product",
+                          "name": "1994-95 Collector's Choice #278",
+                          "description": "Rookie Card"
+                        }
+                      }
+                    ]
+                  },
+                  "author": {
+                    "@type": "Person",
+                    "name": "Maulmann"
+                  }
+                }
+                </script>
             """;
     private static final String templateBegin =
             """
