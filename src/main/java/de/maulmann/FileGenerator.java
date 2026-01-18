@@ -75,187 +75,174 @@ public class FileGenerator {
 
     private static final String faqJsonLd = """
             <script type="application/ld+json">
-            {
-              "@context": "https://schema.org",
-              "@type": "FAQPage",
-              "mainEntity": [{
-                "@type": "Question",
-                "name": "What is the focus of this collection?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "This collection is focused on Juwan Howard basketball trading cards, spanning his entire career from college to the NBA. It includes a wide variety of cards, from base sets to rare inserts, parallels, and autographed cards."
-                }
-              },{
-                "@type": "Question",
-                "name": "Are any of the cards for sale?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Currently, the cards listed on this site are part of a private collection and are not for sale. The purpose of this page is to showcase the collection to fellow enthusiasts."
-                }
-              },{
-                "@type": "Question",
-                "name": "How often is the collection updated?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "The collection is updated regularly as new cards are acquired. Check back often to see the latest additions!"
-                }
-              }]
-            }
-            <script type="application/ld+json">
-                         {
-                           "@context": "https://schema.org",
-                           "@type": "CollectionPage",
-                           "name": "Juwan Howard Basketball Trading Card Collection",
-                           "description": "Private Collection of Juwan Howard Basketball Trading Cards.",
-                           "mainEntity": {
-                             "@type": "ItemList",
-                             "itemListElement": [
-                               {
-                                 "@type": "ListItem",
-                                 "position": 1,
-                                 "item": {
-                                   "@type": "Product",
-                                   "name": "1998-99 Fleer Brilliants 24K Gold 14/24 #97TG",
-                                   "description": "Limited Parallel",
-                                   "brand": {
-                                     "@type": "Brand",
-                                     "name": "Fleer Brilliants"
-                                   },
-                                   "offers": {
-                                     "@type": "Offer",
-                                     "availability": "https://schema.org/SoldOut",
-                                     "price": "0",
-                                     "priceCurrency": "EUR",
-                                     "description": "Private Collection - Not for Sale"
-                                   }
-                                 }
-                               }
-                               {
-                                 "@type": "ListItem",
-                                 "position": 2,
-                                 "item": {
-                                   "@type": "Product",
-                                   "name": "1997-98 Fleer Metal Universe Precious Metal Gems Red 047/100 #33",
-                                   "description": "Limited Parallel",
-                                   "brand": {
-                                     "@type": "Brand",
-                                     "name": "Fleer Metal Universe"
-                                   },
-                                   "offers": {
-                                     "@type": "Offer",
-                                     "availability": "https://schema.org/SoldOut",
-                                     "price": "0",
-                                     "priceCurrency": "EUR",
-                                     "description": "Private Collection - Not for Sale"
-                                   }
-                                 }
-                               }
-                               {
-                                 "@type": "ListItem",
-                                 "position": 3,
-                                 "item": {
-                                   "@type": "Product",
-                                   "name": "1997-98 Fleer Metal Universe Precious Metal Gems Green 007/100 #33",
-                                   "description": "Limited Parallel",
-                                   "brand": {
-                                     "@type": "Brand",
-                                     "name": "Fleer Metal Universe"
-                                   },
-                                   "offers": {
-                                     "@type": "Offer",
-                                     "availability": "https://schema.org/SoldOut",
-                                     "price": "0",
-                                     "priceCurrency": "EUR",
-                                     "description": "Private Collection - Not for Sale"
-                                   }
-                                 }
-                               }
-                               {
-                                 "@type": "ListItem",
-                                 "position": 4,
-                                 "item": {
-                                   "@type": "Product",
-                                   "name": "1998-99 Fleer Metal Universe PMG 33/50 #5",
-                                   "description": "Limited Parallel",
-                                   "brand": {
-                                     "@type": "Brand",
-                                     "name": "Fleer Metal Universe"
-                                   },
-                                   "offers": {
-                                     "@type": "Offer",
-                                     "availability": "https://schema.org/SoldOut",
-                                     "price": "0",
-                                     "priceCurrency": "EUR",
-                                     "description": "Private Collection - Not for Sale"
-                                   }
-                                 }
-                               }
-                             ]
-                           }
-                         }
-                         </script>
+                                      {
+                                        "@context": "https://schema.org",
+                                        "@type": "FAQPage",
+                                        "mainEntity": [{
+                                          "@type": "Question",
+                                          "name": "What is the focus of this collection?",
+                                          "acceptedAnswer": {
+                                            "@type": "Answer",
+                                            "text": "This collection is focused on Juwan Howard basketball trading cards, spanning his entire career from college to the NBA. It includes a wide variety of cards, from base sets to rare inserts, parallels, and autographed cards."
+                                          }
+                                        },{
+                                          "@type": "Question",
+                                          "name": "Are any of the cards for sale?",
+                                          "acceptedAnswer": {
+                                            "@type": "Answer",
+                                            "text": "Currently, the cards listed on this site are part of a private collection and are not for sale. The purpose of this page is to showcase the collection to fellow enthusiasts."
+                                          }
+                                        },{
+                                          "@type": "Question",
+                                          "name": "How often is the collection updated?",
+                                          "acceptedAnswer": {
+                                            "@type": "Answer",
+                                            "text": "The collection is updated regularly as new cards are acquired. Check back often to see the latest additions!"
+                                          }
+                                        }]
+                                      }
+                                      </script><script type="application/ld+json">
+                                      {
+                                        "@context": "https://schema.org",
+                                        "@type": "CollectionPage",
+                                        "name": "Juwan Howard Basketball Trading Card Collection Top 10",
+                                        "description": "Private Collection of the TOP 10 Juwan Howard Basketball Trading Cards.",
+                                        "mainEntity": {
+                                          "@type": "ItemList",
+                                          "itemListElement": [
+                                            {
+                                              "@type": "ListItem",
+                                              "position": 1,
+                                              "item": {
+                                                "@type": "Product",
+                                                "name": "1998-99 Fleer Brilliants 24K Gold 14/24 #97TG",
+                                                "description": "Limited Parallel",
+                                                "brand": { "@type": "Brand", "name": "Fleer Brilliants" },
+                                                "offers": {
+                                                  "@type": "Offer",
+                                                  "availability": "https://schema.org/SoldOut",
+                                                  "price": "0",
+                                                  "priceCurrency": "EUR",
+                                                  "description": "Private Collection - Not for Sale"
+                                                }
+                                              }
+                                            },
+                                            {
+                                              "@type": "ListItem",
+                                              "position": 2,
+                                              "item": {
+                                                "@type": "Product",
+                                                "name": "1997-98 Fleer Metal Universe Precious Metal Gems Red 047/100 #33",
+                                                "description": "Limited Parallel",
+                                                "brand": { "@type": "Brand", "name": "Fleer Metal Universe" },
+                                                "offers": {
+                                                  "@type": "Offer",
+                                                  "availability": "https://schema.org/SoldOut",
+                                                  "price": "0",
+                                                  "priceCurrency": "EUR",
+                                                  "description": "Private Collection - Not for Sale"
+                                                }
+                                              }
+                                            },
+                                            {
+                                              "@type": "ListItem",
+                                              "position": 3,
+                                              "item": {
+                                                "@type": "Product",
+                                                "name": "1997-98 Fleer Metal Universe Precious Metal Gems Green 007/100 #33",
+                                                "description": "Limited Parallel",
+                                                "brand": { "@type": "Brand", "name": "Fleer Metal Universe" },
+                                                "offers": {
+                                                  "@type": "Offer",
+                                                  "availability": "https://schema.org/SoldOut",
+                                                  "price": "0",
+                                                  "priceCurrency": "EUR",
+                                                  "description": "Private Collection - Not for Sale"
+                                                }
+                                              }
+                                            },
+                                            {
+                                              "@type": "ListItem",
+                                              "position": 4,
+                                              "item": {
+                                                "@type": "Product",
+                                                "name": "1998-99 Fleer Metal Universe PMG 33/50 #5",
+                                                "description": "Limited Parallel",
+                                                "brand": { "@type": "Brand", "name": "Fleer Metal Universe" },
+                                                "offers": {
+                                                  "@type": "Offer",
+                                                  "availability": "https://schema.org/SoldOut",
+                                                  "price": "0",
+                                                  "priceCurrency": "EUR",
+                                                  "description": "Private Collection - Not for Sale"
+                                                }
+                                              }
+                                            }
+                                          ]
+                                        }
+                                      }
+                                      </script>
             """;
-    private static final String templateBegin =
-            """
-                    <!DOCTYPE html>
-                    <html lang="en">
+    private static final String templateBegin = """
+            <!doctype html>
+                <html lang="en">
                     <head>
                         <title>Juwan Howard Basketball Trading Card Collection</title>
                         <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1">
+                        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                        <meta name="theme-color" content="#317EFB">
+                        <link rel="preload" href="/css/main.css" as="style">
+                        <link href="/css/main.css" rel="stylesheet" type="text/css">
                         <link rel="preconnect" href="https://www.googletagmanager.com">
                         <script async src="https://www.googletagmanager.com/gtag/js?id=G-535TKYRZTR"></script>
-                                    <script>
-                                      window.dataLayer = window.dataLayer || [];
-                                      function gtag(){dataLayer.push(arguments);}
-                                      gtag('js', new Date());
-                                      gtag('config', 'G-535TKYRZTR');
-                                    </script>
-                          <meta name="google-site-verification" content="Ev1ZxTPJs2GMFNQ6FyItlCYAKUWscL3jDFS_mVXH6IQ">
-                          <link href="/css/main.css" rel="stylesheet" type="text/css">
-                          <meta http-equiv="X-UA-Compatible" content="IE=edge">
-                          <meta name="theme-color" content="#317EFB">
-                          <link href="/favicon/favicon.ico" rel="icon"  sizes="32x32">
-                          <link href="/favicon/apple-touch-icon.png" rel="apple-touch-icon">
-                          <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
-                          <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-                          <link rel="icon" type="image/png" sizes="194x194" href="/favicon/favicon-194x194.png">
-                          <link rel="icon" type="image/png" sizes="192x192" href="/favicon/android-chrome-192x192.png">
-                          <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
-                          <link rel="manifest" href="/manifest.json">
-                          <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#317EFB">
-                          <meta name="apple-mobile-web-app-title" content="Maulmann.de">
-                          <meta name="application-name" content="Maulmann.de">
-                          <meta name="msapplication-TileColor" content="#317EFB">
-                          <link rel=“canonical“ href=”https://www.maulmann.de/”>
-                          <meta name="description" content="Private Collection of Juwan Howard Basketball Trading Cards. Containing many 1/1 and rare Trading Cards from companies like: Panini, Fleer, Topps and Upper Deck. Including Super rare cards like Precious Metal Gems from the 90s">
-                          <meta name="author" content="Mauli Maulmann - Content Creator">
-                          <meta name="publisher" content="Mauli Maulmann - Card Collector">
-                          <meta name="viewport" content="width=device-width, initial-scale=1">
-                          <meta name="robots" content="index,follow">
-                          <meta name="robots" content="max-snippet:-1, max-image-preview:large">
-                          <link rel="canonical" href="https://www.maulmann.de/"/>
-                    """ + faqJsonLd + """
-   
-                    <script>
-                      if ('serviceWorker' in navigator) {
-                        window.addEventListener('load', () => {
-                          navigator.serviceWorker.register('/serviceWorker.js')
+                        <script>
+                            window.dataLayer = window.dataLayer || [];
+                            function gtag(){dataLayer.push(arguments);}
+                                gtag('js', new Date());
+                                gtag('config', 'G-535TKYRZTR');
+                        </script>
+                        <meta name="description" content="Private Collection of Juwan Howard Basketball Trading Cards. Containing many 1/1 and rare Trading Cards from companies like: Panini, Fleer, Topps and Upper Deck. Including Super rare cards like Precious Metal Gems from the 90s">
+                        <meta name="author" content="Mauli Maulmann - Content Creator">
+                        <meta name="publisher" content="Mauli Maulmann - Card Collector">
+                        <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+                        <link rel="canonical" href="https://www.maulmann.de/">
+                        <meta name="google-site-verification" content="Ev1ZxTPJs2GMFNQ6FyItlCYAKUWscL3jDFS_mVXH6IQ">
+                        <link href="/favicon/favicon.ico" rel="icon" sizes="32x32">
+                        <link href="/favicon/apple-touch-icon.png" rel="apple-touch-icon">
+                        <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+                        <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+                        <link rel="icon" type="image/png" sizes="194x194" href="/favicon/favicon-194x194.png">
+                        <link rel="icon" type="image/png" sizes="192x192" href="/favicon/android-chrome-192x192.png">
+                        <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+                        <link rel="manifest" href="/manifest.json">
+                        <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#317EFB">
+                        <meta name="apple-mobile-web-app-title" content="Maulmann.de">
+                        <meta name="application-name" content="Maulmann.de">
+                        <meta name="msapplication-TileColor" content="#317EFB">
+            """ + faqJsonLd + """
+                        <script>
+                            if ('serviceWorker' in navigator) {
+                                window.addEventListener('load', () => {
+                                navigator.serviceWorker.register('/serviceWorker.js')
                             .then(registration => {
-                              console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                            })
+                                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                                })
                             .catch(error => {
-                              console.log('ServiceWorker registration failed: ', error);
-                            });
+                                console.log('ServiceWorker registration failed: ', error);
                         });
-                      }
-                    </script>
-                    </head>
-                    <body>
-                    <h1 id="top" title='Top of the list'>List of Juwan Howard Basketball Trading Cards</h1>
-                     <p>This page contains my Private Collection of all Juwan Howard Basketball Trading Cards i own.
-                     Including many 1/1 and rare Basketball Trading Cards from companies like: Panini,
-                     Fleer, Topps, Leaf and Upper Deck. Including super rare cards like Fleer Precious Metal Gems from the 90's <p>
-                    """;
+                    });
+              }
+            </script>
+            </head>
+            <body>
+            <h1 id="top" title='Top of the list'>List of Juwan Howard Basketball Trading Cards</h1>
+                <p>
+                    This page contains my Private Collection of all Juwan Howard Basketball Trading Cards i own.
+                    Including many 1/1 and rare Basketball Trading Cards from companies like: Panini,
+                    Fleer, Topps, Leaf and Upper Deck. Including super rare cards like Fleer Precious Metal Gems from the 90's
+                <p>
+            """;
 
     private static final String tableHead = "<table>";
     private static final String templateEnd = faqSection + footer + "<p>List Created: " + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()) + "</p></body></html>";
@@ -393,8 +380,7 @@ public class FileGenerator {
      * @throws IOException, thrown if a file operation did not work out as planned
      */
     private static void addTemplateComponent(String templateBegin, boolean appendAtTheEnd) throws IOException {
-        try (OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(FileGenerator.generatedFileLocation, appendAtTheEnd), StandardCharsets.UTF_8);
-             BufferedWriter out = new BufferedWriter(osw)) {
+        try (OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(FileGenerator.generatedFileLocation, appendAtTheEnd), StandardCharsets.UTF_8); BufferedWriter out = new BufferedWriter(osw)) {
             out.append(templateBegin);
             if (!appendAtTheEnd) out.append(createAnchorList());
             out.flush();
@@ -402,12 +388,10 @@ public class FileGenerator {
     }
 
     private static int appendFileContent(final String source, final String name, int counterIn) throws IOException {
-        final String anchorName = " title='Juwan Howard Trading Cards for Season " + name + "' id='" + name + "'>" + name ;
+        final String anchorName = " title='Juwan Howard Trading Cards for Season " + name + "' id='" + name + "'>" + name;
         final StringBuffer result = new StringBuffer("<h2").append(anchorName).append("</h2>").append('\n').append(tableHead);
 
-        try (BufferedReader inputStream = new BufferedReader(new InputStreamReader(new FileInputStream(source), StandardCharsets.UTF_8));
-             OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(FileGenerator.generatedFileLocation, true), StandardCharsets.UTF_8);
-             BufferedWriter out = new BufferedWriter(osw)) {
+        try (BufferedReader inputStream = new BufferedReader(new InputStreamReader(new FileInputStream(source), StandardCharsets.UTF_8)); OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(FileGenerator.generatedFileLocation, true), StandardCharsets.UTF_8); BufferedWriter out = new BufferedWriter(osw)) {
 
             String line;
             int counterAll = counterIn; // keep track of all rows
@@ -443,9 +427,7 @@ public class FileGenerator {
     private static void formatFileContent(final String source, String target) throws IOException {
         final StringBuilder result = new StringBuilder();
 
-        try (BufferedReader inputStream = new BufferedReader(new InputStreamReader(new FileInputStream(source), StandardCharsets.UTF_8));
-             OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(target, false), StandardCharsets.UTF_8);
-             BufferedWriter out = new BufferedWriter(osw)) {
+        try (BufferedReader inputStream = new BufferedReader(new InputStreamReader(new FileInputStream(source), StandardCharsets.UTF_8)); OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(target, false), StandardCharsets.UTF_8); BufferedWriter out = new BufferedWriter(osw)) {
 
             String line;
             int counter = -1; // needs to be -1 because of the table header, we count only the content rows
@@ -464,7 +446,7 @@ public class FileGenerator {
                     ++counter;
                 } else {
                     result.append(line.trim()); // Append trimmed line, but no newline if it's not table structure.
-                                               // This matches the behavior of the original appendFileContent more closely for non-table lines.
+                    // This matches the behavior of the original appendFileContent more closely for non-table lines.
                 }
             }
 
