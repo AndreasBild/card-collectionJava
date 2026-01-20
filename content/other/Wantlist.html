@@ -10,18 +10,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="theme-color" content="#317EFB">
     <link rel="preload" href="/css/main.css" as="style">
-    <link href="/css/main.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/main.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="/css/main.css"></noscript>
     <link rel="preconnect" href="https://www.googletagmanager.com">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-535TKYRZTR"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
+        function loadAnalytics() {
+            var script = document.createElement('script');
+            script.src = "https://www.googletagmanager.com/gtag/js?id=G-535TKYRZTR";
+            script.async = true;
+            document.head.appendChild(script);
 
-        function gtag() {
-            dataLayer.push(arguments);
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-535TKYRZTR');
         }
-
-        gtag('js', new Date());
-        gtag('config', 'G-535TKYRZTR');
+        window.addEventListener('scroll', loadAnalytics, {once: true});
+        window.addEventListener('mousemove', loadAnalytics, {once: true});
+        window.addEventListener('touchstart', loadAnalytics, {once: true});
     </script>
     <meta name="publisher" content="Mauli Maulmann - Card Collector">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">

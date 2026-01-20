@@ -193,15 +193,26 @@ public class FileGenerator {
                         <meta http-equiv="X-UA-Compatible" content="IE=edge">
                         <meta name="theme-color" content="#317EFB">
                         <link rel="preload" href="/css/main.css" as="style">
-                        <link href="/css/main.css" rel="stylesheet" type="text/css">
+                        <link rel="stylesheet" href="/css/main.css" media="print" onload="this.media='all'">
+                        <noscript><link rel="stylesheet" href="/css/main.css"></noscript>
                         <link rel="preconnect" href="https://www.googletagmanager.com">
                         <script async src="https://www.googletagmanager.com/gtag/js?id=G-535TKYRZTR"></script>
-                        <script>
-                            window.dataLayer = window.dataLayer || [];
-                            function gtag(){dataLayer.push(arguments);}
-                                gtag('js', new Date());
-                                gtag('config', 'G-535TKYRZTR');
-                        </script>
+                            <script>
+                                   function loadAnalytics() {
+                                     var script = document.createElement('script');
+                                     script.src = "https://www.googletagmanager.com/gtag/js?id=G-535TKYRZTR";
+                                     script.async = true;
+                                     document.head.appendChild(script);
+            
+                                     window.dataLayer = window.dataLayer || [];
+                                     function gtag(){dataLayer.push(arguments);}
+                                     gtag('js', new Date());
+                                     gtag('config', 'G-535TKYRZTR');
+                                   }
+                                   window.addEventListener('scroll', loadAnalytics, {once: true});
+                                   window.addEventListener('mousemove', loadAnalytics, {once: true});
+                                   window.addEventListener('touchstart', loadAnalytics, {once: true});
+                            </script>
                         <meta name="description" content="Private Collection of Juwan Howard Basketball Trading Cards. Containing many 1/1 and rare Trading Cards from companies like: Panini, Fleer, Topps and Upper Deck. Including Super rare cards like Precious Metal Gems from the 90s">
                         <meta name="author" content="Mauli Maulmann - Content Creator">
                         <meta name="publisher" content="Mauli Maulmann - Card Collector">
