@@ -193,8 +193,7 @@ public class FileGenerator {
                         <meta http-equiv="X-UA-Compatible" content="IE=edge">
                         <meta name="theme-color" content="#317EFB">
                         <link rel="preload" href="/css/main.css" as="style">
-                        <link rel="stylesheet" href="/css/main.css" media="print" onload="this.media='all'">
-                        <noscript><link rel="stylesheet" href="/css/main.css"></noscript>
+                        <link href="/css/main.css" rel="stylesheet" type="text/css">
                         <link rel="preconnect" href="https://www.googletagmanager.com">
                         <script async src="https://www.googletagmanager.com/gtag/js?id=G-535TKYRZTR"></script>
                             <script>
