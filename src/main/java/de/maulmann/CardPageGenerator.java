@@ -17,7 +17,7 @@ public class CardPageGenerator {
 
     // --- KONFIGURATION ---
     private static final String INPUT_FILE = "output/index.html";
-    private static final String OUTPUT_INDEX = "output/new/index_neu.html";
+    private static final String OUTPUT_INDEX = "output/new/index.html";
     private static final String BASE_FOLDER = "cards";
     // Pfade von der Unterseite aus gesehen:
     private static final String RELATIVE_CSS_PATH = "../../css/main.css";
@@ -157,6 +157,49 @@ public class CardPageGenerator {
             System.out.println(" -> Generated: " + currentCard.filename);
         }
     }
+    private static final String templateBegin = """
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1">
+                        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                        <meta name="theme-color" content="#317EFB">
+                        <link rel="preload" href="../../css/main.css" as="style">
+                        <link href="../../css/main.css" rel="stylesheet" type="text/css">
+                        <link rel="preconnect" href="https://www.googletagmanager.com">
+                        <script async src="https://www.googletagmanager.com/gtag/js?id=G-535TKYRZTR"></script>
+                            <script>
+                                   function loadAnalytics() {
+                                     var script = document.createElement('script');
+                                     script.src = "https://www.googletagmanager.com/gtag/js?id=G-535TKYRZTR";
+                                     script.async = true;
+                                     document.head.appendChild(script);
+            
+                                     window.dataLayer = window.dataLayer || [];
+                                     function gtag(){dataLayer.push(arguments);}
+                                     gtag('js', new Date());
+                                     gtag('config', 'G-535TKYRZTR');
+                                   }
+                                   window.addEventListener('scroll', loadAnalytics, {once: true});
+                                   window.addEventListener('mousemove', loadAnalytics, {once: true});
+                                   window.addEventListener('touchstart', loadAnalytics, {once: true});
+                            </script>
+                        <meta name="author" content="Mauli Maulmann - Content Creator">
+                        <meta name="publisher" content="Mauli Maulmann - Card Collector">
+                        <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+                        <link href="../../favicon/favicon.ico" rel="icon" sizes="32x32">
+                        <link href="../../favicon/apple-touch-icon.png" rel="apple-touch-icon">
+                        <link rel="apple-touch-icon" sizes="180x180" href="../../favicon/apple-touch-icon.png">
+                        <link rel="icon" type="image/png" sizes="32x32" href="../../favicon/favicon-32x32.png">
+                        <link rel="icon" type="image/png" sizes="194x194" href="../../favicon/favicon-194x194.png">
+                        <link rel="icon" type="image/png" sizes="192x192" href="../..//favicon/android-chrome-192x192.png">
+                        <link rel="icon" type="image/png" sizes="16x16" href="../..//favicon/favicon-16x16.png">
+                        <link rel="manifest" href="../..//manifest.json">
+                        <link rel="mask-icon" href="../..//favicon/safari-pinned-tab.svg" color="#317EFB">
+                        <meta name="apple-mobile-web-app-title" content="Maulmann.de">
+                        <meta name="application-name" content="Maulmann.de">
+                        <meta name="msapplication-TileColor" content="#317EFB">
+            """;
+
+
 
     private static void createSubPage(CardData c, Path path, CardData prev, CardData next, List<CardData> allCards) throws IOException {
         StringBuilder sb = new StringBuilder();
@@ -166,12 +209,8 @@ public class CardPageGenerator {
 
         sb.append("<!doctype html>\n<html lang=\"en\">\n<head>\n");
         sb.append("    <title>").append(titleStr).append(" - Collection Details</title>\n");
-        sb.append("    <meta charset=\"UTF-8\">\n");
-        sb.append("    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n");
-        sb.append("    <meta name=\"description\" content=\"").append(metaDesc).append("\">\n");
-        sb.append("    <meta name=\"robots\" content=\"index, follow\">\n");
-        sb.append("    <meta name=\"theme-color\" content=\"#317EFB\">\n");
-        sb.append("    <link href=\"").append(RELATIVE_CSS_PATH).append("\" rel=\"stylesheet\" type=\"text/css\">\n");
+        sb.append(templateBegin+"\n");
+
 
         // JSON-LD SCHEMA (FAQ & Product)
         sb.append(generateJsonLd(c));
