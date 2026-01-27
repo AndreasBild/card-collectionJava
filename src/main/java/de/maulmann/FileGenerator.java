@@ -110,9 +110,27 @@ public class FileGenerator {
                                         "mainEntity": {
                                           "@type": "ItemList",
                                           "itemListElement": [
-                                            {
+                                             {
                                               "@type": "ListItem",
                                               "position": 1,
+                                              "item": {
+                                                "@type": "Product",
+                                                "name": "1997-98 Fleer Metal Universe Precious Metal Gems Green 007/100 #33",
+                                                 "image": "https://www.maulmann.de/images/1997-98/Juwan-Howard-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-front.jpg"
+                                                 "description": "Green Version of the Fleer Metal Universe Precious Metal Gem only 10 exist",
+                                                "brand": { "@type": "Brand", "name": "Fleer Metal Universe" },
+                                                "offers": {
+                                                  "@type": "Offer",
+                                                  "availability": "https://schema.org/SoldOut",
+                                                  "price": "0",
+                                                  "priceCurrency": "EUR",
+                                                  "description": "Private Collection - Not for Sale"
+                                                }
+                                              }
+                                            },
+                                            {
+                                              "@type": "ListItem",
+                                              "position": 2,
                                               "item": {
                                                 "@type": "Product",
                                                 "name": "1998-99 Fleer Brilliants 24K Gold 14/24 #97TG",
@@ -129,27 +147,11 @@ public class FileGenerator {
                                             },
                                             {
                                               "@type": "ListItem",
-                                              "position": 2,
-                                              "item": {
-                                                "@type": "Product",
-                                                "name": "1997-98 Fleer Metal Universe Precious Metal Gems Red 047/100 #33",
-                                                "description": "Limited Parallel",
-                                                "brand": { "@type": "Brand", "name": "Fleer Metal Universe" },
-                                                "offers": {
-                                                  "@type": "Offer",
-                                                  "availability": "https://schema.org/SoldOut",
-                                                  "price": "0",
-                                                  "priceCurrency": "EUR",
-                                                  "description": "Private Collection - Not for Sale"
-                                                }
-                                              }
-                                            },
-                                            {
-                                              "@type": "ListItem",
                                               "position": 3,
                                               "item": {
                                                 "@type": "Product",
-                                                "name": "1997-98 Fleer Metal Universe Precious Metal Gems Green 007/100 #33",
+                                                "name": "1997-98 Fleer Metal Universe Precious Metal Gems Red 047/100 #33",
+                                                "image": "https://www.maulmann.de/images/1997-98/Juwan-Howard-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-front.jpg"
                                                 "description": "Limited Parallel",
                                                 "brand": { "@type": "Brand", "name": "Fleer Metal Universe" },
                                                 "offers": {
@@ -176,7 +178,24 @@ public class FileGenerator {
                                                   "priceCurrency": "EUR",
                                                   "description": "Private Collection - Not for Sale"
                                                 }
+                                              },
+                                               {
+                                              "@type": "ListItem",
+                                              "position": 5,
+                                              "item": {
+                                                "@type": "Product",
+                                                "name": "1997-98 Fleer Metal Universe Precious Metal Gems Red 047/100 #33",
+                                                "description": "Limited Parallel",
+                                                "brand": { "@type": "Brand", "name": "Fleer Metal Universe" },
+                                                "offers": {
+                                                  "@type": "Offer",
+                                                  "availability": "https://schema.org/SoldOut",
+                                                  "price": "0",
+                                                  "priceCurrency": "EUR",
+                                                  "description": "Private Collection - Not for Sale"
+                                                }
                                               }
+                                            },
                                             }
                                           ]
                                         }

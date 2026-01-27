@@ -17,11 +17,12 @@ public class CardPageGenerator {
 
     // --- KONFIGURATION ---
     private static final String INPUT_FILE = "output/index.html";
-    private static final String OUTPUT_INDEX = "output/new/index.html";
+    private static final String OUTPUT_INDEX = "newIndex/index.html";
     private static final String BASE_FOLDER = "cards";
     // Pfade von der Unterseite aus gesehen:
     private static final String RELATIVE_CSS_PATH = "../../css/main.css";
     private static final String RELATIVE_IMAGES_PATH = "../../images";
+    private static final String BASE_URL = "https://www.maulmann.de";
     // ---------------------
 
     // Interne Klasse um Kartendaten + Dateinamen zu speichern
@@ -49,9 +50,8 @@ public class CardPageGenerator {
             addIfPresent(filenameTokens, attributes.get("Variant"));
             addIfPresent(filenameTokens, attributes.get("Number"));
 
-            String gradingCo = attributes.get("Grading Co.");
+
             String grade = attributes.get("Grade");
-            if (isValid(gradingCo)) filenameTokens.add(gradingCo);
             if (isValid(grade)) filenameTokens.add(grade);
 
             // Basisnamen bereinigen und speichern
@@ -282,7 +282,7 @@ public class CardPageGenerator {
         sb.append("        <table style=\"width: 100%; border-collapse: collapse; margin-top: 20px;\">\n");
         sb.append("            <tr style=\"background-color: #317EFB; color: white;\"><th colspan=\"2\" style=\"padding: 10px; text-align: left;\">Technical Specifications</th></tr>\n");
         addTableRow(sb, "Season", c.get("Season"));
-        addTableRow(sb, "Team", c.get("Team"));
+        addTableRow(sb, "Team", "Washington Wizards");
         addTableRow(sb, "Manufacturer", c.get("Company"));
         addTableRow(sb, "Brand", c.get("Brand"));
         addTableRow(sb, "Theme", c.get("Theme"));
@@ -338,7 +338,7 @@ public class CardPageGenerator {
     private static String generateMetaDescription(CardData c) {
         return "Details for " + c.get("Player") + " " + c.get("Season") + " " + c.get("Brand") + " card. " +
                 "Variant: " + c.get("Variant") + ". Serial Number: " + c.get("Serial") + "/" + c.get("Print Run") + ". " +
-                "Part of the private " + c.get("Team") + " collection.";
+                "Part of the private " + "Washington Wizards" + " collection.";
     }
 
     private static String generateSeoText(CardData c) {
@@ -356,14 +356,14 @@ public class CardPageGenerator {
 
         if (!c.get("Serial").equals("0")) {
             sb.append("This is a limited edition card, serial numbered <strong>").append(c.get("Serial")).append("</strong> ");
-            sb.append("out of a total print run of ").append(c.get("Print Run")).append(". ");
+            sb.append("out of a total print run of <strong>").append(c.get("Print Run")).append("</strong>. ");
         }
 
         if (c.get("Autograph").equalsIgnoreCase("Yes")) {
             sb.append("Notably, this card features an authentic <strong>Autograph</strong>, significantly adding to its rarity and value. ");
         }
 
-        sb.append("It captures Juwan Howard during his time with the ").append(c.get("Team")).append(".");
+        sb.append("It captures Juwan Howard during his time with the Washington Wizards").append(".");
         return sb.toString();
     }
 
@@ -390,7 +390,10 @@ public class CardPageGenerator {
     }
 
     private static String generateJsonLd(CardData c) {
-        // Wir nutzen hier Text Blocks (""") - falls du Java < 15 nutzt, sag Bescheid.
+        // Wir bauen die absolute URL zum Vorderseiten-Bild
+        // Schema: https://www.maulmann.de/images/SAISON/DATEINAME-front.jpg
+        String frontImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + c.filenameBase + "-front.jpg";
+
         return """
         <script type="application/ld+json">
         {
@@ -398,6 +401,7 @@ public class CardPageGenerator {
           "@graph": [
             {
               "@type": "Product",
+              "image": "%s",
               "name": "%s %s %s - %s",
               "description": "%s",
               "brand": { "@type": "Brand", "name": "%s" },
@@ -423,6 +427,10 @@ public class CardPageGenerator {
         }
         </script>
         """.formatted(
+                // 1. Das neue Bild-Argument an erster Stelle (für "image": "%s")
+                frontImgUrl,
+
+                // 2. Die restlichen Argumente wie bisher
                 c.get("Season"), c.get("Brand"), c.get("Player"), c.get("Variant"), // Name
                 generateMetaDescription(c), // Description
                 c.get("Company"), // Brand
