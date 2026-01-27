@@ -209,6 +209,7 @@ public class CardPageGenerator {
 
         sb.append("<!doctype html>\n<html lang=\"en\">\n<head>\n");
         sb.append("    <title>").append(titleStr).append(" - Collection Details</title>\n");
+        sb.append("    <meta name=\"description\" content=\"").append(metaDesc).append("\">\n");
         sb.append(templateBegin+"\n");
 
 
