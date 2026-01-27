@@ -35,7 +35,8 @@ public class SitemapGenerator {
             xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
             xml.append("<?xml-stylesheet type=\"text/xsl\" href=\"https://www.maulmann.de/sitemap.xsl\"?>\n");
             xml.append("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"\n");
-            xml.append("        xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\">\n");
+            xml.append("        xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\"\n");
+            xml.append("         xmlns:xhtml=\"http://www.w3.org/1999/xhtml\">\n");
 
             // 1. Statische Hauptseiten hinzufügen
             addUrl(xml, BASE_URL + "/index.html", "1.0", "weekly");
