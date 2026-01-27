@@ -20,8 +20,8 @@ public class SitemapGenerator {
     // HIER DEINE ECHTE DOMAIN EINTRAGEN (ohne Slash am Ende):
     private static final String BASE_URL = "https://www.maulmann.de";
 
-    private static final String INPUT_FILE = "output/new/index.html";
-    private static final String OUTPUT_SITEMAP = "sitemap.xml";
+    private static final String INPUT_FILE = "newIndex/index.html";
+    private static final String OUTPUT_SITEMAP = "output/sitemap.xml";
     private static final String DATE_TODAY = LocalDate.now().format(DateTimeFormatter.ISO_DATE);
     // ---------------------
 

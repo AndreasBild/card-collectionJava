@@ -204,11 +204,13 @@ public class CardPageGenerator {
     private static void createSubPage(CardData c, Path path, CardData prev, CardData next, List<CardData> allCards) throws IOException {
         StringBuilder sb = new StringBuilder();
 
-        String titleStr = c.get("Player") + " " + c.get("Season") + " " + c.get("Brand") + " " + c.get("Variant");
+        String titleStr = c.get("Player") + " | " + c.get("Season") + " " + c.get("Brand") + " " + c.get("Theme") + " " + c.get("Variant");
+        String h1 = c.get("Player") + " - " + c.get("Season") + " - " + c.get("Brand") + " " + c.get("Theme") + " " + c.get("Variant");
+
         String metaDesc = generateMetaDescription(c);
 
         sb.append("<!doctype html>\n<html lang=\"en\">\n<head>\n");
-        sb.append("    <title>").append(titleStr).append(" - Collection Details</title>\n");
+        sb.append("    <title>").append(titleStr).append(" | Card Details</title>\n");
         sb.append("    <meta name=\"description\" content=\"").append(metaDesc).append("\">\n");
         sb.append(templateBegin+"\n");
 
@@ -232,7 +234,7 @@ public class CardPageGenerator {
 
         // HEADER
         sb.append("    <header style=\"text-align:center; margin-bottom:40px;\">\n");
-        sb.append("        <h1 style=\"margin-bottom:5px;\">").append(c.get("Player")).append("</h1>\n");
+        sb.append("        <h1 style=\"margin-bottom:5px;\">").append(h1).append("</h1>\n");
         sb.append("        <p style=\"font-size:1.2em; color:#555; margin:0;\">").append(c.get("Season")).append(" ").append(c.get("Company")).append(" ").append(c.get("Brand")).append("</p>\n");
         sb.append("        <p style=\"font-size:1em; color:#777;\">").append(c.get("Theme")).append(" &bull; ").append(c.get("Variant")).append(" &bull; #").append(c.get("Number")).append("</p>\n");
         sb.append("    </header>\n");
@@ -337,9 +339,9 @@ public class CardPageGenerator {
     // --- HELPER METHODS ---
 
     private static String generateMetaDescription(CardData c) {
-        return "Details for " + c.get("Player") + " " + c.get("Season") + " " + c.get("Brand") + " card. " +
+        return "Details for " + c.get("Player") + " " + c.get("Season") + " " + c.get("Brand") + " " + c.get("Theme") + " card." +
                 "Variant: " + c.get("Variant") + ". Serial Number: " + c.get("Serial") + "/" + c.get("Print Run") + ". " +
-                "Part of the private " + "Washington Wizards" + " collection.";
+                "Part of the private collection.";
     }
 
     private static String generateSeoText(CardData c) {
