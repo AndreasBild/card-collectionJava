@@ -254,7 +254,7 @@ public class CardPageGenerator {
         String backImgPath = seasonImgFolder + "/" + c.filenameBase + "-back.jpg";
 
         // Basis für Alt-Texte und Titel
-        String baseAltText = c.get("Player") + " " + c.get("Season") + " " + c.get("Brand") + " " + c.get("Variant") + " #" + c.get("Number");
+        String baseAltText = c.get("Player") + " " + c.get("Season") + " " + c.get("Company") +" " + c.get("Brand") + " " + c.get("Theme") +  " " + c.get("Variant") + " #" + c.get("Number");
 
         // Front Image Wrapper
         sb.append("        <div class=\"card-image-wrapper\" style=\"width: 300px; text-align:center;\">\n");
@@ -348,7 +348,7 @@ public class CardPageGenerator {
         StringBuilder sb = new StringBuilder();
         sb.append("This unique <strong>").append(c.get("Player")).append("</strong> basketball card is a highlight of the ");
         sb.append("<strong>").append(c.get("Season")).append("</strong> season. Produced by ").append(c.get("Company"));
-        sb.append(" as part of the prestigious <strong>").append(c.get("Brand")).append("</strong> set, this specific card features the ");
+        sb.append(" as part of the <strong>").append(c.get("Brand")).append("</strong> set, this specific card features the ");
         sb.append("<strong>").append(c.get("Theme")).append("</strong> theme. ");
 
         if (c.get("Variant").toLowerCase().contains("refractor") || c.get("Variant").toLowerCase().contains("gold")) {
@@ -366,7 +366,7 @@ public class CardPageGenerator {
             sb.append("Notably, this card features an authentic <strong>Autograph</strong>, significantly adding to its rarity and value. ");
         }
 
-        sb.append("It captures Juwan Howard during his time with the Washington Wizards").append(".");
+        sb.append("It captures Juwan Howard during his time with the Washington Bulltes/Wizards").append(".");
         return sb.toString();
     }
 
