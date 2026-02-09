@@ -25,22 +25,31 @@ public class CardPageGenerator {
     private static final String BASE_URL = "https://www.maulmann.de";
     // ---------------------
 
-    // Interne Klasse um Kartendaten + Dateinamen zu speichern
+    // --- INTERNE KLASSE: KARTENDATEN ---
     static class CardData {
         Map<String, String> attributes;
-        String filenameBase; // Der Teil vor .html (für Bilder wichtig)
-        String filename;     // Der komplette Dateiname mit .html
+        String filenameBase;
+        String filename;
         String seasonFolder;
-        String fullRelativePath; // z.B. cards/2021-22/card.html
+        String fullRelativePath;
 
         public CardData(Map<String, String> attributes) {
-            this.attributes = attributes;
+            this.attributes = new HashMap<>(attributes);
+
+            // LOGIK 1: TEAM ERMITTELN
+            String currentTeam = this.attributes.get("Team");
+            if (!isValid(currentTeam)) {
+                String calculatedTeam = getTeamBySeason(this.attributes.get("Season"));
+                this.attributes.put("Team", calculatedTeam);
+            }
+
             calculatePaths();
         }
 
         private void calculatePaths() {
             List<String> filenameTokens = new ArrayList<>();
-            // Reihenfolge für den Dateinamen
+
+            // LOGIK 2: DATEINAMEN BAUEN
             addIfPresent(filenameTokens, attributes.get("Player"));
             addIfPresent(filenameTokens, attributes.get("Team"));
             addIfPresent(filenameTokens, attributes.get("Season"));
@@ -50,26 +59,36 @@ public class CardPageGenerator {
             addIfPresent(filenameTokens, attributes.get("Variant"));
             addIfPresent(filenameTokens, attributes.get("Number"));
 
+            // LOGIK 3: SERIAL NUMBER INTEGRATION
+            String serial = attributes.get("Serial");
+            if (isValid(serial) && !serial.equals("0")) {
+                filenameTokens.add("sn" + serial);
+            }
 
+            // LOGIK 4: GRADING
             String grade = attributes.get("Grade");
             if (isValid(grade)) filenameTokens.add(grade);
 
-            // Basisnamen bereinigen und speichern
+            // Basisnamen bereinigen
             this.filenameBase = cleanFilename(String.join("-", filenameTokens));
             this.filename = this.filenameBase + ".html";
 
             String seasonRaw = attributes.get("Season");
             this.seasonFolder = isValid(seasonRaw) ? cleanFilename(seasonRaw) : "Unknown_Season";
-
-            // Pfad von index.html aus gesehen
             this.fullRelativePath = BASE_FOLDER + "/" + this.seasonFolder + "/" + this.filename;
         }
 
         public String get(String key) {
-            return attributes.getOrDefault(key, "");
+            return attributes.getOrDefault(key, "").trim();
+        }
+
+        public boolean has(String key) {
+            String val = get(key);
+            return isValid(val) && !val.equalsIgnoreCase("No") && !val.equalsIgnoreCase("None");
         }
     }
 
+    // --- MAIN METHODE ---
     public static void main(String[] args) {
         try {
             System.out.println("Reading " + INPUT_FILE + "...");
@@ -111,7 +130,6 @@ public class CardPageGenerator {
             headers[i] = headerCols.get(i).text().trim();
         }
 
-        // SCHRITT 1: Erst alle Karten einlesen
         List<CardData> allCardsInTable = new ArrayList<>();
 
         for (int i = 1; i < rows.size(); i++) {
@@ -126,23 +144,19 @@ public class CardPageGenerator {
             allCardsInTable.add(new CardData(dataMap));
         }
 
-        // SCHRITT 2: Seiten generieren
         for (int i = 0; i < allCardsInTable.size(); i++) {
             CardData currentCard = allCardsInTable.get(i);
 
-            // Links zu vorheriger/nächster Karte finden
             CardData prevCard = (i > 0) ? allCardsInTable.get(i - 1) : null;
             CardData nextCard = (i < allCardsInTable.size() - 1) ? allCardsInTable.get(i + 1) : null;
 
-            // Pfade vorbereiten
             Path folderPath = Paths.get(BASE_FOLDER, currentCard.seasonFolder);
             Files.createDirectories(folderPath);
             Path filePath = folderPath.resolve(currentCard.filename);
 
-            // Seite erstellen
             createSubPage(currentCard, filePath, prevCard, nextCard, allCardsInTable);
 
-            // Link in der Haupttabelle aktualisieren
+            // Link Update
             Element row = rows.get(i + 1);
             Elements cols = row.select("td");
             if (!cols.isEmpty()) {
@@ -157,7 +171,9 @@ public class CardPageGenerator {
             System.out.println(" -> Generated: " + currentCard.filename);
         }
     }
-    private static final String templateBegin = """
+
+    // --- HTML TEMPLATE HEADER ---
+    private static final String TEMPLATE_HEAD_SCRIPTS = """
                         <meta charset="UTF-8">
                         <meta name="viewport" content="width=device-width, initial-scale=1">
                         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -166,22 +182,22 @@ public class CardPageGenerator {
                         <link href="../../css/main.css" rel="stylesheet" type="text/css">
                         <link rel="preconnect" href="https://www.googletagmanager.com">
                         <script async src="https://www.googletagmanager.com/gtag/js?id=G-535TKYRZTR"></script>
-                            <script>
-                                   function loadAnalytics() {
-                                     var script = document.createElement('script');
-                                     script.src = "https://www.googletagmanager.com/gtag/js?id=G-535TKYRZTR";
-                                     script.async = true;
-                                     document.head.appendChild(script);
-            
-                                     window.dataLayer = window.dataLayer || [];
-                                     function gtag(){dataLayer.push(arguments);}
-                                     gtag('js', new Date());
-                                     gtag('config', 'G-535TKYRZTR');
-                                   }
-                                   window.addEventListener('scroll', loadAnalytics, {once: true});
-                                   window.addEventListener('mousemove', loadAnalytics, {once: true});
-                                   window.addEventListener('touchstart', loadAnalytics, {once: true});
-                            </script>
+                        <script>
+                               function loadAnalytics() {
+                                 var script = document.createElement('script');
+                                 script.src = "https://www.googletagmanager.com/gtag/js?id=G-535TKYRZTR";
+                                 script.async = true;
+                                 document.head.appendChild(script);
+        
+                                 window.dataLayer = window.dataLayer || [];
+                                 function gtag(){dataLayer.push(arguments);}
+                                 gtag('js', new Date());
+                                 gtag('config', 'G-535TKYRZTR');
+                               }
+                               window.addEventListener('scroll', loadAnalytics, {once: true});
+                               window.addEventListener('mousemove', loadAnalytics, {once: true});
+                               window.addEventListener('touchstart', loadAnalytics, {once: true});
+                        </script>
                         <meta name="author" content="Mauli Maulmann - Content Creator">
                         <meta name="publisher" content="Mauli Maulmann - Card Collector">
                         <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
@@ -190,33 +206,31 @@ public class CardPageGenerator {
                         <link rel="apple-touch-icon" sizes="180x180" href="../../favicon/apple-touch-icon.png">
                         <link rel="icon" type="image/png" sizes="32x32" href="../../favicon/favicon-32x32.png">
                         <link rel="icon" type="image/png" sizes="194x194" href="../../favicon/favicon-194x194.png">
-                        <link rel="icon" type="image/png" sizes="192x192" href="../..//favicon/android-chrome-192x192.png">
-                        <link rel="icon" type="image/png" sizes="16x16" href="../..//favicon/favicon-16x16.png">
-                        <link rel="manifest" href="../..//manifest.json">
-                        <link rel="mask-icon" href="../..//favicon/safari-pinned-tab.svg" color="#317EFB">
+                        <link rel="icon" type="image/png" sizes="192x192" href="../../favicon/android-chrome-192x192.png">
+                        <link rel="icon" type="image/png" sizes="16x16" href="../../favicon/favicon-16x16.png">
+                        <link rel="manifest" href="../../manifest.json">
+                        <link rel="mask-icon" href="../../favicon/safari-pinned-tab.svg" color="#317EFB">
                         <meta name="apple-mobile-web-app-title" content="Maulmann.de">
                         <meta name="application-name" content="Maulmann.de">
                         <meta name="msapplication-TileColor" content="#317EFB">
             """;
 
-
-
     private static void createSubPage(CardData c, Path path, CardData prev, CardData next, List<CardData> allCards) throws IOException {
         StringBuilder sb = new StringBuilder();
 
-        String titleStr = c.get("Player") + " | " + c.get("Season") + " " + c.get("Brand") + " " + c.get("Theme") + " " + c.get("Variant");
-        String h1 = c.get("Player") + " - " + c.get("Season") + " - " + c.get("Brand") + " " + c.get("Theme") + " " + c.get("Variant");
-
+        String h1Title = generateH1(c);
+        String browserTitle = generateBrowserTitle(c);
         String metaDesc = generateMetaDescription(c);
+        String frontAlt = generateAltText(c, "front");
+        String backAlt = generateAltText(c, "back");
 
+        // HTML START
         sb.append("<!doctype html>\n<html lang=\"en\">\n<head>\n");
-        sb.append("    <title>").append(titleStr).append(" | Card Details</title>\n");
+        sb.append("    <title>").append(browserTitle).append("</title>\n");
         sb.append("    <meta name=\"description\" content=\"").append(metaDesc).append("\">\n");
-        sb.append(templateBegin+"\n");
+        sb.append(TEMPLATE_HEAD_SCRIPTS).append("\n");
 
-
-        // JSON-LD SCHEMA (FAQ & Product)
-        sb.append(generateJsonLd(c));
+        sb.append(generateJsonLd(c, metaDesc, h1Title));
 
         sb.append("</head>\n<body>\n");
 
@@ -234,44 +248,45 @@ public class CardPageGenerator {
 
         // HEADER
         sb.append("    <header style=\"text-align:center; margin-bottom:40px;\">\n");
-        sb.append("        <h1 style=\"margin-bottom:5px;\">").append(h1).append("</h1>\n");
+        sb.append("        <h1 style=\"margin-bottom:5px; font-size: 2em;\">").append(h1Title).append("</h1>\n");
         sb.append("        <p style=\"font-size:1.2em; color:#555; margin:0;\">").append(c.get("Season")).append(" ").append(c.get("Company")).append(" ").append(c.get("Brand")).append("</p>\n");
         sb.append("        <p style=\"font-size:1em; color:#777;\">").append(c.get("Theme")).append(" &bull; ").append(c.get("Variant")).append(" &bull; #").append(c.get("Number")).append("</p>\n");
         sb.append("    </header>\n");
 
-        // SEO TEXT BLOCK
+        // SEO TEXT
         sb.append("    <article style=\"background:#fff; padding:20px; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.05); margin-bottom:30px; line-height:1.6;\">\n");
         sb.append("        <h3>About this Card</h3>\n");
         sb.append("        <p>").append(generateSeoText(c)).append("</p>\n");
         sb.append("    </article>\n");
 
-        // --- IMAGES SECTION (NEU) ---
-        sb.append("    <div class=\"card-images-container\" style=\"display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; margin: 40px 0;\">\n");
+        // --- IMAGES SECTION (FLEXIBEL: QUER & HOCH) ---
+        // align-items: flex-start sorgt dafür, dass sie oben bündig sind. center würde sie mittig ausrichten.
+        // justify-content: center sorgt dafür, dass sie in der Mitte stehen.
+        sb.append("    <div class=\"card-images-container\" style=\"display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; align-items: center; margin: 40px 0;\">\n");
 
-        // Pfade berechnen: ../../images/SAISON/BASISNAME-front.jpg
         String seasonImgFolder = RELATIVE_IMAGES_PATH + "/" + c.seasonFolder;
         String frontImgPath = seasonImgFolder + "/" + c.filenameBase + "-front.jpg";
         String backImgPath = seasonImgFolder + "/" + c.filenameBase + "-back.jpg";
 
-        // Basis für Alt-Texte und Titel
-        String baseAltText = c.get("Player") + " " + c.get("Season") + " " + c.get("Company") +" " + c.get("Brand") + " " + c.get("Theme") +  " " + c.get("Variant") + " #" + c.get("Number");
+        // CSS-Logik:
+        // 1. Der Wrapper hat KEINE feste Breite mehr. Er passt sich dem Inhalt an (flex: 0 1 auto).
+        // 2. Das Bild hat max-width: 100% (für Mobile) und max-height: 550px (für Desktop).
+        // 3. Dadurch kann ein Bild hochkant (300x500) oder quer (600x400) sein -> beides sieht gut aus.
 
-        // Front Image Wrapper
-        sb.append("        <div class=\"card-image-wrapper\" style=\"width: 300px; text-align:center;\">\n");
-        // Anchor mit Title Metadata für SEO, öffnet im neuen Tab
-        sb.append("            <a href=\"").append(frontImgPath).append("\" title=\"View high-resolution front image of ").append(baseAltText).append("\" target=\"_blank\" rel=\"noopener\">\n");
-        // Image mit Alt Metadata für SEO. CSS macht es responsiv statt fixer Höhe.
-        sb.append("                <img src=\"").append(frontImgPath).append("\" alt=\"Front view of ").append(baseAltText).append(" basketball card\" style=\"max-width:100%; height:auto; border:1px solid #eee; box-shadow: 0 2px 5px rgba(0,0,0,0.1);\">\n");
+        // Front Image
+        sb.append("        <div class=\"card-image-wrapper\" style=\"flex: 0 1 auto; text-align:center; max-width: 100%;\">\n");
+        sb.append("            <a href=\"").append(frontImgPath).append("\" title=\"High-res Front: ").append(h1Title).append("\" target=\"_blank\" rel=\"noopener\">\n");
+        sb.append("                <img src=\"").append(frontImgPath).append("\" alt=\"").append(frontAlt).append("\" loading=\"lazy\" ")
+                .append("style=\"max-width: 100%; max-height: 550px; width: auto; height: auto; border:1px solid #eee; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: block; margin: 0 auto;\">\n");
         sb.append("            </a>\n");
         sb.append("            <p style=\"color: #888; margin-top:10px; font-weight:bold;\">Front View</p>\n");
         sb.append("        </div>\n");
 
-        // Back Image Wrapper
-        sb.append("        <div class=\"card-image-wrapper\" style=\"width: 300px; text-align:center;\">\n");
-        // Anchor mit Title Metadata
-        sb.append("            <a href=\"").append(backImgPath).append("\" title=\"View high-resolution back image showing stats for ").append(baseAltText).append("\" target=\"_blank\" rel=\"noopener\">\n");
-        // Image mit Alt Metadata
-        sb.append("                <img src=\"").append(backImgPath).append("\" alt=\"Back view of ").append(baseAltText).append(" basketball card\" style=\"max-width:100%; height:auto; border:1px solid #eee; box-shadow: 0 2px 5px rgba(0,0,0,0.1);\">\n");
+        // Back Image
+        sb.append("        <div class=\"card-image-wrapper\" style=\"flex: 0 1 auto; text-align:center; max-width: 100%;\">\n");
+        sb.append("            <a href=\"").append(backImgPath).append("\" title=\"High-res Back: ").append(h1Title).append("\" target=\"_blank\" rel=\"noopener\">\n");
+        sb.append("                <img src=\"").append(backImgPath).append("\" alt=\"").append(backAlt).append("\" loading=\"lazy\" ")
+                .append("style=\"max-width: 100%; max-height: 550px; width: auto; height: auto; border:1px solid #eee; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: block; margin: 0 auto;\">\n");
         sb.append("            </a>\n");
         sb.append("            <p style=\"color: #888; margin-top:10px; font-weight:bold;\">Back View</p>\n");
         sb.append("        </div>\n");
@@ -279,36 +294,41 @@ public class CardPageGenerator {
         sb.append("    </div>\n");
         // --- END IMAGES SECTION ---
 
-
         // DATA TABLE
         sb.append("    <div class=\"card-data\">\n");
         sb.append("        <table style=\"width: 100%; border-collapse: collapse; margin-top: 20px;\">\n");
         sb.append("            <tr style=\"background-color: #317EFB; color: white;\"><th colspan=\"2\" style=\"padding: 10px; text-align: left;\">Technical Specifications</th></tr>\n");
         addTableRow(sb, "Season", c.get("Season"));
-        addTableRow(sb, "Team", "Washington Wizards");
+        addTableRow(sb, "Team", c.get("Team"));
         addTableRow(sb, "Manufacturer", c.get("Company"));
         addTableRow(sb, "Brand", c.get("Brand"));
         addTableRow(sb, "Theme", c.get("Theme"));
         addTableRow(sb, "Variant", c.get("Variant"));
         addTableRow(sb, "Card Number", c.get("Number"));
-        addTableRow(sb, "Serial / Print Run", c.get("Serial") + " / " + c.get("Print Run"));
+
+        String serialInfo = c.get("Serial") + " / " + c.get("Print Run");
+        if (c.get("Serial").equals("0")) serialInfo = "Not numbered";
+        addTableRow(sb, "Serial / Print Run", serialInfo);
+
         addTableRow(sb, "Rookie Card", c.get("Rookie"));
         addTableRow(sb, "Memorabilia", c.get("Game Used"));
         addTableRow(sb, "Autograph", c.get("Autograph"));
 
         String grading = c.get("Grading Co.") + " " + c.get("Grade");
-        if (grading.trim().length() > 1) addTableRow(sb, "Grading", grading);
+        if (grading.trim().length() > 1 && !grading.trim().equals("null null")) {
+            addTableRow(sb, "Grading", grading);
+        }
 
         sb.append("        </table>\n");
         sb.append("    </div>\n");
 
         // FAQ SECTION
         sb.append("    <section style=\"margin-top: 50px;\">\n");
-        sb.append("        <h2>Frequently Asked Questions</h2>\n");
+        sb.append("        <h2>Frequently Asked Questions about this Card</h2>\n");
         sb.append(generateFaqHtml(c));
         sb.append("    </section>\n");
 
-        // INTERNAL LINKING FOOTER (SEO)
+        // RELATED CARDS
         sb.append("    <section style=\"margin-top: 60px; padding-top: 20px; border-top: 1px solid #ddd;\">\n");
         sb.append("        <h3>More from the ").append(c.get("Season")).append(" Collection</h3>\n");
         sb.append("        <ul style=\"list-style:none; padding:0; display:flex; flex-wrap:wrap; gap:10px;\">\n");
@@ -338,10 +358,67 @@ public class CardPageGenerator {
 
     // --- HELPER METHODS ---
 
+    private static String getTeamBySeason(String season) {
+        if (season == null || season.isEmpty()) return "Unknown Team";
+        String s = season.trim();
+
+        if (s.startsWith("1994") || s.startsWith("1995") || s.startsWith("1996")) return "Washington Bullets";
+        if (s.startsWith("1997") || s.startsWith("1998") || s.startsWith("1999") || s.startsWith("2000")) return "Washington Wizards";
+        if (s.startsWith("2001")) return "Dallas Mavericks";
+        if (s.startsWith("2002")) return "Denver Nuggets";
+        if (s.startsWith("2003")) return "Orlando Magic";
+        if (s.startsWith("2004") || s.startsWith("2005") || s.startsWith("2006")) return "Houston Rockets";
+        if (s.startsWith("2007")) return "Dallas Mavericks";
+        if (s.startsWith("2008")) return "Charlotte Bobcats";
+        if (s.startsWith("2009")) return "Portland Trail Blazers";
+        if (s.startsWith("2010") || s.startsWith("2011") || s.startsWith("2012")) return "Miami Heat";
+
+        return "NBA";
+    }
+
+    private static String generateH1(CardData c) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(c.get("Season")).append(" ");
+        sb.append(c.get("Brand")).append(" ");
+        sb.append(c.get("Player"));
+
+        if (c.has("Theme") && !c.get("Brand").contains(c.get("Theme"))) {
+            sb.append(" ").append(c.get("Theme"));
+        }
+        sb.append(" ").append(c.get("Variant"));
+        if (c.has("Number")) {
+            sb.append(" #").append(c.get("Number"));
+        }
+        return sb.toString().replaceAll("\\s+", " ").trim();
+    }
+
+    private static String generateBrowserTitle(CardData c) {
+        return generateH1(c) + " | Juwan Howard Collection";
+    }
+
+    private static String generateAltText(CardData c, String view) {
+        String base = "Juwan Howard " + c.get("Season") + " " + c.get("Brand") + " #" + c.get("Number");
+        if (view.equals("front")) {
+            return "Front view of " + base + " basketball card - " + c.get("Variant") + " edition (" + c.get("Team") + ")";
+        } else {
+            return "Back view of " + base + " showing stats for " + c.get("Team");
+        }
+    }
+
     private static String generateMetaDescription(CardData c) {
-        return "Details for " + c.get("Player") + " " + c.get("Season") + " " + c.get("Brand") + " " + c.get("Theme") + " card." +
-                "Variant: " + c.get("Variant") + ". Serial Number: " + c.get("Serial") + "/" + c.get("Print Run") + ". " +
-                "Part of the private collection.";
+        StringBuilder sb = new StringBuilder();
+        sb.append("Details for the ").append(c.get("Season")).append(" ").append(c.get("Brand")).append(" ");
+        sb.append(c.get("Player")).append(" card #").append(c.get("Number")).append(" (").append(c.get("Team")).append("). ");
+        sb.append("Variant: ").append(c.get("Variant")).append(". ");
+
+        if (c.has("Serial")) {
+            sb.append("Numbered: ").append(c.get("Serial")).append("/").append(c.get("Print Run")).append(". ");
+        }
+        if (c.has("Grade")) {
+            sb.append("Graded: ").append(c.get("Grading Co.")).append(" ").append(c.get("Grade")).append(". ");
+        }
+        sb.append("View high-res images and specs.");
+        return sb.toString();
     }
 
     private static String generateSeoText(CardData c) {
@@ -357,45 +434,76 @@ public class CardPageGenerator {
             sb.append("It is the ").append(c.get("Variant")).append(" version. ");
         }
 
-        if (!c.get("Serial").equals("0")) {
+        if (c.has("Serial")) {
             sb.append("This is a limited edition card, serial numbered <strong>").append(c.get("Serial")).append("</strong> ");
             sb.append("out of a total print run of <strong>").append(c.get("Print Run")).append("</strong>. ");
+            if (c.get("Serial").equals("1/1") || c.get("Print Run").equals("1")) {
+                sb.append("It is a true <strong>One of One</strong> masterpiece. ");
+            }
         }
 
-        if (c.get("Autograph").equalsIgnoreCase("Yes")) {
+        if (c.has("Autograph") && c.get("Autograph").equalsIgnoreCase("Yes")) {
             sb.append("Notably, this card features an authentic <strong>Autograph</strong>, significantly adding to its rarity and value. ");
         }
 
-        sb.append("It captures Juwan Howard during his time with the Washington Bulltes/Wizards").append(".");
+        if (c.has("Game Used") && c.get("Game Used").equalsIgnoreCase("Yes")) {
+            sb.append("It also contains a piece of <strong>Game Used Memorabilia</strong> (Jersey/Patch). ");
+        }
+
+        sb.append("It captures Juwan Howard during his time with the ").append(c.get("Team")).append(".");
         return sb.toString();
     }
 
     private static String generateFaqHtml(CardData c) {
         StringBuilder sb = new StringBuilder();
-        // FAQ Q1
-        sb.append("<details style=\"margin-bottom:10px; border:1px solid #ddd; padding:10px; border-radius:5px;\">");
-        sb.append("<summary style=\"cursor:pointer; font-weight:bold;\">What is the print run of this card?</summary>");
-        sb.append("<p style=\"margin-top:5px; color:#555;\">This specific ").append(c.get("Variant")).append(" card has a total print run of ").append(c.get("Print Run")).append(". Serial Number: ").append(c.get("Serial")).append(".</p>");
-        sb.append("</details>");
-        // FAQ Q2
-        sb.append("<details style=\"margin-bottom:10px; border:1px solid #ddd; padding:10px; border-radius:5px;\">");
-        sb.append("<summary style=\"cursor:pointer; font-weight:bold;\">Is this a Rookie Card?</summary>");
-        String rookieAns = c.get("Rookie").equalsIgnoreCase("Yes") ? "Yes, this is a highly generated Rookie Card (RC)!" : "No, this is not a rookie card. It was released during the " + c.get("Season") + " season.";
-        sb.append("<p style=\"margin-top:5px; color:#555;\">").append(rookieAns).append("</p>");
-        sb.append("</details>");
-        // FAQ Q3
-        sb.append("<details style=\"margin-bottom:10px; border:1px solid #ddd; padding:10px; border-radius:5px;\">");
-        sb.append("<summary style=\"cursor:pointer; font-weight:bold;\">Does this card have an autograph?</summary>");
-        String autoAns = c.get("Autograph").equalsIgnoreCase("Yes") ? "Yes, this card features a certified autograph." : "No, this card does not feature an autograph.";
-        sb.append("<p style=\"margin-top:5px; color:#555;\">").append(autoAns).append("</p>");
-        sb.append("</details>");
+
+        if (c.has("Serial")) {
+            sb.append(createFaqItem("How rare is this specific card?",
+                    "This card is serially numbered " + c.get("Serial") + " out of a total print run of " + c.get("Print Run") + "."));
+        } else {
+            sb.append(createFaqItem("Is this card numbered?",
+                    "No, this version of the card was not serial numbered by the manufacturer."));
+        }
+
+        String rookieAns = c.get("Rookie").equalsIgnoreCase("Yes")
+                ? "Yes, this is an official Rookie Card (RC) from the " + c.get("Season") + " class!"
+                : "No, this is a veteran card released during the " + c.get("Season") + " season.";
+        sb.append(createFaqItem("Is this a Rookie Card?", rookieAns));
+
+        if (c.has("Autograph") && c.get("Autograph").equalsIgnoreCase("Yes")) {
+            sb.append(createFaqItem("Is the autograph authentic?",
+                    "Yes, this card features a manufacturer-certified autograph guaranteed by " + c.get("Company") + "."));
+        }
+
+        if (c.has("Grade")) {
+            sb.append(createFaqItem("What is the condition of this card?",
+                    "This card has been professionally graded by " + c.get("Grading Co.") + " and received a grade of " + c.get("Grade") + "."));
+        }
+
+        sb.append(createFaqItem("Which team did Juwan Howard play for on this card?",
+                "This card features Juwan Howard in a " + c.get("Team") + " uniform."));
+
         return sb.toString();
     }
 
-    private static String generateJsonLd(CardData c) {
-        // Wir bauen die absolute URL zum Vorderseiten-Bild
-        // Schema: https://www.maulmann.de/images/SAISON/DATEINAME-front.jpg
+    private static String createFaqItem(String question, String answer) {
+        return "<details style=\"margin-bottom:10px; border:1px solid #ddd; padding:10px; border-radius:5px;\">" +
+                "<summary style=\"cursor:pointer; font-weight:bold;\">" + question + "</summary>" +
+                "<p style=\"margin-top:5px; color:#555;\">" + answer + "</p>" +
+                "</details>";
+    }
+
+    private static String generateJsonLd(CardData c, String desc, String name) {
         String frontImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + c.filenameBase + "-front.jpg";
+
+        StringBuilder faqSchema = new StringBuilder();
+        faqSchema.append("    {\n      \"@type\": \"Question\",\n      \"name\": \"What is the serial number?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"")
+                .append(c.get("Serial")).append(" / ").append(c.get("Print Run")).append("\" }\n    }");
+
+        if (c.has("Grade")) {
+            faqSchema.append(",\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Is this card graded?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"Yes, ")
+                    .append(c.get("Grading Co.")).append(" ").append(c.get("Grade")).append("\" }\n    }");
+        }
 
         return """
         <script type="application/ld+json">
@@ -405,41 +513,31 @@ public class CardPageGenerator {
             {
               "@type": "Product",
               "image": "%s",
-              "name": "%s %s %s - %s",
+              "name": "%s",
               "description": "%s",
               "brand": { "@type": "Brand", "name": "%s" },
+              "manufacturer": "%s",
               "sku": "%s-%s",
-              "offers": { "@type": "Offer", "availability": "https://schema.org/SoldOut", "price": "0", "priceCurrency": "EUR", "description": "Private Collection" }
+              "category": "Sports Card",
+              "offers": { "@type": "Offer", "availability": "https://schema.org/SoldOut", "price": "0", "priceCurrency": "EUR", "description": "Private Collection (NFS)" }
             },
             {
               "@type": "FAQPage",
               "mainEntity": [
-                {
-                  "@type": "Question",
-                  "name": "What is the serial number?",
-                  "acceptedAnswer": { "@type": "Answer", "text": "%s / %s" }
-                },
-                {
-                  "@type": "Question",
-                  "name": "Is this card autographed?",
-                  "acceptedAnswer": { "@type": "Answer", "text": "%s" }
-                }
+                %s
               ]
             }
           ]
         }
         </script>
         """.formatted(
-                // 1. Das neue Bild-Argument an erster Stelle (für "image": "%s")
                 frontImgUrl,
-
-                // 2. Die restlichen Argumente wie bisher
-                c.get("Season"), c.get("Brand"), c.get("Player"), c.get("Variant"), // Name
-                generateMetaDescription(c), // Description
-                c.get("Company"), // Brand
-                c.get("Number"), c.get("Variant").replaceAll(" ", ""), // SKU
-                c.get("Serial"), c.get("Print Run"), // FAQ Answer 1
-                c.get("Autograph") // FAQ Answer 2
+                name,
+                desc,
+                c.get("Brand"),
+                c.get("Company"),
+                c.get("Number"), c.get("Variant").replaceAll("[^a-zA-Z0-9]", ""),
+                faqSchema.toString()
         );
     }
 

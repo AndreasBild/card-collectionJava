@@ -6,7 +6,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -19,7 +18,7 @@ public class SitemapGenerator {
     private static final String BASE_URL = "https://www.maulmann.de";
     private static final String INPUT_FILE = "newIndex/index.html";
     private static final String OUTPUT_SITEMAP = "output/sitemap.xml";
-    private static final String IMAGE_PATH_LOCAL = "images/"; // Pfad zu deinen Bildern
+    private static final String IMAGE_PATH_LOCAL = "images/";
     private static final String DATE_TODAY = LocalDate.now().format(DateTimeFormatter.ISO_DATE);
 
     public static void main(String[] args) {
@@ -64,10 +63,18 @@ public class SitemapGenerator {
                         data.put(headers[j], cols.get(j).text().trim());
                     }
 
-                    // Dateinamen & Pfade generieren
+                    // --- LOGIK START ---
+
+                    // 1. Team Logik (identisch zu CardPageGenerator)
+                    String currentTeam = data.get("Team");
+                    if (!isValid(currentTeam)) {
+                        currentTeam = getTeamBySeason(data.get("Season"));
+                    }
+
+                    // 2. Dateinamen Tokens sammeln
                     List<String> tokens = new ArrayList<>();
                     addIfPresent(tokens, data.get("Player"));
-                    addIfPresent(tokens, data.get("Team"));
+                    addIfPresent(tokens, currentTeam);
                     addIfPresent(tokens, data.get("Season"));
                     addIfPresent(tokens, data.get("Company"));
                     addIfPresent(tokens, data.get("Brand"));
@@ -75,17 +82,34 @@ public class SitemapGenerator {
                     addIfPresent(tokens, data.get("Variant"));
                     addIfPresent(tokens, data.get("Number"));
 
+                    // 3. Serial Number Logic
+                    String serial = data.get("Serial");
+                    if (isValid(serial) && !serial.equals("0")) {
+                        tokens.add("sn" + serial);
+                    }
+
+                    // 4. Grading Logic
+                    String grade = data.get("Grade");
+                    if (isValid(grade)) tokens.add(grade);
+
+                    // Pfade generieren
                     String filenameBase = cleanFilename(String.join("-", tokens));
                     String seasonFolder = isValid(data.get("Season")) ? cleanFilename(data.get("Season")) : "Unknown_Season";
 
+                    // HTML URL
                     String pageUrl = BASE_URL + "/cards/" + seasonFolder + "/" + filenameBase + ".html";
-                    String imgTitle = data.get("Player") + " " + data.get("Season") + " " + data.get("Brand");
 
-                    // BILDER-CHECK
+                    // --- NEU: DYNAMISCHE BILD-TITEL (identisch zu Alt-Texten) ---
+                    String baseTitle = "Juwan Howard " + data.getOrDefault("Season", "") + " " + data.getOrDefault("Brand", "") + " #" + data.getOrDefault("Number", "");
+
+                    String frontCaption = "Front view of " + baseTitle + " basketball card - " + data.getOrDefault("Variant", "") + " edition (" + currentTeam + ")";
+                    String backCaption = "Back view of " + baseTitle + " showing stats for " + currentTeam;
+
+                    // Bilder-Check
                     String relDir = IMAGE_PATH_LOCAL + seasonFolder + "/";
                     File fFile = new File(relDir + filenameBase + "-front.jpg");
                     File bFile = new File(relDir + filenameBase + "-back.jpg");
-// Debug-Ausgabe: Wo sucht das Programm?
+                    // Debug-Ausgabe: Wo sucht das Programm?
                     if (i == 1) { // Nur für die erste Karte, um die Konsole nicht zu fluten
                         System.out.println("Suche Bild unter: " + fFile.getAbsolutePath());
                     }
@@ -95,7 +119,9 @@ public class SitemapGenerator {
                     if (frontUrl == null) missingFronts++;
                     if (backUrl == null) missingBacks++;
 
-                    addUrlWithOptionalImages(xml, pageUrl, frontUrl, backUrl, imgTitle);
+                    // Hier übergeben wir jetzt die spezifischen Captions statt eines generischen Titels
+                    addUrlWithImages(xml, pageUrl, frontUrl, frontCaption, backUrl, backCaption);
+
                     totalCards++;
                 }
             }
@@ -103,18 +129,9 @@ public class SitemapGenerator {
             xml.append("</urlset>");
             Files.writeString(Paths.get(OUTPUT_SITEMAP), xml.toString(), StandardCharsets.UTF_8);
 
-            // STATISTIK AUSGABE
             System.out.println("--------------------------------------------------");
             System.out.println("Sitemap erfolgreich erstellt!");
-            System.out.println("Karten insgesamt: " + totalCards);
-            System.out.println("Bilder gefunden (Front): " + (totalCards - missingFronts));
-            System.out.println("Bilder gefunden (Back):  " + (totalCards - missingBacks));
-
-            if (missingFronts > 0 || missingBacks > 0) {
-                System.out.println("\nWARNUNG: Es fehlen noch Bilder!");
-                System.out.println("Fehlende Front-Scans: " + missingFronts);
-                System.out.println("Fehlende Back-Scans:  " + missingBacks);
-            }
+            System.out.println("Karten: " + totalCards + " | Front-Bilder: " + (totalCards - missingFronts) + " | Back-Bilder: " + (totalCards - missingBacks));
             System.out.println("--------------------------------------------------");
 
         } catch (Exception e) {
@@ -122,15 +139,36 @@ public class SitemapGenerator {
         }
     }
 
-    private static void addUrlWithOptionalImages(StringBuilder sb, String loc, String imgFront, String imgBack, String title) {
+    // --- HELPER METHODS ---
+
+    private static String getTeamBySeason(String season) {
+        if (season == null || season.isEmpty()) return "Unknown Team";
+        String s = season.trim();
+
+        if (s.startsWith("1994") || s.startsWith("1995") || s.startsWith("1996")) return "Washington Bullets";
+        if (s.startsWith("1997") || s.startsWith("1998") || s.startsWith("1999") || s.startsWith("2000")) return "Washington Wizards";
+        if (s.startsWith("2001")) return "Dallas Mavericks";
+        if (s.startsWith("2002")) return "Denver Nuggets";
+        if (s.startsWith("2003")) return "Orlando Magic";
+        if (s.startsWith("2004") || s.startsWith("2005") || s.startsWith("2006")) return "Houston Rockets";
+        if (s.startsWith("2007")) return "Dallas Mavericks";
+        if (s.startsWith("2008")) return "Charlotte Bobcats";
+        if (s.startsWith("2009")) return "Portland Trail Blazers";
+        if (s.startsWith("2010") || s.startsWith("2011") || s.startsWith("2012")) return "Miami Heat";
+
+        return "NBA";
+    }
+
+    // Angepasste Methode: Nimmt jetzt separate Captions für Front und Back entgegen
+    private static void addUrlWithImages(StringBuilder sb, String loc, String imgFront, String captionFront, String imgBack, String captionBack) {
         sb.append("  <url>\n");
         sb.append("    <loc>").append(loc).append("</loc>\n");
         sb.append("    <lastmod>").append(DATE_TODAY).append("</lastmod>\n");
-        sb.append("    <changefreq>").append(imgFront == null ? "weekly" : "never").append("</changefreq>\n");
+        sb.append("    <changefreq>").append(imgFront == null ? "weekly" : "monthly").append("</changefreq>\n");
         sb.append("    <priority>0.6</priority>\n");
 
-        if (imgFront != null) appendImg(sb, imgFront, "Front: " + title);
-        if (imgBack != null) appendImg(sb, imgBack, "Back: " + title);
+        if (imgFront != null) appendImg(sb, imgFront, captionFront);
+        if (imgBack != null) appendImg(sb, imgBack, captionBack);
 
         sb.append("  </url>\n");
     }
@@ -138,6 +176,7 @@ public class SitemapGenerator {
     private static void appendImg(StringBuilder sb, String url, String title) {
         sb.append("    <image:image>\n");
         sb.append("      <image:loc>").append(url).append("</image:loc>\n");
+        // image:title ist wichtig für Google Images SEO
         sb.append("      <image:title>").append(escapeXml(title)).append("</image:title>\n");
         sb.append("    </image:image>\n");
     }
