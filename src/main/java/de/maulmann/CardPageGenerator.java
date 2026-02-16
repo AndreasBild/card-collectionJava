@@ -37,6 +37,7 @@ public class CardPageGenerator {
             this.attributes = new HashMap<>(attributes);
 
             // LOGIK 1: TEAM ERMITTELN
+            // Wenn kein Team angegeben ist, wird es historisch berechnet.
             String currentTeam = this.attributes.get("Team");
             if (!isValid(currentTeam)) {
                 String calculatedTeam = getTeamBySeason(this.attributes.get("Season"));
@@ -60,6 +61,7 @@ public class CardPageGenerator {
             addIfPresent(filenameTokens, attributes.get("Number"));
 
             // LOGIK 3: SERIAL NUMBER INTEGRATION
+            // Hängt "-snXX" an, um Duplikate bei limitierten Karten zu vermeiden.
             String serial = attributes.get("Serial");
             if (isValid(serial) && !serial.equals("0")) {
                 filenameTokens.add("sn" + serial);
@@ -156,7 +158,7 @@ public class CardPageGenerator {
 
             createSubPage(currentCard, filePath, prevCard, nextCard, allCardsInTable);
 
-            // Link Update
+            // Link Update in der Index-Tabelle
             Element row = rows.get(i + 1);
             Elements cols = row.select("td");
             if (!cols.isEmpty()) {
@@ -165,6 +167,7 @@ public class CardPageGenerator {
                 playerCell.empty();
                 playerCell.appendElement("a")
                         .attr("href", currentCard.fullRelativePath)
+                        // UPDATE: Meaningful Title auch hier
                         .attr("title", "View details for " + currentCard.get("Season") + " " + currentCard.get("Brand") + " #" + currentCard.get("Number"))
                         .text(originalText);
             }
@@ -221,6 +224,8 @@ public class CardPageGenerator {
         String h1Title = generateH1(c);
         String browserTitle = generateBrowserTitle(c);
         String metaDesc = generateMetaDescription(c);
+
+        // Texte für Bilder
         String frontAlt = generateAltText(c, "front");
         String backAlt = generateAltText(c, "back");
         String frontImgTitle = "Front scan of " + c.get("Player") + " " + c.get("Brand") + " (" + c.get("Season") + ")";
@@ -232,6 +237,7 @@ public class CardPageGenerator {
         sb.append("    <meta name=\"description\" content=\"").append(metaDesc).append("\">\n");
         sb.append(TEMPLATE_HEAD_SCRIPTS).append("\n");
 
+        // Schema.org für Sammlerstücke (ItemPage)
         sb.append(generateJsonLd(c, metaDesc, h1Title));
 
         sb.append("</head>\n<body>\n");
@@ -277,6 +283,7 @@ public class CardPageGenerator {
 
         // Front Image (CSS class: card-image-wrapper)
         sb.append("        <div class=\"card-image-wrapper\">\n");
+        // Bild: onclick öffnet Modal. Title und Alt sind gesetzt.
         sb.append("            <img src=\"").append(frontImgPath).append("\" ")
                 .append("alt=\"").append(frontAlt).append("\" ")
                 .append("title=\"").append(frontImgTitle).append("\" ")
@@ -287,6 +294,7 @@ public class CardPageGenerator {
 
         // Back Image (CSS class: card-image-wrapper)
         sb.append("        <div class=\"card-image-wrapper\">\n");
+        // Bild: onclick öffnet Modal (Parameter getauscht für Flip-Logik)
         sb.append("            <img src=\"").append(backImgPath).append("\" ")
                 .append("alt=\"").append(backAlt).append("\" ")
                 .append("title=\"").append(backImgTitle).append("\" ")
@@ -362,12 +370,13 @@ public class CardPageGenerator {
         sb.append("    Juwan Howard Collection &copy; 2026\n");
         sb.append("</footer>\n");
 
-        // --- MODAL HTML STRUCTURE UND JAVASCRIPT ---
+        // --- MODAL HTML STRUCTURE & LOGIC ---
+        // Das CSS hierfür ist jetzt in main.css (.modal, .modal-content, etc.)
         sb.append("""
             <div id="cardModal" class="modal">
               <span class="close-modal" onclick="closeModal()">&times;</span>
               <button class="flip-modal-btn" onclick="flipCard()">&#8644; Flip Card</button>
-              <img class="modal-content" id="img01">
+              <img class="modal-content" id="img01" alt="Zoomed card view">
             </div>
 
             <script>
@@ -545,7 +554,6 @@ public class CardPageGenerator {
         return sb.toString();
     }
 
-    // UPDATE: Verwende jetzt CSS Klassen statt Inline Styles
     private static String createFaqItem(String question, String answer) {
         return "<details class=\"faq-details\">" +
                 "<summary class=\"faq-summary\">" + question + "</summary>" +
@@ -553,55 +561,82 @@ public class CardPageGenerator {
                 "</details>";
     }
 
-    private static String generateJsonLd(CardData c, String desc, String name) {
+    // UPDATE: Neues "ItemPage" / "IndividualProduct" Schema (Kein Merchant Listing!)
+    private static String generateJsonLd(CardData c, String desc, String h1Title) {
         String frontImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + c.filenameBase + "-front.jpg";
+        String backImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + c.filenameBase + "-back.jpg";
 
-        StringBuilder faqSchema = new StringBuilder();
-        faqSchema.append("    {\n      \"@type\": \"Question\",\n      \"name\": \"What is the serial number?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"")
-                .append(c.get("Serial")).append(" / ").append(c.get("Print Run")).append("\" }\n    }");
-
-        if (c.has("Grade")) {
-            faqSchema.append(",\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Is this card graded?\",\n      \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"Yes, ")
-                    .append(c.get("Grading Co.")).append(" ").append(c.get("Grade")).append("\" }\n    }");
-        }
-
-        return """
+        StringBuilder sb = new StringBuilder();
+        sb.append("""
         <script type="application/ld+json">
         {
           "@context": "https://schema.org",
           "@graph": [
             {
-              "@type": "Product",
-              "image": "%s",
-              "name": "%s",
-              "description": "%s",
-              "brand": { "@type": "Brand", "name": "%s" },
-              "manufacturer": "%s",
-              "sku": "%s-%s",
-              "category": "Sports Card",
-              "offers": { "@type": "Offer", "availability": "https://schema.org/SoldOut", "price": "0", "priceCurrency": "EUR", "description": "Private Collection (NFS)" }
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "%s" },
+                { "@type": "ListItem", "position": 2, "name": "Collection", "item": "%s/index.html" },
+                { "@type": "ListItem", "position": 3, "name": "%s", "item": "%s/index.html#%s" },
+                { "@type": "ListItem", "position": 4, "name": "%s" }
+              ]
             },
             {
-              "@type": "FAQPage",
-              "mainEntity": [
-                %s
-              ]
+              "@type": "ItemPage",
+              "mainEntity": {
+                "@type": "IndividualProduct",
+                "name": "%s",
+                "description": "%s",
+                "image": [ "%s", "%s" ],
+                "brand": { "@type": "Brand", "name": "%s" },
+                "manufacturer": { "@type": "Organization", "name": "%s" },
+                "model": "%s",
+                "identifier": "%s",
+                "category": "Sports Trading Card",
+                "itemCondition": "https://schema.org/UsedCondition",
+        """.formatted(
+                BASE_URL, BASE_URL, c.get("Season"), BASE_URL, c.seasonFolder, c.get("Number"), // Breadcrumb args
+                h1Title, desc, frontImgUrl, backImgUrl, c.get("Brand"), c.get("Company"), c.get("Variant"), c.get("Number") // Product args
+        ));
+
+        // Serial Number (Falls vorhanden)
+        if (c.has("Serial")) {
+            sb.append("        \"serialNumber\": \"").append(c.get("Serial")).append("\",\n");
+        }
+
+        // Additional Properties
+        sb.append("        \"additionalProperty\": [\n");
+        sb.append("          { \"@type\": \"PropertyValue\", \"name\": \"Season\", \"value\": \"").append(c.get("Season")).append("\" },\n");
+        sb.append("          { \"@type\": \"PropertyValue\", \"name\": \"Team\", \"value\": \"").append(c.get("Team")).append("\" },\n");
+        sb.append("          { \"@type\": \"PropertyValue\", \"name\": \"Player\", \"value\": \"").append(c.get("Player")).append("\" }");
+
+        if (c.has("Grade")) {
+            sb.append(",\n          { \"@type\": \"PropertyValue\", \"name\": \"Grade\", \"value\": \"").append(c.get("Grading Co.")).append(" ").append(c.get("Grade")).append("\" }");
+        }
+        if (c.has("Theme")) {
+            sb.append(",\n          { \"@type\": \"PropertyValue\", \"name\": \"Theme\", \"value\": \"").append(c.get("Theme")).append("\" }");
+        }
+        sb.append("\n        ],\n");
+
+        // Offer: SoldOut (Wichtig für Sammlungen!)
+        sb.append("""
+                "offers": {
+                  "@type": "Offer",
+                  "availability": "https://schema.org/SoldOut",
+                  "price": "0",
+                  "priceCurrency": "EUR",
+                  "description": "Private Collection (Not for Sale)"
+                }
+              }
             }
           ]
         }
         </script>
-        """.formatted(
-                frontImgUrl,
-                name,
-                desc,
-                c.get("Brand"),
-                c.get("Company"),
-                c.get("Number"), c.get("Variant").replaceAll("[^a-zA-Z0-9]", ""),
-                faqSchema.toString()
-        );
+        """);
+
+        return sb.toString();
     }
 
-    // UPDATE: Verwende jetzt CSS Klassen statt Inline Styles
     private static void addTableRow(StringBuilder sb, String title, String value) {
         sb.append("            <tr><th class=\"specs-th\">")
                 .append(title)
