@@ -156,7 +156,7 @@ public class CardPageGenerator {
 
             createSubPage(currentCard, filePath, prevCard, nextCard, allCardsInTable);
 
-            // Link Update
+            // Link Update in der Haupttabelle
             Element row = rows.get(i + 1);
             Elements cols = row.select("td");
             if (!cols.isEmpty()) {
@@ -165,7 +165,8 @@ public class CardPageGenerator {
                 playerCell.empty();
                 playerCell.appendElement("a")
                         .attr("href", currentCard.fullRelativePath)
-                        .attr("title", "View details for " + currentCard.get("Brand") + " #" + currentCard.get("Number"))
+                        // UPDATE: Meaningful Title auch hier
+                        .attr("title", "View details for " + currentCard.get("Season") + " " + currentCard.get("Brand") + " #" + currentCard.get("Number"))
                         .text(originalText);
             }
             System.out.println(" -> Generated: " + currentCard.filename);
@@ -221,8 +222,12 @@ public class CardPageGenerator {
         String h1Title = generateH1(c);
         String browserTitle = generateBrowserTitle(c);
         String metaDesc = generateMetaDescription(c);
+
+        // Alt-Texte und Title-Texte für Bilder vorbereiten
         String frontAlt = generateAltText(c, "front");
         String backAlt = generateAltText(c, "back");
+        String frontImgTitle = "Front scan of " + c.get("Player") + " " + c.get("Brand") + " (" + c.get("Season") + ")";
+        String backImgTitle = "Back scan of " + c.get("Player") + " " + c.get("Brand") + " (" + c.get("Season") + ")";
 
         // HTML START
         sb.append("<!doctype html>\n<html lang=\"en\">\n<head>\n");
@@ -236,11 +241,19 @@ public class CardPageGenerator {
 
         // NAVIGATION
         sb.append("<nav style=\"padding: 20px; background: #f8f9fa; border-bottom: 1px solid #e9ecef; display:flex; justify-content:space-between; align-items:center;\">\n");
-        sb.append("    <a href=\"../../index.html\" class=\"modern-button\" style=\"text-decoration:none;\">&larr; Overview</a>\n");
+        // UPDATE: Title tag für Overview
+        sb.append("    <a href=\"../../index.html\" class=\"modern-button\" style=\"text-decoration:none;\" title=\"Return to the complete card collection overview\">&larr; Overview</a>\n");
 
         sb.append("    <div>\n");
-        if (prev != null) sb.append("        <a href=\"").append(prev.filename).append("\" title=\"Previous: ").append(prev.get("Brand")).append("\" style=\"margin-right:10px; text-decoration:none;\">&laquo; Prev</a>\n");
-        if (next != null) sb.append("        <a href=\"").append(next.filename).append("\" title=\"Next: ").append(next.get("Brand")).append("\" style=\"text-decoration:none;\">Next &raquo;</a>\n");
+        // UPDATE: Detaillierte Title tags für Prev/Next
+        if (prev != null) {
+            String prevTitle = "Go to previous card: " + prev.get("Season") + " " + prev.get("Brand");
+            sb.append("        <a href=\"").append(prev.filename).append("\" title=\"").append(prevTitle).append("\" style=\"margin-right:10px; text-decoration:none;\">&laquo; Prev</a>\n");
+        }
+        if (next != null) {
+            String nextTitle = "Go to next card: " + next.get("Season") + " " + next.get("Brand");
+            sb.append("        <a href=\"").append(next.filename).append("\" title=\"").append(nextTitle).append("\" style=\"text-decoration:none;\">Next &raquo;</a>\n");
+        }
         sb.append("    </div>\n");
         sb.append("</nav>\n");
 
@@ -259,24 +272,18 @@ public class CardPageGenerator {
         sb.append("        <p>").append(generateSeoText(c)).append("</p>\n");
         sb.append("    </article>\n");
 
-        // --- IMAGES SECTION (FLEXIBEL: QUER & HOCH) ---
-        // align-items: flex-start sorgt dafür, dass sie oben bündig sind. center würde sie mittig ausrichten.
-        // justify-content: center sorgt dafür, dass sie in der Mitte stehen.
+        // --- IMAGES SECTION ---
         sb.append("    <div class=\"card-images-container\" style=\"display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; align-items: center; margin: 40px 0;\">\n");
 
         String seasonImgFolder = RELATIVE_IMAGES_PATH + "/" + c.seasonFolder;
         String frontImgPath = seasonImgFolder + "/" + c.filenameBase + "-front.jpg";
         String backImgPath = seasonImgFolder + "/" + c.filenameBase + "-back.jpg";
 
-        // CSS-Logik:
-        // 1. Der Wrapper hat KEINE feste Breite mehr. Er passt sich dem Inhalt an (flex: 0 1 auto).
-        // 2. Das Bild hat max-width: 100% (für Mobile) und max-height: 550px (für Desktop).
-        // 3. Dadurch kann ein Bild hochkant (300x500) oder quer (600x400) sein -> beides sieht gut aus.
-
         // Front Image
         sb.append("        <div class=\"card-image-wrapper\" style=\"flex: 0 1 auto; text-align:center; max-width: 100%;\">\n");
-        sb.append("            <a href=\"").append(frontImgPath).append("\" title=\"High-res Front: ").append(h1Title).append("\" target=\"_blank\" rel=\"noopener\">\n");
-        sb.append("                <img src=\"").append(frontImgPath).append("\" alt=\"").append(frontAlt).append("\" loading=\"lazy\" ")
+        sb.append("            <a href=\"").append(frontImgPath).append("\" title=\"View high-resolution front image: ").append(h1Title).append("\" target=\"_blank\" rel=\"noopener\">\n");
+        // UPDATE: Added title attribute to img tag
+        sb.append("                <img src=\"").append(frontImgPath).append("\" alt=\"").append(frontAlt).append("\" title=\"").append(frontImgTitle).append("\" loading=\"lazy\" ")
                 .append("style=\"max-width: 100%; max-height: 550px; width: auto; height: auto; border:1px solid #eee; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: block; margin: 0 auto;\">\n");
         sb.append("            </a>\n");
         sb.append("            <p style=\"color: #888; margin-top:10px; font-weight:bold;\">Front View</p>\n");
@@ -284,8 +291,9 @@ public class CardPageGenerator {
 
         // Back Image
         sb.append("        <div class=\"card-image-wrapper\" style=\"flex: 0 1 auto; text-align:center; max-width: 100%;\">\n");
-        sb.append("            <a href=\"").append(backImgPath).append("\" title=\"High-res Back: ").append(h1Title).append("\" target=\"_blank\" rel=\"noopener\">\n");
-        sb.append("                <img src=\"").append(backImgPath).append("\" alt=\"").append(backAlt).append("\" loading=\"lazy\" ")
+        sb.append("            <a href=\"").append(backImgPath).append("\" title=\"View high-resolution back image: ").append(h1Title).append("\" target=\"_blank\" rel=\"noopener\">\n");
+        // UPDATE: Added title attribute to img tag
+        sb.append("                <img src=\"").append(backImgPath).append("\" alt=\"").append(backAlt).append("\" title=\"").append(backImgTitle).append("\" loading=\"lazy\" ")
                 .append("style=\"max-width: 100%; max-height: 550px; width: auto; height: auto; border:1px solid #eee; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: block; margin: 0 auto;\">\n");
         sb.append("            </a>\n");
         sb.append("            <p style=\"color: #888; margin-top:10px; font-weight:bold;\">Back View</p>\n");
@@ -337,8 +345,12 @@ public class CardPageGenerator {
         for (CardData other : allCards) {
             if (other == c) continue;
             if (count >= 6) break;
+
+            // UPDATE: Meaningful Title für Related Cards Links
+            String linkTitle = "View card details: " + other.get("Season") + " " + other.get("Brand") + " " + other.get("Variant");
+
             sb.append("            <li style=\"flex: 1 1 30%; min-width:200px; margin-bottom:10px;\">\n");
-            sb.append("                <a href=\"").append(other.filename).append("\" style=\"color:#317EFB; text-decoration:none;\">")
+            sb.append("                <a href=\"").append(other.filename).append("\" title=\"").append(linkTitle).append("\" style=\"color:#317EFB; text-decoration:none;\">")
                     .append(other.get("Brand")).append(" #").append(other.get("Number")).append(" ").append(other.get("Variant"))
                     .append("</a>\n");
             sb.append("            </li>\n");

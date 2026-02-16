@@ -179,7 +179,6 @@ public class FileGenerator {
                                                   "description": "Private Collection - Not for Sale"
                                                 }
                                               }
-                                             }
                                             }
                                           ]
                                         }
