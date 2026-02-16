@@ -156,7 +156,7 @@ public class CardPageGenerator {
 
             createSubPage(currentCard, filePath, prevCard, nextCard, allCardsInTable);
 
-            // Link Update in der Haupttabelle
+            // Link Update
             Element row = rows.get(i + 1);
             Elements cols = row.select("td");
             if (!cols.isEmpty()) {
@@ -165,7 +165,6 @@ public class CardPageGenerator {
                 playerCell.empty();
                 playerCell.appendElement("a")
                         .attr("href", currentCard.fullRelativePath)
-                        // UPDATE: Meaningful Title auch hier
                         .attr("title", "View details for " + currentCard.get("Season") + " " + currentCard.get("Brand") + " #" + currentCard.get("Number"))
                         .text(originalText);
             }
@@ -173,7 +172,7 @@ public class CardPageGenerator {
         }
     }
 
-    // --- HTML TEMPLATE HEADER ---
+    // --- TEMPLATE HEADER ---
     private static final String TEMPLATE_HEAD_SCRIPTS = """
                         <meta charset="UTF-8">
                         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -222,8 +221,6 @@ public class CardPageGenerator {
         String h1Title = generateH1(c);
         String browserTitle = generateBrowserTitle(c);
         String metaDesc = generateMetaDescription(c);
-
-        // Alt-Texte und Title-Texte für Bilder vorbereiten
         String frontAlt = generateAltText(c, "front");
         String backAlt = generateAltText(c, "back");
         String frontImgTitle = "Front scan of " + c.get("Player") + " " + c.get("Brand") + " (" + c.get("Season") + ")";
@@ -239,13 +236,11 @@ public class CardPageGenerator {
 
         sb.append("</head>\n<body>\n");
 
-        // NAVIGATION
-        sb.append("<nav style=\"padding: 20px; background: #f8f9fa; border-bottom: 1px solid #e9ecef; display:flex; justify-content:space-between; align-items:center;\">\n");
-        // UPDATE: Title tag für Overview
+        // NAVIGATION (CSS class: detail-nav)
+        sb.append("<nav class=\"detail-nav\">\n");
         sb.append("    <a href=\"../../index.html\" class=\"modern-button\" style=\"text-decoration:none;\" title=\"Return to the complete card collection overview\">&larr; Overview</a>\n");
 
         sb.append("    <div>\n");
-        // UPDATE: Detaillierte Title tags für Prev/Next
         if (prev != null) {
             String prevTitle = "Go to previous card: " + prev.get("Season") + " " + prev.get("Brand");
             sb.append("        <a href=\"").append(prev.filename).append("\" title=\"").append(prevTitle).append("\" style=\"margin-right:10px; text-decoration:none;\">&laquo; Prev</a>\n");
@@ -257,46 +252,47 @@ public class CardPageGenerator {
         sb.append("    </div>\n");
         sb.append("</nav>\n");
 
-        sb.append("<main style=\"max-width: 900px; margin: 0 auto; padding: 20px; font-family: sans-serif;\">\n");
+        // MAIN CONTENT (CSS class: detail-main)
+        sb.append("<main class=\"detail-main\">\n");
 
-        // HEADER
-        sb.append("    <header style=\"text-align:center; margin-bottom:40px;\">\n");
-        sb.append("        <h1 style=\"margin-bottom:5px; font-size: 2em;\">").append(h1Title).append("</h1>\n");
-        sb.append("        <p style=\"font-size:1.2em; color:#555; margin:0;\">").append(c.get("Season")).append(" ").append(c.get("Company")).append(" ").append(c.get("Brand")).append("</p>\n");
-        sb.append("        <p style=\"font-size:1em; color:#777;\">").append(c.get("Theme")).append(" &bull; ").append(c.get("Variant")).append(" &bull; #").append(c.get("Number")).append("</p>\n");
+        // HEADER (CSS class: detail-header)
+        sb.append("    <header class=\"detail-header\">\n");
+        sb.append("        <h1>").append(h1Title).append("</h1>\n");
+        sb.append("        <p class=\"sub-title\">").append(c.get("Season")).append(" ").append(c.get("Company")).append(" ").append(c.get("Brand")).append("</p>\n");
+        sb.append("        <p class=\"meta-info\">").append(c.get("Theme")).append(" &bull; ").append(c.get("Variant")).append(" &bull; #").append(c.get("Number")).append("</p>\n");
         sb.append("    </header>\n");
 
-        // SEO TEXT
-        sb.append("    <article style=\"background:#fff; padding:20px; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.05); margin-bottom:30px; line-height:1.6;\">\n");
+        // SEO TEXT (CSS class: seo-box)
+        sb.append("    <article class=\"seo-box\">\n");
         sb.append("        <h3>About this Card</h3>\n");
         sb.append("        <p>").append(generateSeoText(c)).append("</p>\n");
         sb.append("    </article>\n");
 
-        // --- IMAGES SECTION ---
-        sb.append("    <div class=\"card-images-container\" style=\"display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; align-items: center; margin: 40px 0;\">\n");
+        // --- IMAGES SECTION (CSS class: card-images-container) ---
+        sb.append("    <div class=\"card-images-container\">\n");
 
         String seasonImgFolder = RELATIVE_IMAGES_PATH + "/" + c.seasonFolder;
         String frontImgPath = seasonImgFolder + "/" + c.filenameBase + "-front.jpg";
         String backImgPath = seasonImgFolder + "/" + c.filenameBase + "-back.jpg";
 
-        // Front Image
-        sb.append("        <div class=\"card-image-wrapper\" style=\"flex: 0 1 auto; text-align:center; max-width: 100%;\">\n");
-        sb.append("            <a href=\"").append(frontImgPath).append("\" title=\"View high-resolution front image: ").append(h1Title).append("\" target=\"_blank\" rel=\"noopener\">\n");
-        // UPDATE: Added title attribute to img tag
-        sb.append("                <img src=\"").append(frontImgPath).append("\" alt=\"").append(frontAlt).append("\" title=\"").append(frontImgTitle).append("\" loading=\"lazy\" ")
-                .append("style=\"max-width: 100%; max-height: 550px; width: auto; height: auto; border:1px solid #eee; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: block; margin: 0 auto;\">\n");
-        sb.append("            </a>\n");
-        sb.append("            <p style=\"color: #888; margin-top:10px; font-weight:bold;\">Front View</p>\n");
+        // Front Image (CSS class: card-image-wrapper)
+        sb.append("        <div class=\"card-image-wrapper\">\n");
+        sb.append("            <img src=\"").append(frontImgPath).append("\" ")
+                .append("alt=\"").append(frontAlt).append("\" ")
+                .append("title=\"").append(frontImgTitle).append("\" ")
+                .append("loading=\"lazy\" ")
+                .append("onclick=\"openModal('").append(frontImgPath).append("', '").append(backImgPath).append("')\">\n");
+        sb.append("            <p>Front View (Click to Zoom)</p>\n");
         sb.append("        </div>\n");
 
-        // Back Image
-        sb.append("        <div class=\"card-image-wrapper\" style=\"flex: 0 1 auto; text-align:center; max-width: 100%;\">\n");
-        sb.append("            <a href=\"").append(backImgPath).append("\" title=\"View high-resolution back image: ").append(h1Title).append("\" target=\"_blank\" rel=\"noopener\">\n");
-        // UPDATE: Added title attribute to img tag
-        sb.append("                <img src=\"").append(backImgPath).append("\" alt=\"").append(backAlt).append("\" title=\"").append(backImgTitle).append("\" loading=\"lazy\" ")
-                .append("style=\"max-width: 100%; max-height: 550px; width: auto; height: auto; border:1px solid #eee; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: block; margin: 0 auto;\">\n");
-        sb.append("            </a>\n");
-        sb.append("            <p style=\"color: #888; margin-top:10px; font-weight:bold;\">Back View</p>\n");
+        // Back Image (CSS class: card-image-wrapper)
+        sb.append("        <div class=\"card-image-wrapper\">\n");
+        sb.append("            <img src=\"").append(backImgPath).append("\" ")
+                .append("alt=\"").append(backAlt).append("\" ")
+                .append("title=\"").append(backImgTitle).append("\" ")
+                .append("loading=\"lazy\" ")
+                .append("onclick=\"openModal('").append(backImgPath).append("', '").append(frontImgPath).append("')\">\n");
+        sb.append("            <p>Back View (Click to Zoom)</p>\n");
         sb.append("        </div>\n");
 
         sb.append("    </div>\n");
@@ -305,7 +301,8 @@ public class CardPageGenerator {
         // DATA TABLE
         sb.append("    <div class=\"card-data\">\n");
         sb.append("        <table style=\"width: 100%; border-collapse: collapse; margin-top: 20px;\">\n");
-        sb.append("            <tr style=\"background-color: #317EFB; color: white;\"><th colspan=\"2\" style=\"padding: 10px; text-align: left;\">Technical Specifications</th></tr>\n");
+        // Table Header Class
+        sb.append("            <tr class=\"specs-table-header\"><th colspan=\"2\" style=\"padding: 10px; text-align: left;\">Technical Specifications</th></tr>\n");
         addTableRow(sb, "Season", c.get("Season"));
         addTableRow(sb, "Team", c.get("Team"));
         addTableRow(sb, "Manufacturer", c.get("Company"));
@@ -336,20 +333,19 @@ public class CardPageGenerator {
         sb.append(generateFaqHtml(c));
         sb.append("    </section>\n");
 
-        // RELATED CARDS
-        sb.append("    <section style=\"margin-top: 60px; padding-top: 20px; border-top: 1px solid #ddd;\">\n");
+        // RELATED CARDS (CSS class: related-cards-section)
+        sb.append("    <section class=\"related-cards-section\">\n");
         sb.append("        <h3>More from the ").append(c.get("Season")).append(" Collection</h3>\n");
-        sb.append("        <ul style=\"list-style:none; padding:0; display:flex; flex-wrap:wrap; gap:10px;\">\n");
+        sb.append("        <ul class=\"related-cards-list\">\n");
 
         int count = 0;
         for (CardData other : allCards) {
             if (other == c) continue;
             if (count >= 6) break;
 
-            // UPDATE: Meaningful Title für Related Cards Links
             String linkTitle = "View card details: " + other.get("Season") + " " + other.get("Brand") + " " + other.get("Variant");
 
-            sb.append("            <li style=\"flex: 1 1 30%; min-width:200px; margin-bottom:10px;\">\n");
+            sb.append("            <li class=\"related-card-item\">\n");
             sb.append("                <a href=\"").append(other.filename).append("\" title=\"").append(linkTitle).append("\" style=\"color:#317EFB; text-decoration:none;\">")
                     .append(other.get("Brand")).append(" #").append(other.get("Number")).append(" ").append(other.get("Variant"))
                     .append("</a>\n");
@@ -360,9 +356,60 @@ public class CardPageGenerator {
         sb.append("    </section>\n");
 
         sb.append("</main>\n");
-        sb.append("<footer style=\"text-align: center; margin-top: 50px; padding: 20px; font-size: 0.9em; color: #666; background:#f9f9f9;\">\n");
+
+        // FOOTER (CSS class: detail-footer)
+        sb.append("<footer class=\"detail-footer\">\n");
         sb.append("    Juwan Howard Collection &copy; 2026\n");
         sb.append("</footer>\n");
+
+        // --- MODAL HTML STRUCTURE UND JAVASCRIPT ---
+        sb.append("""
+            <div id="cardModal" class="modal">
+              <span class="close-modal" onclick="closeModal()">&times;</span>
+              <button class="flip-modal-btn" onclick="flipCard()">&#8644; Flip Card</button>
+              <img class="modal-content" id="img01">
+            </div>
+
+            <script>
+                var modal = document.getElementById("cardModal");
+                var modalImg = document.getElementById("img01");
+                
+                // Variablen um Flip-Status zu speichern
+                var currentModalSrc = "";
+                var alternateModalSrc = "";
+
+                function openModal(src, altSrc) {
+                  modal.style.display = "flex";
+                  modal.style.alignItems = "center";
+                  modal.style.justifyContent = "center";
+                  
+                  modalImg.src = src;
+                  currentModalSrc = src;
+                  alternateModalSrc = altSrc;
+                }
+
+                function closeModal() {
+                  modal.style.display = "none";
+                }
+                
+                function flipCard() {
+                    // Tausche die Bilder
+                    var temp = currentModalSrc;
+                    currentModalSrc = alternateModalSrc;
+                    alternateModalSrc = temp;
+                    
+                    modalImg.src = currentModalSrc;
+                }
+
+                // Schließen wenn man neben das Bild klickt
+                window.onclick = function(event) {
+                  if (event.target == modal) {
+                    closeModal();
+                  }
+                }
+            </script>
+        """);
+
         sb.append("</body>\n</html>");
 
         Files.writeString(path, sb.toString(), StandardCharsets.UTF_8);
@@ -498,10 +545,11 @@ public class CardPageGenerator {
         return sb.toString();
     }
 
+    // UPDATE: Verwende jetzt CSS Klassen statt Inline Styles
     private static String createFaqItem(String question, String answer) {
-        return "<details style=\"margin-bottom:10px; border:1px solid #ddd; padding:10px; border-radius:5px;\">" +
-                "<summary style=\"cursor:pointer; font-weight:bold;\">" + question + "</summary>" +
-                "<p style=\"margin-top:5px; color:#555;\">" + answer + "</p>" +
+        return "<details class=\"faq-details\">" +
+                "<summary class=\"faq-summary\">" + question + "</summary>" +
+                "<p class=\"faq-answer\">" + answer + "</p>" +
                 "</details>";
     }
 
@@ -553,10 +601,11 @@ public class CardPageGenerator {
         );
     }
 
+    // UPDATE: Verwende jetzt CSS Klassen statt Inline Styles
     private static void addTableRow(StringBuilder sb, String title, String value) {
-        sb.append("            <tr><th style=\"padding: 8px; border-bottom: 1px solid #ddd; text-align:left; width: 200px; color:#333;\">")
+        sb.append("            <tr><th class=\"specs-th\">")
                 .append(title)
-                .append("</th><td style=\"padding: 8px; border-bottom: 1px solid #ddd; color:#555;\">")
+                .append("</th><td class=\"specs-td\">")
                 .append(isValid(value) ? value : "-")
                 .append("</td></tr>\n");
     }
