@@ -184,54 +184,90 @@ public class FileGenerator {
                                         }
                                       }
                                       </script>
+                                      <script type="application/ld+json">
+                                          {
+                                            "@context": "https://schema.org",
+                                            "@type": "CollectionPage",
+                                            "name": "Juwan Howard Basketball Card Collection",
+                                            "description": "A massive private trading card collection dedicated to NBA player Juwan Howard.",
+                                            "url": "https://www.maulmann.de/index.html",
+                                            "about": {
+                                              "@type": "Person",
+                                              "name": "Juwan Howard",
+                                              "jobTitle": "NBA Basketball Player",
+                                              "memberOf": {
+                                                "@type": "SportsTeam",
+                                                "name": "Michigan Wolverines, Washington Bullets, Miami Heat"
+                                              }
+                                            },
+                                            "author": {
+                                              "@type": "Person",
+                                              "name": "Maulmann"
+                                            }
+                                          }
+                                          </script>
             """;
     private static final String templateBegin = """
-            <!doctype html>
-                <html lang="en">
-                    <head>
-                        <title>Juwan Howard Basketball Trading Card Collection</title>
-                        <meta charset="UTF-8">
-                        <meta name="viewport" content="width=device-width, initial-scale=1">
-                        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-                        <meta name="theme-color" content="#317EFB">
-                        <link rel="preload" href="/css/main.css" as="style">
-                        <link href="/css/main.css" rel="stylesheet" type="text/css">
-                        <link rel="preconnect" href="https://www.googletagmanager.com">
-                        <script async src="https://www.googletagmanager.com/gtag/js?id=G-535TKYRZTR"></script>
-                            <script>
-                                   function loadAnalytics() {
-                                     var script = document.createElement('script');
-                                     script.src = "https://www.googletagmanager.com/gtag/js?id=G-535TKYRZTR";
-                                     script.async = true;
-                                     document.head.appendChild(script);
+                        <!doctype html>
+                            <html lang="en">
+                                <head>
+            <title>Juwan Howard Basketball Card Collection | 1/1s, PMGs & Rare PC</title>
+                                    <meta charset="UTF-8">
+                                    <meta name="viewport" content="width=device-width, initial-scale=1">
+                                    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                                    <meta name="theme-color" content="#317EFB">
+                                    <link rel="preload" href="/css/main.css" as="style">
+                                    <link href="/css/main.css" rel="stylesheet" type="text/css">
+                                    <link rel="preconnect" href="https://www.googletagmanager.com">
+                                    <script async src="https://www.googletagmanager.com/gtag/js?id=G-535TKYRZTR"></script>
+                                        <script>
+                                               function loadAnalytics() {
+                                                 var script = document.createElement('script');
+                                                 script.src = "https://www.googletagmanager.com/gtag/js?id=G-535TKYRZTR";
+                                                 script.async = true;
+                                                 document.head.appendChild(script);
             
-                                     window.dataLayer = window.dataLayer || [];
-                                     function gtag(){dataLayer.push(arguments);}
-                                     gtag('js', new Date());
-                                     gtag('config', 'G-535TKYRZTR');
-                                   }
-                                   window.addEventListener('scroll', loadAnalytics, {once: true});
-                                   window.addEventListener('mousemove', loadAnalytics, {once: true});
-                                   window.addEventListener('touchstart', loadAnalytics, {once: true});
-                            </script>
-                        <meta name="description" content="Private Collection of Juwan Howard Basketball Trading Cards. Containing many 1/1 and rare Trading Cards from companies like: Panini, Fleer, Topps and Upper Deck. Including Super rare cards like Precious Metal Gems from the 90s">
-                        <meta name="author" content="Mauli Maulmann - Content Creator">
-                        <meta name="publisher" content="Mauli Maulmann - Card Collector">
-                        <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
-                        <link rel="canonical" href="https://www.maulmann.de/">
-                        <meta name="google-site-verification" content="Ev1ZxTPJs2GMFNQ6FyItlCYAKUWscL3jDFS_mVXH6IQ">
-                        <link href="/favicon/favicon.ico" rel="icon" sizes="32x32">
-                        <link href="/favicon/apple-touch-icon.png" rel="apple-touch-icon">
-                        <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
-                        <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-                        <link rel="icon" type="image/png" sizes="194x194" href="/favicon/favicon-194x194.png">
-                        <link rel="icon" type="image/png" sizes="192x192" href="/favicon/android-chrome-192x192.png">
-                        <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
-                        <link rel="manifest" href="/manifest.json">
-                        <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#317EFB">
-                        <meta name="apple-mobile-web-app-title" content="Maulmann.de">
-                        <meta name="application-name" content="Maulmann.de">
-                        <meta name="msapplication-TileColor" content="#317EFB">
+                                                 window.dataLayer = window.dataLayer || [];
+                                                 function gtag(){dataLayer.push(arguments);}
+                                                 gtag('js', new Date());
+                                                 gtag('config', 'G-535TKYRZTR');
+                                               }
+                                               window.addEventListener('scroll', loadAnalytics, {once: true});
+                                               window.addEventListener('mousemove', loadAnalytics, {once: true});
+                                               window.addEventListener('touchstart', loadAnalytics, {once: true});
+                                        </script>
+            <meta name="description" content="Explore a massive Juwan Howard private basketball card collection. Featuring rare 90s inserts, PMGs, 1/1s, and autographs from 1994 to today.">
+                                    <meta name="keywords" content="Juwan Howard, Basketball Cards, Player Collection, PC, Trading Cards, Panini, Upper Deck, 1/1, PMG, NBA">
+                                    <meta name="author" content="Mauli Maulmann - Content Creator">
+                                    <meta name="publisher" content="Mauli Maulmann - Card Collector">
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+            
+            <link rel="canonical" href="https://www.maulmann.de/index.html">
+            <meta property="og:type" content="website">
+                <meta property="og:url" content="https://www.maulmann.de/index.html">
+                <meta property="og:title" content="Massive Juwan Howard Basketball Card Collection">
+                <meta property="og:description" content="Over 1000+ Juwan Howard cards. See the 1/1s, PMGs, and rare 90s inserts in this ultimate Player Collection.">
+                <meta property="og:image" content="https://www.maulmann.de/images/1997-98/Juwan-Howard-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-sn7-front.jpg">
+                <meta property="og:site_name" content="Maulmann Trading Cards">
+            
+                <meta name="twitter:card" content="summary_large_image">
+                <meta name="twitter:title" content="Juwan Howard Basketball Card Collection | 1/1s & PMGs">
+                <meta name="twitter:description" content="Explore a massive Juwan Howard private basketball card collection from 1994 to today.">
+                <meta name="twitter:image" content="https://www.maulmann.de/images/1997-98/Juwan-Howard-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-sn7-front.jpg">
+            
+                                    <meta name="google-site-verification" content="Ev1ZxTPJs2GMFNQ6FyItlCYAKUWscL3jDFS_mVXH6IQ">
+                                    <link href="/favicon/favicon.ico" rel="icon" sizes="32x32">
+                                    <link href="/favicon/apple-touch-icon.png" rel="apple-touch-icon">
+                                    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+                                    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+                                    <link rel="icon" type="image/png" sizes="194x194" href="/favicon/favicon-194x194.png">
+                                    <link rel="icon" type="image/png" sizes="192x192" href="/favicon/android-chrome-192x192.png">
+                                    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+                                    <link rel="manifest" href="/manifest.json">
+                                    <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#317EFB">
+                                    <meta name="apple-mobile-web-app-title" content="Maulmann.de">
+                                    <meta name="application-name" content="Maulmann.de">
+                                    <meta name="msapplication-TileColor" content="#317EFB">
             """ + faqJsonLd + """
                         <script>
                             if ('serviceWorker' in navigator) {
@@ -246,13 +282,13 @@ public class FileGenerator {
                     });
               }
             </script>
+            
             </head>
             <body>
-            <h1 id="top" title='Top of the list'>List of Juwan Howard Basketball Trading Cards</h1>
+            <h1 id="top" title='Top of the list'>Juwan Howard Basketball Card - Private Collection</h1>
                 <p>
-                    This page contains my Private Collection of all Juwan Howard Basketball Trading Cards i own.
-                    Including many 1/1 and rare Basketball Trading Cards from companies like: Panini,
-                    Fleer, Topps, Leaf and Upper Deck. Including super rare cards like Fleer Precious Metal Gems from the 90's
+                    I wanted to share my dedicated website where I showcase my private basketball card collection. My main focus is my massive Juwan Howard PC. I’ve been building this for years, and the site features hundreds of cards from 1994 to today, including tons of 1/1s, low-numbered parallels, and rare 90s inserts like PMGs.
+                    You can check out the full Juwan Howard gallery here
                 <p>
             """;
 
