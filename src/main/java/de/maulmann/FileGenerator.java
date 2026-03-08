@@ -462,7 +462,7 @@ public class FileGenerator {
 
             final int offset = result.lastIndexOf("</h2>");
 
-            result.replace(offset, offset + 5, " [This Season: " + counter + " | Total: " + counterAll + "]</h2><div> <a href=\"#top\" title='Back to the top of the list' class='s'>top</a></div>");
+            result.replace(offset, offset + 5, " [This Season: " + counter + " | Total: " + counterAll + "]</h2><div> <a href=\"#top\" title='Back to the top of the list' class='modern-button'>top</a></div>");
 
 
             out.append(result.append('\n'));
