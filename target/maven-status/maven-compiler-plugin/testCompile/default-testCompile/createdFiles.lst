@@ -1,0 +1,5 @@
+de/maulmann/MinifyCompressTest.class
+de/maulmann/GZIPCompressorTest.class
+de/maulmann/HTMLMinifierTest.class
+de/maulmann/CSSMinifierTest.class
+de/maulmann/FileGeneratorTest.class

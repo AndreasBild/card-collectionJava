@@ -1,37 +1,46 @@
 body{font-family:"Trebuchet MS",Arial,Helvetica,sans-serif;line-height:1.5;margin:0;color:#222}body,td,th{padding:8px}p,th,td{text-align:left}div{margin:10px 0}.s{font-size:12px}p{padding:2px 0;background-color:#fff}.actions-list{list-style:none;padding:0;margin:0}.actions-list li{margin-bottom:.75rem}table{table-layout:auto;border-collapse:collapse;width:100%;content-visibility:auto;contain-intrinsic-size:1000px}td,th{border:1px solid #ddd;vertical-align:middle}th{padding:12px 8px;background-color:#3264af;color:#fff}tr:nth-child(2n){background-color:#f2f2f2}tr:hover{background-color:#ddd}
 
-/* General button-like styling for all links except those specifically exempted */
-a:not(.plain) {
-    display: inline-block;
+/* Unify button styles for consistency in height and width */
+.modern-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     text-decoration: none;
     background-color: #4f9e06;
     color: #fff !important;
     transition: background-color 0.2s ease-in-out, transform 0.1s, box-shadow 0.2s;
-    padding: 10px 20px;
-    margin: 4px;
     border-radius: 6px;
-    font-size: 1rem;
+
+    /* Fixed dimensions to ensure they are always aligned in height and width */
+    width: 220px;
+    height: 3rem;
+    margin: 4px;
+    padding: 4px 8px;
+    box-sizing: border-box;
+
+    font-size: 0.95rem;
     font-weight: 600;
     box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
     border: none;
     cursor: pointer;
     outline: 0;
-    white-space: nowrap;
+    white-space: normal;
+    line-height: 1.2;
 }
 
-a:not(.plain):hover:not(.is-disabled) {
+.modern-button:hover:not(.is-disabled) {
     background-color: #77df14;
     box-shadow: 0 4px 8px rgb(0 0 0 / 0.15);
 }
 
-a:not(.plain):active:not(.is-disabled) {
+.modern-button:active:not(.is-disabled) {
     transform: scale(0.98);
     background-color: #004085;
     box-shadow: 0 1px 2px rgb(0 0 0 / 0.1);
 }
 
-a.is-disabled, a[aria-disabled=true] {
+.modern-button.is-disabled, .modern-button[aria-disabled=true] {
     background-color: #ccc;
     color: #666 !important;
     cursor: not-allowed;
@@ -40,31 +49,14 @@ a.is-disabled, a[aria-disabled=true] {
     opacity: 0.6;
 }
 
-a:focus-visible, button:focus, a:focus {
+.modern-button:focus-visible, button:focus, a:focus {
     outline: #000 solid 3px;
     outline-offset: 2px;
     background-color: #ffeb3b !important;
     color: #000 !important;
 }
 
-/* Unify specific navigational buttons for consistency in height and width */
-.modern-button {
-    display: inline-flex !important;
-    align-items: center;
-    justify-content: center;
-
-    /* Fixed dimensions to ensure they are always aligned in height and width */
-    width: 220px;
-    height: 3rem;
-    padding: 4px 8px;
-    box-sizing: border-box;
-
-    font-size: 0.95rem;
-    white-space: normal;
-    line-height: 1.2;
-}
-
-/* Specific styling for links inside tables to keep them looking like standard links */
+/* Specific styling for links inside tables */
 table tr td:first-child a {
     display: inline;
     background: transparent;
