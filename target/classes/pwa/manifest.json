@@ -1,0 +1,34 @@
+{
+  "short_name": "Maulmann | Trading Cards",
+  "name": "Basketball and Baseball Trading Card Collection",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon/android-chrome-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/favicon/android-chrome-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "id": "/?source=pwa",
+  "start_url": "index.html/?source=pwa",
+  "background_color": "#3367D6",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#317EFB",
+  "shortcuts": [
+    {
+      "name": "Juwan Howard Collection",
+      "short_name": "Juwan Howard",
+      "description": "Complete List Of Juwan Howard Basketball Trading Cards",
+      "url": "/?source=pwa",
+      "icons": [{ "src": "/favicon/apple-touch-icon.png", "sizes": "180x180" }]
+    }
+
+  ],
+  "description": "Card Collection"
+}

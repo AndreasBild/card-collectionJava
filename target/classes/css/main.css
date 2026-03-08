@@ -64,6 +64,11 @@ a:focus-visible, button:focus, a:focus {
     line-height: 1.2;
 }
 
+.modern-button-footer {
+    width: 450px;
+    white-space: nowrap;
+}
+
 /* Specific styling for links inside tables to keep them looking like standard links */
 table tr td:first-child a {
     display: inline;

@@ -1,0 +1,15 @@
+de/maulmann/FileGenerator.class
+de/maulmann/GZIPCompressor.class
+de/maulmann/MinifyCompress.class
+de/maulmann/FileGenerator$1.class
+de/maulmann/CardPageGenerator.class
+de/maulmann/CSSMinifier.class
+de/maulmann/S3ListFiles.class
+de/maulmann/CloudFrontInvalidator.class
+de/maulmann/CardPageGenerator$CardData.class
+de/maulmann/S3UploadFiles.class
+de/maulmann/SitemapGenerator.class
+de/maulmann/HTMLMinifier.class
+de/maulmann/S3UploadFilesFolder.class
+de/maulmann/MinifyCompressFolder.class
+de/maulmann/GZIPCompressor$1.class
