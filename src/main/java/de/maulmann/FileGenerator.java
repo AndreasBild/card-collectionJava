@@ -29,12 +29,12 @@ public class FileGenerator {
             <h3>Other Collections</h3>
              <ul class="actions-list">
                 <li>
-                 <a href="index.html" title="Juwan Howard Cards Collection" class="modern-button modern-button-footer">
-                   Juwan Howard Basketball Cards Collection</a>
+                 <a href="index.html" title="Juwan Howard Private Collection" class="modern-button modern-button-footer">
+                   Juwan Howard Private Collection</a>
                 </li>
                 <li>
-                <a href=Wantlist.html title="Juwan Howard Collection Wantlist" class="modern-button modern-button-footer">
-                Juwan Howard Basketball Cards Wantlist</a>
+                <a href=Wantlist.html title="Juwan Howard Wantlist" class="modern-button modern-button-footer">
+                Juwan Howard Wantlist</a>
                 </li>
                 <li>
                 <a href=Baseball.html title="Upper Deck Baseball Cards" class="modern-button modern-button-footer">
