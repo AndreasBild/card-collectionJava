@@ -339,7 +339,7 @@ public class CardPageGenerator {
         // RELATED CARDS
         sb.append("    <section class=\"related-cards-section\">\n");
         sb.append("        <h3>More from the ").append(c.get("Season")).append(" Collection</h3>\n");
-        sb.append("        <ul class=\"related-cards-list\">\n");
+        sb.append("        <ul class=\"actions-list\">\n");
 
         int count = 0;
         for (CardData other : allCards) {
@@ -348,8 +348,8 @@ public class CardPageGenerator {
 
             String linkTitle = "View card details: " + other.get("Season") + " " + other.get("Brand") + " " + other.get("Variant");
 
-            sb.append("            <li class=\"related-card-item\">\n");
-            sb.append("                <a href=\"").append(other.filename).append("\" title=\"").append(linkTitle).append("\" style=\"color:#317EFB; text-decoration:none;\">")
+            sb.append("            <li>\n");
+            sb.append("                <a href=\"").append(other.filename).append("\" title=\"").append(linkTitle).append("\" class=\"modern-button modern-button-footer\">")
                     .append(other.get("Brand")).append(" #").append(other.get("Number")).append(" ").append(other.get("Variant"))
                     .append("</a>\n");
             sb.append("            </li>\n");

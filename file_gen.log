@@ -1,0 +1,147 @@
+[INFO] Scanning for projects...
+[INFO]
+[INFO] ---------------------< de.maulmann:CardCollection >---------------------
+[INFO] Building CardCollection 1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- resources:3.3.1:resources (default-resources) @ CardCollection ---
+[INFO] Copying 33 resources from src/main/resources to target/classes
+[INFO]
+[INFO] --- compiler:3.14.1:compile (default-compile) @ CardCollection ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO]
+[INFO] --- exec:3.6.3:java (default-cli) @ CardCollection ---
+################ AbsolutePath: /app/.
+File in Directory : 1994-95
+File in Directory : 1995-96
+File in Directory : 1996-97
+File in Directory : 1997-98
+File in Directory : 1998-99
+File in Directory : 1999-00
+File in Directory : 2000-01
+File in Directory : 2001-02
+File in Directory : 2002-03
+File in Directory : 2003-04
+File in Directory : 2004-05
+File in Directory : 2005-06
+File in Directory : 2006-07
+File in Directory : 2007-08
+File in Directory : 2009-10
+File in Directory : 2010-11
+File in Directory : 2011-12
+File in Directory : 2012-13
+File in Directory : 2013-14
+File in Directory : 2016-17
+File in Directory : 2017-18
+File in Directory : 2018-19
+File in Directory : 2019-20
+File in Directory : 2020-21
+File in Directory : 2021-22
+File in Directory : 2022-23
+File in Directory : 2023-24
+File in Directory : 2024-25
+File in Directory : 2025-26
+File in Directory : College
+Subdirectory in Directory: other
+result 30
+################ AbsolutePath: /app/.
+File in Directory : 1994-95
+File in Directory : 1995-96
+File in Directory : 1996-97
+File in Directory : 1997-98
+File in Directory : 1998-99
+File in Directory : 1999-00
+File in Directory : 2000-01
+File in Directory : 2001-02
+File in Directory : 2002-03
+File in Directory : 2003-04
+File in Directory : 2004-05
+File in Directory : 2005-06
+File in Directory : 2006-07
+File in Directory : 2007-08
+File in Directory : 2009-10
+File in Directory : 2010-11
+File in Directory : 2011-12
+File in Directory : 2012-13
+File in Directory : 2013-14
+File in Directory : 2016-17
+File in Directory : 2017-18
+File in Directory : 2018-19
+File in Directory : 2019-20
+File in Directory : 2020-21
+File in Directory : 2021-22
+File in Directory : 2022-23
+File in Directory : 2023-24
+File in Directory : 2024-25
+File in Directory : 2025-26
+File in Directory : College
+Subdirectory in Directory: other
+result 30
+An existing File under: output/index.html was replaced
+Filename: 1994-95
+Source: content/1994-95.html
+Filename: 1995-96
+Source: content/1995-96.html
+Filename: 1996-97
+Source: content/1996-97.html
+Filename: 1997-98
+Source: content/1997-98.html
+Filename: 1998-99
+Source: content/1998-99.html
+Filename: 1999-00
+Source: content/1999-00.html
+Filename: 2000-01
+Source: content/2000-01.html
+Filename: 2001-02
+Source: content/2001-02.html
+Filename: 2002-03
+Source: content/2002-03.html
+Filename: 2003-04
+Source: content/2003-04.html
+Filename: 2004-05
+Source: content/2004-05.html
+Filename: 2005-06
+Source: content/2005-06.html
+Filename: 2006-07
+Source: content/2006-07.html
+Filename: 2007-08
+Source: content/2007-08.html
+Filename: 2009-10
+Source: content/2009-10.html
+Filename: 2010-11
+Source: content/2010-11.html
+Filename: 2011-12
+Source: content/2011-12.html
+Filename: 2012-13
+Source: content/2012-13.html
+Filename: 2013-14
+Source: content/2013-14.html
+Filename: 2016-17
+Source: content/2016-17.html
+Filename: 2017-18
+Source: content/2017-18.html
+Filename: 2018-19
+Source: content/2018-19.html
+Filename: 2019-20
+Source: content/2019-20.html
+Filename: 2020-21
+Source: content/2020-21.html
+Filename: 2021-22
+Source: content/2021-22.html
+Filename: 2022-23
+Source: content/2022-23.html
+Filename: 2023-24
+Source: content/2023-24.html
+Filename: 2024-25
+Source: content/2024-25.html
+Filename: 2025-26
+Source: content/2025-26.html
+Filename: College
+Source: content/College.html
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  1.092 s
+[INFO] Finished at: 2026-03-09T01:24:35Z
+[INFO] ------------------------------------------------------------------------
