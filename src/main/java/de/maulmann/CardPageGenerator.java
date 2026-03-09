@@ -4,6 +4,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,6 +25,7 @@ public class CardPageGenerator {
     private static final String RELATIVE_CSS_PATH = "../../css/main.css";
     private static final String RELATIVE_IMAGES_PATH = "../../images";
     private static final String BASE_URL = "https://www.maulmann.de";
+    private static final Logger log = LoggerFactory.getLogger(CardPageGenerator.class);
     // ---------------------
 
     // --- INTERNE KLASSE: KARTENDATEN ---
@@ -39,6 +42,7 @@ public class CardPageGenerator {
             // LOGIK 1: TEAM ERMITTELN
             String currentTeam = this.attributes.get("Team");
             if (!isValid(currentTeam)) {
+                System.out.println(this.attributes.get("Season") + " " +this.filename +this.attributes.get("Number") + currentTeam);
                 String calculatedTeam = getTeamBySeason(this.attributes.get("Season"));
                 this.attributes.put("Team", calculatedTeam);
             }
@@ -51,6 +55,7 @@ public class CardPageGenerator {
 
             addIfPresent(filenameTokens, attributes.get("Player"));
             addIfPresent(filenameTokens, attributes.get("Team"));
+            addIfPresent(filenameTokens, attributes.get("Sport"));
             addIfPresent(filenameTokens, attributes.get("Season"));
             addIfPresent(filenameTokens, attributes.get("Company"));
             addIfPresent(filenameTokens, attributes.get("Brand"));
@@ -308,6 +313,7 @@ public class CardPageGenerator {
         sb.append("            <tr class=\"specs-table-header\"><th colspan=\"2\" style=\"padding: 10px; text-align: left;\">Technical Specifications</th></tr>\n");
         addTableRow(sb, "Season", c.get("Season"));
         addTableRow(sb, "Team", c.get("Team"));
+        addTableRow(sb, "Sport", c.get("Sport"));
         addTableRow(sb, "Manufacturer", c.get("Company"));
         addTableRow(sb, "Brand", c.get("Brand"));
         addTableRow(sb, "Theme", c.get("Theme"));
@@ -521,7 +527,7 @@ public class CardPageGenerator {
             sb.append("It also contains a piece of <strong>Game Used Memorabilia</strong> (Jersey/Patch). ");
         }
 
-        sb.append("It captures Juwan Howard during his time with the ").append(c.get("Team")).append(".");
+        sb.append("It captures Juwan Howard during his time with the <strong> ").append(c.get("Team")).append("</strong>.");
         return sb.toString();
     }
 

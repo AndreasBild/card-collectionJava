@@ -87,6 +87,7 @@ public class SitemapGenerator {
                     List<String> tokens = new ArrayList<>();
                     addIfPresent(tokens, data.get("Player"));
                     addIfPresent(tokens, currentTeam);
+                    addIfPresent(tokens, data.get("Sport"));
                     addIfPresent(tokens, data.get("Season"));
                     addIfPresent(tokens, data.get("Company"));
                     addIfPresent(tokens, data.get("Brand"));
