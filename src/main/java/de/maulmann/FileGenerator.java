@@ -18,7 +18,7 @@ public class FileGenerator {
     // constants: base paths for input and output
     public static String pathSource = "content/";
     public static String pathOutput = "output/";
-    public static String generatedFileLocation = pathOutput + "collection.html";
+    public static String generatedFileLocation = pathOutput + "Juwan-Howard-Collection.html";
     private static String[] nameOfInputFile = getFileNamesFromDirectory();
 
     private static final Logger logger = LoggerFactory.getLogger(FileGenerator.class);
@@ -269,7 +269,7 @@ public class FileGenerator {
             <body>
             <div class="topnav" id="myTopnav">
                 <a href="index.html">Home</a>
-                <a href="collection.html" class="active">Juwan Howard Private Collection</a>
+                <a href=Juwan-Howard-Collection.html class="active">Juwan Howard PC</a>
                 <a href="Baseball.html">Baseball</a>
                 <a href="Flawless.html">Flawless</a>
                 <a href="Wantlist.html">Wantlist</a>
@@ -306,7 +306,7 @@ public class FileGenerator {
 
         // These lines ensure that generatedFileLocation and nameOfInputFile are updated
         // if pathSource or pathOutput were changed (e.g., by tests).
-        generatedFileLocation = pathOutput + "collection.html";
+        generatedFileLocation = pathOutput + "Juwan-Howard-Collection.html";
         nameOfInputFile = getFileNamesFromDirectory();
 
         createLandingPage(pathOutput + "index.html");
@@ -506,7 +506,7 @@ public class FileGenerator {
                 <body>
                     <div class="topnav" id="myTopnav">
                         <a href="index.html" class="active">Home</a>
-                        <a href="collection.html">Juwan Howard Private Collection</a>
+                        <a href=Juwan-Howard-Collection.html>Juwan Howard PC</a>
                         <a href="Baseball.html">Baseball</a>
                         <a href="Flawless.html">Flawless</a>
                         <a href="Wantlist.html">Wantlist</a>
@@ -545,8 +545,8 @@ public class FileGenerator {
                         </article>
                 
                         <section style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
-                             <a href="collection.html" class="modern-button modern-button-footer" style="width: 300px;">View Juwan Howard Private Collection</a>
-                             <a href="Baseball.html" class="modern-button modern-button-footer" style="width: 300px;">View Baseball Collection</a>
+                             <a href=Juwan-Howard-Collection.html class="modern-button modern-button-footer" style="width: 300px;">Juwan Howard Private Collection</a>
+                             <a href="Baseball.html" class="modern-button modern-button-footer" style="width: 300px;">Baseball Collection</a>
                         </section>
                     </main>
                 

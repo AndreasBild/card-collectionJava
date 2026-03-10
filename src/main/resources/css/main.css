@@ -177,7 +177,7 @@ table tr td:first-child a:hover {
 }
 
 .detail-main {
-    max-width: 900px;
+    max-width: 90%;
     margin: 0 auto;
     padding: 20px;
     font-family: sans-serif
@@ -405,8 +405,8 @@ table tr td:first-child a:hover {
 
 /* Responsive table columns collapse */
 @media screen and (max-width: 1000px) {
-    table th:nth-child(3), table td:nth-child(3) /* Sport */
-    table th:nth-child(2), table td:nth-child(2) /* Team */
+    table th:nth-child(3), table td:nth-child(3), /* Sport */
+    table th:nth-child(2), table td:nth-child(2), /* Team */
     table th:nth-child(15), table td:nth-child(15), /* Grade */
     table th:nth-child(13), table td:nth-child(13), /* Game Used */
     table th:nth-child(14), table td:nth-child(14), /* Autograph */

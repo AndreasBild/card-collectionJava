@@ -4,7 +4,7 @@ import re
 nav_html = """
     <div class="topnav" id="myTopnav">
         <a href="index.html">Home</a>
-        <a href="collection.html">Juwan Howard Private Collection</a>
+        <a href="Juwan-Howard-Collection.html">Juwan Howard PC</a>
         <a href="Baseball.html">Baseball</a>
         <a href="Flawless.html">Flawless</a>
         <a href="Wantlist.html">Wantlist</a>
@@ -29,7 +29,7 @@ footer_nav = """
     <nav class="detail-nav" style="background: none; border: none; padding: 20px 0; justify-content: center;">
         <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
             <a href="index.html" class="modern-button" title="Home">Home</a>
-            <a href="collection.html" class="modern-button" title="Juwan Howard Private Collection">Juwan Howard Private Collection</a>
+            <a href="Juwan-Howard-Collection.html" class="modern-button" title="Juwan Howard PC">Juwan Howard PC</a>
             <a href="Baseball.html" class="modern-button" title="Upper Deck Baseball Cards">Baseball</a>
             <a href="Flawless.html" class="modern-button" title="2008 Upper Deck Flawless Basketball">Flawless</a>
             <a href="Wantlist.html" class="modern-button" title="Juwan Howard Wantlist">Wantlist</a>
@@ -63,7 +63,7 @@ for filename in os.listdir(other_dir):
             body_content = re.sub(r'</main>', '', body_content)
 
             # Also clean up any lingering Juwan Howard PC
-            body_content = body_content.replace("Juwan Howard PC", "Juwan Howard Private Collection")
+            body_content = body_content.replace("Juwan Howard PC", "Juwan Howard PC")
 
             # Reconstruct Body
             new_body = nav_html + '<main class="detail-main">' + body_content + footer_nav + '</main>'

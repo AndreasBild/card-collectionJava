@@ -18,8 +18,8 @@ import java.util.*;
 public class CardPageGenerator {
 
     // --- KONFIGURATION ---
-    private static final String INPUT_FILE = "output/collection.html";
-    private static final String OUTPUT_INDEX = "newIndex/collection.html";
+    private static final String INPUT_FILE = "output/Juwan-Howard-Collection.html";
+    private static final String OUTPUT_INDEX = "newIndex/Juwan-Howard-Collection.html";
     private static final String BASE_FOLDER = "cards";
     // Pfade von der Unterseite aus gesehen:
     private static final String RELATIVE_CSS_PATH = "../../css/main.css";
@@ -256,7 +256,7 @@ public class CardPageGenerator {
         // NAVIGATION (Responsive topnav)
         sb.append("<div class=\"topnav\" id=\"myTopnav\">\n");
         sb.append("    <a href=\"../../index.html\">Home</a>\n");
-        sb.append("    <a href=\"../../collection.html\">Juwan Howard Private Collection</a>\n");
+        sb.append("    <a href=\"../../collection.html\">Juwan Howard PC</a>\n");
         sb.append("    <a href=\"../../Baseball.html\">Baseball</a>\n");
         sb.append("    <a href=\"../../Flawless.html\">Flawless</a>\n");
         sb.append("    <a href=\"../../Wantlist.html\">Wantlist</a>\n");
