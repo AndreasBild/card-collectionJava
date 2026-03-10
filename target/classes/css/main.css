@@ -1,4 +1,67 @@
-body{font-family:"Trebuchet MS",Arial,Helvetica,sans-serif;line-height:1.5;margin:0;color:#222}body,td,th{padding:8px}p,th,td{text-align:left}div{margin:10px 0}.s{font-size:12px}p{padding:2px 0;background-color:#fff}.actions-list{list-style:none;padding:0;margin:0}.actions-list li{margin-bottom:.75rem}table{table-layout:auto;border-collapse:collapse;width:100%;content-visibility:auto;contain-intrinsic-size:1000px}td,th{border:1px solid #ddd;vertical-align:middle}th{padding:12px 8px;background-color:#3264af;color:#fff}tr:nth-child(2n){background-color:#f2f2f2}tr:hover{background-color:#ddd}
+body {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+    margin: 0;
+    color: #222
+}
+
+body, td, th {
+    padding: 8px
+}
+
+p, th, td {
+    text-align: left
+}
+
+div {
+    margin: 10px 0
+}
+
+.s {
+    font-size: 12px
+}
+
+p {
+    padding: 2px 0;
+    background-color: #fff
+}
+
+.actions-list {
+    list-style: none;
+    padding: 0;
+    margin: 0
+}
+
+.actions-list li {
+    margin-bottom: .75rem
+}
+
+table {
+    table-layout: auto;
+    border-collapse: collapse;
+    width: 100%;
+    content-visibility: auto;
+    contain-intrinsic-size: 1000px
+}
+
+td, th {
+    border: 1px solid #ddd;
+    vertical-align: middle
+}
+
+th {
+    padding: 12px 8px;
+    background-color: #3264af;
+    color: #fff
+}
+
+tr:nth-child(2n) {
+    background-color: #f2f2f2
+}
+
+tr:hover {
+    background-color: #ddd
+}
 
 /* General button-like styling for all links except those specifically exempted */
 a:not(.plain) {
@@ -88,37 +151,268 @@ table tr td:first-child a:hover {
     text-decoration: none;
 }
 
-.detail-nav{padding:20px;background:#f8f9fa;border-bottom:1px solid #e9ecef;display:flex;justify-content:space-between;align-items:center}.detail-main{max-width:900px;margin:0 auto;padding:20px;font-family:sans-serif}.detail-header{text-align:center;margin-bottom:40px}.detail-header h1{margin-bottom:5px;font-size:2em}.detail-header .sub-title{font-size:1.2em;color:#555;margin:0}.detail-header .meta-info{font-size:1em;color:#777}.seo-box{background:#fff;padding:20px;border-radius:8px;box-shadow:0 2px 5px rgb(0 0 0 / .05);margin-bottom:30px;line-height:1.6}.card-images-container{display:flex;flex-wrap:wrap;gap:40px;justify-content:center;align-items:center;margin:40px 0}.card-image-wrapper{flex:0 1 auto;text-align:center;max-width:100%}.card-image-wrapper img{cursor:pointer;max-width:100%;max-height:550px;width:auto;height:auto;border:1px solid #eee;box-shadow:0 4px 10px rgb(0 0 0 / .1);display:block;margin:0 auto}.card-image-wrapper p{color:#888;margin-top:10px;font-weight:700;text-align:center}.specs-table-header{background-color:#317EFB;color:#fff}.specs-th{padding:8px;border-bottom:1px solid #ddd;text-align:left;width:200px;color:#333;background-color:#fff}.specs-td{padding:8px;border-bottom:1px solid #ddd;color:#555}.faq-details{margin-bottom:10px;border:1px solid #ddd;padding:10px;border-radius:5px}.faq-summary{cursor:pointer;font-weight:700}.faq-answer{margin-top:5px;color:#555}.related-cards-section{margin-top:60px;padding-top:20px;border-top:1px solid #ddd}.related-cards-list{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:10px}.related-card-item{flex:1 1 30%;min-width:200px;margin-bottom:10px}.detail-footer{text-align:center;margin-top:50px;padding:20px;font-size:.9em;color:#666;background:#f9f9f9}.modal{display:none;position:fixed;z-index:9999;padding-top:50px;left:0;top:0;width:100%;height:100%;overflow:auto;background-color:rgb(0 0 0 / .9)}.modal-content{margin:auto;display:block;width:auto;max-width:90%;max-height:85vh;border:2px solid #fff;box-shadow:0 0 20px rgb(0 0 0 / .5);animation-name:zoom;animation-duration:0.3s}.close-modal{position:absolute;top:20px;right:35px;color:#f1f1f1;font-size:40px;font-weight:700;transition:0.3s;cursor:pointer;z-index:10001}.close-modal:hover,.close-modal:focus{color:#bbb;text-decoration:none;cursor:pointer}.flip-modal-btn{position:absolute;top:20px;left:35px;background-color:rgb(255 255 255 / .1);color:#f1f1f1;border:1px solid #f1f1f1;padding:10px 20px;font-size:16px;cursor:pointer;transition:0.3s;border-radius:4px;z-index:10001}.flip-modal-btn:hover{background-color:rgb(255 255 255 / .3)}@keyframes zoom{from{transform:scale(0)}to{transform:scale(1)}}@media only screen and (max-width:700px){.modal-content{width:100%}.flip-modal-btn{top:15px;left:15px;padding:5px 10px;font-size:14px}.close-modal{top:10px;right:20px}}
+.detail-nav {
+    padding: 20px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+}
 
+.detail-main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: sans-serif
+}
 
-/* Responsive table columns collapse */
-@media screen and (max-width: 1200px) {
-    table th:nth-child(13), table td:nth-child(13), /* Grade */
-    table th:nth-child(11), table td:nth-child(11), /* Game Used */
-    table th:nth-child(12), table td:nth-child(12)  /* Autograph */ {
-        display: none;
+.detail-header {
+    text-align: center;
+    margin-bottom: 40px
+}
+
+.detail-header h1 {
+    margin-bottom: 5px;
+    font-size: 2em
+}
+
+.detail-header .sub-title {
+    font-size: 1.2em;
+    color: #555;
+    margin: 0
+}
+
+.detail-header .meta-info {
+    font-size: 1em;
+    color: #777
+}
+
+.seo-box {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgb(0 0 0 / .05);
+    margin-bottom: 30px;
+    line-height: 1.6
+}
+
+.card-images-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 0
+}
+
+.card-image-wrapper {
+    flex: 0 1 auto;
+    text-align: center;
+    max-width: 100%
+}
+
+.card-image-wrapper img {
+    cursor: pointer;
+    max-width: 100%;
+    max-height: 550px;
+    width: auto;
+    height: auto;
+    border: 1px solid #eee;
+    box-shadow: 0 4px 10px rgb(0 0 0 / .1);
+    display: block;
+    margin: 0 auto
+}
+
+.card-image-wrapper p {
+    color: #888;
+    margin-top: 10px;
+    font-weight: 700;
+    text-align: center
+}
+
+.specs-table-header {
+    background-color: #317EFB;
+    color: #fff
+}
+
+.specs-th {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    width: 200px;
+    color: #333;
+    background-color: #fff
+}
+
+.specs-td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    color: #555
+}
+
+.faq-details {
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px
+}
+
+.faq-summary {
+    cursor: pointer;
+    font-weight: 700
+}
+
+.faq-answer {
+    margin-top: 5px;
+    color: #555
+}
+
+.related-cards-section {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd
+}
+
+.related-cards-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px
+}
+
+.related-card-item {
+    flex: 1 1 30%;
+    min-width: 200px;
+    margin-bottom: 10px
+}
+
+.detail-footer {
+    text-align: center;
+    margin-top: 50px;
+    padding: 20px;
+    font-size: .9em;
+    color: #666;
+    background: #f9f9f9
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    padding-top: 50px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0 0 0 / .9)
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    width: auto;
+    max-width: 90%;
+    max-height: 85vh;
+    border: 2px solid #fff;
+    box-shadow: 0 0 20px rgb(0 0 0 / .5);
+    animation-name: zoom;
+    animation-duration: 0.3s
+}
+
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: 700;
+    transition: 0.3s;
+    cursor: pointer;
+    z-index: 10001
+}
+
+.close-modal:hover, .close-modal:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer
+}
+
+.flip-modal-btn {
+    position: absolute;
+    top: 20px;
+    left: 35px;
+    background-color: rgb(255 255 255 / .1);
+    color: #f1f1f1;
+    border: 1px solid #f1f1f1;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 4px;
+    z-index: 10001
+}
+
+.flip-modal-btn:hover {
+    background-color: rgb(255 255 255 / .3)
+}
+
+@keyframes zoom {
+    from {
+        transform: scale(0)
+    }
+    to {
+        transform: scale(1)
     }
 }
 
+@media only screen and (max-width: 700px) {
+    .modal-content {
+        width: 100%
+    }
+
+    .flip-modal-btn {
+        top: 15px;
+        left: 15px;
+        padding: 5px 10px;
+        font-size: 14px
+    }
+
+    .close-modal {
+        top: 10px;
+        right: 20px
+    }
+}
+
+
+/* Responsive table columns collapse */
 @media screen and (max-width: 1000px) {
-    table th:nth-child(10), table td:nth-child(10), /* Rookie */
-    table th:nth-child(8),  table td:nth-child(8),  /* Serial */
-    table th:nth-child(9),  table td:nth-child(9)   /* Print Run */ {
+    table th:nth-child(3), table td:nth-child(3) /* Sport */
+    table th:nth-child(2), table td:nth-child(2) /* Team */
+    table th:nth-child(15), table td:nth-child(15), /* Grade */
+    table th:nth-child(13), table td:nth-child(13), /* Game Used */
+    table th:nth-child(14), table td:nth-child(14), /* Autograph */
+    table th:nth-child(12), table td:nth-child(12) /* Rookie */
+    {
         display: none;
     }
 }
 
 @media screen and (max-width: 800px) {
-    table th:nth-child(1),  table td:nth-child(1),  /* Player */
-    table th:nth-child(2),  table td:nth-child(2),  /* Season */
-    table th:nth-child(7),  table td:nth-child(7)   /* Number */ {
+
+    table th:nth-child(10), table td:nth-child(10), /* Serial */
+    table th:nth-child(11), table td:nth-child(11) /* Print Run */
+    {
         display: none;
     }
 }
 
-@media screen and (max-width: 600px) {
-    table th:nth-child(3),  table td:nth-child(3),  /* Company */
-    table th:nth-child(5),  table td:nth-child(5)   /* Theme */ {
+@media screen and (max-width: 400px) {
+    table th:nth-child(4), table td:nth-child(4), /* Season */
+    table th:nth-child(9), table td:nth-child(9) /* Number */
+    {
         display: none;
     }
 }
