@@ -256,7 +256,7 @@ public class CardPageGenerator {
         // NAVIGATION (Responsive topnav)
         sb.append("<div class=\"topnav\" id=\"myTopnav\">\n");
         sb.append("    <a href=\"../../index.html\">Home</a>\n");
-        sb.append("    <a href=\"../../collection.html\">Juwan Howard PC</a>\n");
+        sb.append("    <a href=\"../../Juwan-Howard-Collection.html\">Juwan Howard PC</a>\n");
         sb.append("    <a href=\"../../Baseball.html\">Baseball</a>\n");
         sb.append("    <a href=\"../../Flawless.html\">Flawless</a>\n");
         sb.append("    <a href=\"../../Wantlist.html\">Wantlist</a>\n");
@@ -279,7 +279,7 @@ public class CardPageGenerator {
 
         // SUB-NAV (Overview, Prev, Next)
         sb.append("<nav class=\"detail-nav\" style=\"display: flex; justify-content: space-between; align-items: center; width: 100%; border: none; background: transparent;\">\n");
-        sb.append("    <a href=\"../../collection.html\" class=\"modern-button\" style=\"text-decoration:none;\" title=\"Return to the complete card collection overview\">&larr; Overview</a>\n");
+        sb.append("    <a href=\"../../Juwan-Howard-Collection.html\" class=\"modern-button\" style=\"text-decoration:none;\" title=\"Return to the complete card collection overview\">&larr; Overview</a>\n");
         sb.append("    <div>\n");
         if (prev != null) {
             String prevTitle = "Go to previous card: " + prev.get("Season") + " " + prev.get("Brand");
