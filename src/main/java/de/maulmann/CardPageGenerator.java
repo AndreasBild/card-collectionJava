@@ -298,13 +298,11 @@ public class CardPageGenerator {
         // HEADER
         sb.append("    <header class=\"detail-header\">\n");
         sb.append("        <h1>").append(h1Title).append("</h1>\n");
-        sb.append("        <p class=\"sub-title\">").append(c.get("Season")).append(" ").append(c.get("Company")).append(" ").append(c.get("Brand")).append("</p>\n");
-        sb.append("        <p class=\"meta-info\">").append(c.get("Theme")).append(" &bull; ").append(c.get("Variant")).append(" &bull; #").append(c.get("Number")).append("</p>\n");
         sb.append("    </header>\n");
 
         // SEO TEXT
         sb.append("    <article class=\"seo-box\">\n");
-        sb.append("        <h3>About this Card</h3>\n");
+        sb.append("        <h2>About this Card</h2>\n");
         sb.append("        <p>").append(generateSeoText(c)).append("</p>\n");
         sb.append("    </article>\n");
 
