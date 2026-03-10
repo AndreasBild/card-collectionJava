@@ -18,8 +18,8 @@ import java.util.*;
 public class CardPageGenerator {
 
     // --- KONFIGURATION ---
-    private static final String INPUT_FILE = "output/index.html";
-    private static final String OUTPUT_INDEX = "newIndex/index.html";
+    private static final String INPUT_FILE = "output/collection.html";
+    private static final String OUTPUT_INDEX = "output/collection.html";
     private static final String BASE_FOLDER = "cards";
     // Pfade von der Unterseite aus gesehen:
     private static final String RELATIVE_CSS_PATH = "../../css/main.css";
@@ -252,8 +252,17 @@ public class CardPageGenerator {
         sb.append("</head>\n<body>\n");
 
         // NAVIGATION (CSS class: detail-nav)
-        sb.append("<nav class=\"detail-nav\">\n");
-        sb.append("    <a href=\"../../index.html\" class=\"modern-button\" style=\"text-decoration:none;\" title=\"Return to the complete card collection overview\">&larr; Overview</a>\n");
+        sb.append("<nav class=\"detail-nav\" style=\"position: sticky; top: 0; z-index: 1000; flex-direction: column; gap: 10px;\">\n");
+        sb.append("    <div style=\"display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; width: 100%;\">\n");
+        sb.append("        <a href=\"../../index.html\" class=\"modern-button\" title=\"Home\">Home</a>\n");
+        sb.append("        <a href=\"../../collection.html\" class=\"modern-button\" title=\"Juwan Howard Private Collection\">Juwan Howard Private Collection</a>\n");
+        sb.append("        <a href=\"../../Baseball.html\" class=\"modern-button\" title=\"Upper Deck Baseball Cards\">Baseball</a>\n");
+        sb.append("        <a href=\"../../Flawless.html\" class=\"modern-button\" title=\"2008 Upper Deck Flawless Basketball\">Flawless</a>\n");
+        sb.append("        <a href=\"../../Wantlist.html\" class=\"modern-button\" title=\"Juwan Howard Wantlist\">Wantlist</a>\n");
+        sb.append("        <a href=\"../../Panini.html\" class=\"modern-button\" title=\"2012-13 Panini Flawless Basketball\">Panini</a>\n");
+        sb.append("    </div>\n");
+        sb.append("    <div style=\"display: flex; justify-content: space-between; align-items: center; width: 100%;\">\n");
+        sb.append("        <a href=\"../../collection.html\" class=\"modern-button\" style=\"text-decoration:none;\" title=\"Return to the complete card collection overview\">&larr; Overview</a>\n");
 
         sb.append("    <div>\n");
         if (prev != null) {
@@ -264,6 +273,7 @@ public class CardPageGenerator {
             String nextTitle = "Go to next card: " + next.get("Season") + " " + next.get("Brand");
             sb.append("        <a id=\"nextCardLink\" href=\"").append(next.filename).append("\" title=\"").append(nextTitle).append("\" style=\"text-decoration:none;\">Next &raquo;</a>\n");
         }
+        sb.append("    </div>\n");
         sb.append("    </div>\n");
         sb.append("</nav>\n");
 
@@ -368,6 +378,16 @@ public class CardPageGenerator {
 
         // FOOTER
         sb.append("<footer class=\"detail-footer\">\n");
+        sb.append("    <nav class=\"detail-nav\" style=\"background: none; border: none; padding: 20px 0;\">\n");
+        sb.append("        <div style=\"display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;\">\n");
+        sb.append("            <a href=\"../../index.html\" class=\"modern-button\" title=\"Home\">Home</a>\n");
+        sb.append("            <a href=\"../../collection.html\" class=\"modern-button\" title=\"Juwan Howard Private Collection\">Juwan Howard Private Collection</a>\n");
+        sb.append("            <a href=\"../../Baseball.html\" class=\"modern-button\" title=\"Upper Deck Baseball Cards\">Baseball</a>\n");
+        sb.append("            <a href=\"../../Flawless.html\" class=\"modern-button\" title=\"2008 Upper Deck Flawless Basketball\">Flawless</a>\n");
+        sb.append("            <a href=\"../../Wantlist.html\" class=\"modern-button\" title=\"Juwan Howard Wantlist\">Wantlist</a>\n");
+        sb.append("            <a href=\"../../Panini.html\" class=\"modern-button\" title=\"2012-13 Panini Flawless Basketball\">Panini</a>\n");
+        sb.append("        </div>\n");
+        sb.append("    </nav>\n");
         sb.append("    Juwan Howard Collection &copy; 2026\n");
         sb.append("</footer>\n");
 

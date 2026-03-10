@@ -18,7 +18,7 @@ public class FileGenerator {
     // constants: base paths for input and output
     private static final String pathSource = "content/";
     private static final String pathOutput = "output/";
-    private static String generatedFileLocation = pathOutput + "index.html";
+    private static String generatedFileLocation = pathOutput + "collection.html";
     private static String[] nameOfInputFile = getFileNamesFromDirectory();
 
     private static final Logger logger = LoggerFactory.getLogger(FileGenerator.class);
@@ -26,27 +26,16 @@ public class FileGenerator {
 
     // constants for static page parts
     public static final String footer = """
-            <h3>Other Collections</h3>
-             <ul class="actions-list">
-                <li>
-                 <a href="index.html" title="Juwan Howard Private Collection" class="modern-button modern-button-footer">
-                   Juwan Howard Private Collection</a>
-                </li>
-                <li>
-                <a href=Wantlist.html title="Juwan Howard Wantlist" class="modern-button modern-button-footer">
-                Juwan Howard Wantlist</a>
-                </li>
-                <li>
-                <a href=Baseball.html title="Upper Deck Baseball Cards" class="modern-button modern-button-footer">
-                Upper Deck Baseball Cards</a>
-                </li>
-                <li>
-                <a href=Flawless.html title="2008 Upper Deck Flawless Basketball" class="modern-button modern-button-footer">
-                2008 Upper Deck Flawless Basketball</a></li>
-                <li>
-                <a href=Panini.html title="2012-13 Panini Flawless Basketball" class="modern-button modern-button-footer">
-                2012-13 Panini Flawless Basketball</a></li>
-                </ul>
+            <nav class="detail-nav" style="background: none; border: none; padding: 20px 0;">
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                    <a href="index.html" class="modern-button" title="Home">Home</a>
+                    <a href="collection.html" class="modern-button" title="Juwan Howard Private Collection">Juwan Howard Private Collection</a>
+                    <a href="Baseball.html" class="modern-button" title="Upper Deck Baseball Cards">Baseball</a>
+                    <a href="Flawless.html" class="modern-button" title="2008 Upper Deck Flawless Basketball">Flawless</a>
+                    <a href="Wantlist.html" class="modern-button" title="Juwan Howard Wantlist">Wantlist</a>
+                    <a href="Panini.html" class="modern-button" title="2012-13 Panini Flawless Basketball">Panini</a>
+                </div>
+            </nav>
                 <p>
                     <a class="plain" href="https://jigsaw.w3.org/css-validator/check/referer" title="CSS Validation Label">
                         <img style="border:0;width:88px;height:31px"
@@ -285,6 +274,17 @@ public class FileGenerator {
             
             </head>
             <body>
+            <nav class="detail-nav" style="position: sticky; top: 0; z-index: 1000;">
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; width: 100%;">
+                    <a href="index.html" class="modern-button" title="Home">Home</a>
+                    <a href="collection.html" class="modern-button" title="Juwan Howard Private Collection">Juwan Howard Private Collection</a>
+                    <a href="Baseball.html" class="modern-button" title="Upper Deck Baseball Cards">Baseball</a>
+                    <a href="Flawless.html" class="modern-button" title="2008 Upper Deck Flawless Basketball">Flawless</a>
+                    <a href="Wantlist.html" class="modern-button" title="Juwan Howard Wantlist">Wantlist</a>
+                    <a href="Panini.html" class="modern-button" title="2012-13 Panini Flawless Basketball">Panini</a>
+                </div>
+            </nav>
+            <main class="detail-main">
             <h1 id="top" title='Top of the list'>Juwan Howard Basketball Card - Private Collection</h1>
                 <p>
                     I wanted to share my dedicated website where I showcase my private basketball card collection. My main focus is my massive Juwan Howard PC. I’ve been building this for years, and the site features hundreds of cards from 1994 to today, including tons of 1/1s, low-numbered parallels, and rare 90s inserts like PMGs.
@@ -293,15 +293,17 @@ public class FileGenerator {
             """;
 
     private static final String tableHead = "<table>";
-    private static final String templateEnd = faqSection + footer + "<p>List Created: " + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()) + "</p></body></html>";
+    private static final String templateEnd = faqSection + footer + "<p>List Created: " + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()) + "</p></main></body></html>";
 
 
     public static void main(String[] args) throws IOException {
 
         // These lines ensure that generatedFileLocation and nameOfInputFile are updated
         // if pathSource or pathOutput were changed (e.g., by tests).
-        generatedFileLocation = "output/index.html";
+        generatedFileLocation = "output/collection.html";
         nameOfInputFile = getFileNamesFromDirectory();
+
+        createLandingPage("output/index.html");
 
         //formatFile();
 
@@ -469,6 +471,70 @@ public class FileGenerator {
             out.flush();
             return counterAll;
 
+        }
+    }
+
+    private static void createLandingPage(String targetPath) throws IOException {
+        String landingContent = """
+                <!doctype html>
+                <html lang="en">
+                <head>
+                    <title>Maulmann Trading Cards | Juwan Howard & Sports Card Collection</title>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1">
+                    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                    <meta name="theme-color" content="#317EFB">
+                    <link rel="preload" href="/css/main.css" as="style">
+                    <link href="/css/main.css" rel="stylesheet" type="text/css">
+                    <meta name="description" content="Welcome to Maulmann Trading Cards. Explore our private collection of Juwan Howard basketball cards, rare 90s inserts, and specialty sets like Flawless and Upper Deck Baseball.">
+                    <link href="/favicon/favicon.ico" rel="icon" sizes="32x32">
+                    <link href="/favicon/apple-touch-icon.png" rel="apple-touch-icon">
+                    <link rel="manifest" href="/manifest.json">
+                </head>
+                <body>
+                    <nav class="detail-nav" style="position: sticky; top: 0; z-index: 1000;">
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; width: 100%;">
+                            <a href="index.html" class="modern-button" title="Home">Home</a>
+                            <a href="collection.html" class="modern-button" title="Juwan Howard Private Collection">Juwan Howard Private Collection</a>
+                            <a href="Baseball.html" class="modern-button" title="Upper Deck Baseball Cards">Baseball</a>
+                            <a href="Flawless.html" class="modern-button" title="2008 Upper Deck Flawless Basketball">Flawless</a>
+                            <a href="Wantlist.html" class="modern-button" title="Juwan Howard Wantlist">Wantlist</a>
+                            <a href="Panini.html" class="modern-button" title="2012-13 Panini Flawless Basketball">Panini</a>
+                        </div>
+                    </nav>
+
+                    <main class="detail-main">
+                        <header class="detail-header">
+                            <h1>Maulmann Trading Cards</h1>
+                            <p class="sub-title">Welcome to our Private Sports Card Collection</p>
+                        </header>
+
+                        <article class="seo-box">
+                            <h3>Explore the Collection</h3>
+                            <p>Welcome to <strong>Maulmann Trading Cards</strong>, a dedicated space showcasing a lifelong passion for sports card collecting. Our centerpiece is a massive <strong>Juwan Howard Private Collection</strong>, featuring over a thousand unique cards spanning his entire career.</p>
+                            <p>Beyond our primary focus, we also feature specialized collections including:</p>
+                            <ul>
+                                <li><strong>Upper Deck Baseball:</strong> A selection of premium baseball cards.</li>
+                                <li><strong>Flawless Basketball:</strong> Showcasing the 2008 and 2012-13 Flawless sets.</li>
+                                <li><strong>Wantlist:</strong> Rare cards we are currently searching for to complete our collection.</li>
+                            </ul>
+                        </article>
+
+                        <section style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+                             <a href="collection.html" class="modern-button modern-button-footer" style="width: 300px;">View Juwan Howard Private Collection</a>
+                             <a href="Baseball.html" class="modern-button modern-button-footer" style="width: 300px;">View Baseball Collection</a>
+                        </section>
+                    </main>
+
+                    <footer class="detail-footer">
+                        Maulmann Trading Cards &copy; 2026
+                    </footer>
+                </body>
+                </html>
+                """;
+        try (OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(targetPath), StandardCharsets.UTF_8); BufferedWriter out = new BufferedWriter(osw)) {
+            out.write(landingContent);
+            out.flush();
         }
     }
 

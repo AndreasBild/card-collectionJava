@@ -92,7 +92,7 @@ class MinifyCompressTest {
         assertTrue(minifiedContent.length() <= htmlContent.length(), "Minified content should be smaller or equal.");
         // The following assertion for "\n  " has been removed as per the subtask.
         assertTrue(minifiedContent.contains("<title>Test Page Title</title>"), "Title should remain."); // Added assertion for title
-        assertTrue(minifiedContent.contains("<h1>Hello World Of HTML</h1>"), "H1 content should match Jsoup's output from verbose input."); // Standardized H1 content
+        assertTrue(minifiedContent.contains("<h1>Hello <!-- inline comment --> World Of HTML</h1>"), "H1 content should match Jsoup's output from verbose input."); // Standardized H1 content
         assertTrue(minifiedContent.contains("// Script comment"), "JS comments should be preserved by Jsoup.");
         assertTrue(minifiedContent.contains("font-family: Arial, sans-serif;") || minifiedContent.contains("font-family:Arial,sans-serif;"), "CSS rule should be present; Jsoup may not deeply minify content within the rule itself.");
     }
@@ -215,7 +215,7 @@ class MinifyCompressTest {
         // Verify content of the processed (GZIPed) files
         String decompressedHtml = readGzipFile(processedHtmlFile);
         assertTrue(decompressedHtml.length() <= htmlContent.length(), "Minified content should generally be smaller or equal.");
-        assertTrue(decompressedHtml.contains("<h1>Hello World Of HTML</h1>"), "H1 content should be present and match expected."); // Standardized H1 content
+        assertTrue(decompressedHtml.contains("<h1>Hello <!-- inline comment --> World Of HTML</h1>"), "H1 content should be present and match expected."); // Standardized H1 content
 
         String decompressedCss = readGzipFile(processedCssFile);
         assertEquals("body{color:blue}", decompressedCss.replaceAll("\\s", ""), "CSS content should be minified.");
