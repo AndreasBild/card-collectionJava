@@ -26,17 +26,7 @@ public class FileGenerator {
 
     // constants for static page parts
     public static final String footer = """
-            <nav class="detail-nav" style="background: none; border: none; padding: 20px 0;">
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
-                    <a href="index.html" class="modern-button" title="Home">Home</a>
-                    <a href="collection.html" class="modern-button" title="Juwan Howard Private Collection">Juwan Howard Private Collection</a>
-                    <a href="Baseball.html" class="modern-button" title="Upper Deck Baseball Cards">Baseball</a>
-                    <a href="Flawless.html" class="modern-button" title="2008 Upper Deck Flawless Basketball">Flawless</a>
-                    <a href="Wantlist.html" class="modern-button" title="Juwan Howard Wantlist">Wantlist</a>
-                    <a href="Panini.html" class="modern-button" title="2012-13 Panini Flawless Basketball">Panini</a>
-                </div>
-            </nav>
-                <p>
+               <p>
                     <a class="plain" href="https://jigsaw.w3.org/css-validator/check/referer" title="CSS Validation Label">
                         <img style="border:0;width:88px;height:31px"
                              src="https://jigsaw.w3.org/css-validator/images/vcss"
