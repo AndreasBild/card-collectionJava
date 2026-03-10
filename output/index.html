@@ -12,18 +12,31 @@
     <link href="/favicon/favicon.ico" rel="icon" sizes="32x32">
     <link href="/favicon/apple-touch-icon.png" rel="apple-touch-icon">
     <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-    <nav class="detail-nav" style="position: sticky; top: 0; z-index: 1000;">
-        <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; width: 100%;">
-            <a href="index.html" class="modern-button" title="Home">Home</a>
-            <a href="collection.html" class="modern-button" title="Juwan Howard Private Collection">Juwan Howard Private Collection</a>
-            <a href="Baseball.html" class="modern-button" title="Upper Deck Baseball Cards">Baseball</a>
-            <a href="Flawless.html" class="modern-button" title="2008 Upper Deck Flawless Basketball">Flawless</a>
-            <a href="Wantlist.html" class="modern-button" title="Juwan Howard Wantlist">Wantlist</a>
-            <a href="Panini.html" class="modern-button" title="2012-13 Panini Flawless Basketball">Panini</a>
-        </div>
-    </nav>
+    <div class="topnav" id="myTopnav">
+        <a href="index.html" class="active">Home</a>
+        <a href="collection.html">Juwan Howard Private Collection</a>
+        <a href="Baseball.html">Baseball</a>
+        <a href="Flawless.html">Flawless</a>
+        <a href="Wantlist.html">Wantlist</a>
+        <a href="Panini.html">Panini</a>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+        </a>
+    </div>
+
+    <script>
+    function myFunction() {
+      var x = document.getElementById("myTopnav");
+      if (x.className === "topnav") {
+        x.className += " responsive";
+      } else {
+        x.className = "topnav";
+      }
+    }
+    </script>
 
     <main class="detail-main">
         <header class="detail-header">
