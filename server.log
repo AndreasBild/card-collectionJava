@@ -1,6 +1,0 @@
-127.0.0.1 - - [10/Mar/2026 12:29:52] "GET /index.html HTTP/1.1" 200 -
-127.0.0.1 - - [10/Mar/2026 12:29:52] "GET /css/main.css HTTP/1.1" 200 -
-127.0.0.1 - - [10/Mar/2026 12:29:52] "GET /collection.html HTTP/1.1" 200 -
-127.0.0.1 - - [10/Mar/2026 12:29:53] code 404, message File not found
-127.0.0.1 - - [10/Mar/2026 12:29:53] "GET /serviceWorker.js HTTP/1.1" 404 -
-127.0.0.1 - - [10/Mar/2026 12:29:53] "GET /Baseball.html HTTP/1.1" 200 -

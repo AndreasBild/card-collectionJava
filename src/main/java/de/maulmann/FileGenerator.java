@@ -247,6 +247,7 @@ public class FileGenerator {
                                     <meta name="apple-mobile-web-app-title" content="Maulmann.de">
                                     <meta name="application-name" content="Maulmann.de">
                                     <meta name="msapplication-TileColor" content="#317EFB">
+                                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
             """ + faqJsonLd + """
                         <script>
                             if ('serviceWorker' in navigator) {
@@ -264,16 +265,29 @@ public class FileGenerator {
             
             </head>
             <body>
-            <nav class="detail-nav" style="position: sticky; top: 0; z-index: 1000;">
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; width: 100%;">
-                    <a href="index.html" class="modern-button" title="Home">Home</a>
-                    <a href="collection.html" class="modern-button" title="Juwan Howard Private Collection">Juwan Howard Private Collection</a>
-                    <a href="Baseball.html" class="modern-button" title="Upper Deck Baseball Cards">Baseball</a>
-                    <a href="Flawless.html" class="modern-button" title="2008 Upper Deck Flawless Basketball">Flawless</a>
-                    <a href="Wantlist.html" class="modern-button" title="Juwan Howard Wantlist">Wantlist</a>
-                    <a href="Panini.html" class="modern-button" title="2012-13 Panini Flawless Basketball">Panini</a>
-                </div>
-            </nav>
+            <div class="topnav" id="myTopnav">
+                <a href="index.html">Home</a>
+                <a href="collection.html" class="active">Juwan Howard Private Collection</a>
+                <a href="Baseball.html">Baseball</a>
+                <a href="Flawless.html">Flawless</a>
+                <a href="Wantlist.html">Wantlist</a>
+                <a href="Panini.html">Panini</a>
+                <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+
+            <script>
+            function myFunction() {
+              var x = document.getElementById("myTopnav");
+              if (x.className === "topnav") {
+                x.className += " responsive";
+              } else {
+                x.className = "topnav";
+              }
+            }
+            </script>
+
             <main class="detail-main">
             <h1 id="top" title='Top of the list'>Juwan Howard Basketball Card - Private Collection</h1>
                 <p>
@@ -290,10 +304,10 @@ public class FileGenerator {
 
         // These lines ensure that generatedFileLocation and nameOfInputFile are updated
         // if pathSource or pathOutput were changed (e.g., by tests).
-        generatedFileLocation = "output/collection.html";
+        generatedFileLocation = pathOutput + "collection.html";
         nameOfInputFile = getFileNamesFromDirectory();
 
-        createLandingPage("output/index.html");
+        createLandingPage(pathOutput + "index.html");
 
         //formatFile();
 
@@ -434,7 +448,7 @@ public class FileGenerator {
 
     private static int appendFileContent(final String source, final String name, int counterIn) throws IOException {
         final String anchorName = " title='Juwan Howard Trading Cards for Season " + name + "' id='" + name + "'>" + name;
-        final StringBuffer result = new StringBuffer("<h2").append(anchorName).append("</h2>").append('\n').append(tableHead);
+        final StringBuffer result = new StringBuffer("<h2").append(anchorName).append("</h2>").append('\n').append(tableHead).append('\n');
 
         try (BufferedReader inputStream = new BufferedReader(new InputStreamReader(new FileInputStream(source), StandardCharsets.UTF_8)); OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(FileGenerator.generatedFileLocation, true), StandardCharsets.UTF_8); BufferedWriter out = new BufferedWriter(osw)) {
 
@@ -444,7 +458,7 @@ public class FileGenerator {
 
             while ((line = inputStream.readLine()) != null) {
                 //every line, which is a row or column, goes to the resulting file
-                if (line.contains("</t") || line.contains("<td") || line.contains("<tr") || line.contains("<th")) {
+                if ((line.contains("</t") || line.contains("<td") || line.contains("<tr") || line.contains("<th")) && !line.contains("<table")) {
                     result.append(line.trim());
                     // we simply count the rows, but do not consider the first one as it is the table header
                     if (line.contains("<tr>")) {
@@ -485,18 +499,31 @@ public class FileGenerator {
                     <link href="/favicon/favicon.ico" rel="icon" sizes="32x32">
                     <link href="/favicon/apple-touch-icon.png" rel="apple-touch-icon">
                     <link rel="manifest" href="/manifest.json">
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
                 </head>
                 <body>
-                    <nav class="detail-nav" style="position: sticky; top: 0; z-index: 1000;">
-                        <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; width: 100%;">
-                            <a href="index.html" class="modern-button" title="Home">Home</a>
-                            <a href="collection.html" class="modern-button" title="Juwan Howard Private Collection">Juwan Howard Private Collection</a>
-                            <a href="Baseball.html" class="modern-button" title="Upper Deck Baseball Cards">Baseball</a>
-                            <a href="Flawless.html" class="modern-button" title="2008 Upper Deck Flawless Basketball">Flawless</a>
-                            <a href="Wantlist.html" class="modern-button" title="Juwan Howard Wantlist">Wantlist</a>
-                            <a href="Panini.html" class="modern-button" title="2012-13 Panini Flawless Basketball">Panini</a>
-                        </div>
-                    </nav>
+                    <div class="topnav" id="myTopnav">
+                        <a href="index.html" class="active">Home</a>
+                        <a href="collection.html">Juwan Howard Private Collection</a>
+                        <a href="Baseball.html">Baseball</a>
+                        <a href="Flawless.html">Flawless</a>
+                        <a href="Wantlist.html">Wantlist</a>
+                        <a href="Panini.html">Panini</a>
+                        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                    </div>
+
+                    <script>
+                    function myFunction() {
+                      var x = document.getElementById("myTopnav");
+                      if (x.className === "topnav") {
+                        x.className += " responsive";
+                      } else {
+                        x.className = "topnav";
+                      }
+                    }
+                    </script>
 
                     <main class="detail-main">
                         <header class="detail-header">

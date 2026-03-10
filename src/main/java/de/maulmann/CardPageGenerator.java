@@ -213,6 +213,7 @@ public class CardPageGenerator {
                         <meta name="apple-mobile-web-app-title" content="Maulmann.de">
                         <meta name="application-name" content="Maulmann.de">
                         <meta name="msapplication-TileColor" content="#317EFB">
+                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
             """;
 
     private static void createSubPage(CardData c, Path path, CardData prev, CardData next, List<CardData> allCards) throws IOException {
@@ -250,19 +251,33 @@ public class CardPageGenerator {
 
         sb.append("</head>\n<body>\n");
 
-        // NAVIGATION (CSS class: detail-nav)
-        sb.append("<nav class=\"detail-nav\" style=\"position: sticky; top: 0; z-index: 1000; flex-direction: column; gap: 10px;\">\n");
-        sb.append("    <div style=\"display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; width: 100%;\">\n");
-        sb.append("        <a href=\"../../index.html\" class=\"modern-button\" title=\"Home\">Home</a>\n");
-        sb.append("        <a href=\"../../collection.html\" class=\"modern-button\" title=\"Juwan Howard Private Collection\">Juwan Howard Private Collection</a>\n");
-        sb.append("        <a href=\"../../Baseball.html\" class=\"modern-button\" title=\"Upper Deck Baseball Cards\">Baseball</a>\n");
-        sb.append("        <a href=\"../../Flawless.html\" class=\"modern-button\" title=\"2008 Upper Deck Flawless Basketball\">Flawless</a>\n");
-        sb.append("        <a href=\"../../Wantlist.html\" class=\"modern-button\" title=\"Juwan Howard Wantlist\">Wantlist</a>\n");
-        sb.append("        <a href=\"../../Panini.html\" class=\"modern-button\" title=\"2012-13 Panini Flawless Basketball\">Panini</a>\n");
-        sb.append("    </div>\n");
-        sb.append("    <div style=\"display: flex; justify-content: space-between; align-items: center; width: 100%;\">\n");
-        sb.append("        <a href=\"../../collection.html\" class=\"modern-button\" style=\"text-decoration:none;\" title=\"Return to the complete card collection overview\">&larr; Overview</a>\n");
+        // NAVIGATION (Responsive topnav)
+        sb.append("<div class=\"topnav\" id=\"myTopnav\">\n");
+        sb.append("    <a href=\"../../index.html\">Home</a>\n");
+        sb.append("    <a href=\"../../collection.html\">Juwan Howard Private Collection</a>\n");
+        sb.append("    <a href=\"../../Baseball.html\">Baseball</a>\n");
+        sb.append("    <a href=\"../../Flawless.html\">Flawless</a>\n");
+        sb.append("    <a href=\"../../Wantlist.html\">Wantlist</a>\n");
+        sb.append("    <a href=\"../../Panini.html\">Panini</a>\n");
+        sb.append("    <a href=\"javascript:void(0);\" class=\"icon\" onclick=\"myFunction()\">\n");
+        sb.append("        <i class=\"fa fa-bars\"></i>\n");
+        sb.append("    </a>\n");
+        sb.append("</div>\n");
 
+        sb.append("<script>\n");
+        sb.append("function myFunction() {\n");
+        sb.append("  var x = document.getElementById(\"myTopnav\");\n");
+        sb.append("  if (x.className === \"topnav\") {\n");
+        sb.append("    x.className += \" responsive\";\n");
+        sb.append("  } else {\n");
+        sb.append("    x.className = \"topnav\";\n");
+        sb.append("  }\n");
+        sb.append("}\n");
+        sb.append("</script>\n");
+
+        // SUB-NAV (Overview, Prev, Next)
+        sb.append("<nav class=\"detail-nav\" style=\"display: flex; justify-content: space-between; align-items: center; width: 100%; border: none; background: transparent;\">\n");
+        sb.append("    <a href=\"../../collection.html\" class=\"modern-button\" style=\"text-decoration:none;\" title=\"Return to the complete card collection overview\">&larr; Overview</a>\n");
         sb.append("    <div>\n");
         if (prev != null) {
             String prevTitle = "Go to previous card: " + prev.get("Season") + " " + prev.get("Brand");
@@ -272,7 +287,6 @@ public class CardPageGenerator {
             String nextTitle = "Go to next card: " + next.get("Season") + " " + next.get("Brand");
             sb.append("        <a id=\"nextCardLink\" href=\"").append(next.filename).append("\" title=\"").append(nextTitle).append("\" style=\"text-decoration:none;\">Next &raquo;</a>\n");
         }
-        sb.append("    </div>\n");
         sb.append("    </div>\n");
         sb.append("</nav>\n");
 
