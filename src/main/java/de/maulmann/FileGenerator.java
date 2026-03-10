@@ -247,6 +247,8 @@ public class FileGenerator {
                                     <meta name="apple-mobile-web-app-title" content="Maulmann.de">
                                     <meta name="application-name" content="Maulmann.de">
                                     <meta name="msapplication-TileColor" content="#317EFB">
+                                    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+                                              as="style">
                                     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
             """ + faqJsonLd + """
                         <script>
@@ -276,7 +278,7 @@ public class FileGenerator {
                     <i class="fa fa-bars"></i>
                 </a>
             </div>
-
+            
             <script>
             function myFunction() {
               var x = document.getElementById("myTopnav");
@@ -287,7 +289,7 @@ public class FileGenerator {
               }
             }
             </script>
-
+            
             <main class="detail-main">
             <h1 id="top" title='Top of the list'>Juwan Howard Basketball Card - Private Collection</h1>
                 <p>
@@ -513,7 +515,7 @@ public class FileGenerator {
                             <i class="fa fa-bars"></i>
                         </a>
                     </div>
-
+                
                     <script>
                     function myFunction() {
                       var x = document.getElementById("myTopnav");
@@ -524,13 +526,13 @@ public class FileGenerator {
                       }
                     }
                     </script>
-
+                
                     <main class="detail-main">
                         <header class="detail-header">
                             <h1>Maulmann Trading Cards</h1>
                             <p class="sub-title">Welcome to our Private Sports Card Collection</p>
                         </header>
-
+                
                         <article class="seo-box">
                             <h3>Explore the Collection</h3>
                             <p>Welcome to <strong>Maulmann Trading Cards</strong>, a dedicated space showcasing a lifelong passion for sports card collecting. Our centerpiece is a massive <strong>Juwan Howard Private Collection</strong>, featuring over a thousand unique cards spanning his entire career.</p>
@@ -541,13 +543,13 @@ public class FileGenerator {
                                 <li><strong>Wantlist:</strong> Rare cards we are currently searching for to complete our collection.</li>
                             </ul>
                         </article>
-
+                
                         <section style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
                              <a href="collection.html" class="modern-button modern-button-footer" style="width: 300px;">View Juwan Howard Private Collection</a>
                              <a href="Baseball.html" class="modern-button modern-button-footer" style="width: 300px;">View Baseball Collection</a>
                         </section>
                     </main>
-
+                
                     <footer class="detail-footer">
                         Maulmann Trading Cards &copy; 2026
                     </footer>

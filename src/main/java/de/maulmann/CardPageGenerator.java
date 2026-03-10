@@ -19,7 +19,7 @@ public class CardPageGenerator {
 
     // --- KONFIGURATION ---
     private static final String INPUT_FILE = "output/collection.html";
-    private static final String OUTPUT_INDEX = "newIndex/index.html";
+    private static final String OUTPUT_INDEX = "newIndex/collection.html";
     private static final String BASE_FOLDER = "cards";
     // Pfade von der Unterseite aus gesehen:
     private static final String RELATIVE_CSS_PATH = "../../css/main.css";
@@ -213,6 +213,8 @@ public class CardPageGenerator {
                         <meta name="apple-mobile-web-app-title" content="Maulmann.de">
                         <meta name="application-name" content="Maulmann.de">
                         <meta name="msapplication-TileColor" content="#317EFB">
+                        <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+                                  as="style">
                         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
             """;
 
