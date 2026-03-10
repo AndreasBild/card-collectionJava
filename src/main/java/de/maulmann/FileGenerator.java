@@ -16,9 +16,9 @@ public class FileGenerator {
 
 
     // constants: base paths for input and output
-    private static final String pathSource = "content/";
-    private static final String pathOutput = "output/";
-    private static String generatedFileLocation = pathOutput + "collection.html";
+    public static String pathSource = "content/";
+    public static String pathOutput = "output/";
+    public static String generatedFileLocation = pathOutput + "collection.html";
     private static String[] nameOfInputFile = getFileNamesFromDirectory();
 
     private static final Logger logger = LoggerFactory.getLogger(FileGenerator.class);
@@ -322,11 +322,16 @@ public class FileGenerator {
     private static String createAnchorList() {
 
         final StringBuilder internalAnchorList = new StringBuilder();
+        internalAnchorList.append("<div style='margin: 20px 0; text-align: center;'>");
+        internalAnchorList.append("<label for='season-select' style='margin-right: 10px; font-weight: bold;'>Select Season:</label>");
+        internalAnchorList.append("<select id='season-select' class='modern-button' style='width: auto; min-width: 220px; cursor: pointer;' onchange=\"if(this.value) window.location.hash = this.value;\">");
+        internalAnchorList.append("<option value=''>-- Select a Season --</option>");
 
         for (final String fileName : nameOfInputFile) {
-            internalAnchorList.append(" <a class='modern-button' href=").append('#').append(fileName).append(" title='Juwan Howard Trading Cards from Season: ").append(fileName).append("'>").append(fileName).append("</a> ");
+            internalAnchorList.append("<option value='").append(fileName).append("'>").append(fileName).append("</option>");
         }
-        internalAnchorList.append(" ");
+        internalAnchorList.append("</select>");
+        internalAnchorList.append("</div>");
 
 
         return internalAnchorList.toString();
