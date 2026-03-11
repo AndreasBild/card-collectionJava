@@ -3,3 +3,4 @@ output/
 cards/
 cp.txt
 *.class
+server.log

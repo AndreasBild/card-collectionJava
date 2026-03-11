@@ -9,4 +9,5 @@
 /app/src/main/java/de/maulmann/S3ListFiles.java
 /app/src/main/java/de/maulmann/S3UploadFiles.java
 /app/src/main/java/de/maulmann/S3UploadFilesFolder.java
+/app/src/main/java/de/maulmann/SharedTemplates.java
 /app/src/main/java/de/maulmann/SitemapGenerator.java
