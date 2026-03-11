@@ -12,17 +12,23 @@ import java.util.List;
 
 public class FileGenerator {
 
+    public static final String JUWAN_HOWARD_COLLECTION_HTML = "Juwan-Howard-Collection.html";
+    static final String DEFAULT_IMAGE="https://www.maulmann.de/images/1997-98/Juwan-Howard-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-sn7-front.jpg";
+
+
     private static final Logger logger = LoggerFactory.getLogger(FileGenerator.class);
+    public static final String INDEX_HTML = "index.html";
 
     // constants: base paths for input and output
     public static String pathSource = "content/";
+
     public static String pathOutput = "output/";
 
     public static void main(String[] args) throws IOException {
-        String generatedFileLocation = pathOutput + "Juwan-Howard-Collection.html";
+        String generatedFileLocation = pathOutput + JUWAN_HOWARD_COLLECTION_HTML;
         String[] nameOfInputFile = getFileNamesFromDirectory();
 
-        createLandingPage(pathOutput + "index.html");
+        createLandingPage(pathOutput + INDEX_HTML);
 
         // create a new file or use an existing file with the same name
         createTargetFile(generatedFileLocation);
@@ -59,28 +65,13 @@ public class FileGenerator {
     private static String getTemplateBegin(String[] fileNames) {
         String title = "Juwan Howard Basketball Card Collection | 1/1s, PMGs & Rare PC";
         String description = "Explore a massive Juwan Howard private basketball card collection. Featuring rare 90s inserts, PMGs, 1/1s, and autographs from 1994 to today.";
-
         StringBuilder sb = new StringBuilder();
         sb.append("<!doctype html>\n<html lang=\"en\">\n<head>\n");
-        sb.append(SharedTemplates.getHead(title, description, "/"));
+        sb.append(SharedTemplates.getHead(title, description, "/" , JUWAN_HOWARD_COLLECTION_HTML, DEFAULT_IMAGE));
 
         // Additional SEO and metadata specifically for the main collection page
         sb.append("""
             <meta name="keywords" content="Juwan Howard, Basketball Cards, Player Collection, PC, Trading Cards, Panini, Upper Deck, 1/1, PMG, NBA">
-            <meta name="author" content="Mauli Maulmann - Content Creator">
-            <meta name="publisher" content="Mauli Maulmann - Card Collector">
-            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-            <link rel="canonical" href="https://www.maulmann.de/index.html">
-            <meta property="og:type" content="website">
-            <meta property="og:url" content="https://www.maulmann.de/index.html">
-            <meta property="og:title" content="Massive Juwan Howard Basketball Card Collection">
-            <meta property="og:description" content="Over 1000+ Juwan Howard cards. See the 1/1s, PMGs, and rare 90s inserts in this ultimate Player Collection.">
-            <meta property="og:image" content="https://www.maulmann.de/images/1997-98/Juwan-Howard-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-sn7-front.jpg">
-            <meta property="og:site_name" content="Maulmann Trading Cards">
-            <meta name="twitter:card" content="summary_large_image">
-            <meta name="twitter:title" content="Juwan Howard Basketball Card Collection | 1/1s & PMGs">
-            <meta name="twitter:description" content="Explore a massive Juwan Howard private basketball card collection from 1994 to today.">
-            <meta name="twitter:image" content="https://www.maulmann.de/images/1997-98/Juwan-Howard-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-sn7-front.jpg">
             <meta name="google-site-verification" content="Ev1ZxTPJs2GMFNQ6FyItlCYAKUWscL3jDFS_mVXH6IQ">
             """);
 
@@ -288,7 +279,7 @@ public class FileGenerator {
                 </body>
                 </html>
                 """,
-                SharedTemplates.getHead(title, description, "/"),
+                SharedTemplates.getHead(title, description, "/", INDEX_HTML,DEFAULT_IMAGE),
                 SharedTemplates.getTopNav("/", "index"));
 
         try (OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(targetPath), StandardCharsets.UTF_8);

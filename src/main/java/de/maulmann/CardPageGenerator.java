@@ -18,6 +18,7 @@ import java.util.*;
 public class CardPageGenerator {
 
     private static final String INPUT_FILE = "output/Juwan-Howard-Collection.html";
+    private static final String PAGE = "Juwan-Howard-Collection.html";
     private static final String OUTPUT_INDEX = "newIndex/Juwan-Howard-Collection.html";
     private static final String BASE_FOLDER = "cards";
     private static final String RELATIVE_IMAGES_PATH = "../../images";
@@ -183,13 +184,9 @@ public class CardPageGenerator {
 
         // HTML START
         sb.append("<!doctype html>\n<html lang=\"en\">\n<head>\n");
-        sb.append(SharedTemplates.getHead(browserTitle, metaDesc, "../../"));
+        sb.append(SharedTemplates.getHead(browserTitle, metaDesc, "../../", PAGE,frontImgPath));
 
-        // Open Graph Tags & LCP Preload
-        sb.append("    <meta property=\"og:title\" content=\"").append(escapeHtml(browserTitle)).append("\">\n");
-        sb.append("    <meta property=\"og:description\" content=\"").append(escapeHtml(metaDesc)).append("\">\n");
-        sb.append("    <meta property=\"og:image\" content=\"").append(frontImgPath).append("\">\n");
-        sb.append("    <meta property=\"og:type\" content=\"website\">\n");
+        // LCP Preload
         sb.append("    <link rel=\"preload\" as=\"image\" href=\"").append(frontImgPath).append("\">\n");
 
         // Schema.org
