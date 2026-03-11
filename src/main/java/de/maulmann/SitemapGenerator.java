@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 public class SitemapGenerator {
 
     private static final String BASE_URL = "https://www.maulmann.de";
-    private static final String INPUT_FILE = "newIndex/index.html";
+    private static final String INPUT_FILE = "newIndex/Juwan-Howard-Collection.html";
     private static final String OUTPUT_SITEMAP = "output/sitemap.xml";
     private static final String IMAGE_PATH_LOCAL = "images/";
     private static final String HTML_PATH_LOCAL = "cards/";
@@ -45,6 +45,7 @@ public class SitemapGenerator {
 
             // 2. Static Pages
             addUrl(xml, BASE_URL + "/index.html", "1.0", "weekly", getLastModifiedDate("index.html"));
+            addUrl(xml, BASE_URL + "/Juwan-Howard-Collection.html", "1.0", "weekly", getLastModifiedDate("Juwan-Howard-Collection.html"));
             addUrl(xml, BASE_URL + "/Wantlist.html", "0.8", "monthly", getLastModifiedDate("Wantlist.html"));
             addUrl(xml, BASE_URL + "/Flawless.html", "0.8", "monthly", getLastModifiedDate("Flawless.html"));
             addUrl(xml, BASE_URL + "/Baseball.html", "0.8", "monthly", getLastModifiedDate("Baseball.html"));
