@@ -6,10 +6,15 @@ import java.util.Objects;
 
 
 public class MinifyCompress {
-    private static String pathSource = "../card-CollectionJava/output";
+    private static String pathSource = "output";
 
     public static void main(String[] args) {
         File directory = new File(pathSource);
+
+        if (!directory.exists()) {
+            System.err.println("Source directory does not exist: " + directory.getAbsolutePath());
+            return;
+        }
 
         for (File file : Objects.<File[]>requireNonNull(directory.listFiles())) {
             if (file.isFile()) {

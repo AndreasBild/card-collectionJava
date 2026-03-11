@@ -1,7 +1,6 @@
 de/maulmann/FileGenerator.class
 de/maulmann/GZIPCompressor.class
 de/maulmann/MinifyCompress.class
-de/maulmann/FileGenerator$1.class
 de/maulmann/CardPageGenerator.class
 de/maulmann/CSSMinifier.class
 de/maulmann/S3ListFiles.class
@@ -12,4 +11,5 @@ de/maulmann/SitemapGenerator.class
 de/maulmann/HTMLMinifier.class
 de/maulmann/S3UploadFilesFolder.class
 de/maulmann/MinifyCompressFolder.class
+de/maulmann/SharedTemplates.class
 de/maulmann/GZIPCompressor$1.class

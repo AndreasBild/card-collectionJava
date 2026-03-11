@@ -17,18 +17,13 @@ import java.util.*;
 
 public class CardPageGenerator {
 
-    // --- KONFIGURATION ---
     private static final String INPUT_FILE = "output/Juwan-Howard-Collection.html";
     private static final String OUTPUT_INDEX = "newIndex/Juwan-Howard-Collection.html";
     private static final String BASE_FOLDER = "cards";
-    // Pfade von der Unterseite aus gesehen:
-    private static final String RELATIVE_CSS_PATH = "../../css/main.css";
     private static final String RELATIVE_IMAGES_PATH = "../../images";
     private static final String BASE_URL = "https://www.maulmann.de";
     private static final Logger log = LoggerFactory.getLogger(CardPageGenerator.class);
-    // ---------------------
 
-    // --- INTERNE KLASSE: KARTENDATEN ---
     static class CardData {
         Map<String, String> attributes;
         String filenameBase;
@@ -39,10 +34,8 @@ public class CardPageGenerator {
         public CardData(Map<String, String> attributes) {
             this.attributes = new HashMap<>(attributes);
 
-            // LOGIK 1: TEAM ERMITTELN
             String currentTeam = this.attributes.get("Team");
             if (!isValid(currentTeam)) {
-                System.out.println(this.attributes.get("Season") + " " +this.filename +this.attributes.get("Number") + currentTeam);
                 String calculatedTeam = getTeamBySeason(this.attributes.get("Season"));
                 this.attributes.put("Team", calculatedTeam);
             }
@@ -62,13 +55,11 @@ public class CardPageGenerator {
             addIfPresent(filenameTokens, attributes.get("Variant"));
             addIfPresent(filenameTokens, attributes.get("Number"));
 
-            // LOGIK 3: SERIAL NUMBER INTEGRATION
             String serial = attributes.get("Serial");
             if (isValid(serial) && !serial.equals("0")) {
                 filenameTokens.add("sn" + serial);
             }
 
-            // LOGIK 4: GRADING
             String grade = attributes.get("Grade");
             if (isValid(grade)) filenameTokens.add(grade);
 
@@ -90,33 +81,35 @@ public class CardPageGenerator {
         }
     }
 
-    // --- MAIN METHODE ---
     public static void main(String[] args) {
         try {
-            System.out.println("Reading " + INPUT_FILE + "...");
+            log.info("Reading {}...", INPUT_FILE);
             File input = new File(INPUT_FILE);
+            if (!input.exists()) {
+                log.error("Input file not found: {}", INPUT_FILE);
+                return;
+            }
             Document doc = Jsoup.parse(input, "UTF-8");
 
             Elements tables = doc.select("table");
             if (tables.isEmpty()) {
-                System.err.println("Error: No tables found!");
+                log.error("Error: No tables found!");
                 return;
             }
 
-            System.out.println("Found " + tables.size() + " tables. Processing...");
+            log.info("Found {} tables. Processing...", tables.size());
 
-            int tableCount = 1;
             for (Element table : tables) {
-                System.out.println("Processing Table #" + tableCount + "...");
                 processTable(table);
-                tableCount++;
             }
 
-            Files.writeString(Paths.get(OUTPUT_INDEX), doc.outerHtml(), StandardCharsets.UTF_8);
-            System.out.println("DONE! Index updated.");
+            File outIndex = new File(OUTPUT_INDEX);
+            outIndex.getParentFile().mkdirs();
+            Files.writeString(outIndex.toPath(), doc.outerHtml(), StandardCharsets.UTF_8);
+            log.info("DONE! Index updated.");
 
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Error generating card pages", e);
         }
     }
 
@@ -169,54 +162,8 @@ public class CardPageGenerator {
                         .attr("title", "View details for " + currentCard.get("Season") + " " + currentCard.get("Brand") + " #" + currentCard.get("Number"))
                         .text(originalText);
             }
-            System.out.println(" -> Generated: " + currentCard.filename);
         }
     }
-
-    // --- TEMPLATE HEADER ---
-    private static final String TEMPLATE_HEAD_SCRIPTS = """
-                        <meta charset="UTF-8">
-                        <meta name="viewport" content="width=device-width, initial-scale=1">
-                        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-                        <meta name="theme-color" content="#317EFB">
-                        <link rel="preload" href="../../css/main.css" as="style">
-                        <link href="../../css/main.css" rel="stylesheet" type="text/css">
-                        <link rel="preconnect" href="https://www.googletagmanager.com">
-                        <script async src="https://www.googletagmanager.com/gtag/js?id=G-535TKYRZTR"></script>
-                        <script>
-                               function loadAnalytics() {
-                                 var script = document.createElement('script');
-                                 script.src = "https://www.googletagmanager.com/gtag/js?id=G-535TKYRZTR";
-                                 script.async = true;
-                                 document.head.appendChild(script);
-                                 window.dataLayer = window.dataLayer || [];
-                                 function gtag(){dataLayer.push(arguments);}
-                                 gtag('js', new Date());
-                                 gtag('config', 'G-535TKYRZTR');
-                               }
-                               window.addEventListener('scroll', loadAnalytics, {once: true});
-                               window.addEventListener('mousemove', loadAnalytics, {once: true});
-                               window.addEventListener('touchstart', loadAnalytics, {once: true});
-                        </script>
-                        <meta name="author" content="Mauli Maulmann - Content Creator">
-                        <meta name="publisher" content="Mauli Maulmann - Card Collector">
-                        <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
-                        <link href="../../favicon/favicon.ico" rel="icon" sizes="32x32">
-                        <link href="../../favicon/apple-touch-icon.png" rel="apple-touch-icon">
-                        <link rel="apple-touch-icon" sizes="180x180" href="../../favicon/apple-touch-icon.png">
-                        <link rel="icon" type="image/png" sizes="32x32" href="../../favicon/favicon-32x32.png">
-                        <link rel="icon" type="image/png" sizes="194x194" href="../../favicon/favicon-194x194.png">
-                        <link rel="icon" type="image/png" sizes="192x192" href="../../favicon/android-chrome-192x192.png">
-                        <link rel="icon" type="image/png" sizes="16x16" href="../../favicon/favicon-16x16.png">
-                        <link rel="manifest" href="../../manifest.json">
-                        <link rel="mask-icon" href="../../favicon/safari-pinned-tab.svg" color="#317EFB">
-                        <meta name="apple-mobile-web-app-title" content="Maulmann.de">
-                        <meta name="application-name" content="Maulmann.de">
-                        <meta name="msapplication-TileColor" content="#317EFB">
-                        <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-                                  as="style">
-                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-            """;
 
     private static void createSubPage(CardData c, Path path, CardData prev, CardData next, List<CardData> allCards) throws IOException {
         StringBuilder sb = new StringBuilder();
@@ -236,8 +183,7 @@ public class CardPageGenerator {
 
         // HTML START
         sb.append("<!doctype html>\n<html lang=\"en\">\n<head>\n");
-        sb.append("    <title>").append(browserTitle).append("</title>\n");
-        sb.append("    <meta name=\"description\" content=\"").append(metaDesc).append("\">\n");
+        sb.append(SharedTemplates.getHead(browserTitle, metaDesc, "../../"));
 
         // Open Graph Tags & LCP Preload
         sb.append("    <meta property=\"og:title\" content=\"").append(escapeHtml(browserTitle)).append("\">\n");
@@ -246,36 +192,13 @@ public class CardPageGenerator {
         sb.append("    <meta property=\"og:type\" content=\"website\">\n");
         sb.append("    <link rel=\"preload\" as=\"image\" href=\"").append(frontImgPath).append("\">\n");
 
-        sb.append(TEMPLATE_HEAD_SCRIPTS).append("\n");
-
         // Schema.org
         sb.append(generateJsonLd(c, metaDesc, h1Title));
 
         sb.append("</head>\n<body>\n");
 
-        // NAVIGATION (Responsive topnav)
-        sb.append("<div class=\"topnav\" id=\"myTopnav\">\n");
-        sb.append("    <a href=\"../../index.html\">Home</a>\n");
-        sb.append("    <a href=\"../../Juwan-Howard-Collection.html\">Juwan Howard PC</a>\n");
-        sb.append("    <a href=\"../../Baseball.html\">Baseball</a>\n");
-        sb.append("    <a href=\"../../Flawless.html\">Flawless</a>\n");
-        sb.append("    <a href=\"../../Wantlist.html\">Wantlist</a>\n");
-        sb.append("    <a href=\"../../Panini.html\">Panini</a>\n");
-        sb.append("    <a href=\"javascript:void(0);\" class=\"icon\" onclick=\"myFunction()\">\n");
-        sb.append("        <i class=\"fa fa-bars\"></i>\n");
-        sb.append("    </a>\n");
-        sb.append("</div>\n");
-
-        sb.append("<script>\n");
-        sb.append("function myFunction() {\n");
-        sb.append("  var x = document.getElementById(\"myTopnav\");\n");
-        sb.append("  if (x.className === \"topnav\") {\n");
-        sb.append("    x.className += \" responsive\";\n");
-        sb.append("  } else {\n");
-        sb.append("    x.className = \"topnav\";\n");
-        sb.append("  }\n");
-        sb.append("}\n");
-        sb.append("</script>\n");
+        // NAVIGATION
+        sb.append(SharedTemplates.getTopNav("../../", "collection"));
 
         // SUB-NAV (Overview, Prev, Next)
         sb.append("<nav class=\"detail-nav\" style=\"display: flex; justify-content: space-between; align-items: center; width: 100%; border: none; background: transparent;\">\n");
@@ -308,17 +231,14 @@ public class CardPageGenerator {
 
         // --- IMAGES SECTION ---
         sb.append("    <div class=\"card-images-container\">\n");
-
-        // Front Image (Kein Lazy-Loading!)
         sb.append("        <div class=\"card-image-wrapper\">\n");
         sb.append("            <img src=\"").append(frontImgPath).append("\" ")
                 .append("alt=\"").append(frontAlt).append("\" ")
                 .append("title=\"").append(frontImgTitle).append("\" ")
+                .append("loading=\"lazy\" ")
                 .append("onclick=\"openModal('").append(frontImgPath).append("', '").append(backImgPath).append("')\">\n");
         sb.append("            <p>Front View (Click to Zoom)</p>\n");
         sb.append("        </div>\n");
-
-        // Back Image (Mit Lazy-Loading)
         sb.append("        <div class=\"card-image-wrapper\">\n");
         sb.append("            <img src=\"").append(backImgPath).append("\" ")
                 .append("alt=\"").append(backAlt).append("\" ")
@@ -327,7 +247,6 @@ public class CardPageGenerator {
                 .append("onclick=\"openModal('").append(backImgPath).append("', '").append(frontImgPath).append("')\">\n");
         sb.append("            <p>Back View (Click to Zoom)</p>\n");
         sb.append("        </div>\n");
-
         sb.append("    </div>\n");
 
         // DATA TABLE
@@ -387,10 +306,13 @@ public class CardPageGenerator {
         sb.append("        </ul>\n");
         sb.append("    </section>\n");
 
+        // FOOTER NAV & FOOTER
+        sb.append(SharedTemplates.getFooterNav("../../"));
+        sb.append(SharedTemplates.getFooter());
+
         sb.append("</main>\n");
 
-
-        // --- MODAL & SCRIPT LOGIC (inkl. Tastatur und Aria) ---
+        // --- MODAL & SCRIPT LOGIC ---
         sb.append("""
             <div id="cardModal" class="modal" aria-hidden="true" style="display:none;">
               <span class="close-modal" aria-label="Close zoomed image" onclick="closeModal()">&times;</span>
@@ -430,7 +352,6 @@ public class CardPageGenerator {
                     closeModal();
                   }
                 }
-                // Keyboard Navigation
                 document.addEventListener('keydown', function(event) {
                     if (event.key === "Escape") {
                         closeModal();
@@ -451,8 +372,6 @@ public class CardPageGenerator {
 
         Files.writeString(path, sb.toString(), StandardCharsets.UTF_8);
     }
-
-    // --- HELPER METHODS ---
 
     private static String getTeamBySeason(String season) {
         if (season == null || season.isEmpty()) return "Unknown Team";
@@ -589,7 +508,6 @@ public class CardPageGenerator {
                 "</details>";
     }
 
-    // UPDATE: Neues sauberes Schema (VisualArtwork + FAQPage) anstatt "SoldOut"-Produkte
     private static String generateJsonLd(CardData c, String desc, String h1Title) {
         String frontImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + c.filenameBase + "-front.jpg";
         String backImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + c.filenameBase + "-back.jpg";
@@ -622,35 +540,29 @@ public class CardPageGenerator {
         sb.append("      \"artform\": \"Sports Memorabilia\"\n");
         sb.append("    },\n");
 
-        // FAQ Page Dynamic Generation
+        // FAQ Page
         sb.append("    {\n");
         sb.append("      \"@type\": \"FAQPage\",\n");
         sb.append("      \"mainEntity\": [\n");
 
         List<String> faqItems = new ArrayList<>();
-
-        // Q1 Rarity
         if (c.has("Serial")) {
             faqItems.add(createJsonLdQuestion("How rare is this specific card?", "This card is serially numbered " + c.get("Serial") + " out of a total print run of " + c.get("Print Run") + "."));
         } else {
             faqItems.add(createJsonLdQuestion("Is this card numbered?", "No, this version of the card was not serial numbered by the manufacturer."));
         }
 
-        // Q2 Rookie
         String rookieAns = c.get("Rookie").equalsIgnoreCase("Yes") ? "Yes, this is an official Rookie Card (RC) from the " + c.get("Season") + " class!" : "No, this is a veteran card released during the " + c.get("Season") + " season.";
         faqItems.add(createJsonLdQuestion("Is this a Rookie Card?", rookieAns));
 
-        // Q3 Auto
         if (c.has("Autograph") && c.get("Autograph").equalsIgnoreCase("Yes")) {
             faqItems.add(createJsonLdQuestion("Is the autograph authentic?", "Yes, this card features a manufacturer-certified autograph guaranteed by " + c.get("Company") + "."));
         }
 
-        // Q4 Grade
         if (c.has("Grade")) {
             faqItems.add(createJsonLdQuestion("What is the condition of this card?", "This card has been professionally graded by " + c.get("Grading Co.") + " and received a grade of " + c.get("Grade") + "."));
         }
 
-        // Q5 Team
         faqItems.add(createJsonLdQuestion("Which team did Juwan Howard play for on this card?", "This card features Juwan Howard in a " + c.get("Team") + " uniform."));
 
         sb.append(String.join(",\n", faqItems)).append("\n");

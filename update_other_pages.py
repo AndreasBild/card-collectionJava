@@ -1,41 +1,16 @@
 import os
 import re
 
-nav_html = """
-    <div class="topnav" id="myTopnav">
-        <a href="index.html">Home</a>
-        <a href="Juwan-Howard-Collection.html">Juwan Howard PC</a>
-        <a href="Baseball.html">Baseball</a>
-        <a href="Flawless.html">Flawless</a>
-        <a href="Wantlist.html">Wantlist</a>
-        <a href="Panini.html">Panini</a>
-        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-            <i class="fa fa-bars"></i>
-        </a>
-    </div>
+# Unified Navigation and Head based on external templates
+def get_resource(path):
+    with open(os.path.join("src/main/resources", path), "r", encoding="utf-8") as f:
+        return f.read()
 
-    <script>
-    function myFunction() {
-      var x = document.getElementById("myTopnav");
-      if (x.className === "topnav") {
-        x.className += " responsive";
-      } else {
-        x.className = "topnav";
-      }
-    }
-    </script>"""
-
-footer_nav = """
-    <nav class="detail-nav" style="background: none; border: none; padding: 20px 0; justify-content: center;">
-        <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
-            <a href="index.html" class="modern-button" title="Home">Home</a>
-            <a href="Juwan-Howard-Collection.html" class="modern-button" title="Juwan Howard PC">Juwan Howard PC</a>
-            <a href="Baseball.html" class="modern-button" title="Upper Deck Baseball Cards">Baseball</a>
-            <a href="Flawless.html" class="modern-button" title="2008 Upper Deck Flawless Basketball">Flawless</a>
-            <a href="Wantlist.html" class="modern-button" title="Juwan Howard Wantlist">Wantlist</a>
-            <a href="Panini.html" class="modern-button" title="2012-13 Panini Flawless Basketball">Panini</a>
-        </div>
-    </nav>"""
+head_template = get_resource("templates/head.html")
+nav_template = get_resource("templates/topnav.html")
+footer_template = get_resource("templates/footer.html")
+footer_nav_template = get_resource("templates/footer_nav.html")
+analytics_template = get_resource("templates/analytics.html")
 
 other_dir = "content/other"
 for filename in os.listdir(other_dir):
@@ -44,30 +19,57 @@ for filename in os.listdir(other_dir):
         with open(filepath, "r", encoding="utf-8") as f:
             content = f.read()
 
-        # Ensure Font Awesome is in the head
-        if "font-awesome" not in content.lower():
-            content = content.replace("</head>", '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">\n</head>')
+        # Extract title and description from existing content if possible
+        title_match = re.search(r'<title>(.*?)</title>', content, re.IGNORECASE)
+        title = title_match.group(1) if title_match else "Maulmann Trading Cards"
 
-        # Extract Head and Body
+        desc_match = re.search(r'<meta name="description" content="(.*?)">', content, re.IGNORECASE)
+        description = desc_match.group(1) if desc_match else "Sports card collection."
+
+        # Reconstruct Head
+        new_head = head_template.replace("{{TITLE}}", title) \
+                                .replace("{{DESCRIPTION}}", description) \
+                                .replace("{{ROOT}}", "") \
+                                .replace("{{ANALYTICS}}", analytics_template)
+
+        content = re.sub(r'<head>.*?</head>', f'<head>\n{new_head}\n</head>', content, flags=re.DOTALL | re.IGNORECASE)
+
+        # Reconstruct TopNav
+        active_page = ""
+        if "index" in filename: active_page = "index"
+        elif "Juwan-Howard-Collection" in filename: active_page = "collection"
+        elif "Baseball" in filename: active_page = "baseball"
+        elif "Flawless" in filename: active_page = "flawless"
+        elif "Wantlist" in filename: active_page = "wantlist"
+        elif "Panini" in filename: active_page = "panini"
+
+        new_nav = nav_template.replace("{{ROOT}}", "") \
+                              .replace("{{ACTIVE_INDEX}}", 'class="active"' if active_page == "index" else "") \
+                              .replace("{{ACTIVE_COLLECTION}}", 'class="active"' if active_page == "collection" else "") \
+                              .replace("{{ACTIVE_BASEBALL}}", 'class="active"' if active_page == "baseball" else "") \
+                              .replace("{{ACTIVE_FLAWLESS}}", 'class="active"' if active_page == "flawless" else "") \
+                              .replace("{{ACTIVE_WANTLIST}}", 'class="active"' if active_page == "wantlist" else "") \
+                              .replace("{{ACTIVE_PANINI}}", 'class="active"' if active_page == "panini" else "")
+
+        # Reconstruct Footer Nav
+        footer_nav = footer_nav_template.replace("{{ROOT}}", "")
+
+        # Extract Body content
         match = re.search(r'(.*<body.*?>)(.*)(</body>.*)', content, re.DOTALL | re.IGNORECASE)
         if match:
             head_part = match.group(1)
             body_content = match.group(2)
             end_part = match.group(3)
 
-            # Clean up body_content: remove previous navs and main wrappers
+            # Clean up body_content
             body_content = re.sub(r'<nav class="detail-nav".*?</nav>', '', body_content, flags=re.DOTALL)
             body_content = re.sub(r'<div class="topnav".*?</div>', '', body_content, flags=re.DOTALL)
             body_content = re.sub(r'<script>\s*function myFunction\(\).*?</script>', '', body_content, flags=re.DOTALL)
             body_content = re.sub(r'<main class="detail-main">', '', body_content)
             body_content = re.sub(r'</main>', '', body_content)
 
-            # Also clean up any lingering Juwan Howard PC
-            body_content = body_content.replace("Juwan Howard PC", "Juwan Howard PC")
-
             # Reconstruct Body
-            new_body = nav_html + '<main class="detail-main">' + body_content + footer_nav + '</main>'
-
+            new_body = new_nav + '\n<main class="detail-main">\n' + body_content + footer_nav + '\n</main>'
             new_content = head_part + new_body + end_part
 
             with open(filepath, "w", encoding="utf-8") as f:

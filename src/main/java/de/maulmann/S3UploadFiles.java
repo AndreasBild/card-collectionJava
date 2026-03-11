@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class S3UploadFiles {
-    private static final String pathSource = "../card-CollectionJava/output";
+    private static final String pathSource = "output";
     // Specify the bucket name
     private static final String bucketName = "maulmann.de";
 
@@ -29,6 +29,10 @@ public class S3UploadFiles {
                 .build();
 
         File directory = new File(pathSource);
+        if (!directory.exists()) {
+            System.err.println("Source directory does not exist: " + directory.getAbsolutePath());
+            return;
+        }
 
         for (File file : Objects.<File[]>requireNonNull(directory.listFiles())) {
             if (file.isFile()) {
