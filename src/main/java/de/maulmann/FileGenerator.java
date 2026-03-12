@@ -257,20 +257,80 @@ public class FileGenerator {
         String title = "Maulmann Trading Cards | Juwan Howard & Sports Card Collection";
         String description = "Welcome to Maulmann Trading Cards. Explore our private collection of Juwan Howard basketball cards, rare 90s inserts, and specialty sets like Flawless and Upper Deck Baseball.";
 
-        String landingContent = String.format("""
+        String landingContent = """
                 <!doctype html>
                 <html lang="en">
                 <head>
-                %s
+                __HEAD__
                 </head>
                 <body>
-                %s
+                __TOP_NAV__
                 <main class="detail-main">
                     <header class="detail-header">
                         <h1>Maulmann Trading Cards</h1>
                         <p class="sub-title">Welcome to our Private Sports Card Collection</p>
                     </header>
-                
+
+                    <section class="slideshow-container">
+                        <div class="mySlides fade">
+                            <img src="images/1997-98/Juwan-Howard-Washington-Wizards-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-sn47-front.jpg" style="width:100%" alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Red">
+                        </div>
+                        <div class="mySlides fade">
+                            <img src="images/1997-98/Juwan-Howard-Washington-Wizards-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-sn7-front.jpg" style="width:100%" alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Green">
+                        </div>
+                        <div class="mySlides fade">
+                            <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-SPx-Finite-Top-Flight-Spectrum-195-sn32-front.jpg" style="width:100%" alt="Juwan Howard 1998-99 Upper Deck SPx Finite Top Flight Spectrum">
+                        </div>
+                        <div class="mySlides fade">
+                            <img src="images/1995-96/Juwan-Howard-Washington-Bullets-1995-96-Fleer-E-XL-Base-Set-Blue-88-front.jpg" style="width:100%" alt="Juwan Howard 1995-96 Fleer E-XL Base Set Blue">
+                        </div>
+                        <div class="mySlides fade">
+                            <img src="images/1994-95/Juwan-Howard-Washington-Bullets-1994-95-Topps-Topps-Finest-Collegiate-Best-Refractor-259-front.jpg" style="width:100%" alt="Juwan Howard 1994-95 Topps Finest Collegiate Best Refractor">
+                        </div>
+                        <div class="mySlides fade">
+                            <img src="images/1994-95/Juwan-Howard-Washington-Bullets-1994-95-Fleer-Ultra-All-Rookies-Base-3-front.jpg" style="width:100%" alt="Juwan Howard 1994-95 Fleer Ultra All Rookies">
+                        </div>
+                    </section>
+
+                    <style>
+                        .slideshow-container {
+                            max-width: 400px;
+                            position: relative;
+                            margin: 20px auto;
+                            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                            border-radius: 10px;
+                            overflow: hidden;
+                        }
+                        .mySlides {
+                            display: none;
+                        }
+                        .fade {
+                            animation-name: fade;
+                            animation-duration: 1.5s;
+                        }
+                        @keyframes fade {
+                            from {opacity: .4}
+                            to {opacity: 1}
+                        }
+                    </style>
+
+                    <script>
+                        let slideIndex = 0;
+                        showSlides();
+
+                        function showSlides() {
+                            let i;
+                            let slides = document.getElementsByClassName("mySlides");
+                            for (i = 0; i < slides.length; i++) {
+                                slides[i].style.display = "none";
+                            }
+                            slideIndex++;
+                            if (slideIndex > slides.length) {slideIndex = 1}
+                            slides[slideIndex-1].style.display = "block";
+                            setTimeout(showSlides, 3000);
+                        }
+                    </script>
+
                     <article class="seo-box">
                         <h3>Explore the Collection</h3>
                         <p>Welcome to <strong>Maulmann Trading Cards</strong>, a dedicated space showcasing a lifelong passion for sports card collecting. Our centerpiece is a massive <strong>Juwan Howard Private Collection</strong>, featuring over a thousand unique cards spanning his entire career.</p>
@@ -281,7 +341,7 @@ public class FileGenerator {
                             <li><strong>Wantlist:</strong> Rare cards we are currently searching for to complete our collection.</li>
                         </ul>
                     </article>
-                
+
                     <section class="faq-section">
                         <h2>Frequently Asked Questions (FAQ)</h2>
                         <details>
@@ -294,14 +354,14 @@ public class FileGenerator {
                         </details>
                         <details>
                             <summary>Why are 90s basketball cards so significant to this collection?</summary>
-                            <p>The 1990s represented a revolutionary period in trading cards, introducing iconic technologies like <strong>Refractors</strong>, <strong>Precious Metal Gems (PMGs)</strong>, and <strong>on-card autographs</strong>. Our collection preserves these milestones of hobby history, focusing on the scarcity and aesthetic beauty that modern collectors and LLMs alike identify as the pinnacle of the sport.</p>
+                            <p>The 1990s represented a revolutionary period in trading cards, introducing iconic technologies like <strong>Refractors</strong>, <strong>Precious Metal Gems (PMGs)</strong>, and <strong>on-card autographs</strong>. Our collection preserves these milestones of hobby history, focusing on the scarcity and aesthetic beauty that modern collectors identify as the pinnacle of the sport.</p>
                         </details>
                         <details>
                             <summary>Can I buy cards from the Maulmann Trading Cards collection?</summary>
-                            <p>Currently, the items showcased are part of a private curated collection and are not available for direct sale. However, we are always active in the hobby community and interested in discussing rare finds, especially those on our <strong>Wantlist</strong>. For inquiries, you can reach out to us at <strong>seraph@gmx.co.uk</strong>.</p>
+                            <p>Currently, the items showcased are part of a private curated collection and are not available for direct sale. However, we are always active in the hobby community and interested in discussing rare finds, especially those on our <strong>Wantlist</strong>. For inquiries, you can reach out to us at <strong>&lt;contact-email-placeholder&gt;</strong>.</p>
                         </details>
                     </section>
-                
+
                     <script type="application/ld+json">
                         {
                             "@context": "https://schema.org",
@@ -342,22 +402,17 @@ public class FileGenerator {
                             ]
                         }
                     </script>
-                
-                <H3>More from the Juwan Howard Collection</H3>
-                    <section style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
-                         <a href="Juwan-Howard-Collection.html" class="modern-button modern-button-footer" style="width: 300px;" title="Juwan Howard Private Collection">Juwan Howard Private Collection</a>
-                         <a href="Wantlist.html" class="modern-button modern-button-footer" style="width: 300px;" title="Juwan Howard Wantlist">Juwan Howrd Wantlist</a>
-                    </section>
-                </main>
-                
-                <footer class="detail-footer">
-                    Maulmann Trading Cards &copy; 2026
-                </footer>
+            
+                """ + SharedTemplates.getFooter(ROOT) + """
+                    </main>
                 </body>
                 </html>
-                """,
-                SharedTemplates.getHead(title, description, "/", INDEX_HTML,DEFAULT_IMAGE),
-                SharedTemplates.getTopNav("/", "index"));
+                """;
+
+        landingContent = landingContent
+                .replace("__HEAD__", SharedTemplates.getHead(title, description, ROOT, INDEX_HTML, DEFAULT_IMAGE))
+                .replace("__TOP_NAV__", SharedTemplates.getTopNav(ROOT, "index"))
+                .replace("<contact-email-placeholder>", "seraph@gmx.co.uk");
 
         try (OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(targetPath), StandardCharsets.UTF_8);
              BufferedWriter out = new BufferedWriter(osw)) {
@@ -366,3 +421,4 @@ public class FileGenerator {
         }
     }
 }
+
