@@ -19,8 +19,8 @@ public class CardPageGenerator {
 
     private static final String INPUT_FILE = "output/Juwan-Howard-Collection.html";
     private static final String PAGE = "Juwan-Howard-Collection.html";
-    private static final String OUTPUT_INDEX = "newIndex/Juwan-Howard-Collection.html";
-    private static final String BASE_FOLDER = "cards";
+    private static final String OUTPUT_INDEX = "output/Juwan-Howard-Collection.html";
+    private static final String BASE_FOLDER = "output/cards";
     private static final String RELATIVE_IMAGES_PATH = "../../images";
     private static final String BASE_URL = "https://www.maulmann.de";
     private static final Logger log = LoggerFactory.getLogger(CardPageGenerator.class);
@@ -185,7 +185,7 @@ public class CardPageGenerator {
         sb.append(SharedTemplates.getHead(browserTitle, metaDesc, ROOT, PAGE, frontImgPath));
 
         // LCP Preload
-        sb.append("    <link rel=\"preload\" as=\"image\" href=\"").append(frontImgPath).append("\">\n");
+        sb.append("    <link rel=\"preload\" as=\"image\" href=\"").append(frontImgPath).append("\" fetchpriority=\"high\">\n");
 
         // Schema.org
         sb.append(generateJsonLd(c, metaDesc, h1Title));
@@ -227,11 +227,11 @@ public class CardPageGenerator {
         // --- IMAGES SECTION ---
         sb.append("    <div class=\"card-images-container\">\n");
         sb.append("        <div class=\"card-image-wrapper\">\n");
-        sb.append("            <img src=\"").append(frontImgPath).append("\" ").append("alt=\"").append(frontAlt).append("\" ").append("title=\"").append(frontImgTitle).append("\" ").append("loading=\"lazy\" ").append("onclick=\"openModal('").append(frontImgPath).append("', '").append(backImgPath).append("')\">\n");
+        sb.append("            <img src=\"").append(frontImgPath).append("\" ").append("alt=\"").append(frontAlt).append("\" ").append("title=\"").append(frontImgTitle).append("\" ").append("width=\"400\" height=\"550\" fetchpriority=\"high\" ").append("onclick=\"openModal('").append(frontImgPath).append("', '").append(backImgPath).append("')\">\n");
         sb.append("            <p>Front View (Click to Zoom)</p>\n");
         sb.append("        </div>\n");
         sb.append("        <div class=\"card-image-wrapper\">\n");
-        sb.append("            <img src=\"").append(backImgPath).append("\" ").append("alt=\"").append(backAlt).append("\" ").append("title=\"").append(backImgTitle).append("\" ").append("loading=\"lazy\" ").append("onclick=\"openModal('").append(backImgPath).append("', '").append(frontImgPath).append("')\">\n");
+        sb.append("            <img src=\"").append(backImgPath).append("\" ").append("alt=\"").append(backAlt).append("\" ").append("title=\"").append(backImgTitle).append("\" ").append("width=\"400\" height=\"550\" loading=\"lazy\" ").append("onclick=\"openModal('").append(backImgPath).append("', '").append(frontImgPath).append("')\">\n");
         sb.append("            <p>Back View (Click to Zoom)</p>\n");
         sb.append("        </div>\n");
         sb.append("    </div>\n");
