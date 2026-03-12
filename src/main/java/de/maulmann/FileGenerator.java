@@ -159,7 +159,7 @@ public class FileGenerator {
     private static String createAnchorList(String[] fileNames) {
         final StringBuilder internalAnchorList = new StringBuilder();
         internalAnchorList.append("<div style='margin: 20px 0; text-align: left;'>");
-        internalAnchorList.append("<label for='season-select'></label>");
+        internalAnchorList.append("<label for='season-select' style='margin-right: 10px; font-weight: bold;'>Jump to Season:</label>");
         internalAnchorList.append("<select id='season-select' class='modern-button' style='background-color:#4f9e06; width: auto; min-width: 220px; cursor: pointer;' onchange=\"if(this.value) window.location.hash = this.value;\">");
         internalAnchorList.append("<option value=''>-- Select a Season --</option>");
 
@@ -273,22 +273,22 @@ public class FileGenerator {
 
                     <section class="slideshow-container">
                         <div class="mySlides fade">
-                            <img src="images/1997-98/Juwan-Howard-Washington-Wizards-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-sn47-front.jpg" style="width:100%" alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Red">
+                            <img src="images/1997-98/Juwan-Howard-Washington-Wizards-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-sn47-front.jpg" style="width:100%" width="400" height="550" alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Red">
                         </div>
                         <div class="mySlides fade">
-                            <img src="images/1997-98/Juwan-Howard-Washington-Wizards-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-sn7-front.jpg" style="width:100%" alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Green">
+                            <img src="images/1997-98/Juwan-Howard-Washington-Wizards-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-sn7-front.jpg" style="width:100%" width="400" height="550" alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Green">
                         </div>
                         <div class="mySlides fade">
-                            <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-SPx-Finite-Top-Flight-Spectrum-195-sn32-front.jpg" style="width:100%" alt="Juwan Howard 1998-99 Upper Deck SPx Finite Top Flight Spectrum">
+                            <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-SPx-Finite-Top-Flight-Spectrum-195-sn32-front.jpg" style="width:100%" width="400" height="550" alt="Juwan Howard 1998-99 Upper Deck SPx Finite Top Flight Spectrum">
                         </div>
                         <div class="mySlides fade">
-                            <img src="images/1995-96/Juwan-Howard-Washington-Bullets-1995-96-Fleer-E-XL-Base-Set-Blue-88-front.jpg" style="width:100%" alt="Juwan Howard 1995-96 Fleer E-XL Base Set Blue">
+                            <img src="images/1995-96/Juwan-Howard-Washington-Bullets-1995-96-Fleer-E-XL-Base-Set-Blue-88-front.jpg" style="width:100%" width="400" height="550" alt="Juwan Howard 1995-96 Fleer E-XL Base Set Blue">
                         </div>
                         <div class="mySlides fade">
-                            <img src="images/1994-95/Juwan-Howard-Washington-Bullets-1994-95-Topps-Topps-Finest-Collegiate-Best-Refractor-259-front.jpg" style="width:100%" alt="Juwan Howard 1994-95 Topps Finest Collegiate Best Refractor">
+                            <img src="images/1994-95/Juwan-Howard-Washington-Bullets-1994-95-Topps-Topps-Finest-Collegiate-Best-Refractor-259-front.jpg" style="width:100%" width="400" height="550" alt="Juwan Howard 1994-95 Topps Finest Collegiate Best Refractor">
                         </div>
                         <div class="mySlides fade">
-                            <img src="images/1994-95/Juwan-Howard-Washington-Bullets-1994-95-Fleer-Ultra-All-Rookies-Base-3-front.jpg" style="width:100%" alt="Juwan Howard 1994-95 Fleer Ultra All Rookies">
+                            <img src="images/1994-95/Juwan-Howard-Washington-Bullets-1994-95-Fleer-Ultra-All-Rookies-Base-3-front.jpg" style="width:100%" width="400" height="550" alt="Juwan Howard 1994-95 Fleer Ultra All Rookies">
                         </div>
                     </section>
 

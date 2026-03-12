@@ -64,14 +64,16 @@ tr:hover {
 }
 
 a:not(.plain) {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     text-decoration: none;
-    background-color: #4f9e06;
+    background-color: #3a7504;
     color: #fff !important;
     transition: background-color .2s ease-in-out, transform .1s, box-shadow .2s;
-    padding: 10px 20px;
-    margin: 4px;
+    padding: 12px 24px;
+    margin: 6px;
     border-radius: 6px;
     font-size: 1rem;
     font-weight: 600;
@@ -79,11 +81,14 @@ a:not(.plain) {
     border: none;
     cursor: pointer;
     outline: 0;
-    white-space: nowrap
+    white-space: nowrap;
+    min-width: 48px;
+    min-height: 48px;
+    box-sizing: border-box
 }
 
 a:not(.plain):hover:not(.is-disabled) {
-    background-color: #77df14;
+    background-color: #2d5a03;
     box-shadow: 0 4px 8px rgb(0 0 0 / .15)
 }
 
@@ -114,7 +119,7 @@ a:focus, a:focus-visible, button:focus {
     align-items: center;
     justify-content: center;
     width: 220px;
-    height: 3rem;
+    min-height: 48px;
     padding: 4px 8px;
     box-sizing: border-box;
     font-size: .95rem;
@@ -139,8 +144,9 @@ select.modern-button option {
 }
 
 .modern-button-footer {
+    max-width: 100%;
     width: 450px;
-    white-space: nowrap
+    white-space: normal
 }
 
 table tr td:first-child a {
@@ -247,7 +253,7 @@ table tr td:first-child a:hover {
 }
 
 .specs-table-header {
-    background-color: #317efb;
+    background-color: #1a5aba;
     color: #fff
 }
 
@@ -440,10 +446,11 @@ table tr td:first-child a:hover {
 
 .topnav a {
     float: left;
-    display: block;
+    display: flex;
+    align-items: center;
     color: #f2f2f2 !important;
     text-align: center;
-    padding: 14px 16px;
+    padding: 0 16px;
     text-decoration: none;
     font-size: 17px;
     margin: 0 !important;
@@ -451,7 +458,8 @@ table tr td:first-child a:hover {
     background-color: transparent !important;
     box-shadow: none !important;
     transition: none !important;
-    font-weight: 400 !important
+    font-weight: 400 !important;
+    min-height: 48px
 }
 
 .topnav a:hover {

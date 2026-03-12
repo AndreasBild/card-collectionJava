@@ -1,4 +1,0 @@
-User-agent: *
-Disallow:
-
-Sitemap: https://www.maulmann.de/sitemap.xml
