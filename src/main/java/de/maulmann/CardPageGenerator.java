@@ -19,7 +19,7 @@ public class CardPageGenerator {
 
     private static final String INPUT_FILE = "output/Juwan-Howard-Collection.html";
     private static final String PAGE = "Juwan-Howard-Collection.html";
-    private static final String OUTPUT_INDEX = "output/Juwan-Howard-Collection.html";
+    private static final String OUTPUT_INDEX = "newIndex/Juwan-Howard-Collection.html";
     private static final String BASE_FOLDER = "cards";
     private static final String RELATIVE_IMAGES_PATH = "../../images";
     private static final String BASE_URL = "https://www.maulmann.de";
