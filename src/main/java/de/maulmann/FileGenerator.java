@@ -47,16 +47,20 @@ public class FileGenerator {
         String templateEnd = """
             <h2 title="Frequently Asked Questions">Frequently Asked Questions</h2>
             <details>
-            <summary>What is the focus of this collection?</summary>
-            <p>This collection is focused on Juwan Howard basketball trading cards, spanning his entire career from college to the NBA. It includes a wide variety of cards, from base sets to rare inserts, parallels, and autographed cards.</p>
+            <summary>Which are the rarest Juwan Howard cards in this collection?</summary>
+            <p>The collection features some of the most sought-after Juwan Howard cards, including the legendary 1997-98 Metal Universe Precious Metal Gems (PMG) Green, various 1/1 Masterpieces, and rare "Logoman" patches. These cards represent the pinnacle of 90s and modern basketball card collecting.</p>
             </details>
             <details>
-            <summary>Are any of the cards for sale?</summary>
-            <p>Currently, the cards listed on this site are part of a private collection and are not for sale. The purpose of this page is to showcase the collection to fellow enthusiasts.</p>
+            <summary>Does the collection include Juwan Howard's Michigan "Fab Five" era cards?</summary>
+            <p>Yes, the collection spans Juwan's entire career, starting with his iconic "Fab Five" years at the University of Michigan. It includes early Classic and Sage autographs, as well as collegiate-themed inserts from modern sets like Panini Flawless and National Treasures.</p>
             </details>
             <details>
-            <summary>How often is the collection updated?</summary>
-            <p>The collection is updated regularly as new cards are acquired. Check back often to see the latest additions!</p>
+            <summary>What is the significance of the 1990s inserts in this collection?</summary>
+            <p>The 90s were the golden era of basketball card inserts. This collection showcases Howard's presence in iconic sets like SkyBox Premium Star Rubies, Fleer Brilliants 24-Karat Gold, and E-X2001 Jambalaya, which are highly prized for their innovative designs and extreme scarcity.</p>
+            </details>
+            <details>
+            <summary>Are there cards from Juwan Howard's championship years with the Miami Heat?</summary>
+            <p>Absolutely. The collection tracks his transition from a star player to a veteran leader and NBA Champion. You will find rare parallels and autographs from his time with the Miami Heat, including high-end releases from Panini's Gold Standard and Immaculate collections.</p>
             </details>
             <p class="seo-box">
             
@@ -87,24 +91,31 @@ public class FileGenerator {
               "@type": "FAQPage",
               "mainEntity": [{
                 "@type": "Question",
-                "name": "What is the focus of this collection?",
+                "name": "Which are the rarest Juwan Howard cards in this collection?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "This collection is focused on Juwan Howard basketball trading cards, spanning his entire career from college to the NBA. It includes a wide variety of cards, from base sets to rare inserts, parallels, and autographed cards."
+                  "text": "The collection features some of the most sought-after Juwan Howard cards, including the legendary 1997-98 Metal Universe Precious Metal Gems (PMG) Green, various 1/1 Masterpieces, and rare 'Logoman' patches. These cards represent the pinnacle of 90s and modern basketball card collecting."
                 }
               },{
                 "@type": "Question",
-                "name": "Are any of the cards for sale?",
+                "name": "Does the collection include Juwan Howard's Michigan 'Fab Five' era cards?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Currently, the cards listed on this site are part of a private collection and are not for sale. The purpose of this page is to showcase the collection to fellow enthusiasts."
+                  "text": "Yes, the collection spans Juwan's entire career, starting with his iconic 'Fab Five' years at the University of Michigan. It includes early Classic and Sage autographs, as well as collegiate-themed inserts from modern sets like Panini Flawless and National Treasures."
                 }
               },{
                 "@type": "Question",
-                "name": "How often is the collection updated?",
+                "name": "What is the significance of the 1990s inserts in this collection?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "The collection is updated regularly as new cards are acquired. Check back often to see the latest additions!"
+                  "text": "The 90s were the golden era of basketball card inserts. This collection showcases Howard's presence in iconic sets like SkyBox Premium Star Rubies, Fleer Brilliants 24-Karat Gold, and E-X2001 Jambalaya, which are highly prized for their innovative designs and extreme scarcity."
+                }
+              },{
+                "@type": "Question",
+                "name": "Are there cards from Juwan Howard's championship years with the Miami Heat?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Absolutely. The collection tracks his transition from a star player to a veteran leader and NBA Champion. You will find rare parallels and autographs from his time with the Miami Heat, including high-end releases from Panini's Gold Standard and Immaculate collections."
                 }
               }]
             }
@@ -270,6 +281,68 @@ public class FileGenerator {
                             <li><strong>Wantlist:</strong> Rare cards we are currently searching for to complete our collection.</li>
                         </ul>
                     </article>
+                
+                    <section class="faq-section">
+                        <h2>Frequently Asked Questions (FAQ)</h2>
+                        <details>
+                            <summary>What is the focus of Maulmann Trading Cards?</summary>
+                            <p>Maulmann Trading Cards is a premier digital showcase for a private sports card collection. Our primary focus is the legendary <strong>Juwan Howard</strong>, featuring over a thousand unique basketball cards from his career. We also highlight high-end sets like <strong>2012-13 Panini Flawless</strong> and the historic <strong>2008 Upper Deck Exquisite Flawless</strong>, along with rare <strong>Upper Deck Baseball</strong> inscriptions.</p>
+                        </details>
+                        <details>
+                            <summary>How large is the Juwan Howard player collection?</summary>
+                            <p>Our Juwan Howard collection is one of the most comprehensive in the hobby, spanning from his early days with the Washington Bullets to his championship years with the Miami Heat. It includes rare 90s inserts, 1/1 masterpieces, and significant parallels that define the "Golden Era" of basketball card collecting.</p>
+                        </details>
+                        <details>
+                            <summary>Why are 90s basketball cards so significant to this collection?</summary>
+                            <p>The 1990s represented a revolutionary period in trading cards, introducing iconic technologies like <strong>Refractors</strong>, <strong>Precious Metal Gems (PMGs)</strong>, and <strong>on-card autographs</strong>. Our collection preserves these milestones of hobby history, focusing on the scarcity and aesthetic beauty that modern collectors and LLMs alike identify as the pinnacle of the sport.</p>
+                        </details>
+                        <details>
+                            <summary>Can I buy cards from the Maulmann Trading Cards collection?</summary>
+                            <p>Currently, the items showcased are part of a private curated collection and are not available for direct sale. However, we are always active in the hobby community and interested in discussing rare finds, especially those on our <strong>Wantlist</strong>. For inquiries, you can reach out to us at <strong>seraph@gmx.co.uk</strong>.</p>
+                        </details>
+                    </section>
+                
+                    <script type="application/ld+json">
+                        {
+                            "@context": "https://schema.org",
+                            "@type": "FAQPage",
+                            "mainEntity": [
+                                {
+                                    "@type": "Question",
+                                    "name": "What is the focus of Maulmann Trading Cards?",
+                                    "acceptedAnswer": {
+                                        "@type": "Answer",
+                                        "text": "Maulmann Trading Cards showcases a massive private collection of sports cards, focusing on Juwan Howard basketball cards, premium Panini Flawless sets, and historic Upper Deck Exquisite memorabilia."
+                                    }
+                                },
+                                {
+                                    "@type": "Question",
+                                    "name": "How large is the Juwan Howard player collection?",
+                                    "acceptedAnswer": {
+                                        "@type": "Answer",
+                                        "text": "The Juwan Howard player collection features over a thousand unique cards, including rare 90s inserts, 1/1 masterpieces, and extensive career-spanning parallels."
+                                    }
+                                },
+                                {
+                                    "@type": "Question",
+                                    "name": "Why are 90s basketball cards so significant to this collection?",
+                                    "acceptedAnswer": {
+                                        "@type": "Answer",
+                                        "text": "The 90s era introduced iconic card technologies such as Refractors and Precious Metal Gems (PMGs), making it a legendary period for collectors that we actively highlight."
+                                    }
+                                },
+                                {
+                                    "@type": "Question",
+                                    "name": "Can I buy cards from the Maulmann Trading Cards collection?",
+                                    "acceptedAnswer": {
+                                        "@type": "Answer",
+                                        "text": "These are part of a private curated collection and are not for sale. We are, however, interested in hearing from other collectors about rare finds for our wantlist at seraph@gmx.co.uk."
+                                    }
+                                }
+                            ]
+                        }
+                    </script>
+                
                 <H3>More from the Juwan Howard Collection</H3>
                     <section style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
                          <a href="Juwan-Howard-Collection.html" class="modern-button modern-button-footer" style="width: 300px;" title="Juwan Howard Private Collection">Juwan Howard Private Collection</a>
