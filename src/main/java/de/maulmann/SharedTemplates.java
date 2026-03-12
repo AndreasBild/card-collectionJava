@@ -85,11 +85,13 @@ public class SharedTemplates {
         return template.replace("{{ROOT}}", root);
     }
 
-    public static String getFooter() {
-        return loadResource("/templates/footer.html");
+    public static String getFooter(String root) {
+
+        String template= loadResource("/templates/footer.html");
+        return template.replace("{{ROOT}}", root).replace("{{TIME}}", getTimestamp());
     }
 
     public static String getTimestamp() {
-        return "<p>List Created: " + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()) + "</p>";
+        return  new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date());
     }
 }

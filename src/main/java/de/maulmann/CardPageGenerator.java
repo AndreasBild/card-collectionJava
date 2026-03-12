@@ -24,6 +24,7 @@ public class CardPageGenerator {
     private static final String RELATIVE_IMAGES_PATH = "../../images";
     private static final String BASE_URL = "https://www.maulmann.de";
     private static final Logger log = LoggerFactory.getLogger(CardPageGenerator.class);
+    public static final String ROOT = "../../";
 
     static class CardData {
         Map<String, String> attributes;
@@ -158,10 +159,7 @@ public class CardPageGenerator {
                 Element playerCell = cols.get(0);
                 String originalText = playerCell.text();
                 playerCell.empty();
-                playerCell.appendElement("a")
-                        .attr("href", currentCard.fullRelativePath)
-                        .attr("title", "View details for " + currentCard.get("Season") + " " + currentCard.get("Brand") + " #" + currentCard.get("Number"))
-                        .text(originalText);
+                playerCell.appendElement("a").attr("href", currentCard.fullRelativePath).attr("title", "View details for " + currentCard.get("Season") + " " + currentCard.get("Brand") + " #" + currentCard.get("Number")).text(originalText);
             }
         }
     }
@@ -184,7 +182,7 @@ public class CardPageGenerator {
 
         // HTML START
         sb.append("<!doctype html>\n<html lang=\"en\">\n<head>\n");
-        sb.append(SharedTemplates.getHead(browserTitle, metaDesc, "../../", PAGE,frontImgPath));
+        sb.append(SharedTemplates.getHead(browserTitle, metaDesc, ROOT, PAGE, frontImgPath));
 
         // LCP Preload
         sb.append("    <link rel=\"preload\" as=\"image\" href=\"").append(frontImgPath).append("\">\n");
@@ -195,7 +193,7 @@ public class CardPageGenerator {
         sb.append("</head>\n<body>\n");
 
         // NAVIGATION
-        sb.append(SharedTemplates.getTopNav("../../", "collection"));
+        sb.append(SharedTemplates.getTopNav(ROOT, "collection"));
 
         // SUB-NAV (Overview, Prev, Next)
         sb.append("<nav class=\"detail-nav\" style=\"display: flex; justify-content: space-between; align-items: center; width: 100%; border: none; background: transparent;\">\n");
@@ -229,19 +227,11 @@ public class CardPageGenerator {
         // --- IMAGES SECTION ---
         sb.append("    <div class=\"card-images-container\">\n");
         sb.append("        <div class=\"card-image-wrapper\">\n");
-        sb.append("            <img src=\"").append(frontImgPath).append("\" ")
-                .append("alt=\"").append(frontAlt).append("\" ")
-                .append("title=\"").append(frontImgTitle).append("\" ")
-                .append("loading=\"lazy\" ")
-                .append("onclick=\"openModal('").append(frontImgPath).append("', '").append(backImgPath).append("')\">\n");
+        sb.append("            <img src=\"").append(frontImgPath).append("\" ").append("alt=\"").append(frontAlt).append("\" ").append("title=\"").append(frontImgTitle).append("\" ").append("loading=\"lazy\" ").append("onclick=\"openModal('").append(frontImgPath).append("', '").append(backImgPath).append("')\">\n");
         sb.append("            <p>Front View (Click to Zoom)</p>\n");
         sb.append("        </div>\n");
         sb.append("        <div class=\"card-image-wrapper\">\n");
-        sb.append("            <img src=\"").append(backImgPath).append("\" ")
-                .append("alt=\"").append(backAlt).append("\" ")
-                .append("title=\"").append(backImgTitle).append("\" ")
-                .append("loading=\"lazy\" ")
-                .append("onclick=\"openModal('").append(backImgPath).append("', '").append(frontImgPath).append("')\">\n");
+        sb.append("            <img src=\"").append(backImgPath).append("\" ").append("alt=\"").append(backAlt).append("\" ").append("title=\"").append(backImgTitle).append("\" ").append("loading=\"lazy\" ").append("onclick=\"openModal('").append(backImgPath).append("', '").append(frontImgPath).append("')\">\n");
         sb.append("            <p>Back View (Click to Zoom)</p>\n");
         sb.append("        </div>\n");
         sb.append("    </div>\n");
@@ -282,8 +272,9 @@ public class CardPageGenerator {
         sb.append("    </section>\n");
 
         // RELATED CARDS
-        sb.append("    <section class=\"related-cards-section\">\n");
-        sb.append("        <h3>More from the ").append(c.get("Season")).append(" Collection</h3>\n");
+        sb.append("    <section style=\"display: flex; flex-wrap: wrap; gap: 20px; justify-content: left;\">\n");
+     //   sb.append("    <section class=\"related-cards-section\">\n");
+        sb.append("        <h3>More from the ").append(c.get("Season")).append(" Juwan Howard Collection</h3>\n");
         sb.append("        <ul class=\"related-cards-list\">\n");
 
         int count = 0;
@@ -293,77 +284,71 @@ public class CardPageGenerator {
 
             String linkTitle = "View card details: " + other.get("Season") + " " + other.get("Brand") + " " + other.get("Variant");
 
-            sb.append("            <li class=\"related-card-item\">\n");
-            sb.append("                <a href=\"").append(other.filename).append("\" title=\"").append(linkTitle).append("\" style=\"color:#317EFB; text-decoration:none;\">")
-                    .append(other.get("Brand")).append(" #").append(other.get("Number")).append(" ").append(other.get("Variant"))
-                    .append("</a>\n");
+            sb.append("            <li>\n");
+            sb.append("                <a href=\"").append(other.filename).append("\" title=\"").append(linkTitle).append("\" class=\"modern-button modern-button-footer\" style=\"width: 300px;text-decoration:none;\" \">").append(other.get("Brand")).append(" #").append(other.get("Number")).append(" ").append(other.get("Variant")).append("</a>\n");
             sb.append("            </li>\n");
             count++;
         }
         sb.append("        </ul>\n");
         sb.append("    </section>\n");
-
-        // FOOTER NAV & FOOTER
-        sb.append(SharedTemplates.getFooterNav("../../"));
-        sb.append(SharedTemplates.getFooter());
-
+        sb.append(SharedTemplates.getFooter(ROOT));
         sb.append("</main>\n");
 
         // --- MODAL & SCRIPT LOGIC ---
         sb.append("""
-            <div id="cardModal" class="modal" aria-hidden="true" style="display:none;">
-              <span class="close-modal" aria-label="Close zoomed image" onclick="closeModal()">&times;</span>
-              <button class="flip-modal-btn" aria-label="Flip card to other side" onclick="flipCard()">&#8644; Flip Card</button>
-              <img class="modal-content" id="img01" alt="Zoomed card view">
-            </div>
-
-            <script>
-                var modal = document.getElementById("cardModal");
-                var modalImg = document.getElementById("img01");
-                var currentModalSrc = "";
-                var alternateModalSrc = "";
-
-                function openModal(src, altSrc) {
-                  modal.style.display = "flex";
-                  modal.style.alignItems = "center";
-                  modal.style.justifyContent = "center";
-                  modal.setAttribute("aria-hidden", "false");
-                  modalImg.src = src;
-                  currentModalSrc = src;
-                  alternateModalSrc = altSrc;
-                }
-
-                function closeModal() {
-                  modal.style.display = "none";
-                  modal.setAttribute("aria-hidden", "true");
-                }
-                function flipCard() {
-                    var temp = currentModalSrc;
-                    currentModalSrc = alternateModalSrc;
-                    alternateModalSrc = temp;
-                    modalImg.src = currentModalSrc;
-                }
-
-                window.onclick = function(event) {
-                  if (event.target == modal) {
-                    closeModal();
-                  }
-                }
-                document.addEventListener('keydown', function(event) {
-                    if (event.key === "Escape") {
-                        closeModal();
-                    }
-                    if (event.key === "ArrowLeft") {
-                        var prevLink = document.getElementById('prevCardLink');
-                        if (prevLink) window.location.href = prevLink.href;
-                    }
-                    if (event.key === "ArrowRight") {
-                        var nextLink = document.getElementById('nextCardLink');
-                        if (nextLink) window.location.href = nextLink.href;
-                    }
-                });
-            </script>
-        """);
+                    <div id="cardModal" class="modal" aria-hidden="true" style="display:none;">
+                      <span class="close-modal" aria-label="Close zoomed image" onclick="closeModal()">&times;</span>
+                      <button class="flip-modal-btn" aria-label="Flip card to other side" onclick="flipCard()">&#8644; Flip Card</button>
+                      <img class="modal-content" id="img01" alt="Zoomed card view">
+                    </div>
+                
+                    <script>
+                        var modal = document.getElementById("cardModal");
+                        var modalImg = document.getElementById("img01");
+                        var currentModalSrc = "";
+                        var alternateModalSrc = "";
+                
+                        function openModal(src, altSrc) {
+                          modal.style.display = "flex";
+                          modal.style.alignItems = "center";
+                          modal.style.justifyContent = "center";
+                          modal.setAttribute("aria-hidden", "false");
+                          modalImg.src = src;
+                          currentModalSrc = src;
+                          alternateModalSrc = altSrc;
+                        }
+                
+                        function closeModal() {
+                          modal.style.display = "none";
+                          modal.setAttribute("aria-hidden", "true");
+                        }
+                        function flipCard() {
+                            var temp = currentModalSrc;
+                            currentModalSrc = alternateModalSrc;
+                            alternateModalSrc = temp;
+                            modalImg.src = currentModalSrc;
+                        }
+                
+                        window.onclick = function(event) {
+                          if (event.target == modal) {
+                            closeModal();
+                          }
+                        }
+                        document.addEventListener('keydown', function(event) {
+                            if (event.key === "Escape") {
+                                closeModal();
+                            }
+                            if (event.key === "ArrowLeft") {
+                                var prevLink = document.getElementById('prevCardLink');
+                                if (prevLink) window.location.href = prevLink.href;
+                            }
+                            if (event.key === "ArrowRight") {
+                                var nextLink = document.getElementById('nextCardLink');
+                                if (nextLink) window.location.href = nextLink.href;
+                            }
+                        });
+                    </script>
+                """);
 
         sb.append("</body>\n</html>");
 
@@ -375,7 +360,8 @@ public class CardPageGenerator {
         String s = season.trim();
 
         if (s.startsWith("1994") || s.startsWith("1995") || s.startsWith("1996")) return "Washington Bullets";
-        if (s.startsWith("1997") || s.startsWith("1998") || s.startsWith("1999") || s.startsWith("2000")) return "Washington Wizards";
+        if (s.startsWith("1997") || s.startsWith("1998") || s.startsWith("1999") || s.startsWith("2000"))
+            return "Washington Wizards";
         if (s.startsWith("2001")) return "Dallas Mavericks";
         if (s.startsWith("2002")) return "Denver Nuggets";
         if (s.startsWith("2003")) return "Orlando Magic";
@@ -470,39 +456,29 @@ public class CardPageGenerator {
         StringBuilder sb = new StringBuilder();
 
         if (c.has("Serial")) {
-            sb.append(createFaqItem("How rare is this specific card?",
-                    "This card is serially numbered " + c.get("Serial") + " out of a total print run of " + c.get("Print Run") + "."));
+            sb.append(createFaqItem("How rare is this specific card?", "This card is serially numbered " + c.get("Serial") + " out of a total print run of " + c.get("Print Run") + "."));
         } else {
-            sb.append(createFaqItem("Is this card numbered?",
-                    "No, this version of the card was not serial numbered by the manufacturer."));
+            sb.append(createFaqItem("Is this card numbered?", "No, this version of the card was not serial numbered by the manufacturer."));
         }
 
-        String rookieAns = c.get("Rookie").equalsIgnoreCase("Yes")
-                ? "Yes, this is an official Rookie Card (RC) from the " + c.get("Season") + " class!"
-                : "No, this is a veteran card released during the " + c.get("Season") + " season.";
+        String rookieAns = c.get("Rookie").equalsIgnoreCase("Yes") ? "Yes, this is an official Rookie Card (RC) from the " + c.get("Season") + " class!" : "No, this is a veteran card released during the " + c.get("Season") + " season.";
         sb.append(createFaqItem("Is this a Rookie Card?", rookieAns));
 
         if (c.has("Autograph") && c.get("Autograph").equalsIgnoreCase("Yes")) {
-            sb.append(createFaqItem("Is the autograph authentic?",
-                    "Yes, this card features a manufacturer-certified autograph guaranteed by " + c.get("Company") + "."));
+            sb.append(createFaqItem("Is the autograph authentic?", "Yes, this card features a manufacturer-certified autograph guaranteed by " + c.get("Company") + "."));
         }
 
         if (c.has("Grade")) {
-            sb.append(createFaqItem("What is the condition of this card?",
-                    "This card has been professionally graded by " + c.get("Grading Co.") + " and received a grade of " + c.get("Grade") + "."));
+            sb.append(createFaqItem("What is the condition of this card?", "This card has been professionally graded by " + c.get("Grading Co.") + " and received a grade of " + c.get("Grade") + "."));
         }
 
-        sb.append(createFaqItem("Which team did Juwan Howard play for on this card?",
-                "This card features Juwan Howard in a " + c.get("Team") + " uniform."));
+        sb.append(createFaqItem("Which team did Juwan Howard play for on this card?", "This card features Juwan Howard in a " + c.get("Team") + " uniform."));
 
         return sb.toString();
     }
 
     private static String createFaqItem(String question, String answer) {
-        return "<details class=\"faq-details\">" +
-                "<summary class=\"faq-summary\">" + question + "</summary>" +
-                "<p class=\"faq-answer\">" + answer + "</p>" +
-                "</details>";
+        return "<details class=\"faq-details\">" + "<summary class=\"faq-summary\">" + question + "</summary>" + "<p class=\"faq-answer\">" + answer + "</p>" + "</details>";
     }
 
     private static String generateJsonLd(CardData c, String desc, String h1Title) {
@@ -577,11 +553,7 @@ public class CardPageGenerator {
     }
 
     private static void addTableRow(StringBuilder sb, String title, String value) {
-        sb.append("            <tr><th class=\"specs-th\">")
-                .append(title)
-                .append("</th><td class=\"specs-td\">")
-                .append(isValid(value) ? value : "-")
-                .append("</td></tr>\n");
+        sb.append("            <tr><th class=\"specs-th\">").append(title).append("</th><td class=\"specs-td\">").append(isValid(value) ? value : "-").append("</td></tr>\n");
     }
 
     private static void addIfPresent(List<String> list, String value) {

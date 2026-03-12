@@ -18,6 +18,7 @@ public class FileGenerator {
 
     private static final Logger logger = LoggerFactory.getLogger(FileGenerator.class);
     public static final String INDEX_HTML = "index.html";
+    public static final String ROOT = "/";
 
     // constants: base paths for input and output
     public static String pathSource = "content/";
@@ -57,7 +58,10 @@ public class FileGenerator {
             <summary>How often is the collection updated?</summary>
             <p>The collection is updated regularly as new cards are acquired. Check back often to see the latest additions!</p>
             </details>
-            """ + SharedTemplates.getFooterNav("/") + SharedTemplates.getFooter() + SharedTemplates.getTimestamp() + "</main></body></html>";
+            <p class="seo-box">
+            
+            </p>
+            """ + SharedTemplates.getFooter(ROOT)+ "</main></body></html>";
             
         addTemplateComponent(generatedFileLocation, templateEnd, true);
     }
@@ -67,7 +71,7 @@ public class FileGenerator {
         String description = "Explore a massive Juwan Howard private basketball card collection. Featuring rare 90s inserts, PMGs, 1/1s, and autographs from 1994 to today.";
         StringBuilder sb = new StringBuilder();
         sb.append("<!doctype html>\n<html lang=\"en\">\n<head>\n");
-        sb.append(SharedTemplates.getHead(title, description, "/" , JUWAN_HOWARD_COLLECTION_HTML, DEFAULT_IMAGE));
+        sb.append(SharedTemplates.getHead(title, description, ROOT, JUWAN_HOWARD_COLLECTION_HTML, DEFAULT_IMAGE));
 
         // Additional SEO and metadata specifically for the main collection page
         sb.append("""
@@ -130,7 +134,7 @@ public class FileGenerator {
         sb.append("""
             <main class="detail-main">
             <h1 id="top" title='Top of the list'>Juwan Howard Basketball Card - Private Collection</h1>
-            <p>
+            <p class="seo-box">
                 I wanted to share my dedicated website where I showcase my private basketball card collection. My main focus is my massive Juwan Howard PC. I’ve been building this for years, and the site features hundreds of cards from 1994 to today, including tons of 1/1s, low-numbered parallels, and rare 90s inserts like PMGs.
                 You can check out the full Juwan Howard gallery here
             </p>
@@ -266,10 +270,10 @@ public class FileGenerator {
                             <li><strong>Wantlist:</strong> Rare cards we are currently searching for to complete our collection.</li>
                         </ul>
                     </article>
-                
+                <H3>More from the Juwan Howard Collection</H3>
                     <section style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
-                         <a href="Juwan-Howard-Collection.html" class="modern-button modern-button-footer" style="width: 300px;">Juwan Howard Private Collection</a>
-                         <a href="Baseball.html" class="modern-button modern-button-footer" style="width: 300px;">Baseball Collection</a>
+                         <a href="Juwan-Howard-Collection.html" class="modern-button modern-button-footer" style="width: 300px;" title="Juwan Howard Private Collection">Juwan Howard Private Collection</a>
+                         <a href="Wantlist.html" class="modern-button modern-button-footer" style="width: 300px;" title="Juwan Howard Wantlist">Juwan Howrd Wantlist</a>
                     </section>
                 </main>
                 
