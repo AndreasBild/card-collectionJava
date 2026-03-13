@@ -168,12 +168,14 @@ table tr td:first-child a:hover {
 }
 
 .detail-nav {
-    padding: 20px;
+    padding: 20px 5%;
     background: #f8f9fa;
     border-bottom: 1px solid #e9ecef;
     display: flex;
     justify-content: space-between;
-    align-items: center
+    align-items: center;
+    box-sizing: border-box;
+    width: 100%
 }
 
 .detail-main {
