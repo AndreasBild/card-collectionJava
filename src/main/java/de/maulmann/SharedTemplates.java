@@ -74,7 +74,7 @@ public class SharedTemplates {
     public static String getTopNav(String root, String activePage) {
         String template = loadResource("/templates/topnav.html");
         if (template.isEmpty()) {
-            return "<nav><a href=\"" + root + "index.html\">Home</a></nav>";
+            return "<nav><a href=\"" + root + "index.html\" title=\"Home\">Home</a></nav>";
         }
         return template.replace("{{ROOT}}", root).replace("{{ACTIVE_INDEX}}", activePage.equals("index") ? "class=\"active\"" : "").replace("{{ACTIVE_COLLECTION}}", activePage.equals("collection") ? "class=\"active\"" : "").replace("{{ACTIVE_BASEBALL}}", activePage.equals("baseball") ? "class=\"active\"" : "").replace("{{ACTIVE_FLAWLESS}}", activePage.equals("flawless") ? "class=\"active\"" : "").replace("{{ACTIVE_WANTLIST}}", activePage.equals("wantlist") ? "class=\"active\"" : "").replace("{{ACTIVE_PANINI}}", activePage.equals("panini") ? "class=\"active\"" : "");
     }
