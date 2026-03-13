@@ -13,8 +13,7 @@ import java.util.List;
 public class FileGenerator {
 
     public static final String JUWAN_HOWARD_COLLECTION_HTML = "Juwan-Howard-Collection.html";
-    static final String DEFAULT_IMAGE="https://www.maulmann.de/images/1997-98/Juwan-Howard-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-sn7-front.jpg";
-
+    static final String DEFAULT_IMAGE="https://www.maulmann.de/images/1997-98/Juwan-Howard-Washington-Wizards-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-sn47-front.jpg";
 
     private static final Logger logger = LoggerFactory.getLogger(FileGenerator.class);
     public static final String INDEX_HTML = "index.html";
