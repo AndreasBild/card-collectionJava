@@ -160,7 +160,7 @@ public class FileGenerator {
         final StringBuilder internalAnchorList = new StringBuilder();
         internalAnchorList.append("<div style='margin: 20px 0; text-align: left;'>");
         internalAnchorList.append("<label for='season-select' style='margin-right: 10px; font-weight: bold;'>Jump to Season:</label>");
-        internalAnchorList.append("<select id='season-select' class='modern-button' style='background-color:#4f9e06; width: auto; min-width: 220px; cursor: pointer;' onchange=\"if(this.value) window.location.hash = this.value;\">");
+        internalAnchorList.append("<select id='season-select' class='modern-button' style='width: auto; min-width: 220px;' onchange=\"if(this.value) window.location.hash = this.value;\">");
         internalAnchorList.append("<option value=''>-- Select a Season --</option>");
 
         for (final String fileName : fileNames) {
