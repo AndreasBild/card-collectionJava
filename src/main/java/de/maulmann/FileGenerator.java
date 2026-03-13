@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -67,6 +68,27 @@ public class FileGenerator {
             """ + SharedTemplates.getFooter(ROOT)+ "</main></body></html>";
             
         addTemplateComponent(generatedFileLocation, templateEnd, true);
+
+        copyOtherPages();
+
+        CardPageGenerator.run();
+    }
+
+    private static void copyOtherPages() {
+        File sourceDir = new File(pathSource + "other");
+        if (!sourceDir.exists()) return;
+
+        File[] files = sourceDir.listFiles((dir, name) -> name.endsWith(".html"));
+        if (files == null) return;
+
+        for (File f : files) {
+            try {
+                Files.copy(f.toPath(), new File(pathOutput + f.getName()).toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                System.out.println("Copied " + f.getName() + " to " + pathOutput);
+            } catch (IOException e) {
+                System.err.println("Error copying " + f.getName() + ": " + e.getMessage());
+            }
+        }
     }
 
     private static String getTemplateBegin(String[] fileNames) {
