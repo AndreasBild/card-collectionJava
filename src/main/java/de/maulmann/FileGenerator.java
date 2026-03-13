@@ -257,7 +257,7 @@ public class FileGenerator {
         String errorPagePath = (outputDir != null ? outputDir : ".") + "/error.html";
         try (OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(errorPagePath), StandardCharsets.UTF_8);
              BufferedWriter out = new BufferedWriter(osw)) {
-            out.write(SharedTemplates.getErrorPage(""));
+            out.write(SharedTemplates.getErrorPage(ROOT));
         }
         System.out.println("Error page created: " + errorPagePath);
 
@@ -269,6 +269,7 @@ public class FileGenerator {
                 <html lang="en">
                 <head>
                 __HEAD__
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
                 </head>
                 <body>
                 __TOP_NAV__

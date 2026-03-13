@@ -97,7 +97,7 @@ public class SharedTemplates {
             return "<html><body><h1>404 - Page Not Found</h1><p>Sorry, the page you are looking for does not exist.</p><a href=\"" + root + "index.html\">Back to Home</a></body></html>";
         }
 
-        String title = "404 - Page Not Found | Maulmann Trading Cards";
+        String title = "Error Page | Maulmann Trading Cards";
         String description = "The page you are looking for does not exist in the Maulmann Trading Cards collection.";
         String page = "error.html";
         String image = root + "images/logo.png"; // Assuming a default logo exists or similar
