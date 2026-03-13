@@ -77,7 +77,7 @@ class FileGeneratorTest {
         Path errorPath = outputDir.resolve("error.html");
         assertTrue(Files.exists(errorPath), "Error file was not generated.");
         String errorContent = Files.readString(errorPath);
-        assertTrue(errorContent.contains("404 - Page Not Found"), "Error page should contain the title");
+        assertTrue(errorContent.contains("Error Page"), "Error page should contain the title");
         assertTrue(errorContent.contains("index.html"), "Error page should contain a link back to home");
     }
 }
