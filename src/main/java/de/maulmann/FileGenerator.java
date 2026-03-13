@@ -253,6 +253,14 @@ public class FileGenerator {
     }
 
     private static void createLandingPage(String targetPath) throws IOException {
+        String outputDir = new File(targetPath).getParent();
+        String errorPagePath = (outputDir != null ? outputDir : ".") + "/error.html";
+        try (OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(errorPagePath), StandardCharsets.UTF_8);
+             BufferedWriter out = new BufferedWriter(osw)) {
+            out.write(SharedTemplates.getErrorPage(""));
+        }
+        System.out.println("Error page created: " + errorPagePath);
+
         String title = "Maulmann Trading Cards | Juwan Howard & Sports Card Collection";
         String description = "Welcome to Maulmann Trading Cards. Explore our private collection of Juwan Howard basketball cards, rare 90s inserts, and specialty sets like Flawless and Upper Deck Baseball.";
 

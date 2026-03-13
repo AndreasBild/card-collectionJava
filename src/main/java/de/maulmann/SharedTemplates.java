@@ -91,6 +91,23 @@ public class SharedTemplates {
         return template.replace("{{ROOT}}", root).replace("{{TIME}}", getTimestamp());
     }
 
+    public static String getErrorPage(String root) {
+        String template = loadResource("/templates/error.html");
+        if (template.isEmpty()) {
+            return "<html><body><h1>404 - Page Not Found</h1><p>Sorry, the page you are looking for does not exist.</p><a href=\"" + root + "index.html\">Back to Home</a></body></html>";
+        }
+
+        String title = "404 - Page Not Found | Maulmann Trading Cards";
+        String description = "The page you are looking for does not exist in the Maulmann Trading Cards collection.";
+        String page = "error.html";
+        String image = root + "images/logo.png"; // Assuming a default logo exists or similar
+
+        return template.replace("{{HEAD}}", getHead(title, description, root, page, image))
+                .replace("{{TOPNAV}}", getTopNav(root, "error"))
+                .replace("{{FOOTER}}", getFooter(root))
+                .replace("{{ROOT}}", root);
+    }
+
     public static String getTimestamp() {
         return  new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date());
     }
