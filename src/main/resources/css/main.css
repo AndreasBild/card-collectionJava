@@ -124,7 +124,12 @@ a:focus, a:focus-visible, button:focus {
     box-sizing: border-box;
     font-size: .95rem;
     white-space: normal;
-    line-height: 1.2
+    line-height: 1.2;
+    color: #fff;
+    background-color: #3a7504;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
 }
 
 select.modern-button {
