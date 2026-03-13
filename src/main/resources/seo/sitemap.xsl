@@ -40,7 +40,7 @@
                                         <xsl:variable name="itemURL">
                                             <xsl:value-of select="sitemap:loc"/>
                                         </xsl:variable>
-                                        <a href="{$itemURL}" target="_blank">
+                                        <a href="{$itemURL}" target="_blank" title="Visit {$itemURL}">
                                             <xsl:value-of select="sitemap:loc"/>
                                         </a>
                                     </td>
