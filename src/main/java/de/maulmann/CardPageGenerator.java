@@ -369,7 +369,7 @@ public class CardPageGenerator {
             String otherLink = "../" + other.seasonFolder + "/" + other.filename;
 
             sb.append("            <li>\n");
-            sb.append("                <a href=\"").append(otherLink).append("\" title=\"").append(escapeHtml(linkTitle)).append("\" class=\"modern-button modern-button-footer\" style=\"width: 300px;text-decoration:none;\" \">").append(escapeHtml(other.get("Brand"))).append(" #").append(escapeHtml(other.get("Number"))).append(" ").append(escapeHtml(other.get("Variant"))).append("</a>\n");
+            sb.append("                <a href=\"").append(otherLink).append("\" title=\"").append(escapeHtml(linkTitle)).append("\" class=\"modern-button modern-button-footer\" style=\"width: 300px;text-decoration:none;\">").append(escapeHtml(other.get("Brand"))).append(" #").append(escapeHtml(other.get("Number"))).append(" ").append(escapeHtml(other.get("Variant"))).append("</a>\n");
             sb.append("            </li>\n");
             count++;
         }
