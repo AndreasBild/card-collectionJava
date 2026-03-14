@@ -29,6 +29,11 @@ public class FileGenerator {
         String generatedFileLocation = pathOutput + JUWAN_HOWARD_COLLECTION_HTML;
         String[] nameOfInputFile = getFileNamesFromDirectory();
 
+        File outputDir = new File(pathOutput);
+        if (!outputDir.exists()) {
+            outputDir.mkdirs();
+        }
+
         createLandingPage(pathOutput + INDEX_HTML);
 
         // create a new file or use an existing file with the same name
@@ -73,7 +78,47 @@ public class FileGenerator {
 
         CardPageGenerator.run();
 
+        copyPwaAssets();
+        copyResources("css");
+        copyResources("favicon");
+
         SitemapGenerator.generate();
+    }
+
+    private static void copyResources(String dirName) {
+        File sourceDir = new File("src/main/resources/" + dirName);
+        File destDir = new File(pathOutput + dirName);
+        if (!sourceDir.exists()) return;
+        if (!destDir.exists()) destDir.mkdirs();
+
+        File[] files = sourceDir.listFiles();
+        if (files == null) return;
+
+        for (File f : files) {
+            if (f.isFile()) {
+                try {
+                    Files.copy(f.toPath(), new File(destDir, f.getName()).toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                } catch (IOException e) {
+                    System.err.println("Error copying " + f.getName() + ": " + e.getMessage());
+                }
+            }
+        }
+    }
+
+    private static void copyPwaAssets() {
+        String[] pwaFiles = {"manifest.json", "serviceWorker.js", "browserconfig.xml"};
+        File pwaDir = new File("src/main/resources/pwa");
+        for (String fileName : pwaFiles) {
+            File sourceFile = new File(pwaDir, fileName);
+            if (sourceFile.exists()) {
+                try {
+                    Files.copy(sourceFile.toPath(), new File(pathOutput + fileName).toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                    System.out.println("Copied " + fileName + " to " + pathOutput);
+                } catch (IOException e) {
+                    System.err.println("Error copying " + fileName + ": " + e.getMessage());
+                }
+            }
+        }
     }
 
     private static void copyOtherPages() {
@@ -145,23 +190,7 @@ public class FileGenerator {
             </script>
             """);
 
-        sb.append("""
-            <script>
-                if ('serviceWorker' in navigator) {
-                    window.addEventListener('load', () => {
-                        navigator.serviceWorker.register('/serviceWorker.js')
-                            .then(registration => {
-                                console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                            })
-                            .catch(error => {
-                                console.log('ServiceWorker registration failed: ', error);
-                            });
-                    });
-                }
-            </script>
-            </head>
-            <body>
-            """);
+        sb.append("</head>\n<body>\n");
 
         sb.append(SharedTemplates.getTopNav("/", "collection"));
 
