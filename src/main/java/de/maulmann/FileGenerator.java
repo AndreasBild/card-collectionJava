@@ -72,6 +72,8 @@ public class FileGenerator {
         copyOtherPages();
 
         CardPageGenerator.run();
+
+        SitemapGenerator.generate();
     }
 
     private static void copyOtherPages() {
