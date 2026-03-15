@@ -19,7 +19,7 @@ public class ImageConverter {
     private static final int MAX_WIDTH = 1000;
     private static final int MAX_HEIGHT = 700;
     private static final int TARGET_DPI = 72;
-    private static final int TARGET_JPG_KB = 140;
+    private static final int TARGET_JPG_KB = 130;
 
     // Mac CLI Paths (Update to /usr/local/bin/... if on Intel Mac)
     private static final String MAGICK_PATH = "/opt/homebrew/bin/magick";
