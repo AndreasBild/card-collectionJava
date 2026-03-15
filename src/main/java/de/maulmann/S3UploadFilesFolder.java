@@ -2,15 +2,22 @@ package de.maulmann;
 
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
-import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.S3AsyncClient;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
-import software.amazon.awssdk.services.s3.model.S3Exception;
-import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.services.s3.model.PutObjectResponse;
+import software.amazon.awssdk.core.async.AsyncRequestBody;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class S3UploadFilesFolder {
 
@@ -18,20 +25,23 @@ public class S3UploadFilesFolder {
     private static final String PATH_SOURCE = "output/cards/";
     private static final String BUCKET_NAME = "maulmann.de";
 
-    // Set this to your desired subfolder (e.g. "v2" or "assets/2023").
-    // Leave it empty ("") to upload to the bucket root.
     private static final String DESTINATION_FOLDER = "cards";
-
     private static final String PROFILE_NAME = "JavaSDKUser";
     private static final Region REGION = Region.EU_CENTRAL_1;
 
-    // Define which files are expected to be GZIPPED
     private static final Set<String> GZIP_EXTENSIONS = new HashSet<>(Arrays.asList(
             ".html", ".css", ".js", ".json", ".xml", ".svg", ".txt"
     ));
 
+    // Thread-safe tracking
+    private static final AtomicInteger successCount = new AtomicInteger(0);
+    private static final AtomicInteger failureCount = new AtomicInteger(0);
+
     public static void main(String[] args) {
-        S3Client s3Client = S3Client.builder()
+        long startTime = System.currentTimeMillis();
+
+        // 1. Build the Asynchronous Client
+        S3AsyncClient s3AsyncClient = S3AsyncClient.builder()
                 .region(REGION)
                 .credentialsProvider(ProfileCredentialsProvider.create(PROFILE_NAME))
                 .build();
@@ -43,84 +53,98 @@ public class S3UploadFilesFolder {
             return;
         }
 
-        System.out.println("Starting recursive upload to bucket: " + BUCKET_NAME +
+        System.out.println("Starting ultra-fast async upload to bucket: " + BUCKET_NAME +
                 (DESTINATION_FOLDER.isEmpty() ? "" : "/" + DESTINATION_FOLDER));
 
-        uploadDirectory(s3Client, rootDirectory, rootDirectory);
-        System.out.println("Upload complete.");
-    }
-
-    private static void uploadDirectory(S3Client s3Client, File currentDir, File rootDirectory) {
-        File[] files = currentDir.listFiles();
-        if (files == null) return;
-
-        for (File file : files) {
-            if (file.isDirectory()) {
-                uploadDirectory(s3Client, file, rootDirectory);
-            } else {
-                uploadFile(s3Client, file, rootDirectory);
-            }
-        }
-    }
-
-    private static void uploadFile(S3Client s3Client, File file, File rootDirectory) {
         try {
-            // 1. Calculate the relative path (e.g. css/style.css)
-            String relativePath = calculateRelativePath(file, rootDirectory);
+            uploadDirectoryAsync(s3AsyncClient, rootDirectory);
 
-            // 2. Prepend the destination folder if one is set
-            String s3Key = DESTINATION_FOLDER.isEmpty()
-                    ? relativePath
-                    : cleanPath(DESTINATION_FOLDER) + "/" + relativePath;
+            long endTime = System.currentTimeMillis();
+            System.out.println("\n--- Upload Summary ---");
+            System.out.println("Successfully uploaded: " + successCount.get() + " files");
+            System.out.println("Failed to upload:      " + failureCount.get() + " files");
+            System.out.println("Total execution time:  " + (endTime - startTime) + " ms");
 
-            String contentType = determineContentType(file);
-            boolean isGzip = shouldBeGzipped(file);
-
-            PutObjectRequest.Builder requestBuilder = PutObjectRequest.builder()
-                    .bucket(BUCKET_NAME)
-                    .key(s3Key)
-                    .contentType(contentType)
-                    .contentLanguage("en-US");
-
-            if (isGzip) {
-                requestBuilder.contentEncoding("gzip");
-            }
-
-            s3Client.putObject(requestBuilder.build(), RequestBody.fromFile(file));
-
-            String status = isGzip ? "[GZIP]" : "[RAW] ";
-            System.out.println("Uploaded " + status + ": " + s3Key);
-
-        } catch (S3Exception e) {
-            System.err.println("S3 Error uploading " + file.getName() + ": " + e.awsErrorDetails().errorMessage());
         } catch (Exception e) {
+            System.err.println("Critical error during upload routing: " + e.getMessage());
             e.printStackTrace();
+        } finally {
+            // Always close the async client to shut down the Netty event loops
+            s3AsyncClient.close();
         }
     }
 
-    /**
-     * Calculates the path relative to the source root (e.g. css/style.css)
-     */
+    private static void uploadDirectoryAsync(S3AsyncClient s3AsyncClient, File rootDirectory) throws IOException {
+        // We will store all the "promises" of future uploads here
+        List<CompletableFuture<PutObjectResponse>> futures = new ArrayList<>();
+
+        Files.walkFileTree(rootDirectory.toPath(), new SimpleFileVisitor<Path>() {
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+                // Kick off the upload and keep track of the CompletableFuture
+                CompletableFuture<PutObjectResponse> future = uploadFileAsync(s3AsyncClient, file.toFile(), rootDirectory);
+                futures.add(future);
+                return FileVisitResult.CONTINUE;
+            }
+        });
+
+        // 2. Wait for all asynchronous network calls to finish before moving on
+        System.out.println("All uploads dispatched to Netty. Waiting for AWS acknowledgments...");
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+    }
+
+    private static CompletableFuture<PutObjectResponse> uploadFileAsync(S3AsyncClient s3AsyncClient, File file, File rootDirectory) {
+        String relativePath = calculateRelativePath(file, rootDirectory);
+        String s3Key = DESTINATION_FOLDER.isEmpty()
+                ? relativePath
+                : cleanPath(DESTINATION_FOLDER) + "/" + relativePath;
+
+        String contentType = determineContentType(file);
+        boolean isGzip = shouldBeGzipped(file);
+
+        PutObjectRequest.Builder requestBuilder = PutObjectRequest.builder()
+                .bucket(BUCKET_NAME)
+                .key(s3Key)
+                .contentType(contentType)
+                .contentLanguage("en-US");
+
+        if (isGzip) {
+            requestBuilder.contentEncoding("gzip");
+        }
+
+        // 3. Fire the non-blocking request using AsyncRequestBody
+        CompletableFuture<PutObjectResponse> future = s3AsyncClient.putObject(
+                requestBuilder.build(),
+                AsyncRequestBody.fromFile(file)
+        );
+
+        // 4. Attach a callback to handle the success or failure whenever it finishes
+        return future.whenComplete((response, exception) -> {
+            if (exception != null) {
+                failureCount.incrementAndGet();
+                System.err.println("Failed to upload " + file.getName() + ": " + exception.getMessage());
+            } else {
+                successCount.incrementAndGet();
+                String status = isGzip ? "[GZIP]" : "[RAW] ";
+                System.out.println("Uploaded " + status + ": " + s3Key);
+            }
+        });
+    }
+
     private static String calculateRelativePath(File file, File rootDirectory) {
         String absoluteFilePath = file.getAbsolutePath();
         String absoluteRootPath = rootDirectory.getAbsolutePath();
 
         if (absoluteFilePath.startsWith(absoluteRootPath)) {
             String relativePath = absoluteFilePath.substring(absoluteRootPath.length());
-
-            // Remove leading slash if present
             if (relativePath.startsWith(File.separator)) {
                 relativePath = relativePath.substring(1);
             }
-            // Normalize slashes to forward slash for S3
             return relativePath.replace("\\", "/");
         }
         return file.getName();
     }
 
-    /**
-     * Helper to remove trailing slashes from the config folder name
-     */
     private static String cleanPath(String path) {
         if (path.endsWith("/") || path.endsWith("\\")) {
             return path.substring(0, path.length() - 1);

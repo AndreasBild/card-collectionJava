@@ -5,16 +5,29 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class SharedTemplates {
 
+    // 1. Thread-safe in-memory cache for all templates
+    private static final Map<String, String> TEMPLATE_CACHE = new ConcurrentHashMap<>();
+
+    // 2. Pre-compiled, highly efficient, thread-safe date formatter
+    private static final DateTimeFormatter TIMESTAMP_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
 
     private static String loadResource(String path) {
+        // If the template is already in RAM, return it instantly (0 Disk I/O)
+        return TEMPLATE_CACHE.computeIfAbsent(path, SharedTemplates::readResourceFromDisk);
+    }
+
+    private static String readResourceFromDisk(String path) {
         String resourcePath = path.startsWith("/") ? path : "/" + path;
         InputStream is = SharedTemplates.class.getResourceAsStream(resourcePath);
+
         if (is == null) {
             String noSlashPath = resourcePath.substring(1);
             is = SharedTemplates.class.getClassLoader().getResourceAsStream(noSlashPath);
@@ -25,7 +38,7 @@ public class SharedTemplates {
             return "";
         }
 
-        try (InputStream effectivelyFinalIs = is; BufferedReader reader = new BufferedReader(new InputStreamReader(effectivelyFinalIs, StandardCharsets.UTF_8))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
             return reader.lines().collect(Collectors.joining("\n"));
         } catch (IOException e) {
             System.err.println("Error loading resource " + path + ": " + e.getMessage());
@@ -76,7 +89,13 @@ public class SharedTemplates {
         if (template.isEmpty()) {
             return "<nav><a href=\"" + root + "index.html\" title=\"Home\">Home</a></nav>";
         }
-        return template.replace("{{ROOT}}", root).replace("{{ACTIVE_INDEX}}", activePage.equals("index") ? "class=\"active\"" : "").replace("{{ACTIVE_COLLECTION}}", activePage.equals("collection") ? "class=\"active\"" : "").replace("{{ACTIVE_BASEBALL}}", activePage.equals("baseball") ? "class=\"active\"" : "").replace("{{ACTIVE_FLAWLESS}}", activePage.equals("flawless") ? "class=\"active\"" : "").replace("{{ACTIVE_WANTLIST}}", activePage.equals("wantlist") ? "class=\"active\"" : "").replace("{{ACTIVE_PANINI}}", activePage.equals("panini") ? "class=\"active\"" : "");
+        return template.replace("{{ROOT}}", root)
+                .replace("{{ACTIVE_INDEX}}", activePage.equals("index") ? "class=\"active\"" : "")
+                .replace("{{ACTIVE_COLLECTION}}", activePage.equals("collection") ? "class=\"active\"" : "")
+                .replace("{{ACTIVE_BASEBALL}}", activePage.equals("baseball") ? "class=\"active\"" : "")
+                .replace("{{ACTIVE_FLAWLESS}}", activePage.equals("flawless") ? "class=\"active\"" : "")
+                .replace("{{ACTIVE_WANTLIST}}", activePage.equals("wantlist") ? "class=\"active\"" : "")
+                .replace("{{ACTIVE_PANINI}}", activePage.equals("panini") ? "class=\"active\"" : "");
     }
 
     public static String getFooterNav(String root) {
@@ -86,8 +105,7 @@ public class SharedTemplates {
     }
 
     public static String getFooter(String root) {
-
-        String template= loadResource("/templates/footer.html");
+        String template = loadResource("/templates/footer.html");
         return template.replace("{{ROOT}}", root).replace("{{TIME}}", getTimestamp());
     }
 
@@ -100,7 +118,7 @@ public class SharedTemplates {
         String title = "Error Page | Maulmann Trading Cards";
         String description = "The page you are looking for does not exist in the Maulmann Trading Cards collection.";
         String page = "error.html";
-        String image = root + "images/logo.png"; // Assuming a default logo exists or similar
+        String image = root + "images/logo.png";
 
         return template.replace("{{HEAD}}", getHead(title, description, root, page, image))
                 .replace("{{TOPNAV}}", getTopNav(root, "error"))
@@ -109,6 +127,6 @@ public class SharedTemplates {
     }
 
     public static String getTimestamp() {
-        return  new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date());
+        return LocalDateTime.now().format(TIMESTAMP_FORMATTER);
     }
 }

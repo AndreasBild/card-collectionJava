@@ -1,92 +1,120 @@
 package de.maulmann;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.*;
-import java.util.Objects;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MinifyCompressFolder {
 
-    // Define source and destination paths
+    // --- CONFIGURATION ---
     private static final String SOURCE_PATH = "cards/";
     private static final String DEST_PATH = "output/cards/";
 
+    // Thread-safe tracking
+    private static final AtomicInteger successCount = new AtomicInteger(0);
+    private static final AtomicInteger failureCount = new AtomicInteger(0);
+
     public static void main(String[] args) {
-        File sourceRoot = new File(SOURCE_PATH);
-        File destRoot = new File(DEST_PATH);
+        long startTime = System.currentTimeMillis();
 
-        if (!sourceRoot.exists()) {
-            System.err.println("Source directory does not exist: " + sourceRoot.getAbsolutePath());
+        Path sourceRoot = Paths.get(SOURCE_PATH);
+        Path destRoot = Paths.get(DEST_PATH);
+
+        if (!Files.exists(sourceRoot)) {
+            System.err.println("Source directory does not exist: " + sourceRoot.toAbsolutePath());
             return;
         }
 
-        System.out.println("Starting recursive compression...");
-        processDirectory(sourceRoot, destRoot);
-        System.out.println("Done! Compressed files are in: " + destRoot.getAbsolutePath());
+        System.out.println("Starting high-speed multithreaded compression...");
+
+        try {
+            processDirectoryMultithreaded(sourceRoot, destRoot);
+
+            long endTime = System.currentTimeMillis();
+            System.out.println("\n--- Processing Summary ---");
+            System.out.println("Successfully processed: " + successCount.get() + " files");
+            System.out.println("Failed to process:      " + failureCount.get() + " files");
+            System.out.println("Total execution time:   " + (endTime - startTime) + " ms");
+            System.out.println("Output location:        " + destRoot.toAbsolutePath());
+
+        } catch (Exception e) {
+            System.err.println("Critical error during processing: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
-    /**
-     * Recursively walks through the source directory and replicates structure in destination.
-     */
-    private static void processDirectory(File sourceDir, File destDir) {
-        // Create destination directory if it doesn't exist
-        if (!destDir.exists() && !destDir.mkdirs()) {
-            System.err.println("Failed to create directory: " + destDir.getAbsolutePath());
-            return;
-        }
+    private static void processDirectoryMultithreaded(Path sourceRoot, Path destRoot) throws IOException, InterruptedException {
+        // Since GZIP compression and minification are CPU-bound,
+        // tying the thread pool to the exact number of CPU cores is highly efficient.
+        int cores = Runtime.getRuntime().availableProcessors();
+        System.out.println("Spinning up " + cores + " parallel compression threads...");
+        ExecutorService executor = Executors.newFixedThreadPool(cores);
 
-        // Get all files in current directory
-        File[] files = sourceDir.listFiles();
-        if (files == null) return;
-
-        for (File sourceFile : files) {
-            // Determine the corresponding destination file/folder path
-            File destFile = new File(destDir, sourceFile.getName());
-
-            if (sourceFile.isDirectory()) {
-                // RECURSION: If it's a folder, go deeper
-                processDirectory(sourceFile, destFile);
-            } else {
-                // If it's a file, process it
-                processFile(sourceFile, destFile);
+        Files.walkFileTree(sourceRoot, new SimpleFileVisitor<Path>() {
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+                // Submit each file as an independent task
+                executor.submit(() -> {
+                    try {
+                        processSingleFile(file, sourceRoot, destRoot);
+                        successCount.incrementAndGet();
+                    } catch (Exception e) {
+                        failureCount.incrementAndGet();
+                        System.err.println("Failed to process " + file.getFileName() + ": " + e.getMessage());
+                    }
+                });
+                return FileVisitResult.CONTINUE;
             }
-        }
+        });
+
+        // Prevent new tasks and wait for all compression threads to finish
+        executor.shutdown();
+        executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
     }
 
-    /**
-     * Handles the logic for Minification -> Compression -> Output
-     */
-    private static void processFile(File sourceFile, File destFile) {
+    private static void processSingleFile(Path sourceFile, Path sourceRoot, Path destRoot) throws IOException {
+        // 1. Calculate destination path maintaining the subfolder structure
+        Path relativePath = sourceRoot.relativize(sourceFile);
+        Path destFile = destRoot.resolve(relativePath);
+
+        // 2. Thread-safely ensure the parent directories exist
+        Files.createDirectories(destFile.getParent());
+
+        File srcFileObj = sourceFile.toFile();
+        File dstFileObj = destFile.toFile();
         File tempMinified = null;
 
         try {
             boolean needsMinification = false;
+            String fileName = srcFileObj.getName().toLowerCase();
 
-            // 1. Identify if Minification is needed
-            if (sourceFile.getName().endsWith(".html")) {
+            // 3. Identify if Minification is needed
+            // File.createTempFile generates a unique name, preventing thread collisions
+            if (fileName.endsWith(".html")) {
                 tempMinified = File.createTempFile("min_html_", ".tmp");
-                minifyHTML(sourceFile, tempMinified);
+                minifyHTML(srcFileObj, tempMinified);
                 needsMinification = true;
-            } else if (sourceFile.getName().endsWith(".css")) {
+            } else if (fileName.endsWith(".css")) {
                 tempMinified = File.createTempFile("min_css_", ".tmp");
-                minifyCSS(sourceFile, tempMinified);
+                minifyCSS(srcFileObj, tempMinified);
                 needsMinification = true;
             }
 
-            // 2. Select input for compression (either the minified temp file or the original)
-            File inputForCompression = needsMinification ? tempMinified : sourceFile;
+            // 4. Select input for compression
+            File inputForCompression = needsMinification ? tempMinified : srcFileObj;
 
-            // 3. Compress to final destination
-            // Note: If you want to append .gz to the filename, change destFile below to:
-            // new File(destFile.getAbsolutePath() + ".gz")
-            compressFile(inputForCompression, destFile);
+            // 5. Compress to final destination
+            compressFile(inputForCompression, dstFileObj);
 
-            System.out.println("Compressed: " + sourceFile.getName() + " -> " + destFile.getName());
+            // System.out.println("Processed: " + fileName + " on " + Thread.currentThread().getName());
 
-        } catch (IOException e) {
-            System.err.println("Error processing file: " + sourceFile.getAbsolutePath());
-            e.printStackTrace();
         } finally {
-            // 4. Cleanup temp file
+            // 6. Cleanup temp file to avoid leaving garbage on the hard drive
             if (tempMinified != null && tempMinified.exists()) {
                 tempMinified.delete();
             }
@@ -94,6 +122,8 @@ public class MinifyCompressFolder {
     }
 
     // --- Wrapper Methods ---
+    // (Assuming your external minifier/compressor classes are thread-safe,
+    // which they should be if they only rely on the file arguments passed to them).
 
     public static void minifyHTML(File inputFile, File outputFile) throws IOException {
         HTMLMinifier.minifyHTML(inputFile, outputFile);

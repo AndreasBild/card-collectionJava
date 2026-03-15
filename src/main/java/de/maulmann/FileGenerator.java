@@ -5,50 +5,70 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+import java.util.stream.Stream;
 
 public class FileGenerator {
 
-    public static final String JUWAN_HOWARD_COLLECTION_HTML = "Juwan-Howard-Collection.html";
-    static final String DEFAULT_IMAGE="https://www.maulmann.de/images/1997-98/Juwan-Howard-Washington-Wizards-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-sn47-front.jpg";
-
     private static final Logger logger = LoggerFactory.getLogger(FileGenerator.class);
+
+    public static final String JUWAN_HOWARD_COLLECTION_HTML = "Juwan-Howard-Collection.html";
+    static final String DEFAULT_IMAGE = "https://www.maulmann.de/images/1997-98/Juwan-Howard-Washington-Wizards-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-sn47-front.jpg";
     public static final String INDEX_HTML = "index.html";
     public static final String ROOT = "/";
 
-    // constants: base paths for input and output
-    public static String pathSource = "content/";
-
-    public static String pathOutput = "output/";
+    // base paths
+    public static final String PATH_SOURCE = "content/";
+    public static final String PATH_OUTPUT = "output/";
 
     public static void main(String[] args) throws IOException {
-        String generatedFileLocation = pathOutput + JUWAN_HOWARD_COLLECTION_HTML;
+        long startTime = System.currentTimeMillis();
+        logger.info("Starting static site generation...");
+
+        // Ensure output directory exists
+        Files.createDirectories(Paths.get(PATH_OUTPUT));
+
+        // Generate the landing page (index.html) and error.html
+        createLandingPage(PATH_OUTPUT + INDEX_HTML);
+
+        // Get sorted list of season HTML files
         String[] nameOfInputFile = getFileNamesFromDirectory();
 
-        File outputDir = new File(pathOutput);
-        if (!outputDir.exists()) {
-            outputDir.mkdirs();
+        // Generate the massive Juwan Howard collection page IN MEMORY
+        generateCollectionPage(PATH_OUTPUT + JUWAN_HOWARD_COLLECTION_HTML, nameOfInputFile);
+
+        // Copy static assets
+        copyOtherPages();
+        copyPwaAssets();
+        copyResources("css");
+        copyResources("favicon");
+
+        // External Generators
+        CardPageGenerator.run();
+        SitemapGenerator.generate();
+
+        long endTime = System.currentTimeMillis();
+        logger.info("Site generation completed in {} ms.", (endTime - startTime));
+    }
+
+    private static void generateCollectionPage(String targetPath, String[] fileNames) throws IOException {
+        StringBuilder fullPage = new StringBuilder();
+
+        // 1. Add Header & Nav
+        fullPage.append(getTemplateBegin(fileNames));
+
+        // 2. Append all season tables
+        int totalCardCount = 0;
+        for (String fileName : fileNames) {
+            System.out.println("Processing Season: " + fileName);
+            String sourceFile = PATH_SOURCE + fileName + ".html";
+            totalCardCount = appendSeasonTable(fullPage, sourceFile, fileName, totalCardCount);
         }
 
-        createLandingPage(pathOutput + INDEX_HTML);
-
-        // create a new file or use an existing file with the same name
-        createTargetFile(generatedFileLocation);
-
-        // add document header as first part of the file content
-        addTemplateComponent(generatedFileLocation, getTemplateBegin(nameOfInputFile), false);
-
-        int counterAll = 0;
-        for (final String fileName : nameOfInputFile) {
-            System.out.println("Processing Filename: " + fileName);
-            final String sourceFile = pathSource + fileName + ".html";
-            counterAll = appendFileContent(generatedFileLocation, sourceFile, fileName, counterAll);
-        }
-
+        // 3. Add Footer & FAQ
         String templateEnd = """
             <h2 title="Frequently Asked Questions">Frequently Asked Questions</h2>
             <details>
@@ -67,74 +87,110 @@ public class FileGenerator {
             <summary>Are there cards from Juwan Howard's championship years with the Miami Heat?</summary>
             <p>Absolutely. The collection tracks his transition from a star player to a veteran leader and NBA Champion. You will find rare parallels and autographs from his time with the Miami Heat, including high-end releases from Panini's Gold Standard and Immaculate collections.</p>
             </details>
-            <p class="seo-box">
-            
-            </p>
-            """ + SharedTemplates.getFooter(ROOT)+ "</main></body></html>";
-            
-        addTemplateComponent(generatedFileLocation, templateEnd, true);
+            <p class="seo-box"></p>
+            """ + SharedTemplates.getFooter(ROOT) + "</main></body></html>";
 
-        copyOtherPages();
+        fullPage.append(templateEnd);
 
-        CardPageGenerator.run();
+        // 4. Write the entire 10MB+ string to disk in one lightning-fast operation
+        Files.writeString(Paths.get(targetPath), fullPage.toString(), StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+        logger.info("Collection page generated successfully: {} (Total Cards: {})", targetPath, totalCardCount);
+    }
 
-        copyPwaAssets();
-        copyResources("css");
-        copyResources("favicon");
+    private static int appendSeasonTable(StringBuilder fullPage, String sourcePath, String seasonName, int runningTotal) throws IOException {
+        int seasonCounter = 0;
+        StringBuilder tableContent = new StringBuilder("<table>\n");
 
-        SitemapGenerator.generate();
+        Path path = Paths.get(sourcePath);
+        if (Files.exists(path)) {
+            // Read all lines at once for speed
+            List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
+            for (String line : lines) {
+                String trimmed = line.trim();
+                if ((trimmed.startsWith("<tr") || trimmed.startsWith("<td") || trimmed.startsWith("<th") || trimmed.startsWith("</t"))
+                        && !trimmed.contains("<table")) {
+                    tableContent.append(trimmed).append("\n");
+                    if (trimmed.contains("<tr>")) {
+                        seasonCounter++;
+                    }
+                }
+            }
+        } else {
+            logger.warn("Source file not found: {}", sourcePath);
+        }
+
+        tableContent.append("</table>\n");
+
+        // Deduct 1 for header row if it exists
+        if (seasonCounter > 0) seasonCounter--;
+
+        int newTotal = runningTotal + seasonCounter;
+
+        String anchorHeader = String.format("<h2 title='Juwan Howard Trading Cards for Season %s' id='%s'>%s [This Season: %d | Total: %d]</h2>\n",
+                seasonName, seasonName, seasonName, seasonCounter, newTotal);
+
+        fullPage.append(anchorHeader)
+                .append(tableContent)
+                .append("<div> <a href=\"#top\" title='Back to the top of the list' class='modern-button'>top</a></div>\n");
+
+        return newTotal;
     }
 
     private static void copyResources(String dirName) {
-        File sourceDir = new File("src/main/resources/" + dirName);
-        File destDir = new File(pathOutput + dirName);
-        if (!sourceDir.exists()) return;
-        if (!destDir.exists()) destDir.mkdirs();
+        Path sourceDir = Paths.get("src/main/resources/" + dirName);
+        Path destDir = Paths.get(PATH_OUTPUT + dirName);
 
-        File[] files = sourceDir.listFiles();
-        if (files == null) return;
+        if (!Files.exists(sourceDir)) return;
 
-        for (File f : files) {
-            if (f.isFile()) {
-                try {
-                    Files.copy(f.toPath(), new File(destDir, f.getName()).toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-                } catch (IOException e) {
-                    System.err.println("Error copying " + f.getName() + ": " + e.getMessage());
-                }
+        try {
+            Files.createDirectories(destDir);
+            try (Stream<Path> stream = Files.list(sourceDir)) {
+                stream.filter(Files::isRegularFile).forEach(source -> {
+                    try {
+                        Files.copy(source, destDir.resolve(source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
+                    } catch (IOException e) {
+                        logger.error("Error copying resource {}", source.getFileName(), e);
+                    }
+                });
             }
+        } catch (IOException e) {
+            logger.error("Failed to process resource directory {}", dirName, e);
         }
     }
 
     private static void copyPwaAssets() {
         String[] pwaFiles = {"manifest.json", "serviceWorker.js", "browserconfig.xml"};
-        File pwaDir = new File("src/main/resources/pwa");
+        Path pwaDir = Paths.get("src/main/resources/pwa");
+
         for (String fileName : pwaFiles) {
-            File sourceFile = new File(pwaDir, fileName);
-            if (sourceFile.exists()) {
+            Path sourceFile = pwaDir.resolve(fileName);
+            if (Files.exists(sourceFile)) {
                 try {
-                    Files.copy(sourceFile.toPath(), new File(pathOutput + fileName).toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-                    System.out.println("Copied " + fileName + " to " + pathOutput);
+                    Files.copy(sourceFile, Paths.get(PATH_OUTPUT + fileName), StandardCopyOption.REPLACE_EXISTING);
+                    System.out.println("Copied " + fileName + " to " + PATH_OUTPUT);
                 } catch (IOException e) {
-                    System.err.println("Error copying " + fileName + ": " + e.getMessage());
+                    logger.error("Error copying PWA asset {}", fileName, e);
                 }
             }
         }
     }
 
     private static void copyOtherPages() {
-        File sourceDir = new File(pathSource + "other");
-        if (!sourceDir.exists()) return;
+        Path sourceDir = Paths.get(PATH_SOURCE + "other");
+        if (!Files.exists(sourceDir)) return;
 
-        File[] files = sourceDir.listFiles((dir, name) -> name.endsWith(".html"));
-        if (files == null) return;
-
-        for (File f : files) {
-            try {
-                Files.copy(f.toPath(), new File(pathOutput + f.getName()).toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-                System.out.println("Copied " + f.getName() + " to " + pathOutput);
-            } catch (IOException e) {
-                System.err.println("Error copying " + f.getName() + ": " + e.getMessage());
-            }
+        try (Stream<Path> stream = Files.list(sourceDir)) {
+            stream.filter(path -> path.toString().endsWith(".html"))
+                    .forEach(source -> {
+                        try {
+                            Files.copy(source, Paths.get(PATH_OUTPUT + source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
+                            System.out.println("Copied " + source.getFileName() + " to " + PATH_OUTPUT);
+                        } catch (IOException e) {
+                            logger.error("Error copying other page {}", source.getFileName(), e);
+                        }
+                    });
+        } catch (IOException e) {
+            logger.error("Failed to copy other pages", e);
         }
     }
 
@@ -145,13 +201,11 @@ public class FileGenerator {
         sb.append("<!doctype html>\n<html lang=\"en\">\n<head>\n");
         sb.append(SharedTemplates.getHead(title, description, ROOT, JUWAN_HOWARD_COLLECTION_HTML, DEFAULT_IMAGE));
 
-        // Additional SEO and metadata specifically for the main collection page
         sb.append("""
             <meta name="keywords" content="Juwan Howard, Basketball Cards, Player Collection, PC, Trading Cards, Panini, Upper Deck, 1/1, PMG, NBA">
             <meta name="google-site-verification" content="Ev1ZxTPJs2GMFNQ6FyItlCYAKUWscL3jDFS_mVXH6IQ">
             """);
 
-        // FAQ JSON-LD can be kept here or moved, it's quite specific.
         sb.append("""
             <script type="application/ld+json">
             {
@@ -191,9 +245,7 @@ public class FileGenerator {
             """);
 
         sb.append("</head>\n<body>\n");
-
         sb.append(SharedTemplates.getTopNav("/", "collection"));
-
         sb.append("""
             <main class="detail-main">
             <h1 id="top" title='Top of the list'>Juwan Howard Basketball Card - Private Collection</h1>
@@ -209,109 +261,43 @@ public class FileGenerator {
     }
 
     private static String createAnchorList(String[] fileNames) {
-        final StringBuilder internalAnchorList = new StringBuilder();
+        StringBuilder internalAnchorList = new StringBuilder();
         internalAnchorList.append("<div style='margin: 20px 0; text-align: left;'>");
         internalAnchorList.append("<label for='season-select' style='margin-right: 10px; font-weight: bold;'>Jump to Season:</label>");
         internalAnchorList.append("<select id='season-select' class='modern-button' style='width: auto; min-width: 220px;' onchange=\"if(this.value) window.location.hash = this.value;\">");
         internalAnchorList.append("<option value=''>-- Select a Season --</option>");
 
-        for (final String fileName : fileNames) {
+        for (String fileName : fileNames) {
             internalAnchorList.append("<option value='").append(fileName).append("'>").append(fileName).append("</option>");
         }
-        internalAnchorList.append("</select>");
-        internalAnchorList.append("</div>");
+        internalAnchorList.append("</select></div>");
 
         return internalAnchorList.toString();
     }
 
     private static String[] getFileNamesFromDirectory() {
-        final File folder = new File(pathSource);
-        final File[] listOfFilesInDirectory = folder.listFiles();
-
-        final List<String> result = new ArrayList<>();
+        File folder = new File(PATH_SOURCE);
+        File[] listOfFilesInDirectory = folder.listFiles((dir, name) -> name.endsWith(".html"));
+        List<String> result = new ArrayList<>();
 
         if (listOfFilesInDirectory != null) {
             Arrays.sort(listOfFilesInDirectory);
             for (File file : listOfFilesInDirectory) {
-                if (file.isFile() && file.getName().endsWith(".html")) {
-                    final String nameWithoutExt = file.getName().substring(0, file.getName().lastIndexOf('.'));
-                    result.add(nameWithoutExt);
+                if (file.isFile() && !file.getName().equals(INDEX_HTML)) {
+                    String nameWithoutExt = file.getName().substring(0, file.getName().lastIndexOf('.'));
+                    // prevent 'other' directory from being listed as season
+                    if(!nameWithoutExt.equals("other")){
+                        result.add(nameWithoutExt);
+                    }
                 }
             }
         }
         return result.toArray(new String[0]);
     }
 
-    private static void createTargetFile(String fileName) throws IOException {
-        final File myFile = new File(fileName);
-        if (myFile.exists()) {
-            myFile.delete();
-        }
-        if (myFile.createNewFile()) {
-            logger.info("A new file under: {} was created", fileName);
-        }
-    }
-
-    private static void addTemplateComponent(String targetFile, String content, boolean append) throws IOException {
-        try (OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(targetFile, append), StandardCharsets.UTF_8);
-             BufferedWriter out = new BufferedWriter(osw)) {
-            out.append(content);
-            out.flush();
-        }
-    }
-
-    private static int appendFileContent(String targetFile, String source, String name, int counterIn) throws IOException {
-        final String anchorHeader = String.format("<h2 title='Juwan Howard Trading Cards for Season %s' id='%s'>%s", name, name, name);
-        final StringBuilder result = new StringBuilder();
-
-        int counter = 0;
-        StringBuilder tableContent = new StringBuilder("<table>\n");
-        try (BufferedReader inputStream = new BufferedReader(new InputStreamReader(new FileInputStream(source), StandardCharsets.UTF_8))) {
-            String line;
-            while ((line = inputStream.readLine()) != null) {
-                String trimmed = line.trim();
-                if ((trimmed.startsWith("<tr") || trimmed.startsWith("<td") || trimmed.startsWith("<th") || trimmed.startsWith("</t"))
-                    && !trimmed.contains("<table")) {
-                    tableContent.append(trimmed);
-                    if (trimmed.contains("<tr>")) {
-                        counter++;
-                    }
-                }
-            }
-        }
-        tableContent.append("</table>\n");
-
-        // Deduct 1 for header row if it exists
-        if (counter > 0) counter--;
-
-        int total = counterIn + counter;
-
-        // Construct header with counts
-        result.append(anchorHeader)
-              .append(" [This Season: ").append(counter)
-              .append(" | Total: ").append(total)
-              .append("]</h2>\n");
-
-        // Append table
-        result.append(tableContent);
-
-        result.append("<div> <a href=\"#top\" title='Back to the top of the list' class='modern-button'>top</a></div>\n");
-
-        try (OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(targetFile, true), StandardCharsets.UTF_8);
-             BufferedWriter out = new BufferedWriter(osw)) {
-            out.append(result.toString()).append('\n');
-            out.flush();
-        }
-        return total;
-    }
-
     private static void createLandingPage(String targetPath) throws IOException {
-        String outputDir = new File(targetPath).getParent();
-        String errorPagePath = (outputDir != null ? outputDir : ".") + "/error.html";
-        try (OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(errorPagePath), StandardCharsets.UTF_8);
-             BufferedWriter out = new BufferedWriter(osw)) {
-            out.write(SharedTemplates.getErrorPage(ROOT));
-        }
+        String errorPagePath = PATH_OUTPUT + "error.html";
+        Files.writeString(Paths.get(errorPagePath), SharedTemplates.getErrorPage(ROOT), StandardCharsets.UTF_8);
         System.out.println("Error page created: " + errorPagePath);
 
         String title = "Maulmann Trading Cards | Juwan Howard & Sports Card Collection";
@@ -331,7 +317,6 @@ public class FileGenerator {
                         <h1>Maulmann Trading Cards</h1>
                         <p class="sub-title">Welcome to our Private Sports Card Collection</p>
                     </header>
-
                     <section class="slideshow-container">
                         <div class="mySlides fade">
                             <img src="images/1997-98/Juwan-Howard-Washington-Wizards-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-sn47-front.jpg" style="width:100%" width="400" height="550" alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Red">
@@ -352,7 +337,6 @@ public class FileGenerator {
                             <img src="images/1994-95/Juwan-Howard-Washington-Bullets-1994-95-Fleer-Ultra-All-Rookies-Base-3-front.jpg" style="width:100%" width="400" height="550" alt="Juwan Howard 1994-95 Fleer Ultra All Rookies">
                         </div>
                     </section>
-
                     <style>
                         .slideshow-container {
                             max-width: 400px;
@@ -374,11 +358,9 @@ public class FileGenerator {
                             to {opacity: 1}
                         }
                     </style>
-
                     <script>
                         let slideIndex = 0;
                         showSlides();
-
                         function showSlides() {
                             let i;
                             let slides = document.getElementsByClassName("mySlides");
@@ -391,7 +373,6 @@ public class FileGenerator {
                             setTimeout(showSlides, 3000);
                         }
                     </script>
-
                     <article class="seo-box">
                         <h3>Explore the Collection</h3>
                         <p>Welcome to <strong>Maulmann Trading Cards</strong>, a dedicated space showcasing a lifelong passion for sports card collecting. Our centerpiece is a massive <strong>Juwan Howard Private Collection</strong>, featuring over a thousand unique cards spanning his entire career.</p>
@@ -402,7 +383,6 @@ public class FileGenerator {
                             <li><strong>Wantlist:</strong> Rare cards we are currently searching for to complete our collection.</li>
                         </ul>
                     </article>
-
                     <section class="faq-section">
                         <h2>Frequently Asked Questions (FAQ)</h2>
                         <details>
@@ -422,7 +402,6 @@ public class FileGenerator {
                             <p>Currently, the items showcased are part of a private curated collection and are not available for direct sale. However, we are always active in the hobby community and interested in discussing rare finds, especially those on our <strong>Wantlist</strong>. For inquiries, you can reach out to us at <strong>&lt;contact-email-placeholder&gt;</strong>.</p>
                         </details>
                     </section>
-
                     <script type="application/ld+json">
                         {
                             "@context": "https://schema.org",
@@ -463,7 +442,6 @@ public class FileGenerator {
                             ]
                         }
                     </script>
-            
                 """ + SharedTemplates.getFooter(ROOT) + """
                     </main>
                 </body>
@@ -475,11 +453,6 @@ public class FileGenerator {
                 .replace("__TOP_NAV__", SharedTemplates.getTopNav(ROOT, "index"))
                 .replace("<contact-email-placeholder>", "seraph@gmx.co.uk");
 
-        try (OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(targetPath), StandardCharsets.UTF_8);
-             BufferedWriter out = new BufferedWriter(osw)) {
-            out.write(landingContent);
-            out.flush();
-        }
+        Files.writeString(Paths.get(targetPath), landingContent, StandardCharsets.UTF_8);
     }
 }
-

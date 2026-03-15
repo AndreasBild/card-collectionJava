@@ -2,84 +2,116 @@ package de.maulmann;
 
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
-import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.S3AsyncClient;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectResponse;
-import software.amazon.awssdk.services.s3.model.S3Exception;
-import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.core.async.AsyncRequestBody;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
 
 public class S3UploadFiles {
-    private static final String pathSource = "output";
-    // Specify the bucket name
-    private static final String bucketName = "maulmann.de";
+
+    private static final String PATH_SOURCE = "output";
+    private static final String BUCKET_NAME = "maulmann.de";
+    private static final Region REGION = Region.EU_CENTRAL_1;
+    private static final String PROFILE_NAME = "JavaSDKUser";
+
+    // Thread-safe tracking
+    private static final AtomicInteger successCount = new AtomicInteger(0);
+    private static final AtomicInteger failureCount = new AtomicInteger(0);
 
     public static void main(String[] args) {
-        // Define the AWS region where your bucket is located
-        Region region = Region.EU_CENTRAL_1;
+        long startTime = System.currentTimeMillis();
+        Path directory = Paths.get(PATH_SOURCE);
 
-        // Create S3 client using credentials from the specified profile (JavaSDKUser)
-        S3Client s3Client = S3Client.builder()
-                .region(region)
-                .credentialsProvider(ProfileCredentialsProvider.create("JavaSDKUser"))
-                .build();
-
-        File directory = new File(pathSource);
-        if (!directory.exists()) {
-            System.err.println("Source directory does not exist: " + directory.getAbsolutePath());
+        if (!Files.exists(directory) || !Files.isDirectory(directory)) {
+            System.err.println("Source directory does not exist or is not a folder: " + directory.toAbsolutePath());
             return;
         }
 
-        for (File file : Objects.<File[]>requireNonNull(directory.listFiles())) {
-            if (file.isFile()) {
-                try {
-                    if (file.getName().endsWith(".html")) {
-                        uploadFile(s3Client,file, "text/html");
+        System.out.println("Starting high-speed async root upload to: " + BUCKET_NAME);
 
-                    } else if (file.getName().endsWith(".css")) {
-                        uploadFile(s3Client,file, "text/css");
+        // 1. Build the Asynchronous Client (Non-blocking Netty)
+        try (S3AsyncClient s3AsyncClient = S3AsyncClient.builder()
+                .region(REGION)
+                .credentialsProvider(ProfileCredentialsProvider.create(PROFILE_NAME))
+                .build()) {
 
+            List<CompletableFuture<Void>> futures = new ArrayList<>();
+
+            // 2. Stream through the directory safely
+            try (Stream<Path> paths = Files.list(directory)) {
+                paths.filter(Files::isRegularFile).forEach(file -> {
+                    String fileName = file.getFileName().toString().toLowerCase();
+                    String contentType = null;
+
+                    if (fileName.endsWith(".html")) {
+                        contentType = "text/html";
+                    } else if (fileName.endsWith(".css")) {
+                        contentType = "text/css";
                     } else {
-                        System.err.println("Failed to decide on filetype: " + file.getAbsolutePath());
+                        System.err.println("Skipping unsupported filetype: " + file.getFileName());
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+
+                    if (contentType != null) {
+                        // Kick off the async upload
+                        futures.add(uploadFileAsync(s3AsyncClient, file, contentType));
+                    }
+                });
             }
+
+            // 3. Wait for all AWS acknowledgments
+            CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+
+            long endTime = System.currentTimeMillis();
+            System.out.println("\n--- Upload Summary ---");
+            System.out.println("Successfully uploaded: " + successCount.get() + " files");
+            System.out.println("Failed to upload:      " + failureCount.get() + " files");
+            System.out.println("Total execution time:  " + (endTime - startTime) + " ms");
+
+            // Optional: Trigger CloudFront Invalidation here once all uploads are finished
+            // CloudFrontInvalidator invalidator = new CloudFrontInvalidator();
+            // invalidator.invalidate();
+
+        } catch (Exception e) {
+            System.err.println("Critical error during upload routing: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
+    private static CompletableFuture<Void> uploadFileAsync(S3AsyncClient s3AsyncClient, Path file, String contentType) {
+        String fileName = file.getFileName().toString();
 
-    private static void uploadFile(S3Client s3Client, File file, String fileType) {
-        try {
-            // Custom metadata using a Map
-            final Map<String, String> customMetadata = new HashMap<>();
-            customMetadata.put("Content-Type", fileType);
-            customMetadata.put("Content-Encoding", "gzip");
-            customMetadata.put("Content-Language", "en-US");
+        // Build request directly without the intermediate HashMap
+        PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                .bucket(BUCKET_NAME)
+                .key(fileName)
+                .contentType(contentType)
+                .contentEncoding("gzip")
+                .contentLanguage("en-US")
+                .build();
 
-            // Create a PutObjectRequest with the bucket name, key (file name), file, and metadata
-            PutObjectRequest putObjectRequest = PutObjectRequest.builder()
-                    .bucket(S3UploadFiles.bucketName)
-                    .key(file.getName())  // You can modify this to include a folder structure in the bucket
-                    .contentEncoding(customMetadata.get("Content-Encoding"))
-                    .contentType(customMetadata.get("Content-Type"))
-                    .contentLanguage(customMetadata.get("Content-Language"))
-                    .build();
+        // Fire the non-blocking request
+        CompletableFuture<PutObjectResponse> future = s3AsyncClient.putObject(
+                putObjectRequest,
+                AsyncRequestBody.fromFile(file)
+        );
 
-            // Upload the file to S3 with metadata
-            PutObjectResponse response = s3Client.putObject(putObjectRequest, RequestBody.fromFile(file));
-
-            System.out.println("Successfully uploaded: " + file.getName() + " with ETag: " + response.eTag());
-       //     CloudFrontInvalidator invalidator = new CloudFrontInvalidator();
-       //     invalidator.invalidate();
-
-        } catch (S3Exception e) {
-            e.printStackTrace();
-        }
+        // Attach callback for logging and counting
+        return future.thenAccept(response -> {
+            successCount.incrementAndGet();
+            System.out.println("Uploaded: " + fileName + " (ETag: " + response.eTag() + ")");
+        }).exceptionally(ex -> {
+            failureCount.incrementAndGet();
+            System.err.println("Failed to upload " + fileName + ": " + ex.getMessage());
+            return null;
+        });
     }
 }
