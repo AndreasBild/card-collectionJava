@@ -325,13 +325,13 @@ public class FileGenerator {
                             <img src="images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-sn7-front.webp" style="width:100%" width="400" height="550" alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Green">
                         </div>
                         <div class="mySlides fade">
-                            <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-SPx-Finite-Base-Set-Spectrum-76-sn291-front.jpg" style="width:100%" width="400" height="550" alt="Juwan Howard 1998-99 Upper Deck SPx Finite Spectrum">
+                            <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-SPx-Finite-Base-Set-Spectrum-76-sn291-front.webp" style="width:100%" width="400" height="550" alt="Juwan Howard 1998-99 Upper Deck SPx Finite Spectrum">
                         </div>
                         <div class="mySlides fade">
-                            <img src="images/1996-97-Juwan-Howard-Washington-Bullets-1996-97-Fleer-Flair-Showcase-ShowTime-Legacy-Collection-ROW-0-SEAT-5-sn11-back.webp" style="width:100%" width="400" height="550" alt="Juwan Howard 1996-97 Fleer Flair Showcase ShowTime Legacy Collection">
+                            <img src="images/1996-97/Juwan-Howard-Washington-Bullets-1996-97-Fleer-Flair-Showcase-ShowTime-Legacy-Collection-ROW-0-SEAT-5-sn11-front.webp" style="width:100%" width="400" height="550" alt="Juwan Howard 1996-97 Fleer Flair Showcase ShowTime Legacy Collection">
                         </div>
                         <div class="mySlides fade">
-                            <img src="images/1994-95/Juwan-Howard-Houston-Rockets-2007-08-Upper-Deck-UD-Artifacts-Divisional-Artifacts-Gold-DA-JH-sn1-front.webp" style="width:100%" width="400" height="550" alt="Juwan Howard 2007-08-95 UD Divisional Artifacts Gold">
+                            <img src="images/2007-08/Juwan-Howard-Houston-Rockets-2007-08-Upper-Deck-UD-Artifacts-Divisional-Artifacts-Gold-DA-JH-sn1-front.webp" style="width:100%" width="400" height="550" alt="Juwan Howard 2007-08-95 UD Divisional Artifacts Gold">
                         </div>
                   
                     </section>
