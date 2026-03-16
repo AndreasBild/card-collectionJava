@@ -18,11 +18,8 @@ public class ImageConverter {
     // --- Configuration ---
     private static final int MAX_WIDTH = 1000;
     private static final int MAX_HEIGHT = 700;
-    private static final int TARGET_DPI = 72;
-    private static final int TARGET_JPG_KB = 130;
 
-    // Mac CLI Paths (Update to /usr/local/bin/... if on Intel Mac)
-    private static final String MAGICK_PATH = "/opt/homebrew/bin/magick";
+    // Mac CLI Paths
     private static final String CWEBP_PATH = "/opt/homebrew/bin/cwebp";
 
     // Thread-safe counters
@@ -30,15 +27,13 @@ public class ImageConverter {
     private static final AtomicInteger failureCount = new AtomicInteger(0);
 
     public static void main(String[] args) {
-        // Define your directories here
-        Path sourceDir = Paths.get("Test");
-        Path jpgOutDir = Paths.get("output/output_jpg");
-        Path webpOutDir = Paths.get("output/output_webp");
+        Path sourceDir = Paths.get("images");
+        Path webpOutDir = Paths.get("output/images"); // Drops right into your pipeline
 
         long startTime = System.currentTimeMillis();
 
         try {
-            processImages(sourceDir, jpgOutDir, webpOutDir);
+            processImages(sourceDir, webpOutDir);
             long endTime = System.currentTimeMillis();
 
             System.out.println("\n--- Processing Summary ---");
@@ -52,7 +47,7 @@ public class ImageConverter {
         }
     }
 
-    public static void processImages(Path sourceDir, Path jpgOutDir, Path webpOutDir) throws IOException, InterruptedException {
+    public static void processImages(Path sourceDir, Path webpOutDir) throws IOException, InterruptedException {
         int cores = Runtime.getRuntime().availableProcessors();
         System.out.println("Starting high-performance pool with " + cores + " threads...");
         ExecutorService executor = Executors.newFixedThreadPool(cores);
@@ -67,7 +62,7 @@ public class ImageConverter {
 
                     executor.submit(() -> {
                         try {
-                            convertAndSaveImage(file, sourceDir, jpgOutDir, webpOutDir);
+                            convertAndSaveImage(file, sourceDir, webpOutDir);
                             successCount.incrementAndGet();
                         } catch (Exception e) {
                             System.err.println("Failed to process " + file + ": " + e.getMessage());
@@ -83,7 +78,7 @@ public class ImageConverter {
         executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
     }
 
-    private static void convertAndSaveImage(Path sourceFile, Path sourceDir, Path jpgOutDir, Path webpOutDir) throws IOException, InterruptedException {
+    private static void convertAndSaveImage(Path sourceFile, Path sourceDir, Path webpOutDir) throws IOException, InterruptedException {
         // --- 1. Fast Dimension Calculation (Reads header only, saves RAM) ---
         int origW = 0;
         int origH = 0;
@@ -112,38 +107,13 @@ public class ImageConverter {
         String baseName = getBaseName(relativePath.getFileName().toString());
         Path relativeParent = relativePath.getParent();
 
-        Path currentJpgOutDir = relativeParent != null ? jpgOutDir.resolve(relativeParent) : jpgOutDir;
         Path currentWebpOutDir = relativeParent != null ? webpOutDir.resolve(relativeParent) : webpOutDir;
-
-        Files.createDirectories(currentJpgOutDir);
         Files.createDirectories(currentWebpOutDir);
 
-        File jpgOutputFile = currentJpgOutDir.resolve(baseName + ".jpg").toFile();
         File webpOutputFile = currentWebpOutDir.resolve(baseName + ".webp").toFile();
 
         // --- 3. Delegate to Native CLI Tools ---
-        writeJpegViaCLI(sourceFile, jpgOutputFile);
         writeWebpViaCLI(sourceFile, webpOutputFile, newW, newH);
-    }
-
-    private static void writeJpegViaCLI(Path sourceFile, File outputFile) throws IOException, InterruptedException {
-        ProcessBuilder pb = new ProcessBuilder(
-                MAGICK_PATH,
-                sourceFile.toAbsolutePath().toString(),
-                "-resize", MAX_WIDTH + "x" + MAX_HEIGHT + ">", // Shrink to fit bounding box only if larger
-                "-density", String.valueOf(TARGET_DPI),
-                "-units", "PixelsPerInch",
-                "-interlace", "Plane", // Progressive JPG
-                "-define", "jpeg:extent=" + TARGET_JPG_KB + "kb", // The magic target size flag
-                outputFile.getAbsolutePath()
-        );
-
-        Process process = pb.start();
-        int exitCode = process.waitFor();
-
-        if (exitCode != 0) {
-            throw new IOException("ImageMagick exited with code " + exitCode);
-        }
     }
 
     private static void writeWebpViaCLI(Path sourceFile, File outputFile, int targetW, int targetH) throws IOException, InterruptedException {
