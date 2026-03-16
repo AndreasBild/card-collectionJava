@@ -451,7 +451,8 @@ table tr td:first-child a:hover {
     z-index: 1000
 }
 
-.topnav a {
+/* UPDATE: .topnav button.icon hinzugefügt und Button-Resets eingefügt */
+.topnav a, .topnav button.icon {
     float: left;
     display: flex;
     align-items: center;
@@ -466,10 +467,15 @@ table tr td:first-child a:hover {
     box-shadow: none !important;
     transition: none !important;
     font-weight: 400 !important;
-    min-height: 48px
+    min-height: 48px;
+    /* Resets speziell für den neuen Button */
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
 }
 
-.topnav a:hover {
+/* UPDATE: Hover-Effekt auch für den Button */
+.topnav a:hover, .topnav button.icon:hover {
     background-color: #ddd !important;
     color: #000 !important
 }
@@ -484,7 +490,8 @@ table tr td:first-child a:hover {
         display: none
     }
 
-    .topnav a.icon {
+    /* UPDATE: Von 'a.icon' auf '.icon' geändert, damit der Button erfasst wird */
+    .topnav .icon {
         float: right;
         display: block
     }

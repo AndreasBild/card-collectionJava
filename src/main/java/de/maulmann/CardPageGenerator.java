@@ -303,15 +303,27 @@ public class CardPageGenerator {
         sb.append("        <p>").append(generateSeoText(c)).append("</p>\n");
         sb.append("    </article>\n");
 
-        // --- IMAGES SECTION ---
-        sb.append("    <div class=\"card-images-container\">\n");
-        sb.append("        <div class=\"card-image-wrapper\">\n");
-        sb.append("            <img src=\"").append(frontImgPath).append("\" ").append("alt=\"").append(escapeHtml(frontAlt)).append("\" ").append("title=\"").append(escapeHtml(frontImgTitle)).append("\" ").append("width=\"400\" height=\"550\" fetchpriority=\"high\" ").append("onclick=\"openModal('").append(frontImgPath).append("', '").append(backImgPath).append("')\">\n");
-        sb.append("            <p>Front View (Click to Zoom)</p>\n");
+// --- IMAGES SECTION ---
+        sb.append("    <div class=\"card-images-container\" style=\"display: flex; gap: 20px; flex-wrap: wrap;\">\n");
+        sb.append("        <div class=\"card-image-wrapper\" style=\"display: flex; flex-direction: column; align-items: center;\">\n");
+        sb.append("            <img src=\"").append(frontImgPath).append("\" ")
+                .append("alt=\"").append(escapeHtml(frontAlt)).append("\" ")
+                .append("title=\"").append(escapeHtml(frontImgTitle)).append("\" ")
+                .append("width=\"400\" height=\"550\" fetchpriority=\"high\" ")
+                // NEU: Zwingt den Browser, den Platz freizuhalten (CLS-Fix)
+                .append("style=\"aspect-ratio: 400 / 550; width: 100%; max-width: 400px; height: auto; display: block; object-fit: contain;\" ")
+                .append("onclick=\"openModal('").append(frontImgPath).append("', '").append(backImgPath).append("')\">\n");
+        sb.append("            <p style=\"margin-top: 10px; min-height: 24px;\">Front View (Click to Zoom)</p>\n");
         sb.append("        </div>\n");
-        sb.append("        <div class=\"card-image-wrapper\">\n");
-        sb.append("            <img src=\"").append(backImgPath).append("\" ").append("alt=\"").append(escapeHtml(backAlt)).append("\" ").append("title=\"").append(escapeHtml(backImgTitle)).append("\" ").append("width=\"400\" height=\"550\" loading=\"lazy\" ").append("onclick=\"openModal('").append(backImgPath).append("', '").append(frontImgPath).append("')\">\n");
-        sb.append("            <p>Back View (Click to Zoom)</p>\n");
+        sb.append("        <div class=\"card-image-wrapper\" style=\"display: flex; flex-direction: column; align-items: center;\">\n");
+        sb.append("            <img src=\"").append(backImgPath).append("\" ")
+                .append("alt=\"").append(escapeHtml(backAlt)).append("\" ")
+                .append("title=\"").append(escapeHtml(backImgTitle)).append("\" ")
+                .append("width=\"400\" height=\"550\" loading=\"lazy\" ")
+                // NEU: Zwingt den Browser, den Platz freizuhalten (CLS-Fix)
+                .append("style=\"aspect-ratio: 400 / 550; width: 100%; max-width: 400px; height: auto; display: block; object-fit: contain;\" ")
+                .append("onclick=\"openModal('").append(backImgPath).append("', '").append(frontImgPath).append("')\">\n");
+        sb.append("            <p style=\"margin-top: 10px; min-height: 24px;\">Back View (Click to Zoom)</p>\n");
         sb.append("        </div>\n");
         sb.append("    </div>\n");
 

@@ -70,25 +70,25 @@ public class FileGenerator {
 
         // 3. Add Footer & FAQ
         String templateEnd = """
-            <h2 title="Frequently Asked Questions">Frequently Asked Questions</h2>
-            <details>
-            <summary>Which are the rarest Juwan Howard cards in this collection?</summary>
-            <p>The collection features some of the most sought-after Juwan Howard cards, including the legendary 1997-98 Metal Universe Precious Metal Gems (PMG) Green, various 1/1 Masterpieces, and rare "Logoman" patches. These cards represent the pinnacle of 90s and modern basketball card collecting.</p>
-            </details>
-            <details>
-            <summary>Does the collection include Juwan Howard's Michigan "Fab Five" era cards?</summary>
-            <p>Yes, the collection spans Juwan's entire career, starting with his iconic "Fab Five" years at the University of Michigan. It includes early Classic and Sage autographs, as well as collegiate-themed inserts from modern sets like Panini Flawless and National Treasures.</p>
-            </details>
-            <details>
-            <summary>What is the significance of the 1990s inserts in this collection?</summary>
-            <p>The 90s were the golden era of basketball card inserts. This collection showcases Howard's presence in iconic sets like SkyBox Premium Star Rubies, Fleer Brilliants 24-Karat Gold, and E-X2001 Jambalaya, which are highly prized for their innovative designs and extreme scarcity.</p>
-            </details>
-            <details>
-            <summary>Are there cards from Juwan Howard's championship years with the Miami Heat?</summary>
-            <p>Absolutely. The collection tracks his transition from a star player to a veteran leader and NBA Champion. You will find rare parallels and autographs from his time with the Miami Heat, including high-end releases from Panini's Gold Standard and Immaculate collections.</p>
-            </details>
-            <p class="seo-box"></p>
-            """ + SharedTemplates.getFooter(ROOT) + "</main></body></html>";
+                <h2 title="Frequently Asked Questions">Frequently Asked Questions</h2>
+                <details>
+                <summary>Which are the rarest Juwan Howard cards in this collection?</summary>
+                <p>The collection features some of the most sought-after Juwan Howard cards, including the legendary 1997-98 Metal Universe Precious Metal Gems (PMG) Green, various 1/1 Masterpieces, and rare "Logoman" patches. These cards represent the pinnacle of 90s and modern basketball card collecting.</p>
+                </details>
+                <details>
+                <summary>Does the collection include Juwan Howard's Michigan "Fab Five" era cards?</summary>
+                <p>Yes, the collection spans Juwan's entire career, starting with his iconic "Fab Five" years at the University of Michigan. It includes early Classic and Sage autographs, as well as collegiate-themed inserts from modern sets like Panini Flawless and National Treasures.</p>
+                </details>
+                <details>
+                <summary>What is the significance of the 1990s inserts in this collection?</summary>
+                <p>The 90s were the golden era of basketball card inserts. This collection showcases Howard's presence in iconic sets like SkyBox Premium Star Rubies, Fleer Brilliants 24-Karat Gold, and E-X2001 Jambalaya, which are highly prized for their innovative designs and extreme scarcity.</p>
+                </details>
+                <details>
+                <summary>Are there cards from Juwan Howard's championship years with the Miami Heat?</summary>
+                <p>Absolutely. The collection tracks his transition from a star player to a veteran leader and NBA Champion. You will find rare parallels and autographs from his time with the Miami Heat, including high-end releases from Panini's Gold Standard and Immaculate collections.</p>
+                </details>
+                <p class="seo-box"></p>
+                """ + SharedTemplates.getFooter(ROOT) + "</main></body></html>";
 
         fullPage.append(templateEnd);
 
@@ -107,8 +107,7 @@ public class FileGenerator {
             List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
             for (String line : lines) {
                 String trimmed = line.trim();
-                if ((trimmed.startsWith("<tr") || trimmed.startsWith("<td") || trimmed.startsWith("<th") || trimmed.startsWith("</t"))
-                        && !trimmed.contains("<table")) {
+                if ((trimmed.startsWith("<tr") || trimmed.startsWith("<td") || trimmed.startsWith("<th") || trimmed.startsWith("</t")) && !trimmed.contains("<table")) {
                     tableContent.append(trimmed).append("\n");
                     if (trimmed.contains("<tr>")) {
                         seasonCounter++;
@@ -126,12 +125,9 @@ public class FileGenerator {
 
         int newTotal = runningTotal + seasonCounter;
 
-        String anchorHeader = String.format("<h2 title='Juwan Howard Trading Cards for Season %s' id='%s'>%s [This Season: %d | Total: %d]</h2>\n",
-                seasonName, seasonName, seasonName, seasonCounter, newTotal);
+        String anchorHeader = String.format("<h2 title='Juwan Howard Trading Cards for Season %s' id='%s'>%s [This Season: %d | Total: %d]</h2>\n", seasonName, seasonName, seasonName, seasonCounter, newTotal);
 
-        fullPage.append(anchorHeader)
-                .append(tableContent)
-                .append("<div> <a href=\"#top\" title='Back to the top of the list' class='modern-button'>top</a></div>\n");
+        fullPage.append(anchorHeader).append(tableContent).append("<div> <a href=\"#top\" title='Back to the top of the list' class='modern-button'>top</a></div>\n");
 
         return newTotal;
     }
@@ -180,15 +176,14 @@ public class FileGenerator {
         if (!Files.exists(sourceDir)) return;
 
         try (Stream<Path> stream = Files.list(sourceDir)) {
-            stream.filter(path -> path.toString().endsWith(".html"))
-                    .forEach(source -> {
-                        try {
-                            Files.copy(source, Paths.get(PATH_OUTPUT + source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
-                            System.out.println("Copied " + source.getFileName() + " to " + PATH_OUTPUT);
-                        } catch (IOException e) {
-                            logger.error("Error copying other page {}", source.getFileName(), e);
-                        }
-                    });
+            stream.filter(path -> path.toString().endsWith(".html")).forEach(source -> {
+                try {
+                    Files.copy(source, Paths.get(PATH_OUTPUT + source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
+                    System.out.println("Copied " + source.getFileName() + " to " + PATH_OUTPUT);
+                } catch (IOException e) {
+                    logger.error("Error copying other page {}", source.getFileName(), e);
+                }
+            });
         } catch (IOException e) {
             logger.error("Failed to copy other pages", e);
         }
@@ -197,67 +192,63 @@ public class FileGenerator {
     private static String getTemplateBegin(String[] fileNames) {
         String title = "Juwan Howard Basketball Card Collection | 1/1s, PMGs & Rare PC";
         String description = "Explore a massive Juwan Howard private basketball card collection. Featuring rare 90s inserts, PMGs, 1/1s, and autographs from 1994 to today.";
-        StringBuilder sb = new StringBuilder();
-        sb.append("<!doctype html>\n<html lang=\"en\">\n<head>\n");
-        sb.append(SharedTemplates.getHead(title, description, ROOT, JUWAN_HOWARD_COLLECTION_HTML, DEFAULT_IMAGE));
 
-        sb.append("""
-            <meta name="keywords" content="Juwan Howard, Basketball Cards, Player Collection, PC, Trading Cards, Panini, Upper Deck, 1/1, PMG, NBA">
-            <meta name="google-site-verification" content="Ev1ZxTPJs2GMFNQ6FyItlCYAKUWscL3jDFS_mVXH6IQ">
-            """);
+        String sb = "<!doctype html>\n<html lang=\"en\">\n<head>\n" +
+                SharedTemplates.getHead(title, description, ROOT, JUWAN_HOWARD_COLLECTION_HTML, DEFAULT_IMAGE) +
+                """
+                        <meta name="keywords" content="Juwan Howard, Basketball Cards, Player Collection, PC, Trading Cards, Panini, Upper Deck, 1/1, PMG, NBA">
+                        <meta name="google-site-verification" content="Ev1ZxTPJs2GMFNQ6FyItlCYAKUWscL3jDFS_mVXH6IQ">
+                        """ +
+                """
+                        <script type="application/ld+json">
+                        {
+                          "@context": "https://schema.org",
+                          "@type": "FAQPage",
+                          "mainEntity": [{
+                            "@type": "Question",
+                            "name": "Which are the rarest Juwan Howard cards in this collection?",
+                            "acceptedAnswer": {
+                              "@type": "Answer",
+                              "text": "The collection features some of the most sought-after Juwan Howard cards, including the legendary 1997-98 Metal Universe Precious Metal Gems (PMG) Green, various 1/1 Masterpieces, and rare 'Logoman' patches. These cards represent the pinnacle of 90s and modern basketball card collecting."
+                            }
+                          },{
+                            "@type": "Question",
+                            "name": "Does the collection include Juwan Howard's Michigan 'Fab Five' era cards?",
+                            "acceptedAnswer": {
+                              "@type": "Answer",
+                              "text": "Yes, the collection spans Juwan's entire career, starting with his iconic 'Fab Five' years at the University of Michigan. It includes early Classic and Sage autographs, as well as collegiate-themed inserts from modern sets like Panini Flawless and National Treasures."
+                            }
+                          },{
+                            "@type": "Question",
+                            "name": "What is the significance of the 1990s inserts in this collection?",
+                            "acceptedAnswer": {
+                              "@type": "Answer",
+                              "text": "The 90s were the golden era of basketball card inserts. This collection showcases Howard's presence in iconic sets like SkyBox Premium Star Rubies, Fleer Brilliants 24-Karat Gold, and E-X2001 Jambalaya, which are highly prized for their innovative designs and extreme scarcity."
+                            }
+                          },{
+                            "@type": "Question",
+                            "name": "Are there cards from Juwan Howard's championship years with the Miami Heat?",
+                            "acceptedAnswer": {
+                              "@type": "Answer",
+                              "text": "Absolutely. The collection tracks his transition from a star player to a veteran leader and NBA Champion. You will find rare parallels and autographs from his time with the Miami Heat, including high-end releases from Panini's Gold Standard and Immaculate collections."
+                            }
+                          }]
+                        }
+                        </script>
+                        """ +
+                "</head>\n<body>\n" +
+                SharedTemplates.getTopNav("/", "collection") +
+                """
+                        <main class="detail-main">
+                        <h1 id="top" title='Top of the list'>Juwan Howard Basketball Card - Private Collection</h1>
+                        <p class="seo-box">
+                            I wanted to share my dedicated website where I showcase my private basketball card collection. My main focus is my massive Juwan Howard PC. I’ve been building this for years, and the site features hundreds of cards from 1994 to today, including tons of 1/1s, low-numbered parallels, and rare 90s inserts like PMGs.
+                            You can check out the full Juwan Howard gallery here
+                        </p>
+                        """ +
+                createAnchorList(fileNames);
 
-        sb.append("""
-            <script type="application/ld+json">
-            {
-              "@context": "https://schema.org",
-              "@type": "FAQPage",
-              "mainEntity": [{
-                "@type": "Question",
-                "name": "Which are the rarest Juwan Howard cards in this collection?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "The collection features some of the most sought-after Juwan Howard cards, including the legendary 1997-98 Metal Universe Precious Metal Gems (PMG) Green, various 1/1 Masterpieces, and rare 'Logoman' patches. These cards represent the pinnacle of 90s and modern basketball card collecting."
-                }
-              },{
-                "@type": "Question",
-                "name": "Does the collection include Juwan Howard's Michigan 'Fab Five' era cards?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Yes, the collection spans Juwan's entire career, starting with his iconic 'Fab Five' years at the University of Michigan. It includes early Classic and Sage autographs, as well as collegiate-themed inserts from modern sets like Panini Flawless and National Treasures."
-                }
-              },{
-                "@type": "Question",
-                "name": "What is the significance of the 1990s inserts in this collection?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "The 90s were the golden era of basketball card inserts. This collection showcases Howard's presence in iconic sets like SkyBox Premium Star Rubies, Fleer Brilliants 24-Karat Gold, and E-X2001 Jambalaya, which are highly prized for their innovative designs and extreme scarcity."
-                }
-              },{
-                "@type": "Question",
-                "name": "Are there cards from Juwan Howard's championship years with the Miami Heat?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Absolutely. The collection tracks his transition from a star player to a veteran leader and NBA Champion. You will find rare parallels and autographs from his time with the Miami Heat, including high-end releases from Panini's Gold Standard and Immaculate collections."
-                }
-              }]
-            }
-            </script>
-            """);
-
-        sb.append("</head>\n<body>\n");
-        sb.append(SharedTemplates.getTopNav("/", "collection"));
-        sb.append("""
-            <main class="detail-main">
-            <h1 id="top" title='Top of the list'>Juwan Howard Basketball Card - Private Collection</h1>
-            <p class="seo-box">
-                I wanted to share my dedicated website where I showcase my private basketball card collection. My main focus is my massive Juwan Howard PC. I’ve been building this for years, and the site features hundreds of cards from 1994 to today, including tons of 1/1s, low-numbered parallels, and rare 90s inserts like PMGs.
-                You can check out the full Juwan Howard gallery here
-            </p>
-            """);
-
-        sb.append(createAnchorList(fileNames));
-
-        return sb.toString();
+        return sb;
     }
 
     private static String createAnchorList(String[] fileNames) {
@@ -286,7 +277,7 @@ public class FileGenerator {
                 if (file.isFile() && !file.getName().equals(INDEX_HTML)) {
                     String nameWithoutExt = file.getName().substring(0, file.getName().lastIndexOf('.'));
                     // prevent 'other' directory from being listed as season
-                    if(!nameWithoutExt.equals("other")){
+                    if (!nameWithoutExt.equals("other")) {
                         result.add(nameWithoutExt);
                     }
                 }
@@ -307,8 +298,12 @@ public class FileGenerator {
                 <!doctype html>
                 <html lang="en">
                 <head>
+                <head>
                 __HEAD__
+                <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+                <noscript>
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+                </noscript>
                 </head>
                 <body>
                 __TOP_NAV__
@@ -319,22 +314,21 @@ public class FileGenerator {
                     </header>
                     <section class="slideshow-container">
                         <div class="mySlides fade">
-                            <img src="images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-sn47-front.webp" style="width:100%" width="400" height="550" alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Red">
+                            <img src="images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-sn47-front.webp"  style="width:100%" width="400" height="550" fetchpriority="high" alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Red">
                         </div>
                         <div class="mySlides fade">
                             <img src="images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-sn7-front.webp" style="width:100%" width="400" height="550" alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Green">
                         </div>
                         <div class="mySlides fade">
-                            <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-SPx-Finite-Base-Set-Spectrum-76-sn291-front.webp" style="width:100%" width="400" height="550" alt="Juwan Howard 1998-99 Upper Deck SPx Finite Spectrum">
+                            <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-SPx-Finite-Base-Set-Spectrum-76-sn291-front.webp" style="width:100%" width="400" height="550" loading="lazy" alt="Juwan Howard 1998-99 Upper Deck SPx Finite Spectrum">
                         </div>
                         <div class="mySlides fade">
-                            <img src="images/1996-97/Juwan-Howard-Washington-Bullets-1996-97-Fleer-Flair-Showcase-ShowTime-Legacy-Collection-ROW-0-SEAT-5-sn11-front.webp" style="width:100%" width="400" height="550" alt="Juwan Howard 1996-97 Fleer Flair Showcase ShowTime Legacy Collection">
+                            <img src="images/1996-97/Juwan-Howard-Washington-Bullets-1996-97-Fleer-Flair-Showcase-ShowTime-Legacy-Collection-ROW-0-SEAT-5-sn11-front.webp" style="width:100%" width="400" height="550" loading="lazy" alt="Juwan Howard 1996-97 Fleer Flair Showcase ShowTime Legacy Collection">
                         </div>
                         <div class="mySlides fade">
-                            <img src="images/2007-08/Juwan-Howard-Houston-Rockets-2007-08-Upper-Deck-UD-Artifacts-Divisional-Artifacts-Gold-DA-JH-sn1-front.webp" style="width:100%" width="400" height="550" alt="Juwan Howard 2007-08-95 UD Divisional Artifacts Gold">
+                            <img src="images/2007-08/Juwan-Howard-Houston-Rockets-2007-08-Upper-Deck-UD-Artifacts-Divisional-Artifacts-Gold-DA-JH-sn1-front.webp" style="width:100%" width="400" height="550" loading="lazy" alt="Juwan Howard 2007-08-95 UD Divisional Artifacts Gold">
                         </div>
-                  
-                    </section>
+                </section>
                     <style>
                         .slideshow-container {
                             max-width: 400px;
@@ -356,23 +350,23 @@ public class FileGenerator {
                             to {opacity: 1}
                         }
                     </style>
-                    <script>
-                        let slideIndex = 0;
-                        showSlides();
-                        function showSlides() {
-                            let i;
-                            let slides = document.getElementsByClassName("mySlides");
-                            for (i = 0; i < slides.length; i++) {
-                                slides[i].style.display = "none";
-                            }
-                            slideIndex++;
-                            if (slideIndex > slides.length) {slideIndex = 1}
-                            slides[slideIndex-1].style.display = "block";
-                            setTimeout(showSlides, 3000);
-                        }
-                    </script>
+                  <script>
+                                                     let slideIndex = 0;
+                                                     setTimeout(showSlides, 3000);
+                
+                                                     function showSlides() {
+                                                         let slides = document.getElementsByClassName("mySlides");
+                                                         for (let i = 0; i < slides.length; i++) {
+                                                             slides[i].style.display = "none";
+                                                         }
+                                                         slideIndex++;
+                                                         if (slideIndex >= slides.length) { slideIndex = 0; }
+                                                         slides[slideIndex].style.display = "block";
+                                                         setTimeout(showSlides, 3000);
+                                                     }
+                                                 </script>
                     <article class="seo-box">
-                        <h3>Explore the Collection</h3>
+                        <h2>Explore the Collection</h2>
                         <p>Welcome to <strong>Maulmann Trading Cards</strong>, a dedicated space showcasing a lifelong passion for sports card collecting. Our centerpiece is a massive <strong>Juwan Howard Private Collection</strong>, featuring over a thousand unique cards spanning his entire career.</p>
                         <p>Beyond our primary focus, we also feature specialized collections including:</p>
                         <ul>
@@ -382,7 +376,7 @@ public class FileGenerator {
                         </ul>
                     </article>
                     <section class="faq-section">
-                        <h2>Frequently Asked Questions (FAQ)</h2>
+                        <h3>Frequently Asked Questions (FAQ)</h3>
                         <details>
                             <summary>What is the focus of Maulmann Trading Cards?</summary>
                             <p>Maulmann Trading Cards is a premier digital showcase for a private sports card collection. Our primary focus is the legendary <strong>Juwan Howard</strong>, featuring over a thousand unique basketball cards from his career. We also highlight high-end sets like <strong>2012-13 Panini Flawless</strong> and the historic <strong>2008 Upper Deck Exquisite Flawless</strong>, along with rare <strong>Upper Deck Baseball</strong> inscriptions.</p>
@@ -446,10 +440,7 @@ public class FileGenerator {
                 </html>
                 """;
 
-        landingContent = landingContent
-                .replace("__HEAD__", SharedTemplates.getHead(title, description, ROOT, INDEX_HTML, DEFAULT_IMAGE))
-                .replace("__TOP_NAV__", SharedTemplates.getTopNav(ROOT, "index"))
-                .replace("<contact-email-placeholder>", "seraph@gmx.co.uk");
+        landingContent = landingContent.replace("__HEAD__", SharedTemplates.getHead(title, description, ROOT, INDEX_HTML, DEFAULT_IMAGE)).replace("__TOP_NAV__", SharedTemplates.getTopNav(ROOT, "index")).replace("<contact-email-placeholder>", "seraph@gmx.co.uk");
 
         Files.writeString(Paths.get(targetPath), landingContent, StandardCharsets.UTF_8);
     }

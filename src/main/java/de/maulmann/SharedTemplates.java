@@ -19,6 +19,8 @@ public class SharedTemplates {
     // 2. Pre-compiled, highly efficient, thread-safe date formatter
     private static final DateTimeFormatter TIMESTAMP_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
 
+    // 3. NEW: Generate a unique ID for this specific site build
+    private static final String BUILD_ID = String.valueOf(System.currentTimeMillis());
     private static String loadResource(String path) {
         // If the template is already in RAM, return it instantly (0 Disk I/O)
         return TEMPLATE_CACHE.computeIfAbsent(path, SharedTemplates::readResourceFromDisk);
@@ -81,9 +83,9 @@ public class SharedTemplates {
                 .replace("{{ANALYTICS}}", getAnalytics())
                 .replace("{{SEO}}", getSeo(page, description))
                 .replace("{{OPENGRAPH}}", getOpenGraph(page, title, description, image))
-                .replace("{{FAVICON}}", getFavicon(root));
+                .replace("{{FAVICON}}", getFavicon(root))
+                .replace("{{BUILD_ID}}", BUILD_ID); // <--- NEW CACHE BUSTER
     }
-
     public static String getTopNav(String root, String activePage) {
         String template = loadResource("/templates/topnav.html");
         if (template.isEmpty()) {
