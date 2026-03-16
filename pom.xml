@@ -12,7 +12,7 @@
         <maven.compiler.source>19</maven.compiler.source>
         <maven.compiler.target>19</maven.compiler.target>
         <maven.compiler.release>19</maven.compiler.release>
-        <aws.sdk.version>2.41.5</aws.sdk.version>
+        <aws.sdk.version>2.42.13</aws.sdk.version>
         <org.slf4j.version>2.0.17</org.slf4j.version>
         <org.junit.jupiter.version>6.0.2</org.junit.jupiter.version>
         <org.apache.maven.plugins.version>3.14.1</org.apache.maven.plugins.version>
@@ -47,6 +47,12 @@
             <groupId>software.amazon.awssdk</groupId>
             <artifactId>cloudfront</artifactId>
             <version>${aws.sdk.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>netty-nio-client</artifactId>
+            <version>${aws.sdk.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.yahoo.platform.yui</groupId>
