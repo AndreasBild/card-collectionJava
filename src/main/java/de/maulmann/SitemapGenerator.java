@@ -173,8 +173,8 @@ public class SitemapGenerator {
             String backCaption = "Back view of " + baseTitle + " showing stats for " + team;
 
             // Image checks (Cache lookup is instantaneous)
-            String frontRelPath = IMAGE_PATH_LOCAL + seasonFolder + "/" + filenameBase + "-front.jpg";
-            String backRelPath = IMAGE_PATH_LOCAL + seasonFolder + "/" + filenameBase + "-back.jpg";
+            String frontRelPath = IMAGE_PATH_LOCAL + seasonFolder + "/" + filenameBase + "-front.webp";
+            String backRelPath = IMAGE_PATH_LOCAL + seasonFolder + "/" + filenameBase + "-back.webp";
 
             String frontUrl = availableImages.contains(frontRelPath) ? BASE_URL + "/" + frontRelPath : null;
             String backUrl = availableImages.contains(backRelPath) ? BASE_URL + "/" + backRelPath : null;

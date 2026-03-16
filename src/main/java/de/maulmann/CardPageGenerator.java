@@ -247,8 +247,8 @@ public class CardPageGenerator {
         String metaDesc = generateMetaDescription(c);
 
         String seasonImgFolder = RELATIVE_IMAGES_PATH + "/" + c.seasonFolder;
-        String frontImgPath = seasonImgFolder + "/" + c.filenameBase + "-front.jpg";
-        String backImgPath = seasonImgFolder + "/" + c.filenameBase + "-back.jpg";
+        String frontImgPath = seasonImgFolder + "/" + c.filenameBase + "-front.webp";
+        String backImgPath = seasonImgFolder + "/" + c.filenameBase + "-back.webp";
 
         String frontAlt = generateAltText(c, "front");
         String backAlt = generateAltText(c, "back");
@@ -753,8 +753,8 @@ public class CardPageGenerator {
     }
 
     private static String generateJsonLd(CardData c, String desc, String h1Title, String overviewPage) {
-        String frontImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + c.filenameBase + "-front.jpg";
-        String backImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + c.filenameBase + "-back.jpg";
+        String frontImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + c.filenameBase + "-front.webp";
+        String backImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + c.filenameBase + "-back.webp";
 
         StringBuilder sb = new StringBuilder();
         sb.append("<script type=\"application/ld+json\">\n");
