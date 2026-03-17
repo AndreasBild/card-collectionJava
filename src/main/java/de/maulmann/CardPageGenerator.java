@@ -28,7 +28,6 @@ public class CardPageGenerator {
     private static final Logger log = LoggerFactory.getLogger(CardPageGenerator.class);
     public static final String ROOT = "../../";
 
-    // --- NEU: Globale Liste für alle gefundenen Duplikate ---
     private static final List<String> duplicateLog = new ArrayList<>();
 
     static class CardData {
@@ -97,13 +96,11 @@ public class CardPageGenerator {
         log.info("Starting high-speed Card Page Generation...");
         long startTime = System.currentTimeMillis();
 
-        // Duplikat-Log initialisieren
         duplicateLog.clear();
         duplicateLog.add("FILTERED DUPLICATES LOG");
         duplicateLog.add("=======================");
         duplicateLog.add("These un-numbered base/insert cards were skipped during HTML generation because a duplicate already exists in the collection.\n");
 
-        // --- WIPE LOCAL GHOST FILES BEFORE GENERATING ---
         try {
             Path cardsDir = Paths.get(BASE_FOLDER);
             if (Files.exists(cardsDir)) {
@@ -116,7 +113,6 @@ public class CardPageGenerator {
             log.warn("Could not clean output/cards directory: " + e.getMessage());
         }
 
-        // --- LESE AB JETZT ALLES AUS DEM OUTPUT ORDNER ---
         processCollection("output/Juwan-Howard-Collection.html", "output/Juwan-Howard-Collection.html", "Juwan-Howard-Collection.html");
 
         String[] otherFiles = {
@@ -130,11 +126,10 @@ public class CardPageGenerator {
             processCollection(filePath, filePath, new File(filePath).getName());
         }
 
-        // --- NEU: Speichere die Duplikate-Datei am Ende des Durchlaufs ---
         try {
             File dupFile = new File("output/Duplicates.txt");
             Files.write(dupFile.toPath(), duplicateLog, StandardCharsets.UTF_8);
-            log.info("Saved Duplicates.txt with {} entries.", duplicateLog.size() - 4); // -4 wegen der Header-Zeilen
+            log.info("Saved Duplicates.txt with {} entries.", duplicateLog.size() - 4);
         } catch (IOException e) {
             log.error("Failed to write Duplicates.txt", e);
         }
@@ -150,16 +145,11 @@ public class CardPageGenerator {
     private static void processCollection(String inputPath, String outputPath, String overviewPage) {
         try {
             File input = new File(inputPath);
-            if (!input.exists()) {
-                log.warn("Input file not found: {}", inputPath);
-                return;
-            }
+            if (!input.exists()) return;
 
             Document doc = Jsoup.parse(input, "UTF-8");
             Elements tables = doc.select("table");
             if (tables.isEmpty()) return;
-
-            log.info("Processing {} tables in {}...", tables.size(), fileNameFromPath(inputPath));
 
             List<CardData> rawCards = new ArrayList<>();
             int globalCardCounter = 0;
@@ -168,21 +158,14 @@ public class CardPageGenerator {
                 globalCardCounter = extractTableDataAndUpdateDom(table, rawCards, globalCardCounter);
             }
 
-            if (rawCards.isEmpty()) {
-                log.warn("No valid card rows found in {}", inputPath);
-                return;
-            }
+            if (rawCards.isEmpty()) return;
 
-            // ==========================================
-            // DEDUPLICATION LOGIC
-            // ==========================================
             List<CardData> filteredCards = new ArrayList<>();
             Set<String> seenFingerprints = new HashSet<>();
 
             duplicateLog.add("\n--- From " + overviewPage + " ---");
 
             for (CardData card : rawCards) {
-                // --- UPDATE: Der Fingerprint berücksichtigt jetzt auch Grading Co. und Grade! ---
                 String fingerprint = (card.get("Season") + "|" + card.get("Company") + "|" +
                         card.get("Brand") + "|" + card.get("Theme") + "|" +
                         card.get("Variant") + "|" + card.get("Number") + "|" +
@@ -195,34 +178,26 @@ public class CardPageGenerator {
 
                 if (seenFingerprints.contains(fingerprint)) {
                     if (!hasSerial) {
-                        // --- NEU: Duplikat protokollieren ---
                         String dupInfo = card.get("Season") + " " + card.get("Company") + " " +
                                 card.get("Brand") + " " + card.get("Theme") + " " +
                                 card.get("Variant") + " #" + card.get("Number") + " - " + card.get("Player");
                         duplicateLog.add("[SKIPPED] " + dupInfo.replaceAll("\\s+", " "));
                         continue;
                     } else {
-                        // It's a duplicate, BUT it has a serial number (e.g. 2/10 and 7/10). Keep it!
                         filteredCards.add(card);
                     }
                 } else {
-                    // First time seeing this card
                     seenFingerprints.add(fingerprint);
                     filteredCards.add(card);
                 }
             }
 
-            log.info("Deduplication complete: Kept {} unique/numbered cards out of {}.", filteredCards.size(), rawCards.size());
-
-            // Update main HTML DOM
             updateDomLinks(tables, filteredCards);
 
-            // Write the updated main HTML file back to disk
             File outIndex = new File(outputPath);
             if (outIndex.getParentFile() != null) outIndex.getParentFile().mkdirs();
             Files.writeString(outIndex.toPath(), doc.outerHtml(), StandardCharsets.UTF_8);
 
-            // Multithread the generation of the subpages using ONLY the filtered list
             generateSubPagesMultithreaded(filteredCards, overviewPage);
 
         } catch (IOException | InterruptedException e) {
@@ -240,7 +215,6 @@ public class CardPageGenerator {
         for (int i = 0; i < rows.size(); i++) {
             Elements cells = rows.get(i).children();
             if (cells.isEmpty()) continue;
-
             headers = new String[cells.size()];
             for (int j = 0; j < cells.size(); j++) {
                 headers[j] = cells.get(j).text().trim();
@@ -263,18 +237,14 @@ public class CardPageGenerator {
                 dataMap.put(headers[j], cols.get(j).text().trim());
             }
 
-            // Create card with unique ID
             CardData currentCard = new CardData(dataMap, counter++);
             globalCardList.add(currentCard);
-
-            // We temporarily store the card reference directly in the row element for the next step
             row.attr("data-card-id", String.valueOf(currentCard.hashCode()));
         }
         return counter;
     }
 
     private static void updateDomLinks(Elements tables, List<CardData> filteredCards) {
-        // Create a fast lookup map of approved cards
         Set<String> approvedCardIds = new HashSet<>();
         for (CardData card : filteredCards) {
             approvedCardIds.add(String.valueOf(card.hashCode()));
@@ -282,9 +252,8 @@ public class CardPageGenerator {
 
         for (Element table : tables) {
             Elements rows = table.select("tr");
-            int playerColIndex = 0; // Default
+            int playerColIndex = 0;
 
-            // Find Player column
             if (!rows.isEmpty()) {
                 Elements headers = rows.get(0).children();
                 for (int j = 0; j < headers.size(); j++) {
@@ -297,9 +266,8 @@ public class CardPageGenerator {
 
             for (Element row : rows) {
                 String rowId = row.attr("data-card-id");
-                if (rowId.isEmpty()) continue; // Header row
+                if (rowId.isEmpty()) continue;
 
-                // Wurde die Karte behalten?
                 if (approvedCardIds.contains(rowId)) {
                     Elements cols = row.children();
                     if (cols.size() > playerColIndex) {
@@ -318,10 +286,8 @@ public class CardPageGenerator {
                                     .text(originalText);
                         }
                     }
-                    // Clean up temporary attribute
                     row.removeAttr("data-card-id");
                 } else {
-                    // --- DER FIX: LÖSCHE DIE ZEILE KOMPLETT AUS DER TABELLE ---
                     row.remove();
                 }
             }
@@ -331,7 +297,6 @@ public class CardPageGenerator {
     private static void generateSubPagesMultithreaded(List<CardData> allCards, String overviewPage) throws InterruptedException {
         int cores = Runtime.getRuntime().availableProcessors();
         ExecutorService executor = Executors.newFixedThreadPool(cores);
-        AtomicInteger successCount = new AtomicInteger(0);
 
         for (int i = 0; i < allCards.size(); i++) {
             final int index = i;
@@ -346,7 +311,6 @@ public class CardPageGenerator {
                     Path filePath = folderPath.resolve(currentCard.filename);
 
                     createSubPage(currentCard, filePath, prevCard, nextCard, allCards, overviewPage);
-                    successCount.incrementAndGet();
                 } catch (Exception e) {
                     log.error("Failed to generate subpage for card at index " + index, e);
                 }
@@ -355,19 +319,16 @@ public class CardPageGenerator {
 
         executor.shutdown();
         executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
-        log.info("Successfully generated {} subpages for {}.", successCount.get(), overviewPage);
     }
 
     private static void createSubPage(CardData c, Path path, CardData prev, CardData next, List<CardData> allCards, String overviewPage) throws IOException {
-        StringBuilder sb = new StringBuilder(4096);
+        StringBuilder sb = new StringBuilder(10000);
 
         String h1Title = generateH1(c);
         String browserTitle = generateBrowserTitle(c, overviewPage);
         String metaDesc = generateMetaDescription(c);
 
         String seasonImgFolder = RELATIVE_IMAGES_PATH + "/" + c.seasonFolder;
-
-        // Remove the "-<uniqueId>" suffix for the IMAGE lookup so it still finds the original file
         String imageBaseName = c.filenameBase.substring(0, c.filenameBase.lastIndexOf("-"));
 
         String frontImgPath = seasonImgFolder + "/" + imageBaseName + "-front.webp";
@@ -381,13 +342,8 @@ public class CardPageGenerator {
         // HTML START
         sb.append("<!doctype html>\n<html lang=\"en\">\n<head>\n");
         sb.append(SharedTemplates.getHead(escapeHtml(browserTitle), escapeHtml(metaDesc), ROOT, overviewPage, frontImgPath));
-
-        // LCP Preload
         sb.append("    <link rel=\"preload\" as=\"image\" href=\"").append(frontImgPath).append("\" fetchpriority=\"high\">\n");
-
-        // Schema.org
         sb.append(generateJsonLd(c, metaDesc, h1Title, overviewPage, imageBaseName));
-
         sb.append("</head>\n<body>\n");
 
         // NAVIGATION
@@ -395,83 +351,80 @@ public class CardPageGenerator {
         if (activeNav.equals("juwan-howard-collection")) activeNav = "collection";
         sb.append(SharedTemplates.getTopNav(ROOT, activeNav));
 
-        // SUB-NAV (Overview, Prev, Next)
         sb.append("<nav class=\"detail-nav\" style=\"border: none; background: transparent;\">\n");
-        sb.append("    <a href=\"../../").append(overviewPage).append("\" class=\"modern-button\" style=\"text-decoration:none;\" title=\"Return to the complete card collection overview\">&larr; Overview</a>\n");
+        sb.append("    <a href=\"../../").append(overviewPage).append("\" class=\"modern-button\" style=\"text-decoration:none;\">&larr; Overview</a>\n");
         sb.append("    <div style=\"display: flex; gap: 10px;\">\n");
         if (prev != null) {
-            String prevTitle = "Go to previous card: " + prev.get("Season") + " " + prev.get("Brand");
             String prevLink = "../" + prev.seasonFolder + "/" + prev.filename;
-            sb.append("        <a id=\"prevCardLink\" href=\"").append(prevLink).append("\" title=\"").append(escapeHtml(prevTitle)).append("\" style=\"text-decoration:none;\">&laquo; Prev</a>\n");
+            sb.append("        <a id=\"prevCardLink\" href=\"").append(prevLink).append("\" class=\"modern-button\" style=\"text-decoration:none;\">&laquo; Prev</a>\n");
         }
         if (next != null) {
-            String nextTitle = "Go to next card: " + next.get("Season") + " " + next.get("Brand");
             String nextLink = "../" + next.seasonFolder + "/" + next.filename;
-            sb.append("        <a id=\"nextCardLink\" href=\"").append(nextLink).append("\" title=\"").append(escapeHtml(nextTitle)).append("\" style=\"text-decoration:none;\">Next &raquo;</a>\n");
+            sb.append("        <a id=\"nextCardLink\" href=\"").append(nextLink).append("\" class=\"modern-button\" style=\"text-decoration:none;\">Next &raquo;</a>\n");
         }
         sb.append("    </div>\n");
         sb.append("</nav>\n");
 
         // MAIN CONTENT
         sb.append("<main class=\"detail-main\">\n");
-
-        // HEADER
         sb.append("    <header class=\"detail-header\">\n");
         sb.append("        <h1>").append(escapeHtml(h1Title)).append("</h1>\n");
         sb.append("    </header>\n");
 
-        // SEO TEXT
-        sb.append("    <article class=\"seo-box\">\n");
-        sb.append("        <h2>About this Card</h2>\n");
-        sb.append("        <p>").append(generateSeoText(c)).append("</p>\n");
-        sb.append("    </article>\n");
+        // --- AI Snapshot / TL;DR Box ---
+        sb.append("    <div class=\"ai-summary\" style=\"background: #f4f8fc; border-left: 4px solid #0056b3; padding: 15px; border-radius: 4px; margin-bottom: 25px;\">\n");
+        sb.append("        <p style=\"margin:0; font-size: 0.95em;\"><strong>Card Snapshot:</strong> The ");
+        sb.append(escapeHtml(c.get("Season"))).append(" ").append(escapeHtml(c.get("Company"))).append(" ").append(escapeHtml(c.get("Brand"))).append(" ");
+        sb.append(escapeHtml(c.get("Player")));
+        if (c.has("Variant") && !c.get("Variant").equalsIgnoreCase("Base")) {
+            sb.append(" ").append(escapeHtml(c.get("Variant")));
+        }
+        sb.append(" (Card #").append(escapeHtml(c.get("Number"))).append(") ");
+
+        String combined = c.get("Serial/Print Run");
+        if (isValid(combined)) {
+            sb.append("is a limited edition sports trading card, serially numbered ").append(escapeHtml(combined)).append(". ");
+        } else if (c.has("Serial")) {
+            sb.append("is a limited edition sports trading card, serially numbered ").append(escapeHtml(c.get("Serial"))).append("/").append(escapeHtml(c.get("Print Run"))).append(". ");
+        } else {
+            sb.append("is a collectible sports trading card. ");
+        }
+
+        if (c.has("Autograph") && c.get("Autograph").equalsIgnoreCase("Yes")) sb.append("It features a certified authentic autograph. ");
+        if (c.has("Game Used") && c.get("Game Used").equalsIgnoreCase("Yes")) sb.append("It contains game-used memorabilia. ");
+        sb.append("</p>\n    </div>\n");
 
         // IMAGES SECTION
         sb.append("    <div class=\"card-images-container\" style=\"display: flex; gap: 20px; flex-wrap: wrap;\">\n");
         sb.append("        <div class=\"card-image-wrapper\" style=\"display: flex; flex-direction: column; align-items: center;\">\n");
-        sb.append("            <img src=\"").append(frontImgPath).append("\" ")
-                .append("alt=\"").append(escapeHtml(frontAlt)).append("\" ")
-                .append("title=\"").append(escapeHtml(frontImgTitle)).append("\" ")
-                .append("width=\"400\" height=\"550\" fetchpriority=\"high\" ")
-                .append("style=\"aspect-ratio: 400 / 550; width: 100%; max-width: 400px; height: auto; display: block; object-fit: contain;\" ")
-                .append("onclick=\"openModal('").append(frontImgPath).append("', '").append(backImgPath).append("')\">\n");
-        sb.append("            <p style=\"margin-top: 10px; min-height: 24px;\">Front View (Click to Zoom)</p>\n");
+        sb.append("            <img src=\"").append(frontImgPath).append("\" alt=\"").append(escapeHtml(frontAlt)).append("\" title=\"").append(escapeHtml(frontImgTitle)).append("\" width=\"400\" height=\"550\" fetchpriority=\"high\" style=\"aspect-ratio: 400 / 550; width: 100%; max-width: 400px; height: auto; display: block; object-fit: contain; cursor: zoom-in;\" onclick=\"openModal('").append(frontImgPath).append("', '").append(backImgPath).append("')\">\n");
+        sb.append("            <p style=\"margin-top: 10px; font-size: 0.85em; color: #666;\">&#x1F50D; Click to Enlarge Front</p>\n");
         sb.append("        </div>\n");
         sb.append("        <div class=\"card-image-wrapper\" style=\"display: flex; flex-direction: column; align-items: center;\">\n");
-        sb.append("            <img src=\"").append(backImgPath).append("\" ")
-                .append("alt=\"").append(escapeHtml(backAlt)).append("\" ")
-                .append("title=\"").append(escapeHtml(backImgTitle)).append("\" ")
-                .append("width=\"400\" height=\"550\" loading=\"lazy\" ")
-                .append("style=\"aspect-ratio: 400 / 550; width: 100%; max-width: 400px; height: auto; display: block; object-fit: contain;\" ")
-                .append("onclick=\"openModal('").append(backImgPath).append("', '").append(frontImgPath).append("')\">\n");
-        sb.append("            <p style=\"margin-top: 10px; min-height: 24px;\">Back View (Click to Zoom)</p>\n");
+        sb.append("            <img src=\"").append(backImgPath).append("\" alt=\"").append(escapeHtml(backAlt)).append("\" title=\"").append(escapeHtml(backImgTitle)).append("\" width=\"400\" height=\"550\" loading=\"lazy\" style=\"aspect-ratio: 400 / 550; width: 100%; max-width: 400px; height: auto; display: block; object-fit: contain; cursor: zoom-in;\" onclick=\"openModal('").append(backImgPath).append("', '").append(frontImgPath).append("')\">\n");
+        sb.append("            <p style=\"margin-top: 10px; font-size: 0.85em; color: #666;\">&#x1F50D; Click to Enlarge Back</p>\n");
         sb.append("        </div>\n");
         sb.append("    </div>\n");
 
         // DATA TABLE
-        sb.append("    <div class=\"card-data\">\n");
+        sb.append("    <div class=\"card-data\" style=\"margin-top: 30px;\">\n");
         sb.append("        <table style=\"width: 100%; border-collapse: collapse; margin-top: 20px;\">\n");
         sb.append("            <tr class=\"specs-table-header\"><th colspan=\"2\" style=\"padding: 10px; text-align: left;\">Technical Specifications</th></tr>\n");
         addTableRow(sb, "Season", c.get("Season"));
         addTableRow(sb, "Team", c.get("Team"));
-        addTableRow(sb, "Sport", c.get("Sport"));
         addTableRow(sb, "Manufacturer", c.get("Company"));
         addTableRow(sb, "Brand", c.get("Brand"));
         addTableRow(sb, "Theme", c.get("Theme"));
         addTableRow(sb, "Variant", c.get("Variant"));
         addTableRow(sb, "Card Number", c.get("Number"));
 
-        String serial = c.get("Serial");
-        String printRun = c.get("Print Run");
-        String combined = c.get("Serial/Print Run");
         String serialDisplay = "-";
         if (isValid(combined)) {
             serialDisplay = combined;
-        } else if (isValid(serial) || isValid(printRun)) {
-            serialDisplay = (isValid(serial) ? serial : "?") + " / " + (isValid(printRun) ? printRun : "?");
+        } else if (c.has("Serial") || c.has("Print Run")) {
+            serialDisplay = (c.has("Serial") ? c.get("Serial") : "?") + " / " + (c.has("Print Run") ? c.get("Print Run") : "?");
         }
         addTableRow(sb, "Serial / Print Run", serialDisplay);
-
         addTableRow(sb, "Rookie Card", c.get("Rookie"));
         addTableRow(sb, "Memorabilia", c.get("Game Used"));
         addTableRow(sb, "Autograph", c.get("Autograph"));
@@ -480,62 +433,67 @@ public class CardPageGenerator {
         if (grading.trim().length() > 1 && !grading.trim().equals("null null")) {
             addTableRow(sb, "Grading", grading);
         }
-
         sb.append("        </table>\n");
         sb.append("    </div>\n");
 
-        // SEASON / CAREER CONTEXT
-        if ("Juwan Howard".equals(c.get("Player"))) {
-            String highlights = getSeasonHighlights(c.get("Season"));
-            String seasonTeammates = getNotableTeammates(c.get("Season"));
-            if (!highlights.isEmpty() || !seasonTeammates.isEmpty()) {
-                sb.append("    <div class=\"career-context\" style=\"margin-top: 30px; padding: 15px; background: #f9f9f9; border-left: 5px solid #317EFB;\">\n");
-                sb.append("        <h3>Career & Season Context</h3>\n");
-                if (!highlights.isEmpty()) {
-                    sb.append("        <p><strong>Highlights:</strong> ").append(escapeHtml(highlights)).append("</p>\n");
-                }
-                if (!seasonTeammates.isEmpty()) {
-                    sb.append("        <p><strong>Notable Teammates:</strong> ").append(escapeHtml(seasonTeammates)).append("</p>\n");
-                }
-                sb.append("    </div>\n");
+        // --- NEW: ADVANCED TRIVIA & CONTEXT ENGINES ---
+        String hobbyTrivia = getHobbyTrivia(c);
+        String techTrivia = getCardTechTrivia(c);
+        String eraContext = getNbaEraContext(c.get("Season"));
+        String playerHighlights = getSeasonHighlights(c.get("Season"), c.get("Player"));
+
+        if (!hobbyTrivia.isEmpty() || !techTrivia.isEmpty() || !eraContext.isEmpty() || !playerHighlights.isEmpty()) {
+            sb.append("    <div class=\"context-engine\" style=\"margin-top: 40px; display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));\">\n");
+
+            // 1. Hobby Significance
+            if (!hobbyTrivia.isEmpty()) {
+                sb.append("        <div style=\"background: #fff; border: 1px solid #eaeaea; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);\">\n");
+                sb.append("            <h3 style=\"margin-top:0; color: #333; font-size: 1.1em;\">&#x1F3C6; Hobby Significance</h3>\n");
+                sb.append("            <p style=\"font-size: 0.95em; color: #555; line-height: 1.6;\">").append(hobbyTrivia).append("</p>\n");
+                sb.append("        </div>\n");
             }
+
+            // 2. Card Manufacturing Technology
+            if (!techTrivia.isEmpty()) {
+                sb.append("        <div style=\"background: #fff; border: 1px solid #eaeaea; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);\">\n");
+                sb.append("            <h3 style=\"margin-top:0; color: #333; font-size: 1.1em;\">&#x2692;&#xFE0F; Card Technology</h3>\n");
+                sb.append("            <p style=\"font-size: 0.95em; color: #555; line-height: 1.6;\">").append(techTrivia).append("</p>\n");
+                sb.append("        </div>\n");
+            }
+
+            // 3. Player Performance & Teammates
+            if (!playerHighlights.isEmpty()) {
+                sb.append("        <div style=\"background: #fff; border: 1px solid #eaeaea; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);\">\n");
+                sb.append("            <h3 style=\"margin-top:0; color: #333; font-size: 1.1em;\">&#x1F4C8; Player Performance & Team</h3>\n");
+                sb.append("            <p style=\"font-size: 0.95em; color: #555; line-height: 1.6;\">").append(playerHighlights).append("</p>\n");
+                sb.append("        </div>\n");
+            }
+
+            // 4. NBA Era & Pop Culture Context
+            if (!eraContext.isEmpty()) {
+                sb.append("        <div style=\"background: #fff; border: 1px solid #eaeaea; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);\">\n");
+                sb.append("            <h3 style=\"margin-top:0; color: #333; font-size: 1.1em;\">&#x1F3C0; NBA Era & Pop Culture</h3>\n");
+                sb.append("            <p style=\"font-size: 0.95em; color: #555; line-height: 1.6;\">").append(eraContext).append("</p>\n");
+                sb.append("        </div>\n");
+            }
+            sb.append("    </div>\n");
         }
 
         // FAQ SECTION
         sb.append("    <section style=\"margin-top: 50px;\">\n");
-        sb.append("        <h2>Frequently Asked Questions about this Card</h2>\n");
+        sb.append("        <h2>Collector FAQs</h2>\n");
         sb.append(generateFaqHtml(c));
         sb.append("    </section>\n");
 
-        // RELATED CARDS
-        sb.append("    <section style=\"display: flex; flex-wrap: wrap; gap: 20px; justify-content: left;\">\n");
-        sb.append("        <h3>More from the ").append(escapeHtml(c.get("Season"))).append(" ").append(escapeHtml(c.get("Player"))).append(" Collection</h3>\n");
-        sb.append("        <ul class=\"related-cards-list\">\n");
-
-        int count = 0;
-        for (CardData other : allCards) {
-            if (other == c) continue;
-            if (count >= 6) break;
-
-            String linkTitle = "View card details: " + other.get("Season") + " " + other.get("Brand") + " " + other.get("Variant");
-            String otherLink = "../" + other.seasonFolder + "/" + other.filename;
-
-            sb.append("            <li>\n");
-            sb.append("                <a href=\"").append(otherLink).append("\" title=\"").append(escapeHtml(linkTitle)).append("\" class=\"modern-button modern-button-footer\" style=\"width: 300px;text-decoration:none;\">").append(escapeHtml(other.get("Brand"))).append(" #").append(escapeHtml(other.get("Number"))).append(" ").append(escapeHtml(other.get("Variant"))).append("</a>\n");
-            sb.append("            </li>\n");
-            count++;
-        }
-        sb.append("        </ul>\n");
-        sb.append("    </section>\n");
         sb.append(SharedTemplates.getFooter(ROOT));
         sb.append("</main>\n");
 
         // --- MODAL & SCRIPT LOGIC ---
         sb.append("""
-                    <div id="cardModal" class="modal" aria-hidden="true" style="display:none;">
-                      <span class="close-modal" aria-label="Close zoomed image" onclick="closeModal()">&times;</span>
-                      <button class="flip-modal-btn" aria-label="Flip card to other side" onclick="flipCard()">&#8644; Flip Card</button>
-                      <img class="modal-content" id="img01" alt="Zoomed card view">
+                    <div id="cardModal" class="modal" aria-hidden="true" style="display:none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.9);">
+                      <span class="close-modal" aria-label="Close zoomed image" onclick="closeModal()" style="position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer;">&times;</span>
+                      <button class="flip-modal-btn" aria-label="Flip card to other side" onclick="flipCard()" style="position: absolute; top: 20px; left: 20px; padding: 10px 20px; font-size: 16px; cursor: pointer;">&#8644; Flip Card</button>
+                      <img class="modal-content" id="img01" alt="Zoomed card view" style="margin: auto; display: block; max-width: 90%; max-height: 90vh;">
                     </div>
                 
                     <script>
@@ -553,7 +511,6 @@ public class CardPageGenerator {
                           currentModalSrc = src;
                           alternateModalSrc = altSrc;
                         }
-                
                         function closeModal() {
                           modal.style.display = "none";
                           modal.setAttribute("aria-hidden", "true");
@@ -564,16 +521,11 @@ public class CardPageGenerator {
                             alternateModalSrc = temp;
                             modalImg.src = currentModalSrc;
                         }
-                
                         window.onclick = function(event) {
-                          if (event.target == modal) {
-                            closeModal();
-                          }
+                          if (event.target == modal) closeModal();
                         }
                         document.addEventListener('keydown', function(event) {
-                            if (event.key === "Escape") {
-                                closeModal();
-                            }
+                            if (event.key === "Escape") closeModal();
                             if (event.key === "ArrowLeft") {
                                 var prevLink = document.getElementById('prevCardLink');
                                 if (prevLink) window.location.href = prevLink.href;
@@ -587,8 +539,157 @@ public class CardPageGenerator {
                 """);
 
         sb.append("</body>\n</html>");
-
         Files.writeString(path, sb.toString(), StandardCharsets.UTF_8);
+    }
+
+    // --- ENGINE 1: HOBBY SIGNIFICANCE (Sets, Parallels & History) ---
+    private static String getHobbyTrivia(CardData c) {
+        String brand = c.get("Brand").toLowerCase();
+        String theme = c.get("Theme").toLowerCase();
+        String variant = c.get("Variant").toLowerCase();
+        String company = c.get("Company").toLowerCase();
+
+        StringBuilder trivia = new StringBuilder();
+
+        // 1. Skybox / Fleer Holy Grails
+        if (variant.contains("pmg green") || variant.contains("precious metal gems green")) {
+            trivia.append("The mythical PMG Green! Limited to just the first 10 copies of the 100-card print run, this is undeniably one of the most legendary and expensive parallel cards in the entire sports card hobby. ");
+        } else if (variant.contains("pmg") || variant.contains("precious metal gems") || theme.contains("precious metal gems")) {
+            trivia.append("SkyBox Metal Universe Precious Metal Gems (PMGs) are widely considered the holy grails of 1990s basketball. The print run was strictly limited to 100 copies. They are notorious for severe edge-chipping straight out of the pack, making highly-graded copies 'unicorns' at auction. ");
+        }
+        if (variant.contains("star ruby") || variant.contains("rubies")) {
+            trivia.append("Skybox Premium 'Star Rubies' are among the most revered and aesthetically striking parallels of the late 90s. With brilliant red foil and extreme scarcity (often numbered to 50 or 45), they are a centerpiece that rivals PMGs in demand. ");
+        }
+        if (variant.contains("legacy") || theme.contains("legacy collection")) {
+            trivia.append("Flair Showcase's 'Legacy Collection' revolutionized the hobby by introducing tiered rarity (Row 0, Row 1, Row 2) stamped with vibrant blue foil. These were some of the very first mainstream serial-numbered parallels, changing the chase dynamic forever. ");
+        }
+        if (variant.contains("rave") && !variant.contains("refractor")) {
+            trivia.append("Z-Force 'Raves' (including Super Raves and Thunder Raves) featured vibrant, chaotic foil patterns matching the loud, aggressive aesthetic of 90s basketball. They were incredibly tough pack pulls. ");
+        }
+
+        // 2. E-X Series & Seating Tiers
+        if (variant.contains("credentials")) {
+            trivia.append("E-X Credentials (Now and Future) are among the most aesthetically stunning and condition-sensitive acetate cards ever produced. The print runs differed based on the player's card number, creating a complex and highly engaging chase for collectors. ");
+        }
+        if (variant.contains("general admission") || variant.contains("mezzanine") || variant.contains("balcony") || variant.contains("club box") || variant.contains("standing room") || variant.contains("loge level") || variant.contains("tier reserved")) {
+            trivia.append("Modeled after stadium seating, these tiers represented different levels of scarcity in the set. Pulling 'Club Box' or 'Loge Level' equivalents meant you had secured the rarest variations in the product. ");
+        }
+        if (brand.contains("jambalaya") || theme.contains("jambalaya")) {
+            trivia.append("E-X2001 Jambalaya inserts are legendary. Featuring a highly unique die-cut oval shape and falling at an incredibly tough ratio of 1 in 720 packs, their design and scarcity hold immense prestige today. ");
+        }
+
+        // 3. Upper Deck & High-End History
+        if (brand.contains("exquisite")) {
+            trivia.append("In 2003, Upper Deck gambled by releasing 'Exquisite Collection', packaged in wooden boxes at unprecedented price points. It single-handedly birthed the ultra-high-end market, introducing massive multi-color patches and on-card autographs. ");
+        }
+        if (variant.contains("electric court")) {
+            trivia.append("Upper Deck's 'Electric Court' (along with Gold and Platinum versions) were among the earliest parallel chase cards in the hobby, giving collectors a premium foil-stamped upgrade over the standard base card. ");
+        }
+        if (variant.contains("diamond") && (variant.contains("double") || variant.contains("triple") || variant.contains("quadruple"))) {
+            trivia.append("Upper Deck Black Diamond utilized a unique tiered rarity system based on the number of diamonds printed on the card. 'Quadruple Diamond' cards were the rarest base parallels in the set. ");
+        }
+
+        // 4. Medallions & Scripts
+        if (variant.contains("medallion")) {
+            trivia.append("Fleer Ultra's Medallion parallels (Gold and Platinum) offered a premium foil upgrade. Platinum Medallions, in particular, were heavily short-printed and remain highly collectible. ");
+        }
+        if (variant.contains("script") && (variant.contains("silver") || variant.contains("gold") || variant.contains("super"))) {
+            trivia.append("Upper Deck's 'Script' parallels added elegant facsimile foil signatures to the cards, with 'Super Script' usually being severely limited and serial-numbered. ");
+        }
+
+        // 5. Panini Modern High-End
+        if (brand.contains("flawless") || brand.contains("national treasures")) {
+            trivia.append("Panini's Flawless and National Treasures lines represent the pinnacle of modern investment-grade basketball cards. Flawless is famous for embedding actual, certified diamonds and precious gems directly into the card. ");
+        }
+
+        // 6. Base / Entry Level
+        if (variant.equals("base") || variant.equals("base set")) {
+            trivia.append("As the foundational base card of the set, this piece represents the core of player registries. While not inherently rare, finding un-numbered base cards from the 90s in pristine Gem Mint condition has become incredibly difficult due to the card stock used at the time. ");
+        }
+
+        return trivia.toString();
+    }
+
+    // --- ENGINE 2: CARD TECHNOLOGY (Die-Cuts, Chromium, Plates, 1/1s) ---
+    private static String getCardTechTrivia(CardData c) {
+        String brand = c.get("Brand").toLowerCase();
+        String variant = c.get("Variant").toLowerCase();
+        String theme = c.get("Theme").toLowerCase();
+
+        StringBuilder tech = new StringBuilder();
+
+        // 1. One-of-Ones & Plates
+        if (variant.contains("printing plate") || variant.contains("magenta") || variant.contains("cyan") || variant.contains("yellow") || variant.contains("black plate")) {
+            tech.append("<strong>Printing Plate:</strong> This is an actual 1-of-1 metal plate used directly in the manufacturer's printing press to create the standard cards for this set. It is a true piece of production history. ");
+        } else if (variant.contains("1 of 1") || variant.contains("1/1") || c.get("Serial").equals("1/1") || c.get("Serial/Print Run").contains("1/1") || variant.contains("masterpiece") || variant.contains("superfractor") || variant.contains("nebula")) {
+            tech.append("<strong>One-of-One (1/1):</strong> This card is a true Masterpiece. Being the absolute only card of its exact kind ever manufactured makes it the ultimate crown jewel for any serious collector. ");
+        } else if (variant.contains("pre production") || variant.contains("proof")) {
+            tech.append("<strong>Production Proof:</strong> This is a rare pre-production proof or test print, originally used internally by the manufacturer to verify color and quality before the mass print run began. ");
+        }
+
+        // 2. The Refractor / Chromium Family
+        if (variant.contains("refractor") || variant.contains("frozenfractor") || variant.contains("x-fractor") || variant.contains("atomic")) {
+            if (variant.contains("atomic")) tech.append("<strong>Atomic Refractor:</strong> Features a stunning 'cracked ice' hyper-plaid holographic pattern. ");
+            else if (variant.contains("x-fractor")) tech.append("<strong>X-Fractor:</strong> Famous for its distinct checkerboard holographic pattern. ");
+            else if (variant.contains("frozenfractor")) tech.append("<strong>Frozenfractor:</strong> An incredibly rare, condition-sensitive parallel with a unique frosted ice aesthetic. ");
+            else if (variant.contains("negative")) tech.append("<strong>Negative Refractor:</strong> Inverts the image colors for a striking, ghost-like appearance. ");
+            else if (variant.contains("superfractor")) tech.append("<strong>Superfractor:</strong> The undisputed king of modern cards, featuring a mesmerizing golden swirl pattern, strictly limited to 1 copy worldwide. ");
+            else tech.append("<strong>Chromium Refractor:</strong> Chromium technology revolutionized the hobby by adding a rainbow light-diffracting coating to the card surface. The specific color (Gold, Sapphire, Ruby, etc.) designates its exact scarcity tier in the set. ");
+        }
+
+        // 3. Modern Opti-Chrome / Prizm Tech
+        if (variant.contains("mojo") || variant.contains("tie dye") || variant.contains("meta") || variant.contains("marble") || variant.contains("astral") || variant.contains("fractal") || variant.contains("pulsar") || variant.contains("holo")) {
+            tech.append("<strong>Opti-Chrome Technology:</strong> This parallel utilizes hyper-refractive geometric foil patterns (like Mojo, Pulsar, or Tie-Dye) that react dynamically to light. These finishes are highly sought after by modern investors. ");
+        }
+
+        // 4. Physical Card Alterations (Die-Cut, Acetate, Embossed)
+        if (variant.contains("die") && variant.contains("cut") || theme.contains("die-cut")) {
+            tech.append("<strong>Die-Cut Technology:</strong> Manufacturers used custom stamping dies to cut intricate borders and patterns into the card stock. Because of the exposed, delicate extra corners, die-cut cards are notoriously condition-sensitive. ");
+        }
+        if (variant.contains("acetate") || variant.contains("plexiglass") || variant.contains("crystal")) {
+            tech.append("<strong>Acetate / Plexiglass:</strong> Printed on clear, transparent, or semi-translucent plastic rather than traditional cardboard, creating a premium 'window' effect. ");
+        }
+        if (variant.contains("embossed") || theme.contains("embossed")) {
+            tech.append("<strong>Embossing:</strong> Manufacturers used heavy presses to stamp raised, 3D textures into the card face, adding a premium tactile element that collectors could physically feel. ");
+        }
+
+        // 5. Foil & Finishes
+        if (variant.contains("foil tech") || brand.contains("metal universe") || theme.contains("etched")) {
+            tech.append("<strong>Etched Foil:</strong> Utilizes proprietary technology to create deep, grooved textures in the metallic background of the card, allowing light to catch the card in dynamic ways. ");
+        }
+
+        // 6. Memorabilia
+        if (variant.contains("patch") || variant.contains("multicolor") || variant.contains("prime")) {
+            tech.append("<strong>Prime Patch:</strong> Instead of a standard single-color jersey swatch, this card features a 'Prime' cut—usually containing multi-color stitching, numbers, or logos directly from the game-worn jersey. ");
+        }
+
+        return tech.toString();
+    }
+
+    // --- ENGINE 3: PLAYER PERFORMANCE & TEAMMATES ---
+    private static String getSeasonHighlights(String season, String player) {
+        if (!"Juwan Howard".equals(player)) return "";
+
+        if (season.startsWith("1994")) return "Drafted 5th overall by Washington, Juwan Howard proved himself an elite talent during his 1994-95 rookie campaign. He earned NBA All-Rookie Second Team honors and played alongside former 'Fab Five' teammate Chris Webber, as well as the 7-foot-7 giant Gheorghe Mureșan.";
+        if (season.startsWith("1995-96")) return "The 1995-96 season was Juwan's major breakout year. He became an NBA All-Star, was named to the All-NBA Third Team, and averaged a dominant 22.1 points per game. He anchored the Bullets alongside Chris Webber and sharpshooter Tracy Murray.";
+        if (season.startsWith("1996") || season.startsWith("1997")) return "During this era, Juwan was the focal point of the Washington Wizards offense. He shared the court with prime Rod Strickland, who led the league in assists, and a young rookie named Richard Hamilton.";
+        if (season.startsWith("2000-01") || season.startsWith("2001-02")) return "Traded to the Dallas Mavericks, Juwan provided crucial veteran scoring. He joined a highly explosive offensive roster featuring a young Dirk Nowitzki, MVP-caliber point guard Steve Nash, and Michael Finley.";
+        if (season.startsWith("2003-04")) return "Playing for the Orlando Magic, Juwan Howard was a vital secondary scorer alongside the NBA's scoring champion, Tracy McGrady. He started 81 games and averaged 17 points per night.";
+        if (season.startsWith("2004") || season.startsWith("2005") || season.startsWith("2006")) return "During his tenure with the Houston Rockets, Juwan was a seasoned veteran presence in the frontcourt, playing alongside Hall of Fame center Yao Ming, Tracy McGrady, and legendary shot-blocker Dikembe Mutombo.";
+        if (season.startsWith("2010") || season.startsWith("2011") || season.startsWith("2012")) return "As a respected locker room leader for the Miami Heat, Juwan Howard achieved the ultimate goal. Playing alongside the 'Big Three' (LeBron James, Dwyane Wade, Chris Bosh), he won back-to-back NBA Championships in 2012 and 2013, capping off an incredible near-20-year career.";
+        if (season.toLowerCase().contains("college")) return "At the University of Michigan, Juwan Howard was a cornerstone of the legendary 'Fab Five'. Alongside Chris Webber, Jalen Rose, Jimmy King, and Ray Jackson, they reached consecutive NCAA championship games and permanently altered basketball culture.";
+        return "";
+    }
+
+    // --- ENGINE 4: NBA ERA & POP CULTURE CONTEXT ---
+    private static String getNbaEraContext(String season) {
+        if (season.startsWith("1996")) return "The 1996-97 season celebrated the NBA's 50th Anniversary (noted by gold NBA logos on many cards). It also marked the arrival of the legendary 1996 Draft Class (Kobe Bryant, Allen Iverson, Steve Nash), which drove the sports card hobby into a frenzy of innovation.";
+        if (season.startsWith("1998")) return "The 1998-99 season was shortened to just 50 games due to a league-wide lockout. As a result, card manufacturers produced fewer sets and lower print runs, making specific inserts from this era surprisingly scarce today.";
+        if (season.startsWith("1999")) return "Pop Culture crossover: During the 1999 television season, Juwan Howard made a famous cameo appearance in the hit political drama 'The West Wing' (Episode: 'The Crackpots and These Women'), playing a pickup basketball game against the President's staff.";
+        if (season.startsWith("2003")) return "The 2003-04 season is historic for the arrival of LeBron James, Dwyane Wade, and Carmelo Anthony. The massive hype around this rookie class caused a boom in trading card investments, leading to the birth of ultra-high-end products like Exquisite Collection.";
+        if (season.startsWith("2011") || season.startsWith("2012")) return "During the 'Heatles' era in Miami, the NBA was dominated by the polarizing Big Three. Cards produced during this period capture a highly significant dynasty that changed player empowerment and free agency forever.";
+        if (season.toLowerCase().contains("college")) return "The early 90s college basketball scene was revolutionized by the Fab Five. They introduced baggy shorts, black socks, and a trash-talking swagger that heavily influenced the aesthetic of 90s hip-hop and sports pop culture.";
+        return "";
     }
 
     private static String fileNameFromPath(String path) {
@@ -598,10 +699,8 @@ public class CardPageGenerator {
     private static String getTeamBySeason(String season) {
         if (season == null || season.isEmpty()) return "Unknown Team";
         String s = season.trim();
-
         if (s.startsWith("1994") || s.startsWith("1995") || s.startsWith("1996")) return "Washington Bullets";
-        if (s.startsWith("1997") || s.startsWith("1998") || s.startsWith("1999") || s.startsWith("2000"))
-            return "Washington Wizards";
+        if (s.startsWith("1997") || s.startsWith("1998") || s.startsWith("1999") || s.startsWith("2000")) return "Washington Wizards";
         if (s.startsWith("2001")) return "Dallas Mavericks";
         if (s.startsWith("2002")) return "Denver Nuggets";
         if (s.startsWith("2003")) return "Orlando Magic";
@@ -610,7 +709,6 @@ public class CardPageGenerator {
         if (s.startsWith("2008")) return "Charlotte Bobcats";
         if (s.startsWith("2009")) return "Portland Trail Blazers";
         if (s.startsWith("2010") || s.startsWith("2011") || s.startsWith("2012")) return "Miami Heat";
-
         return "NBA";
     }
 
@@ -619,16 +717,9 @@ public class CardPageGenerator {
         sb.append(c.get("Season")).append(" ");
         sb.append(c.get("Brand")).append(" ");
         sb.append(c.get("Player"));
-
-        if (c.has("Theme") && !c.get("Brand").contains(c.get("Theme"))) {
-            sb.append(" ").append(c.get("Theme"));
-        }
-        if (c.has("Variant")) {
-            sb.append(" ").append(c.get("Variant"));
-        }
-        if (c.has("Number")) {
-            sb.append(" #").append(c.get("Number"));
-        }
+        if (c.has("Theme") && !c.get("Brand").contains(c.get("Theme"))) sb.append(" ").append(c.get("Theme"));
+        if (c.has("Variant")) sb.append(" ").append(c.get("Variant"));
+        if (c.has("Number")) sb.append(" #").append(c.get("Number"));
         return sb.toString().replaceAll("\\s+", " ").trim();
     }
 
@@ -640,30 +731,19 @@ public class CardPageGenerator {
 
     private static String generateAltText(CardData c, String view) {
         String base = c.get("Player") + " " + c.get("Season") + " " + c.get("Brand") + " #" + c.get("Number");
-        if (view.equals("front")) {
-            return "Front view of " + base + " - " + c.get("Variant") + " edition (" + c.get("Team") + ")";
-        } else {
-            return "Back view of " + base + " showing stats for " + c.get("Team");
-        }
+        if (view.equals("front")) return "Front view of " + base + " - " + c.get("Variant") + " edition (" + c.get("Team") + ")";
+        else return "Back view of " + base + " showing stats for " + c.get("Team");
     }
 
     private static String generateMetaDescription(CardData c) {
         StringBuilder sb = new StringBuilder();
         sb.append("Details for the ").append(c.get("Season")).append(" ").append(c.get("Brand")).append(" ");
         sb.append(c.get("Player")).append(" card #").append(c.get("Number")).append(" (").append(c.get("Team")).append("). ");
-        if (c.has("Variant")) {
-            sb.append("Variant: ").append(c.get("Variant")).append(". ");
-        }
-
+        if (c.has("Variant")) sb.append("Variant: ").append(c.get("Variant")).append(". ");
         String combinedSerial = c.get("Serial/Print Run");
-        if (isValid(combinedSerial)) {
-            sb.append("Numbered: ").append(combinedSerial).append(". ");
-        } else {
-            if (c.has("Serial")) {
-                sb.append("Numbered: ").append(c.get("Serial")).append("/").append(c.get("Print Run")).append(". ");
-            }
-        }
-        sb.append("View high-res images and specs.");
+        if (isValid(combinedSerial)) sb.append("Numbered: ").append(combinedSerial).append(". ");
+        else if (c.has("Serial")) sb.append("Numbered: ").append(c.get("Serial")).append("/").append(c.get("Print Run")).append(". ");
+        sb.append("View high-res images and collector facts.");
         return sb.toString();
     }
 
@@ -671,207 +751,47 @@ public class CardPageGenerator {
         String theme = c.get("Theme").toLowerCase();
         String brand = c.get("Brand").toLowerCase();
         String variant = c.get("Variant").toLowerCase();
-
-        return theme.contains("precious metal gems") || theme.contains("pmg") ||
-                theme.contains("star rubies") || theme.contains("star ruby") ||
-                theme.contains("legacy collection") ||
-                brand.contains("precious metal gems") || brand.contains("pmg") ||
-                variant.contains("precious metal gems") || variant.contains("pmg") ||
-                variant.contains("star rubies") || variant.contains("star ruby") ||
-                variant.contains("legacy collection");
-    }
-
-    private static boolean isChampionshipSeason(String season) {
-        return season.startsWith("2011-12") || season.startsWith("2012-13");
-    }
-
-    private static boolean isCollegeEra(CardData c) {
-        String season = c.get("Season");
-        String team = c.get("Team");
-        return "College".equalsIgnoreCase(season) || team.toLowerCase().contains("michigan") || team.toLowerCase().contains("wolverines");
-    }
-
-    private static String getSeasonHighlights(String season) {
-        if (season.startsWith("1994")) return "The 1994-95 season was Juwan Howard's rookie year, earning him NBA All-Rookie Second Team honors.";
-        if (season.startsWith("1995-96")) return "In 1996, Juwan Howard was an NBA All-Star and was named to the All-NBA Third Team.";
-        if (season.startsWith("2011-12")) return "Juwan Howard won his first NBA Championship with the Miami Heat in 2012.";
-        if (season.startsWith("2012-13")) return "Juwan Howard won his second consecutive NBA Championship with the Miami Heat in 2013.";
-        if ("College".equalsIgnoreCase(season)) return "As a member of the legendary 'Fab Five' at the University of Michigan, Juwan Howard reached two NCAA championship games.";
-        return "";
-    }
-
-    private static String getNotableTeammates(String season) {
-        if (season.startsWith("1994") || season.startsWith("1995")) return "Chris Webber, Gheorghe Mureșan, and Calbert Cheaney.";
-        if (season.startsWith("1996") || season.startsWith("1997") || season.startsWith("1998")) return "Chris Webber, Rod Strickland, and Tracy Murray.";
-        if (season.startsWith("1999") || season.startsWith("2000")) return "Mitch Richmond, Rod Strickland, and Richard Hamilton.";
-        if (season.startsWith("2001")) return "Dirk Nowitzki, Steve Nash, and Michael Finley.";
-        if (season.startsWith("2003")) return "Tracy McGrady, Tyronn Lue, and Drew Gooden.";
-        if (season.startsWith("2004") || season.startsWith("2005") || season.startsWith("2006")) return "Tracy McGrady, Yao Ming, and Dikembe Mutombo.";
-        if (season.startsWith("2010") || season.startsWith("2011") || season.startsWith("2012")) return "LeBron James, Dwyane Wade, and Chris Bosh.";
-        if ("College".equalsIgnoreCase(season)) return "Chris Webber, Jalen Rose, Jimmy King, and Ray Jackson (The Fab Five).";
-        return "";
-    }
-
-    private static String generateSeoText(CardData c) {
-        StringBuilder sb = new StringBuilder();
-        String brand = c.get("Brand");
-        String company = c.get("Company");
-        String season = c.get("Season");
-        String theme = c.get("Theme");
-        String variant = c.get("Variant");
-        String team = c.get("Team");
-        String player = c.get("Player");
-
-        sb.append("This unique <strong>").append(escapeHtml(player)).append("</strong> card is a highlight of the ");
-        sb.append("<strong>").append(escapeHtml(season)).append("</strong> season. Produced by ").append(escapeHtml(company));
-        sb.append(" as part of the <strong>").append(escapeHtml(brand)).append("</strong> set");
-        if (isValid(theme)) {
-            sb.append(", this specific card features the <strong>").append(escapeHtml(theme)).append("</strong> theme");
-        }
-        sb.append(". ");
-
-        if (brand.toLowerCase().contains("metal universe")) {
-            sb.append("SkyBox Metal Universe cards are legendary for their futuristic designs and groundbreaking etching technology. ");
-        } else if (brand.toLowerCase().contains("topps chrome")) {
-            sb.append("Topps Chrome is one of the most collected brands in the hobby, known for its premium chromium finish and iconic refractors. ");
-        } else if (brand.toLowerCase().contains("flawless") || brand.toLowerCase().contains("national treasures")) {
-            sb.append("As a high-end release, this card represents the pinnacle of luxury in sports card collecting. ");
-        }
-
-        if (theme.toLowerCase().contains("precious metal gems") || theme.toLowerCase().contains("pmg")) {
-            sb.append("The <strong>Precious Metal Gems (PMG)</strong> inserts are among the most coveted parallels in the entire world of sports card collecting. ");
-        }
-
-        if (isHolyGrail(c)) {
-            sb.append("This specific card is considered a <strong>'Holy Grail'</strong> for collectors. Whether it's a PMG, a Star Ruby, or a Legacy Collection, these versions represent the absolute peak of sports card rarity and design innovation. ");
-        }
-
-        if (variant.toLowerCase().contains("refractor") || variant.toLowerCase().contains("gold")) {
-            sb.append("Collectors particularly appreciate the <strong>").append(escapeHtml(variant)).append("</strong> finish, which adds a beautiful shine and significant value to the card. ");
-        } else if (!variant.equalsIgnoreCase("Base") && !variant.isEmpty()) {
-            sb.append("It is the <strong>").append(escapeHtml(variant)).append("</strong> version, offering a distinct look compared to the base set. ");
-        } else {
-            sb.append("It is the classic <strong>Base</strong> version, a fundamental part of any complete collection. ");
-        }
-
-        String serial = c.get("Serial");
-        String printRun = c.get("Print Run");
-        String combined = c.get("Serial/Print Run");
-
-        if (isValid(combined)) {
-            sb.append("This is a limited edition card, serial numbered <strong>").append(escapeHtml(combined)).append("</strong>. ");
-            if (combined.contains("1/1") || combined.contains("/1")) {
-                sb.append("It is a true <strong>One of One</strong> masterpiece, the only one of its kind in existence. ");
-            }
-        } else if (c.has("Serial")) {
-            sb.append("This is a limited edition card, serial numbered <strong>").append(escapeHtml(serial)).append("</strong> ");
-            sb.append("out of a total print run of <strong>").append(escapeHtml(printRun)).append("</strong>. ");
-            if (serial.equals("1/1") || printRun.equals("1")) {
-                sb.append("It is a true <strong>One of One</strong> masterpiece, the only one of its kind in existence. ");
-            } else if (isValid(printRun) && printRun.replaceAll("[^0-9]", "").length() > 0 && Integer.parseInt(printRun.replaceAll("[^0-9]", "")) <= 100) {
-                sb.append("With such a low print run, it is considered a very rare 'short print' (SP). ");
-            }
-        }
-
-        if (c.has("Rookie") && c.get("Rookie").equalsIgnoreCase("Yes")) {
-            sb.append("As an official <strong>Rookie Card</strong>, it captures ").append(escapeHtml(player)).append(" at the very beginning of their professional career. ");
-        }
-
-        if (c.has("Autograph") && c.get("Autograph").equalsIgnoreCase("Yes")) {
-            sb.append("Notably, this card features an authentic <strong>Autograph</strong>, providing a direct link to the player's legacy. ");
-        }
-
-        if (c.has("Game Used") && c.get("Game Used").equalsIgnoreCase("Yes")) {
-            sb.append("It also contains a piece of <strong>Game Used Memorabilia</strong>, making it a tangible piece of sports history. ");
-        }
-
-        if (isValid(team)) {
-            sb.append("It captures ").append(escapeHtml(player)).append(" during their time with the <strong>").append(escapeHtml(team)).append("</strong>. ");
-
-            if ("Juwan Howard".equals(c.get("Player"))) {
-                if (isChampionshipSeason(c.get("Season"))) {
-                    sb.append("This card hails from one of Juwan Howard's <strong>NBA Championship</strong> winning seasons with the Miami Heat, adding historical significance to the piece. ");
-                }
-                if (isCollegeEra(c)) {
-                    sb.append("This card commemorates Juwan Howard's legendary time as part of the <strong>'Fab Five'</strong> at the University of Michigan, one of the most influential groups in college basketball history. ");
-                }
-            }
-        }
-
-        return sb.toString();
+        return theme.contains("pmg") || theme.contains("star rubies") || theme.contains("legacy collection") ||
+                brand.contains("pmg") || variant.contains("pmg") || variant.contains("star rubies") || variant.contains("legacy collection");
     }
 
     private static String generateFaqHtml(CardData c) {
         StringBuilder sb = new StringBuilder();
-
         String season = c.get("Season");
-        String brand = c.get("Brand");
         String company = c.get("Company");
-        String variant = c.get("Variant");
         String player = c.get("Player");
 
         if (isHolyGrail(c)) {
-            sb.append(createFaqItem("Is this a 'Holy Grail' card for collectors?", "Yes, this card belongs to one of the most prestigious series in the hobby (like PMG, Legacy, or Star Rubies). These are extremely rare and highly sought after by high-end collectors worldwide."));
+            sb.append(createFaqItem("Is this a 'Holy Grail' card?", "Yes, this card belongs to one of the most prestigious parallel series in the hobby. These are extremely rare and heavily targeted by high-end investors."));
         }
 
         String combined = c.get("Serial/Print Run");
         if (isValid(combined)) {
-            sb.append(createFaqItem("How rare is this specific card?", "This card is serially numbered " + escapeHtml(combined) + ", making it a limited edition collectible."));
+            sb.append(createFaqItem("How rare is this specific card?", "This card is serially numbered " + escapeHtml(combined) + ", making it a strictly limited edition collectible."));
         } else if (c.has("Serial")) {
-            sb.append(createFaqItem("How rare is this specific card?", "This card is serially numbered " + escapeHtml(c.get("Serial")) + " out of a total print run of " + escapeHtml(c.get("Print Run")) + ", making it a limited edition collectible."));
-        } else {
-            sb.append(createFaqItem("Is this card numbered?", "No, this version of the card was not individually serial numbered by " + escapeHtml(company) + ". These are often referred to as 'pack-pulled' or 'un-numbered' versions."));
+            sb.append(createFaqItem("How rare is this specific card?", "This card is serially numbered " + escapeHtml(c.get("Serial")) + " out of a total print run of " + escapeHtml(c.get("Print Run")) + "."));
         }
 
         if (c.has("Rookie")) {
             String rookieAns = c.get("Rookie").equalsIgnoreCase("Yes") ?
-                    "Yes, this is an official Rookie Card (RC) from " + escapeHtml(player) + "'s debut " + escapeHtml(season) + " season, which is highly sought after by collectors." :
-                    "No, this card was released during the " + escapeHtml(season) + " season, which was part of " + escapeHtml(player) + "'s established career.";
+                    "Yes, this is an official Rookie Card (RC) from " + escapeHtml(player) + "'s debut season, holding premium value for collectors." :
+                    "No, this card was released during the " + escapeHtml(season) + " season, later in " + escapeHtml(player) + "'s career.";
             sb.append(createFaqItem("Is this a " + escapeHtml(player) + " Rookie Card?", rookieAns));
         }
 
         if (c.has("Autograph") && c.get("Autograph").equalsIgnoreCase("Yes")) {
-            sb.append(createFaqItem("Is the autograph on this card authentic?", "Yes, this card features a manufacturer-certified autograph. " + escapeHtml(company) + " guarantees the authenticity of the signature on the card."));
-        }
-
-        if (c.has("Game Used") && c.get("Game Used").equalsIgnoreCase("Yes")) {
-            sb.append(createFaqItem("What kind of memorabilia is on this card?", "This card contains a piece of game-used memorabilia, typically a jersey or patch worn by the player in a game."));
-        }
-
-        if (brand.toLowerCase().contains("metal universe")) {
-            sb.append(createFaqItem("What makes SkyBox Metal Universe cards special?", "Metal Universe cards from the late 90s are famous for their unique 'galactic' backgrounds and high-quality etching, with the PMG parallels being some of the most expensive cards in the hobby."));
-        }
-
-        if (isValid(variant) && !variant.equalsIgnoreCase("Base")) {
-            sb.append(createFaqItem("What is the '" + escapeHtml(variant) + "' variant?", "The '" + escapeHtml(variant) + "' is a parallel version of the base card. Parallels usually have different colors, finishes, or lower print runs than the standard version."));
-        }
-
-        sb.append(createFaqItem("Which team is " + escapeHtml(player) + " representing on this card?", "On this " + escapeHtml(season) + " " + escapeHtml(brand) + " card, " + escapeHtml(player) + " is shown as a member of the " + escapeHtml(c.get("Team")) + "."));
-
-        if ("Juwan Howard".equals(c.get("Player"))) {
-            if (isChampionshipSeason(c.get("Season"))) {
-                sb.append(createFaqItem("Did Juwan Howard win a championship this season?", "Yes! This card is from the " + escapeHtml(season) + " season when Juwan Howard won an NBA Championship with the Miami Heat."));
-            }
-
-            String teammates = getNotableTeammates(c.get("Season"));
-            if (!teammates.isEmpty()) {
-                sb.append(createFaqItem("Who were some of Juwan Howard's notable teammates during this season?", "During the " + escapeHtml(season) + " season with the " + escapeHtml(c.get("Team")) + ", Juwan played alongside players like " + escapeHtml(teammates)));
-            }
-
-            if (isCollegeEra(c)) {
-                sb.append(createFaqItem("What is Juwan Howard's college legacy?", "Juwan Howard was a key member of the 'Fab Five' at the University of Michigan, widely considered one of the most iconic and influential teams in college basketball history."));
-            }
+            sb.append(createFaqItem("Is the autograph authentic?", "Yes, this card features a manufacturer-certified autograph guaranteed by " + escapeHtml(company) + "."));
         }
 
         if (c.has("Grade")) {
-            sb.append(createFaqItem("Is this card professionally graded?", "Yes, this card has been graded by " + escapeHtml(c.get("Grading Co.")) + " and received a score of " + escapeHtml(c.get("Grade")) + ". Professional grading helps verify the condition and authenticity of high-value cards."));
+            sb.append(createFaqItem("Is this card professionally graded?", "Yes, this card has been graded by " + escapeHtml(c.get("Grading Co.")) + " and received a condition score of " + escapeHtml(c.get("Grade")) + "."));
         }
 
         return sb.toString();
     }
 
     private static String createFaqItem(String question, String answer) {
-        return "<details class=\"faq-details\">" + "<summary class=\"faq-summary\">" + question + "</summary>" + "<p class=\"faq-answer\">" + answer + "</p>" + "</details>";
+        return "<details class=\"faq-details\" style=\"background: #fff; padding: 15px; border-bottom: 1px solid #ddd; cursor: pointer;\">" + "<summary class=\"faq-summary\" style=\"font-weight: bold; font-size: 1.1em; outline: none;\">" + question + "</summary>" + "<p class=\"faq-answer\" style=\"margin-top: 10px; color: #555;\">" + answer + "</p>" + "</details>";
     }
 
     private static String generateJsonLd(CardData c, String desc, String h1Title, String overviewPage, String imageBaseName) {
@@ -883,90 +803,28 @@ public class CardPageGenerator {
         sb.append("{\n");
         sb.append("  \"@context\": \"https://schema.org\",\n");
         sb.append("  \"@graph\": [\n");
-
-        // Breadcrumbs
-        sb.append("    {\n");
-        sb.append("      \"@type\": \"BreadcrumbList\",\n");
-        sb.append("      \"itemListElement\": [\n");
-        sb.append("        { \"@type\": \"ListItem\", \"position\": 1, \"name\": \"Home\", \"item\": \"").append(BASE_URL).append("\" },\n");
-        sb.append("        { \"@type\": \"ListItem\", \"position\": 2, \"name\": \"Collection\", \"item\": \"").append(BASE_URL).append("/").append(overviewPage).append("\" },\n");
-        sb.append("        { \"@type\": \"ListItem\", \"position\": 3, \"name\": \"").append(escapeJson(c.get("Season"))).append("\", \"item\": \"").append(BASE_URL).append("/").append(overviewPage).append("#").append(escapeJson(c.get("Number"))).append("\" },\n");
-        sb.append("        { \"@type\": \"ListItem\", \"position\": 4, \"name\": \"").append(escapeJson(h1Title)).append("\" }\n");
-        sb.append("      ]\n");
-        sb.append("    },\n");
-
-        // Visual Artwork
         sb.append("    {\n");
         sb.append("      \"@type\": \"VisualArtwork\",\n");
         sb.append("      \"name\": \"").append(escapeJson(h1Title)).append("\",\n");
         sb.append("      \"image\": [ \"").append(frontImgUrl).append("\", \"").append(backImgUrl).append("\" ],\n");
         sb.append("      \"description\": \"").append(escapeJson(desc)).append("\",\n");
         sb.append("      \"creator\": { \"@type\": \"Organization\", \"name\": \"").append(escapeJson(c.get("Company"))).append("\" },\n");
+        sb.append("      \"about\": {\n");
+        sb.append("        \"@type\": \"Person\",\n");
+        sb.append("        \"name\": \"").append(escapeJson(c.get("Player"))).append("\",\n");
+        sb.append("        \"jobTitle\": \"Professional Basketball Player\"\n");
+        sb.append("      },\n");
         sb.append("      \"artMedium\": \"Trading Card\",\n");
         sb.append("      \"artform\": \"Sports Memorabilia\"\n");
-        sb.append("    },\n");
-
-        // FAQ Page
-        sb.append("    {\n");
-        sb.append("      \"@type\": \"FAQPage\",\n");
-        sb.append("      \"mainEntity\": [\n");
-
-        List<String> faqItems = new ArrayList<>();
-        String season = c.get("Season");
-        String brand = c.get("Brand");
-        String company = c.get("Company");
-        String player = c.get("Player");
-
-        String combined = c.get("Serial/Print Run");
-        if (isValid(combined)) {
-            faqItems.add(createJsonLdQuestion("How rare is this specific card?", "This card is serially numbered " + combined + ", making it a limited edition collectible."));
-        } else if (c.has("Serial")) {
-            faqItems.add(createJsonLdQuestion("How rare is this specific card?", "This card is serially numbered " + c.get("Serial") + " out of a total print run of " + c.get("Print Run") + ", making it a limited edition collectible."));
-        } else {
-            faqItems.add(createJsonLdQuestion("Is this card numbered?", "No, this version of the card was not individually serial numbered by " + company + ". These are often referred to as 'pack-pulled' or 'un-numbered' versions."));
-        }
-
-        if (c.has("Rookie")) {
-            String rookieAns = c.get("Rookie").equalsIgnoreCase("Yes") ?
-                    "Yes, this is an official Rookie Card (RC) from " + player + "'s debut " + season + " season, which is highly sought after by collectors." :
-                    "No, this card was released during the " + season + " season, which was part of " + player + "'s established career.";
-            faqItems.add(createJsonLdQuestion("Is this a " + player + " Rookie Card?", rookieAns));
-        }
-
-        if (c.has("Autograph") && c.get("Autograph").equalsIgnoreCase("Yes")) {
-            faqItems.add(createJsonLdQuestion("Is the autograph on this card authentic?", "Yes, this card features a manufacturer-certified autograph. " + company + " guarantees the authenticity of the signature on the card."));
-        }
-
-        if (c.has("Game Used") && c.get("Game Used").equalsIgnoreCase("Yes")) {
-            faqItems.add(createJsonLdQuestion("What kind of memorabilia is on this card?", "This card contains a piece of game-used memorabilia, typically a jersey or patch worn by the player in a game."));
-        }
-
-        if (brand.toLowerCase().contains("metal universe")) {
-            faqItems.add(createJsonLdQuestion("What makes SkyBox Metal Universe cards special?", "Metal Universe cards from the late 90s are famous for their unique 'galactic' backgrounds and high-quality etching, with the PMG parallels being some of the most expensive cards in the hobby."));
-        }
-
-        faqItems.add(createJsonLdQuestion("Which team is " + player + " representing on this card?", "On this " + season + " " + brand + " card, " + player + " is shown as a member of the " + c.get("Team") + "."));
-
-        if (c.has("Grade")) {
-            faqItems.add(createJsonLdQuestion("Is this card professionally graded?", "Yes, this card has been graded by " + c.get("Grading Co.") + " and received a score of " + c.get("Grade") + ". Professional grading helps verify the condition and authenticity of high-value cards."));
-        }
-
-        sb.append(String.join(",\n", faqItems)).append("\n");
-        sb.append("      ]\n");
         sb.append("    }\n");
         sb.append("  ]\n");
         sb.append("}\n");
         sb.append("</script>\n");
-
         return sb.toString();
     }
 
-    private static String createJsonLdQuestion(String q, String a) {
-        return "        { \"@type\": \"Question\", \"name\": \"" + escapeJson(q) + "\", \"acceptedAnswer\": { \"@type\": \"Answer\", \"text\": \"" + escapeJson(a) + "\" } }";
-    }
-
     private static void addTableRow(StringBuilder sb, String title, String value) {
-        sb.append("            <tr><th class=\"specs-th\">").append(title).append("</th><td class=\"specs-td\">").append(isValid(value) ? escapeHtml(value) : "-").append("</td></tr>\n");
+        sb.append("            <tr><th class=\"specs-th\" style=\"padding: 8px; border-bottom: 1px solid #ddd; width: 30%;\">").append(title).append("</th><td class=\"specs-td\" style=\"padding: 8px; border-bottom: 1px solid #ddd;\">").append(isValid(value) ? escapeHtml(value) : "-").append("</td></tr>\n");
     }
 
     private static void addIfPresent(List<String> list, String value) {

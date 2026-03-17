@@ -52,16 +52,86 @@ public class FileGenerator {
             sb.append("        <p class=\"sub-title\">Complete Career Overview</p>\n");
             sb.append("    </header>\n");
 
-            // --- Alle HTML-Dateien im content/ Ordner finden, die eine Zahl enthalten (z.B. 94-95.html) ---
+            // --- DATEIEN EINLESEN ---
             File contentDir = new File("content");
             File[] seasonFiles = contentDir.listFiles((dir, name) -> name.endsWith(".html") && name.matches(".*\\d.*"));
 
             if (seasonFiles != null && seasonFiles.length > 0) {
-                Arrays.sort(seasonFiles); // Sortiert chronologisch (94 vor 95)
+                Arrays.sort(seasonFiles); // Chronologisch sortieren
+
+                // --- NEU: DYNAMISCHE FILTER-BOX & SUCHFELD BAUEN ---
+                sb.append("    <div class=\"collection-controls\" style=\"margin: 20px 0; padding: 15px; background: #f4f8fc; border-radius: 8px; display: flex; gap: 15px; flex-wrap: wrap; align-items: center;\">\n");
+                sb.append("        <strong style=\"color: #333;\">Filter Collection:</strong>\n");
+
+                // Dropdown Menü (automatisch aus Dateinamen generiert)
+                sb.append("        <select id=\"seasonFilter\" style=\"padding: 10px; border-radius: 4px; border: 1px solid #ccc; font-size: 16px; min-width: 200px;\">\n");
+                sb.append("            <option value=\"all\">All Seasons</option>\n");
                 for (File file : seasonFiles) {
-                    String tableContent = new String(Files.readAllBytes(file.toPath()));
-                    sb.append(tableContent).append("\n<br>\n");
+                    String seasonName = file.getName().replace(".html", "");
+                    sb.append("            <option value=\"").append(seasonName.toLowerCase()).append("\">Season ").append(seasonName).append("</option>\n");
                 }
+                sb.append("        </select>\n");
+
+                // Suchfeld
+                sb.append("        <input type=\"text\" id=\"textSearch\" placeholder=\"Search for Brand, Variant, Number...\" style=\"padding: 10px; border-radius: 4px; border: 1px solid #ccc; font-size: 16px; flex-grow: 1; min-width: 250px;\">\n");
+                sb.append("    </div>\n");
+
+                // --- TABELLEN EINFÜGEN ---
+                for (File file : seasonFiles) {
+                    String seasonName = file.getName().replace(".html", "");
+                    // Jede Tabelle bekommt einen unsichtbaren Tag für den Filter
+                    sb.append("\n<div class=\"season-table-wrapper\" data-season=\"").append(seasonName.toLowerCase()).append("\">\n");
+
+                    String tableContent = new String(Files.readAllBytes(file.toPath()));
+                    sb.append(tableContent);
+
+                    sb.append("\n</div><br>\n");
+                }
+
+                // --- NEU: JAVASCRIPT FÜR DIE FILTER-LOGIK ---
+                sb.append("""
+                    <script>
+                        document.getElementById('seasonFilter').addEventListener('change', applyFilters);
+                        document.getElementById('textSearch').addEventListener('keyup', applyFilters);
+
+                        function applyFilters() {
+                            const seasonVal = document.getElementById('seasonFilter').value;
+                            const searchVal = document.getElementById('textSearch').value.toLowerCase();
+                            
+                            const wrappers = document.querySelectorAll('.season-table-wrapper');
+                            
+                            wrappers.forEach(wrapper => {
+                                const wrapperSeason = wrapper.getAttribute('data-season');
+                                let hasVisibleRows = false;
+                                
+                                // Step 1: Does it match the Season Dropdown?
+                                if (seasonVal !== 'all' && wrapperSeason !== seasonVal) {
+                                    wrapper.style.display = 'none';
+                                    return; // Skip checking rows
+                                }
+                                
+                                // Step 2: Does it match the Text Search?
+                                const rows = wrapper.querySelectorAll('tr');
+                                for(let i = 0; i < rows.length; i++) {
+                                    const row = rows[i];
+                                    if(row.querySelector('th')) continue; // Skip headers
+                                    
+                                    const text = row.textContent.toLowerCase();
+                                    if(searchVal === '' || text.includes(searchVal)) {
+                                        row.style.display = '';
+                                        hasVisibleRows = true;
+                                    } else {
+                                        row.style.display = 'none';
+                                    }
+                                }
+                                
+                                // Hide the entire wrapper if no rows match the search
+                                wrapper.style.display = hasVisibleRows ? '' : 'none';
+                            });
+                        }
+                    </script>
+                """);
+
             } else {
                 System.out.println("   WARNUNG: Keine Saison-Dateien (z.B. 94-95.html) im Ordner 'content' gefunden!");
             }
