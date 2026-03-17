@@ -20,7 +20,7 @@ public class SharedTemplates {
     private static final DateTimeFormatter TIMESTAMP_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
 
     // 3. NEW: Generate a unique ID for this specific site build
-    private static final String BUILD_ID = String.valueOf(System.currentTimeMillis());
+    static final String BUILD_ID = String.valueOf(System.currentTimeMillis());
     static String loadResource(String path) {
         // If the template is already in RAM, return it instantly (0 Disk I/O)
         return TEMPLATE_CACHE.computeIfAbsent(path, SharedTemplates::readResourceFromDisk);

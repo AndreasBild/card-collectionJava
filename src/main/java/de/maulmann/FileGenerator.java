@@ -19,7 +19,93 @@ public class FileGenerator {
         // von CardPageGenerator.createSubPage(card) für jede Karte.
         // ==========================================================
 
+        // --- NEU: Statische Seiten modular verarbeiten ---
+        System.out.println("-> Verarbeite statische Zusatzseiten...");
+
+        processStaticPage(
+                "Flawless.html",
+                "2008 Upper Deck Exquisite Flawless Basketball | Private Collection",
+                "Discover a stunning private collection of 2008 Upper Deck Exquisite Flawless basketball autographs, featuring legends like Michael Jordan and Kevin Garnett."
+        );
+
+        processStaticPage(
+                "Baseball.html",
+                "Upper Deck Baseball Cards | Private Collection",
+                "Explore our premium selection of rare Upper Deck Baseball cards and inscriptions."
+        );
+
+        processStaticPage(
+                "Panini.html",
+                "Panini Flawless Basketball | Private Collection",
+                "A showcase of the ultra-high-end Panini Flawless basketball card collection."
+        );
+
+        processStaticPage(
+                "Wantlist.html",
+                "Juwan Howard Wantlist | Cards I'm Searching For",
+                "A detailed list of rare Juwan Howard basketball cards needed to complete the ultimate private collection."
+        );
+
         System.out.println("-> HTML-Generierung abgeschlossen.");
+    }
+
+    // --- HILFSMETHODE FÜR STATISCHE SEITEN ---
+    // --- HILFSMETHODE FÜR STATISCHE SEITEN ---
+    public static void processStaticPage(String filename, String title, String description) {
+        try {
+            // UPDATE: Sucht jetzt im richtigen Ordner "content/other/"
+            File sourceFile = new File("content/other/" + filename);
+
+            if (!sourceFile.exists()) {
+                // Fallback, falls sie direkt im Hauptverzeichnis liegen sollten
+                sourceFile = new File(filename);
+            }
+            if (!sourceFile.exists()) {
+                System.out.println("-> Überspringe " + filename + " (Datei in content/other/ nicht gefunden)");
+                return;
+            }
+
+            String content = new String(java.nio.file.Files.readAllBytes(sourceFile.toPath()));
+
+            // 1. HEAD generieren
+            String headHtml = SharedTemplates.getHead(
+                    title,
+                    description,
+                    "",
+                    filename,
+                    DEFAULT_IMAGE
+            );
+
+            // 2. TOPNAV laden und den aktiven Link markieren
+            String topnavHtml = SharedTemplates.loadResource("/templates/topnav.html").replace("{{ROOT}}", "");
+            String targetHref = "href=\"" + filename + "\"";
+            String activeHref = "href=\"" + filename + "\" class=\"active\"";
+            topnavHtml = topnavHtml.replace(targetHref, activeHref);
+
+            // 3. FOOTER laden
+            String footerHtml = SharedTemplates.loadResource("/templates/footer.html").replace("{{ROOT}}", "");
+            String footerNavHtml = SharedTemplates.loadResource("/templates/footer_nav.html").replace("{{ROOT}}", "");
+
+            // 4. PLATZHALTER ersetzen
+            content = content.replace("{{HEAD}}", headHtml);
+            content = content.replace("{{TOPNAV}}", topnavHtml);
+            content = content.replace("{{FOOTER}}", footerHtml);
+            content = content.replace("{{FOOTER_NAV}}", footerNavHtml);
+            content = content.replace("{{BUILD_ID}}", SharedTemplates.BUILD_ID);
+
+            // 5. In den output-Ordner schreiben
+            File outputDir = new File("output");
+            if (!outputDir.exists()) outputDir.mkdirs();
+
+            File outputFile = new File(outputDir, filename);
+            try (java.io.FileWriter writer = new java.io.FileWriter(outputFile)) {
+                writer.write(content);
+            }
+            System.out.println("-> " + filename + " erfolgreich modular generiert.");
+
+        } catch (Exception e) {
+            System.err.println("Fehler beim Verarbeiten von " + filename + ": " + e.getMessage());
+        }
     }
 
     public static void createLandingPage() {
@@ -29,9 +115,6 @@ public class FileGenerator {
             sb.append("<html lang=\"en\">\n");
 
             // --- KOPFBEREICH (Ohne FontAwesome!) ---
-            // Nutze deine SharedTemplates, um den Head zu bauen.
-            // Wichtig: In der SharedTemplates.getHead() Methode solltest du den
-            // <link rel="stylesheet" href="...font-awesome.min.css"> Eintrag komplett löschen!
             String headHtml = SharedTemplates.getHead(
                     "Maulmann Trading Cards | Juwan Howard & Sports Card Collection",
                     "Private collection of Juwan Howard basketball cards, featuring 1/1s, PMGs, and rare 90s inserts.",
