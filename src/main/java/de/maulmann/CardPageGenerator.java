@@ -442,7 +442,29 @@ public class CardPageGenerator {
         String eraContext = getNbaEraContext(c.get("Season"));
         String playerHighlights = getSeasonHighlights(c.get("Season"), c.get("Player"));
 
-        if (!hobbyTrivia.isEmpty() || !techTrivia.isEmpty() || !eraContext.isEmpty() || !playerHighlights.isEmpty()) {
+
+        // --- NEW: EXTRACT TEXT FROM BACK IMAGE (USING ORIGINAL JPG/PNG) ---
+        // Passe "images/" an, falls deine Original-Scans woanders liegen (z.B. "content/images/")
+        String originalImgBasePath = "images/" + c.seasonFolder + "/" + imageBaseName + "-back";
+
+        File sourceJpg = new File(originalImgBasePath + ".jpg");
+        File sourcePng = new File(originalImgBasePath + ".png");
+        File sourceJpeg = new File(originalImgBasePath + ".jpeg");
+
+        String pathToRead = "";
+        if (sourceJpg.exists()) pathToRead = sourceJpg.getPath();
+        else if (sourcePng.exists()) pathToRead = sourcePng.getPath();
+        else if (sourceJpeg.exists()) pathToRead = sourceJpeg.getPath();
+
+        String cardBackText = "";
+        if (!pathToRead.isEmpty()) {
+            cardBackText = CardTextExtractor.getBackText(pathToRead);
+        } else {
+            // Optional: Hilft dir beim Debuggen, falls der Pfad nicht stimmt
+            // System.out.println("⚠️ OCR Skipped: Could not find original image for " + originalImgBasePath);
+        }
+
+        if (!hobbyTrivia.isEmpty() || !techTrivia.isEmpty() || !eraContext.isEmpty() || !playerHighlights.isEmpty() || !cardBackText.isEmpty()) {
             sb.append("    <div class=\"context-engine\" style=\"margin-top: 40px; display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));\">\n");
 
             // 1. Hobby Significance
@@ -476,6 +498,18 @@ public class CardPageGenerator {
                 sb.append("            <p style=\"font-size: 0.95em; color: #555; line-height: 1.6;\">").append(eraContext).append("</p>\n");
                 sb.append("        </div>\n");
             }
+
+            // 5. EXTRACTED CARD TEXT (Smarter & Schöner)
+            if (!cardBackText.isEmpty()) {
+                sb.append("        <div class=\"card-back-text-container\" style=\"grid-column: 1 / -1;\">\n");
+                sb.append("            <div class=\"card-back-text-header\">\n");
+                sb.append("                <span>&#x1F4DC; Original Card Back Transcription</span>\n");
+                sb.append("                <span style=\"margin-left: auto; font-size: 0.8em; opacity: 0.6;\">Verified via AI-OCR</span>\n");
+                sb.append("            </div>\n");
+                sb.append("            <pre class=\"card-back-content\">").append(escapeHtml(cardBackText)).append("</pre>\n");
+                sb.append("        </div>\n");
+            }
+
             sb.append("    </div>\n");
         }
 
