@@ -21,7 +21,7 @@ public class SharedTemplates {
 
     // 3. NEW: Generate a unique ID for this specific site build
     private static final String BUILD_ID = String.valueOf(System.currentTimeMillis());
-    private static String loadResource(String path) {
+    static String loadResource(String path) {
         // If the template is already in RAM, return it instantly (0 Disk I/O)
         return TEMPLATE_CACHE.computeIfAbsent(path, SharedTemplates::readResourceFromDisk);
     }
