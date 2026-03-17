@@ -98,7 +98,14 @@ public class ImageConverter {
             }
         }
 
-        double ratio = Math.min((double) MAX_WIDTH / origW, (double) MAX_HEIGHT / origH);
+        // --- NEW: Smart Orientation Detection ---
+        boolean isPortrait = origH > origW;
+
+        // If portrait, swap the bounding box so height gets the larger limit (1000)
+        int currentMaxWidth = isPortrait ? MAX_HEIGHT : MAX_WIDTH;   // Portrait: 700, Landscape: 1000
+        int currentMaxHeight = isPortrait ? MAX_WIDTH : MAX_HEIGHT;  // Portrait: 1000, Landscape: 700
+
+        double ratio = Math.min((double) currentMaxWidth / origW, (double) currentMaxHeight / origH);
         int newW = ratio < 1.0 ? (int) (origW * ratio) : origW;
         int newH = ratio < 1.0 ? (int) (origH * ratio) : origH;
 
