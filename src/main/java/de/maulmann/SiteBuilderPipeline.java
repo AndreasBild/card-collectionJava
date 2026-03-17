@@ -125,7 +125,10 @@ public class SiteBuilderPipeline {
                         uploadFutures.add(uploadBytesAsync(s3Client, s3Key, gzippedData, "application/xml", CACHE_SHORT, uploadCount));
                     } else if (fileName.endsWith(".ico")) {
                         uploadFutures.add(uploadRawFileAsync(s3Client, file, s3Key, "image/x-icon", CACHE_LONG, uploadCount));
-                    }
+                    }else if (fileName.startsWith("robots")) {
+                    byte[] gzippedData = GZIPCompressor.compressBytes(Files.readAllBytes(file), 9);
+                    uploadFutures.add(uploadBytesAsync(s3Client, s3Key, gzippedData, "text/plain", CACHE_SHORT, uploadCount));
+                }
                 } catch (Exception e) {
                     System.err.println("Failed to process " + fileName + ": " + e.getMessage());
                 }
