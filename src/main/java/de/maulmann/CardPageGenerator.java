@@ -18,6 +18,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Comparator;
 
 public class CardPageGenerator {
 
@@ -27,6 +28,9 @@ public class CardPageGenerator {
     private static final Logger log = LoggerFactory.getLogger(CardPageGenerator.class);
     public static final String ROOT = "../../";
 
+    // --- NEU: Globale Liste für alle gefundenen Duplikate ---
+    private static final List<String> duplicateLog = new ArrayList<>();
+
     static class CardData {
         Map<String, String> attributes;
         String filenameBase;
@@ -34,7 +38,7 @@ public class CardPageGenerator {
         String seasonFolder;
         String fullRelativePath;
 
-        public CardData(Map<String, String> attributes) {
+        public CardData(Map<String, String> attributes, int uniqueId) {
             this.attributes = new HashMap<>(attributes);
 
             String currentTeam = this.attributes.get("Team");
@@ -45,10 +49,10 @@ public class CardPageGenerator {
                     this.attributes.put("Team", calculatedTeam);
                 }
             }
-            calculatePaths();
+            calculatePaths(uniqueId);
         }
 
-        private void calculatePaths() {
+        private void calculatePaths(int uniqueId) {
             List<String> filenameTokens = new ArrayList<>();
 
             addIfPresent(filenameTokens, attributes.get("Player"));
@@ -71,7 +75,7 @@ public class CardPageGenerator {
             String grade = attributes.get("Grade");
             if (isValid(grade)) filenameTokens.add(grade);
 
-            this.filenameBase = cleanFilename(String.join("-", filenameTokens));
+            this.filenameBase = cleanFilename(String.join("-", filenameTokens)) + "-" + uniqueId;
             this.filename = this.filenameBase + ".html";
 
             String seasonRaw = attributes.get("Season");
@@ -93,17 +97,46 @@ public class CardPageGenerator {
         log.info("Starting high-speed Card Page Generation...");
         long startTime = System.currentTimeMillis();
 
+        // Duplikat-Log initialisieren
+        duplicateLog.clear();
+        duplicateLog.add("FILTERED DUPLICATES LOG");
+        duplicateLog.add("=======================");
+        duplicateLog.add("These un-numbered base/insert cards were skipped during HTML generation because a duplicate already exists in the collection.\n");
+
+        // --- WIPE LOCAL GHOST FILES BEFORE GENERATING ---
+        try {
+            Path cardsDir = Paths.get(BASE_FOLDER);
+            if (Files.exists(cardsDir)) {
+                Files.walk(cardsDir)
+                        .sorted(Comparator.reverseOrder())
+                        .map(Path::toFile)
+                        .forEach(File::delete);
+            }
+        } catch (IOException e) {
+            log.warn("Could not clean output/cards directory: " + e.getMessage());
+        }
+
+        // --- LESE AB JETZT ALLES AUS DEM OUTPUT ORDNER ---
         processCollection("output/Juwan-Howard-Collection.html", "output/Juwan-Howard-Collection.html", "Juwan-Howard-Collection.html");
 
         String[] otherFiles = {
-                "Baseball.html",
-                "Flawless.html",
-                "Wantlist.html",
-                "Panini.html"
+                "output/Baseball.html",
+                "output/Flawless.html",
+                "output/Wantlist.html",
+                "output/Panini.html"
         };
 
-        for (String fileName : otherFiles) {
-            processCollection("output/" + fileName, "output/" + fileName, fileName);
+        for (String filePath : otherFiles) {
+            processCollection(filePath, filePath, new File(filePath).getName());
+        }
+
+        // --- NEU: Speichere die Duplikate-Datei am Ende des Durchlaufs ---
+        try {
+            File dupFile = new File("output/Duplicates.txt");
+            Files.write(dupFile.toPath(), duplicateLog, StandardCharsets.UTF_8);
+            log.info("Saved Duplicates.txt with {} entries.", duplicateLog.size() - 4); // -4 wegen der Header-Zeilen
+        } catch (IOException e) {
+            log.error("Failed to write Duplicates.txt", e);
         }
 
         long endTime = System.currentTimeMillis();
@@ -122,46 +155,88 @@ public class CardPageGenerator {
                 return;
             }
 
-            // Parse the DOM once
             Document doc = Jsoup.parse(input, "UTF-8");
             Elements tables = doc.select("table");
             if (tables.isEmpty()) return;
 
             log.info("Processing {} tables in {}...", tables.size(), fileNameFromPath(inputPath));
 
-            // Extract all card data across all tables
-            List<CardData> allCardsInFile = new ArrayList<>();
+            List<CardData> rawCards = new ArrayList<>();
+            int globalCardCounter = 0;
+
             for (Element table : tables) {
-                extractTableDataAndUpdateDom(table, allCardsInFile);
+                globalCardCounter = extractTableDataAndUpdateDom(table, rawCards, globalCardCounter);
             }
 
-            if (allCardsInFile.isEmpty()) {
+            if (rawCards.isEmpty()) {
                 log.warn("No valid card rows found in {}", inputPath);
                 return;
             }
 
-            // Write the updated main HTML file back to disk IMMEDIATELY before generating subpages
+            // ==========================================
+            // DEDUPLICATION LOGIC
+            // ==========================================
+            List<CardData> filteredCards = new ArrayList<>();
+            Set<String> seenFingerprints = new HashSet<>();
+
+            duplicateLog.add("\n--- From " + overviewPage + " ---");
+
+            for (CardData card : rawCards) {
+                // --- UPDATE: Der Fingerprint berücksichtigt jetzt auch Grading Co. und Grade! ---
+                String fingerprint = (card.get("Season") + "|" + card.get("Company") + "|" +
+                        card.get("Brand") + "|" + card.get("Theme") + "|" +
+                        card.get("Variant") + "|" + card.get("Number") + "|" +
+                        card.get("Grading Co.") + "|" + card.get("Grade")).toLowerCase();
+
+                String serial = card.get("Serial");
+                if (!isValid(serial)) serial = card.get("Serial/Print Run");
+
+                boolean hasSerial = isValid(serial) && !serial.equals("0");
+
+                if (seenFingerprints.contains(fingerprint)) {
+                    if (!hasSerial) {
+                        // --- NEU: Duplikat protokollieren ---
+                        String dupInfo = card.get("Season") + " " + card.get("Company") + " " +
+                                card.get("Brand") + " " + card.get("Theme") + " " +
+                                card.get("Variant") + " #" + card.get("Number") + " - " + card.get("Player");
+                        duplicateLog.add("[SKIPPED] " + dupInfo.replaceAll("\\s+", " "));
+                        continue;
+                    } else {
+                        // It's a duplicate, BUT it has a serial number (e.g. 2/10 and 7/10). Keep it!
+                        filteredCards.add(card);
+                    }
+                } else {
+                    // First time seeing this card
+                    seenFingerprints.add(fingerprint);
+                    filteredCards.add(card);
+                }
+            }
+
+            log.info("Deduplication complete: Kept {} unique/numbered cards out of {}.", filteredCards.size(), rawCards.size());
+
+            // Update main HTML DOM
+            updateDomLinks(tables, filteredCards);
+
+            // Write the updated main HTML file back to disk
             File outIndex = new File(outputPath);
             if (outIndex.getParentFile() != null) outIndex.getParentFile().mkdirs();
             Files.writeString(outIndex.toPath(), doc.outerHtml(), StandardCharsets.UTF_8);
 
-            // Multithread the generation of the hundreds/thousands of subpages
-            generateSubPagesMultithreaded(allCardsInFile, overviewPage);
+            // Multithread the generation of the subpages using ONLY the filtered list
+            generateSubPagesMultithreaded(filteredCards, overviewPage);
 
         } catch (IOException | InterruptedException e) {
             log.error("Error processing collection " + inputPath, e);
         }
     }
 
-    private static void extractTableDataAndUpdateDom(Element table, List<CardData> globalCardList) {
+    private static int extractTableDataAndUpdateDom(Element table, List<CardData> globalCardList, int counter) {
         Elements rows = table.select("tr");
-        if (rows.isEmpty()) return;
+        if (rows.isEmpty()) return counter;
 
         int headerRowIndex = -1;
         String[] headers = null;
-        int playerColIndex = -1;
 
-        // Fast Header Search
         for (int i = 0; i < rows.size(); i++) {
             Elements cells = rows.get(i).children();
             if (cells.isEmpty()) continue;
@@ -169,20 +244,15 @@ public class CardPageGenerator {
             headers = new String[cells.size()];
             for (int j = 0; j < cells.size(); j++) {
                 headers[j] = cells.get(j).text().trim();
-                if (headers[j].equalsIgnoreCase("Player")) {
-                    playerColIndex = j;
-                }
             }
             if (headers.length > 0) {
                 headerRowIndex = i;
-                if (playerColIndex == -1) playerColIndex = 0;
                 break;
             }
         }
 
-        if (headerRowIndex == -1 || headers == null) return;
+        if (headerRowIndex == -1 || headers == null) return counter;
 
-        // Process rows and update DOM directly
         for (int i = headerRowIndex + 1; i < rows.size(); i++) {
             Element row = rows.get(i);
             Elements cols = row.children();
@@ -193,18 +263,67 @@ public class CardPageGenerator {
                 dataMap.put(headers[j], cols.get(j).text().trim());
             }
 
-            CardData currentCard = new CardData(dataMap);
+            // Create card with unique ID
+            CardData currentCard = new CardData(dataMap, counter++);
             globalCardList.add(currentCard);
 
-            // Fast DOM Update for the overview table link
-            if (cols.size() > playerColIndex) {
-                Element playerCell = cols.get(playerColIndex);
-                String originalText = playerCell.text();
-                playerCell.empty();
-                playerCell.appendElement("a")
-                        .attr("href", currentCard.fullRelativePath)
-                        .attr("title", "View details for " + currentCard.get("Season") + " " + currentCard.get("Brand") + " #" + currentCard.get("Number"))
-                        .text(originalText);
+            // We temporarily store the card reference directly in the row element for the next step
+            row.attr("data-card-id", String.valueOf(currentCard.hashCode()));
+        }
+        return counter;
+    }
+
+    private static void updateDomLinks(Elements tables, List<CardData> filteredCards) {
+        // Create a fast lookup map of approved cards
+        Set<String> approvedCardIds = new HashSet<>();
+        for (CardData card : filteredCards) {
+            approvedCardIds.add(String.valueOf(card.hashCode()));
+        }
+
+        for (Element table : tables) {
+            Elements rows = table.select("tr");
+            int playerColIndex = 0; // Default
+
+            // Find Player column
+            if (!rows.isEmpty()) {
+                Elements headers = rows.get(0).children();
+                for (int j = 0; j < headers.size(); j++) {
+                    if (headers.get(j).text().trim().equalsIgnoreCase("Player")) {
+                        playerColIndex = j;
+                        break;
+                    }
+                }
+            }
+
+            for (Element row : rows) {
+                String rowId = row.attr("data-card-id");
+                if (rowId.isEmpty()) continue; // Header row
+
+                // Wurde die Karte behalten?
+                if (approvedCardIds.contains(rowId)) {
+                    Elements cols = row.children();
+                    if (cols.size() > playerColIndex) {
+                        Element playerCell = cols.get(playerColIndex);
+
+                        CardData matchingCard = filteredCards.stream()
+                                .filter(c -> String.valueOf(c.hashCode()).equals(rowId))
+                                .findFirst().orElse(null);
+
+                        if (matchingCard != null) {
+                            String originalText = playerCell.text();
+                            playerCell.empty();
+                            playerCell.appendElement("a")
+                                    .attr("href", matchingCard.fullRelativePath)
+                                    .attr("title", "View details for " + matchingCard.get("Season") + " " + matchingCard.get("Brand") + " #" + matchingCard.get("Number"))
+                                    .text(originalText);
+                        }
+                    }
+                    // Clean up temporary attribute
+                    row.removeAttr("data-card-id");
+                } else {
+                    // --- DER FIX: LÖSCHE DIE ZEILE KOMPLETT AUS DER TABELLE ---
+                    row.remove();
+                }
             }
         }
     }
@@ -223,7 +342,7 @@ public class CardPageGenerator {
                     CardData nextCard = (index < allCards.size() - 1) ? allCards.get(index + 1) : null;
 
                     Path folderPath = Paths.get(BASE_FOLDER, currentCard.seasonFolder);
-                    Files.createDirectories(folderPath); // Thread-safe
+                    Files.createDirectories(folderPath);
                     Path filePath = folderPath.resolve(currentCard.filename);
 
                     createSubPage(currentCard, filePath, prevCard, nextCard, allCards, overviewPage);
@@ -240,15 +359,19 @@ public class CardPageGenerator {
     }
 
     private static void createSubPage(CardData c, Path path, CardData prev, CardData next, List<CardData> allCards, String overviewPage) throws IOException {
-        StringBuilder sb = new StringBuilder(4096); // Pre-allocate buffer for speed
+        StringBuilder sb = new StringBuilder(4096);
 
         String h1Title = generateH1(c);
         String browserTitle = generateBrowserTitle(c, overviewPage);
         String metaDesc = generateMetaDescription(c);
 
         String seasonImgFolder = RELATIVE_IMAGES_PATH + "/" + c.seasonFolder;
-        String frontImgPath = seasonImgFolder + "/" + c.filenameBase + "-front.webp";
-        String backImgPath = seasonImgFolder + "/" + c.filenameBase + "-back.webp";
+
+        // Remove the "-<uniqueId>" suffix for the IMAGE lookup so it still finds the original file
+        String imageBaseName = c.filenameBase.substring(0, c.filenameBase.lastIndexOf("-"));
+
+        String frontImgPath = seasonImgFolder + "/" + imageBaseName + "-front.webp";
+        String backImgPath = seasonImgFolder + "/" + imageBaseName + "-back.webp";
 
         String frontAlt = generateAltText(c, "front");
         String backAlt = generateAltText(c, "back");
@@ -263,7 +386,7 @@ public class CardPageGenerator {
         sb.append("    <link rel=\"preload\" as=\"image\" href=\"").append(frontImgPath).append("\" fetchpriority=\"high\">\n");
 
         // Schema.org
-        sb.append(generateJsonLd(c, metaDesc, h1Title, overviewPage));
+        sb.append(generateJsonLd(c, metaDesc, h1Title, overviewPage, imageBaseName));
 
         sb.append("</head>\n<body>\n");
 
@@ -303,14 +426,13 @@ public class CardPageGenerator {
         sb.append("        <p>").append(generateSeoText(c)).append("</p>\n");
         sb.append("    </article>\n");
 
-// --- IMAGES SECTION ---
+        // IMAGES SECTION
         sb.append("    <div class=\"card-images-container\" style=\"display: flex; gap: 20px; flex-wrap: wrap;\">\n");
         sb.append("        <div class=\"card-image-wrapper\" style=\"display: flex; flex-direction: column; align-items: center;\">\n");
         sb.append("            <img src=\"").append(frontImgPath).append("\" ")
                 .append("alt=\"").append(escapeHtml(frontAlt)).append("\" ")
                 .append("title=\"").append(escapeHtml(frontImgTitle)).append("\" ")
                 .append("width=\"400\" height=\"550\" fetchpriority=\"high\" ")
-                // NEU: Zwingt den Browser, den Platz freizuhalten (CLS-Fix)
                 .append("style=\"aspect-ratio: 400 / 550; width: 100%; max-width: 400px; height: auto; display: block; object-fit: contain;\" ")
                 .append("onclick=\"openModal('").append(frontImgPath).append("', '").append(backImgPath).append("')\">\n");
         sb.append("            <p style=\"margin-top: 10px; min-height: 24px;\">Front View (Click to Zoom)</p>\n");
@@ -320,7 +442,6 @@ public class CardPageGenerator {
                 .append("alt=\"").append(escapeHtml(backAlt)).append("\" ")
                 .append("title=\"").append(escapeHtml(backImgTitle)).append("\" ")
                 .append("width=\"400\" height=\"550\" loading=\"lazy\" ")
-                // NEU: Zwingt den Browser, den Platz freizuhalten (CLS-Fix)
                 .append("style=\"aspect-ratio: 400 / 550; width: 100%; max-width: 400px; height: auto; display: block; object-fit: contain;\" ")
                 .append("onclick=\"openModal('").append(backImgPath).append("', '").append(frontImgPath).append("')\">\n");
         sb.append("            <p style=\"margin-top: 10px; min-height: 24px;\">Back View (Click to Zoom)</p>\n");
@@ -363,7 +484,7 @@ public class CardPageGenerator {
         sb.append("        </table>\n");
         sb.append("    </div>\n");
 
-        // SEASON / CAREER CONTEXT (Player-specific)
+        // SEASON / CAREER CONTEXT
         if ("Juwan Howard".equals(c.get("Player"))) {
             String highlights = getSeasonHighlights(c.get("Season"));
             String seasonTeammates = getNotableTeammates(c.get("Season"));
@@ -609,7 +730,6 @@ public class CardPageGenerator {
         }
         sb.append(". ");
 
-        // Add brand-specific context
         if (brand.toLowerCase().contains("metal universe")) {
             sb.append("SkyBox Metal Universe cards are legendary for their futuristic designs and groundbreaking etching technology. ");
         } else if (brand.toLowerCase().contains("topps chrome")) {
@@ -618,7 +738,6 @@ public class CardPageGenerator {
             sb.append("As a high-end release, this card represents the pinnacle of luxury in sports card collecting. ");
         }
 
-        // Theme and Variant logic
         if (theme.toLowerCase().contains("precious metal gems") || theme.toLowerCase().contains("pmg")) {
             sb.append("The <strong>Precious Metal Gems (PMG)</strong> inserts are among the most coveted parallels in the entire world of sports card collecting. ");
         }
@@ -635,7 +754,6 @@ public class CardPageGenerator {
             sb.append("It is the classic <strong>Base</strong> version, a fundamental part of any complete collection. ");
         }
 
-        // Rarity and Serial Numbering
         String serial = c.get("Serial");
         String printRun = c.get("Print Run");
         String combined = c.get("Serial/Print Run");
@@ -655,7 +773,6 @@ public class CardPageGenerator {
             }
         }
 
-        // Career Context
         if (c.has("Rookie") && c.get("Rookie").equalsIgnoreCase("Yes")) {
             sb.append("As an official <strong>Rookie Card</strong>, it captures ").append(escapeHtml(player)).append(" at the very beginning of their professional career. ");
         }
@@ -693,7 +810,6 @@ public class CardPageGenerator {
         String variant = c.get("Variant");
         String player = c.get("Player");
 
-        // Rarity/Serial Number
         if (isHolyGrail(c)) {
             sb.append(createFaqItem("Is this a 'Holy Grail' card for collectors?", "Yes, this card belongs to one of the most prestigious series in the hobby (like PMG, Legacy, or Star Rubies). These are extremely rare and highly sought after by high-end collectors worldwide."));
         }
@@ -707,7 +823,6 @@ public class CardPageGenerator {
             sb.append(createFaqItem("Is this card numbered?", "No, this version of the card was not individually serial numbered by " + escapeHtml(company) + ". These are often referred to as 'pack-pulled' or 'un-numbered' versions."));
         }
 
-        // Rookie Card
         if (c.has("Rookie")) {
             String rookieAns = c.get("Rookie").equalsIgnoreCase("Yes") ?
                     "Yes, this is an official Rookie Card (RC) from " + escapeHtml(player) + "'s debut " + escapeHtml(season) + " season, which is highly sought after by collectors." :
@@ -715,7 +830,6 @@ public class CardPageGenerator {
             sb.append(createFaqItem("Is this a " + escapeHtml(player) + " Rookie Card?", rookieAns));
         }
 
-        // Autograph & Memorabilia
         if (c.has("Autograph") && c.get("Autograph").equalsIgnoreCase("Yes")) {
             sb.append(createFaqItem("Is the autograph on this card authentic?", "Yes, this card features a manufacturer-certified autograph. " + escapeHtml(company) + " guarantees the authenticity of the signature on the card."));
         }
@@ -724,17 +838,14 @@ public class CardPageGenerator {
             sb.append(createFaqItem("What kind of memorabilia is on this card?", "This card contains a piece of game-used memorabilia, typically a jersey or patch worn by the player in a game."));
         }
 
-        // Brand/Set Significance
         if (brand.toLowerCase().contains("metal universe")) {
             sb.append(createFaqItem("What makes SkyBox Metal Universe cards special?", "Metal Universe cards from the late 90s are famous for their unique 'galactic' backgrounds and high-quality etching, with the PMG parallels being some of the most expensive cards in the hobby."));
         }
 
-        // Variant/Theme
         if (isValid(variant) && !variant.equalsIgnoreCase("Base")) {
             sb.append(createFaqItem("What is the '" + escapeHtml(variant) + "' variant?", "The '" + escapeHtml(variant) + "' is a parallel version of the base card. Parallels usually have different colors, finishes, or lower print runs than the standard version."));
         }
 
-        // Team
         sb.append(createFaqItem("Which team is " + escapeHtml(player) + " representing on this card?", "On this " + escapeHtml(season) + " " + escapeHtml(brand) + " card, " + escapeHtml(player) + " is shown as a member of the " + escapeHtml(c.get("Team")) + "."));
 
         if ("Juwan Howard".equals(c.get("Player"))) {
@@ -752,7 +863,6 @@ public class CardPageGenerator {
             }
         }
 
-        // Grading
         if (c.has("Grade")) {
             sb.append(createFaqItem("Is this card professionally graded?", "Yes, this card has been graded by " + escapeHtml(c.get("Grading Co.")) + " and received a score of " + escapeHtml(c.get("Grade")) + ". Professional grading helps verify the condition and authenticity of high-value cards."));
         }
@@ -764,9 +874,9 @@ public class CardPageGenerator {
         return "<details class=\"faq-details\">" + "<summary class=\"faq-summary\">" + question + "</summary>" + "<p class=\"faq-answer\">" + answer + "</p>" + "</details>";
     }
 
-    private static String generateJsonLd(CardData c, String desc, String h1Title, String overviewPage) {
-        String frontImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + c.filenameBase + "-front.webp";
-        String backImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + c.filenameBase + "-back.webp";
+    private static String generateJsonLd(CardData c, String desc, String h1Title, String overviewPage, String imageBaseName) {
+        String frontImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + imageBaseName + "-front.webp";
+        String backImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + imageBaseName + "-back.webp";
 
         StringBuilder sb = new StringBuilder();
         sb.append("<script type=\"application/ld+json\">\n");

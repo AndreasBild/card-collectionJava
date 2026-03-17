@@ -12,6 +12,13 @@ import software.amazon.awssdk.services.cloudfront.CloudFrontClient;
 import software.amazon.awssdk.services.cloudfront.model.CreateInvalidationRequest;
 import software.amazon.awssdk.services.cloudfront.model.InvalidationBatch;
 
+import software.amazon.awssdk.services.s3.model.ListObjectsV2Request;
+import software.amazon.awssdk.services.s3.model.ListObjectsV2Response;
+import software.amazon.awssdk.services.s3.model.S3Object;
+import software.amazon.awssdk.services.s3.model.DeleteObjectsRequest;
+import software.amazon.awssdk.services.s3.model.Delete;
+import software.amazon.awssdk.services.s3.model.ObjectIdentifier;
+
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,18 +32,15 @@ import java.util.stream.Stream;
 public class SiteBuilderPipeline {
 
     private static final String OUTPUT_DIR = "output";
-    private static final String IMAGES_DIR = "output/images"; // Pointing to the generated WebP folder
+    private static final String IMAGES_DIR = "output/images";
     private static final String BUCKET_NAME = "maulmann.de";
     private static final Region REGION = Region.EU_CENTRAL_1;
 
     // --- CLOUDFRONT CONFIG ---
-    // IMPORTANT: Replace this with your actual CloudFront Distribution ID!
     private static final String CLOUDFRONT_DIST_ID = "E2R4RQKEX6C6Y6";
 
     // --- CACHE CONTROL CONSTANTS ---
-    // 1 Year Cache for Static Assets (Images, CSS, JS)
     private static final String CACHE_LONG = "public, max-age=31536000, immutable";
-    // 0 Seconds Cache for HTML & XML (Always force browser to check for new version)
     private static final String CACHE_SHORT = "max-age=0, must-revalidate";
 
     public static void main(String[] args) {
@@ -45,19 +49,19 @@ public class SiteBuilderPipeline {
         System.out.println("🚀 STARTING MASTER BUILD PIPELINE");
         System.out.println("==================================================");
 
-        // --- UPGRADE: Custom Netty Client to handle massive concurrent uploads ---
         try (S3AsyncClient s3AsyncClient = S3AsyncClient.builder()
                 .region(REGION)
                 .credentialsProvider(DefaultCredentialsProvider.create())
                 .httpClientBuilder(NettyNioAsyncHttpClient.builder()
-                        .maxConcurrency(500) // Handles huge bursts of file uploads safely
+                        .maxConcurrency(500)
                         .connectionAcquisitionTimeout(Duration.ofSeconds(60))
                 )
                 .build()) {
 
             // --- PHASE 1: Generate Site HTML ---
             System.out.println("\n[PHASE 1] Generating HTML files...");
-            FileGenerator.main(new String[0]);
+            FileGenerator.main(new String[0]); // Baut das Grundgerüst und fügt die Saison-Dateien zusammen
+            CardPageGenerator.run();           // Liest die fertigen Tabellen, generiert Subpages & verlinkt sie!
 
             // --- PHASE 2: Convert Images to WebP ---
             System.out.println("\n[PHASE 2] Converting images to WebP...");
@@ -70,6 +74,10 @@ public class SiteBuilderPipeline {
             // --- PHASE 4: Upload Images (No GZIP) ---
             System.out.println("\n[PHASE 4] Syncing Images to S3...");
             processAndUploadImages(s3AsyncClient);
+
+            // --- PHASE 4.5: Clean up Orphaned Files on S3 ---
+            System.out.println("\n[PHASE 4.5] Sweeping S3 for ghost files...");
+            cleanOrphanedS3Files(s3AsyncClient);
 
             // --- PHASE 5: Generate, Compress & Upload Sitemap ---
             System.out.println("\n[PHASE 5] Processing Sitemap...");
@@ -97,8 +105,6 @@ public class SiteBuilderPipeline {
         try (Stream<Path> paths = Files.walk(outputDir)) {
             paths.filter(Files::isRegularFile).forEach(file -> {
                 String fileName = file.getFileName().toString().toLowerCase();
-
-                // Strips "output/" so files land in the bucket root
                 String s3Key = outputDir.relativize(file).toString().replace("\\", "/");
 
                 try {
@@ -132,7 +138,7 @@ public class SiteBuilderPipeline {
 
     private static void processAndUploadImages(S3AsyncClient s3Client) throws Exception {
         Path imagesDir = Paths.get(IMAGES_DIR);
-        Path outputDir = Paths.get(OUTPUT_DIR); // Needed to strip the prefix
+        Path outputDir = Paths.get(OUTPUT_DIR);
 
         if (!Files.exists(imagesDir)) {
             System.out.println("-> Images directory not found, skipping phase.");
@@ -148,9 +154,7 @@ public class SiteBuilderPipeline {
                 String contentType = determineImageContentType(fileName);
 
                 if (contentType != null) {
-                    // Strips "output/" so "output/images/card.webp" becomes "images/card.webp" in S3
                     String s3Key = outputDir.relativize(file).toString().replace("\\", "/");
-
                     uploadFutures.add(uploadRawFileAsync(s3Client, file, s3Key, contentType, CACHE_LONG, uploadCount));
                 }
             });
@@ -158,6 +162,83 @@ public class SiteBuilderPipeline {
 
         CompletableFuture.allOf(uploadFutures.toArray(new CompletableFuture[0])).join();
         System.out.println("-> Successfully synced " + uploadCount.get() + " images.");
+    }
+
+    private static void cleanOrphanedS3Files(S3AsyncClient s3Client) {
+        try {
+            Path localOutputDir = Paths.get(OUTPUT_DIR);
+            List<ObjectIdentifier> objectsToDelete = new ArrayList<>();
+
+            System.out.println("    Scanning S3 bucket for pagination...");
+
+            // --- THE FIX: Robust S3 Pagination Loop ---
+            boolean isDone = false;
+            String continuationToken = null;
+            int totalS3FilesScanned = 0;
+
+            while (!isDone) {
+                ListObjectsV2Request.Builder reqBuilder = ListObjectsV2Request.builder()
+                        .bucket(BUCKET_NAME);
+
+                if (continuationToken != null) {
+                    reqBuilder.continuationToken(continuationToken);
+                }
+
+                // Sync call is safe here and guarantees we wait for the page
+                ListObjectsV2Response listRes = s3Client.listObjectsV2(reqBuilder.build()).join();
+
+                for (S3Object s3Object : listRes.contents()) {
+                    totalS3FilesScanned++;
+                    String s3Key = s3Object.key();
+
+                    // We strictly only sweep files in the generated "cards" and "images" directories
+                    // We DO NOT sweep root HTML files to prevent accidental deletion of static pages
+                    if (s3Key.startsWith("cards/") || s3Key.startsWith("images/")) {
+
+                        Path expectedLocalFile = localOutputDir.resolve(s3Key);
+
+                        if (!Files.exists(expectedLocalFile)) {
+                            objectsToDelete.add(ObjectIdentifier.builder().key(s3Key).build());
+                        }
+                    }
+                }
+
+                if (listRes.nextContinuationToken() == null) {
+                    isDone = true;
+                } else {
+                    continuationToken = listRes.nextContinuationToken();
+                }
+            }
+            // ------------------------------------------
+
+            System.out.println("    Finished scanning " + totalS3FilesScanned + " objects in S3.");
+
+            if (!objectsToDelete.isEmpty()) {
+                System.out.println("    -> Found " + objectsToDelete.size() + " orphaned files. Deleting from S3 in batches...");
+
+                // AWS allows max 1000 deletes per request. We must batch them.
+                for (int i = 0; i < objectsToDelete.size(); i += 1000) {
+                    int end = Math.min(objectsToDelete.size(), i + 1000);
+                    List<ObjectIdentifier> batch = objectsToDelete.subList(i, end);
+
+                    DeleteObjectsRequest deleteReq = DeleteObjectsRequest.builder()
+                            .bucket(BUCKET_NAME)
+                            .delete(Delete.builder().objects(batch).build())
+                            .build();
+
+                    s3Client.deleteObjects(deleteReq).join();
+                    System.out.println("       Deleted batch of " + batch.size() + " files.");
+                }
+
+                System.out.println("    -> S3 Cleanup complete.");
+            } else {
+                System.out.println("    -> S3 is perfectly in sync. No ghost files found.");
+            }
+
+        } catch (Exception e) {
+            System.err.println("-> WARNING: Failed to clean orphaned S3 files: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     private static void processAndUploadSitemap(S3AsyncClient s3Client) throws Exception {
@@ -176,7 +257,7 @@ public class SiteBuilderPipeline {
                 .key("sitemap.xml.gz")
                 .contentType("application/xml")
                 .contentEncoding("gzip")
-                .cacheControl(CACHE_SHORT) // Sitemap must always be fresh for search engines
+                .cacheControl(CACHE_SHORT)
                 .build();
 
         CompletableFuture<PutObjectResponse> future = s3Client.putObject(
@@ -191,18 +272,16 @@ public class SiteBuilderPipeline {
     private static void invalidateCloudFrontCache() {
         System.out.println("\n[PHASE 6] Invalidating CloudFront Edge Caches...");
 
-        // Skip if you haven't put your ID in yet
         if (CLOUDFRONT_DIST_ID.equals("YOUR_DISTRIBUTION_ID_HERE")) {
             System.out.println("-> WARNING: CloudFront ID not set. Skipping invalidation.");
             return;
         }
 
         try (CloudFrontClient cloudFrontClient = CloudFrontClient.builder()
-                .region(Region.AWS_GLOBAL) // CloudFront requires the global region
+                .region(Region.AWS_GLOBAL)
                 .credentialsProvider(DefaultCredentialsProvider.create())
                 .build()) {
 
-            // Fully qualified class name to avoid conflict with java.nio.file.Paths
             software.amazon.awssdk.services.cloudfront.model.Paths cfPaths =
                     software.amazon.awssdk.services.cloudfront.model.Paths.builder()
                             .quantity(1)
@@ -211,7 +290,7 @@ public class SiteBuilderPipeline {
 
             InvalidationBatch batch = InvalidationBatch.builder()
                     .paths(cfPaths)
-                    .callerReference(String.valueOf(System.currentTimeMillis())) // Unique ID for this specific invalidation
+                    .callerReference(String.valueOf(System.currentTimeMillis()))
                     .build();
 
             CreateInvalidationRequest request = CreateInvalidationRequest.builder()
@@ -227,7 +306,6 @@ public class SiteBuilderPipeline {
         }
     }
 
-    // --- Helper: Uploads GZIPPED data directly from RAM with Cache-Control ---
     private static CompletableFuture<Void> uploadBytesAsync(S3AsyncClient s3Client, String s3Key, byte[] data, String contentType, String cacheControl, AtomicInteger counter) {
         PutObjectRequest request = PutObjectRequest.builder()
                 .bucket(BUCKET_NAME)
@@ -246,7 +324,6 @@ public class SiteBuilderPipeline {
                 });
     }
 
-    // --- Helper: Uploads RAW BINARY files (like WebP) directly from Hard Drive with Cache-Control ---
     private static CompletableFuture<Void> uploadRawFileAsync(S3AsyncClient s3Client, Path localFile, String s3Key, String contentType, String cacheControl, AtomicInteger counter) {
         PutObjectRequest request = PutObjectRequest.builder()
                 .bucket(BUCKET_NAME)
@@ -264,7 +341,6 @@ public class SiteBuilderPipeline {
     }
 
     private static String determineImageContentType(String fileName) {
-        // JPGs explicitly ignored. Only modern/standard web formats allowed.
         if (fileName.endsWith(".png")) return "image/png";
         if (fileName.endsWith(".webp")) return "image/webp";
         if (fileName.endsWith(".gif")) return "image/gif";
