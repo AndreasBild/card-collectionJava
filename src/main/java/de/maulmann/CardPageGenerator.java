@@ -53,7 +53,6 @@ public class CardPageGenerator {
 
         private void calculatePaths(int uniqueId) {
             List<String> filenameTokens = new ArrayList<>();
-
             addIfPresent(filenameTokens, attributes.get("Player"));
             addIfPresent(filenameTokens, attributes.get("Team"));
             addIfPresent(filenameTokens, attributes.get("Season"));
@@ -76,7 +75,6 @@ public class CardPageGenerator {
 
             this.filenameBase = cleanFilename(String.join("-", filenameTokens)) + "-" + uniqueId;
             this.filename = this.filenameBase + ".html";
-
             String seasonRaw = attributes.get("Season");
             this.seasonFolder = isValid(seasonRaw) ? cleanFilename(seasonRaw) : "Unknown_Season";
             this.fullRelativePath = "cards/" + this.seasonFolder + "/" + this.filename;
@@ -831,29 +829,28 @@ public class CardPageGenerator {
         String frontImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + imageBaseName + "-front.webp";
         String backImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + imageBaseName + "-back.webp";
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("<script type=\"application/ld+json\">\n");
-        sb.append("{\n");
-        sb.append("  \"@context\": \"https://schema.org\",\n");
-        sb.append("  \"@graph\": [\n");
-        sb.append("    {\n");
-        sb.append("      \"@type\": \"VisualArtwork\",\n");
-        sb.append("      \"name\": \"").append(escapeJson(h1Title)).append("\",\n");
-        sb.append("      \"image\": [ \"").append(frontImgUrl).append("\", \"").append(backImgUrl).append("\" ],\n");
-        sb.append("      \"description\": \"").append(escapeJson(desc)).append("\",\n");
-        sb.append("      \"creator\": { \"@type\": \"Organization\", \"name\": \"").append(escapeJson(c.get("Company"))).append("\" },\n");
-        sb.append("      \"about\": {\n");
-        sb.append("        \"@type\": \"Person\",\n");
-        sb.append("        \"name\": \"").append(escapeJson(c.get("Player"))).append("\",\n");
-        sb.append("        \"jobTitle\": \"Professional Basketball Player\"\n");
-        sb.append("      },\n");
-        sb.append("      \"artMedium\": \"Trading Card\",\n");
-        sb.append("      \"artform\": \"Sports Memorabilia\"\n");
-        sb.append("    }\n");
-        sb.append("  ]\n");
-        sb.append("}\n");
-        sb.append("</script>\n");
-        return sb.toString();
+        String sb = "<script type=\"application/ld+json\">\n" +
+                "{\n" +
+                "  \"@context\": \"https://schema.org\",\n" +
+                "  \"@graph\": [\n" +
+                "    {\n" +
+                "      \"@type\": \"VisualArtwork\",\n" +
+                "      \"name\": \"" + escapeJson(h1Title) + "\",\n" +
+                "      \"image\": [ \"" + frontImgUrl + "\", \"" + backImgUrl + "\" ],\n" +
+                "      \"description\": \"" + escapeJson(desc) + "\",\n" +
+                "      \"creator\": { \"@type\": \"Organization\", \"name\": \"" + escapeJson(c.get("Company")) + "\" },\n" +
+                "      \"about\": {\n" +
+                "        \"@type\": \"Person\",\n" +
+                "        \"name\": \"" + escapeJson(c.get("Player")) + "\",\n" +
+                "        \"jobTitle\": \"Professional Basketball Player\"\n" +
+                "      },\n" +
+                "      \"artMedium\": \"Trading Card\",\n" +
+                "      \"artform\": \"Sports Memorabilia\"\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}\n" +
+                "</script>\n";
+        return sb;
     }
 
     private static void addTableRow(StringBuilder sb, String title, String value) {
