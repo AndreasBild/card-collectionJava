@@ -6,6 +6,12 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateExceptionHandler;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,6 +35,14 @@ public class CardPageGenerator {
     public static final String ROOT = "../../";
 
     private static final List<String> duplicateLog = new ArrayList<>();
+
+    private static final Configuration fmConfig;
+    static {
+        fmConfig = new Configuration(Configuration.VERSION_2_3_32);
+        fmConfig.setClassForTemplateLoading(CardPageGenerator.class, "/templates");
+        fmConfig.setDefaultEncoding("UTF-8");
+        fmConfig.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+    }
 
     static class CardData {
         Map<String, String> attributes;
@@ -319,9 +333,7 @@ public class CardPageGenerator {
         executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
     }
 
-    private static void createSubPage(CardData c, Path path, CardData prev, CardData next, List<CardData> allCards, String overviewPage) throws IOException {
-        StringBuilder sb = new StringBuilder(10000);
-
+    private static void createSubPage(CardData c, Path path, CardData prev, CardData next, List<CardData> allCards, String overviewPage) {
         String h1Title = generateH1(c);
         String browserTitle = generateBrowserTitle(c, overviewPage);
         String metaDesc = generateMetaDescription(c);
@@ -332,245 +344,79 @@ public class CardPageGenerator {
         String frontImgPath = seasonImgFolder + "/" + imageBaseName + "-front.webp";
         String backImgPath = seasonImgFolder + "/" + imageBaseName + "-back.webp";
 
-        String frontAlt = generateAltText(c, "front");
-        String backAlt = generateAltText(c, "back");
-        String frontImgTitle = "Front scan of " + c.get("Player") + " " + c.get("Brand") + " (" + c.get("Season") + ")";
-        String backImgTitle = "Back scan of " + c.get("Player") + " " + c.get("Brand") + " (" + c.get("Season") + ")";
+        // OCR Logic
+        String originalPath = "images/" + c.seasonFolder + "/" + imageBaseName + "-back.jpg";
+        String backText = "";
+         //     backText=  new File(originalPath).exists() ? CardTextExtractor.getBackText(originalPath) : "";
 
-        // HTML START
-        sb.append("<!doctype html>\n<html lang=\"en\">\n<head>\n");
-        sb.append(SharedTemplates.getHead(escapeHtml(browserTitle), escapeHtml(metaDesc), ROOT, overviewPage, frontImgPath));
-        sb.append("    <link rel=\"preload\" as=\"image\" href=\"").append(frontImgPath).append("\" fetchpriority=\"high\">\n");
-        sb.append(generateJsonLd(c, metaDesc, h1Title, overviewPage, imageBaseName));
-        sb.append("</head>\n<body>\n");
+        // Baue die Map für FreeMarker auf
+        Map<String, Object> data = new HashMap<>();
 
-        // NAVIGATION
-        String activeNav = overviewPage.replace(".html", "").toLowerCase();
-        if (activeNav.equals("juwan-howard-collection")) activeNav = "collection";
-        sb.append(SharedTemplates.getTopNav(ROOT, activeNav));
+        // Globale HTML Bausteine
+        data.put("headHtml", SharedTemplates.getHead(escapeHtml(browserTitle), escapeHtml(metaDesc), ROOT, overviewPage, frontImgPath));
+        data.put("jsonLd", generateJsonLd(c, metaDesc, h1Title, overviewPage, imageBaseName));
+        data.put("topNavHtml", SharedTemplates.getTopNav(ROOT, "collection"));
+        data.put("footerHtml", SharedTemplates.getFooter(ROOT));
 
-        sb.append("<nav class=\"detail-nav\" style=\"border: none; background: transparent;\">\n");
-        sb.append("    <a href=\"../../").append(overviewPage).append("\" class=\"modern-button\" style=\"text-decoration:none;\">&larr; Overview</a>\n");
-        sb.append("    <div style=\"display: flex; gap: 10px;\">\n");
-        if (prev != null) {
-            String prevLink = "../" + prev.seasonFolder + "/" + prev.filename;
-            sb.append("        <a id=\"prevCardLink\" href=\"").append(prevLink).append("\" class=\"modern-button\" style=\"text-decoration:none;\">&laquo; Prev</a>\n");
-        }
-        if (next != null) {
-            String nextLink = "../" + next.seasonFolder + "/" + next.filename;
-            sb.append("        <a id=\"nextCardLink\" href=\"").append(nextLink).append("\" class=\"modern-button\" style=\"text-decoration:none;\">Next &raquo;</a>\n");
-        }
-        sb.append("    </div>\n");
-        sb.append("</nav>\n");
+        // Navigation
+        data.put("overviewPage", overviewPage);
+        data.put("prevLink", prev != null ? "../" + prev.seasonFolder + "/" + prev.filename : null);
+        data.put("nextLink", next != null ? "../" + next.seasonFolder + "/" + next.filename : null);
 
-        // MAIN CONTENT
-        sb.append("<main class=\"detail-main\">\n");
-        sb.append("    <header class=\"detail-header\">\n");
-        sb.append("        <h1>").append(escapeHtml(h1Title)).append("</h1>\n");
-        sb.append("    </header>\n");
+        // Titel und SEO Text
+        data.put("h1Title", escapeHtml(h1Title));
+        data.put("aiSnapshotText", escapeHtml(metaDesc));
 
-        // --- AI Snapshot / TL;DR Box ---
-        sb.append("    <div class=\"ai-summary\" style=\"background: #f4f8fc; border-left: 4px solid #0056b3; padding: 15px; border-radius: 4px; margin-bottom: 25px;\">\n");
-        sb.append("        <p style=\"margin:0; font-size: 0.95em;\"><strong>Card Snapshot:</strong> The ");
-        sb.append(escapeHtml(c.get("Season"))).append(" ").append(escapeHtml(c.get("Company"))).append(" ").append(escapeHtml(c.get("Brand"))).append(" ");
-        sb.append(escapeHtml(c.get("Player")));
-        if (c.has("Variant") && !c.get("Variant").equalsIgnoreCase("Base")) {
-            sb.append(" ").append(escapeHtml(c.get("Variant")));
-        }
-        sb.append(" (Card #").append(escapeHtml(c.get("Number"))).append(") ");
+        // Bilder
+        data.put("frontImgPath", frontImgPath);
+        data.put("backImgPath", backImgPath);
+        data.put("frontAlt", escapeHtml(generateAltText(c, "front")));
+        data.put("backAlt", escapeHtml(generateAltText(c, "back")));
+        data.put("frontImgTitle", escapeHtml("Front scan of " + c.get("Player") + " " + c.get("Brand")));
+        data.put("backImgTitle", escapeHtml("Back scan of " + c.get("Player") + " " + c.get("Brand")));
+
+        // Technische Daten (Tabelle)
+        data.put("season", isValid(c.get("Season")) ? escapeHtml(c.get("Season")) : "-");
+        data.put("team", isValid(c.get("Team")) ? escapeHtml(c.get("Team")) : "-");
+        data.put("company", isValid(c.get("Company")) ? escapeHtml(c.get("Company")) : "-");
+        data.put("brand", isValid(c.get("Brand")) ? escapeHtml(c.get("Brand")) : "-");
+        data.put("theme", isValid(c.get("Theme")) ? escapeHtml(c.get("Theme")) : "-");
+        data.put("variant", isValid(c.get("Variant")) ? escapeHtml(c.get("Variant")) : "-");
+        data.put("number", isValid(c.get("Number")) ? escapeHtml(c.get("Number")) : "-");
+        data.put("rookie", isValid(c.get("Rookie")) ? escapeHtml(c.get("Rookie")) : "-");
+        data.put("memorabilia", isValid(c.get("Game Used")) ? escapeHtml(c.get("Game Used")) : "-");
+        data.put("autograph", isValid(c.get("Autograph")) ? escapeHtml(c.get("Autograph")) : "-");
 
         String combined = c.get("Serial/Print Run");
-        if (isValid(combined)) {
-            sb.append("is a limited edition sports trading card, serially numbered ").append(escapeHtml(combined)).append(". ");
-        } else if (c.has("Serial")) {
-            sb.append("is a limited edition sports trading card, serially numbered ").append(escapeHtml(c.get("Serial"))).append("/").append(escapeHtml(c.get("Print Run"))).append(". ");
-        } else {
-            sb.append("is a collectible sports trading card. ");
-        }
-
-        if (c.has("Autograph") && c.get("Autograph").equalsIgnoreCase("Yes")) sb.append("It features a certified authentic autograph. ");
-        if (c.has("Game Used") && c.get("Game Used").equalsIgnoreCase("Yes")) sb.append("It contains game-used memorabilia. ");
-        sb.append("</p>\n    </div>\n");
-
-        // IMAGES SECTION
-        sb.append("    <div class=\"card-images-container\" style=\"display: flex; gap: 20px; flex-wrap: wrap;\">\n");
-        sb.append("        <div class=\"card-image-wrapper\" style=\"display: flex; flex-direction: column; align-items: center;\">\n");
-        sb.append("            <img src=\"").append(frontImgPath).append("\" alt=\"").append(escapeHtml(frontAlt)).append("\" title=\"").append(escapeHtml(frontImgTitle)).append("\" width=\"400\" height=\"550\" fetchpriority=\"high\" style=\"aspect-ratio: 400 / 550; width: 100%; max-width: 400px; height: auto; display: block; object-fit: contain; cursor: zoom-in;\" onclick=\"openModal('").append(frontImgPath).append("', '").append(backImgPath).append("')\">\n");
-        sb.append("            <p style=\"margin-top: 10px; font-size: 0.85em; color: #666;\">&#x1F50D; Click to Enlarge Front</p>\n");
-        sb.append("        </div>\n");
-        sb.append("        <div class=\"card-image-wrapper\" style=\"display: flex; flex-direction: column; align-items: center;\">\n");
-        sb.append("            <img src=\"").append(backImgPath).append("\" alt=\"").append(escapeHtml(backAlt)).append("\" title=\"").append(escapeHtml(backImgTitle)).append("\" width=\"400\" height=\"550\" loading=\"lazy\" style=\"aspect-ratio: 400 / 550; width: 100%; max-width: 400px; height: auto; display: block; object-fit: contain; cursor: zoom-in;\" onclick=\"openModal('").append(backImgPath).append("', '").append(frontImgPath).append("')\">\n");
-        sb.append("            <p style=\"margin-top: 10px; font-size: 0.85em; color: #666;\">&#x1F50D; Click to Enlarge Back</p>\n");
-        sb.append("        </div>\n");
-        sb.append("    </div>\n");
-
-        // DATA TABLE
-        sb.append("    <div class=\"card-data\" style=\"margin-top: 30px;\">\n");
-        sb.append("        <table style=\"width: 100%; border-collapse: collapse; margin-top: 20px;\">\n");
-        sb.append("            <tr class=\"specs-table-header\"><th colspan=\"2\" style=\"padding: 10px; text-align: left;\">Technical Specifications</th></tr>\n");
-        addTableRow(sb, "Season", c.get("Season"));
-        addTableRow(sb, "Team", c.get("Team"));
-        addTableRow(sb, "Manufacturer", c.get("Company"));
-        addTableRow(sb, "Brand", c.get("Brand"));
-        addTableRow(sb, "Theme", c.get("Theme"));
-        addTableRow(sb, "Variant", c.get("Variant"));
-        addTableRow(sb, "Card Number", c.get("Number"));
-
         String serialDisplay = "-";
         if (isValid(combined)) {
             serialDisplay = combined;
         } else if (c.has("Serial") || c.has("Print Run")) {
             serialDisplay = (c.has("Serial") ? c.get("Serial") : "?") + " / " + (c.has("Print Run") ? c.get("Print Run") : "?");
         }
-        addTableRow(sb, "Serial / Print Run", serialDisplay);
-        addTableRow(sb, "Rookie Card", c.get("Rookie"));
-        addTableRow(sb, "Memorabilia", c.get("Game Used"));
-        addTableRow(sb, "Autograph", c.get("Autograph"));
+        data.put("serialDisplay", escapeHtml(serialDisplay));
 
         String grading = c.get("Grading Co.") + " " + c.get("Grade");
-        if (grading.trim().length() > 1 && !grading.trim().equals("null null")) {
-            addTableRow(sb, "Grading", grading);
+        data.put("grading", (grading.trim().length() > 1 && !grading.trim().equals("null null")) ? escapeHtml(grading) : "");
+
+        // Trivia & Context Engines
+        data.put("hobbyTrivia", getHobbyTrivia(c));
+        data.put("techTrivia", getCardTechTrivia(c));
+        data.put("playerHighlights", getSeasonHighlights(c.get("Season"), c.get("Player")));
+        data.put("eraContext", getNbaEraContext(c.get("Season")));
+        data.put("cardBackText", backText);
+
+        data.put("faqHtml", generateFaqHtml(c));
+
+        // FreeMarker Template füllen und in die Datei schreiben
+        try {
+            Template template = fmConfig.getTemplate("card-detail.ftlh");
+            try (Writer out = new OutputStreamWriter(new FileOutputStream(path.toFile()), StandardCharsets.UTF_8)) {
+                template.process(data, out);
+            }
+        } catch (Exception e) {
+            log.error("Failed to process FreeMarker template for " + c.filename, e);
         }
-        sb.append("        </table>\n");
-        sb.append("    </div>\n");
-
-        // --- NEW: ADVANCED TRIVIA & CONTEXT ENGINES ---
-        String hobbyTrivia = getHobbyTrivia(c);
-        String techTrivia = getCardTechTrivia(c);
-        String eraContext = getNbaEraContext(c.get("Season"));
-        String playerHighlights = getSeasonHighlights(c.get("Season"), c.get("Player"));
-
-
-        // --- NEW: EXTRACT TEXT FROM BACK IMAGE (USING ORIGINAL JPG/PNG) ---
-        // Passe "images/" an, falls deine Original-Scans woanders liegen (z.B. "content/images/")
-        String originalImgBasePath = "images/" + c.seasonFolder + "/" + imageBaseName + "-back";
-
-        File sourceJpg = new File(originalImgBasePath + ".jpg");
-        File sourcePng = new File(originalImgBasePath + ".png");
-        File sourceJpeg = new File(originalImgBasePath + ".jpeg");
-
-        String pathToRead = "";
-        if (sourceJpg.exists()) pathToRead = sourceJpg.getPath();
-        else if (sourcePng.exists()) pathToRead = sourcePng.getPath();
-        else if (sourceJpeg.exists()) pathToRead = sourceJpeg.getPath();
-
-        String cardBackText = "";
-        /*
-        if (!pathToRead.isEmpty()) {
-            cardBackText = CardTextExtractor.getBackText(pathToRead);
-        } else {
-            // Optional: Hilft dir beim Debuggen, falls der Pfad nicht stimmt
-            // System.out.println("⚠️ OCR Skipped: Could not find original image for " + originalImgBasePath);
-        }
-*/
-        if (!hobbyTrivia.isEmpty() || !techTrivia.isEmpty() || !eraContext.isEmpty() || !playerHighlights.isEmpty() || !cardBackText.isEmpty()) {
-            sb.append("    <div class=\"context-engine\" style=\"margin-top: 40px; display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));\">\n");
-
-            // 1. Hobby Significance
-            if (!hobbyTrivia.isEmpty()) {
-                sb.append("        <div style=\"background: #fff; border: 1px solid #eaeaea; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);\">\n");
-                sb.append("            <h3 style=\"margin-top:0; color: #333; font-size: 1.1em;\">&#x1F3C6; Hobby Significance</h3>\n");
-                sb.append("            <p style=\"font-size: 0.95em; color: #555; line-height: 1.6;\">").append(hobbyTrivia).append("</p>\n");
-                sb.append("        </div>\n");
-            }
-
-            // 2. Card Manufacturing Technology
-            if (!techTrivia.isEmpty()) {
-                sb.append("        <div style=\"background: #fff; border: 1px solid #eaeaea; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);\">\n");
-                sb.append("            <h3 style=\"margin-top:0; color: #333; font-size: 1.1em;\">&#x2692;&#xFE0F; Card Technology</h3>\n");
-                sb.append("            <p style=\"font-size: 0.95em; color: #555; line-height: 1.6;\">").append(techTrivia).append("</p>\n");
-                sb.append("        </div>\n");
-            }
-
-            // 3. Player Performance & Teammates
-            if (!playerHighlights.isEmpty()) {
-                sb.append("        <div style=\"background: #fff; border: 1px solid #eaeaea; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);\">\n");
-                sb.append("            <h3 style=\"margin-top:0; color: #333; font-size: 1.1em;\">&#x1F4C8; Player Performance & Team</h3>\n");
-                sb.append("            <p style=\"font-size: 0.95em; color: #555; line-height: 1.6;\">").append(playerHighlights).append("</p>\n");
-                sb.append("        </div>\n");
-            }
-
-            // 4. NBA Era & Pop Culture Context
-            if (!eraContext.isEmpty()) {
-                sb.append("        <div style=\"background: #fff; border: 1px solid #eaeaea; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);\">\n");
-                sb.append("            <h3 style=\"margin-top:0; color: #333; font-size: 1.1em;\">&#x1F3C0; NBA Era & Pop Culture</h3>\n");
-                sb.append("            <p style=\"font-size: 0.95em; color: #555; line-height: 1.6;\">").append(eraContext).append("</p>\n");
-                sb.append("        </div>\n");
-            }
-
-            // 5. EXTRACTED CARD TEXT (Spans full width at the bottom of the grid)
-            if (!cardBackText.isEmpty()) {
-                sb.append("        <div style=\"background: #fdfdfd; border: 1px solid #ddd; border-radius: 8px; padding: 20px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); grid-column: 1 / -1;\">\n");
-                sb.append("            <h3 style=\"margin-top:0; color: #444; font-size: 1.1em;\">&#x1F4DC; Back Side Card Content</h3>\n");
-                // white-space: pre-wrap ensures the line breaks from OCR are preserved beautifully
-                sb.append("            <p style=\"font-size: 0.95em; color: #666; line-height: 1.6; font-family: 'Courier New', Courier, monospace; white-space: pre-wrap;\">").append(escapeHtml(cardBackText)).append("</p>\n");
-                sb.append("        </div>\n");
-            }
-
-            sb.append("    </div>\n");
-        }
-
-        // FAQ SECTION
-        sb.append("    <section style=\"margin-top: 50px;\">\n");
-        sb.append("        <h2>Collector FAQs</h2>\n");
-        sb.append(generateFaqHtml(c));
-        sb.append("    </section>\n");
-
-        sb.append(SharedTemplates.getFooter(ROOT));
-        sb.append("</main>\n");
-
-        // --- MODAL & SCRIPT LOGIC ---
-        sb.append("""
-                    <div id="cardModal" class="modal" aria-hidden="true" style="display:none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.9);">
-                      <span class="close-modal" aria-label="Close zoomed image" onclick="closeModal()" style="position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer;">&times;</span>
-                      <button class="flip-modal-btn" aria-label="Flip card to other side" onclick="flipCard()" style="position: absolute; top: 20px; left: 20px; padding: 10px 20px; font-size: 16px; cursor: pointer;">&#8644; Flip Card</button>
-                      <img class="modal-content" id="img01" alt="Zoomed card view" style="margin: auto; display: block; max-width: 90%; max-height: 90vh;">
-                    </div>
-                
-                    <script>
-                        var modal = document.getElementById("cardModal");
-                        var modalImg = document.getElementById("img01");
-                        var currentModalSrc = "";
-                        var alternateModalSrc = "";
-                
-                        function openModal(src, altSrc) {
-                          modal.style.display = "flex";
-                          modal.style.alignItems = "center";
-                          modal.style.justifyContent = "center";
-                          modal.setAttribute("aria-hidden", "false");
-                          modalImg.src = src;
-                          currentModalSrc = src;
-                          alternateModalSrc = altSrc;
-                        }
-                        function closeModal() {
-                          modal.style.display = "none";
-                          modal.setAttribute("aria-hidden", "true");
-                        }
-                        function flipCard() {
-                            var temp = currentModalSrc;
-                            currentModalSrc = alternateModalSrc;
-                            alternateModalSrc = temp;
-                            modalImg.src = currentModalSrc;
-                        }
-                        window.onclick = function(event) {
-                          if (event.target == modal) closeModal();
-                        }
-                        document.addEventListener('keydown', function(event) {
-                            if (event.key === "Escape") closeModal();
-                            if (event.key === "ArrowLeft") {
-                                var prevLink = document.getElementById('prevCardLink');
-                                if (prevLink) window.location.href = prevLink.href;
-                            }
-                            if (event.key === "ArrowRight") {
-                                var nextLink = document.getElementById('nextCardLink');
-                                if (nextLink) window.location.href = nextLink.href;
-                            }
-                        });
-                    </script>
-                """);
-
-        sb.append("</body>\n</html>");
-        Files.writeString(path, sb.toString(), StandardCharsets.UTF_8);
     }
 
     // --- ENGINE 1: HOBBY SIGNIFICANCE (Sets, Parallels & History) ---

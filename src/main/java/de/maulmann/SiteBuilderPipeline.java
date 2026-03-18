@@ -60,7 +60,9 @@ public class SiteBuilderPipeline {
 
             // --- PHASE 1: Generate Site HTML ---
             System.out.println("\n[PHASE 1] Generating HTML files...");
-            FileGenerator.main(new String[0]); // Baut das Grundgerüst und fügt die Saison-Dateien zusammen
+            FileGenerator.buildCollectionOverview();
+            FileGenerator.buildOtherCollections();
+            FileGenerator.buildStaticPages();
             CardPageGenerator.run();           // Liest die fertigen Tabellen, generiert Subpages & verlinkt sie!
 
             // --- PHASE 2: Convert Images to WebP ---

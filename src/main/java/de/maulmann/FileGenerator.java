@@ -1,178 +1,165 @@
 package de.maulmann;
 
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateExceptionHandler;
+
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.Arrays;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 public class FileGenerator {
 
-    static final String DEFAULT_IMAGE = "https://www.maulmann.de/images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-sn47-front.webp";
-
-    public static void main(String[] args) {
-        System.out.println("-> Generiere Startseite (index.html)...");
-        createLandingPage();
-
-        System.out.println("-> Verarbeite statische Zusatzseiten...");
-        processStaticPage("Flawless.html", "2008 Upper Deck Exquisite Flawless Basketball | Private Collection", "Discover a stunning private collection of 2008 Upper Deck Exquisite Flawless basketball autographs.");
-        processStaticPage("Baseball.html", "Upper Deck Baseball Cards | Private Collection", "Explore our premium selection of rare Upper Deck Baseball cards and inscriptions.");
-        processStaticPage("Panini.html", "Panini Flawless Basketball | Private Collection", "A showcase of the ultra-high-end Panini Flawless basketball card collection.");
-        processStaticPage("Wantlist.html", "Juwan Howard Wantlist | Cards I'm Searching For", "A detailed list of rare Juwan Howard basketball cards needed to complete the ultimate private collection.");
-
-        // --- NEU: Die gesplitteten Saison-Dateien zusammenfügen ---
-        buildCollectionOverview();
-
-        System.out.println("-> HTML-Framework (Phase 1) abgeschlossen.");
+    private static final Configuration fmConfig;
+    static {
+        fmConfig = new Configuration(Configuration.VERSION_2_3_32);
+        fmConfig.setClassForTemplateLoading(FileGenerator.class, "/templates");
+        fmConfig.setDefaultEncoding("UTF-8");
+        fmConfig.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
     }
 
+    // --- 1. HAUPT-SAMMLUNG BAUEN ---
     public static void buildCollectionOverview() {
         try {
-            System.out.println("-> Baue Juwan-Howard-Collection.html aus Saison-Dateien...");
+            System.out.println("-> Baue Juwan-Howard-Collection.html...");
+            Map<String, Object> data = createBaseData("Juwan Howard Private Collection", "Complete Career Overview", "Juwan-Howard-Collection.html", "Juwan-Howard-Collection.html");
 
-            String headHtml = SharedTemplates.getHead("Juwan Howard Private Collection | Maulmann Trading Cards", "Complete overview of the Juwan Howard trading card collection, featuring 1/1s and rare inserts.", "", "Juwan-Howard-Collection.html", DEFAULT_IMAGE);
-
-            String topnav = SharedTemplates.loadResource("/templates/topnav.html").replace("{{ROOT}}", "");
-            topnav = topnav.replace("href=\"Juwan-Howard-Collection.html\"", "href=\"Juwan-Howard-Collection.html\" class=\"active\"");
-            String footer =SharedTemplates.loadResource("/templates/footer.html").replace("{{ROOT}}", "");
-
-            StringBuilder sb = new StringBuilder();
-            sb.append("<!DOCTYPE html>\n<html lang=\"en\">\n");
-            sb.append(headHtml).append("\n<body>\n").append(topnav).append("\n");
-            sb.append("<main class=\"detail-main\">\n");
-            sb.append("    <header class=\"detail-header\">\n");
-            sb.append("        <h1>Juwan Howard Private Collection</h1>\n");
-            sb.append("        <p class=\"sub-title\">Complete Career Overview</p>\n");
-            sb.append("    </header>\n");
-
-            // --- DATEIEN EINLESEN ---
             File contentDir = new File("content");
             File[] seasonFiles = contentDir.listFiles((dir, name) -> name.endsWith(".html") && name.matches(".*\\d.*"));
 
-            if (seasonFiles != null && seasonFiles.length > 0) {
-                Arrays.sort(seasonFiles); // Chronologisch sortieren
-
-                // --- NEU: DYNAMISCHE FILTER-BOX & SUCHFELD BAUEN ---
-                sb.append("    <div class=\"collection-controls\" style=\"margin: 20px 0; padding: 15px; background: #f4f8fc; border-radius: 8px; display: flex; gap: 15px; flex-wrap: wrap; align-items: center;\">\n");
-                sb.append("        <strong style=\"color: #333;\">Filter Collection:</strong>\n");
-
-                // Dropdown Menü (automatisch aus Dateinamen generiert)
-                sb.append("        <select id=\"seasonFilter\" style=\"padding: 10px; border-radius: 4px; border: 1px solid #ccc; font-size: 16px; min-width: 200px;\">\n");
-                sb.append("            <option value=\"all\">All Seasons</option>\n");
+            List<Map<String, String>> seasons = new ArrayList<>();
+            if (seasonFiles != null) {
+                Arrays.sort(seasonFiles);
                 for (File file : seasonFiles) {
-                    String seasonName = file.getName().replace(".html", "");
-                    sb.append("            <option value=\"").append(seasonName.toLowerCase()).append("\">Season ").append(seasonName).append("</option>\n");
+                    Map<String, String> seasonMap = new HashMap<>();
+                    String name = file.getName().replace(".html", "");
+                    seasonMap.put("id", name.toLowerCase());
+                    seasonMap.put("name", name);
+
+                    // Bereinigt die Tabellen-Dateien vorsichtshalber von alten Platzhaltern
+                    String rawContent = Files.readString(file.toPath(), StandardCharsets.UTF_8);
+                    seasonMap.put("content", cleanOldPlaceholders(rawContent));
+
+                    seasons.add(seasonMap);
                 }
-                sb.append("        </select>\n");
-
-                // Suchfeld
-                sb.append("        <input type=\"text\" id=\"textSearch\" placeholder=\"Search for Brand, Variant, Number...\" style=\"padding: 10px; border-radius: 4px; border: 1px solid #ccc; font-size: 16px; flex-grow: 1; min-width: 250px;\">\n");
-                sb.append("    </div>\n");
-
-                // --- TABELLEN EINFÜGEN ---
-                for (File file : seasonFiles) {
-                    String seasonName = file.getName().replace(".html", "");
-                    // Jede Tabelle bekommt einen unsichtbaren Tag für den Filter
-                    sb.append("\n<div class=\"season-table-wrapper\" data-season=\"").append(seasonName.toLowerCase()).append("\">\n");
-
-                    String tableContent = new String(Files.readAllBytes(file.toPath()));
-                    sb.append(tableContent);
-
-                    sb.append("\n</div><br>\n");
-                }
-
-                // --- NEU: JAVASCRIPT FÜR DIE FILTER-LOGIK ---
-                sb.append("""
-                            <script>
-                                document.getElementById('seasonFilter').addEventListener('change', applyFilters);
-                                document.getElementById('textSearch').addEventListener('keyup', applyFilters);
-                        
-                                function applyFilters() {
-                                    const seasonVal = document.getElementById('seasonFilter').value;
-                                    const searchVal = document.getElementById('textSearch').value.toLowerCase();
-                        
-                                    const wrappers = document.querySelectorAll('.season-table-wrapper');
-                        
-                                    wrappers.forEach(wrapper => {
-                                        const wrapperSeason = wrapper.getAttribute('data-season');
-                                        let hasVisibleRows = false;
-                        
-                                        // Step 1: Does it match the Season Dropdown?
-                                        if (seasonVal !== 'all' && wrapperSeason !== seasonVal) {
-                                            wrapper.style.display = 'none';
-                                            return; // Skip checking rows
-                                        }
-                        
-                                        // Step 2: Does it match the Text Search?
-                                        const rows = wrapper.querySelectorAll('tr');
-                                        for(let i = 0; i < rows.length; i++) {
-                                            const row = rows[i];
-                                            if(row.querySelector('th')) continue; // Skip headers
-                        
-                                            const text = row.textContent.toLowerCase();
-                                            if(searchVal === '' || text.includes(searchVal)) {
-                                                row.style.display = '';
-                                                hasVisibleRows = true;
-                                            } else {
-                                                row.style.display = 'none';
-                                            }
-                                        }
-                        
-                                        // Hide the entire wrapper if no rows match the search
-                                        wrapper.style.display = hasVisibleRows ? '' : 'none';
-                                    });
-                                }
-                            </script>
-                        """);
-
-            } else {
-                System.out.println("   WARNUNG: Keine Saison-Dateien (z.B. 94-95.html) im Ordner 'content' gefunden!");
             }
+            data.put("seasons", seasons);
+            processTemplate("collection-overview.ftlh", data, "output/Juwan-Howard-Collection.html");
 
-            sb.append("</main>\n").append(footer).append("\n</body>\n</html>");
+        } catch (Exception e) { System.err.println("Fehler bei Haupt-Collection: " + e.getMessage()); }
+    }
 
-            File outputDir = new File("output");
-            if (!outputDir.exists()) outputDir.mkdirs();
+    // --- 2. NEBEN-SAMMLUNGEN BAUEN (Baseball, Panini, etc.) ---
+    public static void buildOtherCollections() {
+        String[] collections = {"Baseball", "Flawless", "Panini", "Wantlist"};
 
-            Files.writeString(new File(outputDir, "Juwan-Howard-Collection.html").toPath(), sb.toString(), StandardCharsets.UTF_8);
-            System.out.println("-> Juwan-Howard-Collection.html erfolgreich in /output erstellt!");
+        for (String coll : collections) {
+            try {
+                System.out.println("-> Baue " + coll + ".html...");
+                // Wichtig: Groß- und Kleinschreibung für das Nav-Highlight genau beachten (z.B. "Baseball.html")
+                Map<String, Object> data = createBaseData(coll + " Collection", "Premium " + coll + " Cards", coll + ".html", coll + ".html");
 
-        } catch (Exception e) {
-            System.err.println("Fehler beim Bauen der Collection-Übersicht: " + e.getMessage());
+                Path sourcePath = Paths.get("content/other", coll + ".html");
+                if (Files.exists(sourcePath)) {
+                    String rawContent = Files.readString(sourcePath, StandardCharsets.UTF_8);
+                    // Bereinigt die importierte Datei von alten Skript-Tags
+                    data.put("pageContent", cleanOldPlaceholders(rawContent));
+                } else {
+                    data.put("pageContent", "<p>No data found for this collection yet.</p>");
+                }
+
+                processTemplate("generic-collection.ftlh", data, "output/" + coll + ".html");
+            } catch (Exception e) { System.err.println("Fehler bei " + coll + ": " + e.getMessage()); }
         }
     }
 
-    public static void processStaticPage(String filename, String title, String description) {
+    // --- 3. STATISCHE SEITEN BAUEN (Index, Error) ---
+    public static void buildStaticPages() {
         try {
-            File sourceFile = new File("content/other/" + filename);
-            if (!sourceFile.exists()) sourceFile = new File(filename);
-            if (!sourceFile.exists()) return;
+            System.out.println("-> Baue index.html & error.html...");
 
-            String content = new String(Files.readAllBytes(sourceFile.toPath()));
+            // Index (Navigations-Highlight für "index.html")
+            Map<String, Object> indexData = createBaseData("Maulmann Trading Cards", "Digital Archive", "index.html", "index.html");
+            processTemplate("index.ftlh", indexData, "output/index.html");
 
-            String headHtml = SharedTemplates.getHead(title, description, "", filename, DEFAULT_IMAGE);
-            String topnavHtml = SharedTemplates.loadResource("/templates/topnav.html").replace("{{ROOT}}", "");
-            topnavHtml = topnavHtml.replace("href=\"" + filename + "\"", "href=\"" + filename + "\" class=\"active\"");
+            // Error 404 (Kein Navigations-Highlight)
+            Map<String, Object> errorData = createBaseData("404 Not Found", "Page missing", "error.html", "");
+            processTemplate("error.ftlh", errorData, "output/error.html");
 
-            String footernavHtml = SharedTemplates.loadResource("/templates/footer_nav.html").replace("{{ROOT}}", "");
-
-            String footerHtml = SharedTemplates.loadResource("/templates/footer.html").replace("{{ROOT}}", "").replace("{{TIME}}", SharedTemplates.getTimestamp());
-
-            content = content.replace("{{HEAD}}", headHtml).replace("{{TOPNAV}}", topnavHtml).replace("{{FOOTER_NAV}}", footernavHtml).replace("{{FOOTER}}", footerHtml).replace("{{BUILD_ID}}", SharedTemplates.BUILD_ID);
-
-            File outputDir = new File("output");
-            if (!outputDir.exists()) outputDir.mkdirs();
-
-            try (FileWriter writer = new FileWriter(new File(outputDir, filename))) {
-                writer.write(content);
-            }
-        } catch (Exception e) {
-            System.err.println("Fehler beim Verarbeiten von " + filename + ": " + e.getMessage());
-        }
+        } catch (Exception e) { System.err.println("Fehler bei statischen Seiten: " + e.getMessage()); }
     }
 
-    public static void createLandingPage() {
-        // ... (Füge hier exakt deinen alten Inhalt der Methode createLandingPage() ein!)
+    // --- HILFSMETHODEN ---
+    private static Map<String, Object> createBaseData(String title, String subTitle, String filename, String navTargetUrl) throws Exception {
+        Map<String, Object> data = new HashMap<>();
+
+        String headHtml = SharedTemplates.getHead(title + " | Maulmann Trading Cards", subTitle, "", filename, "images/default-share.jpg");
+
+        // --- NAVIGATIONS-HIGHLIGHT FIX ---
+        String topnav = SharedTemplates.loadResource("/templates/topnav.html").replace("{{ROOT}}", "");
+        if (!navTargetUrl.isEmpty()) {
+            topnav = topnav.replace("href=\"" + navTargetUrl + "\"", "href=\"" + navTargetUrl + "\" class=\"active\"");
+        }
+
+        // Holt den Standard-Footer (inklusive aktueller Uhrzeit!)
+        String footerHtml = SharedTemplates.getFooter("");
+
+        data.put("headHtml", headHtml);
+        data.put("topNavHtml", topnav);
+        data.put("footerHtml", footerHtml);
+        data.put("pageTitle", title);
+        data.put("subTitle", subTitle);
+
+        return data;
+    }
+
+    // Löscht alte Tags aus Dateien, die noch aus der Python-Skript-Zeit stammen
+    private static String cleanOldPlaceholders(String content) {
+        return content.replace("{{HEAD}}", "")
+                .replace("{{TOP_NAV}}", "")
+                .replace("{{FOOTER_NAV}}", "")
+                .replace("{{FOOTER}}", "")
+                .replace("{{TIME}}", "");
+    }
+
+    // Der wichtigste Teil: Hier wird gerendert und am Schluss alles global gescannt
+    private static void processTemplate(String templateName, Map<String, Object> data, String outputPath) throws Exception {
+        File out = new File(outputPath);
+        if (out.getParentFile() != null) out.getParentFile().mkdirs();
+
+        Template template = fmConfig.getTemplate(templateName);
+
+        // 1. Rendere das komplette HTML zuerst in einen String (Arbeitsspeicher)
+        StringWriter stringWriter = new StringWriter();
+        template.process(data, stringWriter);
+        String finalHtml = stringWriter.toString();
+
+        // 2. GLOBALE PLATZHALTER-AUFLÖSUNG (Fängt alles ab, selbst wenn es tief im Code versteckt ist)
+        if (finalHtml.contains("{{FOOTER_NAV}}")) {
+            try {
+                String footerNav = SharedTemplates.loadResource("/templates/footer_nav.html").replace("{{ROOT}}", "");
+                finalHtml = finalHtml.replace("{{FOOTER_NAV}}", footerNav);
+            } catch (Exception e) {
+                finalHtml = finalHtml.replace("{{FOOTER_NAV}}", ""); // Löschen, falls Datei fehlt
+            }
+        }
+        if (finalHtml.contains("{{FOOTER}}")) {
+            finalHtml = finalHtml.replace("{{FOOTER}}", "");
+        }
+
+        // 3. Erst jetzt die blitzsaubere Datei auf die Festplatte schreiben
+        Files.writeString(out.toPath(), finalHtml, StandardCharsets.UTF_8);
+    }
+
+    // --- STARTPUNKT ---
+    public static void main(String[] args) {
+        buildCollectionOverview();
+        buildOtherCollections();
+        buildStaticPages();
+        System.out.println("-> Alle statischen Seiten erfolgreich generiert!");
     }
 }
