@@ -206,3 +206,49 @@ tr:hover { background-color: #f1f1f1; }
         display: none;
     }
 }
+
+/* --- KARTEN-KARUSSELL (Startseite) --- */
+.card-carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 20px;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    scrollbar-width: none; /* Firefox */
+    -webkit-overflow-scrolling: touch; /* Smooth Scrolling iOS */
+}
+
+/* Versteckt die Scrollbar in Chrome/Safari/Edge */
+.card-carousel::-webkit-scrollbar {
+    display: none;
+}
+
+.carousel-item {
+    flex: 0 0 auto;
+    width: 250px;
+    scroll-snap-align: center;
+    transition: transform 0.3s ease;
+}
+
+.carousel-item:hover {
+    transform: translateY(-8px);
+}
+
+.carousel-item img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 400 / 550;
+    border-radius: 8px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    object-fit: contain;
+    background-color: #fff;
+    display: block;
+}
+
+/* Mobile Optimierung für das Karussell */
+@media (max-width: 600px) {
+    .carousel-item {
+        width: 200px;
+    }
+}
