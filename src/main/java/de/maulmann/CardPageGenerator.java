@@ -457,13 +457,14 @@ public class CardPageGenerator {
         else if (sourceJpeg.exists()) pathToRead = sourceJpeg.getPath();
 
         String cardBackText = "";
+        /*
         if (!pathToRead.isEmpty()) {
             cardBackText = CardTextExtractor.getBackText(pathToRead);
         } else {
             // Optional: Hilft dir beim Debuggen, falls der Pfad nicht stimmt
             // System.out.println("⚠️ OCR Skipped: Could not find original image for " + originalImgBasePath);
         }
-
+*/
         if (!hobbyTrivia.isEmpty() || !techTrivia.isEmpty() || !eraContext.isEmpty() || !playerHighlights.isEmpty() || !cardBackText.isEmpty()) {
             sb.append("    <div class=\"context-engine\" style=\"margin-top: 40px; display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));\">\n");
 
@@ -499,14 +500,12 @@ public class CardPageGenerator {
                 sb.append("        </div>\n");
             }
 
-            // 5. EXTRACTED CARD TEXT (Smarter & Schöner)
+            // 5. EXTRACTED CARD TEXT (Spans full width at the bottom of the grid)
             if (!cardBackText.isEmpty()) {
-                sb.append("        <div class=\"card-back-text-container\" style=\"grid-column: 1 / -1;\">\n");
-                sb.append("            <div class=\"card-back-text-header\">\n");
-                sb.append("                <span>&#x1F4DC; Original Card Back Transcription</span>\n");
-                sb.append("                <span style=\"margin-left: auto; font-size: 0.8em; opacity: 0.6;\">Verified via AI-OCR</span>\n");
-                sb.append("            </div>\n");
-                sb.append("            <pre class=\"card-back-content\">").append(escapeHtml(cardBackText)).append("</pre>\n");
+                sb.append("        <div style=\"background: #fdfdfd; border: 1px solid #ddd; border-radius: 8px; padding: 20px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); grid-column: 1 / -1;\">\n");
+                sb.append("            <h3 style=\"margin-top:0; color: #444; font-size: 1.1em;\">&#x1F4DC; Back Side Card Content</h3>\n");
+                // white-space: pre-wrap ensures the line breaks from OCR are preserved beautifully
+                sb.append("            <p style=\"font-size: 0.95em; color: #666; line-height: 1.6; font-family: 'Courier New', Courier, monospace; white-space: pre-wrap;\">").append(escapeHtml(cardBackText)).append("</p>\n");
                 sb.append("        </div>\n");
             }
 

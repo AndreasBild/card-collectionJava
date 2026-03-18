@@ -31,17 +31,11 @@ public class FileGenerator {
         try {
             System.out.println("-> Baue Juwan-Howard-Collection.html aus Saison-Dateien...");
 
-            String headHtml = SharedTemplates.getHead(
-                    "Juwan Howard Private Collection | Maulmann Trading Cards",
-                    "Complete overview of the Juwan Howard trading card collection, featuring 1/1s and rare inserts.",
-                    "",
-                    "Juwan-Howard-Collection.html",
-                    DEFAULT_IMAGE
-            );
+            String headHtml = SharedTemplates.getHead("Juwan Howard Private Collection | Maulmann Trading Cards", "Complete overview of the Juwan Howard trading card collection, featuring 1/1s and rare inserts.", "", "Juwan-Howard-Collection.html", DEFAULT_IMAGE);
 
             String topnav = SharedTemplates.loadResource("/templates/topnav.html").replace("{{ROOT}}", "");
             topnav = topnav.replace("href=\"Juwan-Howard-Collection.html\"", "href=\"Juwan-Howard-Collection.html\" class=\"active\"");
-            String footer = SharedTemplates.loadResource("/templates/footer.html").replace("{{ROOT}}", "");
+            String footer =SharedTemplates.loadResource("/templates/footer.html").replace("{{ROOT}}", "");
 
             StringBuilder sb = new StringBuilder();
             sb.append("<!DOCTYPE html>\n<html lang=\"en\">\n");
@@ -90,47 +84,47 @@ public class FileGenerator {
 
                 // --- NEU: JAVASCRIPT FÜR DIE FILTER-LOGIK ---
                 sb.append("""
-                    <script>
-                        document.getElementById('seasonFilter').addEventListener('change', applyFilters);
-                        document.getElementById('textSearch').addEventListener('keyup', applyFilters);
-
-                        function applyFilters() {
-                            const seasonVal = document.getElementById('seasonFilter').value;
-                            const searchVal = document.getElementById('textSearch').value.toLowerCase();
-                            
-                            const wrappers = document.querySelectorAll('.season-table-wrapper');
-                            
-                            wrappers.forEach(wrapper => {
-                                const wrapperSeason = wrapper.getAttribute('data-season');
-                                let hasVisibleRows = false;
-                                
-                                // Step 1: Does it match the Season Dropdown?
-                                if (seasonVal !== 'all' && wrapperSeason !== seasonVal) {
-                                    wrapper.style.display = 'none';
-                                    return; // Skip checking rows
+                            <script>
+                                document.getElementById('seasonFilter').addEventListener('change', applyFilters);
+                                document.getElementById('textSearch').addEventListener('keyup', applyFilters);
+                        
+                                function applyFilters() {
+                                    const seasonVal = document.getElementById('seasonFilter').value;
+                                    const searchVal = document.getElementById('textSearch').value.toLowerCase();
+                        
+                                    const wrappers = document.querySelectorAll('.season-table-wrapper');
+                        
+                                    wrappers.forEach(wrapper => {
+                                        const wrapperSeason = wrapper.getAttribute('data-season');
+                                        let hasVisibleRows = false;
+                        
+                                        // Step 1: Does it match the Season Dropdown?
+                                        if (seasonVal !== 'all' && wrapperSeason !== seasonVal) {
+                                            wrapper.style.display = 'none';
+                                            return; // Skip checking rows
+                                        }
+                        
+                                        // Step 2: Does it match the Text Search?
+                                        const rows = wrapper.querySelectorAll('tr');
+                                        for(let i = 0; i < rows.length; i++) {
+                                            const row = rows[i];
+                                            if(row.querySelector('th')) continue; // Skip headers
+                        
+                                            const text = row.textContent.toLowerCase();
+                                            if(searchVal === '' || text.includes(searchVal)) {
+                                                row.style.display = '';
+                                                hasVisibleRows = true;
+                                            } else {
+                                                row.style.display = 'none';
+                                            }
+                                        }
+                        
+                                        // Hide the entire wrapper if no rows match the search
+                                        wrapper.style.display = hasVisibleRows ? '' : 'none';
+                                    });
                                 }
-                                
-                                // Step 2: Does it match the Text Search?
-                                const rows = wrapper.querySelectorAll('tr');
-                                for(let i = 0; i < rows.length; i++) {
-                                    const row = rows[i];
-                                    if(row.querySelector('th')) continue; // Skip headers
-                                    
-                                    const text = row.textContent.toLowerCase();
-                                    if(searchVal === '' || text.includes(searchVal)) {
-                                        row.style.display = '';
-                                        hasVisibleRows = true;
-                                    } else {
-                                        row.style.display = 'none';
-                                    }
-                                }
-                                
-                                // Hide the entire wrapper if no rows match the search
-                                wrapper.style.display = hasVisibleRows ? '' : 'none';
-                            });
-                        }
-                    </script>
-                """);
+                            </script>
+                        """);
 
             } else {
                 System.out.println("   WARNUNG: Keine Saison-Dateien (z.B. 94-95.html) im Ordner 'content' gefunden!");
@@ -160,12 +154,12 @@ public class FileGenerator {
             String headHtml = SharedTemplates.getHead(title, description, "", filename, DEFAULT_IMAGE);
             String topnavHtml = SharedTemplates.loadResource("/templates/topnav.html").replace("{{ROOT}}", "");
             topnavHtml = topnavHtml.replace("href=\"" + filename + "\"", "href=\"" + filename + "\" class=\"active\"");
-            String footerHtml = SharedTemplates.loadResource("/templates/footer.html").replace("{{ROOT}}", "");
 
-            content = content.replace("{{HEAD}}", headHtml)
-                    .replace("{{TOPNAV}}", topnavHtml)
-                    .replace("{{FOOTER}}", footerHtml)
-                    .replace("{{BUILD_ID}}", SharedTemplates.BUILD_ID);
+            String footernavHtml = SharedTemplates.loadResource("/templates/footer_nav.html").replace("{{ROOT}}", "");
+
+            String footerHtml = SharedTemplates.loadResource("/templates/footer.html").replace("{{ROOT}}", "").replace("{{TIME}}", SharedTemplates.getTimestamp());
+
+            content = content.replace("{{HEAD}}", headHtml).replace("{{TOPNAV}}", topnavHtml).replace("{{FOOTER_NAV}}", footernavHtml).replace("{{FOOTER}}", footerHtml).replace("{{BUILD_ID}}", SharedTemplates.BUILD_ID);
 
             File outputDir = new File("output");
             if (!outputDir.exists()) outputDir.mkdirs();
