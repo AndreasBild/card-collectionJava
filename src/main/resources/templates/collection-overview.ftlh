@@ -2,61 +2,33 @@
 <html lang="en">
 <head>
     ${headHtml?no_esc}
-    <style>
-        .back-to-top-btn {
-            text-decoration: none;
-            font-size: 0.85em;
-            color: #555;
-            background: #f4f8fc;
-            padding: 4px 10px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-            transition: all 0.2s ease;
-            font-weight: bold;
-        }
-        .back-to-top-btn:hover {
-            background: #3264af;
-            color: #fff;
-            border-color: #3264af;
-        }
-
-        .season-table-wrapper th {
-            cursor: pointer;
-            user-select: none;
-            transition: background-color 0.2s;
-            position: relative;
-        }
-        .season-table-wrapper th:hover {
-            background-color: #1e4a8c !important;
-        }
-    </style>
 </head>
 <body id="top">
 ${topNavHtml?no_esc}
-
 <main class="detail-main">
     <header class="detail-header">
         <h1>${pageTitle}</h1>
         <p class="sub-title">${subTitle}</p>
     </header>
-
     <#if seasons?has_content>
-        <div class="collection-controls" style="margin: 20px 0; padding: 15px; background: #f4f8fc; border-radius: 8px; display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
+        <div class="collection-controls"
+             style="margin: 20px 0; padding: 15px; background: #f4f8fc; border-radius: 8px; display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
             <strong style="color: #333;">Filter Collection:</strong>
-
-            <select id="seasonFilter" style="padding: 10px; border-radius: 4px; border: 1px solid #ccc; font-size: 16px; min-width: 200px;">
+            <select id="seasonFilter"
+                    style="padding: 10px; border-radius: 4px; border: 1px solid #ccc; font-size: 16px; min-width: 200px;">
                 <option value="all">All Seasons</option>
                 <#list seasons as season>
                     <option value="${season.id}">${season.name}</option>
                 </#list>
             </select>
-
-            <input type="text" id="textSearch" list="hobby-terms" placeholder="Search PMG,or type <=25, =1 for print run..." style="padding: 10px; border-radius: 4px; border: 1px solid #ccc; font-size: 16px; flex-grow: 1; min-width: 250px;">
-
+            <input type="text" id="textSearch" list="hobby-terms"
+                   placeholder="Search PMG, Masterpiece, or type <25, =1..."
+                   style="padding: 10px; border-radius: 4px; border: 1px solid #ccc; font-size: 16px; flex-grow: 1; min-width: 250px;">
             <datalist id="hobby-terms">
-                <option value="<=10">
-                <option value="<=25">
-                <option value="=1">
+                <option value="< 10">
+                <option value="<= 25">
+                <option value="= 1">
+                <option value="1/1 (Masterpiece)">
                 <option value="Precious Metal Gems">
                 <option value="Refractor">
                 <option value="Autograph">
@@ -66,16 +38,15 @@ ${topNavHtml?no_esc}
 
     <#list seasons as season>
         <div class="season-table-wrapper" data-season="${season.id}" style="margin-bottom: 40px;">
-
             <div style="display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px solid #eaeaea; margin-bottom: 5px; padding-bottom: 5px;">
                 <h2 style="margin: 0; color: #3264af;">${season.name}</h2>
-                <a href="#top" class="back-to-top-btn" title="Scroll back to top of the collection" aria-label="Back to top of page">&#8679; Top</a>
+                <a href="#top" class="back-to-top-btn" title="Scroll back to top of the collection"
+                   aria-label="Back to top of page">&#8679; Top</a>
             </div>
-
             <p style="font-weight: bold; color: #555; margin-top: 5px; margin-bottom: 15px; font-size: 0.95em;">
-                Cards this season: <span class="visible-counter">${season.seasonCount}</span> / ${season.cumulativeTotal}
+                Cards this season: <span class="visible-counter">${season.seasonCount}</span>
+                / ${season.cumulativeTotal}
             </p>
-
             <div style="background: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); overflow: hidden; overflow-x: auto;">
                 ${season.content?no_esc}
             </div>
@@ -123,23 +94,22 @@ ${topNavHtml?no_esc}
                     }
 
                     const rows = wrapper.querySelectorAll('tr');
-                    for(let i = 0; i < rows.length; i++) {
+                    for (let i = 0; i < rows.length; i++) {
                         const row = rows[i];
-                        if(row.querySelector('th')) continue;
+                        if (row.querySelector('th')) continue;
 
                         let isMatch = false;
 
-                        // 1. Mathe-Modus (Printrun Filter)
                         if (prMatch) {
                             let cardPrintRun = NaN;
 
                             const extractPR = (cellText) => {
-                                if(!cellText || cellText.trim() === '-' || cellText.trim() === '') return NaN;
-                                if(cellText.includes('/')) {
+                                if (!cellText || cellText.trim() === '-' || cellText.trim() === '') return NaN;
+                                if (cellText.includes('/')) {
                                     const parts = cellText.split('/');
-                                    return parseInt(parts[1].replace(/\\D/g, ''), 10);
+                                    return parseInt(parts[1].replace(/\D/g, ''), 10);
                                 }
-                                return parseInt(cellText.replace(/\\D/g, ''), 10);
+                                return parseInt(cellText.replace(/\D/g, ''), 10);
                             };
 
                             let prVal1 = (serialIdx >= 0 && row.children[serialIdx]) ? extractPR(row.children[serialIdx].textContent) : NaN;
@@ -148,7 +118,6 @@ ${topNavHtml?no_esc}
                             if (!isNaN(prVal1)) cardPrintRun = prVal1;
                             if (!isNaN(prVal2) && (isNaN(cardPrintRun) || prVal2 > cardPrintRun)) cardPrintRun = prVal2;
 
-                            // NEU: "&& cardPrintRun > 0" schließt Base-Karten ohne echte Limitierung strikt aus!
                             if (!isNaN(cardPrintRun) && cardPrintRun > 0) {
                                 if (prOperator === '<' && cardPrintRun < prTarget) isMatch = true;
                                 else if (prOperator === '<=' && cardPrintRun <= prTarget) isMatch = true;
@@ -156,9 +125,7 @@ ${topNavHtml?no_esc}
                                 else if (prOperator === '>=' && cardPrintRun >= prTarget) isMatch = true;
                                 else if ((prOperator === '=' || prOperator === '==') && cardPrintRun === prTarget) isMatch = true;
                             }
-                        }
-                        // 2. Normaler Text- & Alias-Modus
-                        else {
+                        } else {
                             const text = row.textContent.toLowerCase();
                             if (searchVal === '') {
                                 isMatch = true;
@@ -197,7 +164,6 @@ ${topNavHtml?no_esc}
                 });
             }
 
-            // --- TABELLEN SORTIER LOGIK ---
             document.addEventListener('DOMContentLoaded', () => {
                 document.querySelectorAll('.season-table-wrapper table').forEach(table => {
                     const headers = table.querySelectorAll('th');
@@ -215,7 +181,10 @@ ${topNavHtml?no_esc}
                         header.addEventListener('click', () => {
                             headers.forEach(h => {
                                 const span = h.querySelector('span');
-                                if(span) { span.innerHTML = ' &#8693;'; span.style.opacity = '0.3'; }
+                                if (span) {
+                                    span.innerHTML = ' &#8693;';
+                                    span.style.opacity = '0.3';
+                                }
                             });
 
                             icon.innerHTML = sortAsc ? ' &#9650;' : ' &#9660;';
@@ -230,7 +199,10 @@ ${topNavHtml?no_esc}
                                 const bCell = b.children[index];
                                 const aText = aCell ? aCell.textContent.trim() : '';
                                 const bText = bCell ? bCell.textContent.trim() : '';
-                                return aText.localeCompare(bText, undefined, {numeric: true, sensitivity: 'base'}) * (sortAsc ? 1 : -1);
+                                return aText.localeCompare(bText, undefined, {
+                                    numeric: true,
+                                    sensitivity: 'base'
+                                }) * (sortAsc ? 1 : -1);
                             });
 
                             rowArray.forEach(row => tbody.appendChild(row));
@@ -243,9 +215,7 @@ ${topNavHtml?no_esc}
     <#else>
         <p>No collection data found.</p>
     </#if>
-
 </main>
-
 ${footerHtml?no_esc}
 </body>
 </html>
