@@ -20,11 +20,15 @@ import software.amazon.awssdk.services.s3.model.Delete;
 import software.amazon.awssdk.services.s3.model.ObjectIdentifier;
 
 import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths; // Java's file path utility
+import java.nio.file.Paths;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
@@ -58,12 +62,15 @@ public class SiteBuilderPipeline {
                 )
                 .build()) {
 
+            // Initialisiere den Hash-Cache für Smart-Uploads
+            FileHashCache hashCache = new FileHashCache(OUTPUT_DIR + "/sync-hashes.properties");
+
             // --- PHASE 1: Generate Site HTML ---
             System.out.println("\n[PHASE 1] Generating HTML files...");
             FileGenerator.buildCollectionOverview();
             FileGenerator.buildOtherCollections();
             FileGenerator.buildStaticPages();
-            CardPageGenerator.run();           // Liest die fertigen Tabellen, generiert Subpages & verlinkt sie!
+            CardPageGenerator.run();
 
             // --- PHASE 2: Convert Images to WebP ---
             System.out.println("\n[PHASE 2] Converting images to WebP...");
@@ -71,11 +78,14 @@ public class SiteBuilderPipeline {
 
             // --- PHASE 3: Compress & Upload HTML/CSS/JS ---
             System.out.println("\n[PHASE 3] Minifying, Compressing, and Uploading Web Files...");
-            processAndUploadWebFiles(s3AsyncClient);
+            processAndUploadWebFiles(s3AsyncClient, hashCache);
 
             // --- PHASE 4: Upload Images (No GZIP) ---
             System.out.println("\n[PHASE 4] Syncing Images to S3...");
-            processAndUploadImages(s3AsyncClient);
+            processAndUploadImages(s3AsyncClient, hashCache);
+
+            // Speichere die neuen Hashes, damit sie beim nächsten Build bekannt sind
+            hashCache.save();
 
             // --- PHASE 4.5: Clean up Orphaned Files on S3 ---
             System.out.println("\n[PHASE 4.5] Sweeping S3 for ghost files...");
@@ -99,38 +109,57 @@ public class SiteBuilderPipeline {
         }
     }
 
-    private static void processAndUploadWebFiles(S3AsyncClient s3Client) throws Exception {
+    private static void processAndUploadWebFiles(S3AsyncClient s3Client, FileHashCache hashCache) throws Exception {
         Path outputDir = Paths.get(OUTPUT_DIR);
         List<CompletableFuture<Void>> uploadFutures = new ArrayList<>();
         AtomicInteger uploadCount = new AtomicInteger(0);
+        AtomicInteger skipCount = new AtomicInteger(0);
 
         try (Stream<Path> paths = Files.walk(outputDir)) {
             paths.filter(Files::isRegularFile).forEach(file -> {
                 String fileName = file.getFileName().toString().toLowerCase();
                 String s3Key = outputDir.relativize(file).toString().replace("\\", "/");
 
+                // Pre-Check: Hat sich die Datei verändert? (Ignoriere sitemap & hashes)
+                if (fileName.equals("sitemap.xml") || fileName.equals("sitemap.xml.gz") || fileName.equals("sync-hashes.properties")) {
+                    return;
+                }
+
+                if (!hashCache.hasChanged(file)) {
+                    skipCount.incrementAndGet();
+                    return;
+                }
+
                 try {
+                    CompletableFuture<Void> uploadTask = null;
+
                     if (fileName.endsWith(".html")) {
                         byte[] gzippedData = GZIPCompressor.compressBytes(HTMLMinifier.minifyHTMLToBytes(file.toFile()), 9);
-                        uploadFutures.add(uploadBytesAsync(s3Client, s3Key, gzippedData, "text/html", CACHE_SHORT, uploadCount));
+                        uploadTask = uploadBytesAsync(s3Client, s3Key, gzippedData, "text/html", CACHE_SHORT, uploadCount);
                     } else if (fileName.endsWith(".css")) {
                         byte[] gzippedData = GZIPCompressor.compressBytes(CSSMinifier.minifyCSSToBytes(file.toFile()), 9);
-                        uploadFutures.add(uploadBytesAsync(s3Client, s3Key, gzippedData, "text/css", CACHE_LONG, uploadCount));
+                        uploadTask = uploadBytesAsync(s3Client, s3Key, gzippedData, "text/css", CACHE_LONG, uploadCount);
                     } else if (fileName.endsWith(".js")) {
                         byte[] gzippedData = GZIPCompressor.compressBytes(Files.readAllBytes(file), 9);
-                        uploadFutures.add(uploadBytesAsync(s3Client, s3Key, gzippedData, "application/javascript", CACHE_LONG, uploadCount));
+                        uploadTask = uploadBytesAsync(s3Client, s3Key, gzippedData, "application/javascript", CACHE_LONG, uploadCount);
                     } else if (fileName.endsWith(".json")) {
                         byte[] gzippedData = GZIPCompressor.compressBytes(Files.readAllBytes(file), 9);
-                        uploadFutures.add(uploadBytesAsync(s3Client, s3Key, gzippedData, "application/json", CACHE_SHORT, uploadCount));
+                        uploadTask = uploadBytesAsync(s3Client, s3Key, gzippedData, "application/json", CACHE_SHORT, uploadCount);
                     } else if (fileName.endsWith(".xml")) {
                         byte[] gzippedData = GZIPCompressor.compressBytes(Files.readAllBytes(file), 9);
-                        uploadFutures.add(uploadBytesAsync(s3Client, s3Key, gzippedData, "application/xml", CACHE_SHORT, uploadCount));
+                        uploadTask = uploadBytesAsync(s3Client, s3Key, gzippedData, "application/xml", CACHE_SHORT, uploadCount);
                     } else if (fileName.endsWith(".ico")) {
-                        uploadFutures.add(uploadRawFileAsync(s3Client, file, s3Key, "image/x-icon", CACHE_LONG, uploadCount));
-                    }else if (fileName.startsWith("robots")) {
-                    byte[] gzippedData = GZIPCompressor.compressBytes(Files.readAllBytes(file), 9);
-                    uploadFutures.add(uploadBytesAsync(s3Client, s3Key, gzippedData, "text/plain", CACHE_SHORT, uploadCount));
-                }
+                        uploadTask = uploadRawFileAsync(s3Client, file, s3Key, "image/x-icon", CACHE_LONG, uploadCount);
+                    } else if (fileName.startsWith("robots")) {
+                        byte[] gzippedData = GZIPCompressor.compressBytes(Files.readAllBytes(file), 9);
+                        uploadTask = uploadBytesAsync(s3Client, s3Key, gzippedData, "text/plain", CACHE_SHORT, uploadCount);
+                    }
+
+                    // Nach erfolgreichem Upload: Hash aktualisieren
+                    if (uploadTask != null) {
+                        uploadFutures.add(uploadTask.thenRun(() -> hashCache.updateHash(file)));
+                    }
+
                 } catch (Exception e) {
                     System.err.println("Failed to process " + fileName + ": " + e.getMessage());
                 }
@@ -138,10 +167,10 @@ public class SiteBuilderPipeline {
         }
 
         CompletableFuture.allOf(uploadFutures.toArray(new CompletableFuture[0])).join();
-        System.out.println("-> Successfully processed and uploaded " + uploadCount.get() + " web files.");
+        System.out.println("-> Uploaded " + uploadCount.get() + " web files. (Skipped " + skipCount.get() + " unmodified files).");
     }
 
-    private static void processAndUploadImages(S3AsyncClient s3Client) throws Exception {
+    private static void processAndUploadImages(S3AsyncClient s3Client, FileHashCache hashCache) throws Exception {
         Path imagesDir = Paths.get(IMAGES_DIR);
         Path outputDir = Paths.get(OUTPUT_DIR);
 
@@ -152,6 +181,7 @@ public class SiteBuilderPipeline {
 
         List<CompletableFuture<Void>> uploadFutures = new ArrayList<>();
         AtomicInteger uploadCount = new AtomicInteger(0);
+        AtomicInteger skipCount = new AtomicInteger(0);
 
         try (Stream<Path> paths = Files.walk(imagesDir)) {
             paths.filter(Files::isRegularFile).forEach(file -> {
@@ -159,16 +189,26 @@ public class SiteBuilderPipeline {
                 String contentType = determineImageContentType(fileName);
 
                 if (contentType != null) {
+                    // Pre-Check: Hat sich das Bild verändert?
+                    if (!hashCache.hasChanged(file)) {
+                        skipCount.incrementAndGet();
+                        return;
+                    }
+
                     String s3Key = outputDir.relativize(file).toString().replace("\\", "/");
-                    uploadFutures.add(uploadRawFileAsync(s3Client, file, s3Key, contentType, CACHE_LONG, uploadCount));
+                    CompletableFuture<Void> uploadTask = uploadRawFileAsync(s3Client, file, s3Key, contentType, CACHE_LONG, uploadCount);
+
+                    // Nach erfolgreichem Upload: Hash eintragen
+                    uploadFutures.add(uploadTask.thenRun(() -> hashCache.updateHash(file)));
                 }
             });
         }
 
         CompletableFuture.allOf(uploadFutures.toArray(new CompletableFuture[0])).join();
-        System.out.println("-> Successfully synced " + uploadCount.get() + " images.");
+        System.out.println("-> Synced " + uploadCount.get() + " images. (Skipped " + skipCount.get() + " unmodified images).");
     }
 
+    // ... (cleanOrphanedS3Files bleibt absolut unverändert) ...
     private static void cleanOrphanedS3Files(S3AsyncClient s3Client) {
         try {
             Path localOutputDir = Paths.get(OUTPUT_DIR);
@@ -176,7 +216,6 @@ public class SiteBuilderPipeline {
 
             System.out.println("    Scanning S3 bucket for pagination...");
 
-            // --- THE FIX: Robust S3 Pagination Loop ---
             boolean isDone = false;
             String continuationToken = null;
             int totalS3FilesScanned = 0;
@@ -189,19 +228,14 @@ public class SiteBuilderPipeline {
                     reqBuilder.continuationToken(continuationToken);
                 }
 
-                // Sync call is safe here and guarantees we wait for the page
                 ListObjectsV2Response listRes = s3Client.listObjectsV2(reqBuilder.build()).join();
 
                 for (S3Object s3Object : listRes.contents()) {
                     totalS3FilesScanned++;
                     String s3Key = s3Object.key();
 
-                    // We strictly only sweep files in the generated "cards" and "images" directories
-                    // We DO NOT sweep root HTML files to prevent accidental deletion of static pages
                     if (s3Key.startsWith("cards/") || s3Key.startsWith("images/")) {
-
                         Path expectedLocalFile = localOutputDir.resolve(s3Key);
-
                         if (!Files.exists(expectedLocalFile)) {
                             objectsToDelete.add(ObjectIdentifier.builder().key(s3Key).build());
                         }
@@ -214,14 +248,12 @@ public class SiteBuilderPipeline {
                     continuationToken = listRes.nextContinuationToken();
                 }
             }
-            // ------------------------------------------
 
             System.out.println("    Finished scanning " + totalS3FilesScanned + " objects in S3.");
 
             if (!objectsToDelete.isEmpty()) {
                 System.out.println("    -> Found " + objectsToDelete.size() + " orphaned files. Deleting from S3 in batches...");
 
-                // AWS allows max 1000 deletes per request. We must batch them.
                 for (int i = 0; i < objectsToDelete.size(); i += 1000) {
                     int end = Math.min(objectsToDelete.size(), i + 1000);
                     List<ObjectIdentifier> batch = objectsToDelete.subList(i, end);
@@ -234,7 +266,6 @@ public class SiteBuilderPipeline {
                     s3Client.deleteObjects(deleteReq).join();
                     System.out.println("       Deleted batch of " + batch.size() + " files.");
                 }
-
                 System.out.println("    -> S3 Cleanup complete.");
             } else {
                 System.out.println("    -> S3 is perfectly in sync. No ghost files found.");
@@ -352,5 +383,70 @@ public class SiteBuilderPipeline {
         if (fileName.endsWith(".svg")) return "image/svg+xml";
         if (fileName.endsWith(".ico")) return "image/x-icon";
         return null;
+    }
+
+    // =========================================================================
+    // HILFSKLASSE FÜR DEN HASH-CHECK
+    // =========================================================================
+    static class FileHashCache {
+        private final File storeFile;
+        private final Properties hashes = new Properties();
+
+        public FileHashCache(String filePath) {
+            this.storeFile = new File(filePath);
+            if (storeFile.exists()) {
+                try (InputStream in = Files.newInputStream(storeFile.toPath())) {
+                    hashes.load(in);
+                } catch (Exception e) {
+                    System.err.println("Konnt Hash-Datei nicht laden: " + e.getMessage());
+                }
+            }
+        }
+
+        public boolean hasChanged(Path file) {
+            try {
+                String currentHash = calculateMD5(file);
+                String storedHash = hashes.getProperty(file.toString());
+                return !currentHash.equals(storedHash);
+            } catch (Exception e) {
+                return true; // Bei Fehlern sicherheitshalber neu hochladen
+            }
+        }
+
+        public void updateHash(Path file) {
+            try {
+                hashes.setProperty(file.toString(), calculateMD5(file));
+            } catch (Exception ignored) {
+            }
+        }
+
+        public void save() {
+            try {
+                // Ordnerstruktur sicherstellen, falls output/ noch nicht existiert
+                storeFile.getParentFile().mkdirs();
+                try (OutputStream out = Files.newOutputStream(storeFile.toPath())) {
+                    hashes.store(out, "Automatisierter Datei-Upload Hash Cache");
+                }
+            } catch (Exception e) {
+                System.err.println("Konnte Hash-Datei nicht speichern: " + e.getMessage());
+            }
+        }
+
+        private String calculateMD5(Path file) throws Exception {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            try (InputStream is = Files.newInputStream(file)) {
+                byte[] buffer = new byte[8192];
+                int read;
+                while ((read = is.read(buffer)) > 0) {
+                    md.update(buffer, 0, read);
+                }
+            }
+            byte[] digest = md.digest();
+            StringBuilder sb = new StringBuilder();
+            for (byte b : digest) {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        }
     }
 }
