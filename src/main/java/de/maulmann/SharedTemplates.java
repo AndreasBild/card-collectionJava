@@ -61,24 +61,24 @@ public class SharedTemplates {
         String template = loadResource("/templates/opengraph.html");
 
         return template.replace("{{PAGE}}", page)
-                .replace("{{TITLE}}", title)
+                .replace("{{TITLE}}", escapeHtml(title))
                 .replace("{{IMAGE}}", imageURL)
-                .replace("{{DESCRIPTION}}", description);
+                .replace("{{DESCRIPTION}}", escapeHtml(description));
     }
 
     public static String getSeo(String page, String description) {
         String template = loadResource("/templates/seo.html");
         return template.replace("{{PAGE}}", page)
-                .replace("{{DESCRIPTION}}", description);
+                .replace("{{DESCRIPTION}}", escapeHtml(description));
     }
 
     public static String getHead(String title, String description, String root, String page, String image) {
         String template = loadResource("/templates/head.html");
         if (template.isEmpty()) {
-            return "<title>" + title + "</title><meta name=\"description\" content=\"" + description + "\">";
+            return "<title>" + escapeHtml(title) + "</title><meta name=\"description\" content=\"" + escapeHtml(description) + "\">";
         }
-        return template.replace("{{TITLE}}", title)
-                .replace("{{DESCRIPTION}}", description)
+        return template.replace("{{TITLE}}", escapeHtml(title))
+                .replace("{{DESCRIPTION}}", escapeHtml(description))
                 .replace("{{ROOT}}", root)
                 .replace("{{ANALYTICS}}", getAnalytics())
                 .replace("{{SEO}}", getSeo(page, description))
@@ -130,5 +130,14 @@ public class SharedTemplates {
 
     public static String getTimestamp() {
         return LocalDateTime.now().format(TIMESTAMP_FORMATTER);
+    }
+
+    private static String escapeHtml(String text) {
+        if (text == null) return "";
+        return text.replace("&", "&amp;")
+                   .replace("<", "&lt;")
+                   .replace(">", "&gt;")
+                   .replace("\"", "&quot;")
+                   .replace("'", "&#39;");
     }
 }

@@ -365,28 +365,28 @@ public class CardPageGenerator {
         data.put("nextLink", next != null ? "../" + next.seasonFolder + "/" + next.filename : null);
 
         // Titel und SEO Text
-        data.put("h1Title", escapeHtml(h1Title));
-        data.put("aiSnapshotText", escapeHtml(metaDesc));
+        data.put("h1Title", h1Title);
+        data.put("aiSnapshotText", metaDesc);
 
         // Bilder
         data.put("frontImgPath", frontImgPath);
         data.put("backImgPath", backImgPath);
-        data.put("frontAlt", escapeHtml(generateAltText(c, "front")));
-        data.put("backAlt", escapeHtml(generateAltText(c, "back")));
-        data.put("frontImgTitle", escapeHtml("Front scan of " + c.get("Player") + " " + c.get("Brand")));
-        data.put("backImgTitle", escapeHtml("Back scan of " + c.get("Player") + " " + c.get("Brand")));
+        data.put("frontAlt", generateAltText(c, "front"));
+        data.put("backAlt", generateAltText(c, "back"));
+        data.put("frontImgTitle", "Front scan of " + c.get("Player") + " " + c.get("Brand"));
+        data.put("backImgTitle", "Back scan of " + c.get("Player") + " " + c.get("Brand"));
 
         // Technische Daten (Tabelle)
-        data.put("season", isValid(c.get("Season")) ? escapeHtml(c.get("Season")) : "-");
-        data.put("team", isValid(c.get("Team")) ? escapeHtml(c.get("Team")) : "-");
-        data.put("company", isValid(c.get("Company")) ? escapeHtml(c.get("Company")) : "-");
-        data.put("brand", isValid(c.get("Brand")) ? escapeHtml(c.get("Brand")) : "-");
-        data.put("theme", isValid(c.get("Theme")) ? escapeHtml(c.get("Theme")) : "-");
-        data.put("variant", isValid(c.get("Variant")) ? escapeHtml(c.get("Variant")) : "-");
-        data.put("number", isValid(c.get("Number")) ? escapeHtml(c.get("Number")) : "-");
-        data.put("rookie", isValid(c.get("Rookie")) ? escapeHtml(c.get("Rookie")) : "-");
-        data.put("memorabilia", isValid(c.get("Game Used")) ? escapeHtml(c.get("Game Used")) : "-");
-        data.put("autograph", isValid(c.get("Autograph")) ? escapeHtml(c.get("Autograph")) : "-");
+        data.put("season", isValid(c.get("Season")) ? c.get("Season") : "-");
+        data.put("team", isValid(c.get("Team")) ? c.get("Team") : "-");
+        data.put("company", isValid(c.get("Company")) ? c.get("Company") : "-");
+        data.put("brand", isValid(c.get("Brand")) ? c.get("Brand") : "-");
+        data.put("theme", isValid(c.get("Theme")) ? c.get("Theme") : "-");
+        data.put("variant", isValid(c.get("Variant")) ? c.get("Variant") : "-");
+        data.put("number", isValid(c.get("Number")) ? c.get("Number") : "-");
+        data.put("rookie", isValid(c.get("Rookie")) ? c.get("Rookie") : "-");
+        data.put("memorabilia", isValid(c.get("Game Used")) ? c.get("Game Used") : "-");
+        data.put("autograph", isValid(c.get("Autograph")) ? c.get("Autograph") : "-");
 
         String combined = c.get("Serial/Print Run");
         String serialDisplay = "-";
@@ -395,10 +395,10 @@ public class CardPageGenerator {
         } else if (c.has("Serial") || c.has("Print Run")) {
             serialDisplay = (c.has("Serial") ? c.get("Serial") : "?") + " / " + (c.has("Print Run") ? c.get("Print Run") : "?");
         }
-        data.put("serialDisplay", escapeHtml(serialDisplay));
+        data.put("serialDisplay", serialDisplay);
 
         String grading = c.get("Grading Co.") + " " + c.get("Grade");
-        data.put("grading", (grading.trim().length() > 1 && !grading.trim().equals("null null")) ? escapeHtml(grading) : "");
+        data.put("grading", (grading.trim().length() > 1 && !grading.trim().equals("null null")) ? grading : "");
 
         // Trivia & Context Engines
         data.put("hobbyTrivia", getHobbyTrivia(c));
@@ -520,31 +520,31 @@ public class CardPageGenerator {
 
         String combined = c.get("Serial/Print Run");
         if (isValid(combined)) {
-            sb.append(createFaqItem("How rare is this specific card?", "This card is serially numbered " + escapeHtml(combined) + ", making it a strictly limited edition collectible."));
+            sb.append(createFaqItem("How rare is this specific card?", "This card is serially numbered " + combined + ", making it a strictly limited edition collectible."));
         } else if (c.has("Serial")) {
-            sb.append(createFaqItem("How rare is this specific card?", "This card is serially numbered " + escapeHtml(c.get("Serial")) + " out of a total print run of " + escapeHtml(c.get("Print Run")) + "."));
+            sb.append(createFaqItem("How rare is this specific card?", "This card is serially numbered " + c.get("Serial") + " out of a total print run of " + c.get("Print Run") + "."));
         }
 
         if (c.has("Rookie")) {
             String rookieAns = c.get("Rookie").equalsIgnoreCase("Yes") ?
-                    "Yes, this is an official Rookie Card (RC) from " + escapeHtml(player) + "'s debut season, holding premium value for collectors." :
-                    "No, this card was released during the " + escapeHtml(season) + " season, later in " + escapeHtml(player) + "'s career.";
-            sb.append(createFaqItem("Is this a " + escapeHtml(player) + " Rookie Card?", rookieAns));
+                    "Yes, this is an official Rookie Card (RC) from " + player + "'s debut season, holding premium value for collectors." :
+                    "No, this card was released during the " + season + " season, later in " + player + "'s career.";
+            sb.append(createFaqItem("Is this a " + player + " Rookie Card?", rookieAns));
         }
 
         if (c.has("Autograph") && c.get("Autograph").equalsIgnoreCase("Yes")) {
-            sb.append(createFaqItem("Is the autograph authentic?", "Yes, this card features a manufacturer-certified autograph guaranteed by " + escapeHtml(company) + "."));
+            sb.append(createFaqItem("Is the autograph authentic?", "Yes, this card features a manufacturer-certified autograph guaranteed by " + company + "."));
         }
 
         if (c.has("Grade")) {
-            sb.append(createFaqItem("Is this card professionally graded?", "Yes, this card has been graded by " + escapeHtml(c.get("Grading Co.")) + " and received a condition score of " + escapeHtml(c.get("Grade")) + "."));
+            sb.append(createFaqItem("Is this card professionally graded?", "Yes, this card has been graded by " + c.get("Grading Co.") + " and received a condition score of " + c.get("Grade") + "."));
         }
 
         return sb.toString();
     }
 
     private static String createFaqItem(String question, String answer) {
-        return "<details class=\"faq-details\" style=\"background: #fff; padding: 15px; border-bottom: 1px solid #ddd; cursor: pointer;\">" + "<summary class=\"faq-summary\" style=\"font-weight: bold; font-size: 1.1em; outline: none;\">" + question + "</summary>" + "<p class=\"faq-answer\" style=\"margin-top: 10px; color: #555;\">" + answer + "</p>" + "</details>";
+        return "<details class=\"faq-details\" style=\"background: #fff; padding: 15px; border-bottom: 1px solid #ddd; cursor: pointer;\">" + "<summary class=\"faq-summary\" style=\"font-weight: bold; font-size: 1.1em; outline: none;\">" + escapeHtml(question) + "</summary>" + "<p class=\"faq-answer\" style=\"margin-top: 10px; color: #555;\">" + escapeHtml(answer) + "</p>" + "</details>";
     }
 
     private static String generateJsonLd(CardData c, String desc, String h1Title, String overviewPage, String imageBaseName) {
@@ -603,6 +603,10 @@ public class CardPageGenerator {
 
     private static String escapeHtml(String text) {
         if (text == null) return "";
-        return text.replace("\"", "&quot;").replace("'", "&#39;");
+        return text.replace("&", "&amp;")
+                   .replace("<", "&lt;")
+                   .replace(">", "&gt;")
+                   .replace("\"", "&quot;")
+                   .replace("'", "&#39;");
     }
 }
