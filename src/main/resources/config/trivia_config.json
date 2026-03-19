@@ -1,0 +1,366 @@
+{
+  "hobbyTrivia": [
+    {
+      "condition": { "Variant": "pmg green" },
+      "text": "The mythical PMG Green! Limited to just the first 10 copies of the 100-card print run, this is undeniably one of the most legendary and expensive parallel cards in the entire sports card hobby."
+    },
+    {
+      "condition": { "Variant": "precious metal gems green" },
+      "text": "The mythical PMG Green! Limited to just the first 10 copies of the 100-card print run, this is undeniably one of the most legendary and expensive parallel cards in the entire sports card hobby."
+    },
+    {
+      "condition": { "Variant": "pmg", "Variant!": "green" },
+      "text": "SkyBox Metal Universe Precious Metal Gems (PMGs) are widely considered the holy grails of 1990s basketball. The print run was strictly limited to 100 copies. They are notorious for severe edge-chipping straight out of the pack, making highly-graded copies 'unicorns' at auction."
+    },
+    {
+      "condition": { "Variant": "precious metal gems", "Variant!": "green" },
+      "text": "SkyBox Metal Universe Precious Metal Gems (PMGs) are widely considered the holy grails of 1990s basketball. The print run was strictly limited to 100 copies. They are notorious for severe edge-chipping straight out of the pack, making highly-graded copies 'unicorns' at auction."
+    },
+    {
+      "condition": { "Theme": "precious metal gems", "Variant!": "green" },
+      "text": "SkyBox Metal Universe Precious Metal Gems (PMGs) are widely considered the holy grails of 1990s basketball. The print run was strictly limited to 100 copies. They are notorious for severe edge-chipping straight out of the pack, making highly-graded copies 'unicorns' at auction."
+    },
+    {
+      "condition": { "Variant": "star ruby" },
+      "text": "Skybox Premium 'Star Rubies' are among the most revered and aesthetically striking parallels of the late 90s. With brilliant red foil and extreme scarcity (often numbered to 50 or 45), they are a centerpiece that rivals PMGs in demand."
+    },
+    {
+      "condition": { "Variant": "rubies" },
+      "text": "Skybox Premium 'Star Rubies' are among the most revered and aesthetically striking parallels of the late 90s. With brilliant red foil and extreme scarcity (often numbered to 50 or 45), they are a centerpiece that rivals PMGs in demand."
+    },
+    {
+      "condition": { "Variant": "legacy" },
+      "text": "Flair Showcase's 'Legacy Collection' revolutionized the hobby by introducing tiered rarity (Row 0, Row 1, Row 2) stamped with vibrant blue foil. These were some of the very first mainstream serial-numbered parallels, changing the chase dynamic forever."
+    },
+    {
+      "condition": { "Theme": "legacy collection" },
+      "text": "Flair Showcase's 'Legacy Collection' revolutionized the hobby by introducing tiered rarity (Row 0, Row 1, Row 2) stamped with vibrant blue foil. These were some of the very first mainstream serial-numbered parallels, changing the chase dynamic forever."
+    },
+    {
+      "condition": { "Variant": "rave", "Variant!": "refractor" },
+      "text": "Z-Force 'Raves' (including Super Raves and Thunder Raves) featured vibrant, chaotic foil patterns matching the loud, aggressive aesthetic of 90s basketball. They were incredibly tough pack pulls."
+    },
+    {
+      "condition": { "Variant": "credentials" },
+      "text": "E-X Credentials (Now and Future) are among the most aesthetically stunning and condition-sensitive acetate cards ever produced. The print runs differed based on the player's card number, creating a complex and highly engaging chase for collectors."
+    },
+    {
+      "condition": { "Variant": "general admission" },
+      "text": "Modeled after stadium seating, these tiers represented different levels of scarcity in the set. Pulling 'Club Box' or 'Loge Level' equivalents meant you had secured the rarest variations in the product."
+    },
+    {
+      "condition": { "Variant": "mezzanine" },
+      "text": "Modeled after stadium seating, these tiers represented different levels of scarcity in the set. Pulling 'Club Box' or 'Loge Level' equivalents meant you had secured the rarest variations in the product."
+    },
+    {
+      "condition": { "Variant": "balcony" },
+      "text": "Modeled after stadium seating, these tiers represented different levels of scarcity in the set. Pulling 'Club Box' or 'Loge Level' equivalents meant you had secured the rarest variations in the product."
+    },
+    {
+      "condition": { "Variant": "club box" },
+      "text": "Modeled after stadium seating, these tiers represented different levels of scarcity in the set. Pulling 'Club Box' or 'Loge Level' equivalents meant you had secured the rarest variations in the product."
+    },
+    {
+      "condition": { "Variant": "standing room" },
+      "text": "Modeled after stadium seating, these tiers represented different levels of scarcity in the set. Pulling 'Club Box' or 'Loge Level' equivalents meant you had secured the rarest variations in the product."
+    },
+    {
+      "condition": { "Variant": "loge level" },
+      "text": "Modeled after stadium seating, these tiers represented different levels of scarcity in the set. Pulling 'Club Box' or 'Loge Level' equivalents meant you had secured the rarest variations in the product."
+    },
+    {
+      "condition": { "Variant": "tier reserved" },
+      "text": "Modeled after stadium seating, these tiers represented different levels of scarcity in the set. Pulling 'Club Box' or 'Loge Level' equivalents meant you had secured the rarest variations in the product."
+    },
+    {
+      "condition": { "Brand": "jambalaya" },
+      "text": "E-X2001 Jambalaya inserts are legendary. Featuring a highly unique die-cut oval shape and falling at an incredibly tough ratio of 1 in 720 packs, their design and scarcity hold immense prestige today."
+    },
+    {
+      "condition": { "Theme": "jambalaya" },
+      "text": "E-X2001 Jambalaya inserts are legendary. Featuring a highly unique die-cut oval shape and falling at an incredibly tough ratio of 1 in 720 packs, their design and scarcity hold immense prestige today."
+    },
+    {
+      "condition": { "Brand": "exquisite" },
+      "text": "In 2003, Upper Deck gambled by releasing 'Exquisite Collection', packaged in wooden boxes at unprecedented price points. It single-handedly birthed the ultra-high-end market, introducing massive multi-color patches and on-card autographs."
+    },
+    {
+      "condition": { "Variant": "electric court" },
+      "text": "Upper Deck's 'Electric Court' (along with Gold and Platinum versions) were among the earliest parallel chase cards in the hobby, giving collectors a premium foil-stamped upgrade over the standard base card."
+    },
+    {
+      "condition": { "Variant": "diamond", "Variant!": "refractor" },
+      "text": "Upper Deck Black Diamond utilized a unique tiered rarity system based on the number of diamonds printed on the card. 'Quadruple Diamond' cards were the rarest base parallels in the set."
+    },
+    {
+      "condition": { "Variant": "medallion" },
+      "text": "Fleer Ultra's Medallion parallels (Gold and Platinum) offered a premium foil upgrade. Platinum Medallions, in particular, were heavily short-printed and remain highly collectible."
+    },
+    {
+      "condition": { "Variant": "script" },
+      "text": "Upper Deck's 'Script' parallels added elegant facsimile foil signatures to the cards, with 'Super Script' usually being severely limited and serial-numbered."
+    },
+    {
+      "condition": { "Brand": "flawless" },
+      "text": "Panini's Flawless and National Treasures lines represent the pinnacle of modern investment-grade basketball cards. Flawless is famous for embedding actual, certified diamonds and precious gems directly into the card."
+    },
+    {
+      "condition": { "Brand": "national treasures" },
+      "text": "Panini's Flawless and National Treasures lines represent the pinnacle of modern investment-grade basketball cards. Flawless is famous for embedding actual, certified diamonds and precious gems directly into the card."
+    },
+    {
+      "condition": { "Variant": "base", "Variant!": "refractor", "Variant_2!": "frozenfractor", "Variant_3!": "mojo", "Variant_4!": "tie dye", "Variant_5!": "meta", "Variant_6!": "marble", "Variant_7!": "astral", "Variant_8!": "fractal", "Variant_9!": "pulsar", "Variant_10!": "holo" },
+      "text": "As the foundational base card of the set, this piece represents the core of player registries. While not inherently rare, finding un-numbered base cards from the 90s in pristine Gem Mint condition has become incredibly difficult due to the card stock used at the time."
+    }
+  ],
+  "techTrivia": [
+    {
+      "condition": { "Variant": "printing plate" },
+      "text": "<strong>Printing Plate:</strong> This is an actual 1-of-1 metal plate used directly in the manufacturer's printing press to create the standard cards for this set. It is a true piece of production history."
+    },
+    {
+      "condition": { "Variant": "magenta" },
+      "text": "<strong>Printing Plate:</strong> This is an actual 1-of-1 metal plate used directly in the manufacturer's printing press to create the standard cards for this set. It is a true piece of production history."
+    },
+    {
+      "condition": { "Variant": "cyan" },
+      "text": "<strong>Printing Plate:</strong> This is an actual 1-of-1 metal plate used directly in the manufacturer's printing press to create the standard cards for this set. It is a true piece of production history."
+    },
+    {
+      "condition": { "Variant": "yellow" },
+      "text": "<strong>Printing Plate:</strong> This is an actual 1-of-1 metal plate used directly in the manufacturer's printing press to create the standard cards for this set. It is a true piece of production history."
+    },
+    {
+      "condition": { "Variant": "black plate" },
+      "text": "<strong>Printing Plate:</strong> This is an actual 1-of-1 metal plate used directly in the manufacturer's printing press to create the standard cards for this set. It is a true piece of production history."
+    },
+    {
+      "condition": { "Variant": "1 of 1" },
+      "text": "<strong>One-of-One (1/1):</strong> This card is a true Masterpiece. Being the absolute only card of its exact kind ever manufactured makes it the ultimate crown jewel for any serious collector."
+    },
+    {
+      "condition": { "Variant": "1/1" },
+      "text": "<strong>One-of-One (1/1):</strong> This card is a true Masterpiece. Being the absolute only card of its exact kind ever manufactured makes it the ultimate crown jewel for any serious collector."
+    },
+    {
+      "condition": { "Serial": "1/1" },
+      "text": "<strong>One-of-One (1/1):</strong> This card is a true Masterpiece. Being the absolute only card of its exact kind ever manufactured makes it the ultimate crown jewel for any serious collector."
+    },
+    {
+      "condition": { "Serial/Print Run": "1/1" },
+      "text": "<strong>One-of-One (1/1):</strong> This card is a true Masterpiece. Being the absolute only card of its exact kind ever manufactured makes it the ultimate crown jewel for any serious collector."
+    },
+    {
+      "condition": { "Variant": "masterpiece" },
+      "text": "<strong>One-of-One (1/1):</strong> This card is a true Masterpiece. Being the absolute only card of its exact kind ever manufactured makes it the ultimate crown jewel for any serious collector."
+    },
+    {
+      "condition": { "Variant": "superfractor" },
+      "text": "<strong>One-of-One (1/1):</strong> This card is a true Masterpiece. Being the absolute only card of its exact kind ever manufactured makes it the ultimate crown jewel for any serious collector."
+    },
+    {
+      "condition": { "Variant": "nebula" },
+      "text": "<strong>One-of-One (1/1):</strong> This card is a true Masterpiece. Being the absolute only card of its exact kind ever manufactured makes it the ultimate crown jewel for any serious collector."
+    },
+    {
+      "condition": { "Variant": "pre production" },
+      "text": "<strong>Production Proof:</strong> This is a rare pre-production proof or test print, originally used internally by the manufacturer to verify color and quality before the mass print run began."
+    },
+    {
+      "condition": { "Variant": "proof" },
+      "text": "<strong>Production Proof:</strong> This is a rare pre-production proof or test print, originally used internally by the manufacturer to verify color and quality before the mass print run began."
+    },
+    {
+      "condition": { "Variant": "atomic" },
+      "text": "<strong>Atomic Refractor:</strong> Features a stunning 'cracked ice' hyper-plaid holographic pattern."
+    },
+    {
+      "condition": { "Variant": "x-fractor" },
+      "text": "<strong>X-Fractor:</strong> Famous for its distinct checkerboard holographic pattern."
+    },
+    {
+      "condition": { "Variant": "frozenfractor" },
+      "text": "<strong>Frozenfractor:</strong> An incredibly rare, condition-sensitive parallel with a unique frosted ice aesthetic."
+    },
+    {
+      "condition": { "Variant": "negative refractor" },
+      "text": "<strong>Negative Refractor:</strong> Inverts the image colors for a striking, ghost-like appearance."
+    },
+    {
+      "condition": { "Variant": "refractor", "Variant!": "atomic", "Variant_2!": "x-fractor", "Variant_3!": "frozenfractor", "Variant_4!": "negative", "Variant_5!": "superfractor" },
+      "text": "<strong>Chromium Refractor:</strong> Chromium technology revolutionized the hobby by adding a rainbow light-diffracting coating to the card surface. The specific color (Gold, Sapphire, Ruby, etc.) designates its exact scarcity tier in the set."
+    },
+    {
+      "condition": { "Variant": "mojo" },
+      "text": "<strong>Opti-Chrome Technology:</strong> This parallel utilizes hyper-refractive geometric foil patterns (like Mojo, Pulsar, or Tie-Dye) that react dynamically to light. These finishes are highly sought after by modern investors."
+    },
+    {
+      "condition": { "Variant": "tie dye" },
+      "text": "<strong>Opti-Chrome Technology:</strong> This parallel utilizes hyper-refractive geometric foil patterns (like Mojo, Pulsar, or Tie-Dye) that react dynamically to light. These finishes are highly sought after by modern investors."
+    },
+    {
+      "condition": { "Variant": "meta" },
+      "text": "<strong>Opti-Chrome Technology:</strong> This parallel utilizes hyper-refractive geometric foil patterns (like Mojo, Pulsar, or Tie-Dye) that react dynamically to light. These finishes are highly sought after by modern investors."
+    },
+    {
+      "condition": { "Variant": "marble" },
+      "text": "<strong>Opti-Chrome Technology:</strong> This parallel utilizes hyper-refractive geometric foil patterns (like Mojo, Pulsar, or Tie-Dye) that react dynamically to light. These finishes are highly sought after by modern investors."
+    },
+    {
+      "condition": { "Variant": "astral" },
+      "text": "<strong>Opti-Chrome Technology:</strong> This parallel utilizes hyper-refractive geometric foil patterns (like Mojo, Pulsar, or Tie-Dye) that react dynamically to light. These finishes are highly sought after by modern investors."
+    },
+    {
+      "condition": { "Variant": "fractal" },
+      "text": "<strong>Opti-Chrome Technology:</strong> This parallel utilizes hyper-refractive geometric foil patterns (like Mojo, Pulsar, or Tie-Dye) that react dynamically to light. These finishes are highly sought after by modern investors."
+    },
+    {
+      "condition": { "Variant": "pulsar" },
+      "text": "<strong>Opti-Chrome Technology:</strong> This parallel utilizes hyper-refractive geometric foil patterns (like Mojo, Pulsar, or Tie-Dye) that react dynamically to light. These finishes are highly sought after by modern investors."
+    },
+    {
+      "condition": { "Variant": "holo" },
+      "text": "<strong>Opti-Chrome Technology:</strong> This parallel utilizes hyper-refractive geometric foil patterns (like Mojo, Pulsar, or Tie-Dye) that react dynamically to light. These finishes are highly sought after by modern investors."
+    },
+    {
+      "condition": { "Variant": "die", "Variant_2": "cut" },
+      "text": "<strong>Die-Cut Technology:</strong> Manufacturers used custom stamping dies to cut intricate borders and patterns into the card stock. Because of the exposed, delicate extra corners, die-cut cards are notoriously condition-sensitive."
+    },
+    {
+      "condition": { "Theme": "die-cut" },
+      "text": "<strong>Die-Cut Technology:</strong> Manufacturers used custom stamping dies to cut intricate borders and patterns into the card stock. Because of the exposed, delicate extra corners, die-cut cards are notoriously condition-sensitive."
+    },
+    {
+      "condition": { "Variant": "acetate" },
+      "text": "<strong>Acetate / Plexiglass:</strong> Printed on clear, transparent, or semi-translucent plastic rather than traditional cardboard, creating a premium 'window' effect."
+    },
+    {
+      "condition": { "Variant": "plexiglass" },
+      "text": "<strong>Acetate / Plexiglass:</strong> Printed on clear, transparent, or semi-translucent plastic rather than traditional cardboard, creating a premium 'window' effect."
+    },
+    {
+      "condition": { "Variant": "crystal" },
+      "text": "<strong>Acetate / Plexiglass:</strong> Printed on clear, transparent, or semi-translucent plastic rather than traditional cardboard, creating a premium 'window' effect."
+    },
+    {
+      "condition": { "Variant": "embossed" },
+      "text": "<strong>Embossing:</strong> Manufacturers used heavy presses to stamp raised, 3D textures into the card face, adding a premium tactile element that collectors could physically feel."
+    },
+    {
+      "condition": { "Theme": "embossed" },
+      "text": "<strong>Embossing:</strong> Manufacturers used heavy presses to stamp raised, 3D textures into the card face, adding a premium tactile element that collectors could physically feel."
+    },
+    {
+      "condition": { "Variant": "foil tech" },
+      "text": "<strong>Etched Foil:</strong> Utilizes proprietary technology to create deep, grooved textures in the metallic background of the card, allowing light to catch the card in dynamic ways."
+    },
+    {
+      "condition": { "Brand": "metal universe" },
+      "text": "<strong>Etched Foil:</strong> Utilizes proprietary technology to create deep, grooved textures in the metallic background of the card, allowing light to catch the card in dynamic ways."
+    },
+    {
+      "condition": { "Theme": "etched" },
+      "text": "<strong>Etched Foil:</strong> Utilizes proprietary technology to create deep, grooved textures in the metallic background of the card, allowing light to catch the card in dynamic ways."
+    },
+    {
+      "condition": { "Variant": "patch" },
+      "text": "<strong>Prime Patch:</strong> Instead of a standard single-color jersey swatch, this card features a 'Prime' cut—usually containing multi-color stitching, numbers, or logos directly from the game-worn jersey."
+    },
+    {
+      "condition": { "Variant": "multicolor" },
+      "text": "<strong>Prime Patch:</strong> Instead of a standard single-color jersey swatch, this card features a 'Prime' cut—usually containing multi-color stitching, numbers, or logos directly from the game-worn jersey."
+    },
+    {
+      "condition": { "Variant": "prime" },
+      "text": "<strong>Prime Patch:</strong> Instead of a standard single-color jersey swatch, this card features a 'Prime' cut—usually containing multi-color stitching, numbers, or logos directly from the game-worn jersey."
+    }
+  ],
+  "playerHighlights": [
+    {
+      "condition": { "Player": "Juwan Howard", "Season": "1994" },
+      "text": "Drafted 5th overall by Washington, Juwan Howard proved himself an elite talent during his 1994-95 rookie campaign. He earned NBA All-Rookie Second Team honors and played alongside former 'Fab Five' teammate Chris Webber, as well as the 7-foot-7 giant Gheorghe Mureșan."
+    },
+    {
+      "condition": { "Player": "Juwan Howard", "Season": "1995-96" },
+      "text": "The 1995-96 season was Juwan's major breakout year. He became an NBA All-Star, was named to the All-NBA Third Team, and averaged a dominant 22.1 points per game. He anchored the Bullets alongside Chris Webber and sharpshooter Tracy Murray."
+    },
+    {
+      "condition": { "Player": "Juwan Howard", "Season": "1996" },
+      "text": "During this era, Juwan was the focal point of the Washington Wizards offense. He shared the court with prime Rod Strickland, who led the league in assists, and a young rookie named Richard Hamilton."
+    },
+    {
+      "condition": { "Player": "Juwan Howard", "Season": "1997" },
+      "text": "During this era, Juwan was the focal point of the Washington Wizards offense. He shared the court with prime Rod Strickland, who led the league in assists, and a young rookie named Richard Hamilton."
+    },
+    {
+      "condition": { "Player": "Juwan Howard", "Season": "2000-01" },
+      "text": "Traded to the Dallas Mavericks, Juwan provided crucial veteran scoring. He joined a highly explosive offensive roster featuring a young Dirk Nowitzki, MVP-caliber point guard Steve Nash, and Michael Finley."
+    },
+    {
+      "condition": { "Player": "Juwan Howard", "Season": "2001-02" },
+      "text": "Traded to the Dallas Mavericks, Juwan provided crucial veteran scoring. He joined a highly explosive offensive roster featuring a young Dirk Nowitzki, MVP-caliber point guard Steve Nash, and Michael Finley."
+    },
+    {
+      "condition": { "Player": "Juwan Howard", "Season": "2003-04" },
+      "text": "Playing for the Orlando Magic, Juwan Howard was a vital secondary scorer alongside the NBA's scoring champion, Tracy McGrady. He started 81 games and averaged 17 points per night."
+    },
+    {
+      "condition": { "Player": "Juwan Howard", "Season": "2004" },
+      "text": "During his tenure with the Houston Rockets, Juwan was a seasoned veteran presence in the frontcourt, playing alongside Hall of Fame center Yao Ming, Tracy McGrady, and legendary shot-blocker Dikembe Mutombo."
+    },
+    {
+      "condition": { "Player": "Juwan Howard", "Season": "2005" },
+      "text": "During his tenure with the Houston Rockets, Juwan was a seasoned veteran presence in the frontcourt, playing alongside Hall of Fame center Yao Ming, Tracy McGrady, and legendary shot-blocker Dikembe Mutombo."
+    },
+    {
+      "condition": { "Player": "Juwan Howard", "Season": "2006" },
+      "text": "During his tenure with the Houston Rockets, Juwan was a seasoned veteran presence in the frontcourt, playing alongside Hall of Fame center Yao Ming, Tracy McGrady, and legendary shot-blocker Dikembe Mutombo."
+    },
+    {
+      "condition": { "Player": "Juwan Howard", "Season": "2010" },
+      "text": "As a respected locker room leader for the Miami Heat, Juwan Howard achieved the ultimate goal. Playing alongside the 'Big Three' (LeBron James, Dwyane Wade, Chris Bosh), he won back-to-back NBA Championships in 2012 and 2013, capping off an incredible near-20-year career."
+    },
+    {
+      "condition": { "Player": "Juwan Howard", "Season": "2011" },
+      "text": "As a respected locker room leader for the Miami Heat, Juwan Howard achieved the ultimate goal. Playing alongside the 'Big Three' (LeBron James, Dwyane Wade, Chris Bosh), he won back-to-back NBA Championships in 2012 and 2013, capping off an incredible near-20-year career."
+    },
+    {
+      "condition": { "Player": "Juwan Howard", "Season": "2012" },
+      "text": "As a respected locker room leader for the Miami Heat, Juwan Howard achieved the ultimate goal. Playing alongside the 'Big Three' (LeBron James, Dwyane Wade, Chris Bosh), he won back-to-back NBA Championships in 2012 and 2013, capping off an incredible near-20-year career."
+    },
+    {
+      "condition": { "Player": "Juwan Howard", "Season": "college" },
+      "text": "At the University of Michigan, Juwan Howard was a cornerstone of the legendary 'Fab Five'. Alongside Chris Webber, Jalen Rose, Jimmy King, and Ray Jackson, they reached consecutive NCAA championship games and permanently altered basketball culture."
+    }
+  ],
+  "eraContext": [
+    {
+      "condition": { "Season": "1996" },
+      "text": "The 1996-97 season celebrated the NBA's 50th Anniversary (noted by gold NBA logos on many cards). It also marked the arrival of the legendary 1996 Draft Class (Kobe Bryant, Allen Iverson, Steve Nash), which drove the sports card hobby into a frenzy of innovation."
+    },
+    {
+      "condition": { "Season": "1998" },
+      "text": "The 1998-99 season was shortened to just 50 games due to a league-wide lockout. As a result, card manufacturers produced fewer sets and lower print runs, making specific inserts from this era surprisingly scarce today."
+    },
+    {
+      "condition": { "Season": "1999" },
+      "text": "Pop Culture crossover: During the 1999 television season, Juwan Howard made a famous cameo appearance in the hit political drama 'The West Wing' (Episode: 'The Crackpots and These Women'), playing a pickup basketball game against the President's staff."
+    },
+    {
+      "condition": { "Season": "2003" },
+      "text": "The 2003-04 season is historic for the arrival of LeBron James, Dwyane Wade, and Carmelo Anthony. The massive hype around this rookie class caused a boom in trading card investments, leading to the birth of ultra-high-end products like Exquisite Collection."
+    },
+    {
+      "condition": { "Season": "2011" },
+      "text": "During the 'Heatles' era in Miami, the NBA was dominated by the polarizing Big Three. Cards produced during this period capture a highly significant dynasty that changed player empowerment and free agency forever."
+    },
+    {
+      "condition": { "Season": "2012" },
+      "text": "During the 'Heatles' era in Miami, the NBA was dominated by the polarizing Big Three. Cards produced during this period capture a highly significant dynasty that changed player empowerment and free agency forever."
+    },
+    {
+      "condition": { "Season": "college" },
+      "text": "The early 90s college basketball scene was revolutionized by the Fab Five. They introduced baggy shorts, black socks, and a trash-talking swagger that heavily influenced the aesthetic of 90s hip-hop and sports pop culture."
+    }
+  ]
+}
