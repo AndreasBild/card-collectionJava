@@ -58,7 +58,7 @@ public class ImageConverter {
         ExecutorService executor = Executors.newFixedThreadPool(cores);
 
         // Initialisierung des Hash-Checkers
-        ImageHashChecker hashChecker = new ImageHashChecker("output/image-build-hashes.properties");
+        FileTracker tracker = new FileTracker("output/image-build-hashes.properties");
 
         Files.walkFileTree(sourceDir, new SimpleFileVisitor<Path>() {
             @Override
@@ -70,7 +70,7 @@ public class ImageConverter {
 
                     executor.submit(() -> {
                         try {
-                            boolean wasConverted = convertAndSaveImageSet(file, sourceDir, webpOutDir, hashChecker);
+                            boolean wasConverted = convertAndSaveImageSet(file, sourceDir, webpOutDir, tracker);
                             if (wasConverted) {
                                 successCount.incrementAndGet();
                             } else {
@@ -90,10 +90,10 @@ public class ImageConverter {
         executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
 
         // Speichern der aktualisierten Hashes
-        hashChecker.save();
+        tracker.save();
     }
 
-    private static boolean convertAndSaveImageSet(Path sourceFile, Path sourceDir, Path webpOutDir, ImageHashChecker hashChecker) throws Exception {
+    private static boolean convertAndSaveImageSet(Path sourceFile, Path sourceDir, Path webpOutDir, FileTracker tracker) throws Exception {
 
         Path relativePath = sourceDir.relativize(sourceFile);
         String baseName = getBaseName(relativePath.getFileName().toString());
@@ -105,7 +105,7 @@ public class ImageConverter {
         File mainWebpFile = currentWebpOutDir.resolve(baseName + ".webp").toFile();
 
         // 1. PRE-CHECK: Müssen wir dieses Bild-Set neu generieren?
-        if (mainWebpFile.exists() && hashChecker.isUnchanged(sourceFile)) {
+        if (mainWebpFile.exists() && !tracker.hasChanged(sourceFile)) {
             return false;
         }
 
@@ -150,7 +150,7 @@ public class ImageConverter {
         }
 
         // Hash aktualisieren
-        hashChecker.updateHash(sourceFile);
+        tracker.updateHash(sourceFile);
         return true;
     }
 

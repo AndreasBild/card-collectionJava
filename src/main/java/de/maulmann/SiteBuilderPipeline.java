@@ -63,37 +63,38 @@ public class SiteBuilderPipeline {
                 .build()) {
 
             // Initialisiere den Hash-Cache für Smart-Uploads
-            FileHashCache hashCache = new FileHashCache(OUTPUT_DIR + "/sync-hashes.properties");
+            FileTracker tracker = new FileTracker(OUTPUT_DIR + "/sync-hashes.properties");
 
-            // --- PHASE 1: Generate Site HTML ---
-            System.out.println("\n[PHASE 1] Generating HTML files...");
+            // --- PHASE 1: Generate Site HTML & Sitemap ---
+            System.out.println("\n[PHASE 1] Generating HTML files and Sitemap...");
             FileGenerator.buildCollectionOverview();
             FileGenerator.buildOtherCollections();
             FileGenerator.buildStaticPages();
             CardPageGenerator.run();
+            SitemapGenerator.generate(); // Sitemap & robots.txt now ready for Phase 3
 
             // --- PHASE 2: Convert Images to WebP ---
             System.out.println("\n[PHASE 2] Converting images to WebP...");
             ImageConverter.main(new String[0]);
 
-            // --- PHASE 3: Compress & Upload HTML/CSS/JS ---
+            // --- PHASE 3: Compress & Upload HTML/CSS/JS/XML ---
             System.out.println("\n[PHASE 3] Minifying, Compressing, and Uploading Web Files...");
-            processAndUploadWebFiles(s3AsyncClient, hashCache);
+            processAndUploadWebFiles(s3AsyncClient, tracker);
 
             // --- PHASE 4: Upload Images (No GZIP) ---
             System.out.println("\n[PHASE 4] Syncing Images to S3...");
-            processAndUploadImages(s3AsyncClient, hashCache);
+            processAndUploadImages(s3AsyncClient, tracker);
 
             // Speichere die neuen Hashes, damit sie beim nächsten Build bekannt sind
-            hashCache.save();
+            tracker.save();
 
             // --- PHASE 4.5: Clean up Orphaned Files on S3 ---
             System.out.println("\n[PHASE 4.5] Sweeping S3 for ghost files...");
             cleanOrphanedS3Files(s3AsyncClient);
 
-            // --- PHASE 5: Generate, Compress & Upload Sitemap ---
-            System.out.println("\n[PHASE 5] Processing Sitemap...");
-            processAndUploadSitemap(s3AsyncClient);
+            // --- PHASE 5: Compress & Upload Sitemap GZ ---
+            System.out.println("\n[PHASE 5] Processing Sitemap GZ...");
+            processAndUploadSitemapGz(s3AsyncClient, tracker);
 
             // --- PHASE 6: Invalidate CDN Cache ---
             invalidateCloudFrontCache();
@@ -109,7 +110,7 @@ public class SiteBuilderPipeline {
         }
     }
 
-    private static void processAndUploadWebFiles(S3AsyncClient s3Client, FileHashCache hashCache) throws Exception {
+    private static void processAndUploadWebFiles(S3AsyncClient s3Client, FileTracker tracker) throws Exception {
         Path outputDir = Paths.get(OUTPUT_DIR);
         List<CompletableFuture<Void>> uploadFutures = new ArrayList<>();
         AtomicInteger uploadCount = new AtomicInteger(0);
@@ -120,12 +121,14 @@ public class SiteBuilderPipeline {
                 String fileName = file.getFileName().toString().toLowerCase();
                 String s3Key = outputDir.relativize(file).toString().replace("\\", "/");
 
-                // Pre-Check: Hat sich die Datei verändert? (Ignoriere sitemap & hashes)
+                // Pre-Check: Hat sich die Datei verändert? (Ignoriere sitemap-gz & hashes)
+                // sitemap.xml wird in Phase 5 separat als .gz behandelt
                 if (fileName.equals("sitemap.xml") || fileName.equals("sitemap.xml.gz") || fileName.equals("sync-hashes.properties")) {
                     return;
                 }
 
-                if (!hashCache.hasChanged(file)) {
+                String currentHash = tracker.getHash(file);
+                if (!tracker.hasChanged(file)) {
                     skipCount.incrementAndGet();
                     return;
                 }
@@ -157,7 +160,7 @@ public class SiteBuilderPipeline {
 
                     // Nach erfolgreichem Upload: Hash aktualisieren
                     if (uploadTask != null) {
-                        uploadFutures.add(uploadTask.thenRun(() -> hashCache.updateHash(file)));
+                        uploadFutures.add(uploadTask.thenRun(() -> tracker.updateHash(file, currentHash)));
                     }
 
                 } catch (Exception e) {
@@ -170,7 +173,7 @@ public class SiteBuilderPipeline {
         System.out.println("-> Uploaded " + uploadCount.get() + " web files. (Skipped " + skipCount.get() + " unmodified files).");
     }
 
-    private static void processAndUploadImages(S3AsyncClient s3Client, FileHashCache hashCache) throws Exception {
+    private static void processAndUploadImages(S3AsyncClient s3Client, FileTracker tracker) throws Exception {
         Path imagesDir = Paths.get(IMAGES_DIR);
         Path outputDir = Paths.get(OUTPUT_DIR);
 
@@ -190,7 +193,7 @@ public class SiteBuilderPipeline {
 
                 if (contentType != null) {
                     // Pre-Check: Hat sich das Bild verändert?
-                    if (!hashCache.hasChanged(file)) {
+                    if (!tracker.hasChanged(file)) {
                         skipCount.incrementAndGet();
                         return;
                     }
@@ -199,7 +202,7 @@ public class SiteBuilderPipeline {
                     CompletableFuture<Void> uploadTask = uploadRawFileAsync(s3Client, file, s3Key, contentType, CACHE_LONG, uploadCount);
 
                     // Nach erfolgreichem Upload: Hash eintragen
-                    uploadFutures.add(uploadTask.thenRun(() -> hashCache.updateHash(file)));
+                    uploadFutures.add(uploadTask.thenRun(() -> tracker.updateHash(file)));
                 }
             });
         }
@@ -277,13 +280,21 @@ public class SiteBuilderPipeline {
         }
     }
 
-    private static void processAndUploadSitemap(S3AsyncClient s3Client) throws Exception {
-        SitemapGenerator.generate();
-
+    private static void processAndUploadSitemapGz(S3AsyncClient s3Client, FileTracker tracker) throws Exception {
         File sitemapFile = new File(OUTPUT_DIR + "/sitemap.xml");
         File sitemapGzFile = new File(OUTPUT_DIR + "/sitemap.xml.gz");
 
-        if (!sitemapFile.exists()) throw new Exception("Sitemap was not generated properly.");
+        if (!sitemapFile.exists()) {
+            System.err.println("-> WARNING: sitemap.xml not found. Skipping GZ upload.");
+            return;
+        }
+
+        // Wir prüfen hier, ob die sitemap.xml sich geändert hat.
+        // Falls ja, generieren wir die .gz neu und laden sie hoch.
+        if (!tracker.hasChanged(sitemapFile.toPath()) && sitemapGzFile.exists()) {
+            System.out.println("-> Sitemap unchanged. Skipping GZ upload.");
+            return;
+        }
 
         GZIPCompressor.compressFile(sitemapFile, sitemapGzFile, 9);
         System.out.println("-> Compressed sitemap to sitemap.xml.gz");
@@ -296,12 +307,9 @@ public class SiteBuilderPipeline {
                 .cacheControl(CACHE_SHORT)
                 .build();
 
-        CompletableFuture<PutObjectResponse> future = s3Client.putObject(
-                request,
-                AsyncRequestBody.fromFile(sitemapGzFile)
-        );
+        s3Client.putObject(request, AsyncRequestBody.fromFile(sitemapGzFile)).join();
 
-        future.join();
+        tracker.updateHash(sitemapFile.toPath());
         System.out.println("-> Successfully uploaded sitemap.xml.gz to S3");
     }
 
@@ -385,68 +393,4 @@ public class SiteBuilderPipeline {
         return null;
     }
 
-    // =========================================================================
-    // HILFSKLASSE FÜR DEN HASH-CHECK
-    // =========================================================================
-    static class FileHashCache {
-        private final File storeFile;
-        private final Properties hashes = new Properties();
-
-        public FileHashCache(String filePath) {
-            this.storeFile = new File(filePath);
-            if (storeFile.exists()) {
-                try (InputStream in = Files.newInputStream(storeFile.toPath())) {
-                    hashes.load(in);
-                } catch (Exception e) {
-                    System.err.println("Konnt Hash-Datei nicht laden: " + e.getMessage());
-                }
-            }
-        }
-
-        public boolean hasChanged(Path file) {
-            try {
-                String currentHash = calculateMD5(file);
-                String storedHash = hashes.getProperty(file.toString());
-                return !currentHash.equals(storedHash);
-            } catch (Exception e) {
-                return true; // Bei Fehlern sicherheitshalber neu hochladen
-            }
-        }
-
-        public void updateHash(Path file) {
-            try {
-                hashes.setProperty(file.toString(), calculateMD5(file));
-            } catch (Exception ignored) {
-            }
-        }
-
-        public void save() {
-            try {
-                // Ordnerstruktur sicherstellen, falls output/ noch nicht existiert
-                storeFile.getParentFile().mkdirs();
-                try (OutputStream out = Files.newOutputStream(storeFile.toPath())) {
-                    hashes.store(out, "Automatisierter Datei-Upload Hash Cache");
-                }
-            } catch (Exception e) {
-                System.err.println("Konnte Hash-Datei nicht speichern: " + e.getMessage());
-            }
-        }
-
-        private String calculateMD5(Path file) throws Exception {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            try (InputStream is = Files.newInputStream(file)) {
-                byte[] buffer = new byte[8192];
-                int read;
-                while ((read = is.read(buffer)) > 0) {
-                    md.update(buffer, 0, read);
-                }
-            }
-            byte[] digest = md.digest();
-            StringBuilder sb = new StringBuilder();
-            for (byte b : digest) {
-                sb.append(String.format("%02x", b));
-            }
-            return sb.toString();
-        }
-    }
 }
