@@ -125,28 +125,28 @@ ${topNavHtml?no_esc}
             <#if hobbyTrivia != "">
                 <div class="context-card">
                     <h3>&#x1F3C6; Hobby Significance</h3>
-                    <p>${hobbyTrivia}</p>
+                    <p>${hobbyTrivia?no_esc}</p>
                 </div>
             </#if>
 
             <#if techTrivia != "">
                 <div class="context-card">
                     <h3>&#x2692;&#xFE0F; Card Technology</h3>
-                    <p>${techTrivia}</p>
+                    <p>${techTrivia?no_esc}</p>
                 </div>
             </#if>
 
             <#if playerHighlights != "">
                 <div class="context-card">
                     <h3>&#x1F4C8; Player Performance & Team</h3>
-                    <p>${playerHighlights}</p>
+                    <p>${playerHighlights?no_esc}</p>
                 </div>
             </#if>
 
             <#if eraContext != "">
                 <div class="context-card">
                     <h3>&#x1F3C0; NBA Era & Pop Culture</h3>
-                    <p>${eraContext}</p>
+                    <p>${eraContext?no_esc}</p>
                 </div>
             </#if>
 
