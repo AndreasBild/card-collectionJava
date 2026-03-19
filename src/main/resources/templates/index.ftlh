@@ -11,77 +11,158 @@ ${topNavHtml?no_esc}
         <p class="sub-title">Welcome to our Private Sports Card Collection</p>
     </header>
     <style>
-        .card-carousel {
-            display: flex;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            gap: 20px;
-            padding: 20px 0;
-            margin-bottom: 30px;
-            scrollbar-width: none; /* Firefox */
-            -webkit-overflow-scrolling: touch;
+        .carousel-wrapper {
+            width: 100%;
+            overflow: hidden;
+            padding: 40px 0;
+            position: relative;
+            background: radial-gradient(circle at center, #fdfdfd 0%, #f5f5f5 100%);
+            margin-bottom: 40px;
+            border-radius: 12px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.02);
         }
 
-        .card-carousel::-webkit-scrollbar {
-            display: none; /* Chrome/Safari */
+        .card-carousel {
+            display: flex;
+            gap: 30px;
+            width: max-content;
+            animation: infinite-scroll 60s linear infinite;
+            will-change: transform;
+        }
+
+        .carousel-wrapper:hover .card-carousel {
+            animation-play-state: paused;
+        }
+
+        @keyframes infinite-scroll {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(calc(-50% - 15px), 0, 0); }
         }
 
         .carousel-item {
             flex: 0 0 auto;
-            width: 250px;
-            scroll-snap-align: center;
-            transition: transform 0.3s ease;
+            width: 260px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
         }
 
         .carousel-item:hover {
-            transform: translateY(-8px);
+            transform: translateY(-15px) scale(1.08) rotate(1deg);
+            z-index: 100;
         }
 
         .carousel-item img {
             width: 100%;
             height: auto;
             aspect-ratio: 400 / 550;
-            border-radius: 8px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15), 0 2px 5px rgba(0, 0, 0, 0.1);
             object-fit: contain;
             background-color: #fff;
             display: block;
+            border: 1px solid rgba(0,0,0,0.05);
         }
 
+        /* Responsive adjustments */
         @media (max-width: 600px) {
             .carousel-item {
-                width: 200px;
+                width: 180px;
+            }
+            .carousel-wrapper {
+                padding: 20px 0;
+            }
+            .card-carousel {
+                gap: 15px;
+                animation-duration: 40s;
+            }
+            @keyframes infinite-scroll {
+                0% { transform: translate3d(0, 0, 0); }
+                100% { transform: translate3d(calc(-50% - 7.5px), 0, 0); }
             }
         }
+
+        /* Glass effect for the wrapper edges */
+        .carousel-wrapper::before,
+        .carousel-wrapper::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 100px;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .carousel-wrapper::before {
+            left: 0;
+            background: linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+        }
+
+        .carousel-wrapper::after {
+            right: 0;
+            background: linear-gradient(to left, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+        }
     </style>
-    <section class="card-carousel">
-        <div class="carousel-item">
-            <img src="images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-sn47-front.webp"
-                 fetchpriority="high" width="400" height="550"
-                 alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Red">
-        </div>
-        <div class="carousel-item">
-            <img src="images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-sn7-front.webp"
-                 loading="lazy" width="400" height="550"
-                 alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Green">
-        </div>
-        <div class="carousel-item">
-            <img src="images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Upper-Deck-UD3-Season-Ticket-Autograph-Base-JH-front.webp"
-                 loading="lazy" width="400" height="550" alt="Juwan Howard 1997-98 UD3 Season Ticket Autograph">
-        </div>
-        <div class="carousel-item">
-            <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-SPx-Finite-Base-Set-Spectrum-76-sn291-front.webp"
-                 loading="lazy" width="400" height="550" alt="Juwan Howard 1998-99 SPx Finite Base Spectrum">
-        </div>
-        <div class="carousel-item">
-            <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-SPx-Finite-Star-Power-Spectrum-92-sn223-front.webp"
-                 loading="lazy" width="400" height="550" alt="JJuwan Howard 1998-99 SPx Finite Star Power Spectrum">
-        </div>
-        <div class="carousel-item">
-            <img src="images/1994-95/Juwan-Howard-Washington-Bullets-1994-95-Fleer-Ultra-All-Rookies-Base-3-front.webp"
-                 loading="lazy" width="400" height="550" alt="Juwan Howard 1994-95 Fleer Ultra All Rookies">
-        </div>
-    </section>
+
+    <div class="carousel-wrapper">
+        <section class="card-carousel">
+            <!-- First Set -->
+            <div class="carousel-item">
+                <img src="images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-sn47-front.webp"
+                     fetchpriority="high" width="400" height="550"
+                     alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Red">
+            </div>
+            <div class="carousel-item">
+                <img src="images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-sn7-front.webp"
+                     fetchpriority="high" width="400" height="550"
+                     alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Green">
+            </div>
+            <div class="carousel-item">
+                <img src="images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Upper-Deck-UD3-Season-Ticket-Autograph-Base-JH-front.webp"
+                     fetchpriority="high" width="400" height="550" alt="Juwan Howard 1997-98 UD3 Season Ticket Autograph">
+            </div>
+            <div class="carousel-item">
+                <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-SPx-Finite-Base-Set-Spectrum-76-sn291-front.webp"
+                     loading="lazy" width="400" height="550" alt="Juwan Howard 1998-99 SPx Finite Base Spectrum">
+            </div>
+            <div class="carousel-item">
+                <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-SPx-Finite-Star-Power-Spectrum-92-sn223-front.webp"
+                     loading="lazy" width="400" height="550" alt="Juwan Howard 1998-99 SPx Finite Star Power Spectrum">
+            </div>
+            <div class="carousel-item">
+                <img src="images/1994-95/Juwan-Howard-Washington-Bullets-1994-95-Fleer-Ultra-All-Rookies-Base-3-front.webp"
+                     loading="lazy" width="400" height="550" alt="Juwan Howard 1994-95 Fleer Ultra All Rookies">
+            </div>
+            <!-- Second Set (Duplicate for seamless loop) -->
+            <div class="carousel-item">
+                <img src="images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-sn47-front.webp"
+                     loading="lazy" width="400" height="550"
+                     alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Red">
+            </div>
+            <div class="carousel-item">
+                <img src="images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-sn7-front.webp"
+                     loading="lazy" width="400" height="550"
+                     alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Green">
+            </div>
+            <div class="carousel-item">
+                <img src="images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Upper-Deck-UD3-Season-Ticket-Autograph-Base-JH-front.webp"
+                     loading="lazy" width="400" height="550" alt="Juwan Howard 1997-98 UD3 Season Ticket Autograph">
+            </div>
+            <div class="carousel-item">
+                <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-SPx-Finite-Base-Set-Spectrum-76-sn291-front.webp"
+                     loading="lazy" width="400" height="550" alt="Juwan Howard 1998-99 SPx Finite Base Spectrum">
+            </div>
+            <div class="carousel-item">
+                <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-SPx-Finite-Star-Power-Spectrum-92-sn223-front.webp"
+                     loading="lazy" width="400" height="550" alt="Juwan Howard 1998-99 SPx Finite Star Power Spectrum">
+            </div>
+            <div class="carousel-item">
+                <img src="images/1994-95/Juwan-Howard-Washington-Bullets-1994-95-Fleer-Ultra-All-Rookies-Base-3-front.webp"
+                     loading="lazy" width="400" height="550" alt="Juwan Howard 1994-95 Fleer Ultra All Rookies">
+            </div>
+        </section>
+    </div>
+
     <div class="seo-box">
         <h2>Explore the Collection</h2>
         <p>Welcome to Maulmann Trading Cards, a dedicated space showcasing a lifelong passion for sports card
