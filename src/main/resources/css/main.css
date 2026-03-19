@@ -137,10 +137,9 @@ tr:hover {
     margin: 30px 0;
 }
 
-.card-image-wrapper img {
+.card-image-wrapper img:not(.zoomable-img) {
     max-width: 100%;
     height: auto;
-    max-height: 550px;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
@@ -319,13 +318,15 @@ tr:hover {
 .card-images-container { display: flex; gap: 20px; flex-wrap: wrap; }
 .card-image-wrapper { display: flex; flex-direction: column; align-items: center; flex: 1; min-width: 300px; }
 .zoomable-img {
-    aspect-ratio: 400 / 550;
     width: 100%;
-    max-width: 400px;
+    max-width: 600px;
     height: auto;
     display: block;
     object-fit: contain;
     cursor: zoom-in;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 .img-caption { margin-top: 10px; font-size: 0.85em; color: #666; }
 

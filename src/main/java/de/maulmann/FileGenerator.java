@@ -22,6 +22,9 @@ import java.util.*;
 
 public class FileGenerator {
 
+    static String pathSource = "content/";
+    static String pathOutput = "output/";
+
     private static final Configuration fmConfig;
     static {
         fmConfig = new Configuration(Configuration.VERSION_2_3_32);
@@ -36,7 +39,7 @@ public class FileGenerator {
             System.out.println("-> Baue Juwan-Howard-Collection.html...");
             Map<String, Object> data = createBaseData("Juwan Howard Private Collection", "Complete Career Overview", "Juwan-Howard-Collection.html", "Juwan-Howard-Collection.html");
 
-            File contentDir = new File("content");
+            File contentDir = new File(pathSource);
 
             // NEU: Lässt alle Jahreszahlen ZUSÄTZLICH zur College.html durch!
             File[] seasonFiles = contentDir.listFiles((dir, name) -> name.endsWith(".html") && (name.matches(".*\\d.*") || name.equalsIgnoreCase("College.html")));
@@ -89,7 +92,7 @@ public class FileGenerator {
                 }
             }
             data.put("seasons", seasons);
-            processTemplate("collection-overview.ftlh", data, "output/Juwan-Howard-Collection.html");
+            processTemplate("collection-overview.ftlh", data, pathOutput + "Juwan-Howard-Collection.html");
 
         } catch (Exception e) { System.err.println("Fehler bei Haupt-Collection: " + e.getMessage()); }
     }
@@ -103,7 +106,7 @@ public class FileGenerator {
                 System.out.println("-> Baue " + coll + ".html...");
                 Map<String, Object> data = createBaseData(coll + " Collection", "Premium " + coll + " Cards", coll + ".html", coll + ".html");
 
-                Path sourcePath = Paths.get("content/other", coll + ".html");
+                Path sourcePath = Paths.get(pathSource, "other", coll + ".html");
                 if (Files.exists(sourcePath)) {
                     String rawContent = Files.readString(sourcePath, StandardCharsets.UTF_8);
                     data.put("pageContent", cleanOldPlaceholders(rawContent));
@@ -111,7 +114,7 @@ public class FileGenerator {
                     data.put("pageContent", "<p>No data found for this collection yet.</p>");
                 }
 
-                processTemplate("generic-collection.ftlh", data, "output/" + coll + ".html");
+                processTemplate("generic-collection.ftlh", data, pathOutput + coll + ".html");
             } catch (Exception e) { System.err.println("Fehler bei " + coll + ": " + e.getMessage()); }
         }
     }
@@ -123,11 +126,11 @@ public class FileGenerator {
 
             // Index (Navigations-Highlight für "index.html")
             Map<String, Object> indexData = createBaseData("Maulmann Trading Cards", "Digital Archive", "index.html", "index.html");
-            processTemplate("index.ftlh", indexData, "output/index.html");
+            processTemplate("index.ftlh", indexData, pathOutput + "index.html");
 
             // Error 404 (Kein Navigations-Highlight)
             Map<String, Object> errorData = createBaseData("404 Not Found", "Page missing", "error.html", "");
-            processTemplate("error.ftlh", errorData, "output/error.html");
+            processTemplate("error.ftlh", errorData, pathOutput + "error.html");
 
         } catch (Exception e) { System.err.println("Fehler bei statischen Seiten: " + e.getMessage()); }
     }
