@@ -46,7 +46,7 @@ class FileGeneratorTest {
 
     @Test
     void testMain() throws Exception {
-        createDummyHtmlFile("1994-95.html", "<tr><td>Data</td></tr>");
+        createDummyHtmlFile("1994-95.html", "<table><tr><th>Header</th></tr><tr><td>Data</td></tr></table>");
 
         assertDoesNotThrow(() -> FileGenerator.main(new String[]{}));
 
@@ -77,7 +77,7 @@ class FileGeneratorTest {
         Path errorPath = outputDir.resolve("error.html");
         assertTrue(Files.exists(errorPath), "Error file was not generated.");
         String errorContent = Files.readString(errorPath);
-        assertTrue(errorContent.contains("Error Page"), "Error page should contain the title");
+        assertTrue(errorContent.contains("404"), "Error page should contain 404");
         assertTrue(errorContent.contains("index.html"), "Error page should contain a link back to home");
     }
 }

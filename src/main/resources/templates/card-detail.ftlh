@@ -7,7 +7,7 @@
           imagesrcset="${frontImgPath?replace('.webp', '-400w.webp')} 400w,
                        ${frontImgPath?replace('.webp', '-600w.webp')} 600w,
                        ${frontImgPath} 1000w"
-          imagesizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 400px"
+          imagesizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, (max-width: 1300px) 45vw, 600px"
           fetchpriority="high">
     ${jsonLd?no_esc}
 </head>
@@ -42,8 +42,8 @@ ${topNavHtml?no_esc}
                  srcset="${frontImgPath?replace('.webp', '-400w.webp')} 400w,
                          ${frontImgPath?replace('.webp', '-600w.webp')} 600w,
                          ${frontImgPath} 1000w"
-                 sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 400px"
-                 alt="${frontAlt}" title="${frontImgTitle}" width="400" height="550"
+                 sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, (max-width: 1300px) 45vw, 600px"
+                 alt="${frontAlt}" title="${frontImgTitle}"
                  fetchpriority="high" class="zoomable-img"
                  onclick="openModal('${frontImgPath}', '${backImgPath}')">
             <p class="img-caption">&#x1F50D; Click to Enlarge Front</p>
@@ -54,8 +54,8 @@ ${topNavHtml?no_esc}
                  srcset="${backImgPath?replace('.webp', '-400w.webp')} 400w,
                          ${backImgPath?replace('.webp', '-600w.webp')} 600w,
                          ${backImgPath} 1000w"
-                 sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 400px"
-                 alt="${backAlt}" title="${backImgTitle}" width="400" height="550" loading="lazy"
+                 sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, (max-width: 1300px) 45vw, 600px"
+                 alt="${backAlt}" title="${backImgTitle}" loading="lazy"
                  class="zoomable-img"
                  onclick="openModal('${backImgPath}', '${frontImgPath}')">
             <p class="img-caption">&#x1F50D; Click to Enlarge Back</p>
