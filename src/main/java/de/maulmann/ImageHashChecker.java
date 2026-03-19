@@ -1,78 +1,68 @@
 package de.maulmann;
 
 import java.io.*;
-import java.nio.file.Files;
+import java.nio.file.*;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
 
 public class ImageHashChecker {
+    private final File storeFile;
+    private final Properties hashes = new Properties();
 
-    private final File hashStoreFile;
-    private final Properties hashes;
-
-    public ImageHashChecker(String hashStoreFilePath) {
-        this.hashStoreFile = new File(hashStoreFilePath);
-        this.hashes = new Properties();
-        loadHashes();
-    }
-
-    // Lädt die bisherigen Hashes aus der Datei
-    private void loadHashes() {
-        if (hashStoreFile.exists()) {
-            try (InputStream in = new FileInputStream(hashStoreFile)) {
+    public ImageHashChecker(String filePath) {
+        this.storeFile = new File(filePath);
+        if (storeFile.exists()) {
+            try (InputStream in = Files.newInputStream(storeFile.toPath())) {
                 hashes.load(in);
-            } catch (IOException e) {
-                System.err.println("Konnte Hash-Datei nicht laden: " + e.getMessage());
+            } catch (Exception e) {
+                System.err.println("Konnte Image-Hash-Datei nicht laden: " + e.getMessage());
             }
         }
     }
 
-    // Speichert die aktualisierten Hashes in der Datei
-    public void saveHashes() {
-        try (OutputStream out = new FileOutputStream(hashStoreFile)) {
-            hashes.store(out, "Automatisierter Image Build Hash Store");
-        } catch (IOException e) {
-            System.err.println("Konnte Hash-Datei nicht speichern: " + e.getMessage());
+    /**
+     * Prüft, ob sich der MD5-Hash der Quelldatei gegenüber dem gespeicherten Wert geändert hat.
+     */
+    public boolean isUnchanged(Path file) {
+        try {
+            String currentHash = calculateMD5(file);
+            String storedHash = hashes.getProperty(file.toString());
+            return currentHash != null && currentHash.equals(storedHash);
+        } catch (Exception e) {
+            return false; // Im Zweifel als "geändert" markieren
         }
     }
 
-    // Prüft, ob ein Bild neu verarbeitet werden muss
-    public boolean needsProcessing(File sourceFile, File targetFile) {
-        if (!targetFile.exists()) {
-            return true; // Zieldatei fehlt, muss generiert werden
-        }
-
+    /**
+     * Aktualisiert den Hash-Eintrag für eine Datei im Speicher.
+     */
+    public void updateHash(Path file) {
         try {
-            String currentHash = calculateMD5(sourceFile);
-            String storedHash = hashes.getProperty(sourceFile.getAbsolutePath());
+            hashes.setProperty(file.toString(), calculateMD5(file));
+        } catch (Exception ignored) {
+        }
+    }
 
-            // Wenn sich der Hash geändert hat oder nicht existiert, muss es verarbeitet werden
-            if (currentHash != null && !currentHash.equals(storedHash)) {
-                return true;
+    /**
+     * Schreibt alle Hashes aus dem Speicher in die .properties Datei.
+     */
+    public void save() {
+        try {
+            File parent = storeFile.getParentFile();
+            if (parent != null) {
+                parent.mkdirs();
             }
-        } catch (IOException | NoSuchAlgorithmException e) {
-            System.err.println("Fehler beim Hashing von " + sourceFile.getName() + ": " + e.getMessage());
-            return true; // Im Zweifel lieber neu generieren
-        }
-
-        return false; // Alles aktuell!
-    }
-
-    // Aktualisiert den Hash nach erfolgreicher Verarbeitung
-    public void markAsProcessed(File sourceFile) {
-        try {
-            String hash = calculateMD5(sourceFile);
-            hashes.setProperty(sourceFile.getAbsolutePath(), hash);
-        } catch (IOException | NoSuchAlgorithmException e) {
-            System.err.println("Konnte Hash nach Verarbeitung nicht aktualisieren: " + e.getMessage());
+            try (OutputStream out = Files.newOutputStream(storeFile.toPath())) {
+                hashes.store(out, "Automatisierter Image Build Hash Cache");
+            }
+        } catch (Exception e) {
+            System.err.println("Konnte Image-Hash-Datei nicht speichern: " + e.getMessage());
         }
     }
 
-    // Berechnet den eigentlichen MD5 Hash der Datei
-    private String calculateMD5(File file) throws IOException, NoSuchAlgorithmException {
+    private String calculateMD5(Path file) throws Exception {
         MessageDigest md = MessageDigest.getInstance("MD5");
-        try (InputStream is = Files.newInputStream(file.toPath())) {
+        try (InputStream is = Files.newInputStream(file)) {
             byte[] buffer = new byte[8192];
             int read;
             while ((read = is.read(buffer)) > 0) {

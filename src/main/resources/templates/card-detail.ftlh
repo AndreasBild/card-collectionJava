@@ -2,7 +2,13 @@
 <html lang="en">
 <head>
     ${headHtml?no_esc}
-    <link rel="preload" as="image" href="${frontImgPath}" fetchpriority="high">
+    <#-- PRELOAD UPDATE: Teilt dem Browser mit, welche Bildgröße er vorab laden soll -->
+    <link rel="preload" as="image" href="${frontImgPath}"
+          imagesrcset="${frontImgPath?replace('.webp', '-400w.webp')} 400w,
+                       ${frontImgPath?replace('.webp', '-600w.webp')} 600w,
+                       ${frontImgPath} 1000w"
+          imagesizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 400px"
+          fetchpriority="high">
     ${jsonLd?no_esc}
 </head>
 <body>
@@ -31,13 +37,25 @@ ${topNavHtml?no_esc}
 
     <div class="card-images-container">
         <div class="card-image-wrapper">
-            <img src="${frontImgPath}" alt="${frontAlt}" title="${frontImgTitle}" width="400" height="550"
+            <#-- SRCSET FÜR DAS FRONT-BILD -->
+            <img src="${frontImgPath}"
+                 srcset="${frontImgPath?replace('.webp', '-400w.webp')} 400w,
+                         ${frontImgPath?replace('.webp', '-600w.webp')} 600w,
+                         ${frontImgPath} 1000w"
+                 sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 400px"
+                 alt="${frontAlt}" title="${frontImgTitle}" width="400" height="550"
                  fetchpriority="high" class="zoomable-img"
                  onclick="openModal('${frontImgPath}', '${backImgPath}')">
             <p class="img-caption">&#x1F50D; Click to Enlarge Front</p>
         </div>
         <div class="card-image-wrapper">
-            <img src="${backImgPath}" alt="${backAlt}" title="${backImgTitle}" width="400" height="550" loading="lazy"
+            <#-- SRCSET FÜR DAS BACK-BILD -->
+            <img src="${backImgPath}"
+                 srcset="${backImgPath?replace('.webp', '-400w.webp')} 400w,
+                         ${backImgPath?replace('.webp', '-600w.webp')} 600w,
+                         ${backImgPath} 1000w"
+                 sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 400px"
+                 alt="${backAlt}" title="${backImgTitle}" width="400" height="550" loading="lazy"
                  class="zoomable-img"
                  onclick="openModal('${backImgPath}', '${frontImgPath}')">
             <p class="img-caption">&#x1F50D; Click to Enlarge Back</p>
@@ -161,7 +179,6 @@ ${topNavHtml?no_esc}
 </div>
 
 <script>
-    // JS bleibt unverändert, da es bereits sauber getrennt ist
     var modal = document.getElementById("cardModal");
     var modalImg = document.getElementById("img01");
     var currentModalSrc = "";
