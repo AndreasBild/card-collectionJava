@@ -37,7 +37,7 @@ public class FileGenerator {
     public static void buildCollectionOverview() {
         try {
             System.out.println("-> Baue Juwan-Howard-Collection.html...");
-            Map<String, Object> data = createBaseData("Juwan Howard Private Collection", "Complete Career Overview", "Juwan-Howard-Collection.html", "Juwan-Howard-Collection.html");
+            Map<String, Object> data = createBaseData("Juwan Howard Private Collection", "Complete Career Overview", "Juwan-Howard-Collection.html", "collection", "");
 
             File contentDir = new File(pathSource);
 
@@ -104,7 +104,7 @@ public class FileGenerator {
         for (String coll : collections) {
             try {
                 System.out.println("-> Baue " + coll + ".html...");
-                Map<String, Object> data = createBaseData(coll + " Collection", "Premium " + coll + " Cards", coll + ".html", coll + ".html");
+                Map<String, Object> data = createBaseData(coll + " Collection", "Premium " + coll + " Cards", coll + ".html", coll.toLowerCase(), "");
 
                 Path sourcePath = Paths.get(pathSource, "other", coll + ".html");
                 if (Files.exists(sourcePath)) {
@@ -125,34 +125,33 @@ public class FileGenerator {
             System.out.println("-> Baue index.html & error.html...");
 
             // Index (Navigations-Highlight für "index.html")
-            Map<String, Object> indexData = createBaseData("Maulmann Trading Cards", "Digital Archive", "index.html", "index.html");
+            Map<String, Object> indexData = createBaseData("Maulmann Trading Cards", "Digital Archive", "index.html", "index", "");
             processTemplate("index.ftlh", indexData, pathOutput + "index.html");
 
             // Error 404 (Kein Navigations-Highlight)
-            Map<String, Object> errorData = createBaseData("404 Not Found", "Page missing", "error.html", "");
+            // Hier nutzen wir "/" als Root, damit Links auch bei tiefen Pfaden funktionieren (404-Handling im Server)
+            Map<String, Object> errorData = createBaseData("404 Not Found", "Page missing", "error.html", "", "/");
             processTemplate("error.ftlh", errorData, pathOutput + "error.html");
 
         } catch (Exception e) { System.err.println("Fehler bei statischen Seiten: " + e.getMessage()); }
     }
 
     // --- HILFSMETHODEN ---
-    private static Map<String, Object> createBaseData(String title, String subTitle, String filename, String navTargetUrl) throws Exception {
+    private static Map<String, Object> createBaseData(String title, String subTitle, String filename, String navTargetUrl, String root) throws Exception {
         Map<String, Object> data = new HashMap<>();
 
-        String headHtml = SharedTemplates.getHead(title + " | Maulmann Trading Cards", subTitle, "", filename, "images/default-share.jpg");
+        String headHtml = SharedTemplates.getHead(title + " | Maulmann Trading Cards", subTitle, root, filename, root + "images/default-share.jpg");
 
-        String topnav = SharedTemplates.loadResource("/templates/topnav.html").replace("{{ROOT}}", "");
-        if (!navTargetUrl.isEmpty()) {
-            topnav = topnav.replace("href=\"" + navTargetUrl + "\"", "href=\"" + navTargetUrl + "\" class=\"active\"");
-        }
+        String topnav = SharedTemplates.getTopNav(root, navTargetUrl.replace(".html", "").toLowerCase());
 
-        String footerHtml = SharedTemplates.getFooter("");
+        String footerHtml = SharedTemplates.getFooter(root);
 
         data.put("headHtml", headHtml);
         data.put("topNavHtml", topnav);
         data.put("footerHtml", footerHtml);
         data.put("pageTitle", title);
         data.put("subTitle", subTitle);
+        data.put("root", root);
 
         return data;
     }
@@ -177,7 +176,8 @@ public class FileGenerator {
 
         if (finalHtml.contains("{{FOOTER_NAV}}")) {
             try {
-                String footerNav = SharedTemplates.loadResource("/templates/footer_nav.html").replace("{{ROOT}}", "");
+                String root = (String) data.getOrDefault("root", "");
+                String footerNav = SharedTemplates.getFooterNav(root);
                 finalHtml = finalHtml.replace("{{FOOTER_NAV}}", footerNav);
             } catch (Exception e) {
                 finalHtml = finalHtml.replace("{{FOOTER_NAV}}", "");
