@@ -7,44 +7,47 @@
 </head>
 <body>
 ${topNavHtml?no_esc}
-<nav class="detail-nav" style="border: none; background: transparent;">
-    <a href="../../${overviewPage}" class="modern-button" style="text-decoration:none;">&larr; Overview</a>
-    <div style="display: flex; gap: 10px;">
+
+<nav class="detail-nav no-border-bg">
+    <a href="../../${overviewPage}" class="modern-button no-text-decoration">&larr; Overview</a>
+    <div class="nav-button-group">
         <#if prevLink??>
-            <a id="prevCardLink" href="${prevLink}" class="modern-button" style="text-decoration:none;">&laquo; Prev</a>
+            <a id="prevCardLink" href="${prevLink}" class="modern-button no-text-decoration">&laquo; Prev</a>
         </#if>
         <#if nextLink??>
-            <a id="nextCardLink" href="${nextLink}" class="modern-button" style="text-decoration:none;">Next &raquo;</a>
+            <a id="nextCardLink" href="${nextLink}" class="modern-button no-text-decoration">Next &raquo;</a>
         </#if>
     </div>
 </nav>
+
 <main class="detail-main">
     <header class="detail-header">
         <h1>${h1Title}</h1>
     </header>
-    <div class="ai-summary"
-         style="background: #f4f8fc; border-left: 4px solid #0056b3; padding: 15px; border-radius: 4px; margin-bottom: 25px;">
-        <p style="margin:0; font-size: 0.95em;"><strong>Card Snapshot:</strong> ${aiSnapshotText}</p>
+
+    <div class="ai-summary">
+        <p><strong>Card Snapshot:</strong> ${aiSnapshotText}</p>
     </div>
-    <div class="card-images-container" style="display: flex; gap: 20px; flex-wrap: wrap;">
-        <div class="card-image-wrapper" style="display: flex; flex-direction: column; align-items: center;">
+
+    <div class="card-images-container">
+        <div class="card-image-wrapper">
             <img src="${frontImgPath}" alt="${frontAlt}" title="${frontImgTitle}" width="400" height="550"
-                 fetchpriority="high"
-                 style="aspect-ratio: 400 / 550; width: 100%; max-width: 400px; height: auto; display: block; object-fit: contain; cursor: zoom-in;"
+                 fetchpriority="high" class="zoomable-img"
                  onclick="openModal('${frontImgPath}', '${backImgPath}')">
-            <p style="margin-top: 10px; font-size: 0.85em; color: #666;">&#x1F50D; Click to Enlarge Front</p>
+            <p class="img-caption">&#x1F50D; Click to Enlarge Front</p>
         </div>
-        <div class="card-image-wrapper" style="display: flex; flex-direction: column; align-items: center;">
+        <div class="card-image-wrapper">
             <img src="${backImgPath}" alt="${backAlt}" title="${backImgTitle}" width="400" height="550" loading="lazy"
-                 style="aspect-ratio: 400 / 550; width: 100%; max-width: 400px; height: auto; display: block; object-fit: contain; cursor: zoom-in;"
+                 class="zoomable-img"
                  onclick="openModal('${backImgPath}', '${frontImgPath}')">
-            <p style="margin-top: 10px; font-size: 0.85em; color: #666;">&#x1F50D; Click to Enlarge Back</p>
+            <p class="img-caption">&#x1F50D; Click to Enlarge Back</p>
         </div>
     </div>
-    <div class="card-data" style="margin-top: 30px;">
-        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+
+    <div class="card-data">
+        <table class="specs-table">
             <tr class="specs-table-header">
-                <th colspan="2" style="padding: 10px; text-align: left;">Technical Specifications</th>
+                <th colspan="2">Technical Specifications</th>
             </tr>
             <tr>
                 <th class="specs-th">Season</th>
@@ -98,66 +101,67 @@ ${topNavHtml?no_esc}
             </#if>
         </table>
     </div>
+
     <#if (hobbyTrivia != "") || (techTrivia != "") || (playerHighlights != "") || (eraContext != "") || (cardBackText != "")>
-        <div class="context-engine"
-             style="margin-top: 40px; display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+        <div class="context-engine">
             <#if hobbyTrivia != "">
-                <div style="background: #fff; border: 1px solid #eaeaea; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                    <h3 style="margin-top:0; color: #333; font-size: 1.1em;">&#x1F3C6; Hobby Significance</h3>
-                    <p style="font-size: 0.95em; color: #555; line-height: 1.6;">${hobbyTrivia}</p>
+                <div class="context-card">
+                    <h3>&#x1F3C6; Hobby Significance</h3>
+                    <p>${hobbyTrivia}</p>
                 </div>
             </#if>
 
             <#if techTrivia != "">
-                <div style="background: #fff; border: 1px solid #eaeaea; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                    <h3 style="margin-top:0; color: #333; font-size: 1.1em;">&#x2692;&#xFE0F; Card Technology</h3>
-                    <p style="font-size: 0.95em; color: #555; line-height: 1.6;">${techTrivia}</p>
+                <div class="context-card">
+                    <h3>&#x2692;&#xFE0F; Card Technology</h3>
+                    <p>${techTrivia}</p>
                 </div>
             </#if>
 
             <#if playerHighlights != "">
-                <div style="background: #fff; border: 1px solid #eaeaea; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                    <h3 style="margin-top:0; color: #333; font-size: 1.1em;">&#x1F4C8; Player Performance & Team</h3>
-                    <p style="font-size: 0.95em; color: #555; line-height: 1.6;">${playerHighlights}</p>
+                <div class="context-card">
+                    <h3>&#x1F4C8; Player Performance & Team</h3>
+                    <p>${playerHighlights}</p>
                 </div>
             </#if>
 
             <#if eraContext != "">
-                <div style="background: #fff; border: 1px solid #eaeaea; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                    <h3 style="margin-top:0; color: #333; font-size: 1.1em;">&#x1F3C0; NBA Era & Pop Culture</h3>
-                    <p style="font-size: 0.95em; color: #555; line-height: 1.6;">${eraContext}</p>
+                <div class="context-card">
+                    <h3>&#x1F3C0; NBA Era & Pop Culture</h3>
+                    <p>${eraContext}</p>
                 </div>
             </#if>
 
             <#if cardBackText != "">
-                <div class="card-back-text-container" style="grid-column: 1 / -1;">
+                <div class="card-back-text-container full-width">
                     <div class="card-back-text-header">
                         <span>&#x1F4DC; Original Card Back Transcription</span>
-                        <span style="margin-left: auto; font-size: 0.8em; opacity: 0.6;">Verified via AI-OCR</span>
+                        <span class="verified-badge">Verified via AI-OCR</span>
                     </div>
                     <pre class="card-back-content">${cardBackText}</pre>
                 </div>
             </#if>
         </div>
     </#if>
-    <section style="margin-top: 50px;">
+
+    <section class="faq-section">
         <h2>Collector FAQs</h2>
         ${faqHtml?no_esc}
     </section>
+
     ${footerHtml?no_esc}
 </main>
-<div id="cardModal" class="modal" aria-hidden="true"
-     style="display:none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.9);">
-    <span class="close-modal" aria-label="Close zoomed image" onclick="closeModal()"
-          style="position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer;">&times;</span>
-    <button class="flip-modal-btn" aria-label="Flip card to other side" onclick="flipCard()"
-            style="position: absolute; top: 20px; left: 20px; padding: 10px 20px; font-size: 16px; cursor: pointer;">
+
+<div id="cardModal" class="modal" aria-hidden="true">
+    <span class="close-modal" aria-label="Close zoomed image" onclick="closeModal()">&times;</span>
+    <button class="flip-modal-btn" aria-label="Flip card to other side" onclick="flipCard()">
         &#8644; Flip Card
     </button>
-    <img class="modal-content" id="img01" alt="Zoomed card view"
-         style="margin: auto; display: block; max-width: 90%; max-height: 90vh;">
+    <img class="modal-content" id="img01" alt="Zoomed card view">
 </div>
+
 <script>
+    // JS bleibt unverändert, da es bereits sauber getrennt ist
     var modal = document.getElementById("cardModal");
     var modalImg = document.getElementById("img01");
     var currentModalSrc = "";
@@ -165,8 +169,6 @@ ${topNavHtml?no_esc}
 
     function openModal(src, altSrc) {
         modal.style.display = "flex";
-        modal.style.alignItems = "center";
-        modal.style.justifyContent = "center";
         modal.setAttribute("aria-hidden", "false");
         modalImg.src = src;
         currentModalSrc = src;

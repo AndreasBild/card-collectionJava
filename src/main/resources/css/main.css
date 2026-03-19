@@ -298,3 +298,92 @@ tr:hover {
 .season-table-wrapper th:hover {
     background-color: #1e4a8c !important; /* Etwas dunkler beim Drüberfahren */
 }
+/* --- Global Utility --- */
+.no-border-bg { border: none !important; background: transparent !important; }
+.no-text-decoration { text-decoration: none !important; }
+
+/* --- Detail Navigation --- */
+.nav-button-group { display: flex; gap: 10px; }
+
+/* --- AI Snapshot --- */
+.ai-summary {
+    background: #f4f8fc;
+    border-left: 4px solid #0056b3;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 25px;
+}
+.ai-summary p { margin: 0; font-size: 0.95em; }
+
+/* --- Card Images --- */
+.card-images-container { display: flex; gap: 20px; flex-wrap: wrap; }
+.card-image-wrapper { display: flex; flex-direction: column; align-items: center; flex: 1; min-width: 300px; }
+.zoomable-img {
+    aspect-ratio: 400 / 550;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    cursor: zoom-in;
+}
+.img-caption { margin-top: 10px; font-size: 0.85em; color: #666; }
+
+/* --- Specs Table --- */
+.specs-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+.specs-table-header th { padding: 10px; text-align: left; background: #f9f9f9; }
+
+/* --- Context Engine / Cards --- */
+.context-engine {
+    margin-top: 40px;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+.context-card {
+    background: #fff;
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+.context-card h3 { margin-top: 0; color: #333; font-size: 1.1em; }
+.context-card p { font-size: 0.95em; color: #555; line-height: 1.6; }
+.full-width { grid-column: 1 / -1; }
+.verified-badge { margin-left: auto; font-size: 0.8em; opacity: 0.6; }
+
+/* --- FAQ & Sections --- */
+.faq-section { margin-top: 50px; }
+
+/* --- Modal Updates --- */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.9);
+    align-items: center;
+    justify-content: center;
+}
+.modal-content { margin: auto; display: block; max-width: 90%; max-height: 90vh; }
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.flip-modal-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
