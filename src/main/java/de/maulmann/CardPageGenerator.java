@@ -11,6 +11,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.io.StringWriter;
 import java.io.Writer;
 
 import java.io.File;
@@ -36,6 +37,11 @@ public class CardPageGenerator {
 
     private static final List<String> duplicateLog = new ArrayList<>();
     private static final TriviaManager triviaManager = new TriviaManager();
+    private static TimestampTracker timestampTracker;
+
+    public static void setTimestampTracker(TimestampTracker tracker) {
+        timestampTracker = tracker;
+    }
 
     private static final Configuration fmConfig;
     static {
@@ -412,9 +418,17 @@ public class CardPageGenerator {
         // FreeMarker Template füllen und in die Datei schreiben
         try {
             Template template = fmConfig.getTemplate("card-detail.ftlh");
-            try (Writer out = new OutputStreamWriter(new FileOutputStream(path.toFile()), StandardCharsets.UTF_8)) {
-                template.process(data, out);
+            StringWriter sw = new StringWriter();
+            template.process(data, sw);
+            String finalHtml = sw.toString();
+
+            if (timestampTracker != null && finalHtml.contains("[[STABLE_TIME]]")) {
+                String relativeOutputPath = Paths.get("output").toUri().relativize(path.toUri()).getPath();
+                String stableTime = timestampTracker.getStableTimestamp(relativeOutputPath, finalHtml);
+                finalHtml = finalHtml.replace("[[STABLE_TIME]]", stableTime);
             }
+
+            Files.writeString(path, finalHtml, StandardCharsets.UTF_8);
         } catch (Exception e) {
             log.error("Failed to process FreeMarker template for " + c.filename, e);
         }

@@ -10,6 +10,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
@@ -24,6 +25,12 @@ public class FileGenerator {
 
     static String pathSource = "content/";
     static String pathOutput = "output/";
+
+    private static TimestampTracker timestampTracker;
+
+    public static void setTimestampTracker(TimestampTracker tracker) {
+        timestampTracker = tracker;
+    }
 
     private static final Configuration fmConfig;
     static {
@@ -119,6 +126,19 @@ public class FileGenerator {
         }
     }
 
+    public static void copyResources() {
+        try {
+            Path cssDir = Paths.get(pathOutput, "css");
+            Files.createDirectories(cssDir);
+            Path cssSource = Paths.get("src/main/resources/css/main.css");
+            if (Files.exists(cssSource)) {
+                Files.copy(cssSource, cssDir.resolve("main.css"), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+            }
+        } catch (IOException e) {
+            System.err.println("Error copying resources: " + e.getMessage());
+        }
+    }
+
     // --- 3. STATISCHE SEITEN BAUEN (Index, Error) ---
     public static void buildStaticPages() {
         try {
@@ -174,6 +194,12 @@ public class FileGenerator {
         template.process(data, stringWriter);
         String finalHtml = stringWriter.toString();
 
+        if (timestampTracker != null && finalHtml.contains("[[STABLE_TIME]]")) {
+            String relativeOutputPath = new File(pathOutput).toURI().relativize(out.toURI()).getPath();
+            String stableTime = timestampTracker.getStableTimestamp(relativeOutputPath, finalHtml);
+            finalHtml = finalHtml.replace("[[STABLE_TIME]]", stableTime);
+        }
+
         if (finalHtml.contains("{{FOOTER_NAV}}")) {
             try {
                 String root = (String) data.getOrDefault("root", "");
@@ -191,6 +217,7 @@ public class FileGenerator {
     }
 
     public static void main(String[] args) {
+        copyResources();
         buildCollectionOverview();
         buildOtherCollections();
         buildStaticPages();

@@ -64,13 +64,23 @@ public class SiteBuilderPipeline {
 
             // Initialisiere den Hash-Cache für Smart-Uploads
             FileTracker tracker = new FileTracker(OUTPUT_DIR + "/sync-hashes.properties");
+            TimestampTracker timeTracker = new TimestampTracker(OUTPUT_DIR + "/generation-timestamps.properties");
+
+            // Ensure stable CSS version for hash stability if content didn't change
+            SharedTemplates.setBuildId("stable");
 
             // --- PHASE 1: Generate Site HTML & Sitemap ---
             System.out.println("\n[PHASE 1] Generating HTML files and Sitemap...");
+            FileGenerator.setTimestampTracker(timeTracker);
+            CardPageGenerator.setTimestampTracker(timeTracker);
+
+            FileGenerator.copyResources();
             FileGenerator.buildCollectionOverview();
             FileGenerator.buildOtherCollections();
             FileGenerator.buildStaticPages();
             CardPageGenerator.run();
+
+            timeTracker.save();
             SitemapGenerator.generate(); // Sitemap & robots.txt now ready for Phase 3
 
             // --- PHASE 2: Convert Images to WebP ---
