@@ -20,7 +20,12 @@ public class SharedTemplates {
     private static final DateTimeFormatter TIMESTAMP_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
 
     // 3. NEW: Generate a unique ID for this specific site build
-    static final String BUILD_ID = String.valueOf(System.currentTimeMillis());
+    static String BUILD_ID = String.valueOf(System.currentTimeMillis());
+
+    public static void setBuildId(String id) {
+        BUILD_ID = id;
+    }
+
     static String loadResource(String path) {
         // If the template is already in RAM, return it instantly (0 Disk I/O)
         return TEMPLATE_CACHE.computeIfAbsent(path, SharedTemplates::readResourceFromDisk);
@@ -108,7 +113,13 @@ public class SharedTemplates {
 
     public static String getFooter(String root) {
         String template = loadResource("/templates/footer.html");
-        return template.replace("{{ROOT}}", root).replace("{{TIME}}", getTimestamp());
+        // Using a placeholder for stable timestamps that can be replaced after generation
+        return template.replace("{{ROOT}}", root).replace("{{TIME}}", "[[STABLE_TIME]]");
+    }
+
+    public static String getFooter(String root, String time) {
+        String template = loadResource("/templates/footer.html");
+        return template.replace("{{ROOT}}", root).replace("{{TIME}}", time);
     }
 
     public static String getErrorPage(String root) {
