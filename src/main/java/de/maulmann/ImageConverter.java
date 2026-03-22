@@ -16,14 +16,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ImageConverter {
 
     // --- Configuration ---
-    private static final int MAX_WIDTH = 1000;
-    private static final int MAX_HEIGHT = 700;
+    private static final int MAX_WIDTH = 1200;
+    private static final int MAX_HEIGHT = 1600;
 
     // Definition der Responsive-Breiten für das srcset
     private static final int[] RESPONSIVE_WIDTHS = {400, 600};
 
-    // Mac CLI Path zu Homebrew cwebp
-    private static final String CWEBP_PATH = "/opt/homebrew/bin/cwebp";
+    // Dynamic discovery of cwebp
+    private static final String CWEBP_PATH = findCwebp();
 
     // Zähler für die Zusammenfassung
     private static final AtomicInteger successCount = new AtomicInteger(0);
@@ -127,11 +127,7 @@ public class ImageConverter {
         }
 
         // 3. Smart Scaling für das Hauptbild
-        boolean isPortrait = origH > origW;
-        int currentMaxWidth = isPortrait ? MAX_HEIGHT : MAX_WIDTH;
-        int currentMaxHeight = isPortrait ? MAX_WIDTH : MAX_HEIGHT;
-
-        double ratio = Math.min((double) currentMaxWidth / origW, (double) currentMaxHeight / origH);
+        double ratio = Math.min((double) MAX_WIDTH / origW, (double) MAX_HEIGHT / origH);
         int mainW = ratio < 1.0 ? (int) (origW * ratio) : origW;
         int mainH = ratio < 1.0 ? (int) (origH * ratio) : origH;
 
@@ -170,6 +166,24 @@ public class ImageConverter {
         if (exitCode != 0) {
             throw new IOException("cwebp fehlerhaft mit Code " + exitCode);
         }
+    }
+
+    private static String findCwebp() {
+        String[] paths = {
+            "cwebp",
+            "/usr/bin/cwebp",
+            "/usr/local/bin/cwebp",
+            "/opt/homebrew/bin/cwebp",
+            "/usr/sbin/cwebp",
+            "/bin/cwebp"
+        };
+        for (String path : paths) {
+            try {
+                Process p = new ProcessBuilder(path, "-version").start();
+                if (p.waitFor() == 0) return path;
+            } catch (Exception ignored) {}
+        }
+        return "cwebp"; // Fallback to PATH
     }
 
     private static String getBaseName(String fileName) {
