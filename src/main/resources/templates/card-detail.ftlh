@@ -6,7 +6,7 @@
     <link rel="preload" as="image" href="${frontImgPath}"
           imagesrcset="${frontImgPath?replace('.webp', '-400w.webp')} 400w,
                        ${frontImgPath?replace('.webp', '-600w.webp')} 600w,
-                       ${frontImgPath} 1000w"
+                       ${frontImgPath} 1200w"
           imagesizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, (max-width: 1300px) 45vw, 600px"
           fetchpriority="high">
     ${jsonLd?no_esc}
@@ -41,7 +41,7 @@ ${topNavHtml?no_esc}
             <img src="${frontImgPath}"
                  srcset="${frontImgPath?replace('.webp', '-400w.webp')} 400w,
                          ${frontImgPath?replace('.webp', '-600w.webp')} 600w,
-                         ${frontImgPath} 1000w"
+                         ${frontImgPath} 1200w"
                  sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, (max-width: 1300px) 45vw, 600px"
                  alt="${frontAlt}" title="${frontImgTitle}"
                  fetchpriority="high" class="zoomable-img"
@@ -53,7 +53,7 @@ ${topNavHtml?no_esc}
             <img src="${backImgPath}"
                  srcset="${backImgPath?replace('.webp', '-400w.webp')} 400w,
                          ${backImgPath?replace('.webp', '-600w.webp')} 600w,
-                         ${backImgPath} 1000w"
+                         ${backImgPath} 1200w"
                  sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, (max-width: 1300px) 45vw, 600px"
                  alt="${backAlt}" title="${backImgTitle}" loading="lazy"
                  class="zoomable-img"
