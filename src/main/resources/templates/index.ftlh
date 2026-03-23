@@ -174,12 +174,12 @@ ${topNavHtml?no_esc}
             <div class="carousel-item">
                 <img src="images/2017-18/Juwan-Howard-Dallas-Mavericks-2017-18-Panini-Panini-Donruss-Optic-Dominator-Signatures-Gold-Vinyl-18-sn1-front.webp"
                      loading="lazy" width="400" height="550"
-                     alt="2017-18 Panini Panini Donruss Optic Dominator Signatures Gold Vinyl 18">">
+                     alt="2017-18 Panini Panini Donruss Optic Dominator Signatures Gold Vinyl 18">
             </div>
             <div class="carousel-item">
                 <img src="images/2017-18/Juwan-Howard-Miami-Heat-2017-18-Panini-Panini-Flawless-Premium-Ink-Signatures-Platinum-PI-JH-sn1-front.webp"
                      loading="lazy" width="400" height="550"
-                     alt="2017-18 Panini Panini Flawless Premium Ink Signatures Platinum PI JH">">
+                     alt="2017-18 Panini Panini Flawless Premium Ink Signatures Platinum PI JH">
             </div>
 
             <!-- Second Set (Duplicate for seamless loop) -->
@@ -245,12 +245,12 @@ ${topNavHtml?no_esc}
             <div class="carousel-item">
                 <img src="images/2017-18/Juwan-Howard-Dallas-Mavericks-2017-18-Panini-Panini-Donruss-Optic-Dominator-Signatures-Gold-Vinyl-18-sn1-front.webp"
                      loading="lazy" width="400" height="550"
-                     alt="2017-18 Panini Panini Donruss Optic Dominator Signatures Gold Vinyl 18">">
+                     alt="2017-18 Panini Panini Donruss Optic Dominator Signatures Gold Vinyl 18">
             </div>
             <div class="carousel-item">
                 <img src="images/2017-18/Juwan-Howard-Miami-Heat-2017-18-Panini-Panini-Flawless-Premium-Ink-Signatures-Platinum-PI-JH-sn1-front.webp"
                      loading="lazy" width="400" height="550"
-                     alt="2017-18 Panini Panini Flawless Premium Ink Signatures Platinum PI JH">">
+                     alt="2017-18 Panini Panini Flawless Premium Ink Signatures Platinum PI JH">
             </div>
         </section>
     </div>
