@@ -19,7 +19,7 @@ ${topNavHtml?no_esc}
             background: radial-gradient(circle at center, #fdfdfd 0%, #f5f5f5 100%);
             margin-bottom: 40px;
             border-radius: 12px;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.02);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.02);
         }
 
         .card-carousel {
@@ -35,8 +35,12 @@ ${topNavHtml?no_esc}
         }
 
         @keyframes infinite-scroll {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(calc(-50% - 15px), 0, 0); }
+            0% {
+                transform: translate3d(0, 0, 0);
+            }
+            100% {
+                transform: translate3d(calc(-50% - 15px), 0, 0);
+            }
         }
 
         .carousel-item {
@@ -60,7 +64,7 @@ ${topNavHtml?no_esc}
             object-fit: contain;
             background-color: #fff;
             display: block;
-            border: 1px solid rgba(0,0,0,0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         /* Responsive adjustments */
@@ -68,16 +72,23 @@ ${topNavHtml?no_esc}
             .carousel-item {
                 width: 180px;
             }
+
             .carousel-wrapper {
                 padding: 20px 0;
             }
+
             .card-carousel {
                 gap: 15px;
                 animation-duration: 40s;
             }
+
             @keyframes infinite-scroll {
-                0% { transform: translate3d(0, 0, 0); }
-                100% { transform: translate3d(calc(-50% - 7.5px), 0, 0); }
+                0% {
+                    transform: translate3d(0, 0, 0);
+                }
+                100% {
+                    transform: translate3d(calc(-50% - 7.5px), 0, 0);
+                }
             }
         }
 
@@ -95,15 +106,14 @@ ${topNavHtml?no_esc}
 
         .carousel-wrapper::before {
             left: 0;
-            background: linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+            background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
         }
 
         .carousel-wrapper::after {
             right: 0;
-            background: linear-gradient(to left, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+            background: linear-gradient(to left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
         }
     </style>
-
     <div class="carousel-wrapper">
         <section class="card-carousel">
             <!-- First Set -->
@@ -113,25 +123,48 @@ ${topNavHtml?no_esc}
                      alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Red">
             </div>
             <div class="carousel-item">
+                <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Fleer-Fleer-Vintage-61-Base-Set-Classic-5C-sn16-front.webp"
+                     fetchpriority="high" width="400" height="550"
+                     alt="Juwan Howard 1998-99 Fleer Vintage 61 Base Classic 5C">
+            </div>
+            <div class="carousel-item">
+                <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-5-sn33-front.webp"
+                     fetchpriority="high" width="400" height="550"
+                     alt="Juwan Howard 1998-99 Fleer Metal Universe Precious Metal Gems 5">
+            </div>
+            <div class="carousel-item">
+                <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Fleer-Fleer-Brilliants-Base-Set-24-K-Gold-97TG-sn14-front.webp"
+                     fetchpriority="high" width="400" height="550"
+                     alt="Juwan Howard 1998-99 Fleer Brilliants Base 24 K Gold 97TG">
+            </div>
+            <div class="carousel-item">
+                <img src="images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front.webp"
+                     fetchpriority="high" width="400" height="550"
+                     alt="Juwan Howard 2018-19 Panini Panini Contenders Optic Contenders Autographs Gold Vinyl LC JWH">
+            </div>
+            <div class="carousel-item">
                 <img src="images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-sn7-front.webp"
                      fetchpriority="high" width="400" height="550"
                      alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Green">
-            </div>
-            <div class="carousel-item">
-                <img src="images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Upper-Deck-UD3-Season-Ticket-Autograph-Base-JH-front.webp"
-                     fetchpriority="high" width="400" height="550" alt="Juwan Howard 1997-98 UD3 Season Ticket Autograph">
             </div>
             <div class="carousel-item">
                 <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-SPx-Finite-Base-Set-Spectrum-76-sn291-front.webp"
                      loading="lazy" width="400" height="550" alt="Juwan Howard 1998-99 SPx Finite Base Spectrum">
             </div>
             <div class="carousel-item">
-                <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-SPx-Finite-Star-Power-Spectrum-92-sn223-front.webp"
-                     loading="lazy" width="400" height="550" alt="Juwan Howard 1998-99 SPx Finite Star Power Spectrum">
+                <img src="images/1997-98/Juwan-Howard-Washington-Wizards-1997-98-Fleer-Fleer-Metal-Universe-Championship-Base-Set-Precious-Metal-Gems-11-sn32-front.webp"
+                     loading="lazy" width="400" height="550"
+                     alt="1997-98 Fleer Metal Universe Championship Precious Metal Gems 11">
             </div>
             <div class="carousel-item">
-                <img src="images/1994-95/Juwan-Howard-Washington-Bullets-1994-95-Fleer-Ultra-All-Rookies-Base-3-front.webp"
-                     loading="lazy" width="400" height="550" alt="Juwan Howard 1994-95 Fleer Ultra All Rookies">
+                <img src="images/2022-23/Juwan-Howard-Washington-Wizards-2022-23-Panini-Panini-Spectra-Icons-Autographs-Nebula-IA-JUW-sn1-front.webp"
+                     loading="lazy" width="400" height="550"
+                     alt="2022-23 Panini Panini Spectra Icons Autographs Nebula IA JUW">
+            </div>
+            <div class="carousel-item">
+                <img src="images/2018-19/Juwan-Howard-Miami-Heat-2018-19-Panini-Panini-Flawless-Legendary-Scripts-Platinum-LS-JWH-sn1-front.webp"
+                     loading="lazy" width="400" height="550"
+                     alt="2018-19 Panini Panini Flawless Legendary Scripts Platinum LS JWH">
             </div>
             <!-- Second Set (Duplicate for seamless loop) -->
             <div class="carousel-item">
@@ -140,29 +173,56 @@ ${topNavHtml?no_esc}
                      alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Red">
             </div>
             <div class="carousel-item">
+                <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Fleer-Fleer-Vintage-61-Base-Set-Classic-5C-sn16-front.webp"
+                     fetchpriority="high" width="400" height="550"
+                     alt="Juwan Howard 1998-99 Fleer Vintage 61 Base Classic 5C">
+            </div>
+            <div class="carousel-item">
+                <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-5-sn33-front.webp"
+                     fetchpriority="high" width="400" height="550"
+                     alt="Juwan Howard 1998-99 Fleer Metal Universe Precious Metal Gems 5">
+            </div>
+            <div class="carousel-item">
+                <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Fleer-Fleer-Brilliants-Base-Set-24-K-Gold-97TG-sn14-front.webp"
+                     fetchpriority="high" width="400" height="550"
+                     alt="Juwan Howard 1998-99 Fleer Brilliants Base 24 K Gold 97TG">
+            </div>
+            <div class="carousel-item">
+                <img src="images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front.webp"
+                     fetchpriority="high" width="400" height="550"
+                     alt="Juwan Howard 2018-19 Panini Panini Contenders Optic Contenders Autographs Gold Vinyl LC JWH">
+            </div>
+            <div class="carousel-item">
+                <img src="images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front.webp"
+                     fetchpriority="high" width="400" height="550"
+                     alt="Juwan Howard 2018-19 Panini Panini Contenders Optic Contenders Autographs Gold Vinyl LC JWH">
+            </div>
+            <div class="carousel-item">
                 <img src="images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-sn7-front.webp"
                      loading="lazy" width="400" height="550"
                      alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Green">
-            </div>
-            <div class="carousel-item">
-                <img src="images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Upper-Deck-UD3-Season-Ticket-Autograph-Base-JH-front.webp"
-                     loading="lazy" width="400" height="550" alt="Juwan Howard 1997-98 UD3 Season Ticket Autograph">
             </div>
             <div class="carousel-item">
                 <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-SPx-Finite-Base-Set-Spectrum-76-sn291-front.webp"
                      loading="lazy" width="400" height="550" alt="Juwan Howard 1998-99 SPx Finite Base Spectrum">
             </div>
             <div class="carousel-item">
-                <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-SPx-Finite-Star-Power-Spectrum-92-sn223-front.webp"
-                     loading="lazy" width="400" height="550" alt="Juwan Howard 1998-99 SPx Finite Star Power Spectrum">
+                <img src="images/1997-98/Juwan-Howard-Washington-Wizards-1997-98-Fleer-Fleer-Metal-Universe-Championship-Base-Set-Precious-Metal-Gems-11-sn32-front.webp"
+                     loading="lazy" width="400" height="550"
+                     alt="1997-98 Fleer Metal Universe Championship Precious Metal Gems 11">
             </div>
             <div class="carousel-item">
-                <img src="images/1994-95/Juwan-Howard-Washington-Bullets-1994-95-Fleer-Ultra-All-Rookies-Base-3-front.webp"
-                     loading="lazy" width="400" height="550" alt="Juwan Howard 1994-95 Fleer Ultra All Rookies">
+                <img src="images/2022-23/Juwan-Howard-Washington-Wizards-2022-23-Panini-Panini-Spectra-Icons-Autographs-Nebula-IA-JUW-sn1-front.webp"
+                     loading="lazy" width="400" height="550"
+                     alt="2022-23 Panini Panini Spectra Icons Autographs Nebula IA JUW">
+            </div>
+            <div class="carousel-item">
+                <img src="images/2018-19/Juwan-Howard-Miami-Heat-2018-19-Panini-Panini-Flawless-Legendary-Scripts-Platinum-LS-JWH-sn1-front.webp"
+                     loading="lazy" width="400" height="550"
+                     alt="2018-19 Panini Panini Flawless Legendary Scripts Platinum LS JWH">
             </div>
         </section>
     </div>
-
     <div class="seo-box">
         <h2>Explore the Collection</h2>
         <p>Welcome to Maulmann Trading Cards, a dedicated space showcasing a lifelong passion for sports card
