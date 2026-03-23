@@ -30,7 +30,8 @@ public class FileTracker {
         try {
             String currentHash = calculateMD5(file);
             String storedHash = hashes.getProperty(file.toString());
-            return storedHash == null || !currentHash.equals(storedHash);
+            assert currentHash != null;
+            return !currentHash.equals(storedHash);
         } catch (Exception e) {
             return true; // Assume changed on error
         }

@@ -244,7 +244,7 @@ public class CardPageGenerator {
             }
         }
 
-        if (headerRowIndex == -1 || headers == null) return counter;
+        if (headerRowIndex == -1) return counter;
 
         for (int i = headerRowIndex + 1; i < rows.size(); i++) {
             Element row = rows.get(i);
@@ -331,7 +331,7 @@ public class CardPageGenerator {
 
                     createSubPage(currentCard, filePath, prevCard, nextCard, allCards, overviewPage);
                 } catch (Exception e) {
-                    log.error("Failed to generate subpage for card at index " + index, e);
+                    log.error("Failed to generate subpage for card at index {}", index, e);
                 }
             });
         }
