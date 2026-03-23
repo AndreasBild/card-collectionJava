@@ -181,6 +181,11 @@ ${topNavHtml?no_esc}
                      loading="lazy" width="400" height="550"
                      alt="2017-18 Panini Panini Flawless Premium Ink Signatures Platinum PI JH">
             </div>
+            <div class="carousel-item">
+                <img src="images/2013-14/Juwan-Howard-Washington-Wizards-2013-14-Panini-Panini-Immaculate-Collection-Team-Logos-Numbers-Jersey-Patch-93-sn7-back-400w.webp"
+                     loading="lazy" width="400" height="550"
+                     alt="2013-14 Panini Panini Immaculate Collection Team Logos Numbers Jersey Patch 93">
+            </div>
 
             <!-- Second Set (Duplicate for seamless loop) -->
             <div class="carousel-item">
@@ -251,6 +256,11 @@ ${topNavHtml?no_esc}
                 <img src="images/2017-18/Juwan-Howard-Miami-Heat-2017-18-Panini-Panini-Flawless-Premium-Ink-Signatures-Platinum-PI-JH-sn1-front-400w.webp"
                      loading="lazy" width="400" height="550"
                      alt="2017-18 Panini Panini Flawless Premium Ink Signatures Platinum PI JH">
+            </div>
+            <div class="carousel-item">
+                <img src="images/2013-14/Juwan-Howard-Washington-Wizards-2013-14-Panini-Panini-Immaculate-Collection-Team-Logos-Numbers-Jersey-Patch-93-sn7-back-400w.webp"
+                     loading="lazy" width="400" height="550"
+                     alt="2013-14 Panini Panini Immaculate Collection Team Logos Numbers Jersey Patch 93">
             </div>
         </section>
     </div>
