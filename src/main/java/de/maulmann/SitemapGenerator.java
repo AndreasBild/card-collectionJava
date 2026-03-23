@@ -27,6 +27,7 @@ public class SitemapGenerator {
             System.out.println("-> Scanning output directory for sitemap.xml...");
             StringBuilder xml = new StringBuilder();
             xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+            xml.append("<?xml-stylesheet type=\"text/xsl\" href=\"https://www.maulmann.de/sitemap.xsl\"?>\n");
             xml.append("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"\n");
             // Standard Image Sitemap Erweiterung (optional, aber Best Practice)
             xml.append("        xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\">\n");
@@ -137,7 +138,7 @@ public class SitemapGenerator {
         if (imgSrc.startsWith("http")) return imgSrc;
         if (imgSrc.startsWith("//")) return "https:" + imgSrc;
 
-        String baseUrlStripped = BASE_URL.endsWith("/") ? BASE_URL.substring(0, BASE_URL.length() - 1) : BASE_URL;
+        String baseUrlStripped = BASE_URL;
 
         if (imgSrc.startsWith("/")) {
             return baseUrlStripped + imgSrc;
