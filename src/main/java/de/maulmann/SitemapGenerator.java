@@ -1,5 +1,10 @@
 package de.maulmann;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -64,6 +69,31 @@ public class SitemapGenerator {
                             xml.append("    <lastmod>").append(today).append("</lastmod>\n");
                             xml.append("    <changefreq>").append(changeFreq).append("</changefreq>\n");
                             xml.append("    <priority>").append(priority).append("</priority>\n");
+
+                            // Best-in-class Image SEO: Extrahiere Bilder aus der HTML
+                            try {
+                                Document doc = Jsoup.parse(path.toFile(), "UTF-8");
+                                Elements imgs = doc.select("img");
+                                for (Element img : imgs) {
+                                    String src = img.attr("src");
+                                    if (src.isEmpty()) continue;
+
+                                    // Auflösen relativer Pfade (z.B. ../../images/...)
+                                    String absImageLoc = resolveImageLoc(relativePath, src);
+                                    String alt = img.attr("alt");
+                                    if (alt.isEmpty()) alt = img.attr("title");
+
+                                    xml.append("    <image:image>\n");
+                                    xml.append("      <image:loc>").append(escapeXml(absImageLoc)).append("</image:loc>\n");
+                                    if (!alt.isEmpty()) {
+                                        xml.append("      <image:caption>").append(escapeXml(alt)).append("</image:caption>\n");
+                                    }
+                                    xml.append("    </image:image>\n");
+                                }
+                            } catch (IOException e) {
+                                System.err.println("Could not parse " + path + " for images: " + e.getMessage());
+                            }
+
                             xml.append("  </url>\n");
                         });
             }
@@ -99,6 +129,44 @@ public class SitemapGenerator {
         File robotsFile = new File(OUTPUT_DIR + "/robots.txt");
         try (FileWriter writer = new FileWriter(robotsFile)) {
             writer.write(robots.toString());
+        }
+    }
+
+    private static String resolveImageLoc(String pageRelativePath, String imgSrc) {
+        if (imgSrc == null || imgSrc.isEmpty() || imgSrc.startsWith("data:")) return "";
+        if (imgSrc.startsWith("http")) return imgSrc;
+        if (imgSrc.startsWith("//")) return "https:" + imgSrc;
+
+        String baseUrlStripped = BASE_URL.endsWith("/") ? BASE_URL.substring(0, BASE_URL.length() - 1) : BASE_URL;
+
+        if (imgSrc.startsWith("/")) {
+            return baseUrlStripped + imgSrc;
+        }
+
+        // Wir gehen davon aus, dass alle Pfade im Output-Verzeichnis relativ zueinander sind.
+        // pageRelativePath ist z.B. "cards/2005/some-card.html"
+        // imgSrc ist z.B. "../../images/2005/some-card-front.webp"
+
+        try {
+            Path pagePath = Paths.get(pageRelativePath);
+            Path parent = pagePath.getParent();
+
+            String resultPath;
+            if (parent == null) {
+                // Datei liegt im Root, z.B. "index.html"
+                resultPath = imgSrc;
+            } else {
+                // Normalisiere den Pfad relativ zur aktuellen Seite
+                resultPath = parent.resolve(imgSrc).normalize().toString().replace("\\", "/");
+            }
+
+            // Bereinige führende ./ oder /
+            while (resultPath.startsWith("/")) resultPath = resultPath.substring(1);
+            while (resultPath.startsWith("./")) resultPath = resultPath.substring(2);
+
+            return baseUrlStripped + "/" + resultPath;
+        } catch (Exception e) {
+            return baseUrlStripped + "/" + imgSrc;
         }
     }
 
