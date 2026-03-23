@@ -166,6 +166,22 @@ ${topNavHtml?no_esc}
                      loading="lazy" width="400" height="550"
                      alt="2018-19 Panini Panini Flawless Legendary Scripts Platinum LS JWH">
             </div>
+            <div class="carousel-item">
+                <img src="images/2016-17/Juwan-Howard-Miami-Heat-2016-17-Panini-Panini-Donruss-Elite-Signatures-Black-99-sn1-front.webp"
+                     loading="lazy" width="400" height="550"
+                     alt="2016-17 Panini Panini Donruss Elite Signatures Black 99">
+            </div>
+            <div class="carousel-item">
+                <img src="images/2017-18/Juwan-Howard-Dallas-Mavericks-2017-18-Panini-Panini-Donruss-Optic-Dominator-Signatures-Gold-Vinyl-18-sn1-front.webp"
+                     loading="lazy" width="400" height="550"
+                     alt="2017-18 Panini Panini Donruss Optic Dominator Signatures Gold Vinyl 18">">
+            </div>
+            <div class="carousel-item">
+                <img src="images/2017-18/Juwan-Howard-Miami-Heat-2017-18-Panini-Panini-Flawless-Premium-Ink-Signatures-Platinum-PI-JH-sn1-front.webp"
+                     loading="lazy" width="400" height="550"
+                     alt="2017-18 Panini Panini Flawless Premium Ink Signatures Platinum PI JH">">
+            </div>
+
             <!-- Second Set (Duplicate for seamless loop) -->
             <div class="carousel-item">
                 <img src="images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-sn47-front.webp"
@@ -220,6 +236,21 @@ ${topNavHtml?no_esc}
                 <img src="images/2018-19/Juwan-Howard-Miami-Heat-2018-19-Panini-Panini-Flawless-Legendary-Scripts-Platinum-LS-JWH-sn1-front.webp"
                      loading="lazy" width="400" height="550"
                      alt="2018-19 Panini Panini Flawless Legendary Scripts Platinum LS JWH">
+            </div>
+            <div class="carousel-item">
+                <img src="images/2016-17/Juwan-Howard-Miami-Heat-2016-17-Panini-Panini-Donruss-Elite-Signatures-Black-99-sn1-front.webp"
+                     loading="lazy" width="400" height="550"
+                     alt="2016-17 Panini Panini Donruss Elite Signatures Black 99">
+            </div>
+            <div class="carousel-item">
+                <img src="images/2017-18/Juwan-Howard-Dallas-Mavericks-2017-18-Panini-Panini-Donruss-Optic-Dominator-Signatures-Gold-Vinyl-18-sn1-front.webp"
+                     loading="lazy" width="400" height="550"
+                     alt="2017-18 Panini Panini Donruss Optic Dominator Signatures Gold Vinyl 18">">
+            </div>
+            <div class="carousel-item">
+                <img src="images/2017-18/Juwan-Howard-Miami-Heat-2017-18-Panini-Panini-Flawless-Premium-Ink-Signatures-Platinum-PI-JH-sn1-front.webp"
+                     loading="lazy" width="400" height="550"
+                     alt="2017-18 Panini Panini Flawless Premium Ink Signatures Platinum PI JH">">
             </div>
         </section>
     </div>
