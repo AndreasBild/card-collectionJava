@@ -151,6 +151,10 @@
       "text": "<strong>One-of-One (1/1):</strong> This card is a true Masterpiece. Being the absolute only card of its exact kind ever manufactured makes it the ultimate crown jewel for any serious collector."
     },
     {
+      "condition": { "Serial=": "1", "Print Run=": "1" },
+      "text": "<strong>One-of-One (1/1):</strong> This card is a true Masterpiece. Being the absolute only card of its exact kind ever manufactured makes it the ultimate crown jewel for any serious collector."
+    },
+    {
       "condition": { "Variant": "masterpiece" },
       "text": "<strong>One-of-One (1/1):</strong> This card is a true Masterpiece. Being the absolute only card of its exact kind ever manufactured makes it the ultimate crown jewel for any serious collector."
     },

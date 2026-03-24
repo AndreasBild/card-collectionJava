@@ -43,23 +43,32 @@ public class TriviaManager {
             Map.Entry<String, JsonNode> entry = fields.next();
             String fullKey = entry.getKey();
 
-            // Handle logical variants like "Variant!", "Variant_2"
+            // Handle logical variants like "Variant!", "Variant_2", "Serial="
             String baseKey = fullKey;
             boolean negate = false;
+            boolean exact = false;
 
             if (fullKey.endsWith("!")) {
                 baseKey = fullKey.substring(0, fullKey.length() - 1);
                 negate = true;
+            } else if (fullKey.endsWith("=")) {
+                baseKey = fullKey.substring(0, fullKey.length() - 1);
+                exact = true;
             }
+
             if (baseKey.contains("_")) {
                 baseKey = baseKey.split("_")[0];
             }
 
-            String cardValue = cardData.getOrDefault(baseKey, "").toLowerCase();
-            String conditionValue = entry.getValue().asText().toLowerCase();
+            String cardValue = cardData.getOrDefault(baseKey, "").trim().toLowerCase();
+            String conditionValue = entry.getValue().asText().trim().toLowerCase();
 
             if (negate) {
                 if (cardValue.contains(conditionValue)) {
+                    return false;
+                }
+            } else if (exact) {
+                if (!cardValue.equals(conditionValue)) {
                     return false;
                 }
             } else {
