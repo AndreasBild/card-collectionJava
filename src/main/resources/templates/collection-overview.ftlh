@@ -165,6 +165,22 @@ ${topNavHtml?no_esc}
             }
 
             document.addEventListener('DOMContentLoaded', () => {
+                // --- Scroll Restoration Logic ---
+                const savedCardId = sessionStorage.getItem('lastClickedCard');
+                if (savedCardId) {
+                    const targetRow = document.getElementById(savedCardId);
+                    if (targetRow) {
+                        setTimeout(() => {
+                            targetRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            targetRow.style.backgroundColor = '#ffffcc';
+                            setTimeout(() => {
+                                targetRow.style.backgroundColor = '';
+                            }, 2000);
+                        }, 100);
+                    }
+                    sessionStorage.removeItem('lastClickedCard');
+                }
+
                 document.querySelectorAll('.season-table-wrapper table').forEach(table => {
                     const headers = table.querySelectorAll('th');
                     headers.forEach((header, index) => {
@@ -208,6 +224,14 @@ ${topNavHtml?no_esc}
                             rowArray.forEach(row => tbody.appendChild(row));
                             sortAsc = !sortAsc;
                         });
+                    });
+
+                    // Capture click for scroll restoration
+                    table.addEventListener('click', (e) => {
+                        const row = e.target.closest('tr');
+                        if (row && row.id) {
+                            sessionStorage.setItem('lastClickedCard', row.id);
+                        }
                     });
                 });
             });

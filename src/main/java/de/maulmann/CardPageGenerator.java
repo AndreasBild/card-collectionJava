@@ -297,6 +297,7 @@ public class CardPageGenerator {
                                 .findFirst().orElse(null);
 
                         if (matchingCard != null) {
+                            row.attr("id", matchingCard.filenameBase);
                             String originalText = playerCell.text();
                             playerCell.empty();
                             playerCell.appendElement("a")

@@ -15,7 +15,7 @@
 ${topNavHtml?no_esc}
 
 <nav class="detail-nav no-border-bg">
-    <a href="../../${overviewPage}" class="modern-button no-text-decoration">&larr; Overview</a>
+    <a id="backToOverview" href="../../${overviewPage}" class="modern-button no-text-decoration">&larr; Overview</a>
     <div class="nav-button-group">
         <#if prevLink??>
             <a id="prevCardLink" href="${prevLink}" class="modern-button no-text-decoration">&laquo; Prev</a>
@@ -207,6 +207,19 @@ ${topNavHtml?no_esc}
     window.onclick = function (event) {
         if (event.target == modal) closeModal();
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Extract card ID from filename
+        const pathParts = window.location.pathname.split('/');
+        const filename = pathParts[pathParts.length - 1];
+        if (filename && filename.endsWith('.html')) {
+            const cardId = filename.replace('.html', '');
+            const backLink = document.getElementById('backToOverview');
+            if (backLink) {
+                backLink.href += '#' + cardId;
+            }
+        }
+    });
     document.addEventListener('keydown', function (event) {
         if (event.key === "Escape") closeModal();
         if (event.key === "ArrowLeft") {
