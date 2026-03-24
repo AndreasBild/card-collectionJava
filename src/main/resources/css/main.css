@@ -278,6 +278,39 @@ tr:hover {
     display: block;
 }
 
+.carousel-item .hover-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.carousel-item:hover .hover-overlay {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.carousel-item .view-button {
+    background-color: #3a7504;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9em;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+}
+
 /* Mobile Optimierung für das Karussell */
 @media (max-width: 600px) {
     .carousel-item {
