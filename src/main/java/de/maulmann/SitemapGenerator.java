@@ -13,13 +13,21 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 public class SitemapGenerator {
     private static final String BASE_URL = "https://www.maulmann.de";
     private static final String OUTPUT_DIR = "output";
 
+    public static void main(String[] args) {
+        generate();
+    }
+
     public static void generate() {
+        AtomicInteger imagesAdded = new AtomicInteger(0);
+        AtomicInteger imagesMissing = new AtomicInteger(0);
+
         try {
             System.out.println("-> Generating best-in-class robots.txt...");
             generateRobotsTxt();
@@ -77,19 +85,40 @@ public class SitemapGenerator {
                                 Elements imgs = doc.select("img");
                                 for (Element img : imgs) {
                                     String src = img.attr("src");
-                                    if (src.isEmpty()) continue;
+                                    if (src.isEmpty() || src.startsWith("data:")) continue;
 
                                     // Auflösen relativer Pfade (z.B. ../../images/...)
                                     String absImageLoc = resolveImageLoc(relativePath, src);
-                                    String alt = img.attr("alt");
-                                    if (alt.isEmpty()) alt = img.attr("title");
+                                    if (absImageLoc.isEmpty()) continue;
 
-                                    xml.append("    <image:image>\n");
-                                    xml.append("      <image:loc>").append(escapeXml(absImageLoc)).append("</image:loc>\n");
-                                    if (!alt.isEmpty()) {
-                                        xml.append("      <image:caption>").append(escapeXml(alt)).append("</image:caption>\n");
+                                    // Check existence
+                                    boolean exists = false;
+                                    if (src.startsWith("http") || src.startsWith("//")) {
+                                        exists = true;
+                                    } else {
+                                        // For local images, resolve absolute URL gives us the path after BASE_URL
+                                        if (absImageLoc.startsWith(BASE_URL + "/")) {
+                                            String relPath = absImageLoc.substring((BASE_URL + "/").length());
+                                            if (Files.exists(Paths.get(OUTPUT_DIR, relPath))) {
+                                                exists = true;
+                                            }
+                                        }
                                     }
-                                    xml.append("    </image:image>\n");
+
+                                    if (exists) {
+                                        String alt = img.attr("alt");
+                                        if (alt.isEmpty()) alt = img.attr("title");
+
+                                        xml.append("    <image:image>\n");
+                                        xml.append("      <image:loc>").append(escapeXml(absImageLoc)).append("</image:loc>\n");
+                                        if (!alt.isEmpty()) {
+                                            xml.append("      <image:caption>").append(escapeXml(alt)).append("</image:caption>\n");
+                                        }
+                                        xml.append("    </image:image>\n");
+                                        imagesAdded.incrementAndGet();
+                                    } else {
+                                        imagesMissing.incrementAndGet();
+                                    }
                                 }
                             } catch (IOException e) {
                                 System.err.println("Could not parse " + path + " for images: " + e.getMessage());
@@ -107,6 +136,10 @@ public class SitemapGenerator {
             }
 
             System.out.println("-> Sitemap successfully generated based on actual output files!");
+            System.out.println("   > Images added to sitemap: " + imagesAdded.get());
+            if (imagesMissing.get() > 0) {
+                System.out.println("   > Images missing (skipped): " + imagesMissing.get());
+            }
 
         } catch (Exception e) {
             System.err.println("Failed to generate Sitemap: " + e.getMessage());
