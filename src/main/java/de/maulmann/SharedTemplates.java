@@ -25,6 +25,8 @@ public class SharedTemplates {
     public static void setBuildId(String id) {
         BUILD_ID = id;
     }
+    public static final String IMAGE_PATH = "images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-sn7-front.webp";
+
 
     static String loadResource(String path) {
         // If the template is already in RAM, return it instantly (0 Disk I/O)
@@ -131,7 +133,7 @@ public class SharedTemplates {
         String title = "Error Page | Maulmann Trading Cards";
         String description = "The page you are looking for does not exist in the Maulmann Trading Cards collection.";
         String page = "error.html";
-        String image = root + "images/logo.png";
+        String image = root + IMAGE_PATH;
 
         return template.replace("{{HEAD}}", getHead(title, description, root, page, image))
                 .replace("{{TOPNAV}}", getTopNav(root, "error"))

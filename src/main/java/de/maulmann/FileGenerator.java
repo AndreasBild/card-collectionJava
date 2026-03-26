@@ -20,6 +20,7 @@ import java.util.*;
 
 public class FileGenerator {
 
+    public static final String IMAGE_PATH = "images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-sn7-front.webp";
     static String pathSource = "content/";
     static String pathOutput = "output/";
 
@@ -180,7 +181,7 @@ public class FileGenerator {
     private static Map<String, Object> createBaseData(String title, String subTitle, String filename, String navTargetUrl, String root) throws Exception {
         Map<String, Object> data = new HashMap<>();
 
-        String headHtml = SharedTemplates.getHead(title, subTitle, root, filename, root + "images/default-share.jpg");
+        String headHtml = SharedTemplates.getHead(title, subTitle, root, filename, root + IMAGE_PATH);
 
         String topnav = SharedTemplates.getTopNav(root, navTargetUrl.replace(".html", "").toLowerCase());
 
