@@ -137,6 +137,13 @@
     {
       "condition": { "Variant": "1 of 1" },
       "text": "<strong>One-of-One (1/1):</strong> This card is a true Masterpiece. Being the absolute only card of its exact kind ever manufactured makes it the ultimate crown jewel for any serious collector."
+    },{
+      "condition": { "Player": "Juwan Howard", "Serial": "5" },
+      "text": "<strong>Jersey Number (5):</strong> This card is a true Jersey numbered card. Being the card with a matching serial number/ Jersey number match. A nice feature for a  serious collector."
+    },
+    {
+      "condition": { "Player": "Juwan Howard", "Serial=": "5", "Print Run=": "5" },
+      "text": "<strong Jersey Number (5/5):</strong> This card is a true Masterpiece. Being the absolute only card of its exact kind ever manufactured makes it the ultimate crown jewel for any serious collector."
     },
     {
       "condition": { "Variant": "1/1" },
