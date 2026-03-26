@@ -41,7 +41,7 @@ public class FileGenerator {
     public static void buildCollectionOverview() {
         try {
             System.out.println("-> Baue Juwan-Howard-Collection.html...");
-            Map<String, Object> data = createBaseData("Juwan Howard Private Collection", "Complete Career Overview", "Juwan-Howard-Collection.html", "collection", "");
+            Map<String, Object> data = createBaseData("Juwan Howard Private Collection | Maulmann Trading Cards", "Complete Career Overview of the Juwan Howard Master Collection.", "Juwan-Howard-Collection.html", "collection", "");
 
             File contentDir = new File(pathSource);
 
@@ -103,12 +103,32 @@ public class FileGenerator {
 
     // --- 2. NEBEN-SAMMLUNGEN BAUEN (Baseball, Panini, etc.) ---
     public static void buildOtherCollections() {
-        String[] collections = {"Baseball", "Flawless", "Panini", "Wantlist"};
+        Map<String, String[]> collectionMetas = new HashMap<>();
+        collectionMetas.put("Baseball", new String[]{
+                "Ultimate Signature Edition Baseball Collection | Maulmann Trading Cards",
+                "A curated gallery of 2005 Upper Deck Ultimate Signature Edition baseball cards. Featuring 'Immortal Inscriptions' with hand-written nicknames and rare Ken Griffey Jr. buy-back autographs."
+        });
+        collectionMetas.put("Flawless", new String[]{
+                "2008 Upper Deck Exquisite Flawless Basketball | Maulmann Trading Cards",
+                "The peak of Upper Deck's Exquisite era. View rare 2008 Flawless autographs of Michael Jordan, Bill Russell, LeBron James, and Kobe Bryant in this curated private collection."
+        });
+        collectionMetas.put("Panini", new String[]{
+                "2012-13 Panini Flawless Basketball | Maulmann Trading Cards",
+                "A showcase of the historic 2012-13 Panini Flawless Basketball set. Features premium on-card autographs and rare gemstone-embedded cards from NBA legends like Julius Erving and Hakeem Olajuwon."
+        });
+        collectionMetas.put("Wantlist", new String[]{
+                "Juwan Howard Card Wantlist | Rare 90s Parallels Wanted | Maulmann Trading Cards",
+                "Help us complete the Juwan Howard master collection. We are searching for rare 90s parallels, SPx Finite 1/1s, and SkyBox Premium Rubies. View our full basketball card wantlist."
+        });
 
-        for (String coll : collections) {
+        for (Map.Entry<String, String[]> entry : collectionMetas.entrySet()) {
+            String coll = entry.getKey();
+            String title = entry.getValue()[0];
+            String description = entry.getValue()[1];
+
             try {
                 System.out.println("-> Baue " + coll + ".html...");
-                Map<String, Object> data = createBaseData(coll + " Collection", "Premium " + coll + " Cards", coll + ".html", coll.toLowerCase(), "");
+                Map<String, Object> data = createBaseData(title, description, coll + ".html", coll.toLowerCase(), "");
 
                 Path sourcePath = Paths.get(pathSource, "other", coll + ".html");
                 if (Files.exists(sourcePath)) {
@@ -142,12 +162,15 @@ public class FileGenerator {
             System.out.println("-> Baue index.html & error.html...");
 
             // Index (Navigations-Highlight für "index.html")
-            Map<String, Object> indexData = createBaseData("Maulmann Trading Cards", "Digital Archive", "index.html", "index", "");
+            Map<String, Object> indexData = createBaseData(
+                    "Maulmann Trading Cards | Juwan Howard Private Collection & Sports Card Archive",
+                    "Explore the ultimate Juwan Howard private collection with over 1,000 unique cards. Featuring rare 90s inserts, 1-of-1s, and high-end basketball, baseball, and football collectibles.",
+                    "index.html", "index", "");
             processTemplate("index.ftlh", indexData, pathOutput + "index.html");
 
             // Error 404 (Kein Navigations-Highlight)
             // Hier nutzen wir "/" als Root, damit Links auch bei tiefen Pfaden funktionieren (404-Handling im Server)
-            Map<String, Object> errorData = createBaseData("404 Not Found", "Page missing", "error.html", "", "/");
+            Map<String, Object> errorData = createBaseData("404 Not Found | Maulmann Trading Cards", "The page you are looking for does not exist in the Maulmann Trading Cards collection.", "error.html", "", "/");
             processTemplate("error.ftlh", errorData, pathOutput + "error.html");
 
         } catch (Exception e) { System.err.println("Fehler bei statischen Seiten: " + e.getMessage()); }
@@ -157,7 +180,7 @@ public class FileGenerator {
     private static Map<String, Object> createBaseData(String title, String subTitle, String filename, String navTargetUrl, String root) throws Exception {
         Map<String, Object> data = new HashMap<>();
 
-        String headHtml = SharedTemplates.getHead(title + " | Maulmann Trading Cards", subTitle, root, filename, root + "images/default-share.jpg");
+        String headHtml = SharedTemplates.getHead(title, subTitle, root, filename, root + "images/default-share.jpg");
 
         String topnav = SharedTemplates.getTopNav(root, navTargetUrl.replace(".html", "").toLowerCase());
 
