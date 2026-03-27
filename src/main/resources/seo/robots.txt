@@ -1,4 +1,7 @@
 User-agent: *
-Disallow:
+Allow: /
 
-Sitemap: https://www.maulmann.de/sitemap.xml
+User-agent: Googlebot-Image
+Allow: /images/
+
+Sitemap: https://www.maulmann.de/sitemap.xml.gz
