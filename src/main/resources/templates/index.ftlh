@@ -118,11 +118,11 @@ ${topNavHtml?no_esc}
         <section class="card-carousel">
             <!-- First Set -->
             <div class="carousel-item">
-                <img src="images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-sn47-front-400w.webp"
+                <img src="images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-PMG-sn47-front-400w.webp"
                      fetchpriority="high" width="400" height="550"
                      alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Red">
                 <div class="hover-overlay">
-                    <a href="cards/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-sn47-375.html" class="view-button" title="View details for Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Red">View Details</a>
+                    <a href="cards/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-PMG-sn47-375.html" class="view-button" title="View details for Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Red">View Details</a>
                 </div>
             </div>
             <div class="carousel-item">
@@ -158,11 +158,11 @@ ${topNavHtml?no_esc}
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-sn7-front-400w.webp"
+                <img src="images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-PMG-sn7-front-400w.webp"
                      fetchpriority="high" width="400" height="550"
                      alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Green">
                 <div class="hover-overlay">
-                    <a href="cards/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-sn7-376.html" class="view-button" title="View details for Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Green">View Details</a>
+                    <a href="cards/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-PMG-sn7-376.html" class="view-button" title="View details for Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Green">View Details</a>
                 </div>
             </div>
             <div class="carousel-item">
@@ -231,11 +231,11 @@ ${topNavHtml?no_esc}
 
             <!-- Second Set (Duplicate for seamless loop) -->
             <div class="carousel-item">
-                <img src="images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-sn47-front-400w.webp"
+                <img src="images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-PMG-sn47-front-400w.webp"
                      loading="lazy" width="400" height="550"
                      alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Red">
                 <div class="hover-overlay">
-                    <a href="cards/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-sn47-375.html" class="view-button" title="View details for Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Red">View Details</a>
+                    <a href="cards/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-PMG-sn47-375.html" class="view-button" title="View details for Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Red">View Details</a>
                 </div>
             </div>
             <div class="carousel-item">
@@ -279,11 +279,11 @@ ${topNavHtml?no_esc}
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-sn7-front-400w.webp"
+                <img src="images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-PMG-sn7-front-400w.webp"
                      loading="lazy" width="400" height="550"
                      alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Green">
                 <div class="hover-overlay">
-                    <a href="cards/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-sn7-376.html" class="view-button" title="View details for Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Green">View Details</a>
+                    <a href="cards/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-PMG-sn7-376.html" class="view-button" title="View details for Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Green">View Details</a>
                 </div>
             </div>
             <div class="carousel-item">
