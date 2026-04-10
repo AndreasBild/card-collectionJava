@@ -86,7 +86,7 @@ public class SiteBuilderPipeline {
             System.out.println("\n[PHASE 3] Minifying, Compressing, and Uploading Web Files...");
             processAndUploadWebFiles(s3AsyncClient, tracker);
 
-            // --- PHASE 4: Upload Images (No GZIP) ---
+            // --- PHASE 4: Upload Images (No Compression) ---
             System.out.println("\n[PHASE 4] Syncing Images to S3...");
             processAndUploadImages(s3AsyncClient, tracker);
 
@@ -142,25 +142,25 @@ public class SiteBuilderPipeline {
                     CompletableFuture<Void> uploadTask = null;
 
                     if (fileName.endsWith(".html")) {
-                        byte[] gzippedData = GZIPCompressor.compressBytes(HTMLMinifier.minifyHTMLToBytes(file.toFile()), 9);
-                        uploadTask = uploadBytesAsync(s3Client, s3Key, gzippedData, "text/html", CACHE_SHORT, uploadCount);
+                        byte[] brData = BrotliCompressor.compressBytes(HTMLMinifier.minifyHTMLToBytes(file.toFile()), BrotliCompressor.BEST_QUALITY);
+                        uploadTask = uploadBytesAsync(s3Client, s3Key, brData, "text/html", "br", CACHE_SHORT, uploadCount);
                     } else if (fileName.endsWith(".css")) {
-                        byte[] gzippedData = GZIPCompressor.compressBytes(CSSMinifier.minifyCSSToBytes(file.toFile()), 9);
-                        uploadTask = uploadBytesAsync(s3Client, s3Key, gzippedData, "text/css", CACHE_LONG, uploadCount);
+                        byte[] brData = BrotliCompressor.compressBytes(CSSMinifier.minifyCSSToBytes(file.toFile()), BrotliCompressor.BEST_QUALITY);
+                        uploadTask = uploadBytesAsync(s3Client, s3Key, brData, "text/css", "br", CACHE_LONG, uploadCount);
                     } else if (fileName.endsWith(".js")) {
-                        byte[] gzippedData = GZIPCompressor.compressBytes(Files.readAllBytes(file), 9);
-                        uploadTask = uploadBytesAsync(s3Client, s3Key, gzippedData, "application/javascript", CACHE_LONG, uploadCount);
+                        byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BrotliCompressor.BEST_QUALITY);
+                        uploadTask = uploadBytesAsync(s3Client, s3Key, brData, "application/javascript", "br", CACHE_LONG, uploadCount);
                     } else if (fileName.endsWith(".json")) {
-                        byte[] gzippedData = GZIPCompressor.compressBytes(Files.readAllBytes(file), 9);
-                        uploadTask = uploadBytesAsync(s3Client, s3Key, gzippedData, "application/json", CACHE_SHORT, uploadCount);
+                        byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BrotliCompressor.BEST_QUALITY);
+                        uploadTask = uploadBytesAsync(s3Client, s3Key, brData, "application/json", "br", CACHE_SHORT, uploadCount);
                     } else if (fileName.endsWith(".xml")) {
                         byte[] gzippedData = GZIPCompressor.compressBytes(Files.readAllBytes(file), 9);
-                        uploadTask = uploadBytesAsync(s3Client, s3Key, gzippedData, "application/xml", CACHE_SHORT, uploadCount);
+                        uploadTask = uploadBytesAsync(s3Client, s3Key, gzippedData, "application/xml", "gzip", CACHE_SHORT, uploadCount);
                     } else if (fileName.endsWith(".ico")) {
                         uploadTask = uploadRawFileAsync(s3Client, file, s3Key, "image/x-icon", CACHE_LONG, uploadCount);
                     } else if (fileName.startsWith("robots")) {
-                        byte[] gzippedData = GZIPCompressor.compressBytes(Files.readAllBytes(file), 9);
-                        uploadTask = uploadBytesAsync(s3Client, s3Key, gzippedData, "text/plain", CACHE_SHORT, uploadCount);
+                        byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BrotliCompressor.BEST_QUALITY);
+                        uploadTask = uploadBytesAsync(s3Client, s3Key, brData, "text/plain", "br", CACHE_SHORT, uploadCount);
                     }
 
                     // Nach erfolgreichem Upload: Hash aktualisieren
@@ -355,12 +355,12 @@ public class SiteBuilderPipeline {
         }
     }
 
-    private static CompletableFuture<Void> uploadBytesAsync(S3AsyncClient s3Client, String s3Key, byte[] data, String contentType, String cacheControl, AtomicInteger counter) {
+    private static CompletableFuture<Void> uploadBytesAsync(S3AsyncClient s3Client, String s3Key, byte[] data, String contentType, String contentEncoding, String cacheControl, AtomicInteger counter) {
         PutObjectRequest request = PutObjectRequest.builder()
                 .bucket(BUCKET_NAME)
                 .key(s3Key)
                 .contentType(contentType)
-                .contentEncoding("gzip")
+                .contentEncoding(contentEncoding)
                 .contentLanguage("en-US")
                 .cacheControl(cacheControl)
                 .build();

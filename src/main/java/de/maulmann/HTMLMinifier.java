@@ -27,7 +27,7 @@ public class HTMLMinifier {
     }
 
     // --- NEW: IN-MEMORY METHOD ---
-    // Use this to pass data directly to your GZIP compressor without touching the disk!
+    // Use this to pass data directly to your Brotli compressor without touching the disk!
     public static byte[] minifyHTMLToBytes(File inputFile) throws IOException {
         Document document = Jsoup.parse(inputFile, "UTF-8");
         document.outputSettings().prettyPrint(false);

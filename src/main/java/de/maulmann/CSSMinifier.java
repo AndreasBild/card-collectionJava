@@ -21,7 +21,7 @@ public class CSSMinifier {
     }
 
     // --- NEW: IN-MEMORY METHOD ---
-    // Use this to pass data directly to your GZIP compressor without touching the disk!
+    // Use this to pass data directly to your Brotli compressor without touching the disk!
     public static byte[] minifyCSSToBytes(File inputFile) throws IOException {
         try (Reader in = new InputStreamReader(Files.newInputStream(inputFile.toPath()), StandardCharsets.UTF_8);
              StringWriter out = new StringWriter()) {
