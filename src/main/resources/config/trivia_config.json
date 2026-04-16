@@ -109,8 +109,36 @@
       "text": "Panini's Flawless and National Treasures lines represent the pinnacle of modern investment-grade basketball cards. Flawless is famous for embedding actual, certified diamonds and precious gems directly into the card."
     },
     {
-      "condition": { "Variant": "base", "Variant!": "refractor", "Variant_2!": "frozenfractor", "Variant_3!": "mojo", "Variant_4!": "tie dye", "Variant_5!": "meta", "Variant_6!": "marble", "Variant_7!": "astral", "Variant_8!": "fractal", "Variant_9!": "pulsar", "Variant_10!": "holo" },
-      "text": "As the foundational base card of the set, this piece represents the core of player registries. While not inherently rare, finding un-numbered base cards from the 90s in pristine Gem Mint condition has become incredibly difficult due to the card stock used at the time."
+      "condition": { "Company": "Topps", "Brand": "Topps Chrome" },
+      "text": "Topps Chrome is the gold standard for modern chromium cards. Since its debut in 1996, it has become the most desired brand for rookie card parallels and high-end refractors."
+    },
+    {
+      "condition": { "Company": "Topps", "Brand": "Finest" },
+      "text": "Topps Finest was the very first 'premium' brand in basketball cards, introducing Chromium technology to the hobby in 1993 and changing card design forever."
+    },
+    {
+      "condition": { "Company": "Topps", "Brand": "Bowman" },
+      "text": "The Bowman brand is synonymous with the future. Traditionally focused on scouting and 'rookie prospects', these cards are often a player's first appearance in a major professional set."
+    },
+    {
+      "condition": { "Company": "Topps", "Brand": "Stadium Club" },
+      "text": "Stadium Club is legendary for its full-bleed, high-quality action photography. It focused on the art of the game, stripping away borders to let the player's presence dominate the card."
+    },
+    {
+      "condition": { "Company": "Upper Deck", "Brand": "SP" },
+      "text": "Upper Deck SP was the premier premium brand of the 90s. With its thicker card stock and elegant design, it offered a luxury feel that stood out from standard packs."
+    },
+    {
+      "condition": { "Company": "SkyBox", "Brand": "SkyBox Premium" },
+      "text": "SkyBox Premium represented the peak of 90s design innovation. Using high-gloss finishes and bold gold foil accents, it defined the aesthetic of the modern basketball card era."
+    },
+    {
+      "condition": { "Company": "Fleer", "Brand": "Ultra" },
+      "text": "Fleer Ultra was the choice for collectors seeking high-gloss finishes and diverse insert sets. It pushed the boundaries of card coatings and multi-tiered parallel systems."
+    },
+    {
+      "condition": {},
+      "text": "The Juwan Howard collection spans multiple decades of basketball history, capturing everything from the high-flying 90s to his championship years with the Miami Heat. Each card represents a unique piece of this journey."
     }
   ],
   "techTrivia": [
@@ -137,13 +165,14 @@
     {
       "condition": { "Variant": "1 of 1" },
       "text": "<strong>One-of-One (1/1):</strong> This card is a true Masterpiece. Being the absolute only card of its exact kind ever manufactured makes it the ultimate crown jewel for any serious collector."
-    },{
+    },
+    {
       "condition": { "Player": "Juwan Howard", "Serial": "5" },
       "text": "<strong>Jersey Number (5):</strong> This card is a true Jersey numbered card. Being the card with a matching serial number/ Jersey number match. A nice feature for a  serious collector."
     },
     {
       "condition": { "Player": "Juwan Howard", "Serial=": "5", "Print Run=": "5" },
-      "text": "<strong Jersey Number (5/5):</strong> This card is a true Masterpiece. Being the absolute only card of its exact kind ever manufactured makes it the ultimate crown jewel for any serious collector."
+      "text": "<strong>Jersey Number (5/5):</strong> This card is a true Masterpiece. Being the absolute only card of its exact kind ever manufactured makes it the ultimate crown jewel for any serious collector."
     },
     {
       "condition": { "Variant": "1/1" },
@@ -254,6 +283,14 @@
       "text": "<strong>Acetate / Plexiglass:</strong> Printed on clear, transparent, or semi-translucent plastic rather than traditional cardboard, creating a premium 'window' effect."
     },
     {
+      "condition": { "Variant": "luminescent" },
+      "text": "<strong>Luminescent / Illuminator Technology:</strong> These rare 'Triumvirate' inserts used a complex multi-layered acetate and chromium process to create varying levels of translucency and light refraction."
+    },
+    {
+      "condition": { "Variant": "illuminator" },
+      "text": "<strong>Luminescent / Illuminator Technology:</strong> These rare 'Triumvirate' inserts used a complex multi-layered acetate and chromium process to create varying levels of translucency and light refraction."
+    },
+    {
       "condition": { "Variant": "embossed" },
       "text": "<strong>Embossing:</strong> Manufacturers used heavy presses to stamp raised, 3D textures into the card face, adding a premium tactile element that collectors could physically feel."
     },
@@ -284,6 +321,18 @@
     {
       "condition": { "Variant": "prime" },
       "text": "<strong>Prime Patch:</strong> Instead of a standard single-color jersey swatch, this card features a 'Prime' cut—usually containing multi-color stitching, numbers, or logos directly from the game-worn jersey."
+    },
+    {
+      "condition": { "Autograph": "Yes" },
+      "text": "<strong>Certified Autograph:</strong> This card features an authentic signature, signed directly by the player. In the early 90s, these were rare 'Chase' cards, often falling at odds of 1 in 1,000 packs or more."
+    },
+    {
+      "condition": { "Game Used": "Yes" },
+      "text": "<strong>Memorabilia Card:</strong> This card contains a piece of a jersey, ball, or floor used by the player. These cards revolutionized the hobby in the late 90s by bringing a piece of the game directly into collectors' hands."
+    },
+    {
+      "condition": {},
+      "text": "<strong>Trading Card Manufacturing:</strong> Traditional trading card manufacturing involves multiple layers of printing and finishing. Even standard base cards from this era often featured premium UV coatings and high-quality card stock that was revolutionary at the time."
     }
   ],
   "playerHighlights": [
@@ -304,12 +353,24 @@
       "text": "During this era, Juwan was the focal point of the Washington Wizards offense. He shared the court with prime Rod Strickland, who led the league in assists, and a young rookie named Richard Hamilton."
     },
     {
+      "condition": { "Player": "Juwan Howard", "Season": "1998" },
+      "text": "Juwan continued his steady production in Washington, remaining one of the most reliable post players in the league. His veteran leadership began to show as he helped mentor younger teammates during a period of transition for the franchise."
+    },
+    {
+      "condition": { "Player": "Juwan Howard", "Season": "1999" },
+      "text": "The turn of the millennium saw Juwan as a cornerstone for the Wizards. His scoring and rebounding consistency made him a nightly double-double threat and a fan favorite in D.C."
+    },
+    {
       "condition": { "Player": "Juwan Howard", "Season": "2000-01" },
       "text": "Traded to the Dallas Mavericks, Juwan provided crucial veteran scoring. He joined a highly explosive offensive roster featuring a young Dirk Nowitzki, MVP-caliber point guard Steve Nash, and Michael Finley."
     },
     {
       "condition": { "Player": "Juwan Howard", "Season": "2001-02" },
       "text": "Traded to the Dallas Mavericks, Juwan provided crucial veteran scoring. He joined a highly explosive offensive roster featuring a young Dirk Nowitzki, MVP-caliber point guard Steve Nash, and Michael Finley."
+    },
+    {
+      "condition": { "Player": "Juwan Howard", "Season": "2002" },
+      "text": "During his time with the Denver Nuggets, Juwan was a primary scoring option and a valuable mentor for a rebuilding squad. He averaged over 18 points per game, proving he was still a force in the Western Conference."
     },
     {
       "condition": { "Player": "Juwan Howard", "Season": "2003-04" },
@@ -326,6 +387,10 @@
     {
       "condition": { "Player": "Juwan Howard", "Season": "2006" },
       "text": "During his tenure with the Houston Rockets, Juwan was a seasoned veteran presence in the frontcourt, playing alongside Hall of Fame center Yao Ming, Tracy McGrady, and legendary shot-blocker Dikembe Mutombo."
+    },
+    {
+      "condition": { "Player": "Juwan Howard", "Season": "2007" },
+      "text": "Returning to the Mavericks, Juwan provided depth and intelligence off the bench for a championship contender. His ability to hit the mid-range jumper remained a key weapon in his arsenal."
     },
     {
       "condition": { "Player": "Juwan Howard", "Season": "2010" },
@@ -346,8 +411,20 @@
   ],
   "eraContext": [
     {
+      "condition": { "Season": "1994" },
+      "text": "The 1994-95 season marked the return of Michael Jordan from his first retirement. It was an era of heavy-hitting post play and the rise of a new generation of superstars that would dominate the decade."
+    },
+    {
+      "condition": { "Season": "1995" },
+      "text": "The mid-90s were the golden age of NBA expansion, with the Toronto Raptors and Vancouver Grizzlies joining the league. The hobby exploded with creativity in card design and technology during this period."
+    },
+    {
       "condition": { "Season": "1996" },
       "text": "The 1996-97 season celebrated the NBA's 50th Anniversary (noted by gold NBA logos on many cards). It also marked the arrival of the legendary 1996 Draft Class (Kobe Bryant, Allen Iverson, Steve Nash), which drove the sports card hobby into a frenzy of innovation."
+    },
+    {
+      "condition": { "Season": "1997" },
+      "text": "In 1997, the NBA was at its cultural peak. Michael Jordan's Bulls were chasing their second three-peat, and the 'Bulls vs. The World' narrative dominated every headline and highlight reel."
     },
     {
       "condition": { "Season": "1998" },
@@ -358,8 +435,28 @@
       "text": "Pop Culture crossover: During the 1999 television season, Juwan Howard made a famous cameo appearance in the hit political drama 'The West Wing' (Episode: 'The Crackpots and These Women'), playing a pickup basketball game against the President's staff."
     },
     {
+      "condition": { "Season": "2000" },
+      "text": "The start of the new millennium brought a shift in NBA dominance toward the Western Conference. Shaq and Kobe's Lakers began their historic three-peat, setting the bar for excellence in the 2000s."
+    },
+    {
+      "condition": { "Season": "2001" },
+      "text": "The 2001 season saw the arrival of Pau Gasol and Tony Parker, signaling a major increase in the NBA's international influence. This trend reflected in the hobby with more 'International' parallels and global reach."
+    },
+    {
       "condition": { "Season": "2003" },
       "text": "The 2003-04 season is historic for the arrival of LeBron James, Dwyane Wade, and Carmelo Anthony. The massive hype around this rookie class caused a boom in trading card investments, leading to the birth of ultra-high-end products like Exquisite Collection."
+    },
+    {
+      "condition": { "Season": "2004" },
+      "text": "The mid-2000s were defined by the defensive dominance of the Detroit Pistons and the scoring explosions of Kobe Bryant and Allen Iverson. The league was transition from the post-Jordan era to the LeBron era."
+    },
+    {
+      "condition": { "Season": "2005" },
+      "text": "In 2005, the NBA introduced a new dress code, signaling a move toward a more 'corporate' and professional image. In the hobby, this era saw the rise of more formal, elegant card designs."
+    },
+    {
+      "condition": { "Season": "2010" },
+      "text": "The 2010 season changed the NBA forever with 'The Decision'. The formation of the Big Three in Miami created a 'villain' narrative that drove ratings and interest in basketball cards to new heights."
     },
     {
       "condition": { "Season": "2011" },
