@@ -120,7 +120,8 @@ ${topNavHtml?no_esc}
             <div class="carousel-item">
                 <img src="images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-PMG-sn47-front-400w.webp"
                      fetchpriority="high" width="400" height="550"
-                     alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Red">
+                     alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Red"
+                     title="Juwan Howard Private Collection - 1997-98 PMG Red">
                 <div class="hover-overlay">
                     <a href="cards/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-PMG-sn47-375.html" class="view-button" title="View details for Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Red">View Details</a>
                 </div>
@@ -128,7 +129,8 @@ ${topNavHtml?no_esc}
             <div class="carousel-item">
                 <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Fleer-Fleer-Vintage-61-Base-Set-Classic-5C-sn16-front-400w.webp"
                      fetchpriority="high" width="400" height="550"
-                     alt="Juwan Howard 1998-99 Fleer Vintage 61 Base Classic 5C">
+                     alt="Juwan Howard 1998-99 Fleer Vintage 61 Base Classic 5C"
+                     title="Juwan Howard Private Collection - 1998-99 Fleer Vintage 61">
                 <div class="hover-overlay">
                     <a href="cards/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Fleer-Fleer-Vintage-61-Base-Set-Classic-5C-sn16-509.html" class="view-button" title="View details for Juwan Howard 1998-99 Fleer Vintage 61 Base Classic 5C">View Details</a>
                 </div>
@@ -136,7 +138,8 @@ ${topNavHtml?no_esc}
             <div class="carousel-item">
                 <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-5-sn33-front-400w.webp"
                      fetchpriority="high" width="400" height="550"
-                     alt="Juwan Howard 1998-99 Fleer Metal Universe Precious Metal Gems 5">
+                     alt="Juwan Howard 1998-99 Fleer Metal Universe Precious Metal Gems 5"
+                     title="Juwan Howard Private Collection - 1998-99 PMG">
                 <div class="hover-overlay">
                     <a href="cards/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-5-sn33-513.html" class="view-button" title="View details for Juwan Howard 1998-99 Fleer Metal Universe Precious Metal Gems 5">View Details</a>
                 </div>
@@ -144,7 +147,8 @@ ${topNavHtml?no_esc}
             <div class="carousel-item">
                 <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Fleer-Fleer-Brilliants-Base-Set-24-K-Gold-97TG-sn14-front-400w.webp"
                      fetchpriority="high" width="400" height="550"
-                     alt="Juwan Howard 1998-99 Fleer Brilliants Base 24 K Gold 97TG">
+                     alt="Juwan Howard 1998-99 Fleer Brilliants Base 24 K Gold 97TG"
+                     title="Juwan Howard Private Collection - 1998-99 Fleer Brilliants 24K Gold">
                 <div class="hover-overlay">
                     <a href="cards/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Fleer-Fleer-Brilliants-Base-Set-24-K-Gold-97TG-sn14-507.html" class="view-button" title="View details for Juwan Howard 1998-99 Fleer Brilliants Base 24 K Gold 97TG">View Details</a>
                 </div>
@@ -152,7 +156,8 @@ ${topNavHtml?no_esc}
             <div class="carousel-item">
                 <img src="images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-400w.webp"
                      fetchpriority="high" width="400" height="550"
-                     alt="Juwan Howard 2018-19 Panini Panini Contenders Optic Contenders Autographs Gold Vinyl LC JWH">
+                     alt="Juwan Howard 2018-19 Panini Panini Contenders Optic Contenders Autographs Gold Vinyl LC JWH"
+                     title="Juwan Howard Private Collection - 2018-19 Contenders Optic Gold Vinyl 1/1">
                 <div class="hover-overlay">
                     <a href="cards/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-1266.html" class="view-button" title="View details for Juwan Howard 2018-19 Panini Panini Contenders Optic Contenders Autographs Gold Vinyl LC JWH">View Details</a>
                 </div>
@@ -160,14 +165,16 @@ ${topNavHtml?no_esc}
             <div class="carousel-item">
                 <img src="images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-PMG-sn7-front-400w.webp"
                      fetchpriority="high" width="400" height="550"
-                     alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Green">
+                     alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Green"
+                     title="Juwan Howard Private Collection - 1997-98 PMG Green 1/10">
                 <div class="hover-overlay">
                     <a href="cards/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-PMG-sn7-376.html" class="view-button" title="View details for Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Green">View Details</a>
                 </div>
             </div>
             <div class="carousel-item">
                 <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-SPx-Finite-Base-Set-Spectrum-76-sn291-front-400w.webp"
-                     loading="lazy" width="400" height="550" alt="Juwan Howard 1998-99 SPx Finite Base Spectrum">
+                     loading="lazy" width="400" height="550" alt="Juwan Howard 1998-99 SPx Finite Base Spectrum"
+                     title="Juwan Howard Private Collection - 1998-99 SPx Finite Spectrum">
                 <div class="hover-overlay">
                     <a href="cards/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-SPx-Finite-Base-Set-Spectrum-76-sn291-537.html" class="view-button" title="View details for Juwan Howard 1998-99 SPx Finite Base Spectrum">View Details</a>
                 </div>
@@ -175,7 +182,8 @@ ${topNavHtml?no_esc}
             <div class="carousel-item">
                 <img src="images/1997-98/Juwan-Howard-Washington-Wizards-1997-98-Fleer-Fleer-Metal-Universe-Championship-Base-Set-Precious-Metal-Gems-11-sn32-front-400w.webp"
                      loading="lazy" width="400" height="550"
-                     alt="1997-98 Fleer Metal Universe Championship Precious Metal Gems 11">
+                     alt="1997-98 Fleer Metal Universe Championship Precious Metal Gems 11"
+                     title="Juwan Howard Private Collection - 1997-98 PMG Championship">
                 <div class="hover-overlay">
                     <a href="cards/1997-98/Juwan-Howard-Washington-Wizards-1997-98-Fleer-Fleer-Metal-Universe-Championship-Base-Set-Precious-Metal-Gems-11-sn32-371.html" class="view-button" title="View details for 1997-98 Fleer Metal Universe Championship Precious Metal Gems 11">View Details</a>
                 </div>
@@ -183,7 +191,8 @@ ${topNavHtml?no_esc}
             <div class="carousel-item">
                 <img src="images/2022-23/Juwan-Howard-Washington-Wizards-2022-23-Panini-Panini-Spectra-Icons-Autographs-Nebula-IA-JUW-sn1-front-400w.webp"
                      loading="lazy" width="400" height="550"
-                     alt="2022-23 Panini Panini Spectra Icons Autographs Nebula IA JUW">
+                     alt="2022-23 Panini Panini Spectra Icons Autographs Nebula IA JUW"
+                     title="Juwan Howard Private Collection - 2022-23 Spectra Nebula 1/1">
                 <div class="hover-overlay">
                     <a href="cards/2022-23/Juwan-Howard-Washington-Wizards-2022-23-Panini-Panini-Spectra-Icons-Autographs-Nebula-IA-JUW-sn1-1348.html" class="view-button" title="View details for 2022-23 Panini Panini Spectra Icons Autographs Nebula IA JUW">View Details</a>
                 </div>
@@ -191,7 +200,8 @@ ${topNavHtml?no_esc}
             <div class="carousel-item">
                 <img src="images/2018-19/Juwan-Howard-Miami-Heat-2018-19-Panini-Panini-Flawless-Legendary-Scripts-Platinum-LS-JWH-sn1-front-400w.webp"
                      loading="lazy" width="400" height="550"
-                     alt="2018-19 Panini Panini Flawless Legendary Scripts Platinum LS JWH">
+                     alt="2018-19 Panini Panini Flawless Legendary Scripts Platinum LS JWH"
+                     title="Juwan Howard Private Collection - 2018-19 Flawless Platinum 1/1">
                 <div class="hover-overlay">
                     <a href="cards/2018-19/Juwan-Howard-Miami-Heat-2018-19-Panini-Panini-Flawless-Legendary-Scripts-Platinum-LS-JWH-sn1-1245.html" class="view-button" title="View details for 2018-19 Panini Panini Flawless Legendary Scripts Platinum LS JWH">View Details</a>
                 </div>
@@ -199,7 +209,8 @@ ${topNavHtml?no_esc}
             <div class="carousel-item">
                 <img src="images/2016-17/Juwan-Howard-Miami-Heat-2016-17-Panini-Panini-Donruss-Elite-Signatures-Black-99-sn1-front-400w.webp"
                      loading="lazy" width="400" height="550"
-                     alt="2016-17 Panini Panini Donruss Elite Signatures Black 99">
+                     alt="2016-17 Panini Panini Donruss Elite Signatures Black 99"
+                     title="Juwan Howard Private Collection - 2016-17 Donruss Elite Black 1/1">
                 <div class="hover-overlay">
                     <a href="cards/2016-17/Juwan-Howard-Miami-Heat-2016-17-Panini-Panini-Donruss-Elite-Signatures-Black-99-sn1-1205.html" class="view-button" title="View details for 2016-17 Panini Panini Donruss Elite Signatures Black 99">View Details</a>
                 </div>
@@ -207,7 +218,8 @@ ${topNavHtml?no_esc}
             <div class="carousel-item">
                 <img src="images/2017-18/Juwan-Howard-Dallas-Mavericks-2017-18-Panini-Panini-Donruss-Optic-Dominator-Signatures-Gold-Vinyl-18-sn1-front-400w.webp"
                      loading="lazy" width="400" height="550"
-                     alt="2017-18 Panini Panini Donruss Optic Dominator Signatures Gold Vinyl 18">
+                     alt="2017-18 Panini Panini Donruss Optic Dominator Signatures Gold Vinyl 18"
+                     title="Juwan Howard Private Collection - 2017-18 Optic Gold Vinyl 1/1">
                 <div class="hover-overlay">
                     <a href="cards/2017-18/Juwan-Howard-Dallas-Mavericks-2017-18-Panini-Panini-Donruss-Optic-Dominator-Signatures-Gold-Vinyl-18-sn1-1236.html" class="view-button" title="View details for 2017-18 Panini Panini Donruss Optic Dominator Signatures Gold Vinyl 18">View Details</a>
                 </div>
@@ -215,7 +227,8 @@ ${topNavHtml?no_esc}
             <div class="carousel-item">
                 <img src="images/2017-18/Juwan-Howard-Miami-Heat-2017-18-Panini-Panini-Flawless-Premium-Ink-Signatures-Platinum-PI-JH-sn1-front-400w.webp"
                      loading="lazy" width="400" height="550"
-                     alt="2017-18 Panini Panini Flawless Premium Ink Signatures Platinum PI JH">
+                     alt="2017-18 Panini Panini Flawless Premium Ink Signatures Platinum PI JH"
+                     title="Juwan Howard Private Collection - 2017-18 Flawless Premium Ink 1/1">
                 <div class="hover-overlay">
                     <a href="cards/2017-18/Juwan-Howard-Miami-Heat-2017-18-Panini-Panini-Flawless-Premium-Ink-Signatures-Platinum-PI-JH-sn1-1240.html" class="view-button" title="View details for 2017-18 Panini Panini Flawless Premium Ink Signatures Platinum PI JH">View Details</a>
                 </div>
@@ -223,7 +236,8 @@ ${topNavHtml?no_esc}
             <div class="carousel-item">
                 <img src="images/2013-14/Juwan-Howard-Washington-Wizards-2013-14-Panini-Panini-Immaculate-Collection-Team-Logos-Numbers-Jersey-Patch-93-sn7-front-400w.webp"
                      loading="lazy" width="400" height="550"
-                     alt="2013-14 Panini Panini Immaculate Collection Team Logos Numbers Jersey Patch 93">
+                     alt="2013-14 Panini Panini Immaculate Collection Team Logos Numbers Jersey Patch 93"
+                     title="Juwan Howard Private Collection - 2013-14 Immaculate Patch">
                 <div class="hover-overlay">
                     <a href="cards/2013-14/Juwan-Howard-Washington-Wizards-2013-14-Panini-Panini-Immaculate-Collection-Team-Logos-Numbers-Jersey-Patch-93-sn7-1193.html" class="view-button" title="View details for 2013-14 Panini Panini Immaculate Collection Team Logos Numbers Jersey Patch 93">View Details</a>
                 </div>
@@ -233,7 +247,8 @@ ${topNavHtml?no_esc}
             <div class="carousel-item">
                 <img src="images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-PMG-sn47-front-400w.webp"
                      loading="lazy" width="400" height="550"
-                     alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Red">
+                     alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Red"
+                     title="Juwan Howard Private Collection - 1997-98 PMG Red">
                 <div class="hover-overlay">
                     <a href="cards/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-PMG-sn47-375.html" class="view-button" title="View details for Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Red">View Details</a>
                 </div>
@@ -241,7 +256,8 @@ ${topNavHtml?no_esc}
             <div class="carousel-item">
                 <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Fleer-Fleer-Vintage-61-Base-Set-Classic-5C-sn16-front-400w.webp"
                      loading="lazy" width="400" height="550"
-                     alt="Juwan Howard 1998-99 Fleer Vintage 61 Base Classic 5C">
+                     alt="Juwan Howard 1998-99 Fleer Vintage 61 Base Classic 5C"
+                     title="Juwan Howard Private Collection - 1998-99 Fleer Vintage 61">
                 <div class="hover-overlay">
                     <a href="cards/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Fleer-Fleer-Vintage-61-Base-Set-Classic-5C-sn16-509.html" class="view-button" title="View details for Juwan Howard 1998-99 Fleer Vintage 61 Base Classic 5C">View Details</a>
                 </div>
@@ -249,7 +265,8 @@ ${topNavHtml?no_esc}
             <div class="carousel-item">
                 <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-5-sn33-front-400w.webp"
                      loading="lazy" width="400" height="550"
-                     alt="Juwan Howard 1998-99 Fleer Metal Universe Precious Metal Gems 5">
+                     alt="Juwan Howard 1998-99 Fleer Metal Universe Precious Metal Gems 5"
+                     title="Juwan Howard Private Collection - 1998-99 PMG">
                 <div class="hover-overlay">
                     <a href="cards/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-5-sn33-513.html" class="view-button" title="View details for Juwan Howard 1998-99 Fleer Metal Universe Precious Metal Gems 5">View Details</a>
                 </div>
@@ -257,7 +274,8 @@ ${topNavHtml?no_esc}
             <div class="carousel-item">
                 <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Fleer-Fleer-Brilliants-Base-Set-24-K-Gold-97TG-sn14-front-400w.webp"
                      loading="lazy" width="400" height="550"
-                     alt="Juwan Howard 1998-99 Fleer Brilliants Base 24 K Gold 97TG">
+                     alt="Juwan Howard 1998-99 Fleer Brilliants Base 24 K Gold 97TG"
+                     title="Juwan Howard Private Collection - 1998-99 Fleer Brilliants 24K Gold">
                 <div class="hover-overlay">
                     <a href="cards/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Fleer-Fleer-Brilliants-Base-Set-24-K-Gold-97TG-sn14-507.html" class="view-button" title="View details for Juwan Howard 1998-99 Fleer Brilliants Base 24 K Gold 97TG">View Details</a>
                 </div>
@@ -265,7 +283,8 @@ ${topNavHtml?no_esc}
             <div class="carousel-item">
                 <img src="images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-400w.webp"
                      loading="lazy" width="400" height="550"
-                     alt="Juwan Howard 2018-19 Panini Panini Contenders Optic Contenders Autographs Gold Vinyl LC JWH">
+                     alt="Juwan Howard 2018-19 Panini Panini Contenders Optic Contenders Autographs Gold Vinyl LC JWH"
+                     title="Juwan Howard Private Collection - 2018-19 Contenders Optic Gold Vinyl 1/1">
                 <div class="hover-overlay">
                     <a href="cards/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-1266.html" class="view-button" title="View details for Juwan Howard 2018-19 Panini Panini Contenders Optic Contenders Autographs Gold Vinyl LC JWH">View Details</a>
                 </div>
@@ -273,7 +292,8 @@ ${topNavHtml?no_esc}
             <div class="carousel-item">
                 <img src="images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-400w.webp"
                      loading="lazy" width="400" height="550"
-                     alt="Juwan Howard 2018-19 Panini Panini Contenders Optic Contenders Autographs Gold Vinyl LC JWH">
+                     alt="Juwan Howard 2018-19 Panini Panini Contenders Optic Contenders Autographs Gold Vinyl LC JWH"
+                     title="Juwan Howard Private Collection - 2018-19 Contenders Optic Gold Vinyl 1/1">
                 <div class="hover-overlay">
                     <a href="cards/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-1266.html" class="view-button" title="View details for Juwan Howard 2018-19 Panini Panini Contenders Optic Contenders Autographs Gold Vinyl LC JWH">View Details</a>
                 </div>
@@ -281,14 +301,16 @@ ${topNavHtml?no_esc}
             <div class="carousel-item">
                 <img src="images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-PMG-sn7-front-400w.webp"
                      loading="lazy" width="400" height="550"
-                     alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Green">
+                     alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Green"
+                     title="Juwan Howard Private Collection - 1997-98 PMG Green 1/10">
                 <div class="hover-overlay">
                     <a href="cards/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-PMG-sn7-376.html" class="view-button" title="View details for Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Green">View Details</a>
                 </div>
             </div>
             <div class="carousel-item">
                 <img src="images/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-SPx-Finite-Base-Set-Spectrum-76-sn291-front-400w.webp"
-                     loading="lazy" width="400" height="550" alt="Juwan Howard 1998-99 SPx Finite Base Spectrum">
+                     loading="lazy" width="400" height="550" alt="Juwan Howard 1998-99 SPx Finite Base Spectrum"
+                     title="Juwan Howard Private Collection - 1998-99 SPx Finite Spectrum">
                 <div class="hover-overlay">
                     <a href="cards/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-SPx-Finite-Base-Set-Spectrum-76-sn291-537.html" class="view-button" title="View details for Juwan Howard 1998-99 SPx Finite Base Spectrum">View Details</a>
                 </div>
@@ -296,7 +318,8 @@ ${topNavHtml?no_esc}
             <div class="carousel-item">
                 <img src="images/1997-98/Juwan-Howard-Washington-Wizards-1997-98-Fleer-Fleer-Metal-Universe-Championship-Base-Set-Precious-Metal-Gems-11-sn32-front-400w.webp"
                      loading="lazy" width="400" height="550"
-                     alt="1997-98 Fleer Metal Universe Championship Precious Metal Gems 11">
+                     alt="1997-98 Fleer Metal Universe Championship Precious Metal Gems 11"
+                     title="Juwan Howard Private Collection - 1997-98 PMG Championship">
                 <div class="hover-overlay">
                     <a href="cards/1997-98/Juwan-Howard-Washington-Wizards-1997-98-Fleer-Fleer-Metal-Universe-Championship-Base-Set-Precious-Metal-Gems-11-sn32-371.html" class="view-button" title="View details for 1997-98 Fleer Metal Universe Championship Precious Metal Gems 11">View Details</a>
                 </div>
@@ -304,7 +327,8 @@ ${topNavHtml?no_esc}
             <div class="carousel-item">
                 <img src="images/2022-23/Juwan-Howard-Washington-Wizards-2022-23-Panini-Panini-Spectra-Icons-Autographs-Nebula-IA-JUW-sn1-front-400w.webp"
                      loading="lazy" width="400" height="550"
-                     alt="2022-23 Panini Panini Spectra Icons Autographs Nebula IA JUW">
+                     alt="2022-23 Panini Panini Spectra Icons Autographs Nebula IA JUW"
+                     title="Juwan Howard Private Collection - 2022-23 Spectra Nebula 1/1">
                 <div class="hover-overlay">
                     <a href="cards/2022-23/Juwan-Howard-Washington-Wizards-2022-23-Panini-Panini-Spectra-Icons-Autographs-Nebula-IA-JUW-sn1-1348.html" class="view-button" title="View details for 2022-23 Panini Panini Spectra Icons Autographs Nebula IA JUW">View Details</a>
                 </div>
@@ -312,7 +336,8 @@ ${topNavHtml?no_esc}
             <div class="carousel-item">
                 <img src="images/2018-19/Juwan-Howard-Miami-Heat-2018-19-Panini-Panini-Flawless-Legendary-Scripts-Platinum-LS-JWH-sn1-front-400w.webp"
                      loading="lazy" width="400" height="550"
-                     alt="2018-19 Panini Panini Flawless Legendary Scripts Platinum LS JWH">
+                     alt="2018-19 Panini Panini Flawless Legendary Scripts Platinum LS JWH"
+                     title="Juwan Howard Private Collection - 2018-19 Flawless Platinum 1/1">
                 <div class="hover-overlay">
                     <a href="cards/2018-19/Juwan-Howard-Miami-Heat-2018-19-Panini-Panini-Flawless-Legendary-Scripts-Platinum-LS-JWH-sn1-1245.html" class="view-button" title="View details for 2018-19 Panini Panini Flawless Legendary Scripts Platinum LS JWH">View Details</a>
                 </div>
@@ -320,7 +345,8 @@ ${topNavHtml?no_esc}
             <div class="carousel-item">
                 <img src="images/2016-17/Juwan-Howard-Miami-Heat-2016-17-Panini-Panini-Donruss-Elite-Signatures-Black-99-sn1-front-400w.webp"
                      loading="lazy" width="400" height="550"
-                     alt="2016-17 Panini Panini Donruss Elite Signatures Black 99">
+                     alt="2016-17 Panini Panini Donruss Elite Signatures Black 99"
+                     title="Juwan Howard Private Collection - 2016-17 Donruss Elite Black 1/1">
                 <div class="hover-overlay">
                     <a href="cards/2016-17/Juwan-Howard-Miami-Heat-2016-17-Panini-Panini-Donruss-Elite-Signatures-Black-99-sn1-1205.html" class="view-button" title="View details for 2016-17 Panini Panini Donruss Elite Signatures Black 99">View Details</a>
                 </div>
@@ -328,7 +354,8 @@ ${topNavHtml?no_esc}
             <div class="carousel-item">
                 <img src="images/2017-18/Juwan-Howard-Dallas-Mavericks-2017-18-Panini-Panini-Donruss-Optic-Dominator-Signatures-Gold-Vinyl-18-sn1-front-400w.webp"
                      loading="lazy" width="400" height="550"
-                     alt="2017-18 Panini Panini Donruss Optic Dominator Signatures Gold Vinyl 18">
+                     alt="2017-18 Panini Panini Donruss Optic Dominator Signatures Gold Vinyl 18"
+                     title="Juwan Howard Private Collection - 2017-18 Optic Gold Vinyl 1/1">
                 <div class="hover-overlay">
                     <a href="cards/2017-18/Juwan-Howard-Dallas-Mavericks-2017-18-Panini-Panini-Donruss-Optic-Dominator-Signatures-Gold-Vinyl-18-sn1-1236.html" class="view-button" title="View details for 2017-18 Panini Panini Donruss Optic Dominator Signatures Gold Vinyl 18">View Details</a>
                 </div>
@@ -336,7 +363,8 @@ ${topNavHtml?no_esc}
             <div class="carousel-item">
                 <img src="images/2017-18/Juwan-Howard-Miami-Heat-2017-18-Panini-Panini-Flawless-Premium-Ink-Signatures-Platinum-PI-JH-sn1-front-400w.webp"
                      loading="lazy" width="400" height="550"
-                     alt="2017-18 Panini Panini Flawless Premium Ink Signatures Platinum PI JH">
+                     alt="2017-18 Panini Panini Flawless Premium Ink Signatures Platinum PI JH"
+                     title="Juwan Howard Private Collection - 2017-18 Flawless Premium Ink 1/1">
                 <div class="hover-overlay">
                     <a href="cards/2017-18/Juwan-Howard-Miami-Heat-2017-18-Panini-Panini-Flawless-Premium-Ink-Signatures-Platinum-PI-JH-sn1-1240.html" class="view-button" title="View details for 2017-18 Panini Panini Flawless Premium Ink Signatures Platinum PI JH">View Details</a>
                 </div>
@@ -344,7 +372,8 @@ ${topNavHtml?no_esc}
             <div class="carousel-item">
                 <img src="images/2013-14/Juwan-Howard-Washington-Wizards-2013-14-Panini-Panini-Immaculate-Collection-Team-Logos-Numbers-Jersey-Patch-93-sn7-front-400w.webp"
                      loading="lazy" width="400" height="550"
-                     alt="2013-14 Panini Panini Immaculate Collection Team Logos Numbers Jersey Patch 93">
+                     alt="2013-14 Panini Panini Immaculate Collection Team Logos Numbers Jersey Patch 93"
+                     title="Juwan Howard Private Collection - 2013-14 Immaculate Patch">
                 <div class="hover-overlay">
                     <a href="cards/2013-14/Juwan-Howard-Washington-Wizards-2013-14-Panini-Panini-Immaculate-Collection-Team-Logos-Numbers-Jersey-Patch-93-sn7-1193.html" class="view-button" title="View details for 2013-14 Panini Panini Immaculate Collection Team Logos Numbers Jersey Patch 93">View Details</a>
                 </div>
@@ -352,24 +381,26 @@ ${topNavHtml?no_esc}
         </section>
     </div>
     <div class="seo-box">
-        <h2>Explore the Collection</h2>
-        <p>Welcome to Maulmann Trading Cards, a dedicated space showcasing a lifelong passion for sports card
-            collecting. Our centerpiece is a massive Juwan Howard Private Collection, featuring over a thousand unique
-            cards spanning his entire career.</p>
-        <p>Beyond our primary focus, we also feature specialized collections including:</p>
+        <h2>Juwan Howard Super Collector | Private Collection</h2>
+        <p>Welcome to Maulmann Trading Cards, the ultimate digital archive for the Juwan Howard Super Collector. This
+            exclusive Private Collection features over a thousand unique Juwan Howard cards, showcasing his historic
+            career from Michigan's Fab Five to his NBA championships with the Miami Heat.</p>
+        <p>As a dedicated Super Collector, we specialize in high-end hobby grails, including:</p>
         <ul>
-            <li><strong>Upper Deck Baseball:</strong> A selection of premium baseball cards.</li>
-            <li><strong>Flawless Basketball:</strong> Showcasing the 2008 and 2012-13 Flawless sets.</li>
-            <li><strong>Wantlist:</strong> Rare cards we are currently searching for to complete our collection.</li>
+            <li><strong>1/1 Masterpieces:</strong> Unique One-of-One cards, Printing Plates, and Superfractor autographs.</li>
+            <li><strong>Precious Metal Gems (PMG):</strong> Iconic SkyBox Metal Universe PMG Red and Green parallels.</li>
+            <li><strong>Rare 90s Inserts:</strong> SkyBox Premium Star Rubies, Flair Showcase Legacy Collection, and E-X Credentials.</li>
+            <li><strong>Specialized Galleries:</strong> Curated subsets like 2005 Upper Deck Baseball and 2012-13 Panini Flawless.</li>
         </ul>
+        <p>Explore our <a href="Wantlist.html" title="Juwan Howard Card Wantlist">Wantlist</a> to see the rare 1/1s and PMGs we are still hunting for.</p>
     </div>
     <div class="ai-summary"
          style="max-width: 800px; margin: 40px auto 0; text-align: left; line-height: 1.8; background: #f9f9f9; padding: 30px; border-radius: 8px; border-left: 5px solid #3a7504;">
-        <h3 style="margin-top: 0; color: #333;">About the Archive</h3>
-        <p style="margin: 0; color: #555;">This digital archive represents decades of collecting, focusing on high-end
-            90s inserts, rare 1-of-1s, and iconic rookie cards. Explore the technical specifications, verified OCR
-            back-scans, and the historical significance behind each piece. Every card has been digitized and cataloged
-            to preserve hobby history.</p>
+        <h3 style="margin-top: 0; color: #333;">The Juwan Howard Archive</h3>
+        <p style="margin: 0; color: #555;">This Private Collection is optimized for hobbyists and researchers seeking
+            detailed information on Juwan Howard cards. We provide high-resolution scans, technical specifications, and
+            verified AI-OCR back-scans for every card. From common base cards to the most elusive 1/1 Masterpiece,
+            this archive preserves the legacy of one of the 90s' most iconic players.</p>
     </div>
 </main>
 ${footerHtml?no_esc}

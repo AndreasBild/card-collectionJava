@@ -42,7 +42,7 @@ public class FileGenerator {
     public static void buildCollectionOverview() {
         try {
             System.out.println("-> Baue Juwan-Howard-Collection.html...");
-            Map<String, Object> data = createBaseData("Juwan Howard Private Collection | Maulmann Trading Cards", "Complete Career Overview of the Juwan Howard Master Collection.", "Juwan-Howard-Collection.html", "collection", "");
+            Map<String, Object> data = createBaseData("Juwan Howard Private Collection | Juwan Howard Super Collector | Maulmann Trading Cards", "Explore the Juwan Howard Masterpiece Collection. A massive private collection featuring 1/1s, PMGs, Rubies, and Legacy Collection parallels.", "Juwan-Howard-Collection.html", "collection", "");
 
             File contentDir = new File(pathSource);
 
@@ -106,20 +106,20 @@ public class FileGenerator {
     public static void buildOtherCollections() {
         Map<String, String[]> collectionMetas = new HashMap<>();
         collectionMetas.put("Baseball", new String[]{
-                "Ultimate Signature Edition Baseball Collection | Maulmann Trading Cards",
-                "A curated gallery of 2005 Upper Deck Ultimate Signature Edition baseball cards. Featuring 'Immortal Inscriptions' with hand-written nicknames and rare Ken Griffey Jr. buy-back autographs."
+                "Ultimate Signature Edition Baseball Private Collection | Maulmann Trading Cards",
+                "A curated gallery from a private collection of 2005 Upper Deck Ultimate Signature Edition baseball cards. Featuring 'Immortal Inscriptions' and rare Ken Griffey Jr. autographs."
         });
         collectionMetas.put("Flawless", new String[]{
-                "2008 Upper Deck Exquisite Flawless Basketball | Maulmann Trading Cards",
-                "The peak of Upper Deck's Exquisite era. View rare 2008 Flawless autographs of Michael Jordan, Bill Russell, LeBron James, and Kobe Bryant in this curated private collection."
+                "2008 Upper Deck Exquisite Flawless Basketball Private Collection | Maulmann Trading Cards",
+                "The peak of Upper Deck's Exquisite era. View rare 2008 Flawless 1/1s and autographs of Michael Jordan, Bill Russell, and Kobe Bryant in this private collection."
         });
         collectionMetas.put("Panini", new String[]{
-                "2012-13 Panini Flawless Basketball | Maulmann Trading Cards",
-                "A showcase of the historic 2012-13 Panini Flawless Basketball set. Features premium on-card autographs and rare gemstone-embedded cards from NBA legends like Julius Erving and Hakeem Olajuwon."
+                "2012-13 Panini Flawless Basketball Private Collection | Maulmann Trading Cards",
+                "A showcase of the historic 2012-13 Panini Flawless Basketball set from a private collector. Features 1/1 Masterpiece cards and rare gemstone-embedded NBA legends."
         });
         collectionMetas.put("Wantlist", new String[]{
-                "Juwan Howard Card Wantlist | Rare 90s Parallels Wanted | Maulmann Trading Cards",
-                "Help us complete the Juwan Howard master collection. We are searching for rare 90s parallels, SPx Finite 1/1s, and SkyBox Premium Rubies. View our full basketball card wantlist."
+                "Juwan Howard Wantlist | Super Collector Searching for 1/1, PMG, Ruby | Maulmann Trading Cards",
+                "Help a Juwan Howard Super Collector complete the master collection. We are searching for rare 1/1 Masterpieces, Precious Metal Gems (PMG), SkyBox Premium Rubies, and Legacy Collection parallels."
         });
 
         for (Map.Entry<String, String[]> entry : collectionMetas.entrySet()) {
@@ -164,8 +164,8 @@ public class FileGenerator {
 
             // Index (Navigations-Highlight für "index.html")
             Map<String, Object> indexData = createBaseData(
-                    "Maulmann Trading Cards | Juwan Howard Private Collection & Sports Card Archive",
-                    "Explore the ultimate Juwan Howard private collection with over 1,000 unique cards. Featuring rare 90s inserts, 1-of-1s, and high-end basketball, baseball, and football collectibles.",
+                    "Juwan Howard Super Collector | Private Collection | Maulmann Trading Cards",
+                    "Welcome to the ultimate Juwan Howard Private Collection. A Super Collector showcase featuring 1,000+ unique cards, including 1/1 Masterpieces, PMGs, Rubies, and rare 90s basketball inserts.",
                     "index.html", "index", "");
             processTemplate("index.ftlh", indexData, pathOutput + "index.html");
 
