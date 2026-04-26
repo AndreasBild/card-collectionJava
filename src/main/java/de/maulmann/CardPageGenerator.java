@@ -1,6 +1,8 @@
 package de.maulmann;
 
 import org.jsoup.Jsoup;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -49,13 +51,15 @@ public class CardPageGenerator {
 
     static class CardData {
         Map<String, String> attributes;
+        String stableId;
         String filenameBase;
         String filename;
         String seasonFolder;
         String fullRelativePath;
 
-        public CardData(Map<String, String> attributes, int uniqueId) {
+        public CardData(Map<String, String> attributes, String uniqueId) {
             this.attributes = new HashMap<>(attributes);
+            this.stableId = uniqueId;
 
             String currentTeam = this.attributes.get("Team");
             if (!isValid(currentTeam)) {
@@ -68,7 +72,7 @@ public class CardPageGenerator {
             calculatePaths(uniqueId);
         }
 
-        private void calculatePaths(int uniqueId) {
+        private void calculatePaths(String uniqueId) {
             List<String> filenameTokens = new ArrayList<>();
             addIfPresent(filenameTokens, attributes.get("Player"));
             addIfPresent(filenameTokens, attributes.get("Team"));
@@ -167,10 +171,9 @@ public class CardPageGenerator {
             if (tables.isEmpty()) return;
 
             List<CardData> rawCards = new ArrayList<>();
-            int globalCardCounter = 0;
 
             for (Element table : tables) {
-                globalCardCounter = extractTableDataAndUpdateDom(table, rawCards, globalCardCounter);
+                extractTableDataAndUpdateDom(table, rawCards);
             }
 
             if (rawCards.isEmpty()) return;
@@ -220,9 +223,9 @@ public class CardPageGenerator {
         }
     }
 
-    private static int extractTableDataAndUpdateDom(Element table, List<CardData> globalCardList, int counter) {
+    private static void extractTableDataAndUpdateDom(Element table, List<CardData> globalCardList) {
         Elements rows = table.select("tr");
-        if (rows.isEmpty()) return counter;
+        if (rows.isEmpty()) return;
 
         int headerRowIndex = -1;
         String[] headers = null;
@@ -240,7 +243,7 @@ public class CardPageGenerator {
             }
         }
 
-        if (headerRowIndex == -1) return counter;
+        if (headerRowIndex == -1) return;
 
         for (int i = headerRowIndex + 1; i < rows.size(); i++) {
             Element row = rows.get(i);
@@ -252,17 +255,47 @@ public class CardPageGenerator {
                 dataMap.put(headers[j], cols.get(j).text().trim());
             }
 
-            CardData currentCard = new CardData(dataMap, counter++);
+            String stableId = generateStableId(dataMap);
+            CardData currentCard = new CardData(dataMap, stableId);
             globalCardList.add(currentCard);
-            row.attr("data-card-id", String.valueOf(currentCard.hashCode()));
+            row.attr("data-card-id", stableId);
         }
-        return counter;
+    }
+
+    private static String generateStableId(Map<String, String> attributes) {
+        String[] relevantKeys = {
+                "Player", "Team", "Season", "Company", "Brand",
+                "Theme", "Variant", "Number", "Serial", "Print Run",
+                "Serial/Print Run", "Grade"
+        };
+
+        StringBuilder sb = new StringBuilder();
+        for (String key : relevantKeys) {
+            String val = attributes.getOrDefault(key, "").trim();
+            if (!val.isEmpty() && !val.equals("0")) {
+                sb.append(key).append(":").append(val).append("|");
+            }
+        }
+
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] digest = md.digest(sb.toString().getBytes(StandardCharsets.UTF_8));
+            StringBuilder hexString = new StringBuilder();
+            for (int i = 0; i < 4; i++) { // Use first 4 bytes (8 chars) for shorter but stable ID
+                String hex = Integer.toHexString(0xff & digest[i]);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            return String.valueOf(sb.toString().hashCode());
+        }
     }
 
     private static void updateDomLinks(Elements tables, List<CardData> filteredCards) {
         Set<String> approvedCardIds = new HashSet<>();
         for (CardData card : filteredCards) {
-            approvedCardIds.add(String.valueOf(card.hashCode()));
+            approvedCardIds.add(card.stableId);
         }
 
         for (Element table : tables) {
@@ -289,7 +322,7 @@ public class CardPageGenerator {
                         Element playerCell = cols.get(playerColIndex);
 
                         CardData matchingCard = filteredCards.stream()
-                                .filter(c -> String.valueOf(c.hashCode()).equals(rowId))
+                                .filter(c -> c.stableId.equals(rowId))
                                 .findFirst().orElse(null);
 
                         if (matchingCard != null) {
