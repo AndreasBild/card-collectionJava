@@ -12,12 +12,12 @@
         <maven.compiler.source>19</maven.compiler.source>
         <maven.compiler.target>19</maven.compiler.target>
         <maven.compiler.release>19</maven.compiler.release>
-        <aws.sdk.version>2.42.28</aws.sdk.version>
+        <aws.sdk.version>2.42.41</aws.sdk.version>
         <org.slf4j.version>2.0.17</org.slf4j.version>
         <org.junit.jupiter.version>6.0.2</org.junit.jupiter.version>
         <org.apache.maven.plugins.version>3.14.1</org.apache.maven.plugins.version>
         <org.codehaus.mojo.version>3.6.3</org.codehaus.mojo.version>
-        <org.jsoup.version>1.22.1</org.jsoup.version>
+        <org.jsoup.version>1.22.2</org.jsoup.version>
         <com.yahoo.platform.yui.version>2.4.8</com.yahoo.platform.yui.version>
     </properties>
 
