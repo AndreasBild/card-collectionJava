@@ -1,0 +1,22 @@
+# maulmann.de
+
+> Privates digitales Archiv und Showcase der Juwan Howard Super Collector Sportkartensammlung.
+
+Diese Datei dient als Leitfaden für LLMs zur Navigation der Website-Inhalte.
+
+## Core Content
+- [Startseite](https://www.maulmann.de/): Zentraler Einstiegspunkt für die private Juwan Howard Sportkartensammlung und das Archiv.
+- [Juwan Howard Sammlung](https://www.maulmann.de/Juwan-Howard-Collection.html): Umfassende Datenbank mit über 1.000 einzigartigen Juwan Howard Basketballkarten und Parallels.
+- [Baseball Sammlung](https://www.maulmann.de/Baseball.html): Galerie von 2005 Upper Deck Ultimate Signature Edition Baseballkarten und Autogrammen.
+- [Flawless Sammlung](https://www.maulmann.de/Flawless.html): Präsentation seltener 2008 Upper Deck Exquisite Flawless Basketballkarten und 1/1 Unikate.
+- [Panini Flawless](https://www.maulmann.de/Panini.html): Private Sammlung historischer 2012-13 Panini Flawless Basketballkarten und Masterpiece-Karten.
+
+## Knowledge
+- [Wantlist](https://www.maulmann.de/Wantlist.html): Liste seltener Juwan Howard Karten, PMGs und 1/1s, die vom Sammler gesucht werden.
+
+## Company & Contact
+- [Instagram Profil](https://www.maulmann.de/): Offizielles Instagram-Profil des Sammlers (verlinkt auf der Startseite) für Einblicke in die Sammlung.
+
+## Optional
+- [Impressum](https://www.maulmann.de/): Rechtliche Informationen zum Betreiber der Website.
+- [Datenschutz](https://www.maulmann.de/): Informationen zur Verarbeitung personenbezogener Daten auf dieser Website.
