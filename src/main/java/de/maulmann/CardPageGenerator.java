@@ -390,8 +390,9 @@ public class CardPageGenerator {
         Map<String, Object> data = new HashMap<>();
 
         // Globale HTML Bausteine
+        String faqHtml = generateFaqHtml(c);
         data.put("headHtml", SharedTemplates.getHead(escapeHtml(browserTitle), escapeHtml(metaDesc), ROOT, overviewPage, frontImgPath));
-        data.put("jsonLd", generateJsonLd(c, metaDesc, h1Title, overviewPage, imageBaseName));
+        data.put("jsonLd", generateJsonLd(c, metaDesc, h1Title, overviewPage, imageBaseName, faqHtml));
         data.put("topNavHtml", SharedTemplates.getTopNav(ROOT, "collection"));
         data.put("footerHtml", SharedTemplates.getFooter(ROOT));
 
@@ -443,7 +444,7 @@ public class CardPageGenerator {
         data.put("eraContext", getNbaEraContext(c.get("Season")));
         data.put("cardBackText", backText);
 
-        data.put("faqHtml", generateFaqHtml(c));
+        data.put("faqHtml", faqHtml);
 
         // FreeMarker Template füllen und in die Datei schreiben
         try {
@@ -554,8 +555,8 @@ public class CardPageGenerator {
         String theme = c.get("Theme").toLowerCase();
         String brand = c.get("Brand").toLowerCase();
         String variant = c.get("Variant").toLowerCase();
-        return theme.contains("pmg") || theme.contains("star rubies") || theme.contains("legacy collection") ||
-                brand.contains("pmg") || variant.contains("pmg") || variant.contains("star rubies") || variant.contains("legacy collection");
+        List<String> grails = Arrays.asList("pmg", "precious metal gems", "star rubies", "legacy collection", "masterpiece", "1/1", "essential credentials");
+        return grails.stream().anyMatch(g -> theme.contains(g) || brand.contains(g) || variant.contains(g));
     }
 
     private static String generateFaqHtml(CardData c) {
@@ -597,32 +598,110 @@ public class CardPageGenerator {
         return "<details class=\"faq-details\" style=\"background: #fff; padding: 15px; border-bottom: 1px solid #ddd; cursor: pointer;\">" + "<summary class=\"faq-summary\" style=\"font-weight: bold; font-size: 1.1em; outline: none;\">" + escapeHtml(question) + "</summary>" + "<p class=\"faq-answer\" style=\"margin-top: 10px; color: #555;\">" + escapeHtml(answer) + "</p>" + "</details>";
     }
 
-    private static String generateJsonLd(CardData c, String desc, String h1Title, String overviewPage, String imageBaseName) {
+    private static String generateJsonLd(CardData c, String desc, String h1Title, String overviewPage, String imageBaseName, String faqHtml) {
         String frontImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + imageBaseName + "-front.webp";
         String backImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + imageBaseName + "-back.webp";
+        String cardUrl = BASE_URL + "/cards/" + c.seasonFolder + "/" + c.filename;
 
-        String sb = "<script type=\"application/ld+json\">\n" +
-                "{\n" +
-                "  \"@context\": \"https://schema.org\",\n" +
-                "  \"@graph\": [\n" +
-                "    {\n" +
-                "      \"@type\": \"VisualArtwork\",\n" +
-                "      \"name\": \"" + escapeJson(h1Title) + "\",\n" +
-                "      \"image\": [ \"" + frontImgUrl + "\", \"" + backImgUrl + "\" ],\n" +
-                "      \"description\": \"" + escapeJson(desc) + "\",\n" +
-                "      \"creator\": { \"@type\": \"Organization\", \"name\": \"" + escapeJson(c.get("Company")) + "\" },\n" +
-                "      \"about\": {\n" +
-                "        \"@type\": \"Person\",\n" +
-                "        \"name\": \"" + escapeJson(c.get("Player")) + "\",\n" +
-                "        \"jobTitle\": \"Professional Basketball Player\"\n" +
-                "      },\n" +
-                "      \"artMedium\": \"Trading Card\",\n" +
-                "      \"artform\": \"Sports Memorabilia\"\n" +
-                "    }\n" +
-                "  ]\n" +
-                "}\n" +
-                "</script>\n";
-        return sb;
+        StringBuilder sb = new StringBuilder();
+        sb.append("<script type=\"application/ld+json\">\n");
+        sb.append("{\n");
+        sb.append("  \"@context\": \"https://schema.org\",\n");
+        sb.append("  \"@graph\": [\n");
+
+        // 1. BreadcrumbList
+        sb.append("    {\n");
+        sb.append("      \"@type\": \"BreadcrumbList\",\n");
+        sb.append("      \"itemListElement\": [\n");
+        sb.append("        { \"@type\": \"ListItem\", \"position\": 1, \"name\": \"Home\", \"item\": \"").append(BASE_URL).append("/index.html\" },\n");
+        sb.append("        { \"@type\": \"ListItem\", \"position\": 2, \"name\": \"Collection\", \"item\": \"").append(BASE_URL).append("/").append(overviewPage).append("\" },\n");
+        sb.append("        { \"@type\": \"ListItem\", \"position\": 3, \"name\": \"").append(escapeJson(c.get("Season"))).append("\", \"item\": \"").append(BASE_URL).append("/").append(overviewPage).append("#").append(c.seasonFolder.toLowerCase()).append("\" },\n");
+        sb.append("        { \"@type\": \"ListItem\", \"position\": 4, \"name\": \"").append(escapeJson(h1Title)).append("\", \"item\": \"").append(cardUrl).append("\" }\n");
+        sb.append("      ]\n");
+        sb.append("    },\n");
+
+        // 2. VisualArtwork
+        sb.append("    {\n");
+        sb.append("      \"@type\": \"VisualArtwork\",\n");
+        sb.append("      \"@id\": \"").append(cardUrl).append("#artwork\",\n");
+        sb.append("      \"mainEntityOfPage\": \"").append(cardUrl).append("\",\n");
+        sb.append("      \"name\": \"").append(escapeJson(h1Title)).append("\",\n");
+        sb.append("      \"image\": [ \"").append(frontImgUrl).append("\", \"").append(backImgUrl).append("\" ],\n");
+        sb.append("      \"description\": \"").append(escapeJson(desc)).append("\",\n");
+        sb.append("      \"creator\": { \"@type\": \"Organization\", \"name\": \"").append(escapeJson(c.get("Company"))).append("\" },\n");
+        sb.append("      \"about\": {\n");
+        sb.append("        \"@type\": \"Person\",\n");
+        sb.append("        \"name\": \"").append(escapeJson(c.get("Player"))).append("\",\n");
+        sb.append("        \"sameAs\": \"https://en.wikipedia.org/wiki/Juwan_Howard\"\n");
+        sb.append("      },\n");
+        sb.append("      \"artMedium\": \"Trading Card\",\n");
+        sb.append("      \"artform\": \"Sports Memorabilia\"\n");
+        sb.append("    },\n");
+
+        // 3. Product (for search bots)
+        sb.append("    {\n");
+        sb.append("      \"@type\": \"Product\",\n");
+        sb.append("      \"@id\": \"").append(cardUrl).append("#product\",\n");
+        sb.append("      \"mainEntityOfPage\": \"").append(cardUrl).append("\",\n");
+        sb.append("      \"name\": \"").append(escapeJson(h1Title)).append("\",\n");
+        sb.append("      \"image\": [ \"").append(frontImgUrl).append("\", \"").append(backImgUrl).append("\" ],\n");
+        sb.append("      \"description\": \"").append(escapeJson(desc)).append("\",\n");
+        sb.append("      \"sku\": \"").append(c.stableId).append("\",\n");
+        sb.append("      \"mpn\": \"").append(escapeJson(c.get("Number"))).append("\",\n");
+        sb.append("      \"brand\": { \"@type\": \"Brand\", \"name\": \"").append(escapeJson(c.get("Brand"))).append("\" },\n");
+        sb.append("      \"manufacturer\": { \"@type\": \"Organization\", \"name\": \"").append(escapeJson(c.get("Company"))).append("\" },\n");
+        sb.append("      \"category\": \"Sports Trading Cards\",\n");
+        if (isHolyGrail(c)) {
+            sb.append("      \"material\": \"Premium Hobby Parallel\",\n");
+        }
+        sb.append("      \"offers\": {\n");
+        sb.append("        \"@type\": \"Offer\",\n");
+        sb.append("        \"availability\": \"https://schema.org/InStock\",\n");
+        sb.append("        \"itemCondition\": \"https://schema.org/UsedCondition\",\n");
+        sb.append("        \"price\": \"0\",\n");
+        sb.append("        \"priceCurrency\": \"USD\",\n");
+        sb.append("        \"seller\": {\n");
+        sb.append("          \"@type\": \"Person\",\n");
+        sb.append("          \"name\": \"Mauli Maulmann\",\n");
+        sb.append("          \"description\": \"Juwan Howard Super Collector\"\n");
+        sb.append("        }\n");
+        sb.append("      }\n");
+        sb.append("    }");
+
+        // 4. FAQPage (if present)
+        if (faqHtml != null && !faqHtml.isEmpty()) {
+            sb.append(",\n");
+            sb.append("    {\n");
+            sb.append("      \"@type\": \"FAQPage\",\n");
+            sb.append("      \"mainEntity\": [\n");
+
+            Document doc = Jsoup.parseBodyFragment(faqHtml);
+            Elements details = doc.select("details");
+            for (int i = 0; i < details.size(); i++) {
+                Element detail = details.get(i);
+                String q = detail.select("summary").text();
+                String a = detail.select("p").text();
+                sb.append("        {\n");
+                sb.append("          \"@type\": \"Question\",\n");
+                sb.append("          \"name\": \"").append(escapeJson(q)).append("\",\n");
+                sb.append("          \"acceptedAnswer\": {\n");
+                sb.append("            \"@type\": \"Answer\",\n");
+                sb.append("            \"text\": \"").append(escapeJson(a)).append("\"\n");
+                sb.append("          }\n");
+                sb.append("        }");
+                if (i < details.size() - 1) sb.append(",");
+                sb.append("\n");
+            }
+            sb.append("      ]\n");
+            sb.append("    }\n");
+        } else {
+            sb.append("\n");
+        }
+
+        sb.append("  ]\n");
+        sb.append("}\n");
+        sb.append("</script>\n");
+        return sb.toString();
     }
 
     private static void addTableRow(StringBuilder sb, String title, String value) {

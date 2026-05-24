@@ -20,6 +20,7 @@ import java.util.*;
 
 public class FileGenerator {
 
+    private static final String BASE_URL = "https://www.maulmann.de";
     public static final String IMAGE_PATH = "images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-PMG-sn7-front.webp";
     static String pathSource = "content/";
     static String pathOutput = "output/";
@@ -42,7 +43,31 @@ public class FileGenerator {
     public static void buildCollectionOverview() {
         try {
             System.out.println("-> Baue Juwan-Howard-Collection.html...");
-            Map<String, Object> data = createBaseData("Juwan Howard Private Collection | Juwan Howard Super Collector | Maulmann Trading Cards", "Explore the Juwan Howard Masterpiece Collection. A massive private collection featuring 1/1s, PMGs, Rubies, and Legacy Collection parallels.", "Juwan-Howard-Collection.html", "collection", "");
+            Map<String, Object> data = createBaseData("Juwan Howard Private Collection | Juwan Howard Super Collector | Maulmann Trading Cards", "Explore the Juwan Howard Masterpiece Collection. A massive private collection featuring 1,000+ unique cards, including 1/1 Masterpieces, PMGs, Rubies, and rare 90s basketball inserts.", "Juwan-Howard-Collection.html", "collection", "");
+
+            // Schema.org Breadcrumb & CollectionPage
+            String jsonLd = "<script type=\"application/ld+json\">\n" +
+                    "{\n" +
+                    "  \"@context\": \"https://schema.org\",\n" +
+                    "  \"@graph\": [\n" +
+                    "    {\n" +
+                    "      \"@type\": \"BreadcrumbList\",\n" +
+                    "      \"itemListElement\": [\n" +
+                    "        { \"@type\": \"ListItem\", \"position\": 1, \"name\": \"Home\", \"item\": \"" + BASE_URL + "/index.html\" },\n" +
+                    "        { \"@type\": \"ListItem\", \"position\": 2, \"name\": \"Collection\", \"item\": \"" + BASE_URL + "/Juwan-Howard-Collection.html\" }\n" +
+                    "      ]\n" +
+                    "    },\n" +
+                    "    {\n" +
+                    "      \"@type\": \"CollectionPage\",\n" +
+                    "      \"@id\": \"" + BASE_URL + "/Juwan-Howard-Collection.html\",\n" +
+                    "      \"name\": \"Juwan Howard Private Collection\",\n" +
+                    "      \"description\": \"A massive private collection featuring 1,000+ unique cards, including 1/1 Masterpieces, PMGs, Rubies, and rare 90s basketball inserts.\",\n" +
+                    "      \"publisher\": { \"@type\": \"Person\", \"name\": \"Mauli Maulmann\" }\n" +
+                    "    }\n" +
+                    "  ]\n" +
+                    "}\n" +
+                    "</script>";
+            data.put("jsonLd", jsonLd);
 
             File contentDir = new File(pathSource);
 
@@ -131,9 +156,69 @@ public class FileGenerator {
                 System.out.println("-> Baue " + coll + ".html...");
                 Map<String, Object> data = createBaseData(title, description, coll + ".html", coll.toLowerCase(), "");
 
+                // Initial Breadcrumb & CollectionPage
+                String jsonLd = "<script type=\"application/ld+json\">\n" +
+                        "{\n" +
+                        "  \"@context\": \"https://schema.org\",\n" +
+                        "  \"@graph\": [\n" +
+                        "    {\n" +
+                        "      \"@type\": \"BreadcrumbList\",\n" +
+                        "      \"itemListElement\": [\n" +
+                        "        { \"@type\": \"ListItem\", \"position\": 1, \"name\": \"Home\", \"item\": \"" + BASE_URL + "/index.html\" },\n" +
+                        "        { \"@type\": \"ListItem\", \"position\": 2, \"name\": \"" + coll + "\", \"item\": \"" + BASE_URL + "/" + coll + ".html\" }\n" +
+                        "      ]\n" +
+                        "    },\n" +
+                        "    {\n" +
+                        "      \"@type\": \"CollectionPage\",\n" +
+                        "      \"@id\": \"" + BASE_URL + "/" + coll + ".html\",\n" +
+                        "      \"name\": \"" + title.split("\\|")[0].trim() + "\",\n" +
+                        "      \"description\": \"" + description + "\"\n" +
+                        "    }\n" +
+                        "  ]\n" +
+                        "}\n" +
+                        "</script>";
+                data.put("jsonLd", jsonLd);
+
                 Path sourcePath = Paths.get(pathSource, "other", coll + ".html");
                 if (Files.exists(sourcePath)) {
                     String rawContent = Files.readString(sourcePath, StandardCharsets.UTF_8);
+
+                    // Extrahiere FAQ aus dem Content für das JSON-LD (falls vorhanden)
+                    if (rawContent.contains("application/ld+json") && rawContent.contains("FAQPage")) {
+                        try {
+                            Document doc = Jsoup.parse(rawContent);
+                            Element faqScript = doc.selectFirst("script[type=application/ld+json]");
+                            if (faqScript != null) {
+                                String faqJson = faqScript.data().trim();
+                                // Wir bauen ein @graph-basiertes JSON-LD, das Breadcrumb, CollectionPage UND FAQ enthält
+                                jsonLd = "<script type=\"application/ld+json\">\n" +
+                                        "{\n" +
+                                        "  \"@context\": \"https://schema.org\",\n" +
+                                        "  \"@graph\": [\n" +
+                                        "    {\n" +
+                                        "      \"@type\": \"BreadcrumbList\",\n" +
+                                        "      \"itemListElement\": [\n" +
+                                        "        { \"@type\": \"ListItem\", \"position\": 1, \"name\": \"Home\", \"item\": \"" + BASE_URL + "/index.html\" },\n" +
+                                        "        { \"@type\": \"ListItem\", \"position\": 2, \"name\": \"" + coll + "\", \"item\": \"" + BASE_URL + "/" + coll + ".html\" }\n" +
+                                        "      ]\n" +
+                                        "    },\n" +
+                                        "    {\n" +
+                                        "      \"@type\": \"CollectionPage\",\n" +
+                                        "      \"@id\": \"" + BASE_URL + "/" + coll + ".html\",\n" +
+                                        "      \"name\": \"" + title.split("\\|")[0].trim() + "\",\n" +
+                                        "      \"description\": \"" + description + "\"\n" +
+                                        "    },\n" +
+                                        "    " + faqJson + "\n" +
+                                        "  ]\n" +
+                                        "}\n" +
+                                        "</script>";
+                                data.put("jsonLd", jsonLd);
+                            }
+                        } catch (Exception e) {
+                            System.err.println("FAQ Extraction failed for " + coll);
+                        }
+                    }
+
                     data.put("pageContent", cleanOldPlaceholders(rawContent));
                 } else {
                     data.put("pageContent", "<p>No data found for this collection yet.</p>");
@@ -167,6 +252,37 @@ public class FileGenerator {
                     "Juwan Howard Super Collector | Private Collection | Maulmann Trading Cards",
                     "Welcome to the ultimate Juwan Howard Private Collection. A Super Collector showcase featuring 1,000+ unique cards, including 1/1 Masterpieces, PMGs, Rubies, and rare 90s basketball inserts.",
                     "index.html", "index", "");
+
+            // Complex JSON-LD for Index (WebSite, Person, Collection)
+            String indexJsonLd = "<script type=\"application/ld+json\">\n" +
+                    "{\n" +
+                    "  \"@context\": \"https://schema.org\",\n" +
+                    "  \"@graph\": [\n" +
+                    "    {\n" +
+                    "      \"@type\": \"WebSite\",\n" +
+                    "      \"name\": \"Maulmann Trading Cards\",\n" +
+                    "      \"url\": \"" + BASE_URL + "\",\n" +
+                    "      \"description\": \"Private collection of the Juwan Howard Super Collector\"\n" +
+                    "    },\n" +
+                    "    {\n" +
+                    "      \"@type\": \"Person\",\n" +
+                    "      \"name\": \"Mauli Maulmann\",\n" +
+                    "      \"jobTitle\": \"Juwan Howard Super Collector\",\n" +
+                    "      \"url\": \"" + BASE_URL + "\",\n" +
+                    "      \"sameAs\": [\n" +
+                    "        \"https://www.instagram.com/maulmann_cards/\"\n" +
+                    "      ]\n" +
+                    "    },\n" +
+                    "    {\n" +
+                    "      \"@type\": \"CollectionPage\",\n" +
+                    "      \"name\": \"Juwan Howard Masterpiece Collection\",\n" +
+                    "      \"description\": \"A massive private collection of rare Juwan Howard basketball cards.\"\n" +
+                    "    }\n" +
+                    "  ]\n" +
+                    "}\n" +
+                    "</script>";
+            indexData.put("jsonLd", indexJsonLd);
+
             processTemplate("index.ftlh", indexData, pathOutput + "index.html");
 
             // Error 404 (Kein Navigations-Highlight)
@@ -198,7 +314,10 @@ public class FileGenerator {
     }
 
     private static String cleanOldPlaceholders(String content) {
-        return content.replace("{{HEAD}}", "")
+        // Entfernt auch vorhandene ld+json Blöcke aus dem Content, da diese nun im Head via FreeMarker landen
+        String cleaned = content.replaceAll("(?s)<script type=\"application/ld\\+json\">.*?</script>", "");
+
+        return cleaned.replace("{{HEAD}}", "")
                 .replace("{{TOP_NAV}}", "")
                 .replace("{{FOOTER_NAV}}", "")
                 .replace("{{FOOTER}}", "")

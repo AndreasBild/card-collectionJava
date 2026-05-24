@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     ${headHtml?no_esc}
+    <#if jsonLd??>${jsonLd?no_esc}</#if>
 </head>
 <body id="top">
 ${topNavHtml?no_esc}
