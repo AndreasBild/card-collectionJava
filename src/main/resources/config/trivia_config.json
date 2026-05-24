@@ -137,7 +137,7 @@
       "text": "Fleer Ultra was the choice for collectors seeking high-gloss finishes and diverse insert sets. It pushed the boundaries of card coatings and multi-tiered parallel systems."
     },
     {
-      "condition": {},
+      "condition": {"Player": "Juwan Howard" },
       "text": "The Juwan Howard collection spans multiple decades of basketball history, capturing everything from the high-flying 90s to his championship years with the Miami Heat. Each card represents a unique piece of this journey."
     }
   ],
@@ -411,63 +411,63 @@
   ],
   "eraContext": [
     {
-      "condition": { "Season": "1994" },
+      "condition": { "Player": "Juwan Howard", "Season": "1994" },
       "text": "The 1994-95 season marked the return of Michael Jordan from his first retirement. It was an era of heavy-hitting post play and the rise of a new generation of superstars that would dominate the decade."
     },
     {
-      "condition": { "Season": "1995" },
+      "condition": { "Player": "Juwan Howard", "Season": "1995" },
       "text": "The mid-90s were the golden age of NBA expansion, with the Toronto Raptors and Vancouver Grizzlies joining the league. The hobby exploded with creativity in card design and technology during this period."
     },
     {
-      "condition": { "Season": "1996" },
+      "condition": {"Player": "Juwan Howard",  "Season": "1996" },
       "text": "The 1996-97 season celebrated the NBA's 50th Anniversary (noted by gold NBA logos on many cards). It also marked the arrival of the legendary 1996 Draft Class (Kobe Bryant, Allen Iverson, Steve Nash), which drove the sports card hobby into a frenzy of innovation."
     },
     {
-      "condition": { "Season": "1997" },
+      "condition": {"Player": "Juwan Howard",  "Season": "1997" },
       "text": "In 1997, the NBA was at its cultural peak. Michael Jordan's Bulls were chasing their second three-peat, and the 'Bulls vs. The World' narrative dominated every headline and highlight reel."
     },
     {
-      "condition": { "Season": "1998" },
+      "condition": { "Player": "Juwan Howard", "Season": "1998" },
       "text": "The 1998-99 season was shortened to just 50 games due to a league-wide lockout. As a result, card manufacturers produced fewer sets and lower print runs, making specific inserts from this era surprisingly scarce today."
     },
     {
-      "condition": { "Season": "1999" },
+      "condition": { "Player": "Juwan Howard", "Season": "1999" },
       "text": "Pop Culture crossover: During the 1999 television season, Juwan Howard made a famous cameo appearance in the hit political drama 'The West Wing' (Episode: 'The Crackpots and These Women'), playing a pickup basketball game against the President's staff."
     },
     {
-      "condition": { "Season": "2000" },
+      "condition": { "Player": "Juwan Howard", "Season": "2000" },
       "text": "The start of the new millennium brought a shift in NBA dominance toward the Western Conference. Shaq and Kobe's Lakers began their historic three-peat, setting the bar for excellence in the 2000s."
     },
     {
-      "condition": { "Season": "2001" },
+      "condition": { "Player": "Juwan Howard", "Season": "2001" },
       "text": "The 2001 season saw the arrival of Pau Gasol and Tony Parker, signaling a major increase in the NBA's international influence. This trend reflected in the hobby with more 'International' parallels and global reach."
     },
     {
-      "condition": { "Season": "2003" },
+      "condition": { "Player": "Juwan Howard", "Season": "2003" },
       "text": "The 2003-04 season is historic for the arrival of LeBron James, Dwyane Wade, and Carmelo Anthony. The massive hype around this rookie class caused a boom in trading card investments, leading to the birth of ultra-high-end products like Exquisite Collection."
     },
     {
-      "condition": { "Season": "2004" },
+      "condition": { "Player": "Juwan Howard", "Season": "2004" },
       "text": "The mid-2000s were defined by the defensive dominance of the Detroit Pistons and the scoring explosions of Kobe Bryant and Allen Iverson. The league was transition from the post-Jordan era to the LeBron era."
     },
     {
-      "condition": { "Season": "2005" },
+      "condition": {"Player": "Juwan Howard",  "Season": "2005" },
       "text": "In 2005, the NBA introduced a new dress code, signaling a move toward a more 'corporate' and professional image. In the hobby, this era saw the rise of more formal, elegant card designs."
     },
     {
-      "condition": { "Season": "2010" },
+      "condition": { "Player": "Juwan Howard", "Season": "2010" },
       "text": "The 2010 season changed the NBA forever with 'The Decision'. The formation of the Big Three in Miami created a 'villain' narrative that drove ratings and interest in basketball cards to new heights."
     },
     {
-      "condition": { "Season": "2011" },
+      "condition": {"Player": "Juwan Howard",  "Season": "2011" },
       "text": "During the 'Heatles' era in Miami, the NBA was dominated by the polarizing Big Three. Cards produced during this period capture a highly significant dynasty that changed player empowerment and free agency forever."
     },
     {
-      "condition": { "Season": "2012" },
+      "condition": { "Player": "Juwan Howard", "Season": "2012" },
       "text": "During the 'Heatles' era in Miami, the NBA was dominated by the polarizing Big Three. Cards produced during this period capture a highly significant dynasty that changed player empowerment and free agency forever."
     },
     {
-      "condition": { "Season": "college" },
+      "condition": { "Player": "Juwan Howard", "Season": "college" },
       "text": "The early 90s college basketball scene was revolutionized by the Fab Five. They introduced baggy shorts, black socks, and a trash-talking swagger that heavily influenced the aesthetic of 90s hip-hop and sports pop culture."
     }
   ]

@@ -410,8 +410,8 @@ public class CardPageGenerator {
         data.put("backImgPath", backImgPath);
         data.put("frontAlt", generateAltText(c, "front"));
         data.put("backAlt", generateAltText(c, "back"));
-        data.put("frontImgTitle", "Juwan Howard Private Collection - Front scan: " + c.get("Player") + " " + c.get("Brand") + " " + c.get("Variant"));
-        data.put("backImgTitle", "Juwan Howard Private Collection - Back scan: " + c.get("Player") + " " + c.get("Brand") + " " + c.get("Variant"));
+        data.put("frontImgTitle", c.get("Player") +" Private Collection - Front scan: " + c.get("Player") + " " + c.get("Brand") + " " + c.get("Variant"));
+        data.put("backImgTitle", c.get("Player") +" Private Collection - Back scan: " + c.get("Player") + " " + c.get("Brand") + " " + c.get("Variant"));
 
         // Technische Daten (Tabelle)
         data.put("season", isValid(c.get("Season")) ? c.get("Season") : "-");
@@ -441,7 +441,7 @@ public class CardPageGenerator {
         data.put("hobbyTrivia", getHobbyTrivia(c));
         data.put("techTrivia", getCardTechTrivia(c));
         data.put("playerHighlights", getSeasonHighlights(c.get("Season"), c.get("Player")));
-        data.put("eraContext", getNbaEraContext(c.get("Season")));
+        data.put("eraContext", getNbaEraContext(c.get("Season"), c.get("Player")));
         data.put("cardBackText", backText);
 
         data.put("faqHtml", faqHtml);
@@ -484,9 +484,10 @@ public class CardPageGenerator {
     }
 
     // --- ENGINE 4: NBA ERA & POP CULTURE CONTEXT ---
-    private static String getNbaEraContext(String season) {
+    private static String getNbaEraContext(String season, String player) {
         Map<String, String> context = new HashMap<>();
         context.put("Season", season);
+        context.put("Player", player);
         return triviaManager.getTrivia("eraContext", context);
     }
 
@@ -536,7 +537,7 @@ public class CardPageGenerator {
     private static String generateMetaDescription(CardData c) {
         StringBuilder sb = new StringBuilder();
         sb.append("View details for the ").append(c.get("Season")).append(" ").append(c.get("Brand")).append(" ");
-        sb.append(c.get("Player")).append(" card #").append(c.get("Number")).append(" from our Juwan Howard Private Collection. ");
+        sb.append(c.get("Player")).append(" card #").append(c.get("Number")).append(" from our ").append(c.get("Player")).append(" Private Collection. ");
         if (c.has("Variant")) sb.append("Rare ").append(c.get("Variant")).append(" variant. ");
         String combinedSerial = c.get("Serial/Print Run");
         if (isValid(combinedSerial)) {
@@ -547,7 +548,7 @@ public class CardPageGenerator {
             if (c.get("Serial").equals("1") && c.get("Print Run").equals("1")) sb.append("One-of-One (1/1) Masterpiece. ");
             else sb.append("Numbered ").append(c.get("Serial")).append("/").append(c.get("Print Run")).append(". ");
         }
-        sb.append("A must-see for any Juwan Howard Super Collector. High-res scans and hobby history.");
+        sb.append("A must-see for any ").append(c.get("Player")).append(" Super Collector. High-res scans and hobby history.");
         return sb.toString();
     }
 
