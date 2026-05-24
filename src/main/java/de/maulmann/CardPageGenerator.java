@@ -530,8 +530,8 @@ public class CardPageGenerator {
 
     private static String generateAltText(CardData c, String view) {
         String base = c.get("Player") + " " + c.get("Season") + " " + c.get("Brand") + " #" + c.get("Number");
-        if (view.equals("front")) return "Front scan of " + base + " - " + c.get("Variant") + " edition (" + c.get("Team") + ") - Juwan Howard Super Collector Private Collection";
-        else return "Back scan of " + base + " showing stats for " + c.get("Team") + " - Juwan Howard Super Collector Private Collection";
+        if (view.equals("front")) return "Front scan of " + base + " - " + c.get("Variant") + " edition (" + c.get("Team") + ") - "+c.get("Player") + " Collector Private Collection";
+        else return "Back scan of " + base + " showing stats for " + c.get("Team") + " - " +c.get("Player") + " Collector Private Collection";
     }
 
     private static String generateMetaDescription(CardData c) {
@@ -633,7 +633,7 @@ public class CardPageGenerator {
         sb.append("      \"about\": {\n");
         sb.append("        \"@type\": \"Person\",\n");
         sb.append("        \"name\": \"").append(escapeJson(c.get("Player"))).append("\",\n");
-        sb.append("        \"sameAs\": \"https://en.wikipedia.org/wiki/Juwan_Howard\"\n");
+        sb.append("        \"sameAs\": \"https://en.wikipedia.org/wiki/").append(escapeJson(c.get("Player"))).append("\n");
         sb.append("      },\n");
         sb.append("      \"artMedium\": \"Trading Card\",\n");
         sb.append("      \"artform\": \"Sports Memorabilia\"\n");
