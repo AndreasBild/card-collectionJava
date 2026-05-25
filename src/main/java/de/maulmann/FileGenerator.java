@@ -287,7 +287,7 @@ public class FileGenerator {
 
             // Error 404 (Kein Navigations-Highlight)
             // Hier nutzen wir "/" als Root, damit Links auch bei tiefen Pfaden funktionieren (404-Handling im Server)
-            Map<String, Object> errorData = createBaseData("404 Not Found | Maulmann Trading Cards", "The page you are looking for does not exist in the Maulmann Trading Cards collection.", "error.html", "", "/");
+            Map<String, Object> errorData = createBaseData("Error Page| Maulmann Trading Cards", "The page you are looking for does not exist in the Maulmann Trading Cards collection.", "error.html", "", "/");
             processTemplate("error.ftlh", errorData, pathOutput + "error.html");
 
         } catch (Exception e) { System.err.println("Fehler bei statischen Seiten: " + e.getMessage()); }
