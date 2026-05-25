@@ -410,8 +410,8 @@ public class CardPageGenerator {
         data.put("backImgPath", backImgPath);
         data.put("frontAlt", generateAltText(c, "front"));
         data.put("backAlt", generateAltText(c, "back"));
-        data.put("frontImgTitle", c.get("Player") +" Private Collection - Front scan: " + c.get("Player") + " " + c.get("Brand") + " " + c.get("Variant"));
-        data.put("backImgTitle", c.get("Player") +" Private Collection - Back scan: " + c.get("Player") + " " + c.get("Brand") + " " + c.get("Variant"));
+        data.put("frontImgTitle", c.get("Player") +" Private Collection - Front scan: " + c.get("Player") + " " + c.get("Season") + " " + c.get("Brand") + " " + c.get("Variant"));
+        data.put("backImgTitle", c.get("Player") +" Private Collection - Back scan: " + c.get("Player") + " " + c.get("Season") +" " + c.get("Brand") + " " + c.get("Variant"));
 
         // Technische Daten (Tabelle)
         data.put("season", isValid(c.get("Season")) ? c.get("Season") : "-");
