@@ -6,7 +6,7 @@
 <body>
 ${topNavHtml?no_esc}
 <main class="detail-main" style="text-align: center; padding: 100px 20px; min-height: 50vh;">
-    <h1 style="font-size: 5em; color: #3264af; margin: 0;">Error Page</h1>
+    <h1 style="font-size: 5em; color: #3264af; margin: 0;">404</h1>
     <h2 style="font-size: 2em; color: #333;">Requested Card Not Found</h2>
     <p style="color: #666; margin-bottom: 40px; font-size: 1.2em;">The card or collection you are looking for has been
         traded, lost in the mail, or doesn't exist.</p>

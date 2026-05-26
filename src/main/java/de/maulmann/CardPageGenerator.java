@@ -633,7 +633,7 @@ public class CardPageGenerator {
         sb.append("      \"about\": {\n");
         sb.append("        \"@type\": \"Person\",\n");
         sb.append("        \"name\": \"").append(escapeJson(c.get("Player"))).append("\",\n");
-        sb.append("        \"sameAs\": \"https://en.wikipedia.org/wiki/").append(escapeJson(c.get("Player"))).append("\n");
+        sb.append("        \"sameAs\": \"https://en.wikipedia.org/wiki/").append(escapeJson(c.get("Player")).replace(" ", "_")).append("\"\n");
         sb.append("      },\n");
         sb.append("      \"artMedium\": \"Trading Card\",\n");
         sb.append("      \"artform\": \"Sports Memorabilia\"\n");
