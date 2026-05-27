@@ -613,6 +613,7 @@ public class CardPageGenerator {
         // 1. BreadcrumbList
         sb.append("    {\n");
         sb.append("      \"@type\": \"BreadcrumbList\",\n");
+        sb.append("      \"name\": \"Breadcrumbs\",\n");
         sb.append("      \"itemListElement\": [\n");
         sb.append("        { \"@type\": \"ListItem\", \"position\": 1, \"name\": \"Home\", \"item\": \"").append(BASE_URL).append("/index.html\" },\n");
         sb.append("        { \"@type\": \"ListItem\", \"position\": 2, \"name\": \"Collection\", \"item\": \"").append(BASE_URL).append("/").append(overviewPage).append("\" },\n");
@@ -674,6 +675,7 @@ public class CardPageGenerator {
             sb.append(",\n");
             sb.append("    {\n");
             sb.append("      \"@type\": \"FAQPage\",\n");
+            sb.append("      \"name\": \"Frequently Asked Questions\",\n");
             sb.append("      \"mainEntity\": [\n");
 
             Document doc = Jsoup.parseBodyFragment(faqHtml);
