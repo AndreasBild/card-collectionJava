@@ -52,6 +52,7 @@ public class FileGenerator {
                     "  \"@graph\": [\n" +
                     "    {\n" +
                     "      \"@type\": \"BreadcrumbList\",\n" +
+                    "      \"name\": \"Breadcrumbs\",\n" +
                     "      \"itemListElement\": [\n" +
                     "        { \"@type\": \"ListItem\", \"position\": 1, \"name\": \"Home\", \"item\": \"" + BASE_URL + "/index.html\" },\n" +
                     "        { \"@type\": \"ListItem\", \"position\": 2, \"name\": \"Collection\", \"item\": \"" + BASE_URL + "/Juwan-Howard-Collection.html\" }\n" +
@@ -163,6 +164,7 @@ public class FileGenerator {
                         "  \"@graph\": [\n" +
                         "    {\n" +
                         "      \"@type\": \"BreadcrumbList\",\n" +
+                        "      \"name\": \"Breadcrumbs\",\n" +
                         "      \"itemListElement\": [\n" +
                         "        { \"@type\": \"ListItem\", \"position\": 1, \"name\": \"Home\", \"item\": \"" + BASE_URL + "/index.html\" },\n" +
                         "        { \"@type\": \"ListItem\", \"position\": 2, \"name\": \"" + coll + "\", \"item\": \"" + BASE_URL + "/" + coll + ".html\" }\n" +
@@ -197,6 +199,7 @@ public class FileGenerator {
                                         "  \"@graph\": [\n" +
                                         "    {\n" +
                                         "      \"@type\": \"BreadcrumbList\",\n" +
+                                        "      \"name\": \"Breadcrumbs\",\n" +
                                         "      \"itemListElement\": [\n" +
                                         "        { \"@type\": \"ListItem\", \"position\": 1, \"name\": \"Home\", \"item\": \"" + BASE_URL + "/index.html\" },\n" +
                                         "        { \"@type\": \"ListItem\", \"position\": 2, \"name\": \"" + coll + "\", \"item\": \"" + BASE_URL + "/" + coll + ".html\" }\n" +
