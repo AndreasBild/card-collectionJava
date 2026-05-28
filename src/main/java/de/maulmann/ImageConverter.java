@@ -16,8 +16,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ImageConverter {
 
     // --- Configuration ---
-    private static final int MAX_WIDTH = 1200;
-    private static final int MAX_HEIGHT = 1600;
+    private static final int MAX_WIDTH = 900;
+    private static final int MAX_HEIGHT = 1200;
 
     // Definition der Responsive-Breiten für das srcset
     private static final int[] RESPONSIVE_WIDTHS = {400, 600};
