@@ -15,13 +15,13 @@
 ${topNavHtml?no_esc}
 
 <nav class="detail-nav no-border-bg">
-    <a id="backToOverview" href="../../${overviewPage}" class="modern-button no-text-decoration">&larr; Overview</a>
+    <a id="backToOverview" title="Back To Collection Overview" href="../../${overviewPage}" class="modern-button no-text-decoration">&larr; Overview</a>
     <div class="nav-button-group">
         <#if prevLink??>
-            <a id="prevCardLink" href="${prevLink}" class="modern-button no-text-decoration">&laquo; Prev</a>
+            <a id="prevCardLink" title="Previous Card Details" href="${prevLink}" class="modern-button no-text-decoration">&laquo; Prev</a>
         </#if>
         <#if nextLink??>
-            <a id="nextCardLink" href="${nextLink}" class="modern-button no-text-decoration">Next &raquo;</a>
+            <a id="nextCardLink" title="Next Card Details" href="${nextLink}" class="modern-button no-text-decoration">Next &raquo;</a>
         </#if>
     </div>
 </nav>
