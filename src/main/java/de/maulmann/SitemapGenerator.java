@@ -210,7 +210,33 @@ public class SitemapGenerator {
             String topNavHtml = SharedTemplates.getTopNav("", "sitemap");
             String footerHtml = SharedTemplates.getFooter("");
 
+            // Generate JSON-LD for Sitemap
+            String jsonLd = "<script type=\"application/ld+json\">\n" +
+                    "{\n" +
+                    "  \"@context\": \"https://schema.org\",\n" +
+                    "  \"@graph\": [\n" +
+                    "    {\n" +
+                    "      \"@type\": \"BreadcrumbList\",\n" +
+                    "      \"name\": \"Breadcrumbs\",\n" +
+                    "      \"itemListElement\": [\n" +
+                    "        { \"@type\": \"ListItem\", \"position\": 1, \"name\": \"Home\", \"item\": \"" + BASE_URL + "/index.html\" },\n" +
+                    "        { \"@type\": \"ListItem\", \"position\": 2, \"name\": \"Sitemap\", \"item\": \"" + BASE_URL + "/sitemap.html\" }\n" +
+                    "      ]\n" +
+                    "    },\n" +
+                    "    {\n" +
+                    "      \"@type\": \"WebPage\",\n" +
+                    "      \"@id\": \"" + BASE_URL + "/sitemap.html\",\n" +
+                    "      \"url\": \"" + BASE_URL + "/sitemap.html\",\n" +
+                    "      \"name\": \"" + title + "\",\n" +
+                    "      \"description\": \"" + description + "\",\n" +
+                    "      \"publisher\": { \"@type\": \"Person\", \"name\": \"Mauli Maulmann\" }\n" +
+                    "    }\n" +
+                    "  ]\n" +
+                    "}\n" +
+                    "</script>";
+
             data.put("headHtml", headHtml);
+            data.put("jsonLd", jsonLd);
             data.put("topNavHtml", topNavHtml);
             data.put("footerHtml", footerHtml);
 
