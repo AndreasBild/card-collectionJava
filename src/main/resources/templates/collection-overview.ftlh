@@ -23,7 +23,7 @@ ${topNavHtml?no_esc}
                 </#list>
             </select>
             <input type="text" id="textSearch" list="hobby-terms"
-                   placeholder="Search PMG, Masterpiece, or type <25, =1..."
+                   placeholder="Search PMG, Auto or Print Run <25, =1..."
                    style="padding: 10px; border-radius: 4px; border: 1px solid #ccc; font-size: 16px; flex-grow: 1; min-width: 250px;">
             <datalist id="hobby-terms">
                 <option value="= 1">
