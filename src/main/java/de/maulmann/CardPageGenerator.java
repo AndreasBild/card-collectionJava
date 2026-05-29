@@ -391,7 +391,7 @@ public class CardPageGenerator {
 
         // Globale HTML Bausteine
         String faqHtml = generateFaqHtml(c);
-        data.put("headHtml", SharedTemplates.getHead(escapeHtml(browserTitle), escapeHtml(metaDesc), ROOT, overviewPage, frontImgPath));
+        data.put("headHtml", SharedTemplates.getHead(browserTitle, metaDesc, ROOT, overviewPage, frontImgPath));
         data.put("jsonLd", generateJsonLd(c, metaDesc, h1Title, overviewPage, imageBaseName, faqHtml));
         data.put("topNavHtml", SharedTemplates.getTopNav(ROOT, "collection"));
         data.put("footerHtml", SharedTemplates.getFooter(ROOT));
