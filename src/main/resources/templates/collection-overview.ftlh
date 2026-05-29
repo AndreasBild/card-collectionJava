@@ -48,7 +48,7 @@ ${topNavHtml?no_esc}
                 Cards this season: <span class="visible-counter">${season.seasonCount}</span>
                 / ${season.cumulativeTotal}
             </p>
-            <div style="background: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); overflow: hidden; overflow-x: auto;">
+            <div class="table-responsive" style="background: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
                 ${season.content?no_esc}
             </div>
         </div>
