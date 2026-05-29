@@ -45,6 +45,20 @@ a:not(.plain) {
     transform: translateY(-1px);
 }
 
+/* --- TABLE BUTTONS (Consistent width in overviews) --- */
+.table-button {
+    width: 180px; /* Fixed width for consistency */
+    padding: 8px 12px !important;
+    margin: 2px !important;
+    font-size: 0.85rem !important;
+    display: inline-flex !important;
+    justify-content: center;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /* --- TOP NAVIGATION (Sticky) --- */
 .topnav {
     overflow: hidden;
@@ -184,6 +198,13 @@ tr:hover {
         font-size: 0.8rem !important;
         min-width: 0 !important;
         margin: 2px !important;
+    }
+
+    .table-button {
+        width: 120px !important; /* Consistent width even on mobile */
+        padding: 6px 4px !important;
+        font-size: 0.75rem !important;
+        margin: 1px !important;
     }
 
     .detail-header h1 {
