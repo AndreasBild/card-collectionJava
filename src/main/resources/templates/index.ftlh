@@ -400,8 +400,8 @@ ${topNavHtml?no_esc}
         <h3 style="margin-top: 0; color: #333;">The Juwan Howard Archive</h3>
         <p style="margin: 0; color: #555;">This Private Collection is optimized for hobbyists and researchers seeking
             detailed information on Juwan Howard cards. We provide high-resolution scans, technical specifications, and
-            verified AI-OCR back-scans for every card. From common base cards to the most elusive 1/1 Masterpiece,
-            this archive preserves the legacy of one of the 90s' most iconic players.</p>
+            and soon verified AI-OCR back-scans for every card. From common base cards to the most elusive 1/1 Masterpiece,
+            this archive preserves the legacy of one of the 90s' most iconic players. This page will not include any card price guides or card values.</p>
     </div>
 </main>
 ${footerHtml?no_esc}
