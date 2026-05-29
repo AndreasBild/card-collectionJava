@@ -389,18 +389,21 @@ ${topNavHtml?no_esc}
         <p>As a dedicated Super Collector, we specialize in high-end hobby grails, including:</p>
         <ul>
             <li><strong>1/1 Masterpieces:</strong> Unique One-of-One cards, Printing Plates, and Superfractor autographs.</li>
-            <li><strong>Precious Metal Gems (PMG):</strong> Iconic SkyBox Metal Universe PMG Red and Green parallels.</li>
+            <li><strong>Precious Metal Gems (PMG):</strong> Iconic SkyBox Metal Universe PMG Red and the holy grail Green parallels.</li>
             <li><strong>Rare 90s Inserts:</strong> SkyBox Premium Star Rubies, Flair Showcase Legacy Collection, and E-X Credentials.</li>
-            <li><strong>Specialized Galleries:</strong> Curated subsets like 2005 Upper Deck Baseball and 2012-13 Panini Flawless.</li>
+            <li><strong>Specialized Galleries:</strong> Curated subsets like:
+                <a href="Baseball.html" title="2005 Upper Deck Ultimate Signature Edition" class="plain">2005 Upper Deck Ultimate Signature Edition "Immortal Inscriptions"</a>,
+                <a href="Flawless.html" title="2008 Upper Deck Exquisite Basketball Flawless Autographs" class="plain">2008 Upper Deck Exquisite Basketball Flawless Autographs</a> and
+                <a href="Panini.html" title="2012-13 Panini Flawless Basketball Autographs" class="plain">2012-13 Panini Flawless Basketball Autographs</a>.</li>
         </ul>
-        <p>Explore our <a href="Wantlist.html" title="Juwan Howard Card Wantlist">Wantlist</a> to see the rare 1/1s and PMGs we are still hunting for.</p>
+        <p>Explore our <a href="Wantlist.html" title="Juwan Howard Card Wantlist" class="plain">Wantlist</a> to see the rare 1/1s and PMGs we are still hunting for.</p>
     </div>
     <div class="ai-summary"
          style="max-width: 800px; margin: 40px auto 0; text-align: left; line-height: 1.8; background: #f9f9f9; padding: 30px; border-radius: 8px; border-left: 5px solid #3a7504;">
         <h3 style="margin-top: 0; color: #333;">The Juwan Howard Archive</h3>
         <p style="margin: 0; color: #555;">This Private Collection is optimized for hobbyists and researchers seeking
             detailed information on Juwan Howard cards. We provide high-resolution scans, technical specifications, and
-            and soon verified AI-OCR back-scans for every card. From common base cards to the most elusive 1/1 Masterpiece,
+            soon verified AI-OCR back-scans for every card. From common base cards to the most elusive 1/1 Masterpiece,
             this archive preserves the legacy of one of the 90s' most iconic players. This page will not include any card price guides or card values.</p>
     </div>
 </main>
