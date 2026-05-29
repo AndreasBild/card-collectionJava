@@ -5,7 +5,7 @@
 This file is used to guide the LLM on how to understand content for the website.
 
 ## Core Content
-- [Home](https://www.maulmann.de/): Central entry point for the entire Juwean Howard Private Collection and its contents.
+- [Home](https://www.maulmann.de/): Central entry point for the entire Juwan Howard Private Collection and its contents.
 - [Juwan Howard Private Collection](https://www.maulmann.de/Juwan-Howard-Collection.html): Complete checklist for over 1000 unique Juwan Howard Basketball Cards and Parallels.
 - [Baseball Private Collection](https://www.maulmann.de/Baseball.html): Gallery of 2005 Upper Deck Ultimate Signature Edition Baseball Cards und Autographs.
 - [Exquisite Flawless Private Collection](https://www.maulmann.de/Flawless.html): Presentation of ultra rare 2008 Upper Deck Exquisite Flawless Basketball Cards and 1/1.
