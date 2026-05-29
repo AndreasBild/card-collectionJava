@@ -331,6 +331,7 @@ public class CardPageGenerator {
                             playerCell.empty();
                             playerCell.appendElement("a")
                                     .attr("href", matchingCard.fullRelativePath)
+                                    .attr("class", "table-button")
                                     .attr("title", "View details for " + matchingCard.get("Season") + " " + matchingCard.get("Brand") + " #" + matchingCard.get("Number"))
                                     .text(originalText);
                         }
