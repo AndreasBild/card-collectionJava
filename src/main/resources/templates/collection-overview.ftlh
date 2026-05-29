@@ -26,13 +26,15 @@ ${topNavHtml?no_esc}
                    placeholder="Search PMG, Masterpiece, or type <25, =1..."
                    style="padding: 10px; border-radius: 4px; border: 1px solid #ccc; font-size: 16px; flex-grow: 1; min-width: 250px;">
             <datalist id="hobby-terms">
-                <option value="< 10">
-                <option value="<= 25">
                 <option value="= 1">
-                <option value="1/1 (Masterpiece)">
+                <option value="<= 10">
+                <option value="<= 25">
+                <option value="<= 100">
                 <option value="Precious Metal Gems">
                 <option value="Refractor">
                 <option value="Autograph">
+                <option value="Legacy Collection">
+                <option value="Ruby">
                 <option value="Game Used / Patch">
             </datalist>
         </div>
