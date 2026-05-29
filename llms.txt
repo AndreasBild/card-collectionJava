@@ -13,3 +13,4 @@ This file is used to guide the LLM on how to understand content for the website.
 
 ## Knowledge
 - [Wantlist](https://www.maulmann.de/Wantlist.html): List of all Juwan Howard Cards, PMGs und 1/1s that are still missing.
+- [Sitemap](https://www.maulmann.de/sitemap.html): List of all anchor links on this website.
