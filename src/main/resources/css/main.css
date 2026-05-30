@@ -1,4 +1,8 @@
 /* --- BASIS RESETS & FONTS --- */
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     line-height: 1.5;
@@ -6,6 +10,7 @@ body {
     color: #222;
     background-color: #fff;
     -webkit-text-size-adjust: 100%;
+    overflow-x: hidden;
 }
 
 body, td, th {
@@ -152,6 +157,8 @@ a:not(.plain) {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    width: 100%;
+    overflow-wrap: break-word;
 }
 
 .detail-header {
@@ -185,6 +192,11 @@ a:not(.plain) {
 .archive-text {
     margin: 0;
     color: #555;
+}
+
+.seo-box {
+    margin-bottom: 30px;
+    width: 100%;
 }
 
 .seo-box-centered {
