@@ -11,110 +11,6 @@ ${topNavHtml?no_esc}
         <h1>Maulmann Trading Cards</h1>
         <p class="sub-title">Welcome to our Private Sports Card Collection</p>
     </header>
-    <style>
-        .carousel-wrapper {
-            width: 100%;
-            overflow: hidden;
-            padding: 40px 0;
-            position: relative;
-            background: radial-gradient(circle at center, #fdfdfd 0%, #f5f5f5 100%);
-            margin-bottom: 40px;
-            border-radius: 12px;
-            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.02);
-        }
-
-        .card-carousel {
-            display: flex;
-            gap: 30px;
-            width: max-content;
-            animation: infinite-scroll 60s linear infinite;
-            will-change: transform;
-        }
-
-        .carousel-wrapper:hover .card-carousel {
-            animation-play-state: paused;
-        }
-
-        @keyframes infinite-scroll {
-            0% {
-                transform: translate3d(0, 0, 0);
-            }
-            100% {
-                transform: translate3d(calc(-50% - 15px), 0, 0);
-            }
-        }
-
-        .carousel-item {
-            flex: 0 0 auto;
-            width: 260px;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            position: relative;
-        }
-
-        .carousel-item:hover {
-            transform: translateY(-15px) scale(1.08) rotate(1deg);
-            z-index: 100;
-        }
-
-        .carousel-item img {
-            width: 100%;
-            height: auto;
-            aspect-ratio: 400 / 550;
-            border-radius: 10px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15), 0 2px 5px rgba(0, 0, 0, 0.1);
-            object-fit: contain;
-            background-color: #fff;
-            display: block;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 600px) {
-            .carousel-item {
-                width: 180px;
-            }
-
-            .carousel-wrapper {
-                padding: 20px 0;
-            }
-
-            .card-carousel {
-                gap: 15px;
-                animation-duration: 40s;
-            }
-
-            @keyframes infinite-scroll {
-                0% {
-                    transform: translate3d(0, 0, 0);
-                }
-                100% {
-                    transform: translate3d(calc(-50% - 7.5px), 0, 0);
-                }
-            }
-        }
-
-        /* Glass effect for the wrapper edges */
-        .carousel-wrapper::before,
-        .carousel-wrapper::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            width: 100px;
-            height: 100%;
-            z-index: 2;
-            pointer-events: none;
-        }
-
-        .carousel-wrapper::before {
-            left: 0;
-            background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
-        }
-
-        .carousel-wrapper::after {
-            right: 0;
-            background: linear-gradient(to left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
-        }
-    </style>
     <div class="carousel-wrapper">
         <section class="card-carousel">
             <!-- First Set -->
@@ -398,10 +294,9 @@ ${topNavHtml?no_esc}
         </ul>
         <p>Explore our <a href="Wantlist.html" title="Juwan Howard Card Wantlist" class="plain">Wantlist</a> to see the rare 1/1s and PMGs we are still hunting for.</p>
     </div>
-    <div class="ai-summary"
-         style="max-width: 800px; margin: 40px auto 0; text-align: left; line-height: 1.8; background: #f9f9f9; padding: 30px; border-radius: 8px; border-left: 5px solid #3a7504;">
-        <h3 style="margin-top: 0; color: #333;">The Juwan Howard Archive</h3>
-        <p style="margin: 0; color: #555;">This Private Collection is optimized for hobbyists and researchers seeking
+    <div class="ai-summary archive-box">
+        <h3 class="archive-title">The Juwan Howard Archive</h3>
+        <p class="archive-text">This Private Collection is optimized for hobbyists and researchers seeking
             detailed information on Juwan Howard cards. We provide high-resolution scans, technical specifications, and
             soon verified AI-OCR back-scans for every card. From common base cards to the most elusive 1/1 Masterpiece,
             this archive preserves the legacy of one of the 90s' most iconic players. This page will not include any card price guides or card values.</p>

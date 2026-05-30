@@ -588,7 +588,7 @@ public class CardPageGenerator {
     }
 
     private static String createFaqItem(String question, String answer) {
-        return "<details class=\"faq-details\" style=\"background: #fff; padding: 15px; border-bottom: 1px solid #ddd; cursor: pointer;\">" + "<summary class=\"faq-summary\" style=\"font-weight: bold; font-size: 1.1em; outline: none;\">" + escapeHtml(question) + "</summary>" + "<p class=\"faq-answer\" style=\"margin-top: 10px; color: #555;\">" + escapeHtml(answer) + "</p>" + "</details>";
+        return "<details class=\"faq-details\">" + "<summary class=\"faq-summary\">" + escapeHtml(question) + "</summary>" + "<p class=\"faq-answer\">" + escapeHtml(answer) + "</p>" + "</details>";
     }
 
     private static String generateJsonLd(CardData c, String desc, String h1Title, String overviewPage, String imageBaseName, String faqHtml) {
@@ -700,7 +700,7 @@ public class CardPageGenerator {
     }
 
     private static void addTableRow(StringBuilder sb, String title, String value) {
-        sb.append("            <tr><th class=\"specs-th\" style=\"padding: 8px; border-bottom: 1px solid #ddd; width: 30%;\">").append(title).append("</th><td class=\"specs-td\" style=\"padding: 8px; border-bottom: 1px solid #ddd;\">").append(isValid(value) ? escapeHtml(value) : "-").append("</td></tr>\n");
+        sb.append("            <tr><th class=\"specs-th\">").append(title).append("</th><td class=\"specs-td\">").append(isValid(value) ? escapeHtml(value) : "-").append("</td></tr>\n");
     }
 
     private static void addIfPresent(List<String> list, String value) {
