@@ -25,9 +25,6 @@ public class SharedTemplates {
     public static void setBuildId(String id) {
         BUILD_ID = id;
     }
-    public static final String IMAGE_PATH = "images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-PMG-sn7-front.webp";
-
-
     static String loadResource(String path) {
         // If the template is already in RAM, return it instantly (0 Disk I/O)
         return TEMPLATE_CACHE.computeIfAbsent(path, SharedTemplates::readResourceFromDisk);
@@ -123,23 +120,6 @@ public class SharedTemplates {
     public static String getFooter(String root, String time) {
         String template = loadResource("/templates/footer.html");
         return template.replace("{{ROOT}}", root).replace("{{TIME}}", time);
-    }
-
-    public static String getErrorPage(String root) {
-        String template = loadResource("/templates/error.html");
-        if (template.isEmpty()) {
-            return "<html><body><h1>404 - Page Not Found</h1><p>Sorry, the page you are looking for does not exist.</p><a href=\"" + root + "index.html\">Back to Home</a></body></html>";
-        }
-
-        String title = "Error Page | Maulmann Trading Cards";
-        String description = "The page you are looking for does not exist in the Maulmann Trading Cards collection.";
-        String page = "error.html";
-        String image = root + IMAGE_PATH;
-
-        return template.replace("{{HEAD}}", getHead(title, description, root, page, image))
-                .replace("{{TOPNAV}}", getTopNav(root, "error"))
-                .replace("{{FOOTER}}", getFooter(root))
-                .replace("{{ROOT}}", root);
     }
 
     public static String getTimestamp() {

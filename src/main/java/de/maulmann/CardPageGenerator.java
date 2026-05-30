@@ -382,11 +382,6 @@ public class CardPageGenerator {
         String frontImgPath = seasonImgFolder + "/" + imageBaseName + "-front.webp";
         String backImgPath = seasonImgFolder + "/" + imageBaseName + "-back.webp";
 
-        // OCR Logic
-        String originalPath = "images/" + c.seasonFolder + "/" + imageBaseName + "-back.jpg";
-        String backText = "";
-         //     backText=  new File(originalPath).exists() ? CardTextExtractor.getBackText(originalPath) : "";
-
         // Baue die Map für FreeMarker auf
         Map<String, Object> data = new HashMap<>();
 
@@ -443,7 +438,7 @@ public class CardPageGenerator {
         data.put("techTrivia", getCardTechTrivia(c));
         data.put("playerHighlights", getSeasonHighlights(c.get("Season"), c.get("Player")));
         data.put("eraContext", getNbaEraContext(c.get("Season"), c.get("Player")));
-        data.put("cardBackText", backText);
+        data.put("cardBackText", "");
 
         data.put("faqHtml", faqHtml);
 
@@ -490,10 +485,6 @@ public class CardPageGenerator {
         context.put("Season", season);
         context.put("Player", player);
         return triviaManager.getTrivia("eraContext", context);
-    }
-
-    private static String fileNameFromPath(String path) {
-        return new File(path).getName();
     }
 
     private static String getTeamBySeason(String season) {
