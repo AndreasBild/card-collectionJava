@@ -234,11 +234,34 @@ public class FileGenerator {
 
     public static void copyResources() {
         try {
+            // 1. Copy CSS
             Path cssDir = Paths.get(pathOutput, "css");
             Files.createDirectories(cssDir);
             Path cssSource = Paths.get("src/main/resources/css/main.css");
             if (Files.exists(cssSource)) {
                 Files.copy(cssSource, cssDir.resolve("main.css"), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+            }
+
+            // 2. Copy llms.txt from root
+            Path llmsSource = Paths.get("llms.txt");
+            if (Files.exists(llmsSource)) {
+                Files.copy(llmsSource, Paths.get(pathOutput, "llms.txt"), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+            }
+
+            // 3. Copy PWA assets
+            Path pwaSourceDir = Paths.get("src/main/resources/pwa");
+            if (Files.exists(pwaSourceDir)) {
+                try (var stream = Files.walk(pwaSourceDir)) {
+                    stream.filter(Files::isRegularFile).forEach(source -> {
+                        try {
+                            Path target = Paths.get(pathOutput).resolve(pwaSourceDir.relativize(source));
+                            Files.createDirectories(target.getParent());
+                            Files.copy(source, target, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                        } catch (IOException e) {
+                            System.err.println("Error copying PWA asset " + source + ": " + e.getMessage());
+                        }
+                    });
+                }
             }
         } catch (IOException e) {
             System.err.println("Error copying resources: " + e.getMessage());

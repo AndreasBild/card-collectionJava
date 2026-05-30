@@ -61,7 +61,12 @@ public class SiteBuilderPipeline {
             TimestampTracker timeTracker = new TimestampTracker(OUTPUT_DIR + "/generation-timestamps.properties");
 
             // Ensure stable CSS version for hash stability if content didn't change
-            SharedTemplates.setBuildId("stable");
+            String cssHash = tracker.getHash(Paths.get("src/main/resources/css/main.css"));
+            if (cssHash != null && cssHash.length() >= 8) {
+                SharedTemplates.setBuildId(cssHash.substring(0, 8));
+            } else {
+                SharedTemplates.setBuildId("stable");
+            }
 
             // --- PHASE 1: Generate Site HTML & Sitemap ---
             System.out.println("\n[PHASE 1] Generating HTML files and Sitemap...");
@@ -157,7 +162,7 @@ public class SiteBuilderPipeline {
                         uploadTask = uploadBytesAsync(s3Client, s3Key, gzippedData, "application/xml", "gzip", CACHE_SHORT, uploadCount);
                     } else if (fileName.endsWith(".ico")) {
                         uploadTask = uploadRawFileAsync(s3Client, file, s3Key, "image/x-icon", CACHE_LONG, uploadCount);
-                    } else if (fileName.startsWith("robots")) {
+                    } else if (fileName.startsWith("robots") || fileName.endsWith(".txt")) {
                         byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BrotliCompressor.BEST_QUALITY);
                         uploadTask = uploadBytesAsync(s3Client, s3Key, brData, "text/plain", "br", CACHE_SHORT, uploadCount);
                     }
