@@ -206,7 +206,7 @@ public class SitemapGenerator {
             // where it doesn't have easy access to all createBaseData logic from FileGenerator.
             // However, they are in the same package.
 
-            String headHtml = SharedTemplates.getHead(title, description, "", "sitemap.html", FileGenerator.IMAGE_PATH);
+            String headHtml = SharedTemplates.getHead(title, description, "", "sitemap.html", FileGenerator.DEFAULT_IMAGE);
             String topNavHtml = SharedTemplates.getTopNav("", "sitemap");
             String footerHtml = SharedTemplates.getFooter("");
 

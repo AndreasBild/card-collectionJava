@@ -31,19 +31,6 @@ public class GZIPCompressor {
         }
     }
 
-    // --- 2. NEW: RAM-to-File Method ---
-    // Takes the byte[] from your minifier and writes directly to the final .gz file
-    public static void compressBytesToFile(byte[] inputData, File outputFile, int compressionLevel) throws IOException {
-        try (OutputStream out = Files.newOutputStream(outputFile.toPath());
-             GZIPOutputStream gzipOS = new GZIPOutputStream(out, 65536) {
-                 {
-                     def.setLevel(compressionLevel);
-                 }
-             }) {
-            gzipOS.write(inputData);
-        }
-    }
-
     // --- 3. NEW: Pure In-Memory Method ---
     // Takes a byte[] and returns a compressed byte[]. Zero disk I/O.
     public static byte[] compressBytes(byte[] inputData, int compressionLevel) throws IOException {

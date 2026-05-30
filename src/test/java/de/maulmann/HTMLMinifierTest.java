@@ -16,16 +16,13 @@ class HTMLMinifierTest {
     Path tempDir;
 
     @Test
-    void testMinifyHTML() throws IOException {
+    void testMinifyHTMLToBytes() throws IOException {
         Path sourceFile = tempDir.resolve("test.html");
-        Path outputFile = tempDir.resolve("test.min.html");
         String htmlContent = "<!DOCTYPE html><html><head><title>Test</title></head><body><h1>Hello</h1></body></html>";
         Files.write(sourceFile, htmlContent.getBytes());
 
-        HTMLMinifier.minifyHTML(new File(sourceFile.toString()), new File(outputFile.toString()));
-
-        assertTrue(Files.exists(outputFile));
-        String minifiedContent = Files.readString(outputFile);
+        byte[] minifiedBytes = HTMLMinifier.minifyHTMLToBytes(new File(sourceFile.toString()));
+        String minifiedContent = new String(minifiedBytes);
 
         assertTrue(minifiedContent.contains("<h1>Hello</h1>"));
     }
