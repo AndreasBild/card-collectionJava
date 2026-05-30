@@ -7,7 +7,7 @@
 <body>
 ${topNavHtml?no_esc}
 <main class="detail-main">
-    <div class="card-images-container card-container-box">
+    <div class="generic-content">
         ${pageContent?no_esc}
     </div>
 </main>

@@ -184,11 +184,11 @@ public class FileGenerator {
                 Path sourcePath = Paths.get(pathSource, "other", coll + ".html");
                 if (Files.exists(sourcePath)) {
                     String rawContent = Files.readString(sourcePath, StandardCharsets.UTF_8);
+                    Document doc = Jsoup.parse(rawContent);
 
                     // Extrahiere FAQ aus dem Content für das JSON-LD (falls vorhanden)
                     if (rawContent.contains("application/ld+json") && rawContent.contains("FAQPage")) {
                         try {
-                            Document doc = Jsoup.parse(rawContent);
                             Element faqScript = doc.selectFirst("script[type=application/ld+json]");
                             if (faqScript != null) {
                                 String faqJson = faqScript.data().trim();
@@ -222,7 +222,22 @@ public class FileGenerator {
                         }
                     }
 
-                    data.put("pageContent", cleanOldPlaceholders(rawContent));
+                    // NEU: Isoliere den Inhalt des <main>-Tags, um doppelte Verschachtelung zu vermeiden
+                    Element mainElement = doc.selectFirst("main");
+                    String processedContent;
+                    if (mainElement != null) {
+                        // Alle Tabellen automatisch in responsive Container einpacken, falls noch nicht geschehen
+                        for (Element table : mainElement.select("table")) {
+                            if (table.parent() == null || !table.parent().hasClass("table-responsive")) {
+                                table.wrap("<div class=\"table-responsive card-container-box\"></div>");
+                            }
+                        }
+                        processedContent = mainElement.html();
+                    } else {
+                        processedContent = rawContent;
+                    }
+
+                    data.put("pageContent", cleanOldPlaceholders(processedContent));
                 } else {
                     data.put("pageContent", "<p>No data found for this collection yet.</p>");
                 }
