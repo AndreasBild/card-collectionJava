@@ -294,11 +294,18 @@ public class FileGenerator {
                     "Welcome to the ultimate Juwan Howard Private Collection. A Super Collector showcase featuring 1,000+ unique cards, including 1/1 Masterpieces, PMGs, Rubies, and rare 90s basketball inserts.",
                     "index.html", "index", "");
 
-            // Complex JSON-LD for Index (WebSite, Person, Collection)
+            // Complex JSON-LD for Index (WebSite, Person, Collection, Breadcrumbs)
             String indexJsonLd = "<script type=\"application/ld+json\">\n" +
                     "{\n" +
                     "  \"@context\": \"https://schema.org\",\n" +
                     "  \"@graph\": [\n" +
+                    "    {\n" +
+                    "      \"@type\": \"BreadcrumbList\",\n" +
+                    "      \"name\": \"Breadcrumbs\",\n" +
+                    "      \"itemListElement\": [\n" +
+                    "        { \"@type\": \"ListItem\", \"position\": 1, \"name\": \"Home\", \"item\": \"" + BASE_URL + "/index.html\" }\n" +
+                    "      ]\n" +
+                    "    },\n" +
                     "    {\n" +
                     "      \"@type\": \"WebSite\",\n" +
                     "      \"name\": \"Maulmann Trading Cards\",\n" +
