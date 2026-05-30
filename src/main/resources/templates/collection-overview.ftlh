@@ -12,19 +12,16 @@ ${topNavHtml?no_esc}
         <p class="sub-title">${subTitle}</p>
     </header>
     <#if seasons?has_content>
-        <div class="collection-controls"
-             style="margin: 20px 0; padding: 15px; background: #f4f8fc; border-radius: 8px; display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
-            <strong style="color: #333;">Filter Collection:</strong>
-            <select id="seasonFilter"
-                    style="padding: 10px; border-radius: 4px; border: 1px solid #ccc; font-size: 16px; min-width: 200px;">
+        <div class="collection-controls filter-container">
+            <strong class="filter-label">Filter Collection:</strong>
+            <select id="seasonFilter" class="filter-select">
                 <option value="all">All Seasons</option>
                 <#list seasons as season>
                     <option value="${season.id}">${season.name}</option>
                 </#list>
             </select>
-            <input type="text" id="textSearch" list="hobby-terms"
-                   placeholder="Search PMG, Auto or Print Run <25, =1..."
-                   style="padding: 10px; border-radius: 4px; border: 1px solid #ccc; font-size: 16px; flex-grow: 1; min-width: 250px;">
+            <input type="text" id="textSearch" class="filter-input" list="hobby-terms"
+                   placeholder="Search PMG, Auto or Print Run <25, =1...">
             <datalist id="hobby-terms">
                 <option value="= 1">
                 <option value="<= 10">
@@ -40,17 +37,17 @@ ${topNavHtml?no_esc}
         </div>
 
     <#list seasons as season>
-        <div class="season-table-wrapper" data-season="${season.id}" style="margin-bottom: 40px;">
-            <div style="display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px solid #eaeaea; margin-bottom: 5px; padding-bottom: 5px;">
-                <h2 style="margin: 0; color: #3264af;">${season.name}</h2>
+        <div class="season-table-wrapper" data-season="${season.id}">
+            <div class="season-header">
+                <h2 class="season-title">${season.name}</h2>
                 <a href="#top" class="back-to-top-btn" title="Scroll back to top of the collection"
                    aria-label="Back to top of page">&#8679; Top</a>
             </div>
-            <p style="font-weight: bold; color: #555; margin-top: 5px; margin-bottom: 15px; font-size: 0.95em;">
+            <p class="season-count">
                 Cards this season: <span class="visible-counter">${season.seasonCount}</span>
                 / ${season.cumulativeTotal}
             </p>
-            <div class="table-responsive" style="background: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+            <div class="table-responsive card-container-box">
                 ${season.content?no_esc}
             </div>
         </div>
