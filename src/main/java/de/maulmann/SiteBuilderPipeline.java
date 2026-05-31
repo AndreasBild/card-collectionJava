@@ -82,6 +82,15 @@ public class SiteBuilderPipeline {
             timeTracker.save();
             SitemapGenerator.generate(); // Sitemap & robots.txt now ready for Phase 3
 
+            // --- PHASE 1.5: Inject Firestore Ratings ---
+            System.out.println("\n[PHASE 1.5] Injecting Firestore ratings...");
+            String firebaseCreds = System.getenv("FIREBASE_SERVICE_ACCOUNT_JSON");
+            if (firebaseCreds == null || firebaseCreds.isEmpty()) {
+                System.err.println("⚠️ WARNING: FIREBASE_SERVICE_ACCOUNT_JSON is missing! Ratings will NOT be injected.");
+            } else {
+                FirestoreRatingInjector.main(new String[0]);
+            }
+
             // --- PHASE 2: Convert Images to WebP ---
             System.out.println("\n[PHASE 2] Converting images to WebP...");
             ImageConverter.main(new String[0]);

@@ -101,17 +101,24 @@ public class FirestoreRatingInjector {
             return;
         }
 
+        java.util.concurrent.atomic.AtomicInteger count = new java.util.concurrent.atomic.AtomicInteger(0);
         try (Stream<Path> paths = Files.walk(targetPath)) {
             paths.filter(Files::isRegularFile)
                  .filter(p -> p.toString().endsWith(".html"))
-                 .forEach(path -> injectRating(path, firestoreData));
+                 .forEach(path -> {
+                     if (injectRating(path, firestoreData)) {
+                         count.incrementAndGet();
+                     }
+                 });
         }
+        log.info("Completed: Injected ratings into {} files.", count.get());
     }
 
     /**
      * Parses a single HTML file, extracts the card ID, and injects the AggregateRating JSON-LD if data exists.
+     * @return true if rating was injected, false otherwise.
      */
-    private static void injectRating(Path path, Map<String, Map<String, Object>> firestoreData) {
+    private static boolean injectRating(Path path, Map<String, Map<String, Object>> firestoreData) {
         try {
             File file = path.toFile();
             Document doc = Jsoup.parse(file, "UTF-8");
@@ -119,7 +126,7 @@ public class FirestoreRatingInjector {
             // Extract card ID from data-card-id attribute (e.g. on vote-container)
             Element cardElement = doc.select("[data-card-id]").first();
             if (cardElement == null) {
-                return; // Not a card detail page or missing ID
+                return false; // Not a card detail page or missing ID
             }
 
             String cardId = cardElement.attr("data-card-id");
@@ -143,12 +150,14 @@ public class FirestoreRatingInjector {
                     // Overwrite the original file with modified DOM
                     Files.writeString(path, doc.outerHtml(), StandardCharsets.UTF_8);
                     log.info("Injected ratings into: {}", path.getFileName());
+                    return true;
                 }
             }
         } catch (Exception e) {
             log.error("Failed to process HTML file: {}", path, e);
             // System continues with next file
         }
+        return false;
     }
 
     /**
