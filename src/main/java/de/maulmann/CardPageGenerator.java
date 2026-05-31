@@ -590,6 +590,8 @@ public class CardPageGenerator {
         String cardUrl = BASE_URL + "/cards/" + c.seasonFolder + "/" + c.filename;
 
         StringBuilder sb = new StringBuilder();
+
+        // --- MAIN VALID SCHEMA BLOCK ---
         sb.append("<script type=\"application/ld+json\">\n");
         sb.append("{\n");
         sb.append("  \"@context\": \"https://schema.org\",\n");
@@ -623,31 +625,9 @@ public class CardPageGenerator {
         sb.append("      },\n");
         sb.append("      \"artMedium\": \"Trading Card\",\n");
         sb.append("      \"artform\": \"Sports Memorabilia\"\n");
-        sb.append("    },\n");
-
-        // 3. Product (for search bots)
-        sb.append("    {\n");
-        sb.append("      \"@type\": \"Product\",\n");
-        sb.append("      \"@id\": \"").append(cardUrl).append("#product\",\n");
-        sb.append("      \"mainEntityOfPage\": \"").append(cardUrl).append("\",\n");
-        sb.append("      \"name\": \"").append(escapeJson(h1Title)).append("\",\n");
-        sb.append("      \"image\": [ \"").append(frontImgUrl).append("\", \"").append(backImgUrl).append("\" ],\n");
-        sb.append("      \"description\": \"").append(escapeJson(desc)).append("\",\n");
-        sb.append("      \"sku\": \"").append(c.stableId).append("\",\n");
-        sb.append("      \"mpn\": \"").append(escapeJson(c.get("Number"))).append("\",\n");
-        sb.append("      \"brand\": { \"@type\": \"Brand\", \"name\": \"").append(escapeJson(c.get("Brand"))).append("\" },\n");
-        sb.append("      \"manufacturer\": { \"@type\": \"Organization\", \"name\": \"").append(escapeJson(c.get("Company"))).append("\" },\n");
-
-        if (isHolyGrail(c)) {
-            sb.append("      \"category\": \"Sports Trading Cards\",\n");
-            sb.append("      \"material\": \"Premium Hobby Parallel\"\n");
-        } else {
-            sb.append("      \"category\": \"Sports Trading Cards\"\n");
-        }
-
         sb.append("    }");
 
-        // 4. FAQPage (if present)
+        // 3. FAQPage (if present)
         if (faqHtml != null && !faqHtml.isEmpty()) {
             sb.append(",\n");
             sb.append("    {\n");
@@ -681,6 +661,32 @@ public class CardPageGenerator {
         sb.append("  ]\n");
         sb.append("}\n");
         sb.append("</script>\n");
+
+        // --- DORMANT PRODUCT TEMPLATE ---
+        // Hidden from Google until activated by FirestoreRatingInjector
+        sb.append("<script type=\"application/json\" id=\"product-schema-template\">\n");
+        sb.append("{\n");
+        sb.append("  \"@context\": \"https://schema.org\",\n");
+        sb.append("  \"@type\": \"Product\",\n");
+        sb.append("  \"@id\": \"").append(cardUrl).append("#product\",\n");
+        sb.append("  \"mainEntityOfPage\": \"").append(cardUrl).append("\",\n");
+        sb.append("  \"name\": \"").append(escapeJson(h1Title)).append("\",\n");
+        sb.append("  \"image\": [ \"").append(frontImgUrl).append("\", \"").append(backImgUrl).append("\" ],\n");
+        sb.append("  \"description\": \"").append(escapeJson(desc)).append("\",\n");
+        sb.append("  \"sku\": \"").append(c.stableId).append("\",\n");
+        sb.append("  \"mpn\": \"").append(escapeJson(c.get("Number"))).append("\",\n");
+        sb.append("  \"brand\": { \"@type\": \"Brand\", \"name\": \"").append(escapeJson(c.get("Brand"))).append("\" },\n");
+        sb.append("  \"manufacturer\": { \"@type\": \"Organization\", \"name\": \"").append(escapeJson(c.get("Company"))).append("\" },\n");
+
+        if (isHolyGrail(c)) {
+            sb.append("  \"category\": \"Sports Trading Cards\",\n");
+            sb.append("  \"material\": \"Premium Hobby Parallel\"\n");
+        } else {
+            sb.append("  \"category\": \"Sports Trading Cards\"\n");
+        }
+        sb.append("}\n");
+        sb.append("</script>\n");
+
         return sb.toString();
     }
 

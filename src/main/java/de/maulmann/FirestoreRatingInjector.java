@@ -10,7 +10,6 @@ import com.google.firebase.cloud.FirestoreClient;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,8 +28,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.stream.Stream;
 
 /**
- * Senior Java Developer Implementation for Firestore Rating Injection.
- * This tool injects live AggregateRating data directly into the existing JSON-LD graph.
+ * Validates and activates dormant Product schemas if rating data exists.
+ * Deletes invalid schema templates to maintain GSC compliance.
  */
 public class FirestoreRatingInjector {
 
@@ -51,10 +50,6 @@ public class FirestoreRatingInjector {
         }
     }
 
-    /**
-     * Initializes the Firebase Admin SDK using a service account JSON string
-     * provided via environment variable or a local JSON file.
-     */
     private static void initFirebase() throws IOException {
         String serviceAccountJson = System.getenv("FIREBASE_SERVICE_ACCOUNT_JSON");
         String serviceAccountPath = "firebase/maulmann-3f90d-firebase-adminsdk-fbsvc-78c9f10838";
@@ -62,88 +57,60 @@ public class FirestoreRatingInjector {
         FirebaseOptions.Builder optionsBuilder = FirebaseOptions.builder();
 
         if (serviceAccountJson != null && !serviceAccountJson.isEmpty()) {
-            log.info("Initializing Firebase using JSON from environment variable.");
             optionsBuilder.setCredentials(GoogleCredentials.fromStream(
                     new ByteArrayInputStream(serviceAccountJson.getBytes(StandardCharsets.UTF_8))));
         } else {
             File serviceAccountFile = new File(serviceAccountPath);
             if (serviceAccountFile.exists()) {
-                log.info("Initializing Firebase using service account file: {}", serviceAccountPath);
                 optionsBuilder.setCredentials(GoogleCredentials.fromStream(
                         new FileInputStream(serviceAccountFile)));
             } else {
-                log.error("Firebase credentials missing. Neither FIREBASE_SERVICE_ACCOUNT_JSON env var nor file at {} exists.", serviceAccountPath);
                 throw new IllegalStateException("Firebase credentials not found.");
             }
         }
 
         if (FirebaseApp.getApps().isEmpty()) {
             FirebaseApp.initializeApp(optionsBuilder.build());
-            log.info("Firebase Admin SDK initialized successfully.");
         }
     }
 
-    /**
-     * Fetches all documents from the specified Firestore collection in a single synchronous request.
-     *
-     * @return A map where the key is the Document ID and the value is the document data.
-     */
     private static Map<String, Map<String, Object>> fetchFirestoreData() throws ExecutionException, InterruptedException {
-        log.info("Fetching data from Firestore collection: {}", COLLECTION_NAME);
         Firestore db = FirestoreClient.getFirestore();
-
-        // Single synchronous request to minimize Firestore reads
         QuerySnapshot querySnapshot = db.collection(COLLECTION_NAME).get().get();
 
         Map<String, Map<String, Object>> dataMap = new HashMap<>();
         for (QueryDocumentSnapshot document : querySnapshot.getDocuments()) {
             dataMap.put(document.getId(), document.getData());
         }
-        log.info("Successfully cached {} Firestore documents in memory.", dataMap.size());
         return dataMap;
     }
 
-    /**
-     * Iterates over all HTML files in the build target directory and injects JSON-LD ratings.
-     */
     private static void processHtmlFiles(Map<String, Map<String, Object>> firestoreData) throws IOException {
         Path targetPath = Paths.get(TARGET_DIR);
-        if (!Files.exists(targetPath)) {
-            log.warn("Target directory {} not found. Aborting file processing.", TARGET_DIR);
-            return;
-        }
+        if (!Files.exists(targetPath)) return;
 
-        java.util.concurrent.atomic.AtomicInteger count = new java.util.concurrent.atomic.AtomicInteger(0);
         try (Stream<Path> paths = Files.walk(targetPath)) {
             paths.filter(Files::isRegularFile)
                     .filter(p -> p.toString().endsWith(".html"))
-                    .forEach(path -> {
-                        if (injectRating(path, firestoreData)) {
-                            count.incrementAndGet();
-                        }
-                    });
+                    .forEach(path -> injectRating(path, firestoreData));
         }
-        log.info("Completed: Injected ratings into {} files.", count.get());
     }
 
-    /**
-     * Parses a single HTML file, extracts the card ID, locates the existing
-     * JSON-LD graph structure, and inline-injects the AggregateRating data.
-     * @return true if rating was injected, false otherwise.
-     */
     private static boolean injectRating(Path path, Map<String, Map<String, Object>> firestoreData) {
         try {
             File file = path.toFile();
             Document doc = Jsoup.parse(file, "UTF-8");
 
-            // Extract card ID from data-card-id attribute (e.g. on vote-container)
-            Element cardElement = doc.select("[data-card-id]").first();
-            if (cardElement == null) {
+            Element templateScript = doc.selectFirst("script#product-schema-template");
+            if (templateScript == null) {
                 return false;
             }
 
-            String cardId = cardElement.attr("data-card-id");
-            Map<String, Object> data = firestoreData.get(cardId);
+            Element cardElement = doc.select("[data-card-id]").first();
+            String cardId = cardElement != null ? cardElement.attr("data-card-id") : null;
+            Map<String, Object> data = cardId != null ? firestoreData.get(cardId) : null;
+
+            boolean isDomModified = false;
 
             if (data != null) {
                 long ratingCount = parseLong(data.get("ratingCount"));
@@ -151,43 +118,43 @@ public class FirestoreRatingInjector {
 
                 if (ratingCount > 0) {
                     double averageRating = ratingSum / ratingCount;
+                    String jsonContent = templateScript.html();
+                    int lastBraceIndex = jsonContent.lastIndexOf("}");
 
-                    // Locate all structured data script elements
-                    Elements scripts = doc.select("script[type=application/ld+json]");
-                    boolean injectionSuccessful = false;
+                    if (lastBraceIndex != -1) {
+                        String ratingInjection = String.format(Locale.US,
+                                ",\n  \"aggregateRating\": {\n" +
+                                        "    \"@type\": \"AggregateRating\",\n" +
+                                        "    \"ratingValue\": %.1f,\n" +
+                                        "    \"reviewCount\": %d\n" +
+                                        "  }\n", averageRating, ratingCount);
 
-                    for (Element script : scripts) {
-                        String htmlContent = script.html();
+                        jsonContent = jsonContent.substring(0, lastBraceIndex) + ratingInjection + "}";
 
-                        // Check if this script block contains the schema graph Product definition
-                        if (htmlContent.contains("\"@type\": \"Product\"")) {
-                            String targetToken = "\"@type\": \"Product\",";
+                        // Activate script for crawlers
+                        templateScript.text(jsonContent);
+                        templateScript.attr("type", "application/ld+json");
+                        templateScript.removeAttr("id");
+                        isDomModified = true;
+                        log.info("Injected ratings into: {}", path.getFileName());
 
-                            // Inline the aggregateRating attributes right after the type declaration
-                            String dynamicReplacement = String.format(Locale.US,
-                                    "\"@type\": \"Product\",\n" +
-                                            "      \"aggregateRating\": {\n" +
-                                            "        \"@type\": \"AggregateRating\",\n" +
-                                            "        \"ratingValue\": %.1f,\n" +
-                                            "        \"reviewCount\": %d\n" +
-                                            "      },", averageRating, ratingCount);
-
-                            script.text(htmlContent.replace(targetToken, dynamicReplacement));
-                            injectionSuccessful = true;
-                            break;
-                        }
-                    }
-
-                    if (injectionSuccessful) {
-                        // Overwrite the original static HTML file with the merged DOM structure
-                        Files.writeString(path, doc.outerHtml(), StandardCharsets.UTF_8);
-                        log.info("Successfully merged live rating into JSON-LD graph for: {}", path.getFileName());
-                        return true;
                     }
                 }
             }
+
+            // Clean up DOM: Remove the template if no rating was found
+            if (!isDomModified) {
+                templateScript.remove();
+                isDomModified = true;
+            }
+
+            if (isDomModified) {
+                Files.writeString(path, doc.outerHtml(), StandardCharsets.UTF_8);
+                return true;
+            }
+
         } catch (Exception e) {
-            log.error("Failed to process HTML file during rating compilation: {}", path, e);
+            log.error("Failed to process HTML file: {}", path, e);
         }
         return false;
     }
