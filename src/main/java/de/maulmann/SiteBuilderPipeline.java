@@ -85,8 +85,10 @@ public class SiteBuilderPipeline {
             // --- PHASE 1.5: Inject Firestore Ratings ---
             System.out.println("\n[PHASE 1.5] Injecting Firestore ratings...");
             String firebaseCreds = System.getenv("FIREBASE_SERVICE_ACCOUNT_JSON");
-            if (firebaseCreds == null || firebaseCreds.isEmpty()) {
-                System.err.println("⚠️ WARNING: FIREBASE_SERVICE_ACCOUNT_JSON is missing! Ratings will NOT be injected.");
+            File firebaseFile = new File("firebase/maulmann-3f90d-firebase-adminsdk-fbsvc-78c9f10838");
+
+            if ((firebaseCreds == null || firebaseCreds.isEmpty()) && !firebaseFile.exists()) {
+                System.err.println("⚠️ WARNING: Firebase credentials (env or file) are missing! Ratings will NOT be injected.");
             } else {
                 FirestoreRatingInjector.main(new String[0]);
             }
