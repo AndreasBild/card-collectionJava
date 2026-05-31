@@ -1,0 +1,25 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /Trading_cards/{cardId} {
+      // Lesezugriff öffentlich erlaubt
+      allow read: if true;
+
+      // Erstellungszugriff erlaubt, wenn likes oder dislikes initial maximal 1 sind
+      allow create: if (
+        (request.resource.data.get('likes', 0) == 1 && request.resource.data.get('dislikes', 0) == 0) ||
+        (request.resource.data.get('likes', 0) == 0 && request.resource.data.get('dislikes', 0) == 1)
+      );
+
+      // Änderungszugriff nur erlaubt, wenn likes ODER dislikes um genau 1 erhöht wird
+      allow update: if (
+        (request.resource.data.get('likes', 0) == resource.data.get('likes', 0) + 1 && request.resource.data.get('dislikes', 0) == resource.data.get('dislikes', 0)) ||
+        (request.resource.data.get('dislikes', 0) == resource.data.get('dislikes', 0) + 1 && request.resource.data.get('likes', 0) == resource.data.get('likes', 0))
+      );
+
+      // Löschen strikt blockiert
+      allow delete: if false;
+    }
+  }
+}
