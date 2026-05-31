@@ -4,3 +4,4 @@ cards/
 cp.txt
 *.class
 server.log
+/.idea/
