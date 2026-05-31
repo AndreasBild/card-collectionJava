@@ -18,7 +18,7 @@ body, td, th {
 }
 
 /* --- ALLGEMEINES LINK-STYLING --- */
-a:not(.plain) {
+a:not(.plain), button.modern-button, button.flip-modal-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -28,7 +28,10 @@ a:not(.plain) {
     padding: 12px 24px;
     margin: 6px;
     border-radius: 6px;
+    border: none;
+    font-family: inherit;
     font-weight: 600;
+    cursor: pointer;
     transition: all .2s ease-in-out;
     box-sizing: border-box;
 }
@@ -41,11 +44,10 @@ a:not(.plain) {
     margin: 5px !important;
     font-size: 0.95rem !important;
     white-space: nowrap !important;
-    display: inline-flex !important;
     flex-shrink: 0;
 }
 
-.modern-button:hover {
+.modern-button:hover, .flip-modal-btn:hover {
     background-color: #2d5a03 !important;
     transform: translateY(-1px);
 }
@@ -966,9 +968,8 @@ tr:hover {
     position: absolute;
     top: 20px;
     left: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
+    padding: 10px 20px !important;
+    font-size: 16px !important;
 }
 
 /* --- UTILITIES --- */
