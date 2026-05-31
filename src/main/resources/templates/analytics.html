@@ -1,6 +1,11 @@
 <script>
        function loadAnalytics() {
          if (window.analyticsLoaded) return;
+         if (localStorage.getItem('user_consent') !== 'accepted') {
+             // Wait for consent event if not already given
+             window.addEventListener('consent-given', loadAnalytics, {once: true});
+             return;
+         }
          window.analyticsLoaded = true;
          var script = document.createElement('script');
          script.src = "https://www.googletagmanager.com/gtag/js?id=G-535TKYRZTR";
@@ -15,4 +20,9 @@
        window.addEventListener('scroll', loadAnalytics, {once: true, passive: true});
        window.addEventListener('mousemove', loadAnalytics, {once: true, passive: true});
        window.addEventListener('touchstart', loadAnalytics, {once: true, passive: true});
+
+       // Also try to load if consent was already given in a previous session
+       if (localStorage.getItem('user_consent') === 'accepted') {
+           loadAnalytics();
+       }
 </script>

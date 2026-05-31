@@ -456,6 +456,10 @@ public class CardPageGenerator {
                 finalHtml = finalHtml.replace("[[STABLE_TIME]]", stableTime);
             }
 
+            if (finalHtml.contains("{{CONSENT_BANNER}}")) {
+                finalHtml = finalHtml.replace("{{CONSENT_BANNER}}", SharedTemplates.getConsentBanner(ROOT));
+            }
+
             Files.writeString(path, finalHtml, StandardCharsets.UTF_8);
         } catch (Exception e) {
             log.error("Failed to process FreeMarker template for " + c.filename, e);

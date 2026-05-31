@@ -4,6 +4,7 @@
     ${headHtml?no_esc}
 </head>
 <body>
+{{CONSENT_BANNER}}
 ${topNavHtml?no_esc}
 <main class="detail-main error-main">
     <h1 class="error-title">Error Page</h1>
