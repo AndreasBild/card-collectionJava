@@ -507,6 +507,39 @@ tr:hover {
     color: #555;
 }
 
+/* --- VOTE SYSTEM --- */
+.vote-section {
+    margin-top: 40px;
+    text-align: center;
+    background: #fdfdfd;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.vote-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.vote-container .modern-button {
+    width: auto;
+    min-width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.vote-container .modern-button:disabled {
+    background-color: #ccc !important;
+    cursor: not-allowed;
+    transform: none;
+    opacity: 0.7;
+}
+
 /* --- OCR TEXT BOX --- */
 .card-back-text-container {
     background-color: #f9f7f2;

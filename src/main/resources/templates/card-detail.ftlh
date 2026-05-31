@@ -162,6 +162,18 @@ ${topNavHtml?no_esc}
         </div>
     </#if>
 
+    <section class="vote-section">
+        <h2>Collector Sentiment</h2>
+        <div class="vote-container" data-card-id="${cardId}">
+            <button id="like-btn" title="Like this card" class="modern-button">
+                👍 <span id="like-count">0</span>
+            </button>
+            <button id="dislike-btn" title="Dislike this card" class="modern-button">
+                👎 <span id="dislike-count">0</span>
+            </button>
+        </div>
+    </section>
+
     <section class="faq-section">
         <h2>Collector FAQs</h2>
         ${faqHtml?no_esc}
@@ -231,6 +243,66 @@ ${topNavHtml?no_esc}
             if (nextLink) window.location.href = nextLink.href;
         }
     });
+</script>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore, doc, setDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_PROJECT_ID.appspot.com",
+        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+        appId: "YOUR_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const voteContainer = document.querySelector('.vote-container');
+    const cardId = voteContainer.dataset.cardId;
+    const likeBtn = document.getElementById('like-btn');
+    const dislikeBtn = document.getElementById('dislike-btn');
+    const likeCountSpan = document.getElementById('like-count');
+    const dislikeCountSpan = document.getElementById('dislike-count');
+
+    const localStorageKey = `voted_${cardId}`;
+
+    if (localStorage.getItem(localStorageKey)) {
+        likeBtn.disabled = true;
+        dislikeBtn.disabled = true;
+    }
+
+    const cardRef = doc(db, "Trading_cards", cardId);
+
+    onSnapshot(cardRef, (docSnap) => {
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            likeCountSpan.textContent = data.likes || 0;
+            dislikeCountSpan.textContent = data.dislikes || 0;
+        }
+    });
+
+    async function handleVote(type) {
+        if (localStorage.getItem(localStorageKey)) return;
+
+        try {
+            await setDoc(cardRef, {
+                [type]: increment(1)
+            }, { merge: true });
+
+            localStorage.setItem(localStorageKey, 'true');
+            likeBtn.disabled = true;
+            dislikeBtn.disabled = true;
+        } catch (error) {
+            console.error("Error voting:", error);
+        }
+    }
+
+    likeBtn.addEventListener('click', () => handleVote('likes'));
+    dislikeBtn.addEventListener('click', () => handleVote('dislikes'));
 </script>
 </body>
 </html>

@@ -384,6 +384,7 @@ public class CardPageGenerator {
 
         // Baue die Map für FreeMarker auf
         Map<String, Object> data = new HashMap<>();
+        data.put("cardId", c.stableId);
 
         // Globale HTML Bausteine
         String faqHtml = generateFaqHtml(c);
