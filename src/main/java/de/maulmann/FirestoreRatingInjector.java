@@ -115,18 +115,18 @@ public class FirestoreRatingInjector {
         java.util.concurrent.atomic.AtomicInteger count = new java.util.concurrent.atomic.AtomicInteger(0);
         try (Stream<Path> paths = Files.walk(targetPath)) {
             paths.filter(Files::isRegularFile)
-                 .filter(p -> p.toString().endsWith(".html"))
-                 .forEach(path -> {
-                     if (injectRating(path, firestoreData)) {
-                         count.incrementAndGet();
-                     }
-                 });
+                    .filter(p -> p.toString().endsWith(".html"))
+                    .forEach(path -> {
+                        if (injectRating(path, firestoreData)) {
+                            count.incrementAndGet();
+                        }
+                    });
         }
         log.info("Completed: Injected ratings into {} files.", count.get());
     }
 
     /**
-     * Parses a single HTML file, extracts the card ID, and injects the AggregateRating JSON-LD if data exists.
+     * Parses a single HTML file, extracts the card ID and name, and injects the AggregateRating JSON-LD if data exists.
      * @return true if rating was injected, false otherwise.
      */
     private static boolean injectRating(Path path, Map<String, Map<String, Object>> firestoreData) {
@@ -150,7 +150,15 @@ public class FirestoreRatingInjector {
                 if (ratingCount > 0) {
                     double averageRating = ratingSum / ratingCount;
 
-                    String jsonLdSnippet = generateProductJsonLd(averageRating, ratingCount);
+                    // Extract product name from H1 or fallback to document title
+                    String productName = doc.title();
+                    Element h1Element = doc.selectFirst("h1");
+                    if (h1Element != null && !h1Element.text().isBlank()) {
+                        productName = h1Element.text();
+                    }
+
+                    // Pass the extracted name to the JSON-LD generator
+                    String jsonLdSnippet = generateProductJsonLd(productName, averageRating, ratingCount);
 
                     // Create and inject the script tag into the <head>
                     Element scriptTag = new Element("script");
@@ -172,20 +180,23 @@ public class FirestoreRatingInjector {
     }
 
     /**
-     * Generates a valid JSON-LD Product snippet containing AggregateRating.
-     * Uses numeric values for ratingValue and reviewCount for better compatibility.
+     * Generates a valid JSON-LD Product snippet containing AggregateRating and the mandatory name field.
      */
-    private static String generateProductJsonLd(double averageRating, long reviewCount) {
+    private static String generateProductJsonLd(String productName, double averageRating, long reviewCount) {
+        // Escape quotes to ensure valid JSON syntax
+        String safeName = productName != null ? productName.replace("\"", "\\\"") : "Unknown Product";
+
         return String.format(Locale.US,
-            "{\n" +
-            "  \"@context\": \"https://schema.org\",\n" +
-            "  \"@type\": \"Product\",\n" +
-            "  \"aggregateRating\": {\n" +
-            "    \"@type\": \"AggregateRating\",\n" +
-            "    \"ratingValue\": %.1f,\n" +
-            "    \"reviewCount\": %d\n" +
-            "  }\n" +
-            "}", averageRating, reviewCount);
+                "{\n" +
+                        "  \"@context\": \"https://schema.org\",\n" +
+                        "  \"@type\": \"Product\",\n" +
+                        "  \"name\": \"%s\",\n" +
+                        "  \"aggregateRating\": {\n" +
+                        "    \"@type\": \"AggregateRating\",\n" +
+                        "    \"ratingValue\": %.1f,\n" +
+                        "    \"reviewCount\": %d\n" +
+                        "  }\n" +
+                        "}", safeName, averageRating, reviewCount);
     }
 
     private static long parseLong(Object obj) {
