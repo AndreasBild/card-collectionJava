@@ -10,6 +10,7 @@ import com.google.firebase.cloud.FirestoreClient;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +30,7 @@ import java.util.stream.Stream;
 
 /**
  * Senior Java Developer Implementation for Firestore Rating Injection.
- * This tool injects live AggregateRating data into static HTML pages.
+ * This tool injects live AggregateRating data directly into the existing JSON-LD graph.
  */
 public class FirestoreRatingInjector {
 
@@ -126,7 +127,8 @@ public class FirestoreRatingInjector {
     }
 
     /**
-     * Parses a single HTML file, extracts the card ID and name, and injects the AggregateRating JSON-LD if data exists.
+     * Parses a single HTML file, extracts the card ID, locates the existing
+     * JSON-LD graph structure, and inline-injects the AggregateRating data.
      * @return true if rating was injected, false otherwise.
      */
     private static boolean injectRating(Path path, Map<String, Map<String, Object>> firestoreData) {
@@ -137,7 +139,7 @@ public class FirestoreRatingInjector {
             // Extract card ID from data-card-id attribute (e.g. on vote-container)
             Element cardElement = doc.select("[data-card-id]").first();
             if (cardElement == null) {
-                return false; // Not a card detail page or missing ID
+                return false;
             }
 
             String cardId = cardElement.attr("data-card-id");
@@ -150,53 +152,44 @@ public class FirestoreRatingInjector {
                 if (ratingCount > 0) {
                     double averageRating = ratingSum / ratingCount;
 
-                    // Extract product name from H1 or fallback to document title
-                    String productName = doc.title();
-                    Element h1Element = doc.selectFirst("h1");
-                    if (h1Element != null && !h1Element.text().isBlank()) {
-                        productName = h1Element.text();
+                    // Locate all structured data script elements
+                    Elements scripts = doc.select("script[type=application/ld+json]");
+                    boolean injectionSuccessful = false;
+
+                    for (Element script : scripts) {
+                        String htmlContent = script.html();
+
+                        // Check if this script block contains the schema graph Product definition
+                        if (htmlContent.contains("\"@type\": \"Product\"")) {
+                            String targetToken = "\"@type\": \"Product\",";
+
+                            // Inline the aggregateRating attributes right after the type declaration
+                            String dynamicReplacement = String.format(Locale.US,
+                                    "\"@type\": \"Product\",\n" +
+                                            "      \"aggregateRating\": {\n" +
+                                            "        \"@type\": \"AggregateRating\",\n" +
+                                            "        \"ratingValue\": %.1f,\n" +
+                                            "        \"reviewCount\": %d\n" +
+                                            "      },", averageRating, ratingCount);
+
+                            script.text(htmlContent.replace(targetToken, dynamicReplacement));
+                            injectionSuccessful = true;
+                            break;
+                        }
                     }
 
-                    // Pass the extracted name to the JSON-LD generator
-                    String jsonLdSnippet = generateProductJsonLd(productName, averageRating, ratingCount);
-
-                    // Create and inject the script tag into the <head>
-                    Element scriptTag = new Element("script");
-                    scriptTag.attr("type", "application/ld+json");
-                    scriptTag.text(jsonLdSnippet);
-                    doc.head().appendChild(scriptTag);
-
-                    // Overwrite the original file with modified DOM
-                    Files.writeString(path, doc.outerHtml(), StandardCharsets.UTF_8);
-                    log.info("Injected ratings into: {}", path.getFileName());
-                    return true;
+                    if (injectionSuccessful) {
+                        // Overwrite the original static HTML file with the merged DOM structure
+                        Files.writeString(path, doc.outerHtml(), StandardCharsets.UTF_8);
+                        log.info("Successfully merged live rating into JSON-LD graph for: {}", path.getFileName());
+                        return true;
+                    }
                 }
             }
         } catch (Exception e) {
-            log.error("Failed to process HTML file: {}", path, e);
-            // System continues with next file
+            log.error("Failed to process HTML file during rating compilation: {}", path, e);
         }
         return false;
-    }
-
-    /**
-     * Generates a valid JSON-LD Product snippet containing AggregateRating and the mandatory name field.
-     */
-    private static String generateProductJsonLd(String productName, double averageRating, long reviewCount) {
-        // Escape quotes to ensure valid JSON syntax
-        String safeName = productName != null ? productName.replace("\"", "\\\"") : "Unknown Product";
-
-        return String.format(Locale.US,
-                "{\n" +
-                        "  \"@context\": \"https://schema.org\",\n" +
-                        "  \"@type\": \"Product\",\n" +
-                        "  \"name\": \"%s\",\n" +
-                        "  \"aggregateRating\": {\n" +
-                        "    \"@type\": \"AggregateRating\",\n" +
-                        "    \"ratingValue\": %.1f,\n" +
-                        "    \"reviewCount\": %d\n" +
-                        "  }\n" +
-                        "}", safeName, averageRating, reviewCount);
     }
 
     private static long parseLong(Object obj) {

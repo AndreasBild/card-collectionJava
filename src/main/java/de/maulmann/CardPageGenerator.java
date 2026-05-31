@@ -281,7 +281,7 @@ public class CardPageGenerator {
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] digest = md.digest(sb.toString().getBytes(StandardCharsets.UTF_8));
             StringBuilder hexString = new StringBuilder();
-            for (int i = 0; i < 4; i++) { // Use first 4 bytes (8 chars) for shorter but stable ID
+            for (int i = 0; i < 4; i++) {
                 String hex = Integer.toHexString(0xff & digest[i]);
                 if (hex.length() == 1) hexString.append('0');
                 hexString.append(hex);
@@ -382,27 +382,22 @@ public class CardPageGenerator {
         String frontImgPath = seasonImgFolder + "/" + imageBaseName + "-front.webp";
         String backImgPath = seasonImgFolder + "/" + imageBaseName + "-back.webp";
 
-        // Baue die Map für FreeMarker auf
         Map<String, Object> data = new HashMap<>();
         data.put("cardId", c.stableId);
 
-        // Globale HTML Bausteine
         String faqHtml = generateFaqHtml(c);
         data.put("headHtml", SharedTemplates.getHead(browserTitle, metaDesc, ROOT, overviewPage, frontImgPath));
         data.put("jsonLd", generateJsonLd(c, metaDesc, h1Title, overviewPage, imageBaseName, faqHtml));
         data.put("topNavHtml", SharedTemplates.getTopNav(ROOT, "collection"));
         data.put("footerHtml", SharedTemplates.getFooter(ROOT));
 
-        // Navigation
         data.put("overviewPage", overviewPage);
         data.put("prevLink", prev != null ? "../" + prev.seasonFolder + "/" + prev.filename : null);
         data.put("nextLink", next != null ? "../" + next.seasonFolder + "/" + next.filename : null);
 
-        // Titel und SEO Text
         data.put("h1Title", h1Title);
         data.put("aiSnapshotText", metaDesc);
 
-        // Bilder
         data.put("frontImgPath", frontImgPath);
         data.put("backImgPath", backImgPath);
         data.put("frontAlt", generateAltText(c, "front"));
@@ -410,7 +405,6 @@ public class CardPageGenerator {
         data.put("frontImgTitle", c.get("Player") +" Private Collection - Front scan: " + c.get("Player") + " " + c.get("Season") + " " + c.get("Brand") + " " + c.get("Variant"));
         data.put("backImgTitle", c.get("Player") +" Private Collection - Back scan: " + c.get("Player") + " " + c.get("Season") +" " + c.get("Brand") + " " + c.get("Variant"));
 
-        // Technische Daten (Tabelle)
         data.put("season", isValid(c.get("Season")) ? c.get("Season") : "-");
         data.put("team", isValid(c.get("Team")) ? c.get("Team") : "-");
         data.put("company", isValid(c.get("Company")) ? c.get("Company") : "-");
@@ -434,7 +428,6 @@ public class CardPageGenerator {
         String grading = c.get("Grading Co.") + " " + c.get("Grade");
         data.put("grading", (grading.trim().length() > 1 && !grading.trim().equals("null null")) ? grading : "");
 
-        // Trivia & Context Engines
         data.put("hobbyTrivia", getHobbyTrivia(c));
         data.put("techTrivia", getCardTechTrivia(c));
         data.put("playerHighlights", getSeasonHighlights(c.get("Season"), c.get("Player")));
@@ -443,7 +436,6 @@ public class CardPageGenerator {
 
         data.put("faqHtml", faqHtml);
 
-        // FreeMarker Template füllen und in die Datei schreiben
         try {
             Template template = fmConfig.getTemplate("card-detail.ftlh");
             StringWriter sw = new StringWriter();
@@ -466,17 +458,14 @@ public class CardPageGenerator {
         }
     }
 
-    // --- ENGINE 1: HOBBY SIGNIFICANCE (Sets, Parallels & History) ---
     private static String getHobbyTrivia(CardData c) {
         return triviaManager.getTrivia("hobbyTrivia", c.attributes);
     }
 
-    // --- ENGINE 2: CARD TECHNOLOGY (Die-Cuts, Chromium, Plates, 1/1s) ---
     private static String getCardTechTrivia(CardData c) {
         return triviaManager.getTrivia("techTrivia", c.attributes);
     }
 
-    // --- ENGINE 3: PLAYER PERFORMANCE & TEAMMATES ---
     private static String getSeasonHighlights(String season, String player) {
         Map<String, String> context = new HashMap<>();
         context.put("Season", season);
@@ -484,7 +473,6 @@ public class CardPageGenerator {
         return triviaManager.getTrivia("playerHighlights", context);
     }
 
-    // --- ENGINE 4: NBA ERA & POP CULTURE CONTEXT ---
     private static String getNbaEraContext(String season, String player) {
         Map<String, String> context = new HashMap<>();
         context.put("Season", season);
@@ -649,22 +637,14 @@ public class CardPageGenerator {
         sb.append("      \"mpn\": \"").append(escapeJson(c.get("Number"))).append("\",\n");
         sb.append("      \"brand\": { \"@type\": \"Brand\", \"name\": \"").append(escapeJson(c.get("Brand"))).append("\" },\n");
         sb.append("      \"manufacturer\": { \"@type\": \"Organization\", \"name\": \"").append(escapeJson(c.get("Company"))).append("\" },\n");
-        sb.append("      \"category\": \"Sports Trading Cards\",\n");
+
         if (isHolyGrail(c)) {
-            sb.append("      \"material\": \"Premium Hobby Parallel\",\n");
+            sb.append("      \"category\": \"Sports Trading Cards\",\n");
+            sb.append("      \"material\": \"Premium Hobby Parallel\"\n");
+        } else {
+            sb.append("      \"category\": \"Sports Trading Cards\"\n");
         }
-        sb.append("      \"offers\": {\n");
-        sb.append("        \"@type\": \"Offer\",\n");
-        sb.append("        \"availability\": \"https://schema.org/InStock\",\n");
-        sb.append("        \"itemCondition\": \"https://schema.org/UsedCondition\",\n");
-        sb.append("        \"price\": \"0\",\n");
-        sb.append("        \"priceCurrency\": \"USD\",\n");
-        sb.append("        \"seller\": {\n");
-        sb.append("          \"@type\": \"Person\",\n");
-        sb.append("          \"name\": \"Mauli Maulmann\",\n");
-        sb.append("          \"description\": \"Juwan Howard Super Collector\"\n");
-        sb.append("        }\n");
-        sb.append("      }\n");
+
         sb.append("    }");
 
         // 4. FAQPage (if present)
@@ -733,9 +713,9 @@ public class CardPageGenerator {
     private static String escapeHtml(String text) {
         if (text == null) return "";
         return text.replace("&", "&amp;")
-                   .replace("<", "&lt;")
-                   .replace(">", "&gt;")
-                   .replace("\"", "&quot;")
-                   .replace("'", "&#39;");
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("\"", "&quot;")
+                .replace("'", "&#39;");
     }
 }
