@@ -250,12 +250,13 @@ ${topNavHtml?no_esc}
     import { getFirestore, doc, setDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
-        apiKey: "YOUR_API_KEY",
-        authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-        projectId: "YOUR_PROJECT_ID",
-        storageBucket: "YOUR_PROJECT_ID.appspot.com",
-        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-        appId: "YOUR_APP_ID"
+        apiKey: "AIzaSyCtPPb0fIt3kaKBwDvvBFpVUkyt8-nR2NE",
+        authDomain: "maulmann-3f90d.firebaseapp.com",
+        projectId: "maulmann-3f90d",
+        storageBucket: "maulmann-3f90d.firebasestorage.app",
+        messagingSenderId: "252806218272",
+        appId: "1:252806218272:web:c38637e537dc958f3eb245",
+        measurementId: "G-78BKZH6R67"
     };
 
     const app = initializeApp(firebaseConfig);
