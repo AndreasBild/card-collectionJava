@@ -19,9 +19,15 @@
         <org.codehaus.mojo.version>3.6.3</org.codehaus.mojo.version>
         <org.jsoup.version>1.22.2</org.jsoup.version>
         <com.yahoo.platform.yui.version>2.4.8</com.yahoo.platform.yui.version>
+        <com.google.firebase.version>9.9.0</com.google.firebase.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.google.firebase</groupId>
+            <artifactId>firebase-admin</artifactId>
+            <version>${com.google.firebase.version}</version>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
