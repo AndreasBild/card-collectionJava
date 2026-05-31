@@ -178,16 +178,16 @@ ${topNavHtml?no_esc}
             <h3>Rate this Card</h3>
             <div class="rating-interaction-container">
                 <div class="star-rating" id="interactive-stars">
-                    <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Hervorragend"></label>
-                    <input type="radio" id="star4half" name="rating" value="4.5" /><label class="half" for="star4half" title="Sehr gut"></label>
-                    <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Gut"></label>
-                    <input type="radio" id="star3half" name="rating" value="3.5" /><label class="half" for="star3half" title="Ganz gut"></label>
-                    <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Befriedigend"></label>
-                    <input type="radio" id="star2half" name="rating" value="2.5" /><label class="half" for="star2half" title="Akzeptabel"></label>
-                    <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Ausreichend"></label>
-                    <input type="radio" id="star1half" name="rating" value="1.5" /><label class="half" for="star1half" title="Mangelhaft"></label>
-                    <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Ungenügend"></label>
-                    <input type="radio" id="star0half" name="rating" value="0.5" /><label class="half" for="star0half" title="Sehr ungenügend"></label>
+                    <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Exceptional"></label>
+                    <input type="radio" id="star4half" name="rating" value="4.5" /><label class="half" for="star4half" title="Very Good"></label>
+                    <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Good"></label>
+                    <input type="radio" id="star3half" name="rating" value="3.5" /><label class="half" for="star3half" title="Nice"></label>
+                    <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Average"></label>
+                    <input type="radio" id="star2half" name="rating" value="2.5" /><label class="half" for="star2half" title="Ok"></label>
+                    <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Acceptable"></label>
+                    <input type="radio" id="star1half" name="rating" value="1.5" /><label class="half" for="star1half" title="Not Good"></label>
+                    <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Poor"></label>
+                    <input type="radio" id="star0half" name="rating" value="0.5" /><label class="half" for="star0half" title="Very Poor"></label>
                 </div>
                 <div id="rating-value-label" class="rating-label">Rate it!</div>
             </div>
