@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -51,22 +52,32 @@ public class FirestoreRatingInjector {
 
     /**
      * Initializes the Firebase Admin SDK using a service account JSON string
-     * provided via environment variable for CI/CD compatibility.
+     * provided via environment variable or a local JSON file.
      */
     private static void initFirebase() throws IOException {
         String serviceAccountJson = System.getenv("FIREBASE_SERVICE_ACCOUNT_JSON");
-        if (serviceAccountJson == null || serviceAccountJson.isEmpty()) {
-            log.error("Environment variable FIREBASE_SERVICE_ACCOUNT_JSON is missing.");
-            throw new IllegalStateException("FIREBASE_SERVICE_ACCOUNT_JSON not set.");
+        String serviceAccountPath = "firebase/maulmann-3f90d-firebase-adminsdk-fbsvc-78c9f10838";
+
+        FirebaseOptions.Builder optionsBuilder = FirebaseOptions.builder();
+
+        if (serviceAccountJson != null && !serviceAccountJson.isEmpty()) {
+            log.info("Initializing Firebase using JSON from environment variable.");
+            optionsBuilder.setCredentials(GoogleCredentials.fromStream(
+                    new ByteArrayInputStream(serviceAccountJson.getBytes(StandardCharsets.UTF_8))));
+        } else {
+            File serviceAccountFile = new File(serviceAccountPath);
+            if (serviceAccountFile.exists()) {
+                log.info("Initializing Firebase using service account file: {}", serviceAccountPath);
+                optionsBuilder.setCredentials(GoogleCredentials.fromStream(
+                        new FileInputStream(serviceAccountFile)));
+            } else {
+                log.error("Firebase credentials missing. Neither FIREBASE_SERVICE_ACCOUNT_JSON env var nor file at {} exists.", serviceAccountPath);
+                throw new IllegalStateException("Firebase credentials not found.");
+            }
         }
 
-        FirebaseOptions options = FirebaseOptions.builder()
-                .setCredentials(GoogleCredentials.fromStream(
-                        new ByteArrayInputStream(serviceAccountJson.getBytes(StandardCharsets.UTF_8))))
-                .build();
-
         if (FirebaseApp.getApps().isEmpty()) {
-            FirebaseApp.initializeApp(options);
+            FirebaseApp.initializeApp(optionsBuilder.build());
             log.info("Firebase Admin SDK initialized successfully.");
         }
     }
