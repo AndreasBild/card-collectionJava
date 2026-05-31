@@ -172,6 +172,25 @@ ${topNavHtml?no_esc}
                 👎 <span id="dislike-count">0</span>
             </button>
         </div>
+
+        <div class="rating-stars-wrapper">
+            <h3>Card Rating</h3>
+            <div class="star-rating">
+                <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="5 stars"></label>
+                <input type="radio" id="star4half" name="rating" value="4.5" /><label class="half" for="star4half" title="4.5 stars"></label>
+                <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="4 stars"></label>
+                <input type="radio" id="star3half" name="rating" value="3.5" /><label class="half" for="star3half" title="3.5 stars"></label>
+                <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="3 stars"></label>
+                <input type="radio" id="star2half" name="rating" value="2.5" /><label class="half" for="star2half" title="2.5 stars"></label>
+                <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="2 stars"></label>
+                <input type="radio" id="star1half" name="rating" value="1.5" /><label class="half" for="star1half" title="1.5 stars"></label>
+                <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="1 star"></label>
+                <input type="radio" id="star0half" name="rating" value="0.5" /><label class="half" for="star0half" title="0.5 stars"></label>
+            </div>
+            <p class="rating-info">
+                <span id="average-rating">0.0</span> / 5.0 (<span id="rating-count">0</span> votes)
+            </p>
+        </div>
     </section>
 
     <section class="faq-section">
@@ -269,20 +288,36 @@ ${topNavHtml?no_esc}
     const likeCountSpan = document.getElementById('like-count');
     const dislikeCountSpan = document.getElementById('dislike-count');
 
+    const averageRatingSpan = document.getElementById('average-rating');
+    const ratingCountSpan = document.getElementById('rating-count');
+    const starInputs = document.querySelectorAll('.star-rating input');
+
     const localStorageKey = `voted_${cardId}`;
+    const localStorageRatingKey = `voted_rating_${cardId}`;
 
     if (localStorage.getItem(localStorageKey)) {
         likeBtn.disabled = true;
         dislikeBtn.disabled = true;
     }
 
-    const cardRef = doc(db, "Trading_cards", cardId);
+    if (localStorage.getItem(localStorageRatingKey)) {
+        starInputs.forEach(input => input.disabled = true);
+    }
+
+    const cardRef = doc(db, "basketball_cards", cardId);
 
     onSnapshot(cardRef, (docSnap) => {
         if (docSnap.exists()) {
             const data = docSnap.data();
             likeCountSpan.textContent = data.likes || 0;
             dislikeCountSpan.textContent = data.dislikes || 0;
+
+            const sum = data.ratingSum || 0;
+            const count = data.ratingCount || 0;
+            const average = count > 0 ? (sum / count).toFixed(1) : "0.0";
+
+            averageRatingSpan.textContent = average;
+            ratingCountSpan.textContent = count;
         }
     });
 
@@ -302,8 +337,28 @@ ${topNavHtml?no_esc}
         }
     }
 
+    async function handleRating(value) {
+        if (localStorage.getItem(localStorageRatingKey)) return;
+
+        try {
+            await setDoc(cardRef, {
+                ratingSum: increment(parseFloat(value)),
+                ratingCount: increment(1)
+            }, { merge: true });
+
+            localStorage.setItem(localStorageRatingKey, 'true');
+            starInputs.forEach(input => input.disabled = true);
+        } catch (error) {
+            console.error("Error rating:", error);
+        }
+    }
+
     likeBtn.addEventListener('click', () => handleVote('likes'));
     dislikeBtn.addEventListener('click', () => handleVote('dislikes'));
+
+    starInputs.forEach(input => {
+        input.addEventListener('change', (e) => handleRating(e.target.value));
+    });
 </script>
 </body>
 </html>

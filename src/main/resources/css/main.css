@@ -540,6 +540,79 @@ tr:hover {
     opacity: 0.7;
 }
 
+.rating-stars-wrapper {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.rating-stars-wrapper h3 {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.star-rating {
+    border: none;
+    display: inline-block;
+    direction: rtl;
+}
+
+.star-rating input {
+    display: none;
+}
+
+.star-rating label {
+    color: #ddd;
+    float: right;
+    cursor: pointer;
+    position: relative;
+    width: 0.9rem;
+    height: 1.8rem;
+    overflow: hidden;
+    line-height: 1.8rem;
+}
+
+.star-rating label:before {
+    content: "\2605";
+    font-size: 1.8rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.star-rating .full:before {
+    left: -0.9rem;
+}
+
+.star-rating label.full {
+    margin-right: 4px;
+}
+
+.star-rating input:checked ~ label,
+.star-rating:not(:checked) > label:hover,
+.star-rating:not(:checked) > label:hover ~ label {
+    color: #FFD700;
+}
+
+.star-rating input:checked + label:hover,
+.star-rating input:checked ~ label:hover,
+.star-rating label:hover ~ input:checked ~ label,
+.star-rating input:checked ~ label:hover ~ label {
+    color: #FFED85;
+}
+
+.star-rating input:disabled ~ label {
+    cursor: default;
+    opacity: 0.6;
+}
+
+.rating-info {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
 /* --- OCR TEXT BOX --- */
 .card-back-text-container {
     background-color: #f9f7f2;
