@@ -165,31 +165,49 @@ ${topNavHtml?no_esc}
     <section class="vote-section">
         <h2>Collector Sentiment</h2>
         <div class="vote-container" data-card-id="${cardId}">
-            <button id="like-btn" title="Like this card" class="modern-button">
-                👍 <span id="like-count">0</span>
+            <button id="like-btn" title="I like this card" class="vote-btn like">
+                <span class="icon">👍</span> <span class="label">Like</span> <span id="like-count" class="count">0</span>
             </button>
-            <button id="dislike-btn" title="Dislike this card" class="modern-button">
-                👎 <span id="dislike-count">0</span>
+            <button id="dislike-btn" title="I dislike this card" class="vote-btn dislike">
+                <span class="icon">👎</span> <span class="label">Dislike</span> <span id="dislike-count" class="count">0</span>
             </button>
         </div>
 
         <div class="rating-stars-wrapper">
-            <h3>Card Rating</h3>
-            <div class="star-rating">
-                <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="5 stars"></label>
-                <input type="radio" id="star4half" name="rating" value="4.5" /><label class="half" for="star4half" title="4.5 stars"></label>
-                <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="4 stars"></label>
-                <input type="radio" id="star3half" name="rating" value="3.5" /><label class="half" for="star3half" title="3.5 stars"></label>
-                <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="3 stars"></label>
-                <input type="radio" id="star2half" name="rating" value="2.5" /><label class="half" for="star2half" title="2.5 stars"></label>
-                <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="2 stars"></label>
-                <input type="radio" id="star1half" name="rating" value="1.5" /><label class="half" for="star1half" title="1.5 stars"></label>
-                <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="1 star"></label>
-                <input type="radio" id="star0half" name="rating" value="0.5" /><label class="half" for="star0half" title="0.5 stars"></label>
+            <h3>Rate this Card</h3>
+            <div class="rating-interaction-container">
+                <div class="star-rating" id="interactive-stars">
+                    <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Hervorragend"></label>
+                    <input type="radio" id="star4half" name="rating" value="4.5" /><label class="half" for="star4half" title="Sehr gut"></label>
+                    <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Gut"></label>
+                    <input type="radio" id="star3half" name="rating" value="3.5" /><label class="half" for="star3half" title="Ganz gut"></label>
+                    <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Befriedigend"></label>
+                    <input type="radio" id="star2half" name="rating" value="2.5" /><label class="half" for="star2half" title="Akzeptabel"></label>
+                    <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Ausreichend"></label>
+                    <input type="radio" id="star1half" name="rating" value="1.5" /><label class="half" for="star1half" title="Mangelhaft"></label>
+                    <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Ungenügend"></label>
+                    <input type="radio" id="star0half" name="rating" value="0.5" /><label class="half" for="star0half" title="Sehr ungenügend"></label>
+                </div>
+                <div id="rating-value-label" class="rating-label">Rate it!</div>
             </div>
-            <p class="rating-info">
-                <span id="average-rating">0.0</span> / 5.0 (<span id="rating-count">0</span> votes)
-            </p>
+
+            <div id="rating-confirmation" class="rating-confirmation" style="display: none;">
+                <p>Your Rating: <span id="selected-rating-text">0</span> Stars. Send it now?</p>
+                <div class="confirmation-buttons">
+                    <button id="submit-rating-btn" class="modern-button confirm-btn">Submit Rating</button>
+                    <button id="cancel-rating-btn" class="cancel-btn">Cancel</button>
+                </div>
+            </div>
+
+            <div class="aggregate-rating">
+                <div class="aggregate-stars-container">
+                    <div class="stars-outer">
+                        <div class="stars-inner" id="stars-inner-width"></div>
+                    </div>
+                    <span class="rating-number"><span id="average-rating">0.0</span> / 5.0</span>
+                </div>
+                <p class="rating-count-text">(<span id="rating-count">0</span> Collector Ratings)</p>
+            </div>
         </div>
     </section>
 
@@ -290,10 +308,19 @@ ${topNavHtml?no_esc}
 
     const averageRatingSpan = document.getElementById('average-rating');
     const ratingCountSpan = document.getElementById('rating-count');
+    const starsInner = document.getElementById('stars-inner-width');
     const starInputs = document.querySelectorAll('.star-rating input');
+    const starLabels = document.querySelectorAll('.star-rating label');
+    const ratingLabel = document.getElementById('rating-value-label');
+    const ratingConfirmation = document.getElementById('rating-confirmation');
+    const selectedRatingText = document.getElementById('selected-rating-text');
+    const submitRatingBtn = document.getElementById('submit-rating-btn');
+    const cancelRatingBtn = document.getElementById('cancel-rating-btn');
 
     const localStorageKey = `voted_${cardId}`;
     const localStorageRatingKey = `voted_rating_${cardId}`;
+
+    let pendingRating = null;
 
     if (localStorage.getItem(localStorageKey)) {
         likeBtn.disabled = true;
@@ -301,7 +328,13 @@ ${topNavHtml?no_esc}
     }
 
     if (localStorage.getItem(localStorageRatingKey)) {
+        disableStarInteraction();
+    }
+
+    function disableStarInteraction() {
         starInputs.forEach(input => input.disabled = true);
+        ratingLabel.textContent = "Thank you for rating!";
+        ratingLabel.style.color = "#3a7504";
     }
 
     const cardRef = doc(db, "Trading_cards", cardId);
@@ -318,6 +351,10 @@ ${topNavHtml?no_esc}
 
             averageRatingSpan.textContent = average;
             ratingCountSpan.textContent = count;
+
+            // Update visual stars
+            const visualPercentage = (parseFloat(average) / 5) * 100;
+            starsInner.style.width = visualPercentage + "%";
         }
     });
 
@@ -337,27 +374,57 @@ ${topNavHtml?no_esc}
         }
     }
 
-    async function handleRating(value) {
-        if (localStorage.getItem(localStorageRatingKey)) return;
+    async function submitRating() {
+        if (!pendingRating || localStorage.getItem(localStorageRatingKey)) return;
 
         try {
             await setDoc(cardRef, {
-                ratingSum: increment(parseFloat(value)),
+                ratingSum: increment(parseFloat(pendingRating)),
                 ratingCount: increment(1)
             }, { merge: true });
 
             localStorage.setItem(localStorageRatingKey, 'true');
-            starInputs.forEach(input => input.disabled = true);
+            disableStarInteraction();
+            ratingConfirmation.style.display = 'none';
+            pendingRating = null;
         } catch (error) {
             console.error("Error rating:", error);
         }
     }
 
+    // Interaction Listeners
     likeBtn.addEventListener('click', () => handleVote('likes'));
     dislikeBtn.addEventListener('click', () => handleVote('dislikes'));
 
+    starLabels.forEach(label => {
+        label.addEventListener('mouseenter', (e) => {
+            if (!localStorage.getItem(localStorageRatingKey)) {
+                ratingLabel.textContent = e.target.title;
+            }
+        });
+    });
+
+    document.getElementById('interactive-stars').addEventListener('mouseleave', () => {
+        if (!localStorage.getItem(localStorageRatingKey)) {
+            ratingLabel.textContent = "Rate it!";
+        }
+    });
+
     starInputs.forEach(input => {
-        input.addEventListener('change', (e) => handleRating(e.target.value));
+        input.addEventListener('change', (e) => {
+            if (localStorage.getItem(localStorageRatingKey)) return;
+            pendingRating = e.target.value;
+            selectedRatingText.textContent = pendingRating;
+            ratingConfirmation.style.display = 'block';
+            ratingConfirmation.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+    });
+
+    submitRatingBtn.addEventListener('click', submitRating);
+    cancelRatingBtn.addEventListener('click', () => {
+        ratingConfirmation.style.display = 'none';
+        pendingRating = null;
+        starInputs.forEach(input => input.checked = false);
     });
 </script>
 </body>
