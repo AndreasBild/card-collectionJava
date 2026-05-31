@@ -56,6 +56,11 @@ public class SharedTemplates {
         return loadResource("/templates/analytics.html");
     }
 
+    public static String getConsentBanner(String root) {
+        String template = loadResource("/templates/consent_banner.html");
+        return template.replace("{{ROOT}}", root);
+    }
+
     public static String getFavicon(String root) {
         String template = loadResource("/templates/favicon.html");
         return template.replace("{{ROOT}}", root);

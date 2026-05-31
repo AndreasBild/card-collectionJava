@@ -12,6 +12,7 @@
     ${jsonLd?no_esc}
 </head>
 <body>
+{{CONSENT_BANNER}}
 ${topNavHtml?no_esc}
 
 <nav class="detail-nav no-border-bg">
@@ -358,8 +359,25 @@ ${topNavHtml?no_esc}
         }
     });
 
+    function checkConsent() {
+        if (localStorage.getItem('user_consent') !== 'accepted') {
+            if (window.showConsentBanner) {
+                window.showConsentBanner();
+            }
+            // Highlight the banner briefly
+            const banner = document.getElementById('consent-banner');
+            if (banner) {
+                banner.style.backgroundColor = '#fff9c4';
+                setTimeout(() => banner.style.backgroundColor = '#fff', 2000);
+            }
+            return false;
+        }
+        return true;
+    }
+
     async function handleVote(type) {
         if (localStorage.getItem(localStorageKey)) return;
+        if (!checkConsent()) return;
 
         try {
             await setDoc(cardRef, {
@@ -376,6 +394,7 @@ ${topNavHtml?no_esc}
 
     async function submitRating() {
         if (!pendingRating || localStorage.getItem(localStorageRatingKey)) return;
+        if (!checkConsent()) return;
 
         try {
             await setDoc(cardRef, {

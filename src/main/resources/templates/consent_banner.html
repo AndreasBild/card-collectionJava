@@ -1,0 +1,48 @@
+<div id="consent-banner" class="consent-banner" style="display: none;">
+    <div class="consent-content">
+        <p>
+            Wir verwenden Cookies und Local Storage, um Ihr Erlebnis zu verbessern, z. B. für unser Like- und Bewertungssystem.
+            Weitere Informationen finden Sie in unserer <a href="{{ROOT}}privacy.html">Datenschutzerklärung</a>.
+        </p>
+        <div class="consent-buttons">
+            <button id="consent-accept" class="modern-button confirm-btn">Zustimmen</button>
+            <button id="consent-reject" class="modern-button cancel-btn">Ablehnen</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const banner = document.getElementById('consent-banner');
+        const acceptBtn = document.getElementById('consent-accept');
+        const rejectBtn = document.getElementById('consent-reject');
+        const CONSENT_KEY = 'user_consent';
+
+        function showBanner() {
+            banner.style.display = 'block';
+        }
+
+        function hideBanner() {
+            banner.style.display = 'none';
+        }
+
+        function setConsent(status) {
+            localStorage.setItem(CONSENT_KEY, status);
+            hideBanner();
+            if (status === 'accepted') {
+                window.dispatchEvent(new Event('consent-given'));
+            }
+        }
+
+        const consent = localStorage.getItem(CONSENT_KEY);
+        if (!consent) {
+            showBanner();
+        }
+
+        acceptBtn.addEventListener('click', () => setConsent('accepted'));
+        rejectBtn.addEventListener('click', () => setConsent('rejected'));
+
+        // Expose a function to re-show the banner
+        window.showConsentBanner = showBanner;
+    })();
+</script>

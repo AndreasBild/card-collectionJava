@@ -5,6 +5,7 @@
     <#if jsonLd??>${jsonLd?no_esc}</#if>
 </head>
 <body>
+{{CONSENT_BANNER}}
 ${topNavHtml?no_esc}
 <main class="detail-main">
     <header class="detail-header">

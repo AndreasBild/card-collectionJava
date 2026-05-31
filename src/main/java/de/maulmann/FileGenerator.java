@@ -147,6 +147,14 @@ public class FileGenerator {
                 "Juwan Howard Wantlist | Super Collector Searching for 1/1, PMG, Ruby",
                 "Help a Juwan Howard Super Collector complete the master collection. We are searching for rare 1/1 Masterpieces, Precious Metal Gems (PMG), SkyBox Premium Rubies, and Legacy Collection parallels."
         });
+        collectionMetas.put("privacy", new String[]{
+                "Privacy Policy | Maulmann Trading Cards",
+                "Privacy policy for Maulmann Trading Cards. Information on data collection and usage."
+        });
+        collectionMetas.put("imprint", new String[]{
+                "Imprint | Maulmann Trading Cards",
+                "Legal notice and contact information for Maulmann Trading Cards."
+        });
 
         for (Map.Entry<String, String[]> entry : collectionMetas.entrySet()) {
             String coll = entry.getKey();
@@ -386,6 +394,11 @@ public class FileGenerator {
             String relativeOutputPath = new File(pathOutput).toURI().relativize(out.toURI()).getPath();
             String stableTime = timestampTracker.getStableTimestamp(relativeOutputPath, finalHtml);
             finalHtml = finalHtml.replace("[[STABLE_TIME]]", stableTime);
+        }
+
+        if (finalHtml.contains("{{CONSENT_BANNER}}")) {
+            String root = (String) data.getOrDefault("root", "");
+            finalHtml = finalHtml.replace("{{CONSENT_BANNER}}", SharedTemplates.getConsentBanner(root));
         }
 
         if (finalHtml.contains("{{FOOTER_NAV}}")) {
