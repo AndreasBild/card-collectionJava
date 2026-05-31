@@ -304,7 +304,7 @@ ${topNavHtml?no_esc}
         starInputs.forEach(input => input.disabled = true);
     }
 
-    const cardRef = doc(db, "basketball_cards", cardId);
+    const cardRef = doc(db, "Trading_cards", cardId);
 
     onSnapshot(cardRef, (docSnap) => {
         if (docSnap.exists()) {
