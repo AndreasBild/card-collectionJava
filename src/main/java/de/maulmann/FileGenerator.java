@@ -286,6 +286,22 @@ public class FileGenerator {
                     });
                 }
             }
+
+            // 4. Copy Favicon assets
+            Path faviconSourceDir = Paths.get("src/main/resources/favicon");
+            if (Files.exists(faviconSourceDir)) {
+                try (var stream = Files.walk(faviconSourceDir)) {
+                    stream.filter(Files::isRegularFile).forEach(source -> {
+                        try {
+                            Path target = Paths.get(pathOutput, "favicon").resolve(faviconSourceDir.relativize(source));
+                            Files.createDirectories(target.getParent());
+                            Files.copy(source, target, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                        } catch (IOException e) {
+                            System.err.println("Error copying Favicon asset " + source + ": " + e.getMessage());
+                        }
+                    });
+                }
+            }
         } catch (IOException e) {
             System.err.println("Error copying resources: " + e.getMessage());
         }
