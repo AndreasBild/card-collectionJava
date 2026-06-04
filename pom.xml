@@ -128,7 +128,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>${org.codehaus.mojo.version}</version>
                 <configuration>
-                    <mainClass>de.maulmann.FileGenerator</mainClass>
+                    <mainClass>de.maulmann.SiteBuilderPipeline</mainClass>
                 </configuration>
             </plugin>
         </plugins>
