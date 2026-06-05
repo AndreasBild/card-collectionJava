@@ -396,7 +396,7 @@ public class CardPageGenerator {
         data.put("nextLink", next != null ? "../" + next.seasonFolder + "/" + next.filename : null);
 
         data.put("h1Title", h1Title);
-        data.put("aiSnapshotText", metaDesc);
+        data.put("aiSnapshotText", generateAiSnapshotText(c));
 
         data.put("frontImgPath", frontImgPath);
         data.put("backImgPath", backImgPath);
@@ -534,6 +534,34 @@ public class CardPageGenerator {
             else sb.append("Numbered ").append(c.get("Serial")).append("/").append(c.get("Print Run")).append(". ");
         }
         sb.append("A must-see for any ").append(c.get("Player")).append(" Super Collector. High-res scans and hobby history.");
+        return sb.toString();
+    }
+
+    private static String generateAiSnapshotText(CardData c) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("View details for the ");
+        sb.append("<strong>").append(escapeHtml(c.get("Season"))).append(" ").append(escapeHtml(c.get("Brand"))).append(" ").append(escapeHtml(c.get("Player"))).append("</strong>");
+        sb.append(" card #").append(escapeHtml(c.get("Number"))).append(" from our ").append(escapeHtml(c.get("Player"))).append(" Private Collection. ");
+
+        if (c.has("Variant")) {
+            sb.append("Rare <strong>").append(escapeHtml(c.get("Variant"))).append("</strong> variant. ");
+        }
+
+        String combinedSerial = c.get("Serial/Print Run");
+        if (isValid(combinedSerial)) {
+            if (combinedSerial.contains("1/1") || combinedSerial.equals("1")) {
+                sb.append("Includes <strong>1/1 Masterpiece</strong> details. ");
+            } else {
+                sb.append("Serial numbered <strong>").append(escapeHtml(combinedSerial)).append("</strong>. ");
+            }
+        } else if (c.has("Serial")) {
+            if (c.get("Serial").equals("1") && c.get("Print Run").equals("1")) {
+                sb.append("One-of-One (<strong>1/1</strong>) Masterpiece. ");
+            } else {
+                sb.append("Numbered <strong>").append(escapeHtml(c.get("Serial"))).append("/").append(escapeHtml(c.get("Print Run"))).append("</strong>. ");
+            }
+        }
+        sb.append("A must-see for any ").append(escapeHtml(c.get("Player"))).append(" Super Collector. High-res scans and hobby history.");
         return sb.toString();
     }
 
