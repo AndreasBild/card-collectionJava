@@ -17,10 +17,48 @@
             navigator.serviceWorker.register('{{ROOT}}serviceWorker.js')
                 .then(registration => {
                     console.log('ServiceWorker registration successful with scope: ', registration.scope);
+
+                    // Check for updates
+                    registration.addEventListener('updatefound', () => {
+                        const newWorker = registration.installing;
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                // New content is available, show notification or reload
+                                if (confirm('New version available! Update now?')) {
+                                    newWorker.postMessage('skipWaiting');
+                                }
+                            }
+                        });
+                    });
+
+                    // Initial check for push subscription
+                    if ('PushManager' in window) {
+                        registration.pushManager.getSubscription().then(subscription => {
+                            if (subscription) {
+                                console.log('User is subscribed to push notifications');
+                            }
+                        });
+                    }
                 })
                 .catch(error => {
                     console.log('ServiceWorker registration failed: ', error);
                 });
         });
+
+        // Handle controller change (e.g. after skipWaiting)
+        let refreshing = false;
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+            if (!refreshing) {
+                window.location.reload();
+                refreshing = true;
+            }
+        });
+
+        // Clear App Badge when opening the app
+        if ('clearAppBadge' in navigator) {
+            navigator.clearAppBadge().catch((error) => {
+                console.error('Error clearing badge:', error);
+            });
+        }
     }
 </script>

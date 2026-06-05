@@ -4,31 +4,52 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/favicon/android-chrome-192x192.png",
+      "src": "favicon/android-chrome-192x192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "/favicon/android-chrome-512x512.png",
+      "src": "favicon/android-chrome-512x512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
   ],
-  "id": "/?source=pwa",
-  "start_url": "/index.html?source=pwa",
+  "id": "./?source=pwa",
+  "start_url": "./index.html?source=pwa",
   "background_color": "#3367D6",
   "display": "standalone",
-  "scope": "/",
+  "scope": "./",
   "theme_color": "#317EFB",
+  "categories": ["sports", "collection", "hobby"],
   "shortcuts": [
     {
       "name": "Juwan Howard Collection",
       "short_name": "Juwan Howard",
       "description": "Complete List Of Juwan Howard Basketball Trading Cards",
-      "url": "/?source=pwa",
-      "icons": [{ "src": "/favicon/apple-touch-icon.png", "sizes": "180x180" }]
+      "url": "./Juwan-Howard-Collection.html?source=pwa",
+      "icons": [{ "src": "favicon/android-chrome-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Baseball Cards",
+      "short_name": "Baseball",
+      "description": "Juwan Howard Baseball Card Collection",
+      "url": "./Baseball.html?source=pwa",
+      "icons": [{ "src": "favicon/android-chrome-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Flawless Collection",
+      "short_name": "Flawless",
+      "description": "Panini Flawless Card Subset",
+      "url": "./Flawless.html?source=pwa",
+      "icons": [{ "src": "favicon/android-chrome-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Wantlist",
+      "short_name": "Wantlist",
+      "description": "Cards we are looking for",
+      "url": "./Wantlist.html?source=pwa",
+      "icons": [{ "src": "favicon/android-chrome-192x192.png", "sizes": "192x192" }]
     }
-
   ],
-  "description": "Card Collection"
+  "description": "The ultimate digital archive for the Juwan Howard Super Collector. Featuring over a thousand unique trading cards, PMGs, and 1/1 Masterpieces."
 }
