@@ -36,7 +36,7 @@ ${topNavHtml?no_esc}
     </header>
 
     <div class="ai-summary">
-        <p><strong>Card Snapshot:</strong> ${aiSnapshotText}</p>
+        <p><strong>Card Snapshot:</strong> ${aiSnapshotText?no_esc}</p>
     </div>
 
     <div class="card-images-container">
