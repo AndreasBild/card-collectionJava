@@ -24,9 +24,7 @@ ${topNavHtml?no_esc}
         <#if nextLink??>
             <a id="nextCardLink" title="Next Card Details" href="${nextLink}" class="modern-button no-text-decoration">Next &raquo;</a>
         </#if>
-        <button id="shareBtn" title="Share this card" class="modern-button" style="display: none;">
-            <span class="icon">📤</span> Share
-        </button>
+        <button id="shareBtn" title="Share this card" class="modern-button" style="display: none;">Share</button>
     </div>
 </nav>
 
