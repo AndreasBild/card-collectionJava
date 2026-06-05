@@ -10,4 +10,52 @@
     <a href="{{ROOT}}sitemap.html" title="HTML Sitemap" class="plain">Sitemap</a> |
     <a href="{{ROOT}}imprint.html" title="Imprint" class="plain">Imprint</a> |
     <a href="{{ROOT}}privacy.html" title="Privacy Policy" class="plain">Privacy Policy</a>
+    <div style="margin-top: 15px;">
+        <button id="subscribePush" class="modern-button" style="display: none; font-size: 0.8em; padding: 5px 10px;">
+            🔔 Enable Notifications
+        </button>
+    </div>
 </footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const subscribeBtn = document.getElementById('subscribePush');
+        if ('serviceWorker' in navigator && 'PushManager' in window) {
+            navigator.serviceWorker.ready.then(registration => {
+                registration.pushManager.getSubscription().then(subscription => {
+                    if (!subscription) {
+                        subscribeBtn.style.display = 'inline-block';
+                    }
+                });
+            });
+
+            subscribeBtn.addEventListener('click', () => {
+                navigator.serviceWorker.ready.then(registration => {
+                    // Use user consent logic before subscribing
+                    if (localStorage.getItem('user_consent') !== 'accepted') {
+                        if (window.showConsentBanner) {
+                            window.showConsentBanner();
+                        }
+                        return;
+                    }
+
+                    const options = {
+                        userVisibleOnly: true,
+                        // Note: For a real implementation, a valid VAPID public key from a push service is required.
+                        applicationServerKey: 'BJKfWjE6mN_X-f_m7y_nZ_J0X_X_X_X_X_X_X_X_X'
+                    };
+                    registration.pushManager.subscribe(options)
+                        .then(subscription => {
+                            console.log('User subscribed:', subscription);
+                            subscribeBtn.style.display = 'none';
+                            alert('Notifications enabled! You will receive updates about new cards.');
+                        })
+                        .catch(err => {
+                            console.error('Subscription failed:', err);
+                            alert('Notification subscription failed. Please check your browser settings.');
+                        });
+                });
+            });
+        }
+    });
+</script>

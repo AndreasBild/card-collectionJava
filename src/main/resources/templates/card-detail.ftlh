@@ -24,6 +24,9 @@ ${topNavHtml?no_esc}
         <#if nextLink??>
             <a id="nextCardLink" title="Next Card Details" href="${nextLink}" class="modern-button no-text-decoration">Next &raquo;</a>
         </#if>
+        <button id="shareBtn" title="Share this card" class="modern-button" style="display: none;">
+            <span class="icon">📤</span> Share
+        </button>
     </div>
 </nav>
 
@@ -322,6 +325,24 @@ ${topNavHtml?no_esc}
     const localStorageRatingKey = `voted_rating_${cardId}`;
 
     let pendingRating = null;
+
+    // Web Share API implementation
+    const shareBtn = document.getElementById('shareBtn');
+    if (navigator.share) {
+        shareBtn.style.display = 'inline-flex';
+        shareBtn.addEventListener('click', async () => {
+            try {
+                await navigator.share({
+                    title: document.title,
+                    text: 'Check out this rare Juwan Howard card: ' + document.querySelector('h1').textContent,
+                    url: window.location.href
+                });
+                console.log('Successfully shared');
+            } catch (error) {
+                console.log('Error sharing:', error);
+            }
+        });
+    }
 
     if (localStorage.getItem(localStorageKey)) {
         likeBtn.disabled = true;
