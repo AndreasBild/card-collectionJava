@@ -59,6 +59,10 @@
             navigator.clearAppBadge().catch((error) => {
                 console.error('Error clearing badge:', error);
             });
+            // Also notify Service Worker to clear its local state if needed
+            if (navigator.serviceWorker.controller) {
+                navigator.serviceWorker.controller.postMessage('clearBadge');
+            }
         }
     }
 </script>

@@ -39,6 +39,20 @@ public class FileGenerator {
         fmConfig.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
     }
 
+    // --- 0. LATEST METADATA FÜR PWA ---
+    public static void generateLatestMetadata(int totalCardCount) {
+        try {
+            System.out.println("-> Generiere latest.json...");
+            String json = "{\n" +
+                    "  \"cardCount\": " + totalCardCount + ",\n" +
+                    "  \"lastUpdate\": \"" + System.currentTimeMillis() + "\"\n" +
+                    "}";
+            Files.writeString(Paths.get(pathOutput, "latest.json"), json, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            System.err.println("Fehler bei latest.json: " + e.getMessage());
+        }
+    }
+
     // --- 1. HAUPT-SAMMLUNG BAUEN ---
     public static void buildCollectionOverview() {
         try {
@@ -76,6 +90,8 @@ public class FileGenerator {
             File[] seasonFiles = contentDir.listFiles((dir, name) -> name.endsWith(".html") && (name.matches(".*\\d.*") || name.equalsIgnoreCase("College.html")));
 
             List<Map<String, String>> seasons = new ArrayList<>();
+            int cumulativeTotal = 0; // Der laufende Zähler für die Gesamtanzahl!
+
             if (seasonFiles != null) {
 
                 // NEU: Sortiert chronologisch, aber zwingt "College.html" an die allererste Position
@@ -84,8 +100,6 @@ public class FileGenerator {
                     if (f2.getName().equalsIgnoreCase("College.html")) return 1;
                     return f1.getName().compareTo(f2.getName());
                 });
-
-                int cumulativeTotal = 0; // Der laufende Zähler für die Gesamtanzahl!
 
                 for (File file : seasonFiles) {
                     Map<String, String> seasonMap = new HashMap<>();
@@ -124,6 +138,9 @@ public class FileGenerator {
             }
             data.put("seasons", seasons);
             processTemplate("collection-overview.ftlh", data, pathOutput + "Juwan-Howard-Collection.html");
+
+            // Metadaten für PWA generieren
+            generateLatestMetadata(cumulativeTotal);
 
         } catch (Exception e) { System.err.println("Fehler bei Haupt-Collection: " + e.getMessage()); }
     }
@@ -279,7 +296,14 @@ public class FileGenerator {
                         try {
                             Path target = Paths.get(pathOutput).resolve(pwaSourceDir.relativize(source));
                             Files.createDirectories(target.getParent());
-                            Files.copy(source, target, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+
+                            if (source.getFileName().toString().equals("serviceWorker.js")) {
+                                String content = Files.readString(source, StandardCharsets.UTF_8);
+                                content = content.replace("[[BUILD_ID]]", SharedTemplates.BUILD_ID);
+                                Files.writeString(target, content, StandardCharsets.UTF_8);
+                            } else {
+                                Files.copy(source, target, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                            }
                         } catch (IOException e) {
                             System.err.println("Error copying PWA asset " + source + ": " + e.getMessage());
                         }
