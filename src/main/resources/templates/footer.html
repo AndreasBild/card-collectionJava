@@ -39,21 +39,29 @@
                         return;
                     }
 
-                    const options = {
-                        userVisibleOnly: true,
-                        // Note: For a real implementation, a valid VAPID public key from a push service is required.
-                        applicationServerKey: 'BJKfWjE6mN_X-f_m7y_nZ_J0X_X_X_X_X_X_X_X_X'
-                    };
-                    registration.pushManager.subscribe(options)
-                        .then(subscription => {
-                            console.log('User subscribed:', subscription);
+                    // First request browser notification permission
+                    Notification.requestPermission().then(permission => {
+                        if (permission === 'granted') {
+                            // If push isn't possible (e.g. no VAPID), we still have permission for local notifications
+                            // triggered by the service worker checking latest.json
                             subscribeBtn.style.display = 'none';
                             alert('Notifications enabled! You will receive updates about new cards.');
-                        })
-                        .catch(err => {
-                            console.error('Subscription failed:', err);
-                            alert('Notification subscription failed. Please check your browser settings.');
-                        });
+
+                            // Optional: Still try to subscribe to real push if VAPID is set
+                            const options = {
+                                userVisibleOnly: true,
+                                // Note: For a real implementation, a valid VAPID public key from a push service is required.
+                                applicationServerKey: 'BJKfWjE6mN_X-f_m7y_nZ_J0X_X_X_X_X_X_X_X_X'
+                            };
+                            registration.pushManager.subscribe(options).catch(e => {
+                                console.log('Push subscription skipped or failed, local polling will be used instead.');
+                            });
+                        } else {
+                            alert('Notification permission denied.');
+                        }
+                    }).catch(err => {
+                        console.error('Permission request failed:', err);
+                    });
                 });
             });
         }

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#317EFB">
+    <title>Offline - Maulmann Cards</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            text-align: center;
+            padding: 50px 20px;
+            background: #f4f7f9;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            max-width: 400px;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1 { color: #2c3e50; margin-top: 0; }
+        p { color: #5a6c7d; line-height: 1.6; }
+        .back-btn {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 12px 24px;
+            background: #3a7504;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .back-btn:hover {
+            background: #2d5a03;
+        }
+        .icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">📡❌</div>
+        <h1>You are offline</h1>
+        <p>It seems you don't have an internet connection right now. Some pages you've visited before might still be available.</p>
+        <a href="./index.html" class="back-btn">Return to Home</a>
+    </div>
+</body>
+</html>
