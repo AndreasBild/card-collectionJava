@@ -38,6 +38,12 @@ public class SitemapGenerator {
         generate();
     }
 
+    private static TimestampTracker timestampTracker;
+
+    public static void setTimestampTracker(TimestampTracker tracker) {
+        timestampTracker = tracker;
+    }
+
     public static void generate() {
         AtomicInteger imagesAdded = new AtomicInteger(0);
         AtomicInteger imagesMissing = new AtomicInteger(0);
@@ -202,10 +208,6 @@ public class SitemapGenerator {
             String title = "HTML Sitemap | Juwan Howard Private Collection";
             String description = "An organized overview of all pages in the Juwan Howard Super Collector private collection, including over 1,000 unique trading cards.";
 
-            // Note: We need to use SharedTemplates but SitemapGenerator might run in a context
-            // where it doesn't have easy access to all createBaseData logic from FileGenerator.
-            // However, they are in the same package.
-
             String headHtml = SharedTemplates.getHead(title, description, "", "sitemap.html", FileGenerator.DEFAULT_IMAGE);
             String topNavHtml = SharedTemplates.getTopNav("", "sitemap");
             String footerHtml = SharedTemplates.getFooter("");
@@ -254,26 +256,18 @@ public class SitemapGenerator {
             Template template = fmConfig.getTemplate("sitemap.ftlh");
             File outFile = new File(OUTPUT_DIR + "/sitemap.html");
 
-            try (FileWriter writer = new FileWriter(outFile)) {
-                template.process(data, writer);
-            }
+            StringWriter sw = new StringWriter();
+            template.process(data, sw);
+            String finalHtml = sw.toString();
 
-            // Post-process for stable time if needed?
-            // SitemapGenerator is called in Phase 1 of SiteBuilderPipeline after FileGenerator.
-            // We might need to handle the [[STABLE_TIME]] here as well if we want it to be consistent.
-            // But let's see if the current implementation in FileGenerator/CardPageGenerator is enough.
-            // Actually, processTemplate in FileGenerator handles it.
-            // SitemapGenerator.generate() is called directly.
-
-            String finalHtml = Files.readString(outFile.toPath(), StandardCharsets.UTF_8);
-            if (finalHtml.contains("[[STABLE_TIME]]")) {
-                // We don't have easy access to the timestampTracker here unless we pass it.
-                // For now, let's just use the current timestamp if not handled.
-                // But wait, SharedTemplates.getFooter("") uses [[STABLE_TIME]].
+            if (timestampTracker != null && finalHtml.contains("[[STABLE_TIME]]")) {
+                String stableTime = timestampTracker.getStableTimestamp("sitemap.html", finalHtml);
+                finalHtml = finalHtml.replace("[[STABLE_TIME]]", stableTime);
+            } else {
                 finalHtml = finalHtml.replace("[[STABLE_TIME]]", SharedTemplates.getTimestamp());
-                Files.writeString(outFile.toPath(), finalHtml, StandardCharsets.UTF_8);
             }
 
+            Files.writeString(outFile.toPath(), finalHtml, StandardCharsets.UTF_8);
             System.out.println("-> Sitemap.html successfully generated!");
         } catch (Exception e) {
             System.err.println("Failed to generate HTML Sitemap: " + e.getMessage());
