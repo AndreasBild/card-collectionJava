@@ -3,6 +3,8 @@ package de.maulmann;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -69,6 +71,13 @@ public class TimestampTracker {
 
             // Merge current session data into stored data
             currentSessionData.forEach((k, v) -> storedData.setProperty(k, v));
+
+            // Cleanup: Remove entries for files that no longer exist
+            storedData.entrySet().removeIf(entry -> {
+                String identifier = (String) entry.getKey();
+                Path filePath = parent != null ? parent.toPath().resolve(identifier) : Paths.get(identifier);
+                return !Files.exists(filePath);
+            });
 
             try (OutputStream out = Files.newOutputStream(storeFile.toPath())) {
                 storedData.store(out, "Automated Generation Timestamp Cache");

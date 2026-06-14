@@ -84,6 +84,13 @@ public class FileTracker {
             if (parent != null) {
                 parent.mkdirs();
             }
+
+            // Cleanup: Remove entries for files that no longer exist
+            hashes.entrySet().removeIf(entry -> {
+                String filePath = (String) entry.getKey();
+                return !Files.exists(Paths.get(filePath));
+            });
+
             try (OutputStream out = Files.newOutputStream(storeFile.toPath())) {
                 hashes.store(out, "Automated File Build Hash Cache");
             }
