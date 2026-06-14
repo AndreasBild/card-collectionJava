@@ -40,7 +40,7 @@ public class TimestampTracker {
      */
     public String getStableTimestamp(String identifier, String content) {
         String contentToHash = content.replace("[[STABLE_TIME]]", "")
-                .replaceAll("main\\.css\\?v=\\d+", "main.css?v=STABLE");
+                .replaceAll("main\\.css\\?v=[a-fA-F0-9]+", "main.css?v=STABLE");
         String currentHash = calculateHash(contentToHash);
         String entry = (String) storedData.get(identifier);
 

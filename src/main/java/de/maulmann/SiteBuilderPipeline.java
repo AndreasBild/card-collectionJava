@@ -72,6 +72,7 @@ public class SiteBuilderPipeline {
             System.out.println("\n[PHASE 1] Generating HTML files and Sitemap...");
             FileGenerator.setTimestampTracker(timeTracker);
             CardPageGenerator.setTimestampTracker(timeTracker);
+            SitemapGenerator.setTimestampTracker(timeTracker);
 
             FileGenerator.copyResources();
             FileGenerator.buildCollectionOverview();
@@ -148,7 +149,8 @@ public class SiteBuilderPipeline {
                 }
 
                 String currentHash = tracker.getHash(file);
-                if (!tracker.hasChanged(file)) {
+                String storedHash = tracker.getStoredHash(file);
+                if (currentHash != null && currentHash.equals(storedHash)) {
                     skipCount.incrementAndGet();
                     return;
                 }
@@ -158,29 +160,28 @@ public class SiteBuilderPipeline {
 
                     if (fileName.endsWith(".html")) {
                         byte[] brData = BrotliCompressor.compressBytes(HTMLMinifier.minifyHTMLToBytes(file.toFile()), BrotliCompressor.BEST_QUALITY);
-                        uploadTask = uploadBytesAsync(s3Client, s3Key, brData, "text/html", "br", CACHE_SHORT, uploadCount);
+                        uploadTask = uploadBytesAsync(s3Client, s3Key, brData, "text/html", "br", CACHE_SHORT, uploadCount, tracker, file, currentHash);
                     } else if (fileName.endsWith(".css")) {
                         byte[] brData = BrotliCompressor.compressBytes(CSSMinifier.minifyCSSToBytes(file.toFile()), BrotliCompressor.BEST_QUALITY);
-                        uploadTask = uploadBytesAsync(s3Client, s3Key, brData, "text/css", "br", CACHE_LONG, uploadCount);
+                        uploadTask = uploadBytesAsync(s3Client, s3Key, brData, "text/css", "br", CACHE_LONG, uploadCount, tracker, file, currentHash);
                     } else if (fileName.endsWith(".js")) {
                         byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BrotliCompressor.BEST_QUALITY);
-                        uploadTask = uploadBytesAsync(s3Client, s3Key, brData, "application/javascript", "br", CACHE_LONG, uploadCount);
+                        uploadTask = uploadBytesAsync(s3Client, s3Key, brData, "application/javascript", "br", CACHE_LONG, uploadCount, tracker, file, currentHash);
                     } else if (fileName.endsWith(".json")) {
                         byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BrotliCompressor.BEST_QUALITY);
-                        uploadTask = uploadBytesAsync(s3Client, s3Key, brData, "application/json", "br", CACHE_SHORT, uploadCount);
+                        uploadTask = uploadBytesAsync(s3Client, s3Key, brData, "application/json", "br", CACHE_SHORT, uploadCount, tracker, file, currentHash);
                     } else if (fileName.endsWith(".xml")) {
                         byte[] gzippedData = GZIPCompressor.compressBytes(Files.readAllBytes(file), 9);
-                        uploadTask = uploadBytesAsync(s3Client, s3Key, gzippedData, "application/xml", "gzip", CACHE_SHORT, uploadCount);
+                        uploadTask = uploadBytesAsync(s3Client, s3Key, gzippedData, "application/xml", "gzip", CACHE_SHORT, uploadCount, tracker, file, currentHash);
                     } else if (fileName.endsWith(".ico")) {
-                        uploadTask = uploadRawFileAsync(s3Client, file, s3Key, "image/x-icon", CACHE_LONG, uploadCount);
+                        uploadTask = uploadRawFileAsync(s3Client, file, s3Key, "image/x-icon", CACHE_LONG, uploadCount, tracker, currentHash);
                     } else if (fileName.startsWith("robots") || fileName.endsWith(".txt")) {
                         byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BrotliCompressor.BEST_QUALITY);
-                        uploadTask = uploadBytesAsync(s3Client, s3Key, brData, "text/plain", "br", CACHE_SHORT, uploadCount);
+                        uploadTask = uploadBytesAsync(s3Client, s3Key, brData, "text/plain", "br", CACHE_SHORT, uploadCount, tracker, file, currentHash);
                     }
 
-                    // Nach erfolgreichem Upload: Hash aktualisieren
                     if (uploadTask != null) {
-                        uploadFutures.add(uploadTask.thenRun(() -> tracker.updateHash(file, currentHash)));
+                        uploadFutures.add(uploadTask);
                     }
 
                 } catch (Exception e) {
@@ -213,16 +214,17 @@ public class SiteBuilderPipeline {
 
                 if (contentType != null) {
                     // Pre-Check: Hat sich das Bild verändert?
-                    if (!tracker.hasChanged(file)) {
+                    String currentHash = tracker.getHash(file);
+                    String storedHash = tracker.getStoredHash(file);
+                    if (currentHash != null && currentHash.equals(storedHash)) {
                         skipCount.incrementAndGet();
                         return;
                     }
 
                     String s3Key = outputDir.relativize(file).toString().replace("\\", "/");
-                    CompletableFuture<Void> uploadTask = uploadRawFileAsync(s3Client, file, s3Key, contentType, CACHE_LONG, uploadCount);
+                    CompletableFuture<Void> uploadTask = uploadRawFileAsync(s3Client, file, s3Key, contentType, CACHE_LONG, uploadCount, tracker, currentHash);
 
-                    // Nach erfolgreichem Upload: Hash eintragen
-                    uploadFutures.add(uploadTask.thenRun(() -> tracker.updateHash(file)));
+                    uploadFutures.add(uploadTask);
                 }
             });
         }
@@ -370,7 +372,7 @@ public class SiteBuilderPipeline {
         }
     }
 
-    private static CompletableFuture<Void> uploadBytesAsync(S3AsyncClient s3Client, String s3Key, byte[] data, String contentType, String contentEncoding, String cacheControl, AtomicInteger counter) {
+    private static CompletableFuture<Void> uploadBytesAsync(S3AsyncClient s3Client, String s3Key, byte[] data, String contentType, String contentEncoding, String cacheControl, AtomicInteger counter, FileTracker tracker, Path localFile, String preCalculatedHash) {
         PutObjectRequest request = PutObjectRequest.builder()
                 .bucket(BUCKET_NAME)
                 .key(s3Key)
@@ -381,14 +383,19 @@ public class SiteBuilderPipeline {
                 .build();
 
         return s3Client.putObject(request, AsyncRequestBody.fromBytes(data))
-                .thenAccept(response -> counter.incrementAndGet())
+                .thenAccept(response -> {
+                    counter.incrementAndGet();
+                    if (tracker != null && localFile != null) {
+                        tracker.updateHash(localFile, preCalculatedHash);
+                    }
+                })
                 .exceptionally(ex -> {
                     System.err.println("Failed to upload " + s3Key + ": " + ex.getMessage());
                     return null;
                 });
     }
 
-    private static CompletableFuture<Void> uploadRawFileAsync(S3AsyncClient s3Client, Path localFile, String s3Key, String contentType, String cacheControl, AtomicInteger counter) {
+    private static CompletableFuture<Void> uploadRawFileAsync(S3AsyncClient s3Client, Path localFile, String s3Key, String contentType, String cacheControl, AtomicInteger counter, FileTracker tracker, String preCalculatedHash) {
         PutObjectRequest request = PutObjectRequest.builder()
                 .bucket(BUCKET_NAME)
                 .key(s3Key)
@@ -397,7 +404,12 @@ public class SiteBuilderPipeline {
                 .build();
 
         return s3Client.putObject(request, AsyncRequestBody.fromFile(localFile))
-                .thenAccept(response -> counter.incrementAndGet())
+                .thenAccept(response -> {
+                    counter.incrementAndGet();
+                    if (tracker != null && localFile != null) {
+                        tracker.updateHash(localFile, preCalculatedHash);
+                    }
+                })
                 .exceptionally(ex -> {
                     System.err.println("Failed to upload file " + s3Key + ": " + ex.getMessage());
                     return null;

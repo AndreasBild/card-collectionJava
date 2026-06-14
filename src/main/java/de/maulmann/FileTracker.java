@@ -58,6 +58,13 @@ public class FileTracker {
     }
 
     /**
+     * Returns the previously stored hash for a file.
+     */
+    public String getStoredHash(Path file) {
+        return hashes.getProperty(file.toString());
+    }
+
+    /**
      * Calculates the MD5 hash and returns it, or null if the file doesn't exist.
      */
     public String getHash(Path file) {
