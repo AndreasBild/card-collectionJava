@@ -26,7 +26,7 @@ public class SitemapGenerator {
 
     private static final Configuration fmConfig;
     static {
-        fmConfig = new Configuration(Configuration.VERSION_2_3_32);
+        fmConfig = new Configuration(Configuration.VERSION_2_3_34);
         fmConfig.setClassForTemplateLoading(SitemapGenerator.class, "/templates");
         fmConfig.setDefaultEncoding("UTF-8");
         fmConfig.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
