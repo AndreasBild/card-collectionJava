@@ -9,6 +9,7 @@ import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Iterator;
 import java.util.concurrent.StructuredTaskScope;
+import java.util.concurrent.StructuredTaskScope.Joiner;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ImageConverter {
@@ -56,7 +57,7 @@ public class ImageConverter {
         // Initialisierung des Hash-Checkers
         FileTracker tracker = new FileTracker("output/image-build-hashes.properties");
 
-        try (var scope = new StructuredTaskScope<Void>()) {
+        try (var scope = StructuredTaskScope.open(Joiner.allSuccessfulOrThrow(), cfg -> cfg)) {
             Files.walkFileTree(sourceDir, new SimpleFileVisitor<Path>() {
                 @Override
                 public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
