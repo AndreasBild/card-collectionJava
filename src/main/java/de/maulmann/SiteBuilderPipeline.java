@@ -23,7 +23,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.StructuredTaskScope;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
@@ -133,64 +133,59 @@ public class SiteBuilderPipeline {
 
     private static void processAndUploadWebFiles(S3AsyncClient s3Client, FileTracker tracker) throws Exception {
         Path outputDir = Paths.get(OUTPUT_DIR);
-        List<CompletableFuture<Void>> uploadFutures = new ArrayList<>();
         AtomicInteger uploadCount = new AtomicInteger(0);
         AtomicInteger skipCount = new AtomicInteger(0);
 
-        try (Stream<Path> paths = Files.walk(outputDir)) {
-            paths.filter(Files::isRegularFile).forEach(file -> {
-                String fileName = file.getFileName().toString().toLowerCase();
-                String s3Key = outputDir.relativize(file).toString().replace("\\", "/");
+        try (var scope = new StructuredTaskScope<Void>()) {
+            try (Stream<Path> paths = Files.walk(outputDir)) {
+                paths.filter(Files::isRegularFile).forEach(file -> {
+                    String fileName = file.getFileName().toString().toLowerCase();
+                    String s3Key = outputDir.relativize(file).toString().replace("\\", "/");
 
-                // Pre-Check: Hat sich die Datei verändert? (Ignoriere sitemap-gz & hashes)
-                // sitemap.xml wird in Phase 5 separat als .gz behandelt
-                if (fileName.equals("sitemap.xml") || fileName.equals("sitemap.xml.gz") || fileName.equals("sync-hashes.properties")) {
-                    return;
-                }
-
-                String currentHash = tracker.getHash(file);
-                String storedHash = tracker.getStoredHash(file);
-                if (currentHash != null && currentHash.equals(storedHash)) {
-                    skipCount.incrementAndGet();
-                    return;
-                }
-
-                try {
-                    CompletableFuture<Void> uploadTask = null;
-
-                    if (fileName.endsWith(".html")) {
-                        byte[] brData = BrotliCompressor.compressBytes(HTMLMinifier.minifyHTMLToBytes(file.toFile()), BrotliCompressor.BEST_QUALITY);
-                        uploadTask = uploadBytesAsync(s3Client, s3Key, brData, "text/html", "br", CACHE_SHORT, uploadCount, tracker, file, currentHash);
-                    } else if (fileName.endsWith(".css")) {
-                        byte[] brData = BrotliCompressor.compressBytes(CSSMinifier.minifyCSSToBytes(file.toFile()), BrotliCompressor.BEST_QUALITY);
-                        uploadTask = uploadBytesAsync(s3Client, s3Key, brData, "text/css", "br", CACHE_LONG, uploadCount, tracker, file, currentHash);
-                    } else if (fileName.endsWith(".js")) {
-                        byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BrotliCompressor.BEST_QUALITY);
-                        uploadTask = uploadBytesAsync(s3Client, s3Key, brData, "application/javascript", "br", CACHE_LONG, uploadCount, tracker, file, currentHash);
-                    } else if (fileName.endsWith(".json")) {
-                        byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BrotliCompressor.BEST_QUALITY);
-                        uploadTask = uploadBytesAsync(s3Client, s3Key, brData, "application/json", "br", CACHE_SHORT, uploadCount, tracker, file, currentHash);
-                    } else if (fileName.endsWith(".xml")) {
-                        byte[] gzippedData = GZIPCompressor.compressBytes(Files.readAllBytes(file), 9);
-                        uploadTask = uploadBytesAsync(s3Client, s3Key, gzippedData, "application/xml", "gzip", CACHE_SHORT, uploadCount, tracker, file, currentHash);
-                    } else if (fileName.endsWith(".ico")) {
-                        uploadTask = uploadRawFileAsync(s3Client, file, s3Key, "image/x-icon", CACHE_LONG, uploadCount, tracker, currentHash);
-                    } else if (fileName.startsWith("robots") || fileName.endsWith(".txt")) {
-                        byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BrotliCompressor.BEST_QUALITY);
-                        uploadTask = uploadBytesAsync(s3Client, s3Key, brData, "text/plain", "br", CACHE_SHORT, uploadCount, tracker, file, currentHash);
+                    if (fileName.equals("sitemap.xml") || fileName.equals("sitemap.xml.gz") || fileName.equals("sync-hashes.properties")) {
+                        return;
                     }
 
-                    if (uploadTask != null) {
-                        uploadFutures.add(uploadTask);
+                    String currentHash = tracker.getHash(file);
+                    String storedHash = tracker.getStoredHash(file);
+                    if (currentHash != null && currentHash.equals(storedHash)) {
+                        skipCount.incrementAndGet();
+                        return;
                     }
 
-                } catch (Exception e) {
-                    System.err.println("Failed to process " + fileName + ": " + e.getMessage());
-                }
-            });
+                    scope.fork(() -> {
+                        try {
+                            if (fileName.endsWith(".html")) {
+                                byte[] brData = BrotliCompressor.compressBytes(HTMLMinifier.minifyHTMLToBytes(file.toFile()), BrotliCompressor.BEST_QUALITY);
+                                uploadBytes(s3Client, s3Key, brData, "text/html", "br", CACHE_SHORT, uploadCount, tracker, file, currentHash);
+                            } else if (fileName.endsWith(".css")) {
+                                byte[] brData = BrotliCompressor.compressBytes(CSSMinifier.minifyCSSToBytes(file.toFile()), BrotliCompressor.BEST_QUALITY);
+                                uploadBytes(s3Client, s3Key, brData, "text/css", "br", CACHE_LONG, uploadCount, tracker, file, currentHash);
+                            } else if (fileName.endsWith(".js")) {
+                                byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BrotliCompressor.BEST_QUALITY);
+                                uploadBytes(s3Client, s3Key, brData, "application/javascript", "br", CACHE_LONG, uploadCount, tracker, file, currentHash);
+                            } else if (fileName.endsWith(".json")) {
+                                byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BrotliCompressor.BEST_QUALITY);
+                                uploadBytes(s3Client, s3Key, brData, "application/json", "br", CACHE_SHORT, uploadCount, tracker, file, currentHash);
+                            } else if (fileName.endsWith(".xml")) {
+                                byte[] gzippedData = GZIPCompressor.compressBytes(Files.readAllBytes(file), 9);
+                                uploadBytes(s3Client, s3Key, gzippedData, "application/xml", "gzip", CACHE_SHORT, uploadCount, tracker, file, currentHash);
+                            } else if (fileName.endsWith(".ico")) {
+                                uploadRawFile(s3Client, file, s3Key, "image/x-icon", CACHE_LONG, uploadCount, tracker, currentHash);
+                            } else if (fileName.startsWith("robots") || fileName.endsWith(".txt")) {
+                                byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BrotliCompressor.BEST_QUALITY);
+                                uploadBytes(s3Client, s3Key, brData, "text/plain", "br", CACHE_SHORT, uploadCount, tracker, file, currentHash);
+                            }
+                        } catch (Exception e) {
+                            System.err.println("Failed to process " + fileName + ": " + e.getMessage());
+                        }
+                        return null;
+                    });
+                });
+            }
+            scope.join();
         }
 
-        CompletableFuture.allOf(uploadFutures.toArray(new CompletableFuture[0])).join();
         System.out.println("-> Uploaded " + uploadCount.get() + " web files. (Skipped " + skipCount.get() + " unmodified files).");
     }
 
@@ -203,33 +198,38 @@ public class SiteBuilderPipeline {
             return;
         }
 
-        List<CompletableFuture<Void>> uploadFutures = new ArrayList<>();
         AtomicInteger uploadCount = new AtomicInteger(0);
         AtomicInteger skipCount = new AtomicInteger(0);
 
-        try (Stream<Path> paths = Files.walk(imagesDir)) {
-            paths.filter(Files::isRegularFile).forEach(file -> {
-                String fileName = file.getFileName().toString().toLowerCase();
-                String contentType = determineImageContentType(fileName);
+        try (var scope = new StructuredTaskScope<Void>()) {
+            try (Stream<Path> paths = Files.walk(imagesDir)) {
+                paths.filter(Files::isRegularFile).forEach(file -> {
+                    String fileName = file.getFileName().toString().toLowerCase();
+                    String contentType = determineImageContentType(fileName);
 
-                if (contentType != null) {
-                    // Pre-Check: Hat sich das Bild verändert?
-                    String currentHash = tracker.getHash(file);
-                    String storedHash = tracker.getStoredHash(file);
-                    if (currentHash != null && currentHash.equals(storedHash)) {
-                        skipCount.incrementAndGet();
-                        return;
+                    if (contentType != null) {
+                        String currentHash = tracker.getHash(file);
+                        String storedHash = tracker.getStoredHash(file);
+                        if (currentHash != null && currentHash.equals(storedHash)) {
+                            skipCount.incrementAndGet();
+                            return;
+                        }
+
+                        String s3Key = outputDir.relativize(file).toString().replace("\\", "/");
+                        scope.fork(() -> {
+                            try {
+                                uploadRawFile(s3Client, file, s3Key, contentType, CACHE_LONG, uploadCount, tracker, currentHash);
+                            } catch (Exception e) {
+                                System.err.println("Failed to upload image " + fileName + ": " + e.getMessage());
+                            }
+                            return null;
+                        });
                     }
-
-                    String s3Key = outputDir.relativize(file).toString().replace("\\", "/");
-                    CompletableFuture<Void> uploadTask = uploadRawFileAsync(s3Client, file, s3Key, contentType, CACHE_LONG, uploadCount, tracker, currentHash);
-
-                    uploadFutures.add(uploadTask);
-                }
-            });
+                });
+            }
+            scope.join();
         }
 
-        CompletableFuture.allOf(uploadFutures.toArray(new CompletableFuture[0])).join();
         System.out.println("-> Synced " + uploadCount.get() + " images. (Skipped " + skipCount.get() + " unmodified images).");
     }
 
@@ -372,7 +372,7 @@ public class SiteBuilderPipeline {
         }
     }
 
-    private static CompletableFuture<Void> uploadBytesAsync(S3AsyncClient s3Client, String s3Key, byte[] data, String contentType, String contentEncoding, String cacheControl, AtomicInteger counter, FileTracker tracker, Path localFile, String preCalculatedHash) {
+    private static void uploadBytes(S3AsyncClient s3Client, String s3Key, byte[] data, String contentType, String contentEncoding, String cacheControl, AtomicInteger counter, FileTracker tracker, Path localFile, String preCalculatedHash) {
         PutObjectRequest request = PutObjectRequest.builder()
                 .bucket(BUCKET_NAME)
                 .key(s3Key)
@@ -382,20 +382,14 @@ public class SiteBuilderPipeline {
                 .cacheControl(cacheControl)
                 .build();
 
-        return s3Client.putObject(request, AsyncRequestBody.fromBytes(data))
-                .thenAccept(response -> {
-                    counter.incrementAndGet();
-                    if (tracker != null && localFile != null) {
-                        tracker.updateHash(localFile, preCalculatedHash);
-                    }
-                })
-                .exceptionally(ex -> {
-                    System.err.println("Failed to upload " + s3Key + ": " + ex.getMessage());
-                    return null;
-                });
+        s3Client.putObject(request, AsyncRequestBody.fromBytes(data)).join();
+        counter.incrementAndGet();
+        if (tracker != null && localFile != null) {
+            tracker.updateHash(localFile, preCalculatedHash);
+        }
     }
 
-    private static CompletableFuture<Void> uploadRawFileAsync(S3AsyncClient s3Client, Path localFile, String s3Key, String contentType, String cacheControl, AtomicInteger counter, FileTracker tracker, String preCalculatedHash) {
+    private static void uploadRawFile(S3AsyncClient s3Client, Path localFile, String s3Key, String contentType, String cacheControl, AtomicInteger counter, FileTracker tracker, String preCalculatedHash) {
         PutObjectRequest request = PutObjectRequest.builder()
                 .bucket(BUCKET_NAME)
                 .key(s3Key)
@@ -403,17 +397,11 @@ public class SiteBuilderPipeline {
                 .cacheControl(cacheControl)
                 .build();
 
-        return s3Client.putObject(request, AsyncRequestBody.fromFile(localFile))
-                .thenAccept(response -> {
-                    counter.incrementAndGet();
-                    if (tracker != null && localFile != null) {
-                        tracker.updateHash(localFile, preCalculatedHash);
-                    }
-                })
-                .exceptionally(ex -> {
-                    System.err.println("Failed to upload file " + s3Key + ": " + ex.getMessage());
-                    return null;
-                });
+        s3Client.putObject(request, AsyncRequestBody.fromFile(localFile)).join();
+        counter.incrementAndGet();
+        if (tracker != null && localFile != null) {
+            tracker.updateHash(localFile, preCalculatedHash);
+        }
     }
 
     private static String determineImageContentType(String fileName) {

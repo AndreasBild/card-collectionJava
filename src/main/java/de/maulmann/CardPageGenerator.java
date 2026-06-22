@@ -20,9 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.StructuredTaskScope;
 import java.util.Comparator;
 
 public class CardPageGenerator {
@@ -345,30 +343,28 @@ public class CardPageGenerator {
     }
 
     private static void generateSubPagesMultithreaded(List<CardData> allCards, String overviewPage) throws InterruptedException {
-        int cores = Runtime.getRuntime().availableProcessors();
-        ExecutorService executor = Executors.newFixedThreadPool(cores);
+        try (var scope = new StructuredTaskScope<Void>()) {
+            for (int i = 0; i < allCards.size(); i++) {
+                final int index = i;
+                scope.fork(() -> {
+                    try {
+                        CardData currentCard = allCards.get(index);
+                        CardData prevCard = (index > 0) ? allCards.get(index - 1) : null;
+                        CardData nextCard = (index < allCards.size() - 1) ? allCards.get(index + 1) : null;
 
-        for (int i = 0; i < allCards.size(); i++) {
-            final int index = i;
-            executor.submit(() -> {
-                try {
-                    CardData currentCard = allCards.get(index);
-                    CardData prevCard = (index > 0) ? allCards.get(index - 1) : null;
-                    CardData nextCard = (index < allCards.size() - 1) ? allCards.get(index + 1) : null;
+                        Path folderPath = Paths.get(BASE_FOLDER, currentCard.seasonFolder);
+                        Files.createDirectories(folderPath);
+                        Path filePath = folderPath.resolve(currentCard.filename);
 
-                    Path folderPath = Paths.get(BASE_FOLDER, currentCard.seasonFolder);
-                    Files.createDirectories(folderPath);
-                    Path filePath = folderPath.resolve(currentCard.filename);
-
-                    createSubPage(currentCard, filePath, prevCard, nextCard, allCards, overviewPage);
-                } catch (Exception e) {
-                    log.error("Failed to generate subpage for card at index {}", index, e);
-                }
-            });
+                        createSubPage(currentCard, filePath, prevCard, nextCard, allCards, overviewPage);
+                    } catch (Exception e) {
+                        log.error("Failed to generate subpage for card at index " + index, e);
+                    }
+                    return null;
+                });
+            }
+            scope.join();
         }
-
-        executor.shutdown();
-        executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
     }
 
     private static void createSubPage(CardData c, Path path, CardData prev, CardData next, List<CardData> allCards, String overviewPage) {

@@ -9,27 +9,30 @@ import java.util.Map;
 import java.util.Set;
 
 public class TriviaManager {
-    private JsonNode config;
-    private final ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    public TriviaManager() {
-        // Pfad muss mit deiner Ordnerstruktur in src/main/resources übereinstimmen
+    private final java.lang.LazyConstant<JsonNode> config = java.lang.LazyConstant.of(() -> {
         try (InputStream is = getClass().getResourceAsStream("/config/trivia_config.json")) {
             if (is != null) {
-                this.config = mapper.readTree(is);
+                return MAPPER.readTree(is);
             } else {
                 System.err.println("trivia_config.json wurde im Pfad /config/ nicht gefunden!");
             }
         } catch (Exception e) {
             System.err.println("Fehler beim Laden der trivia_config.json: " + e.getMessage());
         }
+        return MAPPER.createObjectNode();
+    });
+
+    public TriviaManager() {
     }
 
     public String getTrivia(String type, Map<String, String> cardData) {
-        if (config == null || !config.has(type)) return "";
+        JsonNode configNode = config.get();
+        if (configNode == null || !configNode.has(type)) return "";
 
         Set<String> results = new LinkedHashSet<>();
-        for (JsonNode rule : config.get(type)) {
+        for (JsonNode rule : configNode.get(type)) {
             if (matches(rule.get("condition"), cardData)) {
                 results.add(rule.get("text").asText());
             }

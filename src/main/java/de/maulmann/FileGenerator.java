@@ -31,13 +31,13 @@ public class FileGenerator {
         timestampTracker = tracker;
     }
 
-    private static final Configuration fmConfig;
-    static {
-        fmConfig = new Configuration(Configuration.VERSION_2_3_34);
-        fmConfig.setClassForTemplateLoading(FileGenerator.class, "/templates");
-        fmConfig.setDefaultEncoding("UTF-8");
-        fmConfig.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-    }
+    private static final java.lang.LazyConstant<Configuration> FM_CONFIG = java.lang.LazyConstant.of(() -> {
+        Configuration cfg = new Configuration(Configuration.VERSION_2_3_34);
+        cfg.setClassForTemplateLoading(FileGenerator.class, "/templates");
+        cfg.setDefaultEncoding("UTF-8");
+        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+        return cfg;
+    });
 
     // --- 0. LATEST METADATA FÜR PWA ---
     public static void generateLatestMetadata(int totalCardCount) {
@@ -424,7 +424,7 @@ public class FileGenerator {
         File out = new File(outputPath);
         if (out.getParentFile() != null) out.getParentFile().mkdirs();
 
-        Template template = fmConfig.getTemplate(templateName);
+        Template template = FM_CONFIG.get().getTemplate(templateName);
 
         StringWriter stringWriter = new StringWriter();
         template.process(data, stringWriter);

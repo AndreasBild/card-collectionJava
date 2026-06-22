@@ -8,9 +8,7 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Iterator;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.StructuredTaskScope;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ImageConverter {
@@ -53,41 +51,43 @@ public class ImageConverter {
     }
 
     public static void processImages(Path sourceDir, Path webpOutDir) throws IOException, InterruptedException {
-        int cores = Runtime.getRuntime().availableProcessors();
-        System.out.println("Starting high-performance pool with " + cores + " threads...");
-        ExecutorService executor = Executors.newFixedThreadPool(cores);
+        System.out.println("Starting image processing with StructuredTaskScope...");
 
         // Initialisierung des Hash-Checkers
         FileTracker tracker = new FileTracker("output/image-build-hashes.properties");
 
-        Files.walkFileTree(sourceDir, new SimpleFileVisitor<Path>() {
-            @Override
-            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
-                String fileName = file.toString().toLowerCase();
-                if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") ||
-                        fileName.endsWith(".png") || fileName.endsWith(".gif") ||
-                        fileName.endsWith(".bmp")) {
+        try (var scope = new StructuredTaskScope<Void>()) {
+            Files.walkFileTree(sourceDir, new SimpleFileVisitor<Path>() {
+                @Override
+                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+                    String fileName = file.toString().toLowerCase();
+                    if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") ||
+                            fileName.endsWith(".png") || fileName.endsWith(".gif") ||
+                            fileName.endsWith(".bmp")) {
 
-                    executor.submit(() -> {
-                        try {
-                            boolean wasConverted = convertAndSaveImageSet(file, sourceDir, webpOutDir, tracker);
-                            if (wasConverted) {
-                                successCount.incrementAndGet();
-                            } else {
-                                skippedCount.incrementAndGet();
+                        scope.fork(() -> {
+                            try {
+                                boolean wasConverted = convertAndSaveImageSet(file, sourceDir, webpOutDir, tracker);
+                                if (wasConverted) {
+                                    successCount.incrementAndGet();
+                                } else {
+                                    skippedCount.incrementAndGet();
+                                }
+                            } catch (Exception e) {
+                                System.err.println("Failed to process " + file + ": " + e.getMessage());
+                                failureCount.incrementAndGet();
                             }
-                        } catch (Exception e) {
-                            System.err.println("Failed to process " + file + ": " + e.getMessage());
-                            failureCount.incrementAndGet();
-                        }
-                    });
+                            return null;
+                        });
+                    }
+                    return FileVisitResult.CONTINUE;
                 }
-                return FileVisitResult.CONTINUE;
-            }
-        });
+            });
 
-        executor.shutdown();
-        executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+            scope.join();
+        } catch (Exception e) {
+            System.err.println("Critical error during parallel image processing: " + e.getMessage());
+        }
 
         // Speichern der aktualisierten Hashes
         tracker.save();
