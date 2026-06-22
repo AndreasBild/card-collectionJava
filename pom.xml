@@ -9,9 +9,9 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>19</maven.compiler.source>
-        <maven.compiler.target>19</maven.compiler.target>
-        <maven.compiler.release>19</maven.compiler.release>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.release>21</maven.compiler.release>
         <aws.sdk.version>2.46.15</aws.sdk.version>
         <netty.version>4.2.15.Final</netty.version>
         <org.slf4j.version>2.0.18</org.slf4j.version>
@@ -135,9 +135,9 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${org.apache.maven.plugins.version}</version>
                 <configuration>
-                    <source>21</source>
-                    <target>21</target>
-                    <release>21</release>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <release>${maven.compiler.release}</release>
                 </configuration>
             </plugin>
             <plugin>
