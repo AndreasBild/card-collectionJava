@@ -5,3 +5,4 @@ cp.txt
 *.class
 server.log
 /.idea/
+src/main/resources/config/firebase_config.json
