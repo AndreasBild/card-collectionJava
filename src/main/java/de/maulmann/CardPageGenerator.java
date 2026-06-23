@@ -34,6 +34,7 @@ public class CardPageGenerator {
 
     private static final List<String> duplicateLog = new ArrayList<>();
     private static final TriviaManager triviaManager = new TriviaManager();
+    private static final FirebaseConfigManager firebaseConfigManager = new FirebaseConfigManager();
     private static TimestampTracker timestampTracker;
 
     public static void setTimestampTracker(TimestampTracker tracker) {
@@ -432,6 +433,7 @@ public class CardPageGenerator {
         data.put("cardBackText", "");
 
         data.put("faqHtml", faqHtml);
+        data.put("firebaseConfig", firebaseConfigManager.getConfig());
 
         try {
             Template template = fmConfig.getTemplate("card-detail.ftlh");
