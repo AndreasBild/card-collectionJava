@@ -22,7 +22,20 @@ public class FirebaseConfigManager {
         String[] keys = {"apiKey", "authDomain", "projectId", "storageBucket", "messagingSenderId", "appId", "measurementId"};
         boolean foundInEnv = false;
         for (String key : keys) {
+            // Try different common patterns for environment variables:
+            // 1. FIREBASE_APIKEY
+            // 2. FIREBASE_API_KEY (screaming snake case)
+            // 3. Just the key (e.g. apiKey)
+            String screamingSnake = key.replaceAll("([a-z])([A-Z])", "$1_$2").toUpperCase();
+
             String envValue = System.getenv("FIREBASE_" + key.toUpperCase());
+            if (envValue == null || envValue.isEmpty()) {
+                envValue = System.getenv("FIREBASE_" + screamingSnake);
+            }
+            if (envValue == null || envValue.isEmpty()) {
+                envValue = System.getenv(key);
+            }
+
             if (envValue != null && !envValue.isEmpty()) {
                 configMap.put(key, envValue);
                 foundInEnv = true;
@@ -69,29 +82,4 @@ public class FirebaseConfigManager {
         return config.get();
     }
 
-    private static class SimpleLazyConstant<T> {
-        private final Supplier<T> supplier;
-        private volatile T value;
-
-        private SimpleLazyConstant(Supplier<T> supplier) {
-            this.supplier = supplier;
-        }
-
-        public static <T> SimpleLazyConstant<T> of(Supplier<T> supplier) {
-            return new SimpleLazyConstant<>(supplier);
-        }
-
-        public T get() {
-            T result = value;
-            if (result == null) {
-                synchronized (this) {
-                    result = value;
-                    if (result == null) {
-                        value = result = supplier.get();
-                    }
-                }
-            }
-            return result;
-        }
-    }
 }

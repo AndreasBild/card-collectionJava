@@ -31,7 +31,7 @@ public class FileGenerator {
         timestampTracker = tracker;
     }
 
-    private static final java.lang.LazyConstant<Configuration> FM_CONFIG = java.lang.LazyConstant.of(() -> {
+    private static final SimpleLazyConstant<Configuration> FM_CONFIG = SimpleLazyConstant.of(() -> {
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_34);
         cfg.setClassForTemplateLoading(FileGenerator.class, "/templates");
         cfg.setDefaultEncoding("UTF-8");

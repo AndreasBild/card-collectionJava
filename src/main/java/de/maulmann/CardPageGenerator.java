@@ -21,7 +21,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.StructuredTaskScope;
-import java.util.concurrent.StructuredTaskScope.Joiner;
 import java.util.Comparator;
 
 public class CardPageGenerator {
@@ -345,7 +344,7 @@ public class CardPageGenerator {
     }
 
     private static void generateSubPagesMultithreaded(List<CardData> allCards, String overviewPage) throws InterruptedException {
-        try (var scope = StructuredTaskScope.open(Joiner.allSuccessfulOrThrow(), cfg -> cfg)) {
+        try (var scope = new StructuredTaskScope<Object>()) {
             for (int i = 0; i < allCards.size(); i++) {
                 final int index = i;
                 scope.fork(() -> {
