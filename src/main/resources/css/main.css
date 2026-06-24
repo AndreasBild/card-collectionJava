@@ -18,7 +18,7 @@ body, td, th {
 }
 
 /* --- ALLGEMEINES LINK-STYLING --- */
-a:not(.plain), button.modern-button, button.flip-modal-btn {
+a:not(.plain), button.modern-button, button.flip-modal-btn, button.close-modal-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -49,6 +49,11 @@ a:not(.plain), button.modern-button, button.flip-modal-btn {
 
 .modern-button:hover, .flip-modal-btn:hover {
     background-color: #2d5a03 !important;
+    transform: translateY(-1px);
+}
+
+.close-modal-btn:hover {
+    background-color: #a93226 !important;
     transform: translateY(-1px);
 }
 
@@ -954,14 +959,13 @@ tr:hover {
     max-height: 90vh;
 }
 
-.close-modal {
+.close-modal-btn {
     position: absolute;
-    top: 15px;
-    right: 35px;
-    color: #f1f1f1;
-    font-size: 40px;
-    font-weight: bold;
-    cursor: pointer;
+    top: 20px;
+    right: 20px;
+    background-color: #c0392b !important;
+    padding: 10px 20px !important;
+    font-size: 16px !important;
 }
 
 .flip-modal-btn {
