@@ -222,7 +222,7 @@ ${topNavHtml?no_esc}
 </main>
 
 <div id="cardModal" class="modal" aria-hidden="true">
-    <span class="close-modal" aria-label="Close zoomed image" onclick="closeModal()">&times;</span>
+    <button class="close-modal-btn" aria-label="Close zoomed image" onclick="closeModal()">&times;</button>
     <button class="flip-modal-btn" aria-label="Flip card to other side" onclick="flipCard()">
         &#8644; Flip Card
     </button>
