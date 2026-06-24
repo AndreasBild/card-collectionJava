@@ -357,7 +357,7 @@ ${topNavHtml?no_esc}
         ratingLabel.style.color = "#3a7504";
     }
 
-    const cardRef = doc(db, "Trading_cards", cardId);
+    const cardRef = doc(db, "basketball_cards", cardId);
 
     onSnapshot(cardRef, (docSnap) => {
         if (docSnap.exists()) {

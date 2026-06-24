@@ -34,7 +34,7 @@ import java.util.stream.Stream;
 public class FirestoreRatingInjector {
 
     private static final Logger log = LoggerFactory.getLogger(FirestoreRatingInjector.class);
-    private static final String COLLECTION_NAME = "Trading_cards";
+    private static final String COLLECTION_NAME = "basketball_cards";
     private static final String TARGET_DIR = "output/cards";
 
     public static void main(String[] args) {

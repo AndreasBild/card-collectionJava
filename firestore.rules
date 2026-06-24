@@ -1,7 +1,7 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /Trading_cards/{cardId} {
+    match /basketball_cards/{cardId} {
 
       function getVal(docData, field) {
         return docData.get(field, 0);
