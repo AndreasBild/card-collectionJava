@@ -899,6 +899,34 @@ tr:hover {
     margin-top: 0;
 }
 
+.sitemap-card-list li {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.sitemap-card-link {
+    font-weight: bold;
+    font-size: 1.1em;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.sitemap-card-details {
+    font-size: 0.85em;
+    color: #666;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.sitemap-card-spec {
+    background: #f9f9f9;
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
 /* --- CONTEXT ENGINE --- */
 .context-engine {
     margin-top: 40px;
