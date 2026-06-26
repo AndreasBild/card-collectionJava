@@ -32,14 +32,7 @@ ${topNavHtml?no_esc}
                     <ul class="sitemap-list sitemap-card-list">
                         <#list season.links as link>
                             <li>
-                                <a href="${link.url}" class="plain sitemap-card-link" title="${link.text}">${link.player!"Card"}</a>
-                                <div class="sitemap-card-details">
-                                    <#if link.company?? && link.company != ""><span class="sitemap-card-spec">${link.company}</span></#if>
-                                    <#if link.brand?? && link.brand != "" && link.brand != link.company!><span class="sitemap-card-spec">${link.brand}</span></#if>
-                                    <#if link.theme?? && link.theme != ""><span class="sitemap-card-spec">${link.theme}</span></#if>
-                                    <#if link.variant?? && link.variant != ""><span class="sitemap-card-spec">${link.variant}</span></#if>
-                                    <#if link.number?? && link.number != ""><span class="sitemap-card-spec">#${link.number}</span></#if>
-                                </div>
+                                <a href="${link.url}" class="plain sitemap-card-link" title="${link.text}">${link.text}</a>
                             </li>
                         </#list>
                     </ul>
