@@ -9,7 +9,6 @@ import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Iterator;
 import java.util.concurrent.StructuredTaskScope;
-import java.util.concurrent.StructuredTaskScope.Joiner;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ImageConverter {
@@ -57,7 +56,7 @@ public class ImageConverter {
         // Initialisierung des Hash-Checkers
         FileTracker tracker = new FileTracker("output/image-build-hashes.properties");
 
-        try (var scope = StructuredTaskScope.open(Joiner.allSuccessfulOrThrow(), cfg -> cfg)) {
+        try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
             Files.walkFileTree(sourceDir, new SimpleFileVisitor<Path>() {
                 @Override
                 public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
@@ -86,6 +85,7 @@ public class ImageConverter {
             });
 
             scope.join();
+            scope.throwIfFailed();
         } catch (Exception e) {
             System.err.println("Critical error during parallel image processing: " + e.getMessage());
         }

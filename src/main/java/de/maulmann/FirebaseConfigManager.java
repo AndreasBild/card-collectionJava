@@ -22,7 +22,20 @@ public class FirebaseConfigManager {
         String[] keys = {"apiKey", "authDomain", "projectId", "storageBucket", "messagingSenderId", "appId", "measurementId"};
         boolean foundInEnv = false;
         for (String key : keys) {
+            // Pattern 1: FIREBASE_APIKEY
             String envValue = System.getenv("FIREBASE_" + key.toUpperCase());
+
+            // Pattern 2: FIREBASE_API_KEY (screaming snake case)
+            if (envValue == null || envValue.isEmpty()) {
+                String snakeKey = key.replaceAll("([a-z])([A-Z]+)", "$1_$2").toUpperCase();
+                envValue = System.getenv("FIREBASE_" + snakeKey);
+            }
+
+            // Pattern 3: apiKey (exact)
+            if (envValue == null || envValue.isEmpty()) {
+                envValue = System.getenv(key);
+            }
+
             if (envValue != null && !envValue.isEmpty()) {
                 configMap.put(key, envValue);
                 foundInEnv = true;

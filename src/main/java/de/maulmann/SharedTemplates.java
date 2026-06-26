@@ -17,8 +17,8 @@ public class SharedTemplates {
     private static final Map<String, String> TEMPLATE_CACHE = new ConcurrentHashMap<>();
 
     // 2. Pre-compiled, highly efficient, thread-safe date formatter
-    private static final java.lang.LazyConstant<DateTimeFormatter> TIMESTAMP_FORMATTER =
-            java.lang.LazyConstant.of(() -> DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
+    private static final SimpleLazyConstant<DateTimeFormatter> TIMESTAMP_FORMATTER =
+            SimpleLazyConstant.of(() -> DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
 
     // 3. NEW: Generate a unique ID for this specific site build
     static String BUILD_ID = String.valueOf(System.currentTimeMillis());
