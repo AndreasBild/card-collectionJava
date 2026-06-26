@@ -12,8 +12,6 @@
         <maven.compiler.source>26</maven.compiler.source>
         <maven.compiler.target>26</maven.compiler.target>
         <maven.compiler.release>26</maven.compiler.release>
-        <aws.sdk.version>2.46.17</aws.sdk.version>
-        <netty.version>4.2.15.Final</netty.version>
         <org.slf4j.version>2.0.18</org.slf4j.version>
         <org.junit.jupiter.version>6.1.0</org.junit.jupiter.version>
         <org.apache.maven.plugins.version>3.15.0</org.apache.maven.plugins.version>
@@ -26,20 +24,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>software.amazon.awssdk</groupId>
-                <artifactId>bom</artifactId>
-                <version>${aws.sdk.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>io.netty</groupId>
-                <artifactId>netty-bom</artifactId>
-                <version>${netty.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
             <dependency>
                 <groupId>org.apache.httpcomponents.client5</groupId>
                 <artifactId>httpclient5</artifactId>
@@ -73,22 +57,6 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>${org.slf4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>software.amazon.awssdk</groupId>
-            <artifactId>s3</artifactId>
-            <version>${aws.sdk.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>software.amazon.awssdk</groupId>
-            <artifactId>cloudfront</artifactId>
-            <version>${aws.sdk.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>software.amazon.awssdk</groupId>
-            <artifactId>netty-nio-client</artifactId>
-            <version>${aws.sdk.version}</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.freemarker</groupId>
