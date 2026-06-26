@@ -8,7 +8,8 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Iterator;
-import java.util.concurrent.StructuredTaskScope;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ImageConverter {
@@ -50,13 +51,13 @@ public class ImageConverter {
         }
     }
 
-    public static void processImages(Path sourceDir, Path webpOutDir) throws IOException, InterruptedException {
-        System.out.println("Starting image processing with StructuredTaskScope...");
+    public static void processImages(Path sourceDir, Path webpOutDir) throws IOException {
+        System.out.println("Starting image processing with virtual threads...");
 
         // Initialisierung des Hash-Checkers
         FileTracker tracker = new FileTracker("output/image-build-hashes.properties");
 
-        try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
+        try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
             Files.walkFileTree(sourceDir, new SimpleFileVisitor<Path>() {
                 @Override
                 public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
@@ -65,7 +66,7 @@ public class ImageConverter {
                             fileName.endsWith(".png") || fileName.endsWith(".gif") ||
                             fileName.endsWith(".bmp")) {
 
-                        scope.fork(() -> {
+                        executor.submit(() -> {
                             try {
                                 boolean wasConverted = convertAndSaveImageSet(file, sourceDir, webpOutDir, tracker);
                                 if (wasConverted) {
@@ -77,15 +78,11 @@ public class ImageConverter {
                                 System.err.println("Failed to process " + file + ": " + e.getMessage());
                                 failureCount.incrementAndGet();
                             }
-                            return null;
                         });
                     }
                     return FileVisitResult.CONTINUE;
                 }
             });
-
-            scope.join();
-            scope.throwIfFailed();
         } catch (Exception e) {
             System.err.println("Critical error during parallel image processing: " + e.getMessage());
         }

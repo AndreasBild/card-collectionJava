@@ -23,7 +23,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.StructuredTaskScope;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
@@ -136,7 +137,7 @@ public class SiteBuilderPipeline {
         AtomicInteger uploadCount = new AtomicInteger(0);
         AtomicInteger skipCount = new AtomicInteger(0);
 
-        try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
+        try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
             try (Stream<Path> paths = Files.walk(outputDir)) {
                 paths.filter(Files::isRegularFile).forEach(file -> {
                     String fileName = file.getFileName().toString().toLowerCase();
@@ -153,7 +154,7 @@ public class SiteBuilderPipeline {
                         return;
                     }
 
-                    scope.fork(() -> {
+                    executor.submit(() -> {
                         try {
                             if (fileName.endsWith(".html")) {
                                 byte[] brData = BrotliCompressor.compressBytes(HTMLMinifier.minifyHTMLToBytes(file.toFile()), BrotliCompressor.BEST_QUALITY);
@@ -179,12 +180,9 @@ public class SiteBuilderPipeline {
                         } catch (Exception e) {
                             System.err.println("Failed to process " + fileName + ": " + e.getMessage());
                         }
-                        return null;
                     });
                 });
             }
-            scope.join();
-            scope.throwIfFailed();
         }
 
         System.out.println("-> Uploaded " + uploadCount.get() + " web files. (Skipped " + skipCount.get() + " unmodified files).");
@@ -202,7 +200,7 @@ public class SiteBuilderPipeline {
         AtomicInteger uploadCount = new AtomicInteger(0);
         AtomicInteger skipCount = new AtomicInteger(0);
 
-        try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
+        try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
             try (Stream<Path> paths = Files.walk(imagesDir)) {
                 paths.filter(Files::isRegularFile).forEach(file -> {
                     String fileName = file.getFileName().toString().toLowerCase();
@@ -217,19 +215,16 @@ public class SiteBuilderPipeline {
                         }
 
                         String s3Key = outputDir.relativize(file).toString().replace("\\", "/");
-                        scope.fork(() -> {
+                        executor.submit(() -> {
                             try {
                                 uploadRawFile(s3Client, file, s3Key, contentType, CACHE_LONG, uploadCount, tracker, currentHash);
                             } catch (Exception e) {
                                 System.err.println("Failed to upload image " + fileName + ": " + e.getMessage());
                             }
-                            return null;
                         });
                     }
                 });
             }
-            scope.join();
-            scope.throwIfFailed();
         }
 
         System.out.println("-> Synced " + uploadCount.get() + " images. (Skipped " + skipCount.get() + " unmodified images).");
