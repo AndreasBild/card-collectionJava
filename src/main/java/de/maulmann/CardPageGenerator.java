@@ -20,7 +20,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.concurrent.StructuredTaskScope;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.Comparator;
 
 public class CardPageGenerator {
@@ -217,7 +218,7 @@ public class CardPageGenerator {
 
             generateSubPagesMultithreaded(filteredCards, overviewPage);
 
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException e) {
             log.error("Error processing collection " + inputPath, e);
         }
     }
@@ -343,11 +344,11 @@ public class CardPageGenerator {
         }
     }
 
-    private static void generateSubPagesMultithreaded(List<CardData> allCards, String overviewPage) throws InterruptedException {
-        try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
+    private static void generateSubPagesMultithreaded(List<CardData> allCards, String overviewPage) {
+        try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
             for (int i = 0; i < allCards.size(); i++) {
                 final int index = i;
-                scope.fork(() -> {
+                executor.submit(() -> {
                     try {
                         CardData currentCard = allCards.get(index);
                         CardData prevCard = (index > 0) ? allCards.get(index - 1) : null;
@@ -361,13 +362,8 @@ public class CardPageGenerator {
                     } catch (Exception e) {
                         log.error("Failed to generate subpage for card at index " + index, e);
                     }
-                    return null;
                 });
             }
-            scope.join();
-            scope.throwIfFailed();
-        } catch (java.util.concurrent.ExecutionException e) {
-            log.error("Error in multithreaded generation", e);
         }
     }
 
