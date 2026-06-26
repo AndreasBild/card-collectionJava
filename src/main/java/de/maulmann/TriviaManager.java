@@ -11,7 +11,7 @@ import java.util.Set;
 public class TriviaManager {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    private final java.lang.LazyConstant<JsonNode> config = java.lang.LazyConstant.of(() -> {
+    private final SimpleLazyConstant<JsonNode> config = SimpleLazyConstant.of(() -> {
         try (InputStream is = getClass().getResourceAsStream("/config/trivia_config.json")) {
             if (is != null) {
                 return MAPPER.readTree(is);

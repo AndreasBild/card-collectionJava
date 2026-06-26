@@ -24,7 +24,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.StructuredTaskScope;
-import java.util.concurrent.StructuredTaskScope.Joiner;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
@@ -137,7 +136,7 @@ public class SiteBuilderPipeline {
         AtomicInteger uploadCount = new AtomicInteger(0);
         AtomicInteger skipCount = new AtomicInteger(0);
 
-        try (var scope = StructuredTaskScope.open(Joiner.allSuccessfulOrThrow(), cfg -> cfg)) {
+        try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
             try (Stream<Path> paths = Files.walk(outputDir)) {
                 paths.filter(Files::isRegularFile).forEach(file -> {
                     String fileName = file.getFileName().toString().toLowerCase();
@@ -185,6 +184,7 @@ public class SiteBuilderPipeline {
                 });
             }
             scope.join();
+            scope.throwIfFailed();
         }
 
         System.out.println("-> Uploaded " + uploadCount.get() + " web files. (Skipped " + skipCount.get() + " unmodified files).");
@@ -202,7 +202,7 @@ public class SiteBuilderPipeline {
         AtomicInteger uploadCount = new AtomicInteger(0);
         AtomicInteger skipCount = new AtomicInteger(0);
 
-        try (var scope = StructuredTaskScope.open(Joiner.allSuccessfulOrThrow(), cfg -> cfg)) {
+        try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
             try (Stream<Path> paths = Files.walk(imagesDir)) {
                 paths.filter(Files::isRegularFile).forEach(file -> {
                     String fileName = file.getFileName().toString().toLowerCase();
@@ -229,6 +229,7 @@ public class SiteBuilderPipeline {
                 });
             }
             scope.join();
+            scope.throwIfFailed();
         }
 
         System.out.println("-> Synced " + uploadCount.get() + " images. (Skipped " + skipCount.get() + " unmodified images).");
