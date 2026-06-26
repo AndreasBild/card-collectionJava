@@ -129,6 +129,13 @@ public class SitemapGenerator {
                     if (!relativePath.contains("/")) {
                         coreLinks.add(linkMap);
                     } else if (relativePath.startsWith("cards/")) {
+                        linkMap.put("player", pageTitle);
+                        linkMap.put("company", getSpecValue(doc, "Manufacturer"));
+                        linkMap.put("brand", getSpecValue(doc, "Brand"));
+                        linkMap.put("theme", getSpecValue(doc, "Theme"));
+                        linkMap.put("variant", getSpecValue(doc, "Variant"));
+                        linkMap.put("number", getSpecValue(doc, "Card Number"));
+
                         String[] parts = relativePath.split("/");
                         if (parts.length >= 3) {
                             String season = parts[1];
@@ -331,6 +338,20 @@ public class SitemapGenerator {
         } catch (Exception e) {
             return baseUrlStripped + "/" + imgSrc;
         }
+    }
+
+    private static String getSpecValue(Document doc, String specName) {
+        Elements rows = doc.select("tr");
+        for (Element row : rows) {
+            Element th = row.selectFirst("th.specs-th");
+            if (th != null && th.text().trim().equalsIgnoreCase(specName)) {
+                Element td = row.selectFirst("td.specs-td");
+                if (td != null) {
+                    return td.text().trim();
+                }
+            }
+        }
+        return "";
     }
 
     private static String escapeXml(String text) {

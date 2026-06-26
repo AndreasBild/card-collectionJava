@@ -29,9 +29,18 @@ ${topNavHtml?no_esc}
             <#list cardSeasons as season>
                 <div class="season-group">
                     <h3>${season.name}</h3>
-                    <ul class="sitemap-list">
+                    <ul class="sitemap-list sitemap-card-list">
                         <#list season.links as link>
-                            <li><a href="${link.url}" class="plain" title="${link.text}">${link.text}</a></li>
+                            <li>
+                                <a href="${link.url}" class="plain sitemap-card-link" title="${link.text}">${link.player!"Card"}</a>
+                                <div class="sitemap-card-details">
+                                    <#if link.company?? && link.company != ""><span class="sitemap-card-spec">${link.company}</span></#if>
+                                    <#if link.brand?? && link.brand != "" && link.brand != link.company!><span class="sitemap-card-spec">${link.brand}</span></#if>
+                                    <#if link.theme?? && link.theme != ""><span class="sitemap-card-spec">${link.theme}</span></#if>
+                                    <#if link.variant?? && link.variant != ""><span class="sitemap-card-spec">${link.variant}</span></#if>
+                                    <#if link.number?? && link.number != ""><span class="sitemap-card-spec">#${link.number}</span></#if>
+                                </div>
+                            </li>
                         </#list>
                     </ul>
                 </div>
