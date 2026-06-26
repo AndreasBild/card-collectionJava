@@ -495,7 +495,7 @@ public class CardPageGenerator {
 
     private static String generateH1(CardData c) {
         StringBuilder sb = new StringBuilder();
-        sb.append(c.get("Player")).append(" | ");
+        sb.append(c.get("Player")).append(" ");
         sb.append(c.get("Season")).append(" ");
         sb.append(c.get("Company")).append(" ");
         sb.append(c.get("Brand")).append(" ");
