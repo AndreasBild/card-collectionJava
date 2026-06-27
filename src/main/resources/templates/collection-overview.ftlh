@@ -7,6 +7,7 @@
 <body id="top">
 ${topNavHtml?no_esc}
 <main class="detail-main">
+    <#if breadcrumbHtml??>${breadcrumbHtml?no_esc}</#if>
     <header class="detail-header">
         <h1>${pageTitle}</h1>
         <p class="sub-title">${subTitle}</p>

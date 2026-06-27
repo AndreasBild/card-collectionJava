@@ -217,21 +217,24 @@ public class SitemapGenerator {
 
             String headHtml = SharedTemplates.getHead(title, description, "", "sitemap.html", FileGenerator.DEFAULT_IMAGE);
             String topNavHtml = SharedTemplates.getTopNav("", "sitemap");
+
+            List<Map<String, String>> breadcrumbItems = new ArrayList<>();
+            breadcrumbItems.add(Map.of("name", "Home", "link", "index.html"));
+            breadcrumbItems.add(Map.of("name", "Sitemap", "link", ""));
+            data.put("breadcrumbHtml", SharedTemplates.getBreadcrumb(breadcrumbItems));
+
             String footerHtml = SharedTemplates.getFooter("");
 
             // Generate JSON-LD for Sitemap
+            List<Map<String, String>> bcItems = new ArrayList<>();
+            bcItems.add(Map.of("name", "Home", "link", BASE_URL + "/index.html"));
+            bcItems.add(Map.of("name", "Sitemap", "link", BASE_URL + "/sitemap.html"));
+
             String jsonLd = "<script type=\"application/ld+json\">\n" +
                     "{\n" +
                     "  \"@context\": \"https://schema.org\",\n" +
                     "  \"@graph\": [\n" +
-                    "    {\n" +
-                    "      \"@type\": \"BreadcrumbList\",\n" +
-                    "      \"name\": \"Breadcrumbs\",\n" +
-                    "      \"itemListElement\": [\n" +
-                    "        { \"@type\": \"ListItem\", \"position\": 1, \"name\": \"Home\", \"item\": \"" + BASE_URL + "/index.html\" },\n" +
-                    "        { \"@type\": \"ListItem\", \"position\": 2, \"name\": \"Sitemap\", \"item\": \"" + BASE_URL + "/sitemap.html\" }\n" +
-                    "      ]\n" +
-                    "    },\n" +
+                    "    " + SharedTemplates.getBreadcrumbJsonLd(bcItems) + ",\n" +
                     "    {\n" +
                     "      \"@type\": \"WebPage\",\n" +
                     "      \"@id\": \"" + BASE_URL + "/sitemap.html\",\n" +

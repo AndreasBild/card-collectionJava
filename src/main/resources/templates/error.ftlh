@@ -7,6 +7,7 @@
 {{CONSENT_BANNER}}
 ${topNavHtml?no_esc}
 <main class="detail-main error-main">
+    <#if breadcrumbHtml??>${breadcrumbHtml?no_esc}</#if>
     <h1 class="error-title">Error Page</h1>
     <h2 class="error-subtitle">Requested Card Not Found</h2>
     <p class="error-text">The card or collection you are looking for has been

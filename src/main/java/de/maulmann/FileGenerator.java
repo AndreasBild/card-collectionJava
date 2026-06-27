@@ -60,18 +60,15 @@ public class FileGenerator {
             Map<String, Object> data = createBaseData("Juwan Howard Private Collection | Juwan Howard Super Collector", "Explore the Juwan Howard Masterpiece Collection. A massive private collection featuring 1,000+ unique cards, including 1/1 Masterpieces, PMGs, Rubies, and rare 90s basketball inserts.", "Juwan-Howard-Collection.html", "collection", "");
 
             // Schema.org Breadcrumb & CollectionPage
+            List<Map<String, String>> bcItems = new ArrayList<>();
+            bcItems.add(Map.of("name", "Home", "link", BASE_URL + "/index.html"));
+            bcItems.add(Map.of("name", "Collection", "link", BASE_URL + "/Juwan-Howard-Collection.html"));
+
             String jsonLd = "<script type=\"application/ld+json\">\n" +
                     "{\n" +
                     "  \"@context\": \"https://schema.org\",\n" +
                     "  \"@graph\": [\n" +
-                    "    {\n" +
-                    "      \"@type\": \"BreadcrumbList\",\n" +
-                    "      \"name\": \"Breadcrumbs\",\n" +
-                    "      \"itemListElement\": [\n" +
-                    "        { \"@type\": \"ListItem\", \"position\": 1, \"name\": \"Home\", \"item\": \"" + BASE_URL + "/index.html\" },\n" +
-                    "        { \"@type\": \"ListItem\", \"position\": 2, \"name\": \"Collection\", \"item\": \"" + BASE_URL + "/Juwan-Howard-Collection.html\" }\n" +
-                    "      ]\n" +
-                    "    },\n" +
+                    "    " + SharedTemplates.getBreadcrumbJsonLd(bcItems) + ",\n" +
                     "    {\n" +
                     "      \"@type\": \"CollectionPage\",\n" +
                     "      \"@id\": \"" + BASE_URL + "/Juwan-Howard-Collection.html\",\n" +
@@ -137,6 +134,12 @@ public class FileGenerator {
                 }
             }
             data.put("seasons", seasons);
+
+            List<Map<String, String>> breadcrumbItems = new ArrayList<>();
+            breadcrumbItems.add(Map.of("name", "Home", "link", "index.html"));
+            breadcrumbItems.add(Map.of("name", "Collection", "link", ""));
+            data.put("breadcrumbHtml", SharedTemplates.getBreadcrumb(breadcrumbItems));
+
             processTemplate("collection-overview.ftlh", data, pathOutput + "Juwan-Howard-Collection.html");
 
             // Metadaten für PWA generieren
@@ -182,19 +185,21 @@ public class FileGenerator {
                 System.out.println("-> Baue " + coll + ".html...");
                 Map<String, Object> data = createBaseData(title, description, coll + ".html", coll.toLowerCase(), "");
 
+                List<Map<String, String>> breadcrumbItems = new ArrayList<>();
+                breadcrumbItems.add(Map.of("name", "Home", "link", "index.html"));
+                breadcrumbItems.add(Map.of("name", coll, "link", ""));
+                data.put("breadcrumbHtml", SharedTemplates.getBreadcrumb(breadcrumbItems));
+
                 // Initial Breadcrumb & CollectionPage
+                List<Map<String, String>> collBcItems = new ArrayList<>();
+                collBcItems.add(Map.of("name", "Home", "link", BASE_URL + "/index.html"));
+                collBcItems.add(Map.of("name", coll, "link", BASE_URL + "/" + coll + ".html"));
+
                 String jsonLd = "<script type=\"application/ld+json\">\n" +
                         "{\n" +
                         "  \"@context\": \"https://schema.org\",\n" +
                         "  \"@graph\": [\n" +
-                        "    {\n" +
-                        "      \"@type\": \"BreadcrumbList\",\n" +
-                        "      \"name\": \"Breadcrumbs\",\n" +
-                        "      \"itemListElement\": [\n" +
-                        "        { \"@type\": \"ListItem\", \"position\": 1, \"name\": \"Home\", \"item\": \"" + BASE_URL + "/index.html\" },\n" +
-                        "        { \"@type\": \"ListItem\", \"position\": 2, \"name\": \"" + coll + "\", \"item\": \"" + BASE_URL + "/" + coll + ".html\" }\n" +
-                        "      ]\n" +
-                        "    },\n" +
+                        "    " + SharedTemplates.getBreadcrumbJsonLd(collBcItems) + ",\n" +
                         "    {\n" +
                         "      \"@type\": \"CollectionPage\",\n" +
                         "      \"@id\": \"" + BASE_URL + "/" + coll + ".html\",\n" +
@@ -222,14 +227,7 @@ public class FileGenerator {
                                         "{\n" +
                                         "  \"@context\": \"https://schema.org\",\n" +
                                         "  \"@graph\": [\n" +
-                                        "    {\n" +
-                                        "      \"@type\": \"BreadcrumbList\",\n" +
-                                        "      \"name\": \"Breadcrumbs\",\n" +
-                                        "      \"itemListElement\": [\n" +
-                                        "        { \"@type\": \"ListItem\", \"position\": 1, \"name\": \"Home\", \"item\": \"" + BASE_URL + "/index.html\" },\n" +
-                                        "        { \"@type\": \"ListItem\", \"position\": 2, \"name\": \"" + coll + "\", \"item\": \"" + BASE_URL + "/" + coll + ".html\" }\n" +
-                                        "      ]\n" +
-                                        "    },\n" +
+                                        "    " + SharedTemplates.getBreadcrumbJsonLd(collBcItems) + ",\n" +
                                         "    {\n" +
                                         "      \"@type\": \"CollectionPage\",\n" +
                                         "      \"@id\": \"" + BASE_URL + "/" + coll + ".html\",\n" +
@@ -342,18 +340,19 @@ public class FileGenerator {
                     "Welcome to the ultimate Juwan Howard Private Collection. A Super Collector showcase featuring 1,000+ unique cards, including 1/1 Masterpieces, PMGs, Rubies, and rare 90s basketball inserts.",
                     "index.html", "index", "");
 
+            List<Map<String, String>> indexBreadcrumbItems = new ArrayList<>();
+            indexBreadcrumbItems.add(Map.of("name", "Home", "link", ""));
+            indexData.put("breadcrumbHtml", SharedTemplates.getBreadcrumb(indexBreadcrumbItems));
+
             // Complex JSON-LD for Index (WebSite, Person, Collection, Breadcrumbs)
+            List<Map<String, String>> indexBcItems = new ArrayList<>();
+            indexBcItems.add(Map.of("name", "Home", "link", BASE_URL + "/index.html"));
+
             String indexJsonLd = "<script type=\"application/ld+json\">\n" +
                     "{\n" +
                     "  \"@context\": \"https://schema.org\",\n" +
                     "  \"@graph\": [\n" +
-                    "    {\n" +
-                    "      \"@type\": \"BreadcrumbList\",\n" +
-                    "      \"name\": \"Breadcrumbs\",\n" +
-                    "      \"itemListElement\": [\n" +
-                    "        { \"@type\": \"ListItem\", \"position\": 1, \"name\": \"Home\", \"item\": \"" + BASE_URL + "/index.html\" }\n" +
-                    "      ]\n" +
-                    "    },\n" +
+                    "    " + SharedTemplates.getBreadcrumbJsonLd(indexBcItems) + ",\n" +
                     "    {\n" +
                     "      \"@type\": \"WebSite\",\n" +
                     "      \"name\": \"Maulmann Trading Cards\",\n" +
@@ -384,6 +383,12 @@ public class FileGenerator {
             // Error 404 (Kein Navigations-Highlight)
             // Hier nutzen wir "/" als Root, damit Links auch bei tiefen Pfaden funktionieren (404-Handling im Server)
             Map<String, Object> errorData = createBaseData("Error Page| Maulmann Trading Cards", "The page you are looking for does not exist in the Maulmann Trading Cards collection.", "error.html", "", "/");
+
+            List<Map<String, String>> errorBreadcrumbItems = new ArrayList<>();
+            errorBreadcrumbItems.add(Map.of("name", "Home", "link", "index.html"));
+            errorBreadcrumbItems.add(Map.of("name", "Error", "link", ""));
+            errorData.put("breadcrumbHtml", SharedTemplates.getBreadcrumb(errorBreadcrumbItems));
+
             processTemplate("error.ftlh", errorData, pathOutput + "error.html");
 
         } catch (Exception e) { System.err.println("Fehler bei statischen Seiten: " + e.getMessage()); }
