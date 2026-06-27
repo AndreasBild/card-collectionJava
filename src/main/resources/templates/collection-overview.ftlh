@@ -38,7 +38,7 @@ ${topNavHtml?no_esc}
         </div>
 
     <#list seasons as season>
-        <div class="season-table-wrapper" data-season="${season.id}">
+        <div class="season-table-wrapper" id="${season.id}" data-season="${season.id}">
             <div class="season-header">
                 <h2 class="season-title">${season.name}</h2>
                 <a href="#top" class="back-to-top-btn" title="Scroll back to top of the collection"
@@ -166,6 +166,21 @@ ${topNavHtml?no_esc}
             }
 
             document.addEventListener('DOMContentLoaded', () => {
+                // --- Fragment Handling ---
+                const hash = window.location.hash;
+                if (hash && hash.length > 1) {
+                    const seasonId = hash.substring(1);
+                    const filterSelect = document.getElementById('seasonFilter');
+                    if (filterSelect) {
+                        const options = Array.from(filterSelect.options);
+                        const match = options.find(o => o.value === seasonId);
+                        if (match) {
+                            filterSelect.value = seasonId;
+                            applyFilters();
+                        }
+                    }
+                }
+
                 // --- Scroll Restoration Logic ---
                 const savedCardId = sessionStorage.getItem('lastClickedCard');
                 if (savedCardId) {

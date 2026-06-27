@@ -297,6 +297,7 @@ tr:hover {
 
 .season-table-wrapper {
     margin-bottom: 40px;
+    scroll-margin-top: 70px;
 }
 
 .season-table-wrapper th {
