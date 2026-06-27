@@ -36,13 +36,18 @@ public class FirestoreRatingInjector {
     private static final Logger log = LoggerFactory.getLogger(FirestoreRatingInjector.class);
     private static final String COLLECTION_NAME = "Trading_cards";
     private static final String TARGET_DIR = "output/cards";
+    private static final String CACHE_FILE = "output/rating-cache.properties";
+
+    private static final java.util.Properties ratingCache = new java.util.Properties();
 
     public static void main(String[] args) {
         log.info("Starting Firestore rating injection process...");
         try {
+            loadCache();
             initFirebase();
             Map<String, Map<String, Object>> firestoreData = fetchFirestoreData();
             processHtmlFiles(firestoreData);
+            saveCache();
             log.info("Firestore rating injection completed successfully.");
         } catch (Exception e) {
             log.error("Fatal error during Firestore rating injection", e);
@@ -96,6 +101,30 @@ public class FirestoreRatingInjector {
         }
     }
 
+    private static void loadCache() {
+        File file = new File(CACHE_FILE);
+        if (file.exists()) {
+            try (FileInputStream in = new FileInputStream(file)) {
+                ratingCache.load(in);
+            } catch (IOException e) {
+                log.warn("Could not load rating cache: {}", e.getMessage());
+            }
+        }
+    }
+
+    private static void saveCache() {
+        File file = new File(CACHE_FILE);
+        File parent = file.getParentFile();
+        if (parent != null && !parent.exists()) {
+            parent.mkdirs();
+        }
+        try (java.io.FileOutputStream out = new java.io.FileOutputStream(file)) {
+            ratingCache.store(out, "Firestore Rating Injection Cache");
+        } catch (IOException e) {
+            log.warn("Could not save rating cache: {}", e.getMessage());
+        }
+    }
+
     private static boolean injectRating(Path path, Map<String, Map<String, Object>> firestoreData) {
         try {
             File file = path.toFile();
@@ -136,8 +165,17 @@ public class FirestoreRatingInjector {
                         templateScript.attr("type", "application/ld+json");
                         templateScript.removeAttr("id");
                         isDomModified = true;
-                        log.info("Injected ratings into: {}", path.getFileName());
 
+                        // Only log if data changed since last build
+                        String cacheKey = cardId;
+                        String cacheValue = ratingCount + ":" + ratingSum;
+                        String storedValue = ratingCache.getProperty(cacheKey);
+
+                        if (!cacheValue.equals(storedValue)) {
+                            log.info("Injected NEW ratings into: {} (Count: {}, Sum: {})",
+                                    path.getFileName(), ratingCount, ratingSum);
+                            ratingCache.setProperty(cacheKey, cacheValue);
+                        }
                     }
                 }
             }
