@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -96,6 +97,67 @@ public class SharedTemplates {
                 .replace("{{FAVICON}}", getFavicon(root))
                 .replace("{{BUILD_ID}}", BUILD_ID); // <--- NEW CACHE BUSTER
     }
+    public static String getBreadcrumb(List<Map<String, String>> items) {
+        String template = loadResource("/templates/breadcrumb.html");
+        if (template.isEmpty()) return "";
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < items.size(); i++) {
+            Map<String, String> item = items.get(i);
+            String name = escapeHtml(item.get("name"));
+            String link = item.get("link");
+            boolean isLast = (i == items.size() - 1);
+
+            sb.append("            <li class=\"breadcrumb-item\"");
+            if (isLast) {
+                sb.append(" aria-current=\"page\">").append(name).append("</li>\n");
+            } else {
+                sb.append("><a href=\"").append(link).append("\" class=\"plain\">").append(name).append("</a></li>\n");
+            }
+        }
+        return template.replace("{{ITEMS}}", sb.toString().trim());
+    }
+
+    public static String getBreadcrumbJsonLd(List<Map<String, String>> items) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("    {\n");
+        sb.append("      \"@type\": \"BreadcrumbList\",\n");
+        sb.append("      \"name\": \"Breadcrumbs\",\n");
+        sb.append("      \"itemListElement\": [\n");
+
+        for (int i = 0; i < items.size(); i++) {
+            Map<String, String> item = items.get(i);
+            String name = escapeHtml(item.get("name")); // Using existing escapeHtml for JSON-safe strings if they don't contain quotes
+            // Actually it's better to escape JSON specifically
+            name = name.replace("\"", "\\\"");
+            String link = item.get("link");
+            if (link == null || link.isEmpty()) {
+                // If link is empty, we still need a valid URL for schema.org usually,
+                // but some parsers allow omitting 'item' for the last item.
+                // However, Google recommends including it.
+                // For now we'll just skip 'item' if link is empty.
+            }
+
+            sb.append("        { \"@type\": \"ListItem\", \"position\": ").append(i + 1).append(", \"name\": \"").append(name).append("\"");
+            if (link != null && !link.isEmpty()) {
+                // Prepend BASE_URL if relative
+                String absoluteLink = link;
+                if (!link.startsWith("http")) {
+                    // This is tricky because we don't know the full context here easily.
+                    // But in this project, BASE_URL is https://www.maulmann.de
+                }
+                sb.append(", \"item\": \"").append(link).append("\"");
+            }
+            sb.append(" }");
+            if (i < items.size() - 1) sb.append(",");
+            sb.append("\n");
+        }
+
+        sb.append("      ]\n");
+        sb.append("    }");
+        return sb.toString();
+    }
+
     public static String getTopNav(String root, String activePage) {
         String template = loadResource("/templates/topnav.html");
         if (template.isEmpty()) {

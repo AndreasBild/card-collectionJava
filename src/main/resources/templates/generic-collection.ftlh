@@ -8,6 +8,7 @@
 {{CONSENT_BANNER}}
 ${topNavHtml?no_esc}
 <main class="detail-main">
+    <#if breadcrumbHtml??>${breadcrumbHtml?no_esc}</#if>
     <div class="generic-content">
         ${pageContent?no_esc}
     </div>

@@ -8,6 +8,7 @@
 {{CONSENT_BANNER}}
 ${topNavHtml?no_esc}
 <main class="detail-main">
+    <#if breadcrumbHtml??>${breadcrumbHtml?no_esc}</#if>
     <header class="detail-header">
         <h1>Maulmann Trading Cards</h1>
         <p class="sub-title">Welcome to our Private Sports Card Collection</p>

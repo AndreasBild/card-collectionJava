@@ -150,6 +150,58 @@ a:not(.plain), button.modern-button, button.flip-modal-btn, button.close-modal-b
     justify-content: center;
 }
 
+/* --- BREADCRUMB --- */
+.breadcrumb-nav {
+    padding: 10px 0;
+    margin-bottom: 5px;
+    font-size: 0.85rem;
+}
+
+.breadcrumb-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    color: #777;
+}
+
+.breadcrumb-item {
+    display: flex;
+    align-items: center;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: "›";
+    padding: 0 8px;
+    color: #ccc;
+    font-weight: normal;
+}
+
+.breadcrumb-item a {
+    color: #3264af;
+    text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+    text-decoration: underline !important;
+}
+
+.breadcrumb-item[aria-current="page"] {
+    color: #777;
+    font-weight: normal;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 400px;
+}
+
+@media screen and (max-width: 600px) {
+    .breadcrumb-item[aria-current="page"] {
+        max-width: 200px;
+    }
+}
+
 .burger-icon-button {
     background: none;
     border: none;

@@ -385,6 +385,14 @@ public class CardPageGenerator {
         data.put("headHtml", SharedTemplates.getHead(browserTitle, metaDesc, ROOT, overviewPage, frontImgPath));
         data.put("jsonLd", generateJsonLd(c, metaDesc, h1Title, overviewPage, imageBaseName, faqHtml));
         data.put("topNavHtml", SharedTemplates.getTopNav(ROOT, "collection"));
+
+        List<Map<String, String>> breadcrumbItems = new ArrayList<>();
+        breadcrumbItems.add(Map.of("name", "Home", "link", ROOT + "index.html"));
+        breadcrumbItems.add(Map.of("name", "Collection", "link", ROOT + overviewPage));
+        breadcrumbItems.add(Map.of("name", c.get("Season"), "link", ROOT + overviewPage + "#" + c.seasonFolder.toLowerCase()));
+        breadcrumbItems.add(Map.of("name", h1Title, "link", ""));
+        data.put("breadcrumbHtml", SharedTemplates.getBreadcrumb(breadcrumbItems));
+
         data.put("footerHtml", SharedTemplates.getFooter(ROOT));
 
         data.put("overviewPage", overviewPage);
@@ -624,16 +632,12 @@ public class CardPageGenerator {
         sb.append("  \"@graph\": [\n");
 
         // 1. BreadcrumbList
-        sb.append("    {\n");
-        sb.append("      \"@type\": \"BreadcrumbList\",\n");
-        sb.append("      \"name\": \"Breadcrumbs\",\n");
-        sb.append("      \"itemListElement\": [\n");
-        sb.append("        { \"@type\": \"ListItem\", \"position\": 1, \"name\": \"Home\", \"item\": \"").append(BASE_URL).append("/index.html\" },\n");
-        sb.append("        { \"@type\": \"ListItem\", \"position\": 2, \"name\": \"Collection\", \"item\": \"").append(BASE_URL).append("/").append(overviewPage).append("\" },\n");
-        sb.append("        { \"@type\": \"ListItem\", \"position\": 3, \"name\": \"").append(escapeJson(c.get("Season"))).append("\", \"item\": \"").append(BASE_URL).append("/").append(overviewPage).append("#").append(c.seasonFolder.toLowerCase()).append("\" },\n");
-        sb.append("        { \"@type\": \"ListItem\", \"position\": 4, \"name\": \"").append(escapeJson(h1Title)).append("\", \"item\": \"").append(cardUrl).append("\" }\n");
-        sb.append("      ]\n");
-        sb.append("    },\n");
+        List<Map<String, String>> bcItems = new ArrayList<>();
+        bcItems.add(Map.of("name", "Home", "link", BASE_URL + "/index.html"));
+        bcItems.add(Map.of("name", "Collection", "link", BASE_URL + "/" + overviewPage));
+        bcItems.add(Map.of("name", c.get("Season"), "link", BASE_URL + "/" + overviewPage + "#" + c.seasonFolder.toLowerCase()));
+        bcItems.add(Map.of("name", h1Title, "link", cardUrl));
+        sb.append(SharedTemplates.getBreadcrumbJsonLd(bcItems)).append(",\n");
 
         // 2. VisualArtwork
         sb.append("    {\n");

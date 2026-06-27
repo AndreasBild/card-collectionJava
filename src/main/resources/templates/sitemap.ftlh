@@ -7,6 +7,7 @@
 <body>
 ${topNavHtml?no_esc}
 <main class="detail-main">
+    <#if breadcrumbHtml??>${breadcrumbHtml?no_esc}</#if>
     <header class="detail-header">
         <h1>HTML Sitemap</h1>
         <p class="sub-title">An organized overview of all pages in the Juwan Howard Private Collection</p>

@@ -15,6 +15,7 @@
 {{CONSENT_BANNER}}
 ${topNavHtml?no_esc}
 
+<main class="detail-main">
 <nav class="detail-nav no-border-bg">
     <a id="backToOverview" title="Back To Collection Overview" href="../../${overviewPage}" class="modern-button no-text-decoration">&larr; Overview</a>
     <div class="nav-button-group">
@@ -28,7 +29,8 @@ ${topNavHtml?no_esc}
     </div>
 </nav>
 
-<main class="detail-main">
+    <#if breadcrumbHtml??>${breadcrumbHtml?no_esc}</#if>
+
     <header class="detail-header">
         <h1>${h1Title}</h1>
     </header>
