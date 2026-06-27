@@ -23,6 +23,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -50,7 +51,7 @@ public class SiteBuilderPipeline {
 
         try (S3AsyncClient s3AsyncClient = S3AsyncClient.builder()
                 .region(REGION)
-                .credentialsProvider(DefaultCredentialsProvider.create())
+                .credentialsProvider(DefaultCredentialsProvider.builder().build())
                 .httpClientBuilder(NettyNioAsyncHttpClient.builder()
                         .maxConcurrency(500)
                         .connectionAcquisitionTimeout(Duration.ofSeconds(60))
@@ -128,7 +129,6 @@ public class SiteBuilderPipeline {
 
         } catch (Exception e) {
             System.err.println("\n❌ PIPELINE FAILED: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
@@ -295,7 +295,6 @@ public class SiteBuilderPipeline {
 
         } catch (Exception e) {
             System.err.println("-> WARNING: Failed to clean orphaned S3 files: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
@@ -342,7 +341,7 @@ public class SiteBuilderPipeline {
 
         try (CloudFrontClient cloudFrontClient = CloudFrontClient.builder()
                 .region(Region.AWS_GLOBAL)
-                .credentialsProvider(DefaultCredentialsProvider.create())
+                .credentialsProvider(DefaultCredentialsProvider.builder().build())
                 .build()) {
 
             software.amazon.awssdk.services.cloudfront.model.Paths cfPaths =
