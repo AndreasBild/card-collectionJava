@@ -303,7 +303,7 @@ public class CardPageGenerator {
             int playerColIndex = 0;
 
             if (!rows.isEmpty()) {
-                Elements headers = rows.get(0).children();
+                Elements headers = rows.getFirst().children();
                 for (int j = 0; j < headers.size(); j++) {
                     if (headers.get(j).text().trim().equalsIgnoreCase("Player")) {
                         playerColIndex = j;
