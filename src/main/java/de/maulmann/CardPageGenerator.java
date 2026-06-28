@@ -262,7 +262,7 @@ public class CardPageGenerator {
         }
     }
 
-    private static String generateStableId(Map<String, String> attributes) {
+    public static String generateStableId(Map<String, String> attributes) {
         String[] relevantKeys = {
                 "Player", "Team", "Season", "Company", "Brand",
                 "Theme", "Variant", "Number", "Serial", "Print Run",
