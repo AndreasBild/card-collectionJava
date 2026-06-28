@@ -5,10 +5,12 @@ from playwright.async_api import async_playwright
 async def run_bulk_review(base_url="https://www.maulmann.de"):
     async with async_playwright() as p:
         # Launch browser
-        # Set headless=False if you want to see the browser in action
         browser = await p.chromium.launch(headless=True)
+
+        # Kontext mit einem echten User-Agent erstellen, um Bot-Erkennung zu umgehen
         context = await browser.new_context(
-            viewport={'width': 1280, 'height': 800}
+            viewport={'width': 1280, 'height': 800},
+            user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
         )
         page = await context.new_page()
 
@@ -16,14 +18,14 @@ async def run_bulk_review(base_url="https://www.maulmann.de"):
         print(f"Navigating to sitemap: {sitemap_url}")
 
         try:
-            await page.goto(sitemap_url)
+            # Auch hier auf domcontentloaded wechseln, falls die Sitemap Tracking-Skripte lädt
+            await page.goto(sitemap_url, wait_until="domcontentloaded", timeout=30000)
         except Exception as e:
             print(f"Failed to load sitemap: {e}")
             await browser.close()
             return
 
         # Get all card detail links from the sitemap
-        # The selector .sitemap-card-link matches the links in the card detail section of the sitemap
         links = await page.eval_on_selector_all(".sitemap-card-link", "elements => elements.map(e => e.href)")
 
         if not links:
@@ -36,18 +38,17 @@ async def run_bulk_review(base_url="https://www.maulmann.de"):
         for i, link in enumerate(links):
             print(f"[{i+1}/{len(links)}] Processing: {link}")
             try:
-                await page.goto(link, wait_until="networkidle")
+                # wait_until="domcontentloaded" verhindert Timeouts durch Hintergrund-Netzwerkaktivität.
+                # Ein explizites Timeout von 15 Sekunden sichert den Ablauf ab.
+                await page.goto(link, wait_until="domcontentloaded", timeout=15000)
 
                 # 1. Accept GDPR Consent via LocalStorage
-                # We set this and then we might need to trigger the logic that depends on it,
-                # but since handleVote checks it on every click, it should be fine.
                 await page.evaluate("localStorage.setItem('user_consent', 'accepted')")
 
                 # 2. Click Like button
-                # Selector: #like-btn
                 like_btn = page.locator("#like-btn")
-                # Wait for the button to be attached and visible
                 try:
+                    # Da wir nicht auf das Netzwerk warten, warten wir hier explizit auf die Sichtbarkeit des Buttons
                     await like_btn.wait_for(state="visible", timeout=5000)
                     if not await like_btn.is_disabled():
                         await like_btn.click()
@@ -58,23 +59,20 @@ async def run_bulk_review(base_url="https://www.maulmann.de"):
                     print(f"  - Like button not found or not visible")
 
                 # 3. Rate 5 Stars
-                # Selector for 5-star label: label[for='star5']
                 star5_label = page.locator("label[for='star5']")
                 try:
-                    await star5_label.wait_for(state="visible", timeout=2000)
+                    await star5_label.wait_for(state="visible", timeout=3000)
                     await star5_label.click()
 
                     # 4. Submit Rating
-                    # The confirmation div appears after clicking a star
                     submit_btn = page.locator("#submit-rating-btn")
-                    # Wait for the submit button to become visible
-                    await submit_btn.wait_for(state="visible", timeout=2000)
+                    await submit_btn.wait_for(state="visible", timeout=3000)
                     await submit_btn.click()
                     print(f"  - Rated 5 stars")
                 except Exception:
                     print(f"  - Rating interaction failed (maybe already rated?)")
 
-                # Small sleep to avoid rate limiting and allow Firebase to process
+                # Kleiner Sleep, um Firebase-Prozesse zu erlauben und Rate-Limiting zu vermeiden
                 await asyncio.sleep(0.5)
 
             except Exception as e:
@@ -84,6 +82,6 @@ async def run_bulk_review(base_url="https://www.maulmann.de"):
         await browser.close()
 
 if __name__ == "__main__":
-    # Allow overriding the base URL from command line
+    # Ermöglicht das Überschreiben der Basis-URL via Kommandozeile
     target_url = sys.argv[1] if len(sys.argv) > 1 else "https://www.maulmann.de"
     asyncio.run(run_bulk_review(target_url))
