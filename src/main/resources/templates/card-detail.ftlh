@@ -288,7 +288,7 @@ ${topNavHtml?no_esc}
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, doc, setDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getFirestore, enableIndexedDbPersistence, doc, setDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "${firebaseConfig.apiKey!}",
@@ -302,6 +302,14 @@ ${topNavHtml?no_esc}
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
+
+    enableIndexedDbPersistence(db).catch((err) => {
+        if (err.code == 'failed-precondition') {
+            console.warn('Multiple tabs open, persistence can only be enabled in one tab at a a time.');
+        } else if (err.code == 'unimplemented') {
+            console.warn('The current browser does not support all of the features required to enable persistence');
+        }
+    });
 
     const voteContainer = document.querySelector('.vote-container');
     const cardId = voteContainer.dataset.cardId;
