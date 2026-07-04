@@ -1143,3 +1143,84 @@ tr:hover {
     .card-image-wrapper img { max-height: 300px; }
     .modern-button { min-height: 36px; padding: 5px 10px !important; }
 }
+
+/* ==========================================================================
+   20. Market Section
+   ========================================================================== */
+
+.market-section {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    margin-top: 2rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.market-section h2 {
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 0.5rem;
+}
+
+.market-listing {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background-color: #f9f9f9;
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+.market-listing:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+.market-img {
+    max-width: 80px;
+    max-height: 80px;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.market-details {
+    flex: 1;
+}
+
+.market-title {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.market-price {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.market-action {
+    display: inline-flex;
+    white-space: nowrap;
+}
+
+.market-loading, .market-empty, .market-error {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+    font-style: italic;
+    background-color: #f9f9f9;
+    border-radius: var(--border-radius);
+}
+
+@media (max-width: 600px) {
+    .market-listing {
+        flex-direction: column;
+        text-align: center;
+    }
+}
