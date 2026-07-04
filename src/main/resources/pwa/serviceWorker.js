@@ -82,7 +82,7 @@ self.addEventListener('fetch', function (event) {
             return cache.match(request, { ignoreSearch: true }).then(cachedResponse => {
                 const fetchPromise = fetch(request).then(networkResponse => {
                     // Update cache with new version
-                    if (networkResponse.ok) {
+                    if (networkResponse.ok && request.url.startsWith('http')) {
                         const responseClone = networkResponse.clone();
                         event.waitUntil(cache.put(request, responseClone));
                     }
