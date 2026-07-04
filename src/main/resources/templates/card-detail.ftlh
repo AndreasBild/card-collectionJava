@@ -198,8 +198,8 @@ ${topNavHtml?no_esc}
             <div id="rating-confirmation" class="rating-confirmation" style="display: none;">
                 <p>Your Rating: <span id="selected-rating-text">0</span> Stars. Send it now?</p>
                 <div class="confirmation-buttons">
-                    <button id="submit-rating-btn" class="modern-button confirm-btn">Submit Rating</button>
-                    <button id="cancel-rating-btn" class="cancel-btn">Cancel</button>
+                    <button id="submit-rating-btn" class="modern-button confirm-btn" title="Submit Rating">Submit Rating</button>
+                    <button id="cancel-rating-btn" class="cancel-btn" title="Cancel Rating">Cancel</button>
                 </div>
             </div>
 
@@ -228,7 +228,7 @@ ${topNavHtml?no_esc}
     <button class="flip-modal-btn" aria-label="Flip card to other side" onclick="flipCard()">
         &#8644; Flip Card
     </button>
-    <img class="modal-content" id="img01" alt="Zoomed card view">
+    <img class="modal-content" id="img01" alt="Zoomed card view" title="Zoomed card view">
 </div>
 
 <script>

@@ -112,7 +112,7 @@ public class SharedTemplates {
             if (isLast) {
                 sb.append(" aria-current=\"page\">").append(name).append("</li>\n");
             } else {
-                sb.append("><a href=\"").append(link).append("\" class=\"plain\">").append(name).append("</a></li>\n");
+                sb.append("><a href=\"").append(link).append("\" class=\"plain\" title=\"").append(name).append("\">").append(name).append("</a></li>\n");
             }
         }
         return template.replace("{{ITEMS}}", sb.toString().trim());
