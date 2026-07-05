@@ -9,7 +9,7 @@ body {
     margin: 0;
     color: #222;
     background-color: #fff;
-    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
     overflow-x: hidden;
 }
 
@@ -196,7 +196,7 @@ a:not(.plain), button.modern-button, button.flip-modal-btn, button.close-modal-b
     max-width: 400px;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (width <= 600px) {
     .breadcrumb-item[aria-current="page"] {
         max-width: 200px;
     }
@@ -229,7 +229,7 @@ a:not(.plain), button.modern-button, button.flip-modal-btn, button.close-modal-b
     background: #fff;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 10px rgb(0 0 0 / 5%);
 }
 
 .archive-box {
@@ -375,7 +375,7 @@ tr:hover {
     background: radial-gradient(circle at center, #fdfdfd 0%, #f5f5f5 100%);
     margin-bottom: 40px;
     border-radius: 12px;
-    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.02);
+    box-shadow: inset 0 0 20px rgb(0 0 0 / 2%);
 }
 
 .carousel-wrapper::before,
@@ -391,12 +391,12 @@ tr:hover {
 
 .carousel-wrapper::before {
     left: 0;
-    background: linear-gradient(to right, #fff 0%, rgba(255, 255, 255, 0) 100%);
+    background: linear-gradient(to right, #fff 0%, rgb(255 255 255 / 0%) 100%);
 }
 
 .carousel-wrapper::after {
     right: 0;
-    background: linear-gradient(to left, #fff 0%, rgba(255, 255, 255, 0) 100%);
+    background: linear-gradient(to left, #fff 0%, rgb(255 255 255 / 0%) 100%);
 }
 
 .carousel-wrapper:hover .card-carousel {
@@ -433,11 +433,11 @@ tr:hover {
     height: auto;
     aspect-ratio: 400 / 550;
     border-radius: 10px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15), 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 20px rgb(0 0 0 / 15%), 0 2px 5px rgb(0 0 0 / 10%);
     object-fit: contain;
     background-color: #fff;
     display: block;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border: 1px solid rgb(0 0 0 / 5%);
 }
 
 .carousel-item .hover-overlay {
@@ -449,7 +449,7 @@ tr:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgb(0 0 0 / 40%);
     border-radius: 10px;
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -469,7 +469,7 @@ tr:hover {
     text-decoration: none;
     font-weight: bold;
     font-size: 0.9em;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 10px rgb(0 0 0 / 30%);
     white-space: nowrap;
 }
 
@@ -499,7 +499,7 @@ tr:hover {
     max-width: 100%;
     height: auto;
     border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 15px rgb(0 0 0 / 15%);
 }
 
 .zoomable-img {
@@ -511,7 +511,7 @@ tr:hover {
     cursor: zoom-in;
     background-color: #f0f0f0;
     border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 15px rgb(0 0 0 / 15%);
 }
 
 .img-caption {
@@ -551,7 +551,7 @@ tr:hover {
     border-radius: var(--border-radius);
     padding: 2rem;
     margin-top: 2rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 6px rgb(0 0 0 / 5%);
 }
 
 
@@ -580,7 +580,7 @@ tr:hover {
     left: 0;
     right: 0;
     background: #fff;
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 -2px 10px rgb(0 0 0 / 10%);
     z-index: 10000;
     padding: 20px;
     border-top: 3px solid #317EFB;
@@ -614,7 +614,7 @@ tr:hover {
     min-width: 120px;
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
     .consent-content {
         flex-direction: row;
         justify-content: space-between;
@@ -630,7 +630,7 @@ tr:hover {
     padding: 30px 20px;
     border-radius: 12px;
     border: 1px solid #eee;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+    box-shadow: 0 4px 15px rgb(0 0 0 / 2%);
 }
 
 .vote-container {
@@ -677,7 +677,7 @@ tr:hover {
 }
 
 .vote-btn .count {
-    background: rgba(0,0,0,0.05);
+    background: rgb(0 0 0 / 5%);
     padding: 2px 8px;
     border-radius: 12px;
     font-size: 0.85rem;
@@ -731,7 +731,7 @@ tr:hover {
     transition: color 0.15s ease;
 }
 
-.star-rating label:before {
+.star-rating label::before {
     content: "\2605";
     font-size: 2.4rem;
     position: absolute;
@@ -739,7 +739,7 @@ tr:hover {
     top: 0;
 }
 
-.star-rating .full:before {
+.star-rating .full::before {
     left: -1.2rem;
 }
 
@@ -999,7 +999,7 @@ tr:hover {
     border: 1px solid #eaeaea;
     border-radius: 8px;
     padding: 20px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 6px rgb(0 0 0 / 5%);
 }
 
 .context-card h3 {
@@ -1034,7 +1034,7 @@ tr:hover {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0,0,0,0.9);
+    background-color: rgb(0 0 0 / 90%);
     align-items: center;
     justify-content: center;
 }
@@ -1067,6 +1067,7 @@ tr:hover {
 .no-border-bg { border: none !important; background: transparent !important; }
 .no-text-decoration { text-decoration: none !important; }
 .nav-button-group { display: flex; gap: 10px; }
+
 .ai-summary {
     background: #f4f8fc;
     border-left: 4px solid #0056b3;
@@ -1075,6 +1076,7 @@ tr:hover {
     margin-bottom: 25px;
 }
 .ai-summary p { margin: 0; font-size: 0.95em; }
+
 .flex-column-center {
     margin-top: 40px;
     display: flex;
@@ -1088,14 +1090,14 @@ tr:hover {
 .footer-button-fixed { width: 300px; }
 
 /* --- RESPONSIVE DESIGN --- */
-@media screen and (max-width: 800px) {
+@media screen and (width <= 800px) {
     table td:nth-child(3), table th:nth-child(3),
     table td:nth-child(10), table th:nth-child(10) {
         display: none;
     }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (width <= 600px) {
     .topnav a:not(:first-child) { display: none; }
     .topnav .icon { float: right; display: block; }
     .topnav.responsive { position: relative; }
@@ -1143,7 +1145,7 @@ tr:hover {
     }
 }
 
-@media screen and (max-height: 500px) and (orientation: landscape) {
+@media screen and (height <= 500px) and (orientation: landscape) {
     .topnav { position: relative; }
     .card-images-container { flex-direction: row; gap: 10px; }
     .card-image-wrapper img { max-height: 300px; }
@@ -1160,7 +1162,7 @@ tr:hover {
     border-radius: var(--border-radius);
     padding: 2rem;
     margin-top: 2rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 6px rgb(0 0 0 / 5%);
 }
 
 .market-section h2 {
@@ -1218,7 +1220,7 @@ tr:hover {
     border-radius: var(--border-radius);
 }
 
-@media (max-width: 600px) {
+@media (width <= 600px) {
     .market-listing {
         flex-direction: column;
         text-align: center;
