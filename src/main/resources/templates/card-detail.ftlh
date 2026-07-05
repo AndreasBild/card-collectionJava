@@ -301,100 +301,39 @@ ${topNavHtml?no_esc}
         function searchMarket() {
             const cardName = encodeURIComponent("${h1Title?js_string}");
             const ebaySearchUrl = "https://www.ebay.com/sch/i.html?_nkw=" + cardName;
-            const proxyUrl = "https://api.allorigins.win/get?url=" + encodeURIComponent(ebaySearchUrl);
 
-            fetch(proxyUrl)
-                .then(response => {
-                    if (response.ok) return response.json();
-                    throw new Error('Network response was not ok.');
-                })
-                .then(data => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(data.contents, 'text/html');
+            marketResults.innerHTML = ''; // Clear loading
 
-                    // Find actual listings (eBay s-item)
-                    const items = doc.querySelectorAll('.s-item');
-                    let foundListing = null;
+            const a = document.createElement('a');
+            a.href = ebaySearchUrl;
+            a.target = "_blank";
+            a.rel = "noopener noreferrer";
+            a.className = "market-listing no-text-decoration";
 
-                    for (let i = 0; i < items.length; i++) {
-                        const item = items[i];
-                        // Skip the 'Shop on eBay' header item which is often the first
-                        if (item.querySelector('.s-item__title') && item.querySelector('.s-item__title').textContent.includes('Shop on eBay')) {
-                            continue;
-                        }
+            const detailsDiv = document.createElement('div');
+            detailsDiv.className = "market-details";
 
-                        const linkEl = item.querySelector('.s-item__link');
-                        const priceEl = item.querySelector('.s-item__price');
-                        const titleEl = item.querySelector('.s-item__title');
-                        const imgEl = item.querySelector('.s-item__image-img');
+            const titleDiv = document.createElement('div');
+            titleDiv.className = "market-title";
+            titleDiv.textContent = "Search for ${h1Title?js_string}";
 
-                        if (linkEl && priceEl && titleEl && priceEl.textContent.trim() !== '') {
-                            foundListing = {
-                                url: linkEl.href,
-                                price: priceEl.textContent.trim(),
-                                title: titleEl.textContent.trim(),
-                                imgSrc: imgEl ? imgEl.src : ''
-                            };
-                            break;
-                        }
-                    }
+            const descDiv = document.createElement('div');
+            descDiv.style.fontSize = '0.9rem';
+            descDiv.style.color = '#555';
+            descDiv.style.marginTop = '4px';
+            descDiv.textContent = "Check current active listings on eBay";
 
-                    if (foundListing) {
-                        marketResults.innerHTML = ''; // Clear loading
+            detailsDiv.appendChild(titleDiv);
+            detailsDiv.appendChild(descDiv);
 
-                        const a = document.createElement('a');
-                        a.href = foundListing.url;
-                        a.target = "_blank";
-                        a.rel = "noopener noreferrer";
-                        a.className = "market-listing no-text-decoration";
+            const actionDiv = document.createElement('div');
+            actionDiv.className = "market-action modern-button";
+            actionDiv.textContent = "View on eBay";
 
-                        if (foundListing.imgSrc) {
-                            const img = document.createElement('img');
-                            img.src = foundListing.imgSrc;
-                            img.alt = "Listing image";
-                            img.className = "market-img";
-                            img.loading = "lazy";
-                            a.appendChild(img);
-                        }
+            a.appendChild(detailsDiv);
+            a.appendChild(actionDiv);
 
-                        const detailsDiv = document.createElement('div');
-                        detailsDiv.className = "market-details";
-
-                        const titleDiv = document.createElement('div');
-                        titleDiv.className = "market-title";
-                        titleDiv.textContent = foundListing.title;
-
-                        const priceDiv = document.createElement('div');
-                        priceDiv.className = "market-price";
-                        priceDiv.textContent = foundListing.price;
-
-                        detailsDiv.appendChild(titleDiv);
-                        detailsDiv.appendChild(priceDiv);
-
-                        const actionDiv = document.createElement('div');
-                        actionDiv.className = "market-action modern-button";
-                        actionDiv.textContent = "View on eBay";
-
-                        a.appendChild(detailsDiv);
-                        a.appendChild(actionDiv);
-
-                        marketResults.appendChild(a);
-                    } else {
-                        marketResults.innerHTML = '';
-                        const emptyDiv = document.createElement('div');
-                        emptyDiv.className = "market-empty";
-                        emptyDiv.textContent = "No active listings found right now.";
-                        marketResults.appendChild(emptyDiv);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching market data:', error);
-                    marketResults.innerHTML = '';
-                    const errorDiv = document.createElement('div');
-                    errorDiv.className = "market-error";
-                    errorDiv.textContent = "Could not load market data.";
-                    marketResults.appendChild(errorDiv);
-                });
+            marketResults.appendChild(a);
         }
     });
     document.addEventListener('keydown', function (event) {
