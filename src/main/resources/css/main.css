@@ -546,8 +546,14 @@ tr:hover {
 }
 
 .faq-section {
-    margin-top: 50px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    margin-top: 2rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
 }
+
 
 .faq-details {
     background: #fff;
