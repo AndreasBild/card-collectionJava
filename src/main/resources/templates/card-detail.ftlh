@@ -304,11 +304,8 @@ ${topNavHtml?no_esc}
 
             marketResults.innerHTML = ''; // Clear loading
 
-            const a = document.createElement('a');
-            a.href = ebaySearchUrl;
-            a.target = "_blank";
-            a.rel = "noopener noreferrer";
-            a.className = "market-listing no-text-decoration";
+            const container = document.createElement('div');
+            container.className = "market-listing";
 
             const detailsDiv = document.createElement('div');
             detailsDiv.className = "market-details";
@@ -326,14 +323,17 @@ ${topNavHtml?no_esc}
             detailsDiv.appendChild(titleDiv);
             detailsDiv.appendChild(descDiv);
 
-            const actionDiv = document.createElement('div');
-            actionDiv.className = "market-action modern-button";
-            actionDiv.textContent = "View on eBay";
+            const actionA = document.createElement('a');
+            actionA.href = ebaySearchUrl;
+            actionA.target = "_blank";
+            actionA.rel = "noopener noreferrer";
+            actionA.className = "market-action modern-button no-text-decoration";
+            actionA.textContent = "View on eBay";
 
-            a.appendChild(detailsDiv);
-            a.appendChild(actionDiv);
+            container.appendChild(detailsDiv);
+            container.appendChild(actionA);
 
-            marketResults.appendChild(a);
+            marketResults.appendChild(container);
         }
     });
     document.addEventListener('keydown', function (event) {

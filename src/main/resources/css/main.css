@@ -1173,12 +1173,6 @@ tr:hover {
     padding: 1rem;
     border-radius: var(--border-radius);
     border: 1px solid var(--border-color);
-    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
-}
-
-.market-listing:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
 }
 
 .market-img {
