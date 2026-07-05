@@ -14,31 +14,29 @@
 <body>
 {{CONSENT_BANNER}}
 ${topNavHtml?no_esc}
-
 <main class="detail-main">
-<nav class="detail-nav no-border-bg">
-    <a id="backToOverview" title="Back To Collection Overview" href="../../${overviewPage}" class="modern-button no-text-decoration">&larr; Overview</a>
-    <div class="nav-button-group">
-        <#if prevLink??>
-            <a id="prevCardLink" title="Previous Card Details" href="${prevLink}" class="modern-button no-text-decoration">&laquo; Prev</a>
-        </#if>
-        <#if nextLink??>
-            <a id="nextCardLink" title="Next Card Details" href="${nextLink}" class="modern-button no-text-decoration">Next &raquo;</a>
-        </#if>
-        <button id="shareBtn" title="Share this card" class="modern-button" style="display: none;">Share</button>
-    </div>
-</nav>
-
+    <nav class="detail-nav no-border-bg">
+        <a id="backToOverview" title="Back To Collection Overview" href="../../${overviewPage}"
+           class="modern-button no-text-decoration">&larr; Overview</a>
+        <div class="nav-button-group">
+            <#if prevLink??>
+                <a id="prevCardLink" title="Previous Card Details" href="${prevLink}"
+                   class="modern-button no-text-decoration">&laquo; Prev</a>
+            </#if>
+            <#if nextLink??>
+                <a id="nextCardLink" title="Next Card Details" href="${nextLink}"
+                   class="modern-button no-text-decoration">Next &raquo;</a>
+            </#if>
+            <button id="shareBtn" title="Share this card" class="modern-button" style="display: none;">Share</button>
+        </div>
+    </nav>
     <#if breadcrumbHtml??>${breadcrumbHtml?no_esc}</#if>
-
     <header class="detail-header">
         <h1>${h1Title}</h1>
     </header>
-
     <div class="ai-summary">
         <p><strong>Card Snapshot:</strong> ${aiSnapshotText?no_esc}</p>
     </div>
-
     <div class="card-images-container">
         <div class="card-image-wrapper">
             <#-- SRCSET FÜR DAS FRONT-BILD -->
@@ -65,7 +63,6 @@ ${topNavHtml?no_esc}
             <p class="img-caption">&#x1F50D; Click to Enlarge Back</p>
         </div>
     </div>
-
     <div class="card-data">
         <table class="specs-table">
             <tr class="specs-table-header">
@@ -123,7 +120,6 @@ ${topNavHtml?no_esc}
             </#if>
         </table>
     </div>
-
     <#if (hobbyTrivia != "") || (techTrivia != "") || (playerHighlights != "") || (eraContext != "") || (cardBackText != "")>
         <div class="context-engine">
             <#if hobbyTrivia != "">
@@ -165,7 +161,6 @@ ${topNavHtml?no_esc}
             </#if>
         </div>
     </#if>
-
     <section class="vote-section">
         <h2>Collector Sentiment</h2>
         <div class="vote-container" data-card-id="${cardId}">
@@ -173,36 +168,46 @@ ${topNavHtml?no_esc}
                 <span class="icon">👍</span> <span class="label">Like</span> <span id="like-count" class="count">0</span>
             </button>
             <button id="dislike-btn" title="I dislike this card" class="vote-btn dislike">
-                <span class="icon">👎</span> <span class="label">Dislike</span> <span id="dislike-count" class="count">0</span>
+                <span class="icon">👎</span> <span class="label">Dislike</span> <span id="dislike-count"
+                                                                                     class="count">0</span>
             </button>
         </div>
-
         <div class="rating-stars-wrapper">
             <h3>Rate this Card</h3>
             <div class="rating-interaction-container">
                 <div class="star-rating" id="interactive-stars">
-                    <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Exceptional"></label>
-                    <input type="radio" id="star4half" name="rating" value="4.5" /><label class="half" for="star4half" title="Very Good"></label>
-                    <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Good"></label>
-                    <input type="radio" id="star3half" name="rating" value="3.5" /><label class="half" for="star3half" title="Nice"></label>
-                    <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Average"></label>
-                    <input type="radio" id="star2half" name="rating" value="2.5" /><label class="half" for="star2half" title="Ok"></label>
-                    <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Acceptable"></label>
-                    <input type="radio" id="star1half" name="rating" value="1.5" /><label class="half" for="star1half" title="Not Good"></label>
-                    <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Poor"></label>
-                    <input type="radio" id="star0half" name="rating" value="0.5" /><label class="half" for="star0half" title="Very Poor"></label>
+                    <input type="radio" id="star5" name="rating" value="5"/><label class="full" for="star5"
+                                                                                   title="Exceptional"></label>
+                    <input type="radio" id="star4half" name="rating" value="4.5"/><label class="half" for="star4half"
+                                                                                         title="Very Good"></label>
+                    <input type="radio" id="star4" name="rating" value="4"/><label class="full" for="star4"
+                                                                                   title="Good"></label>
+                    <input type="radio" id="star3half" name="rating" value="3.5"/><label class="half" for="star3half"
+                                                                                         title="Nice"></label>
+                    <input type="radio" id="star3" name="rating" value="3"/><label class="full" for="star3"
+                                                                                   title="Average"></label>
+                    <input type="radio" id="star2half" name="rating" value="2.5"/><label class="half" for="star2half"
+                                                                                         title="Ok"></label>
+                    <input type="radio" id="star2" name="rating" value="2"/><label class="full" for="star2"
+                                                                                   title="Acceptable"></label>
+                    <input type="radio" id="star1half" name="rating" value="1.5"/><label class="half" for="star1half"
+                                                                                         title="Not Good"></label>
+                    <input type="radio" id="star1" name="rating" value="1"/><label class="full" for="star1"
+                                                                                   title="Poor"></label>
+                    <input type="radio" id="star0half" name="rating" value="0.5"/><label class="half" for="star0half"
+                                                                                         title="Very Poor"></label>
                 </div>
                 <div id="rating-value-label" class="rating-label">Rate it!</div>
             </div>
-
             <div id="rating-confirmation" class="rating-confirmation" style="display: none;">
                 <p>Your Rating: <span id="selected-rating-text">0</span> Stars. Send it now?</p>
                 <div class="confirmation-buttons">
-                    <button id="submit-rating-btn" class="modern-button confirm-btn" title="Submit Rating">Submit Rating</button>
+                    <button id="submit-rating-btn" class="modern-button confirm-btn" title="Submit Rating">Submit
+                        Rating
+                    </button>
                     <button id="cancel-rating-btn" class="cancel-btn" title="Cancel Rating">Cancel</button>
                 </div>
             </div>
-
             <div class="aggregate-rating">
                 <div class="aggregate-stars-container">
                     <div class="stars-outer">
@@ -214,22 +219,18 @@ ${topNavHtml?no_esc}
             </div>
         </div>
     </section>
-
-    <section class="faq-section" id="faq-section">
-        <h2>Collector FAQs</h2>
-        ${faqHtml?no_esc}
-    </section>
-
     <section class="market-section" id="market-section" style="display: none;">
         <h2>Cards on the market</h2>
         <div id="market-results">
             <div class="market-loading">Searching for active listings...</div>
         </div>
     </section>
-
+    <section class="faq-section" id="faq-section">
+        <h2>Collector FAQs</h2>
+        ${faqHtml?no_esc}
+    </section>
     ${footerHtml?no_esc}
 </main>
-
 <div id="cardModal" class="modal" aria-hidden="true">
     <button class="close-modal-btn" aria-label="Close zoomed image" onclick="closeModal()">&times;</button>
     <button class="flip-modal-btn" aria-label="Flip card to other side" onclick="flipCard()">
@@ -237,7 +238,6 @@ ${topNavHtml?no_esc}
     </button>
     <img class="modal-content" id="img01" alt="Zoomed card view" title="Zoomed card view">
 </div>
-
 <script>
     var modal = document.getElementById("cardModal");
     var modalImg = document.getElementById("img01");
@@ -293,7 +293,7 @@ ${topNavHtml?no_esc}
                     marketSection.style.display = 'block';
                     searchMarket();
                 }
-            }, { threshold: 0.1 });
+            }, {threshold: 0.1});
 
             observer.observe(faqSection);
         }
@@ -348,10 +348,16 @@ ${topNavHtml?no_esc}
         }
     });
 </script>
-
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, enableIndexedDbPersistence, doc, setDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import {initializeApp} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import {
+        getFirestore,
+        enableIndexedDbPersistence,
+        doc,
+        setDoc,
+        increment,
+        onSnapshot
+    } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "${firebaseConfig.apiKey!}",
@@ -474,7 +480,7 @@ ${topNavHtml?no_esc}
         try {
             await setDoc(cardRef, {
                 [type]: increment(1)
-            }, { merge: true });
+            }, {merge: true});
 
             localStorage.setItem(localStorageKey, 'true');
             likeBtn.disabled = true;
@@ -492,7 +498,7 @@ ${topNavHtml?no_esc}
             await setDoc(cardRef, {
                 ratingSum: increment(parseFloat(pendingRating)),
                 ratingCount: increment(1)
-            }, { merge: true });
+            }, {merge: true});
 
             localStorage.setItem(localStorageRatingKey, 'true');
             disableStarInteraction();
@@ -527,7 +533,7 @@ ${topNavHtml?no_esc}
             pendingRating = e.target.value;
             selectedRatingText.textContent = pendingRating;
             ratingConfirmation.style.display = 'block';
-            ratingConfirmation.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            ratingConfirmation.scrollIntoView({behavior: 'smooth', block: 'nearest'});
         });
     });
 
