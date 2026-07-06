@@ -530,7 +530,8 @@ tr:hover {
 .specs-table-header th {
     padding: 10px;
     text-align: left;
-    background: #f9f9f9;
+    background: #3264af;
+    color: #fff;
 }
 
 .specs-th {
