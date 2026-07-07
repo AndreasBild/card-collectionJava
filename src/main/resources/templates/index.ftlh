@@ -14,6 +14,8 @@ ${topNavHtml?no_esc}
         <p class="sub-title">Welcome to our Private Sports Card Collection</p>
     </header>
     <div class="carousel-wrapper">
+        <button class="carousel-nav left-arrow" aria-label="Previous image">&lt;</button>
+        <button class="carousel-nav right-arrow" aria-label="Next image">&gt;</button>
         <section class="card-carousel">
             <!-- First Set -->
             <div class="carousel-item">
@@ -279,6 +281,7 @@ ${topNavHtml?no_esc}
             </div>
         </section>
     </div>
+    <div class="home-text-container">
     <div class="seo-box">
         <h2>Juwan Howard Super Collector | Private Collection</h2>
         <p>Welcome to Maulmann Trading Cards, the ultimate digital archive for the Juwan Howard Super Collector. This
@@ -303,7 +306,133 @@ ${topNavHtml?no_esc}
             soon verified AI-OCR back-scans for every card. From common base cards to the most elusive 1/1 Masterpiece,
             this archive preserves the legacy of one of the 90s' most iconic players. This page will not include any card price guides or card values.</p>
     </div>
+    </div>
 </main>
 ${footerHtml?no_esc}
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const carousel = document.querySelector(".card-carousel");
+        const leftArrow = document.querySelector(".left-arrow");
+        const rightArrow = document.querySelector(".right-arrow");
+        const wrapper = document.querySelector(".carousel-wrapper");
+
+        if (!carousel) return;
+
+        let isPaused = false;
+        let animationFrameId;
+        const scrollSpeed = 60; // pixels per second
+        let lastTime = 0;
+        let exactScrollLeft = carousel.scrollLeft;
+
+        // Gap is 15px. Total width = 2*contentWidth - gap.
+        // scrollWidth / 2 = contentWidth - 0.5 * gap.
+        // We need contentWidth, which is (scrollWidth / 2) + (gap / 2).
+        let carouselWidthCache = 0;
+        function updateCarouselWidth() {
+            const gap = parseFloat(window.getComputedStyle(carousel).gap) || 0;
+            carouselWidthCache = (carousel.scrollWidth / 2) + (gap / 2);
+        }
+        function getCarouselWidth() {
+            return carouselWidthCache;
+        }
+        updateCarouselWidth();
+        window.addEventListener('resize', updateCarouselWidth);
+
+        function scroll(currentTime) {
+            if (!lastTime) lastTime = currentTime;
+            const deltaTime = currentTime - lastTime;
+            lastTime = currentTime;
+
+            if (!isPaused && deltaTime > 0) {
+                exactScrollLeft += (scrollSpeed * deltaTime) / 1000;
+
+                if (exactScrollLeft >= getCarouselWidth()) {
+                    exactScrollLeft -= getCarouselWidth();
+                }
+                carousel.scrollLeft = exactScrollLeft;
+            } else if (isPaused) {
+                // Keep exactScrollLeft in sync when paused (e.g. user manually scrolling)
+                exactScrollLeft = carousel.scrollLeft;
+            }
+            animationFrameId = requestAnimationFrame(scroll);
+        }
+
+        animationFrameId = requestAnimationFrame(scroll);
+
+        wrapper.addEventListener("mouseenter", () => isPaused = true);
+        wrapper.addEventListener("mouseleave", () => {
+            isPaused = false;
+            lastTime = performance.now(); // Reset time to prevent jump
+        });
+        wrapper.addEventListener("touchstart", () => isPaused = true, {passive: true});
+        wrapper.addEventListener("touchend", () => {
+            isPaused = false;
+            lastTime = performance.now();
+        }, {passive: true});
+
+        const scrollAmount = 300;
+
+        leftArrow.addEventListener("click", () => {
+            let target = carousel.scrollLeft - scrollAmount;
+            if (target <= 0) {
+                 target += getCarouselWidth();
+            }
+            carousel.scrollLeft = target;
+            exactScrollLeft = target;
+        });
+
+        rightArrow.addEventListener("click", () => {
+            let target = carousel.scrollLeft + scrollAmount;
+            if (target >= getCarouselWidth()) {
+                target -= getCarouselWidth();
+            }
+            carousel.scrollLeft = target;
+            exactScrollLeft = target;
+        });
+
+        let isDown = false;
+        let startX;
+        let initialScrollLeft;
+
+        carousel.addEventListener('mousedown', (e) => {
+            isDown = true;
+            carousel.style.cursor = 'grabbing';
+            startX = e.pageX - carousel.offsetLeft;
+            initialScrollLeft = carousel.scrollLeft;
+            isPaused = true;
+        });
+
+        carousel.addEventListener('mouseleave', () => {
+            isDown = false;
+            carousel.style.cursor = 'grab';
+        });
+
+        carousel.addEventListener('mouseup', () => {
+            isDown = false;
+            carousel.style.cursor = 'grab';
+        });
+
+        carousel.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - carousel.offsetLeft;
+            const walk = (x - startX) * 2;
+            let target = initialScrollLeft - walk;
+
+            if (target <= 0) {
+                 target += getCarouselWidth();
+                 initialScrollLeft = target;
+                 startX = e.pageX - carousel.offsetLeft;
+            } else if (target >= getCarouselWidth()) {
+                target -= getCarouselWidth();
+                initialScrollLeft = target;
+                startX = e.pageX - carousel.offsetLeft;
+            }
+            carousel.scrollLeft = target;
+            exactScrollLeft = target;
+        });
+    });
+</script>
 </body>
 </html>
