@@ -469,9 +469,6 @@ tr:hover {
     font-size: 0.9em;
     box-shadow: 0 4px 10px rgb(0 0 0 / 30%);
     white-space: nowrap;
-}
-
-
     100% { transform: translate3d(calc(-50% - 15px), 0, 0); }
 }
 
