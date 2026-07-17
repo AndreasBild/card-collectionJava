@@ -41,7 +41,7 @@ public class TriviaManager {
     }
 
     private boolean matches(JsonNode condition, Map<String, String> cardData) {
-        Iterator<Map.Entry<String, JsonNode>> fields = condition.fields();
+        Iterator<Map.Entry<String, JsonNode>> fields = condition.properties().iterator();
         while (fields.hasNext()) {
             Map.Entry<String, JsonNode> entry = fields.next();
             String fullKey = entry.getKey();

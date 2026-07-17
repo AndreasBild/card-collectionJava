@@ -23,6 +23,7 @@ import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.Comparator;
+import java.util.stream.Stream;
 
 public class CardPageGenerator {
 
@@ -120,16 +121,15 @@ public class CardPageGenerator {
         duplicateLog.add("=======================");
         duplicateLog.add("These un-numbered base/insert cards were skipped during HTML generation because a duplicate already exists in the collection.\n");
 
-        try {
-            Path cardsDir = Paths.get(BASE_FOLDER);
-            if (Files.exists(cardsDir)) {
-                Files.walk(cardsDir)
-                        .sorted(Comparator.reverseOrder())
+        Path cardsDir = Paths.get(BASE_FOLDER);
+        if (Files.exists(cardsDir)) {
+            try (Stream<Path> walk = Files.walk(cardsDir)) {
+                walk.sorted(Comparator.reverseOrder())
                         .map(Path::toFile)
                         .forEach(File::delete);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
-        } catch (IOException e) {
-            log.warn("Could not clean output/cards directory: " + e.getMessage());
         }
 
         processCollection("output/Juwan-Howard-Collection.html", "output/Juwan-Howard-Collection.html", "Juwan-Howard-Collection.html");
