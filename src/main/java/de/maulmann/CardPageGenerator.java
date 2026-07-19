@@ -65,7 +65,7 @@ public class CardPageGenerator {
             String currentTeam = this.attributes.get("Team");
             if (!isValid(currentTeam)) {
                 String player = this.attributes.get("Player");
-                if ("Juwan Howard".equals(player)) {
+                if (player != null && player.startsWith("Juwan Howard")) {
                     String calculatedTeam = getTeamBySeason(this.attributes.get("Season"));
                     this.attributes.put("Team", calculatedTeam);
                 }
@@ -75,8 +75,13 @@ public class CardPageGenerator {
 
         private void calculatePaths(String uniqueId) {
             List<String> filenameTokens = new ArrayList<>();
-            addIfPresent(filenameTokens, attributes.get("Player"));
-            addIfPresent(filenameTokens, attributes.get("Team"));
+            String pStr = attributes.get("Player");
+            if (pStr != null && pStr.contains(",")) pStr = pStr.split(",")[0].trim();
+            addIfPresent(filenameTokens, pStr);
+
+            String tStr = attributes.get("Team");
+            if (tStr != null && tStr.contains(",")) tStr = tStr.split(",")[0].trim();
+            addIfPresent(filenameTokens, tStr);
             addIfPresent(filenameTokens, attributes.get("Season"));
             addIfPresent(filenameTokens, attributes.get("Company"));
             addIfPresent(filenameTokens, attributes.get("Brand"));
@@ -272,6 +277,9 @@ public class CardPageGenerator {
         StringBuilder sb = new StringBuilder();
         for (String key : relevantKeys) {
             String val = attributes.getOrDefault(key, "").trim();
+            if (key.equals("Player") || key.equals("Team")) {
+                if (val.contains(",")) val = val.split(",")[0].trim();
+            }
             if (!val.isEmpty() && !val.equals("0")) {
                 sb.append(key).append(":").append(val).append("|");
             }
@@ -406,11 +414,12 @@ public class CardPageGenerator {
         data.put("backImgPath", backImgPath);
         data.put("frontAlt", generateAltText(c, "front"));
         data.put("backAlt", generateAltText(c, "back"));
-        data.put("frontImgTitle", c.get("Player") +" Private Collection - Front scan: " + c.get("Player") + " " + c.get("Season") + " " + c.get("Brand") + " " + c.get("Variant"));
-        data.put("backImgTitle", c.get("Player") +" Private Collection - Back scan: " + c.get("Player") + " " + c.get("Season") +" " + c.get("Brand") + " " + c.get("Variant"));
+        data.put("frontImgTitle", getPrimaryPlayer(c) +" Private Collection - Front scan: " + formatMulti(c.get("Player")) + " " + c.get("Season") + " " + c.get("Brand") + " " + c.get("Variant"));
+        data.put("backImgTitle", getPrimaryPlayer(c) +" Private Collection - Back scan: " + formatMulti(c.get("Player")) + " " + c.get("Season") +" " + c.get("Brand") + " " + c.get("Variant"));
 
+        data.put("player", isValid(c.get("Player")) ? formatMulti(c.get("Player")) : "-");
         data.put("season", isValid(c.get("Season")) ? c.get("Season") : "-");
-        data.put("team", isValid(c.get("Team")) ? c.get("Team") : "-");
+        data.put("team", isValid(c.get("Team")) ? formatMulti(c.get("Team")) : "-");
         data.put("company", isValid(c.get("Company")) ? c.get("Company") : "-");
         data.put("brand", isValid(c.get("Brand")) ? c.get("Brand") : "-");
         data.put("theme", isValid(c.get("Theme")) ? c.get("Theme") : "-");
@@ -503,7 +512,7 @@ public class CardPageGenerator {
 
     private static String generateH1(CardData c) {
         StringBuilder sb = new StringBuilder();
-        sb.append(c.get("Player")).append(" ");
+        sb.append(formatMulti(c.get("Player"))).append(" ");
         sb.append(c.get("Season")).append(" ");
         sb.append(c.get("Company")).append(" ");
         sb.append(c.get("Brand")).append(" ");
@@ -514,21 +523,21 @@ public class CardPageGenerator {
     }
 
     private static String generateBrowserTitle(CardData c, String overviewPage) {
-        String player = c.get("Player");
+        String player = getPrimaryPlayer(c);
         if (!isValid(player)) player = "Card";
         return generateH1(c) + " | " + player + " Private Collection";
     }
 
     private static String generateAltText(CardData c, String view) {
-        String base = c.get("Player") + " " + c.get("Season") + " " + c.get("Brand") + " #" + c.get("Number");
-        if (view.equals("front")) return "Front scan of " + base + " - " + c.get("Variant") + " edition (" + c.get("Team") + ") - "+c.get("Player") + " Collector Private Collection";
-        else return "Back scan of " + base + " showing stats for " + c.get("Team") + " - " +c.get("Player") + " Collector Private Collection";
+        String base = formatMulti(c.get("Player")) + " " + c.get("Season") + " " + c.get("Brand") + " #" + c.get("Number");
+        if (view.equals("front")) return "Front scan of " + base + " - " + c.get("Variant") + " edition (" + formatMulti(c.get("Team")) + ") - "+getPrimaryPlayer(c) + " Collector Private Collection";
+        else return "Back scan of " + base + " showing stats for " + formatMulti(c.get("Team")) + " - " +getPrimaryPlayer(c) + " Collector Private Collection";
     }
 
     private static String generateMetaDescription(CardData c) {
         StringBuilder sb = new StringBuilder();
         sb.append("View details for the ").append(c.get("Season")).append(" ").append(c.get("Brand")).append(" ");
-        sb.append(c.get("Player")).append(" card #").append(c.get("Number")).append(" from our ").append(c.get("Player")).append(" Private Collection. ");
+        sb.append(formatMulti(c.get("Player"))).append(" card #").append(c.get("Number")).append(" from our ").append(getPrimaryPlayer(c)).append(" Private Collection. ");
         if (c.has("Variant")) sb.append("Rare ").append(c.get("Variant")).append(" variant. ");
         String combinedSerial = c.get("Serial/Print Run");
         if (isValid(combinedSerial)) {
@@ -546,8 +555,8 @@ public class CardPageGenerator {
     private static String generateAiSnapshotText(CardData c) {
         StringBuilder sb = new StringBuilder();
         sb.append("View details for the ");
-        sb.append("<strong>").append(escapeHtml(c.get("Season"))).append(" ").append(escapeHtml(c.get("Brand"))).append(" ").append(escapeHtml(c.get("Player"))).append("</strong>");
-        sb.append(" card #").append(escapeHtml(c.get("Number"))).append(" from our ").append(escapeHtml(c.get("Player"))).append(" Private Collection. ");
+        sb.append("<strong>").append(escapeHtml(c.get("Season"))).append(" ").append(escapeHtml(c.get("Brand"))).append(" ").append(escapeHtml(formatMulti(c.get("Player")))).append("</strong>");
+        sb.append(" card #").append(escapeHtml(c.get("Number"))).append(" from our ").append(escapeHtml(getPrimaryPlayer(c))).append(" Private Collection. ");
 
         if (c.has("Variant")) {
             sb.append("Rare <strong>").append(escapeHtml(c.get("Variant"))).append("</strong> variant. ");
@@ -567,7 +576,7 @@ public class CardPageGenerator {
                 sb.append("Numbered <strong>").append(escapeHtml(c.get("Serial"))).append("/").append(escapeHtml(c.get("Print Run"))).append("</strong>. ");
             }
         }
-        sb.append("A must-see for any ").append(escapeHtml(c.get("Player"))).append(" Super Collector. High-res scans and hobby history.");
+        sb.append("A must-see for any ").append(escapeHtml(getPrimaryPlayer(c))).append(" Super Collector. High-res scans and hobby history.");
         return sb.toString();
     }
 
@@ -583,7 +592,8 @@ public class CardPageGenerator {
         StringBuilder sb = new StringBuilder();
         String season = c.get("Season");
         String company = c.get("Company");
-        String player = c.get("Player");
+        String player = formatMulti(c.get("Player"));
+        String primaryPlayer = getPrimaryPlayer(c);
 
         if (isHolyGrail(c)) {
             sb.append(createFaqItem("Is this a 'Holy Grail' card?", "Yes, this card belongs to one of the most prestigious parallel series in the hobby. These are extremely rare and heavily targeted by high-end investors."));
@@ -598,8 +608,8 @@ public class CardPageGenerator {
 
         if (c.has("Rookie")) {
             String rookieAns = c.get("Rookie").equalsIgnoreCase("Yes") ?
-                    "Yes, this is an official Rookie Card (RC) from " + player + "'s debut season, holding premium value for collectors." :
-                    "No, this card was released during the " + season + " season, later in " + player + "'s career.";
+                    "Yes, this is an official Rookie Card (RC) from " + primaryPlayer + "'s debut season, holding premium value for collectors." :
+                    "No, this card was released during the " + season + " season, later in " + primaryPlayer + "'s career.";
             sb.append(createFaqItem("Is this a " + player + " Rookie Card?", rookieAns));
         }
 
@@ -650,8 +660,8 @@ public class CardPageGenerator {
         sb.append("      \"creator\": { \"@type\": \"Organization\", \"name\": \"").append(escapeJson(c.get("Company"))).append("\" },\n");
         sb.append("      \"about\": {\n");
         sb.append("        \"@type\": \"Person\",\n");
-        sb.append("        \"name\": \"").append(escapeJson(c.get("Player"))).append("\",\n");
-        sb.append("        \"sameAs\": \"https://en.wikipedia.org/wiki/").append(escapeJson(c.get("Player")).replace(" ", "_")).append("\"\n");
+        sb.append("        \"name\": \"").append(escapeJson(formatMulti(c.get("Player")))).append("\",\n");
+        sb.append("        \"sameAs\": \"https://en.wikipedia.org/wiki/").append(escapeJson(getPrimaryPlayer(c)).replace(" ", "_")).append("\"\n");
         sb.append("      },\n");
         sb.append("      \"artMedium\": \"Trading Card\",\n");
         sb.append("      \"artform\": \"Sports Memorabilia\"\n");
@@ -718,6 +728,26 @@ public class CardPageGenerator {
         sb.append("</script>\n");
 
         return sb.toString();
+    }
+
+
+    private static String getPrimaryPlayer(CardData c) {
+        String p = c.get("Player");
+        if (p == null) return "";
+        if (p.contains(",")) return p.split(",")[0].trim();
+        return p;
+    }
+
+    private static String getPrimaryTeam(CardData c) {
+        String t = c.get("Team");
+        if (t == null) return "";
+        if (t.contains(",")) return t.split(",")[0].trim();
+        return t;
+    }
+
+    private static String formatMulti(String val) {
+        if (val == null) return "";
+        return val.replaceAll("\\s*,\\s*", " / ");
     }
 
     private static void addTableRow(StringBuilder sb, String title, String value) {

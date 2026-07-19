@@ -69,6 +69,10 @@ ${topNavHtml?no_esc}
                 <th colspan="2">Technical Specifications</th>
             </tr>
             <tr>
+                <th class="specs-th">Player</th>
+                <td class="specs-td">${player}</td>
+            </tr>
+            <tr>
                 <th class="specs-th">Season</th>
                 <td class="specs-td">${season}</td>
             </tr>
