@@ -355,8 +355,9 @@ ${topNavHtml?no_esc}
 <script type="module">
     import {initializeApp} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import {
-        getFirestore,
-        enableIndexedDbPersistence,
+        initializeFirestore,
+        persistentLocalCache,
+        persistentMultipleTabManager,
         doc,
         setDoc,
         increment,
@@ -374,14 +375,10 @@ ${topNavHtml?no_esc}
     };
 
     const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    enableIndexedDbPersistence(db).catch((err) => {
-        if (err.code == 'failed-precondition') {
-            console.warn('Multiple tabs open, persistence can only be enabled in one tab at a a time.');
-        } else if (err.code == 'unimplemented') {
-            console.warn('The current browser does not support all of the features required to enable persistence');
-        }
+    const db = initializeFirestore(app, {
+        localCache: persistentLocalCache({
+            tabManager: persistentMultipleTabManager()
+        })
     });
 
     const voteContainer = document.querySelector('.vote-container');
@@ -472,6 +469,7 @@ ${topNavHtml?no_esc}
                 banner.style.backgroundColor = '#fff9c4';
                 setTimeout(() => banner.style.backgroundColor = '#fff', 2000);
             }
+            alert("Please accept site preferences in the banner below to rate cards.");
             return false;
         }
         return true;
@@ -491,6 +489,7 @@ ${topNavHtml?no_esc}
             dislikeBtn.disabled = true;
         } catch (error) {
             console.error("Error voting:", error);
+            alert("Could not submit your vote. Please check your network connection or ad-blocker settings.");
         }
     }
 
@@ -510,6 +509,7 @@ ${topNavHtml?no_esc}
             pendingRating = null;
         } catch (error) {
             console.error("Error rating:", error);
+            alert("Could not submit your rating. Please check your network connection or ad-blocker settings.");
         }
     }
 
