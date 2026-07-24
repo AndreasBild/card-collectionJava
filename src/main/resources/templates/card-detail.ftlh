@@ -381,8 +381,7 @@ ${topNavHtml?no_esc}
         })
     });
 
-    const voteContainer = document.querySelector('.vote-container');
-    const cardId = voteContainer.dataset.cardId;
+    const cardId = "${cardId}";
     const likeBtn = document.getElementById('like-btn');
     const dislikeBtn = document.getElementById('dislike-btn');
     const likeCountSpan = document.getElementById('like-count');
@@ -425,6 +424,8 @@ ${topNavHtml?no_esc}
     if (localStorage.getItem(localStorageKey)) {
         likeBtn.disabled = true;
         dislikeBtn.disabled = true;
+        likeBtn.title = "You have already voted on this card";
+        dislikeBtn.title = "You have already voted on this card";
     }
 
     if (localStorage.getItem(localStorageRatingKey)) {
@@ -455,6 +456,12 @@ ${topNavHtml?no_esc}
             // Update visual stars
             const visualPercentage = (parseFloat(average) / 5) * 100;
             starsInner.style.width = visualPercentage + "%";
+        } else {
+            likeCountSpan.textContent = "0";
+            dislikeCountSpan.textContent = "0";
+            averageRatingSpan.textContent = "0.0";
+            ratingCountSpan.textContent = "0";
+            starsInner.style.width = "0%";
         }
     });
 
@@ -481,12 +488,17 @@ ${topNavHtml?no_esc}
 
         try {
             await setDoc(cardRef, {
-                [type]: increment(1)
+                likes: type === 'likes' ? increment(1) : increment(0),
+                dislikes: type === 'dislikes' ? increment(1) : increment(0),
+                ratingCount: increment(0),
+                ratingSum: increment(0)
             }, {merge: true});
 
             localStorage.setItem(localStorageKey, 'true');
             likeBtn.disabled = true;
             dislikeBtn.disabled = true;
+            likeBtn.title = "You have already voted on this card";
+            dislikeBtn.title = "You have already voted on this card";
         } catch (error) {
             console.error("Error voting:", error);
             alert("Could not submit your vote. Please check your network connection or ad-blocker settings.");
@@ -499,8 +511,10 @@ ${topNavHtml?no_esc}
 
         try {
             await setDoc(cardRef, {
-                ratingSum: increment(parseFloat(pendingRating)),
-                ratingCount: increment(1)
+                likes: increment(0),
+                dislikes: increment(0),
+                ratingCount: increment(1),
+                ratingSum: increment(parseFloat(pendingRating))
             }, {merge: true});
 
             localStorage.setItem(localStorageRatingKey, 'true');
