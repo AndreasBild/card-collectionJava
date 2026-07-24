@@ -355,6 +355,7 @@ ${topNavHtml?no_esc}
 <script type="module">
     import {initializeApp} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import {
+        getFirestore,
         initializeFirestore,
         persistentLocalCache,
         persistentMultipleTabManager,
@@ -375,11 +376,29 @@ ${topNavHtml?no_esc}
     };
 
     const app = initializeApp(firebaseConfig);
-    const db = initializeFirestore(app, {
-        localCache: persistentLocalCache({
-            tabManager: persistentMultipleTabManager()
-        })
-    });
+    let db;
+    try {
+        db = initializeFirestore(app, {
+            localCache: persistentLocalCache({
+                tabManager: persistentMultipleTabManager()
+            })
+        });
+    } catch (e) {
+        console.warn("Firestore persistent cache not supported in this browser mode (e.g. Private Tab), falling back to standard Firestore:", e);
+        try {
+            db = getFirestore(app);
+        } catch (e2) {
+            console.error("Firestore init fallback error:", e2);
+        }
+    }
+
+    function getStorage(key) {
+        try { return localStorage.getItem(key); } catch (e) { return null; }
+    }
+
+    function setStorage(key, val) {
+        try { localStorage.setItem(key, val); } catch (e) {}
+    }
 
     const cardId = "${cardId}";
     const likeBtn = document.getElementById('like-btn');
@@ -421,14 +440,14 @@ ${topNavHtml?no_esc}
         });
     }
 
-    if (localStorage.getItem(localStorageKey)) {
+    if (getStorage(localStorageKey)) {
         likeBtn.disabled = true;
         dislikeBtn.disabled = true;
         likeBtn.title = "You have already voted on this card";
         dislikeBtn.title = "You have already voted on this card";
     }
 
-    if (localStorage.getItem(localStorageRatingKey)) {
+    if (getStorage(localStorageRatingKey)) {
         disableStarInteraction();
     }
 
@@ -463,10 +482,12 @@ ${topNavHtml?no_esc}
             ratingCountSpan.textContent = "0";
             starsInner.style.width = "0%";
         }
+    }, (error) => {
+        console.warn("Firestore snapshot error for card " + cardId + ":", error);
     });
 
     function checkConsent() {
-        if (localStorage.getItem('user_consent') !== 'accepted') {
+        if (getStorage('user_consent') !== 'accepted') {
             if (window.showConsentBanner) {
                 window.showConsentBanner();
             }
@@ -483,7 +504,7 @@ ${topNavHtml?no_esc}
     }
 
     async function handleVote(type) {
-        if (localStorage.getItem(localStorageKey)) return;
+        if (getStorage(localStorageKey)) return;
         if (!checkConsent()) return;
 
         try {
@@ -494,7 +515,7 @@ ${topNavHtml?no_esc}
                 ratingSum: increment(0)
             }, {merge: true});
 
-            localStorage.setItem(localStorageKey, 'true');
+            setStorage(localStorageKey, 'true');
             likeBtn.disabled = true;
             dislikeBtn.disabled = true;
             likeBtn.title = "You have already voted on this card";
@@ -506,7 +527,7 @@ ${topNavHtml?no_esc}
     }
 
     async function submitRating() {
-        if (!pendingRating || localStorage.getItem(localStorageRatingKey)) return;
+        if (!pendingRating || getStorage(localStorageRatingKey)) return;
         if (!checkConsent()) return;
 
         try {
@@ -517,7 +538,7 @@ ${topNavHtml?no_esc}
                 ratingSum: increment(parseFloat(pendingRating))
             }, {merge: true});
 
-            localStorage.setItem(localStorageRatingKey, 'true');
+            setStorage(localStorageRatingKey, 'true');
             disableStarInteraction();
             ratingConfirmation.style.display = 'none';
             pendingRating = null;
