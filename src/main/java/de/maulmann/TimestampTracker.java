@@ -23,6 +23,8 @@ public class TimestampTracker {
     // Key: File path, Value: {hash}:{timestamp}
     private final ConcurrentHashMap<String, String> currentSessionData = new ConcurrentHashMap<>();
 
+    private static final java.util.regex.Pattern MAIN_CSS_PATTERN = java.util.regex.Pattern.compile("main\\.css\\?v=[a-fA-F0-9]+");
+
     public TimestampTracker(String filePath) {
         this.storeFile = new File(filePath);
         if (storeFile.exists()) {
@@ -41,8 +43,8 @@ public class TimestampTracker {
      * @return A stable timestamp string.
      */
     public String getStableTimestamp(String identifier, String content) {
-        String contentToHash = content.replace("[[STABLE_TIME]]", "")
-                .replaceAll("main\\.css\\?v=[a-fA-F0-9]+", "main.css?v=STABLE");
+        String contentToHash = MAIN_CSS_PATTERN.matcher(content.replace("[[STABLE_TIME]]", ""))
+                .replaceAll("main.css?v=STABLE");
         String currentHash = calculateHash(contentToHash);
         String entry = (String) storedData.get(identifier);
 

@@ -44,7 +44,7 @@ public class FirestoreRatingInjector {
         log.info("Starting Firestore rating injection process...");
         try {
             loadCache();
-            initFirebase();
+            FirebaseConfigManager.initFirebase();
             Map<String, Map<String, Object>> firestoreData = fetchFirestoreData();
             processHtmlFiles(firestoreData);
             saveCache();
@@ -52,30 +52,6 @@ public class FirestoreRatingInjector {
         } catch (Exception e) {
             log.error("Fatal error during Firestore rating injection", e);
             System.exit(1);
-        }
-    }
-
-    private static void initFirebase() throws IOException {
-        String serviceAccountJson = System.getenv("FIREBASE_SERVICE_ACCOUNT_JSON");
-        String serviceAccountPath = "firebase/maulmann-3f90d-firebase-adminsdk-fbsvc-78c9f10838";
-
-        FirebaseOptions.Builder optionsBuilder = FirebaseOptions.builder();
-
-        if (serviceAccountJson != null && !serviceAccountJson.isEmpty()) {
-            optionsBuilder.setCredentials(GoogleCredentials.fromStream(
-                    new ByteArrayInputStream(serviceAccountJson.getBytes(StandardCharsets.UTF_8))));
-        } else {
-            File serviceAccountFile = new File(serviceAccountPath);
-            if (serviceAccountFile.exists()) {
-                optionsBuilder.setCredentials(GoogleCredentials.fromStream(
-                        new FileInputStream(serviceAccountFile)));
-            } else {
-                throw new IllegalStateException("Firebase credentials not found.");
-            }
-        }
-
-        if (FirebaseApp.getApps().isEmpty()) {
-            FirebaseApp.initializeApp(optionsBuilder.build());
         }
     }
 
@@ -94,10 +70,11 @@ public class FirestoreRatingInjector {
         Path targetPath = Paths.get(TARGET_DIR);
         if (!Files.exists(targetPath)) return;
 
-        try (Stream<Path> paths = Files.walk(targetPath)) {
+        try (java.util.concurrent.ExecutorService executor = java.util.concurrent.Executors.newVirtualThreadPerTaskExecutor();
+             Stream<Path> paths = Files.walk(targetPath)) {
             paths.filter(Files::isRegularFile)
                     .filter(p -> p.toString().endsWith(".html"))
-                    .forEach(path -> injectRating(path, firestoreData));
+                    .forEach(path -> executor.submit(() -> injectRating(path, firestoreData)));
         }
     }
 

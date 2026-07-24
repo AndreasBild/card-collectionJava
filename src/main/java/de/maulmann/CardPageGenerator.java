@@ -23,6 +23,7 @@ import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.Comparator;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CardPageGenerator {
@@ -300,11 +301,12 @@ public class CardPageGenerator {
         }
     }
 
+    private static final java.util.regex.Pattern MULTI_VAL_PATTERN = java.util.regex.Pattern.compile("\\s*,\\s*");
+    private static final java.util.regex.Pattern MULTI_SPACE_PATTERN = java.util.regex.Pattern.compile("\\s+");
+
     private static void updateDomLinks(Elements tables, List<CardData> filteredCards) {
-        Set<String> approvedCardIds = new HashSet<>();
-        for (CardData card : filteredCards) {
-            approvedCardIds.add(card.stableId);
-        }
+        Map<String, CardData> approvedCardMap = filteredCards.stream()
+                .collect(Collectors.toMap(c -> c.stableId, c -> c, (a, b) -> a));
 
         for (Element table : tables) {
             Elements rows = table.select("tr");
@@ -324,25 +326,19 @@ public class CardPageGenerator {
                 String rowId = row.attr("data-card-id");
                 if (rowId.isEmpty()) continue;
 
-                if (approvedCardIds.contains(rowId)) {
+                CardData matchingCard = approvedCardMap.get(rowId);
+                if (matchingCard != null) {
                     Elements cols = row.children();
                     if (cols.size() > playerColIndex) {
                         Element playerCell = cols.get(playerColIndex);
-
-                        CardData matchingCard = filteredCards.stream()
-                                .filter(c -> c.stableId.equals(rowId))
-                                .findFirst().orElse(null);
-
-                        if (matchingCard != null) {
-                            row.attr("id", matchingCard.filenameBase);
-                            String originalText = playerCell.text();
-                            playerCell.empty();
-                            playerCell.appendElement("a")
-                                    .attr("href", matchingCard.fullRelativePath)
-                                    .attr("class", "table-button")
-                                    .attr("title", "View details for " + matchingCard.get("Season") + " " + matchingCard.get("Brand") + " #" + matchingCard.get("Number"))
-                                    .text(originalText);
-                        }
+                        row.attr("id", matchingCard.filenameBase);
+                        String originalText = playerCell.text();
+                        playerCell.empty();
+                        playerCell.appendElement("a")
+                                .attr("href", matchingCard.fullRelativePath)
+                                .attr("class", "table-button")
+                                .attr("title", "View details for " + matchingCard.get("Season") + " " + matchingCard.get("Brand") + " #" + matchingCard.get("Number"))
+                                .text(originalText);
                     }
                     row.removeAttr("data-card-id");
                 } else {
