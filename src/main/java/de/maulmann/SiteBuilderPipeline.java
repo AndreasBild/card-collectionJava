@@ -163,8 +163,9 @@ public class SiteBuilderPipeline {
                                 byte[] brData = BrotliCompressor.compressBytes(CSSMinifier.minifyCSSToBytes(file.toFile()), BrotliCompressor.BEST_QUALITY);
                                 uploadBytes(s3Client, s3Key, brData, "text/css", "br", CACHE_LONG, uploadCount, tracker, file, currentHash);
                             } else if (fileName.endsWith(".js")) {
+                                String cacheControl = fileName.equalsIgnoreCase("serviceworker.js") ? CACHE_SHORT : CACHE_LONG;
                                 byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BrotliCompressor.BEST_QUALITY);
-                                uploadBytes(s3Client, s3Key, brData, "application/javascript", "br", CACHE_LONG, uploadCount, tracker, file, currentHash);
+                                uploadBytes(s3Client, s3Key, brData, "application/javascript", "br", cacheControl, uploadCount, tracker, file, currentHash);
                             } else if (fileName.endsWith(".json")) {
                                 byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BrotliCompressor.BEST_QUALITY);
                                 uploadBytes(s3Client, s3Key, brData, "application/json", "br", CACHE_SHORT, uploadCount, tracker, file, currentHash);
