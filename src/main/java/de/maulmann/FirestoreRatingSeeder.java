@@ -34,36 +34,12 @@ public class FirestoreRatingSeeder {
     public static void main(String[] args) {
         log.info("Starting Firestore rating seeding process...");
         try {
-            initFirebase();
+            FirebaseConfigManager.initFirebase();
             processCollections();
             log.info("Firestore rating seeding completed successfully.");
         } catch (Exception e) {
             log.error("Fatal error during Firestore rating seeding", e);
             System.exit(1);
-        }
-    }
-
-    private static void initFirebase() throws IOException {
-        String serviceAccountJson = System.getenv("FIREBASE_SERVICE_ACCOUNT_JSON");
-        String serviceAccountPath = "firebase/maulmann-3f90d-firebase-adminsdk-fbsvc-78c9f10838";
-
-        FirebaseOptions.Builder optionsBuilder = FirebaseOptions.builder();
-
-        if (serviceAccountJson != null && !serviceAccountJson.isEmpty()) {
-            optionsBuilder.setCredentials(GoogleCredentials.fromStream(
-                    new ByteArrayInputStream(serviceAccountJson.getBytes(StandardCharsets.UTF_8))));
-        } else {
-            File serviceAccountFile = new File(serviceAccountPath);
-            if (serviceAccountFile.exists()) {
-                optionsBuilder.setCredentials(GoogleCredentials.fromStream(
-                        new FileInputStream(serviceAccountFile)));
-            } else {
-                throw new IllegalStateException("Firebase credentials not found. Set FIREBASE_SERVICE_ACCOUNT_JSON or ensure the service account file exists at " + serviceAccountPath);
-            }
-        }
-
-        if (FirebaseApp.getApps().isEmpty()) {
-            FirebaseApp.initializeApp(optionsBuilder.build());
         }
     }
 

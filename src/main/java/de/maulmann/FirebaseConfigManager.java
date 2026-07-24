@@ -5,15 +5,24 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Supplier;
 
 public class FirebaseConfigManager {
     private static final Logger log = LoggerFactory.getLogger(FirebaseConfigManager.class);
     private static final ObjectMapper MAPPER = new ObjectMapper();
     private static final String CONFIG_PATH = "/config/firebase_config.json";
+    private static final String DEFAULT_SERVICE_ACCOUNT_PATH = "firebase/maulmann-3f90d-firebase-adminsdk-fbsvc-78c9f10838";
 
     private final SimpleLazyConstant<Map<String, String>> config = SimpleLazyConstant.of(() -> {
         Map<String, String> configMap = new HashMap<>();
@@ -82,29 +91,25 @@ public class FirebaseConfigManager {
         return config.get();
     }
 
-    private static class SimpleLazyConstant<T> {
-        private final Supplier<T> supplier;
-        private volatile T value;
+    public static void initFirebase() throws IOException {
+        String serviceAccountJson = System.getenv("FIREBASE_SERVICE_ACCOUNT_JSON");
+        FirebaseOptions.Builder optionsBuilder = FirebaseOptions.builder();
 
-        private SimpleLazyConstant(Supplier<T> supplier) {
-            this.supplier = supplier;
-        }
-
-        public static <T> SimpleLazyConstant<T> of(Supplier<T> supplier) {
-            return new SimpleLazyConstant<>(supplier);
-        }
-
-        public T get() {
-            T result = value;
-            if (result == null) {
-                synchronized (this) {
-                    result = value;
-                    if (result == null) {
-                        value = result = supplier.get();
-                    }
-                }
+        if (serviceAccountJson != null && !serviceAccountJson.isEmpty()) {
+            optionsBuilder.setCredentials(GoogleCredentials.fromStream(
+                    new ByteArrayInputStream(serviceAccountJson.getBytes(StandardCharsets.UTF_8))));
+        } else {
+            File serviceAccountFile = new File(DEFAULT_SERVICE_ACCOUNT_PATH);
+            if (serviceAccountFile.exists()) {
+                optionsBuilder.setCredentials(GoogleCredentials.fromStream(
+                        new FileInputStream(serviceAccountFile)));
+            } else {
+                throw new IllegalStateException("Firebase credentials not found. Set FIREBASE_SERVICE_ACCOUNT_JSON or ensure the service account file exists at " + DEFAULT_SERVICE_ACCOUNT_PATH);
             }
-            return result;
+        }
+
+        if (FirebaseApp.getApps().isEmpty()) {
+            FirebaseApp.initializeApp(optionsBuilder.build());
         }
     }
 }

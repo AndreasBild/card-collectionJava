@@ -29,8 +29,8 @@ public class FileTracker {
     public boolean hasChanged(Path file) {
         try {
             String currentHash = calculateMD5(file);
+            if (currentHash == null) return true;
             String storedHash = hashes.getProperty(file.toString());
-            assert currentHash != null;
             return !currentHash.equals(storedHash);
         } catch (Exception e) {
             return true; // Assume changed on error
