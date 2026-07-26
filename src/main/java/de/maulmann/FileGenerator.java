@@ -137,7 +137,7 @@ public class FileGenerator {
                                 .append("<td>").append(escapeHtml(c.company)).append("</td>")
                                 .append("<td>").append(escapeHtml(c.brand)).append("</td>")
                                 .append("<td>").append(escapeHtml(c.theme)).append("</td>")
-                                .append("<td><a href=\"").append(detailPath).append("\" title=\"").append(variantTitle).append("\">").append(variantText).append("</a></td>")
+                                .append("<td>").append(escapeHtml(c.variant)).append("</td>")
                                 .append("<td>").append(escapeHtml(c.cardNumber)).append("</td>")
                                 .append("<td>").append(escapeHtml(c.serialNumber != null ? c.serialNumber : "0")).append("</td>")
                                 .append("<td>").append(c.printRun != null ? c.printRun : 0).append("</td>")
