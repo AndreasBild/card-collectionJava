@@ -81,7 +81,7 @@ public class FileGenerator {
                     "</script>";
             data.put("jsonLd", jsonLd);
 
-            List<CardJson> jsonCards = loadCardsFromJson();
+            List<CardJson> jsonCards = filterDuplicateJsonCards(loadCardsFromJson());
             List<Map<String, String>> seasons = new ArrayList<>();
             int cumulativeTotal = 0;
 
@@ -540,6 +540,40 @@ public class FileGenerator {
             System.err.println("Failed to read cards.json: " + e.getMessage());
             return Collections.emptyList();
         }
+    }
+
+    public static List<CardJson> filterDuplicateJsonCards(List<CardJson> rawCards) {
+        List<CardJson> filtered = new ArrayList<>();
+        Set<String> seenFingerprints = new HashSet<>();
+
+        for (CardJson c : rawCards) {
+            String season = c.season != null ? c.season : "";
+            String company = c.company != null ? c.company : "";
+            String brand = c.brand != null ? c.brand : "";
+            String theme = c.theme != null ? c.theme : "";
+            String variant = c.variant != null ? c.variant : "";
+            String number = c.cardNumber != null ? c.cardNumber : "";
+            String gradingCo = c.gradingCompany != null ? c.gradingCompany : "";
+            String grade = c.grade != null ? c.grade : "";
+
+            String fingerprint = (season + "|" + company + "|" + brand + "|" + theme + "|" +
+                    variant + "|" + number + "|" + gradingCo + "|" + grade).toLowerCase();
+
+            String serial = c.serialNumber;
+            boolean hasSerial = serial != null && !serial.trim().isEmpty() && !serial.trim().equals("0");
+
+            if (seenFingerprints.contains(fingerprint)) {
+                if (!hasSerial) {
+                    continue;
+                } else {
+                    filtered.add(c);
+                }
+            } else {
+                seenFingerprints.add(fingerprint);
+                filtered.add(c);
+            }
+        }
+        return filtered;
     }
 
     private static String escapeHtml(String input) {

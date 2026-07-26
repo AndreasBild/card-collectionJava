@@ -178,7 +178,10 @@ public class CardPageGenerator {
             for (CardJson c : jsonCards) {
                 juwanCards.add(new CardData(c, null));
             }
-            generateSubPagesMultithreaded(juwanCards, "Juwan-Howard-Collection.html");
+            List<CardData> filteredJuwanCards = filterDuplicateCards(juwanCards, "content/json/cards.json");
+            log.info("Deduplication complete: {} cards queued for generation (skipped {} un-numbered duplicates).",
+                    filteredJuwanCards.size(), (juwanCards.size() - filteredJuwanCards.size()));
+            generateSubPagesMultithreaded(filteredJuwanCards, "Juwan-Howard-Collection.html");
         } else {
             processCollection("output/Juwan-Howard-Collection.html", "output/Juwan-Howard-Collection.html", "Juwan-Howard-Collection.html");
         }
@@ -210,6 +213,41 @@ public class CardPageGenerator {
         run();
     }
 
+    private static List<CardData> filterDuplicateCards(List<CardData> rawCards, String sourceName) {
+        List<CardData> filteredCards = new ArrayList<>();
+        Set<String> seenFingerprints = new HashSet<>();
+
+        duplicateLog.add("\n--- From " + sourceName + " ---");
+
+        for (CardData card : rawCards) {
+            String fingerprint = (card.get("Season") + "|" + card.get("Company") + "|" +
+                    card.get("Brand") + "|" + card.get("Theme") + "|" +
+                    card.get("Variant") + "|" + card.get("Number") + "|" +
+                    card.get("Grading Co.") + "|" + card.get("Grade")).toLowerCase();
+
+            String serial = card.get("Serial");
+            if (!isValid(serial)) serial = card.get("Serial/Print Run");
+
+            boolean hasSerial = isValid(serial) && !serial.equals("0");
+
+            if (seenFingerprints.contains(fingerprint)) {
+                if (!hasSerial) {
+                    String dupInfo = card.get("Season") + " " + card.get("Company") + " " +
+                            card.get("Brand") + " " + card.get("Theme") + " " +
+                            card.get("Variant") + " #" + card.get("Number") + " - " + card.get("Player");
+                    duplicateLog.add("[SKIPPED] " + dupInfo.replaceAll("\\s+", " "));
+                    continue;
+                } else {
+                    filteredCards.add(card);
+                }
+            } else {
+                seenFingerprints.add(fingerprint);
+                filteredCards.add(card);
+            }
+        }
+        return filteredCards;
+    }
+
     private static void processCollection(String inputPath, String outputPath, String overviewPage) {
         try {
             File input = new File(inputPath);
@@ -227,37 +265,7 @@ public class CardPageGenerator {
 
             if (rawCards.isEmpty()) return;
 
-            List<CardData> filteredCards = new ArrayList<>();
-            Set<String> seenFingerprints = new HashSet<>();
-
-            duplicateLog.add("\n--- From " + overviewPage + " ---");
-
-            for (CardData card : rawCards) {
-                String fingerprint = (card.get("Season") + "|" + card.get("Company") + "|" +
-                        card.get("Brand") + "|" + card.get("Theme") + "|" +
-                        card.get("Variant") + "|" + card.get("Number") + "|" +
-                        card.get("Grading Co.") + "|" + card.get("Grade")).toLowerCase();
-
-                String serial = card.get("Serial");
-                if (!isValid(serial)) serial = card.get("Serial/Print Run");
-
-                boolean hasSerial = isValid(serial) && !serial.equals("0");
-
-                if (seenFingerprints.contains(fingerprint)) {
-                    if (!hasSerial) {
-                        String dupInfo = card.get("Season") + " " + card.get("Company") + " " +
-                                card.get("Brand") + " " + card.get("Theme") + " " +
-                                card.get("Variant") + " #" + card.get("Number") + " - " + card.get("Player");
-                        duplicateLog.add("[SKIPPED] " + dupInfo.replaceAll("\\s+", " "));
-                        continue;
-                    } else {
-                        filteredCards.add(card);
-                    }
-                } else {
-                    seenFingerprints.add(fingerprint);
-                    filteredCards.add(card);
-                }
-            }
+            List<CardData> filteredCards = filterDuplicateCards(rawCards, overviewPage);
 
             updateDomLinks(tables, filteredCards);
 
