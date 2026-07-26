@@ -180,9 +180,9 @@ public class SiteBuilderPipeline {
                             } else if (fileName.endsWith(".json")) {
                                 byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BROTLI_FAST_QUALITY);
                                 uploadBytes(s3Client, s3Key, brData, "application/json", "br", CACHE_SHORT, uploadCount, tracker, file, currentHash);
-                            } else if (fileName.endsWith(".xml")) {
-                                byte[] gzippedData = GZIPCompressor.compressBytes(Files.readAllBytes(file), 9);
-                                uploadBytes(s3Client, s3Key, gzippedData, "application/xml", "gzip", CACHE_SHORT, uploadCount, tracker, file, currentHash);
+                            } else if (fileName.endsWith(".xml") || fileName.endsWith(".xsl")) {
+                                byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BROTLI_FAST_QUALITY);
+                                uploadBytes(s3Client, s3Key, brData, "application/xml", "br", CACHE_SHORT, uploadCount, tracker, file, currentHash);
                             } else if (fileName.endsWith(".ico")) {
                                 uploadRawFile(s3Client, file, s3Key, "image/x-icon", CACHE_LONG, uploadCount, tracker, currentHash);
                             } else if (fileName.startsWith("robots") || fileName.endsWith(".txt")) {

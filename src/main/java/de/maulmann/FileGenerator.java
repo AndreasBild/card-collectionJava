@@ -392,6 +392,22 @@ public class FileGenerator {
                     });
                 }
             }
+
+            // 5. Copy SEO assets (sitemap.xsl)
+            Path seoSourceDir = Paths.get("src/main/resources/seo");
+            if (Files.exists(seoSourceDir)) {
+                try (var stream = Files.walk(seoSourceDir)) {
+                    stream.filter(Files::isRegularFile).forEach(source -> {
+                        try {
+                            Path target = Paths.get(pathOutput).resolve(seoSourceDir.relativize(source));
+                            Files.createDirectories(target.getParent());
+                            Files.copy(source, target, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                        } catch (IOException e) {
+                            System.err.println("Error copying SEO asset " + source + ": " + e.getMessage());
+                        }
+                    });
+                }
+            }
         } catch (IOException e) {
             System.err.println("Error copying resources: " + e.getMessage());
         }
