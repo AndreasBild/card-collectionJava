@@ -319,21 +319,30 @@ public class SiteBuilderPipeline {
         File sitemapGzFile = new File(OUTPUT_DIR + "/sitemap.xml.gz");
 
         if (!sitemapFile.exists()) {
-            System.err.println("-> WARNING: sitemap.xml not found. Skipping GZ upload.");
+            System.err.println("-> WARNING: sitemap.xml not found. Skipping Sitemap upload.");
             return;
         }
 
-        // Wir prüfen hier, ob die sitemap.xml sich geändert hat.
-        // Falls ja, generieren wir die .gz neu und laden sie hoch.
         if (!tracker.hasChanged(sitemapFile.toPath()) && sitemapGzFile.exists()) {
-            System.out.println("-> Sitemap unchanged. Skipping GZ upload.");
+            System.out.println("-> Sitemap unchanged. Skipping upload.");
             return;
         }
 
+        // 1. Upload uncompressed sitemap.xml
+        PutObjectRequest xmlReq = PutObjectRequest.builder()
+                .bucket(BUCKET_NAME)
+                .key("sitemap.xml")
+                .contentType("application/xml; charset=utf-8")
+                .cacheControl(CACHE_SHORT)
+                .build();
+        s3Client.putObject(xmlReq, AsyncRequestBody.fromFile(sitemapFile)).join();
+        System.out.println("-> Successfully uploaded sitemap.xml to S3");
+
+        // 2. Compress & upload sitemap.xml.gz
         GZIPCompressor.compressFile(sitemapFile, sitemapGzFile, 9);
         System.out.println("-> Compressed sitemap to sitemap.xml.gz");
 
-        PutObjectRequest request = PutObjectRequest.builder()
+        PutObjectRequest gzReq = PutObjectRequest.builder()
                 .bucket(BUCKET_NAME)
                 .key("sitemap.xml.gz")
                 .contentType("application/xml")
@@ -341,10 +350,10 @@ public class SiteBuilderPipeline {
                 .cacheControl(CACHE_SHORT)
                 .build();
 
-        s3Client.putObject(request, AsyncRequestBody.fromFile(sitemapGzFile)).join();
+        s3Client.putObject(gzReq, AsyncRequestBody.fromFile(sitemapGzFile)).join();
+        System.out.println("-> Successfully uploaded sitemap.xml.gz to S3");
 
         tracker.updateHash(sitemapFile.toPath());
-        System.out.println("-> Successfully uploaded sitemap.xml.gz to S3");
     }
 
     private static void invalidateCloudFrontCache() {

@@ -84,6 +84,9 @@ public class SitemapGenerator {
                 return s1.compareTo(s2);
             });
 
+            SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd");
+            isoFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
             for (Path path : allPaths) {
                 String relativePath = outputDirPath.relativize(path).toString().replace("\\", "/");
                 String loc = BASE_URL + "/" + relativePath;
@@ -91,6 +94,14 @@ public class SitemapGenerator {
                 // SEO Best Practice: index.html auf die reine Root-Domain leiten
                 if (loc.endsWith("/index.html")) {
                     loc = loc.replace("/index.html", "/");
+                }
+
+                // File-based lastmod timestamp for Search Engine accuracy
+                String lastModDate;
+                try {
+                    lastModDate = isoFormat.format(new Date(Files.getLastModifiedTime(path).toMillis()));
+                } catch (Exception e) {
+                    lastModDate = isoFormat.format(new Date());
                 }
 
                 // Smarte SEO Prioritäten und Crawl-Frequenzen
@@ -110,7 +121,7 @@ public class SitemapGenerator {
 
                 xml.append("  <url>\n");
                 xml.append("    <loc>").append(escapeXml(loc)).append("</loc>\n");
-                xml.append("    <lastmod>").append(today).append("</lastmod>\n");
+                xml.append("    <lastmod>").append(lastModDate).append("</lastmod>\n");
                 xml.append("    <changefreq>").append(changeFreq).append("</changefreq>\n");
                 xml.append("    <priority>").append(priority).append("</priority>\n");
 
@@ -143,13 +154,29 @@ public class SitemapGenerator {
                         }
                     }
 
+                    // Extract Images from <img> and <picture>/<source> elements for Image Sitemap
+                    Set<String> processedImageUrls = new HashSet<>();
+                    Elements pictureSources = doc.select("picture source[srcset]");
+                    for (Element source : pictureSources) {
+                        String srcset = source.attr("srcset");
+                        if (!srcset.isEmpty()) {
+                            String[] candidates = srcset.split(",");
+                            String firstCandidate = candidates[0].trim().split("\\s+")[0];
+                            String absLoc = resolveImageLoc(relativePath, firstCandidate);
+                            if (!absLoc.isEmpty() && processedImageUrls.add(absLoc)) {
+                                addImageToXml(xml, absLoc, pageTitle);
+                                imagesAdded.incrementAndGet();
+                            }
+                        }
+                    }
+
                     Elements imgs = doc.select("img");
                     for (Element img : imgs) {
                         String src = img.attr("src");
                         if (src.isEmpty() || src.startsWith("data:")) continue;
 
                         String absImageLoc = resolveImageLoc(relativePath, src);
-                        if (absImageLoc.isEmpty()) continue;
+                        if (absImageLoc.isEmpty() || !processedImageUrls.add(absImageLoc)) continue;
 
                         boolean exists = false;
                         if (src.startsWith("http") || src.startsWith("//")) {
@@ -166,13 +193,8 @@ public class SitemapGenerator {
                         if (exists) {
                             String alt = img.attr("alt");
                             if (alt.isEmpty()) alt = img.attr("title");
-
-                            xml.append("    <image:image>\n");
-                            xml.append("      <image:loc>").append(escapeXml(absImageLoc)).append("</image:loc>\n");
-                            if (!alt.isEmpty()) {
-                                xml.append("      <image:caption>").append(escapeXml(alt)).append("</image:caption>\n");
-                            }
-                            xml.append("    </image:image>\n");
+                            if (alt.isEmpty()) alt = pageTitle;
+                            addImageToXml(xml, absImageLoc, alt);
                             imagesAdded.incrementAndGet();
                         } else {
                             imagesMissing.incrementAndGet();
@@ -285,18 +307,34 @@ public class SitemapGenerator {
         }
     }
 
+    private static void addImageToXml(StringBuilder xml, String imageLoc, String caption) {
+        xml.append("    <image:image>\n");
+        xml.append("      <image:loc>").append(escapeXml(imageLoc)).append("</image:loc>\n");
+        if (caption != null && !caption.trim().isEmpty()) {
+            xml.append("      <image:caption>").append(escapeXml(caption.trim())).append("</image:caption>\n");
+        }
+        xml.append("    </image:image>\n");
+    }
+
     private static void generateRobotsTxt() throws IOException {
         StringBuilder robots = new StringBuilder();
 
-        // Erlaube allen Suchmaschinen das Crawlen der gesamten Seite
+        // Standard Search Engine Crawling
         robots.append("User-agent: *\n");
         robots.append("Allow: /\n\n");
 
-        // Explizit Bilder-Bots erlauben (extrem wichtig für Sammler-Websites!)
+        // High Priority Image Indexing for Collector Websites
         robots.append("User-agent: Googlebot-Image\n");
         robots.append("Allow: /images/\n\n");
 
-        // Zeige den Crawlern sofort an, wo die komprimierte Sitemap liegt
+        // AI Search Discovery Bots
+        robots.append("User-agent: GPTBot\nAllow: /\n\n");
+        robots.append("User-agent: ClaudeBot\nAllow: /\n\n");
+        robots.append("User-agent: PerplexityBot\nAllow: /\n\n");
+        robots.append("User-agent: Applebot\nAllow: /\n\n");
+
+        // Dual Sitemap Indexing (Both Raw XML and GZIP)
+        robots.append("Sitemap: ").append(BASE_URL).append("/sitemap.xml\n");
         robots.append("Sitemap: ").append(BASE_URL).append("/sitemap.xml.gz\n");
 
         File robotsFile = new File(OUTPUT_DIR + "/robots.txt");
