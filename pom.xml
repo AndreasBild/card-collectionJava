@@ -9,9 +9,9 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-        <maven.compiler.release>21</maven.compiler.release>
+        <maven.compiler.source>24</maven.compiler.source>
+        <maven.compiler.target>24</maven.compiler.target>
+        <maven.compiler.release>24</maven.compiler.release>
         <aws.sdk.version>2.48.4</aws.sdk.version>
         <netty.version>4.2.16.Final</netty.version>
         <org.slf4j.version>2.0.18</org.slf4j.version>
@@ -147,12 +147,16 @@
                 <version>${org.codehaus.mojo.version}</version>
                 <configuration>
                     <mainClass>de.maulmann.SiteBuilderPipeline</mainClass>
+                    <commandlineArgs>--enable-native-access=ALL-UNNAMED</commandlineArgs>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.5.6</version>
+                <configuration>
+                    <argLine>--enable-native-access=ALL-UNNAMED</argLine>
+                </configuration>
             </plugin>
         </plugins>
 
