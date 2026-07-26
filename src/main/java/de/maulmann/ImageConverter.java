@@ -102,7 +102,7 @@ public class ImageConverter {
                     }, executor));
                 }
             }
-            CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+            CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new)).join();
         } catch (Exception e) {
             System.err.println("Critical error during parallel image processing: " + e.getMessage());
         }

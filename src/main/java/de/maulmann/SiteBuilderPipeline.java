@@ -195,7 +195,7 @@ public class SiteBuilderPipeline {
                     }, executor));
                 });
             }
-            CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+            CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new)).join();
         }
 
         System.out.println("-> Uploaded " + uploadCount.get() + " web files. (Skipped " + skipCount.get() + " unmodified files).");
@@ -239,7 +239,7 @@ public class SiteBuilderPipeline {
                     }
                 });
             }
-            CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+            CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new)).join();
         }
 
         System.out.println("-> Synced " + uploadCount.get() + " images. (Skipped " + skipCount.get() + " unmodified images).");
