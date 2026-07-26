@@ -380,9 +380,6 @@ public class CardPageGenerator {
         }
     }
 
-    private static final java.util.regex.Pattern MULTI_VAL_PATTERN = java.util.regex.Pattern.compile("\\s*,\\s*");
-    private static final java.util.regex.Pattern MULTI_SPACE_PATTERN = java.util.regex.Pattern.compile("\\s+");
-
     private static void updateDomLinks(Elements tables, List<CardData> filteredCards) {
         Map<String, CardData> approvedCardMap = filteredCards.stream()
                 .collect(Collectors.toMap(c -> c.stableId, c -> c, (a, b) -> a));
@@ -930,20 +927,9 @@ public class CardPageGenerator {
         return p;
     }
 
-    private static String getPrimaryTeam(CardData c) {
-        String t = c.get("Team");
-        if (t == null) return "";
-        if (t.contains(",")) return t.split(",")[0].trim();
-        return t;
-    }
-
     private static String formatMulti(String val) {
         if (val == null) return "";
         return val.replaceAll("\\s*,\\s*", " / ");
-    }
-
-    private static void addTableRow(StringBuilder sb, String title, String value) {
-        sb.append("            <tr><th class=\"specs-th\">").append(title).append("</th><td class=\"specs-td\">").append(isValid(value) ? escapeHtml(value) : "-").append("</td></tr>\n");
     }
 
     private static void addIfPresent(List<String> list, String value) {

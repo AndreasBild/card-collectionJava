@@ -173,21 +173,10 @@ public class SharedTemplates {
                 .replace("{{ACTIVE_SITEMAP}}", activePage.equals("sitemap") ? "class=\"active\"" : "");
     }
 
-    public static String getFooterNav(String root) {
-        String template = loadResource("/templates/footer_nav.html");
-        if (template.isEmpty()) return "";
-        return template.replace("{{ROOT}}", root);
-    }
-
     public static String getFooter(String root) {
         String template = loadResource("/templates/footer.html");
         // Using a placeholder for stable timestamps that can be replaced after generation
         return template.replace("{{ROOT}}", root).replace("{{TIME}}", "[[STABLE_TIME]]");
-    }
-
-    public static String getFooter(String root, String time) {
-        String template = loadResource("/templates/footer.html");
-        return template.replace("{{ROOT}}", root).replace("{{TIME}}", time);
     }
 
     public static String getTimestamp() {

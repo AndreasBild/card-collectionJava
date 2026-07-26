@@ -158,48 +158,6 @@ public class FileGenerator {
 
                     seasons.add(seasonMap);
                 }
-            } else {
-                File contentDir = new File(pathSource);
-                File[] seasonFiles = contentDir.listFiles((dir, name) -> name.endsWith(".html") && (name.matches(".*\\d.*") || name.equalsIgnoreCase("College.html")));
-
-                if (seasonFiles != null) {
-                    Arrays.sort(seasonFiles, (f1, f2) -> {
-                        if (f1.getName().equalsIgnoreCase("College.html")) return -1;
-                        if (f2.getName().equalsIgnoreCase("College.html")) return 1;
-                        return f1.getName().compareTo(f2.getName());
-                    });
-
-                    for (File file : seasonFiles) {
-                        Map<String, String> seasonMap = new HashMap<>();
-                        String rawName = file.getName().replace(".html", "");
-                        seasonMap.put("id", rawName.toLowerCase());
-
-                        if (rawName.equalsIgnoreCase("College")) {
-                            seasonMap.put("name", "College");
-                        } else {
-                            seasonMap.put("name", "Season " + rawName);
-                        }
-
-                        String rawContent = Files.readString(file.toPath(), StandardCharsets.UTF_8);
-                        Document doc = Jsoup.parse(rawContent, "UTF-8");
-                        Element table = doc.selectFirst("table");
-
-                        int seasonCardCount = 0;
-                        if (table != null) {
-                            seasonCardCount = Math.max(0, table.select("tr").size() - 1);
-                            seasonMap.put("content", cleanOldPlaceholders(table.outerHtml()));
-                        } else {
-                            seasonMap.put("content", "<p>No cards found.</p>");
-                        }
-
-                        cumulativeTotal += seasonCardCount;
-
-                        seasonMap.put("seasonCount", String.valueOf(seasonCardCount));
-                        seasonMap.put("cumulativeTotal", String.valueOf(cumulativeTotal));
-
-                        seasons.add(seasonMap);
-                    }
-                }
             }
             data.put("seasons", seasons);
 
@@ -528,19 +486,6 @@ public class FileGenerator {
         if (finalHtml.contains("{{CONSENT_BANNER}}")) {
             String root = (String) data.getOrDefault("root", "");
             finalHtml = finalHtml.replace("{{CONSENT_BANNER}}", SharedTemplates.getConsentBanner(root));
-        }
-
-        if (finalHtml.contains("{{FOOTER_NAV}}")) {
-            try {
-                String root = (String) data.getOrDefault("root", "");
-                String footerNav = SharedTemplates.getFooterNav(root);
-                finalHtml = finalHtml.replace("{{FOOTER_NAV}}", footerNav);
-            } catch (Exception e) {
-                finalHtml = finalHtml.replace("{{FOOTER_NAV}}", "");
-            }
-        }
-        if (finalHtml.contains("{{FOOTER}}")) {
-            finalHtml = finalHtml.replace("{{FOOTER}}", "");
         }
 
         Files.writeString(out.toPath(), finalHtml, StandardCharsets.UTF_8);

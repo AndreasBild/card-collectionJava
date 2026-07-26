@@ -46,7 +46,9 @@ class FileGeneratorTest {
 
     @Test
     void testMain() throws Exception {
-        createDummyHtmlFile("1994-95.html", "<table><tr><th>Header</th></tr><tr><td>Data</td></tr></table>");
+        Path jsonDir = Files.createDirectories(contentDir.resolve("json"));
+        String jsonContent = "[{\"player\":\"Juwan Howard\",\"season\":\"1994-95\",\"team\":\"Washington Bullets\",\"company\":\"Upper Deck\",\"brand\":\"Collector's Choice\",\"theme\":\"Base\",\"variant\":\"Base\",\"cardNumber\":\"123\",\"serialNumber\":\"0\",\"printRun\":0,\"isAutograph\":false,\"isPatch\":false,\"isRookie\":true}]";
+        Files.writeString(jsonDir.resolve("cards.json"), jsonContent);
 
         assertDoesNotThrow(() -> FileGenerator.main(new String[]{}));
 
@@ -57,7 +59,6 @@ class FileGeneratorTest {
 
         assertTrue(content.contains("Juwan Howard"), "Should contain Juwan Howard");
         assertTrue(content.contains("1994-95"), "Should contain season 1994-95");
-        assertTrue(content.contains("Data"), "Should contain Data from source file");
 
         // Ensure proper HTML structure
         assertTrue(content.contains("<html"), "Should have opening html tag");
