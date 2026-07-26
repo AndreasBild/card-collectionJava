@@ -42,23 +42,48 @@ public class CardJson {
     public String get(String key) {
         if (key == null) return null;
         switch (key.toLowerCase()) {
-            case "player": return player;
-            case "season": return season;
-            case "team": return team;
-            case "company": return company;
-            case "brand": return brand;
-            case "theme": return theme;
-            case "variant": return variant;
-            case "number":
-            case "cardnumber": return cardNumber;
-            case "serial":
-            case "serialnumber": return serialNumber;
-            case "grading co.":
-            case "gradingcompany": return gradingCompany;
-            case "grade": return grade;
-            case "notes": return notes;
-            case "collection": return collection;
-            default: return null;
+            case "player" -> {
+                return player;
+            }
+            case "season" -> {
+                return season;
+            }
+            case "team" -> {
+                return team;
+            }
+            case "company" -> {
+                return company;
+            }
+            case "brand" -> {
+                return brand;
+            }
+            case "theme" -> {
+                return theme;
+            }
+            case "variant" -> {
+                return variant;
+            }
+            case "number", "cardnumber" -> {
+                return cardNumber;
+            }
+            case "serial", "serialnumber" -> {
+                return serialNumber;
+            }
+            case "grading co.", "gradingcompany" -> {
+                return gradingCompany;
+            }
+            case "grade" -> {
+                return grade;
+            }
+            case "notes" -> {
+                return notes;
+            }
+            case "collection" -> {
+                return collection;
+            }
+            default -> {
+                return null;
+            }
         }
     }
 }

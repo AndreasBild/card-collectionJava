@@ -237,6 +237,14 @@ public class FileGenerator {
                         "</script>";
                 data.put("jsonLd", jsonLd);
 
+                Path jsonPath = Paths.get(pathSource, "json", coll.toLowerCase() + ".json");
+                String tableHtml = "";
+                if (Files.exists(jsonPath)) {
+                    com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+                    List<CardJson> cardList = mapper.readValue(jsonPath.toFile(), mapper.getTypeFactory().constructCollectionType(List.class, CardJson.class));
+                    tableHtml = generateHtmlTableFromJson(cardList);
+                }
+
                 Path sourcePath = Paths.get(pathSource, "other", coll + ".html");
                 if (Files.exists(sourcePath)) {
                     String rawContent = Files.readString(sourcePath, StandardCharsets.UTF_8);
@@ -248,7 +256,6 @@ public class FileGenerator {
                             Element faqScript = doc.selectFirst("script[type=application/ld+json]");
                             if (faqScript != null) {
                                 String faqJson = faqScript.data().trim();
-                                // Wir bauen ein @graph-basiertes JSON-LD, das Breadcrumb, CollectionPage UND FAQ enthält
                                 jsonLd = "<script type=\"application/ld+json\">\n" +
                                         "{\n" +
                                         "  \"@context\": \"https://schema.org\",\n" +
@@ -271,29 +278,65 @@ public class FileGenerator {
                         }
                     }
 
-                    // NEU: Isoliere den Inhalt des <main>-Tags, um doppelte Verschachtelung zu vermeiden
                     Element mainElement = doc.selectFirst("main");
                     String processedContent;
                     if (mainElement != null) {
-                        // Alle Tabellen automatisch in responsive Container einpacken, falls noch nicht geschehen
-                        for (Element table : mainElement.select("table")) {
-                            if (table.parent() == null || !table.parent().hasClass("table-responsive")) {
-                                table.wrap("<div class=\"table-responsive card-container-box\"></div>");
-                            }
-                        }
-                        processedContent = mainElement.html();
+                        mainElement.select("table, .table-responsive").remove();
+                        processedContent = mainElement.html() + "\n" + tableHtml;
                     } else {
-                        processedContent = rawContent;
+                        processedContent = rawContent + "\n" + tableHtml;
                     }
 
                     data.put("pageContent", cleanOldPlaceholders(processedContent));
                 } else {
-                    data.put("pageContent", "<p>No data found for this collection yet.</p>");
+                    data.put("pageContent", tableHtml.isEmpty() ? "<p>No data found for this collection yet.</p>" : tableHtml);
                 }
 
                 processTemplate("generic-collection.ftlh", data, pathOutput + coll + ".html");
             } catch (Exception e) { System.err.println("Fehler bei " + coll + ": " + e.getMessage()); }
         }
+    }
+
+    public static String generateHtmlTableFromJson(List<CardJson> cardList) {
+        if (cardList == null || cardList.isEmpty()) {
+            return "<p>No cards found in this collection.</p>";
+        }
+
+        StringBuilder htmlBuilder = new StringBuilder();
+        htmlBuilder.append("<div class=\"table-responsive card-container-box\"><table><thead><tr>")
+                .append("<th>Player</th><th>Team</th><th>Sport</th><th>Season</th>")
+                .append("<th>Company</th><th>Brand</th><th>Theme</th><th>Variant</th>")
+                .append("<th>Number</th><th>Serial</th><th>Print Run</th>")
+                .append("<th>Rookie</th><th>Game Used</th><th>Autograph</th><th>Grade</th>")
+                .append("</tr></thead><tbody>");
+
+        for (CardJson c : cardList) {
+            CardPageGenerator.CardData cardData = new CardPageGenerator.CardData(c, null);
+            String detailPath = cardData.fullRelativePath;
+            String playerTitle = "View " + escapeHtml(c.player) + " " + escapeHtml(c.season) + " " + escapeHtml(c.brand) + " #" + escapeHtml(c.cardNumber != null ? c.cardNumber : "") + " card detail page";
+            String variantText = escapeHtml(c.variant != null ? c.variant : "Base");
+            String variantTitle = "View details for " + escapeHtml(c.player) + " " + escapeHtml(c.season) + " " + escapeHtml(c.brand) + " " + variantText + " parallel";
+
+            htmlBuilder.append("<tr id=\"").append(cardData.filenameBase).append("\">")
+                    .append("<td><a href=\"").append(detailPath).append("\" class=\"table-button\" title=\"").append(playerTitle).append("\" itemprop=\"url\"><span itemprop=\"name\">").append(escapeHtml(c.player)).append("</span></a></td>")
+                    .append("<td>").append(escapeHtml(c.team)).append("</td>")
+                    .append("<td>Basketball</td>")
+                    .append("<td>").append(escapeHtml(c.season)).append("</td>")
+                    .append("<td>").append(escapeHtml(c.company)).append("</td>")
+                    .append("<td>").append(escapeHtml(c.brand)).append("</td>")
+                    .append("<td>").append(escapeHtml(c.theme)).append("</td>")
+                    .append("<td><a href=\"").append(detailPath).append("\" title=\"").append(variantTitle).append("\">").append(variantText).append("</a></td>")
+                    .append("<td>").append(escapeHtml(c.cardNumber)).append("</td>")
+                    .append("<td>").append(escapeHtml(c.serialNumber != null ? c.serialNumber : "0")).append("</td>")
+                    .append("<td>").append(c.printRun != null ? c.printRun : 0).append("</td>")
+                    .append("<td>").append(c.isRookie ? "Yes" : "No").append("</td>")
+                    .append("<td>").append(c.isPatch ? "Yes" : "No").append("</td>")
+                    .append("<td>").append(c.isAutograph ? "Yes" : "No").append("</td>")
+                    .append("<td>").append(escapeHtml(c.grade != null ? c.grade : "No")).append("</td>")
+                    .append("</tr>");
+        }
+        htmlBuilder.append("</tbody></table></div>");
+        return htmlBuilder.toString();
     }
 
     public static void copyResources() {

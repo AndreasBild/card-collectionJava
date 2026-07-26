@@ -196,7 +196,6 @@ public class CardPageGenerator {
         for (Map.Entry<String, String> entry : otherJsonBuckets.entrySet()) {
             String jsonPath = entry.getKey();
             String overviewPage = entry.getValue();
-            String filePath = "output/" + overviewPage;
             
             List<CardJson> cards = loadCardsFromJsonFile(jsonPath);
             if (!cards.isEmpty()) {
@@ -208,8 +207,6 @@ public class CardPageGenerator {
                 List<CardData> filtered = filterDuplicateCards(cardDataList, jsonPath);
                 generateSubPagesMultithreaded(filtered, overviewPage);
             }
-            // Always process the overview page to inject table button links into the overview DOM
-            processCollection(filePath, filePath, overviewPage);
         }
 
         try {
