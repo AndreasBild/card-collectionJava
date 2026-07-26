@@ -7,10 +7,14 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
 
 public class ImageConverter {
 
@@ -52,48 +56,53 @@ public class ImageConverter {
     }
 
     public static void processImages(Path sourceDir, Path webpOutDir) throws IOException {
-        System.out.println("Starting image processing with virtual threads...");
+        System.out.println("Starting image processing with virtual threads on: " + sourceDir.toAbsolutePath());
+        System.out.println("AVIFENC_PATH: " + AVIFENC_PATH);
 
         // Initialisierung des Hash-Checkers
         FileTracker tracker = new FileTracker("output/image-build-hashes.properties");
 
+        List<CompletableFuture<Void>> futures = new ArrayList<>();
         try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
-            Files.walkFileTree(sourceDir, new SimpleFileVisitor<Path>() {
-                @Override
-                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
-                    String fileName = file.toString().toLowerCase();
-                    if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") ||
-                            fileName.endsWith(".png") || fileName.endsWith(".gif") ||
-                            fileName.endsWith(".bmp")) {
+            List<Path> allFiles;
+            try (Stream<Path> stream = Files.walk(sourceDir)) {
+                allFiles = stream.filter(Files::isRegularFile).toList();
+            }
+            for (Path file : allFiles) {
+                String fileName = file.toString().toLowerCase();
+                if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") ||
+                        fileName.endsWith(".png") || fileName.endsWith(".gif") ||
+                        fileName.endsWith(".bmp")) {
 
-                        Path relativePath = sourceDir.relativize(file);
-                        String baseName = getBaseName(relativePath.getFileName().toString());
-                        Path relativeParent = relativePath.getParent();
-                        Path currentWebpOutDir = relativeParent != null ? webpOutDir.resolve(relativeParent) : webpOutDir;
-                        File mainWebpFile = currentWebpOutDir.resolve(baseName + ".webp").toFile();
+                    Path relativePath = sourceDir.relativize(file);
+                    String baseName = getBaseName(relativePath.getFileName().toString());
+                    Path relativeParent = relativePath.getParent();
+                    Path currentWebpOutDir = relativeParent != null ? webpOutDir.resolve(relativeParent) : webpOutDir;
+                    File mainWebpFile = currentWebpOutDir.resolve(baseName + ".webp").toFile();
+                    File mainAvifFile = currentWebpOutDir.resolve(baseName + ".avif").toFile();
+                    boolean mainAvifMissing = (AVIFENC_PATH != null && !mainAvifFile.exists());
 
-                        if (mainWebpFile.exists() && !tracker.hasChanged(file)) {
-                            skippedCount.incrementAndGet();
-                            return FileVisitResult.CONTINUE;
-                        }
-
-                        executor.submit(() -> {
-                            try {
-                                boolean wasConverted = convertAndSaveImageSet(file, sourceDir, webpOutDir, tracker);
-                                if (wasConverted) {
-                                    successCount.incrementAndGet();
-                                } else {
-                                    skippedCount.incrementAndGet();
-                                }
-                            } catch (Exception e) {
-                                System.err.println("Failed to process " + file + ": " + e.getMessage());
-                                failureCount.incrementAndGet();
-                            }
-                        });
+                    if (mainWebpFile.exists() && !mainAvifMissing && !tracker.hasChanged(file)) {
+                        skippedCount.incrementAndGet();
+                        continue;
                     }
-                    return FileVisitResult.CONTINUE;
+
+                    futures.add(CompletableFuture.runAsync(() -> {
+                        try {
+                            boolean wasConverted = convertAndSaveImageSet(file, sourceDir, webpOutDir, tracker);
+                            if (wasConverted) {
+                                successCount.incrementAndGet();
+                            } else {
+                                skippedCount.incrementAndGet();
+                            }
+                        } catch (Exception e) {
+                            System.err.println("Failed to process " + file + ": " + e.getMessage());
+                            failureCount.incrementAndGet();
+                        }
+                    }, executor));
                 }
-            });
+            }
+            CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
         } catch (Exception e) {
             System.err.println("Critical error during parallel image processing: " + e.getMessage());
         }
@@ -113,10 +122,15 @@ public class ImageConverter {
 
         File mainWebpFile = currentWebpOutDir.resolve(baseName + ".webp").toFile();
 
+        File mainAvifFile = currentWebpOutDir.resolve(baseName + ".avif").toFile();
+        boolean mainAvifMissing = (AVIFENC_PATH != null && !mainAvifFile.exists());
+
         // 1. PRE-CHECK: Müssen wir dieses Bild-Set neu generieren?
-        if (mainWebpFile.exists() && !tracker.hasChanged(sourceFile)) {
+        if (mainWebpFile.exists() && !mainAvifMissing && !tracker.hasChanged(sourceFile)) {
             return false;
         }
+
+        System.out.println("Processing image set: " + baseName + " (AVIF missing: " + mainAvifMissing + ")");
 
         // 2. Original-Dimensionen auslesen (nur Header-Scan)
         int origW = 0;
@@ -145,7 +159,6 @@ public class ImageConverter {
         // A) Hauptbild (z.B. jordan.webp & jordan.avif)
         writeWebpViaCLI(sourceFile, mainWebpFile, mainW, mainH, 78);
         if (AVIFENC_PATH != null) {
-            File mainAvifFile = currentWebpOutDir.resolve(baseName + ".avif").toFile();
             writeAvifViaCLI(sourceFile, mainAvifFile, mainW, mainH, 65);
         }
 
@@ -220,7 +233,10 @@ public class ImageConverter {
             } finally {
                 if (tempPng.exists()) tempPng.delete();
             }
-        } catch (Exception ignored) {}
+        } catch (Exception e) {
+            System.err.println("AVIF conversion error for " + outputFile.getName() + ": " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     private static String findCwebp() {
