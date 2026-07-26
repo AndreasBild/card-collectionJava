@@ -130,8 +130,6 @@ public class ImageConverter {
             return false;
         }
 
-        System.out.println("Processing image set: " + baseName + " (AVIF missing: " + mainAvifMissing + ")");
-
         // 2. Original-Dimensionen auslesen (nur Header-Scan)
         int origW = 0;
         int origH = 0;
