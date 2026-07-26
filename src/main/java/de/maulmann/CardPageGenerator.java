@@ -186,15 +186,29 @@ public class CardPageGenerator {
             processCollection("output/Juwan-Howard-Collection.html", "output/Juwan-Howard-Collection.html", "Juwan-Howard-Collection.html");
         }
 
-        String[] otherFiles = {
-                "output/Baseball.html",
-                "output/Flawless.html",
-                "output/Wantlist.html",
-                "output/Panini.html"
-        };
+        Map<String, String> otherJsonBuckets = Map.of(
+                "content/json/baseball.json", "Baseball.html",
+                "content/json/flawless.json", "Flawless.html",
+                "content/json/wantlist.json", "Wantlist.html",
+                "content/json/panini.json", "Panini.html"
+        );
 
-        for (String filePath : otherFiles) {
-            processCollection(filePath, filePath, new File(filePath).getName());
+        for (Map.Entry<String, String> entry : otherJsonBuckets.entrySet()) {
+            String jsonPath = entry.getKey();
+            String overviewPage = entry.getValue();
+            List<CardJson> cards = loadCardsFromJsonFile(jsonPath);
+            if (!cards.isEmpty()) {
+                log.info("Generating subpages from {} ({} cards)...", jsonPath, cards.size());
+                List<CardData> cardDataList = new ArrayList<>();
+                for (CardJson c : cards) {
+                    cardDataList.add(new CardData(c, null));
+                }
+                List<CardData> filtered = filterDuplicateCards(cardDataList, jsonPath);
+                generateSubPagesMultithreaded(filtered, overviewPage);
+            } else {
+                String filePath = "output/" + overviewPage;
+                processCollection(filePath, filePath, overviewPage);
+            }
         }
 
         try {
@@ -207,6 +221,19 @@ public class CardPageGenerator {
 
         long endTime = System.currentTimeMillis();
         log.info("All card pages generated in {} ms.", (endTime - startTime));
+    }
+
+    private static final com.fasterxml.jackson.databind.ObjectMapper JSON_MAPPER = new com.fasterxml.jackson.databind.ObjectMapper();
+
+    public static List<CardJson> loadCardsFromJsonFile(String jsonPath) {
+        File jsonFile = new File(jsonPath);
+        if (!jsonFile.exists()) return Collections.emptyList();
+        try {
+            return JSON_MAPPER.readValue(jsonFile, new com.fasterxml.jackson.core.type.TypeReference<List<CardJson>>() {});
+        } catch (IOException e) {
+            log.error("Failed to load cards from " + jsonPath, e);
+            return Collections.emptyList();
+        }
     }
 
     public static void main(String[] args) {
