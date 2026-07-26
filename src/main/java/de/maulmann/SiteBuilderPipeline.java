@@ -24,6 +24,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -70,35 +71,43 @@ public class SiteBuilderPipeline {
                 SharedTemplates.setBuildId("stable");
             }
 
-            // --- PHASE 1: Generate Site HTML & Sitemap ---
-            System.out.println("\n[PHASE 1] Generating HTML files and Sitemap...");
-            FileGenerator.setTimestampTracker(timeTracker);
-            CardPageGenerator.setTimestampTracker(timeTracker);
-            SitemapGenerator.setTimestampTracker(timeTracker);
+            // --- PARALLEL PHASES: HTML Generation & Image WebP Conversion ---
+            System.out.println("\n[PHASE 1 & 2] Launching HTML Generation and Image WebP Conversion in parallel...");
 
-            FileGenerator.copyResources();
-            FileGenerator.buildCollectionOverview();
-            FileGenerator.buildOtherCollections();
-            FileGenerator.buildStaticPages();
-            CardPageGenerator.run();
+            CompletableFuture<Void> htmlTask = CompletableFuture.runAsync(() -> {
+                System.out.println("  -> [PHASE 1] Generating HTML files and Sitemap...");
+                FileGenerator.setTimestampTracker(timeTracker);
+                CardPageGenerator.setTimestampTracker(timeTracker);
+                SitemapGenerator.setTimestampTracker(timeTracker);
 
-            timeTracker.save();
-            SitemapGenerator.generate(); // Sitemap & robots.txt now ready for Phase 3
+                FileGenerator.copyResources();
+                FileGenerator.buildCollectionOverview();
+                FileGenerator.buildOtherCollections();
+                FileGenerator.buildStaticPages();
+                CardPageGenerator.run();
 
-            // --- PHASE 1.5: Inject Firestore Ratings ---
-            System.out.println("\n[PHASE 1.5] Injecting Firestore ratings...");
-            String firebaseCreds = System.getenv("FIREBASE_SERVICE_ACCOUNT_JSON");
-            File firebaseFile = new File("firebase/maulmann-3f90d-firebase-adminsdk-fbsvc-78c9f10838");
+                timeTracker.save();
+                SitemapGenerator.generate(); // Sitemap & robots.txt now ready for Phase 3
 
-            if ((firebaseCreds == null || firebaseCreds.isEmpty()) && !firebaseFile.exists()) {
-                System.err.println("⚠️ WARNING: Firebase credentials (env or file) are missing! Ratings will NOT be injected.");
-            } else {
-                FirestoreRatingInjector.main(new String[0]);
-            }
+                // --- PHASE 1.5: Inject Firestore Ratings ---
+                System.out.println("  -> [PHASE 1.5] Injecting Firestore ratings...");
+                String firebaseCreds = System.getenv("FIREBASE_SERVICE_ACCOUNT_JSON");
+                File firebaseFile = new File("firebase/maulmann-3f90d-firebase-adminsdk-fbsvc-78c9f10838");
 
-            // --- PHASE 2: Convert Images to WebP ---
-            System.out.println("\n[PHASE 2] Converting images to WebP...");
-            ImageConverter.main(new String[0]);
+                if ((firebaseCreds == null || firebaseCreds.isEmpty()) && !firebaseFile.exists()) {
+                    System.err.println("⚠️ WARNING: Firebase credentials (env or file) are missing! Ratings will NOT be injected.");
+                } else {
+                    FirestoreRatingInjector.main(new String[0]);
+                }
+            });
+
+            CompletableFuture<Void> imageTask = CompletableFuture.runAsync(() -> {
+                System.out.println("  -> [PHASE 2] Converting images to WebP...");
+                ImageConverter.main(new String[0]);
+            });
+
+            // Wait for both tasks to complete concurrently
+            CompletableFuture.allOf(htmlTask, imageTask).join();
 
             // --- PHASE 3: Compress & Upload HTML/CSS/JS/XML ---
             System.out.println("\n[PHASE 3] Minifying, Compressing, and Uploading Web Files...");
@@ -136,6 +145,7 @@ public class SiteBuilderPipeline {
         Path outputDir = Paths.get(OUTPUT_DIR);
         AtomicInteger uploadCount = new AtomicInteger(0);
         AtomicInteger skipCount = new AtomicInteger(0);
+        final int BROTLI_FAST_QUALITY = 9;
 
         try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
             try (Stream<Path> paths = Files.walk(outputDir)) {
@@ -157,17 +167,17 @@ public class SiteBuilderPipeline {
                     executor.submit(() -> {
                         try {
                             if (fileName.endsWith(".html")) {
-                                byte[] brData = BrotliCompressor.compressBytes(HTMLMinifier.minifyHTMLToBytes(file.toFile()), BrotliCompressor.BEST_QUALITY);
+                                byte[] brData = BrotliCompressor.compressBytes(HTMLMinifier.minifyHTMLToBytes(file.toFile()), BROTLI_FAST_QUALITY);
                                 uploadBytes(s3Client, s3Key, brData, "text/html", "br", CACHE_SHORT, uploadCount, tracker, file, currentHash);
                             } else if (fileName.endsWith(".css")) {
-                                byte[] brData = BrotliCompressor.compressBytes(CSSMinifier.minifyCSSToBytes(file.toFile()), BrotliCompressor.BEST_QUALITY);
+                                byte[] brData = BrotliCompressor.compressBytes(CSSMinifier.minifyCSSToBytes(file.toFile()), BROTLI_FAST_QUALITY);
                                 uploadBytes(s3Client, s3Key, brData, "text/css", "br", CACHE_LONG, uploadCount, tracker, file, currentHash);
                             } else if (fileName.endsWith(".js")) {
                                 String cacheControl = fileName.equalsIgnoreCase("serviceworker.js") ? CACHE_SHORT : CACHE_LONG;
-                                byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BrotliCompressor.BEST_QUALITY);
+                                byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BROTLI_FAST_QUALITY);
                                 uploadBytes(s3Client, s3Key, brData, "application/javascript", "br", cacheControl, uploadCount, tracker, file, currentHash);
                             } else if (fileName.endsWith(".json")) {
-                                byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BrotliCompressor.BEST_QUALITY);
+                                byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BROTLI_FAST_QUALITY);
                                 uploadBytes(s3Client, s3Key, brData, "application/json", "br", CACHE_SHORT, uploadCount, tracker, file, currentHash);
                             } else if (fileName.endsWith(".xml")) {
                                 byte[] gzippedData = GZIPCompressor.compressBytes(Files.readAllBytes(file), 9);
@@ -175,7 +185,7 @@ public class SiteBuilderPipeline {
                             } else if (fileName.endsWith(".ico")) {
                                 uploadRawFile(s3Client, file, s3Key, "image/x-icon", CACHE_LONG, uploadCount, tracker, currentHash);
                             } else if (fileName.startsWith("robots") || fileName.endsWith(".txt")) {
-                                byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BrotliCompressor.BEST_QUALITY);
+                                byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BROTLI_FAST_QUALITY);
                                 uploadBytes(s3Client, s3Key, brData, "text/plain", "br", CACHE_SHORT, uploadCount, tracker, file, currentHash);
                             }
                         } catch (Exception e) {

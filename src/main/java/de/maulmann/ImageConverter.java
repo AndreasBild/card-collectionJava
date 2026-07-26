@@ -66,6 +66,17 @@ public class ImageConverter {
                             fileName.endsWith(".png") || fileName.endsWith(".gif") ||
                             fileName.endsWith(".bmp")) {
 
+                        Path relativePath = sourceDir.relativize(file);
+                        String baseName = getBaseName(relativePath.getFileName().toString());
+                        Path relativeParent = relativePath.getParent();
+                        Path currentWebpOutDir = relativeParent != null ? webpOutDir.resolve(relativeParent) : webpOutDir;
+                        File mainWebpFile = currentWebpOutDir.resolve(baseName + ".webp").toFile();
+
+                        if (mainWebpFile.exists() && !tracker.hasChanged(file)) {
+                            skippedCount.incrementAndGet();
+                            return FileVisitResult.CONTINUE;
+                        }
+
                         executor.submit(() -> {
                             try {
                                 boolean wasConverted = convertAndSaveImageSet(file, sourceDir, webpOutDir, tracker);
