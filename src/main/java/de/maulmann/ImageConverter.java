@@ -157,7 +157,7 @@ public class ImageConverter {
         // A) Hauptbild (z.B. jordan.webp & jordan.avif)
         writeWebpViaCLI(sourceFile, mainWebpFile, mainW, mainH, 78);
         if (AVIFENC_PATH != null) {
-            writeAvifViaCLI(sourceFile, mainAvifFile, mainW, mainH, 65);
+            writeAvifViaCLI(sourceFile, mainAvifFile, mainW, mainH, 48);
         }
 
         // B) Responsive Varianten (z.B. jordan-400w.webp & jordan-400w.avif)
@@ -170,7 +170,7 @@ public class ImageConverter {
 
                 if (AVIFENC_PATH != null) {
                     File respAvifFile = currentWebpOutDir.resolve(baseName + "-" + targetW + "w.avif").toFile();
-                    int avifQuality = (targetW <= 400) ? 60 : 65;
+                    int avifQuality = (targetW <= 400) ? 38 : (targetW <= 600 ? 40 : 44);
                     writeAvifViaCLI(sourceFile, respAvifFile, targetW, targetH, avifQuality);
                 }
             }
@@ -221,6 +221,7 @@ public class ImageConverter {
                             AVIFENC_PATH,
                             "-s", "6",
                             "-q", String.valueOf(quality),
+                            "--yuv", "420",
                             "-j", "8",
                             tempPng.getAbsolutePath(),
                             outputFile.getAbsolutePath()
