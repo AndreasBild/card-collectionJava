@@ -142,16 +142,26 @@ public class ImageConverter {
 
         // --- CLI GENERIERUNG ---
 
-        // A) Hauptbild (z.B. jordan.webp)
+        // A) Hauptbild (z.B. jordan.webp & jordan.avif)
         writeWebpViaCLI(sourceFile, mainWebpFile, mainW, mainH, 78);
+        if (AVIFENC_PATH != null) {
+            File mainAvifFile = currentWebpOutDir.resolve(baseName + ".avif").toFile();
+            writeAvifViaCLI(sourceFile, mainAvifFile, mainW, mainH, 65);
+        }
 
-        // B) Responsive Varianten (z.B. jordan-400w.webp)
+        // B) Responsive Varianten (z.B. jordan-400w.webp & jordan-400w.avif)
         for (int targetW : RESPONSIVE_WIDTHS) {
             if (targetW < mainW) {
                 int targetH = (int) (mainH * ((double) targetW / mainW));
                 File respFile = currentWebpOutDir.resolve(baseName + "-" + targetW + "w.webp").toFile();
                 int quality = (targetW <= 400) ? 70 : 75;
                 writeWebpViaCLI(sourceFile, respFile, targetW, targetH, quality);
+
+                if (AVIFENC_PATH != null) {
+                    File respAvifFile = currentWebpOutDir.resolve(baseName + "-" + targetW + "w.avif").toFile();
+                    int avifQuality = (targetW <= 400) ? 60 : 65;
+                    writeAvifViaCLI(sourceFile, respAvifFile, targetW, targetH, avifQuality);
+                }
             }
         }
 
@@ -159,6 +169,8 @@ public class ImageConverter {
         tracker.updateHash(sourceFile);
         return true;
     }
+
+    private static final String AVIFENC_PATH = findAvifenc();
 
     private static void writeWebpViaCLI(Path sourceFile, File outputFile, int targetW, int targetH, int quality) throws IOException, InterruptedException {
         ProcessBuilder pb = new ProcessBuilder(
@@ -180,6 +192,37 @@ public class ImageConverter {
         }
     }
 
+    private static void writeAvifViaCLI(Path sourceFile, File outputFile, int targetW, int targetH, int quality) {
+        if (AVIFENC_PATH == null) return;
+        try {
+            File tempPng = File.createTempFile("avif_resize_", ".png");
+            try {
+                java.awt.image.BufferedImage orig = ImageIO.read(sourceFile.toFile());
+                if (orig != null) {
+                    java.awt.image.BufferedImage resized = new java.awt.image.BufferedImage(targetW, targetH, java.awt.image.BufferedImage.TYPE_INT_RGB);
+                    java.awt.Graphics2D g = resized.createGraphics();
+                    g.setRenderingHint(java.awt.RenderingHints.KEY_INTERPOLATION, java.awt.RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+                    g.drawImage(orig, 0, 0, targetW, targetH, null);
+                    g.dispose();
+                    ImageIO.write(resized, "png", tempPng);
+
+                    ProcessBuilder pb = new ProcessBuilder(
+                            AVIFENC_PATH,
+                            "-s", "6",
+                            "-q", String.valueOf(quality),
+                            "-j", "8",
+                            tempPng.getAbsolutePath(),
+                            outputFile.getAbsolutePath()
+                    );
+                    Process p = pb.start();
+                    p.waitFor();
+                }
+            } finally {
+                if (tempPng.exists()) tempPng.delete();
+            }
+        } catch (Exception ignored) {}
+    }
+
     private static String findCwebp() {
         String[] paths = {
             "cwebp",
@@ -196,6 +239,22 @@ public class ImageConverter {
             } catch (Exception ignored) {}
         }
         return "cwebp"; // Fallback to PATH
+    }
+
+    private static String findAvifenc() {
+        String[] paths = {
+            "avifenc",
+            "/opt/homebrew/bin/avifenc",
+            "/usr/local/bin/avifenc",
+            "/usr/bin/avifenc"
+        };
+        for (String path : paths) {
+            try {
+                Process p = new ProcessBuilder(path, "--version").start();
+                if (p.waitFor() == 0) return path;
+            } catch (Exception ignored) {}
+        }
+        return null;
     }
 
     private static String getBaseName(String fileName) {
