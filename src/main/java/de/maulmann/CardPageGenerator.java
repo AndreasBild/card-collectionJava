@@ -437,7 +437,8 @@ public class CardPageGenerator {
         data.put("cardId", c.stableId);
 
         String faqHtml = generateFaqHtml(c);
-        data.put("headHtml", SharedTemplates.getHead(browserTitle, metaDesc, ROOT, overviewPage, frontImgPath));
+        String frontImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + imageBaseName + "-front.webp";
+        data.put("headHtml", SharedTemplates.getHead(browserTitle, metaDesc, ROOT, c.fullRelativePath, frontImgUrl));
         data.put("jsonLd", generateJsonLd(c, metaDesc, h1Title, overviewPage, imageBaseName, faqHtml));
         data.put("topNavHtml", SharedTemplates.getTopNav(ROOT, "collection"));
 
@@ -801,7 +802,18 @@ public class CardPageGenerator {
         bcItems.add(Map.of("name", h1Title, "link", cardUrl));
         sb.append(SharedTemplates.getBreadcrumbJsonLd(bcItems)).append(",\n");
 
-        // 2. VisualArtwork
+        // 2. ItemPage Node for Search Engine Crawlers
+        sb.append("    {\n");
+        sb.append("      \"@type\": \"ItemPage\",\n");
+        sb.append("      \"@id\": \"").append(cardUrl).append("#webpage\",\n");
+        sb.append("      \"url\": \"").append(cardUrl).append("\",\n");
+        sb.append("      \"name\": \"").append(escapeJson(h1Title)).append("\",\n");
+        sb.append("      \"description\": \"").append(escapeJson(desc)).append("\",\n");
+        sb.append("      \"primaryImageOfPage\": { \"@type\": \"ImageObject\", \"url\": \"").append(frontImgUrl).append("\" },\n");
+        sb.append("      \"breadcrumb\": { \"@id\": \"").append(cardUrl).append("#breadcrumb\" }\n");
+        sb.append("    },\n");
+
+        // 3. VisualArtwork
         sb.append("    {\n");
         sb.append("      \"@type\": \"VisualArtwork\",\n");
         sb.append("      \"@id\": \"").append(cardUrl).append("#artwork\",\n");

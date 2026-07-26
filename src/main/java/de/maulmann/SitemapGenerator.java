@@ -221,10 +221,62 @@ public class SitemapGenerator {
             }
 
             generateHtmlSitemap(coreLinks, seasonGroups);
+            generateLlmsFullTxt(allPaths);
 
         } catch (Exception e) {
             System.err.println("Failed to generate Sitemap: " + e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    private static void generateLlmsFullTxt(List<Path> allPaths) {
+        System.out.println("-> Generating llms-full.txt for AI/LLM RAG Indexing...");
+        StringBuilder sb = new StringBuilder();
+        sb.append("# maulmann.de - Full Private Collection Knowledge Base for LLMs\n\n");
+        sb.append("> Full dataset index for the Juwan Howard Basketball Card Private Collection.\n");
+        sb.append("> Web: ").append(BASE_URL).append("/\n\n");
+
+        sb.append("## Core Overview Pages\n");
+        sb.append("- Home: ").append(BASE_URL).append("/\n");
+        sb.append("- Juwan Howard Collection: ").append(BASE_URL).append("/Juwan-Howard-Collection.html\n");
+        sb.append("- Baseball Collection: ").append(BASE_URL).append("/Baseball.html\n");
+        sb.append("- Flawless Collection: ").append(BASE_URL).append("/Flawless.html\n");
+        sb.append("- Panini Collection: ").append(BASE_URL).append("/Panini.html\n");
+        sb.append("- Wantlist: ").append(BASE_URL).append("/Wantlist.html\n\n");
+
+        sb.append("## Complete Card Index & Direct URLs\n\n");
+
+        Path outputDirPath = Paths.get(OUTPUT_DIR);
+        for (Path path : allPaths) {
+            String relativePath = outputDirPath.relativize(path).toString().replace("\\", "/");
+            if (!relativePath.startsWith("cards/")) continue;
+
+            String fileName = path.getFileName().toString().replace(".html", "");
+            String loc = BASE_URL + "/" + relativePath;
+
+            try {
+                Document doc = Jsoup.parse(path.toFile(), "UTF-8");
+                String title = doc.select("h1").text();
+                String desc = doc.select("meta[name=description]").attr("content");
+                if (title.isEmpty()) title = fileName;
+
+                sb.append("### ").append(title).append("\n");
+                sb.append("- URL: ").append(loc).append("\n");
+                if (!desc.isEmpty()) {
+                    sb.append("- Description: ").append(desc).append("\n");
+                }
+                sb.append("\n");
+            } catch (Exception ignored) {
+                sb.append("- ").append(fileName).append(": ").append(loc).append("\n");
+            }
+        }
+
+        File llmsFullFile = new File(OUTPUT_DIR + "/llms-full.txt");
+        try (FileWriter writer = new FileWriter(llmsFullFile)) {
+            writer.write(sb.toString());
+            System.out.println("-> llms-full.txt successfully generated!");
+        } catch (IOException e) {
+            System.err.println("Failed to write llms-full.txt: " + e.getMessage());
         }
     }
 
@@ -327,15 +379,23 @@ public class SitemapGenerator {
         robots.append("User-agent: Googlebot-Image\n");
         robots.append("Allow: /images/\n\n");
 
-        // AI Search Discovery Bots
+        // AI Search Discovery Bots & LLM Crawlers
         robots.append("User-agent: GPTBot\nAllow: /\n\n");
+        robots.append("User-agent: ChatGPT-User\nAllow: /\n\n");
         robots.append("User-agent: ClaudeBot\nAllow: /\n\n");
+        robots.append("User-agent: Claude-Web\nAllow: /\n\n");
         robots.append("User-agent: PerplexityBot\nAllow: /\n\n");
+        robots.append("User-agent: Google-Extended\nAllow: /\n\n");
         robots.append("User-agent: Applebot\nAllow: /\n\n");
+        robots.append("User-agent: Meta-ExternalAgent\nAllow: /\n\n");
+        robots.append("User-agent: Amazonbot\nAllow: /\n\n");
+        robots.append("User-agent: ByteDance\nAllow: /\n\n");
 
-        // Dual Sitemap Indexing (Both Raw XML and GZIP)
+        // Dual Sitemap Indexing & LLM Manifests
         robots.append("Sitemap: ").append(BASE_URL).append("/sitemap.xml\n");
         robots.append("Sitemap: ").append(BASE_URL).append("/sitemap.xml.gz\n");
+        robots.append("Sitemap: ").append(BASE_URL).append("/llms.txt\n");
+        robots.append("Sitemap: ").append(BASE_URL).append("/llms-full.txt\n");
 
         File robotsFile = new File(OUTPUT_DIR + "/robots.txt");
         try (FileWriter writer = new FileWriter(robotsFile)) {
