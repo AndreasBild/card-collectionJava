@@ -156,58 +156,61 @@ ${topNavHtml?no_esc}
         </table>
     </div>
     <#if (hobbyTrivia != "") || (techTrivia != "") || (playerHighlights != "") || (eraContext != "") || (cardBackText != "")>
-        <div class="context-engine">
-            <#if hobbyTrivia != "">
-                <div class="context-card">
-                    <h3>&#x1F3C6; Hobby Significance</h3>
-                    <p>${hobbyTrivia?no_esc}</p>
-                </div>
-            </#if>
-
-            <#if techTrivia != "">
-                <div class="context-card">
-                    <h3>&#x2692;&#xFE0F; Card Technology</h3>
-                    <p>${techTrivia?no_esc}</p>
-                </div>
-            </#if>
-
-            <#if playerHighlights != "">
-                <div class="context-card">
-                    <h3>&#x1F4C8; Player Performance & Team</h3>
-                    <p>${playerHighlights?no_esc}</p>
-                </div>
-            </#if>
-
-            <#if eraContext != "">
-                <div class="context-card">
-                    <h3>&#x1F3C0; NBA Era & Pop Culture</h3>
-                    <p>${eraContext?no_esc}</p>
-                </div>
-            </#if>
-
-            <#if cardBackText != "">
-                <div class="card-back-text-container full-width">
-                    <div class="card-back-text-header">
-                        <span>&#x1F4DC; Original Card Back Transcription</span>
-                        <span class="verified-badge">Verified via AI-OCR</span>
+        <section class="context-section">
+            <h2 class="context-section-title">&#x1F4CA; Collector Insights & Card Highlights</h2>
+            <div class="context-engine">
+                <#if hobbyTrivia != "">
+                    <div class="context-card">
+                        <h3>&#x1F3C6; Hobby Significance</h3>
+                        <p>${hobbyTrivia?no_esc}</p>
                     </div>
-                    <pre class="card-back-content">${cardBackText}</pre>
-                </div>
-            </#if>
+                </#if>
 
-            <#if externalLinks?? && (externalLinks?size > 0)>
-                <div class="context-card full-width external-references-card">
-                    <h3>&#x1F517; Collector Reference Profiles & History</h3>
-                    <div class="external-pills-wrapper">
-                        <#list externalLinks as link>
-                            <a href="${link.url}" target="_blank" rel="noopener" class="external-link-pill" title="Explore ${link.name}">
-                                <span class="pill-icon">${link.icon}</span> ${link.name} &nearr;
-                            </a>
-                        </#list>
+                <#if techTrivia != "">
+                    <div class="context-card">
+                        <h3>&#x2692;&#xFE0F; Card Technology</h3>
+                        <p>${techTrivia?no_esc}</p>
                     </div>
-                </div>
-            </#if>
-        </div>
+                </#if>
+
+                <#if playerHighlights != "">
+                    <div class="context-card">
+                        <h3>&#x1F4C8; Player Performance & Team</h3>
+                        <p>${playerHighlights?no_esc}</p>
+                    </div>
+                </#if>
+
+                <#if eraContext != "">
+                    <div class="context-card">
+                        <h3>&#x1F3C0; NBA Era & Pop Culture</h3>
+                        <p>${eraContext?no_esc}</p>
+                    </div>
+                </#if>
+
+                <#if cardBackText != "">
+                    <div class="card-back-text-container full-width">
+                        <div class="card-back-text-header">
+                            <span>&#x1F4DC; Original Card Back Transcription</span>
+                            <span class="verified-badge">Verified via AI-OCR</span>
+                        </div>
+                        <pre class="card-back-content">${cardBackText}</pre>
+                    </div>
+                </#if>
+
+                <#if externalLinks?? && (externalLinks?size > 0)>
+                    <div class="context-card full-width external-references-card">
+                        <h3>&#x1F517; Collector Reference Profiles & History</h3>
+                        <div class="external-pills-wrapper">
+                            <#list externalLinks as link>
+                                <a href="${link.url}" target="_blank" rel="noopener" class="external-link-pill" title="Explore ${link.name}">
+                                    <span class="pill-icon">${link.icon}</span> ${link.name} &nearr;
+                                </a>
+                            </#list>
+                        </div>
+                    </div>
+                </#if>
+            </div>
+        </section>
     </#if>
     <#if relatedCards?? && (relatedCards?size > 0)>
         <section class="related-cards-section">
@@ -215,7 +218,7 @@ ${topNavHtml?no_esc}
             <p class="related-cards-subtitle">Explore similar parallel variants, card technology, and basketball era highlights.</p>
             <div class="related-cards-grid">
                 <#list relatedCards as card>
-                    <a href="${card.url}" class="related-card-item" title="${card.title}">
+                    <a href="${card.url}" class="related-card-item" title="${card.title}" aria-label="${card.title}">
                         <div class="related-card-thumb-wrapper">
                             <picture>
                                 <#if card.thumbAvif??>
@@ -229,7 +232,7 @@ ${topNavHtml?no_esc}
                         </div>
                         <div class="related-card-info">
                             <span class="related-card-tag">${card.variant}</span>
-                            <h4 class="related-card-title">${card.title}</h4>
+                            <h3 class="related-card-title">${card.title}</h3>
                             <span class="related-card-meta">${card.season} &bull; ${card.brand}</span>
                         </div>
                     </a>

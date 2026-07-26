@@ -1295,26 +1295,31 @@ tr:hover {
     box-shadow: 0 4px 12px rgba(0, 86, 179, 0.3);
 }
 
+.context-section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 35px 0 15px;
+}
+
 .related-cards-section {
     margin: 40px 0;
     padding: 24px;
-    background: linear-gradient(135deg, rgba(30, 41, 59, 0.5), rgba(51, 65, 85, 0.35));
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: #0f172a;
+    border: 1px solid #334155;
     border-radius: 16px;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
 }
 
 .related-cards-section h2 {
     font-size: 1.5rem;
     margin-bottom: 6px;
     color: #ffffff;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .related-cards-subtitle {
     font-size: 0.92rem;
-    color: #cbd5e1;
+    color: #e2e8f0;
     margin-bottom: 20px;
 }
 
@@ -1327,27 +1332,26 @@ tr:hover {
 .related-card-item {
     display: flex;
     flex-direction: column;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: #1e293b;
+    border: 1px solid #334155;
     border-radius: 12px;
     overflow: hidden;
     text-decoration: none;
     color: inherit;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    backdrop-filter: blur(8px);
 }
 
 .related-card-item:hover {
     transform: translateY(-6px) scale(1.02);
-    background: rgba(255, 255, 255, 0.14);
-    border-color: rgba(96, 165, 250, 0.7);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35), 0 0 20px rgba(59, 130, 246, 0.3);
+    background: #334155;
+    border-color: #60a5fa;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
 }
 
 .related-card-thumb-wrapper {
     width: 100%;
     aspect-ratio: 5 / 7;
-    background: rgba(15, 23, 42, 0.35);
+    background: #020617;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1381,21 +1385,21 @@ tr:hover {
 .related-card-tag {
     align-self: flex-start;
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    padding: 2px 8px;
+    padding: 3px 8px;
     border-radius: 4px;
-    background: rgba(59, 130, 246, 0.2);
-    color: #60a5fa;
-    border: 1px solid rgba(96, 165, 250, 0.3);
+    background: #1e3a8a;
+    color: #bfdbfe;
+    border: 1px solid #3b82f6;
 }
 
 .related-card-title {
-    font-size: 0.92rem;
+    font-size: 0.95rem;
     font-weight: 600;
-    line-height: 1.3;
-    color: #f1f5f9;
+    line-height: 1.35;
+    color: #ffffff;
     margin: 4px 0 2px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -1404,8 +1408,8 @@ tr:hover {
 }
 
 .related-card-meta {
-    font-size: 0.8rem;
-    color: #94a3b8;
+    font-size: 0.82rem;
+    color: #cbd5e1;
 }
 
 @media (max-width: 640px) {
