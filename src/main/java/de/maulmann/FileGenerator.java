@@ -81,56 +81,118 @@ public class FileGenerator {
                     "</script>";
             data.put("jsonLd", jsonLd);
 
-            File contentDir = new File(pathSource);
-
-            // NEU: Lässt alle Jahreszahlen ZUSÄTZLICH zur College.html durch!
-            File[] seasonFiles = contentDir.listFiles((dir, name) -> name.endsWith(".html") && (name.matches(".*\\d.*") || name.equalsIgnoreCase("College.html")));
-
+            List<CardJson> jsonCards = loadCardsFromJson();
             List<Map<String, String>> seasons = new ArrayList<>();
-            int cumulativeTotal = 0; // Der laufende Zähler für die Gesamtanzahl!
+            int cumulativeTotal = 0;
 
-            if (seasonFiles != null) {
+            if (!jsonCards.isEmpty()) {
+                Map<String, List<CardJson>> grouped = new LinkedHashMap<>();
 
-                // NEU: Sortiert chronologisch, aber zwingt "College.html" an die allererste Position
-                Arrays.sort(seasonFiles, (f1, f2) -> {
-                    if (f1.getName().equalsIgnoreCase("College.html")) return -1;
-                    if (f2.getName().equalsIgnoreCase("College.html")) return 1;
-                    return f1.getName().compareTo(f2.getName());
-                });
+                List<String> seasonKeys = jsonCards.stream()
+                        .map(c -> c.season != null ? c.season : "Unknown")
+                        .distinct()
+                        .sorted((s1, s2) -> {
+                            if (s1.equalsIgnoreCase("College")) return -1;
+                            if (s2.equalsIgnoreCase("College")) return 1;
+                            return s1.compareTo(s2);
+                        })
+                        .toList();
 
-                for (File file : seasonFiles) {
+                for (String sk : seasonKeys) {
+                    grouped.put(sk, new ArrayList<>());
+                }
+                for (CardJson c : jsonCards) {
+                    String sk = c.season != null ? c.season : "Unknown";
+                    grouped.computeIfAbsent(sk, k -> new ArrayList<>()).add(c);
+                }
+
+                for (Map.Entry<String, List<CardJson>> entry : grouped.entrySet()) {
+                    String seasonKey = entry.getKey();
+                    List<CardJson> seasonCardList = entry.getValue();
+
                     Map<String, String> seasonMap = new HashMap<>();
-                    String rawName = file.getName().replace(".html", "");
-                    seasonMap.put("id", rawName.toLowerCase());
+                    seasonMap.put("id", seasonKey.toLowerCase());
+                    seasonMap.put("name", seasonKey.equalsIgnoreCase("College") ? "College" : "Season " + seasonKey);
 
-                    if (rawName.equalsIgnoreCase("College")) {
-                        seasonMap.put("name", "College");
-                    } else {
-                        seasonMap.put("name", "Season " + rawName);
+                    StringBuilder htmlBuilder = new StringBuilder();
+                    htmlBuilder.append("<table><tr>")
+                            .append("<th>Player</th><th>Team</th><th>Sport</th><th>Season</th>")
+                            .append("<th>Company</th><th>Brand</th><th>Theme</th><th>Variant</th>")
+                            .append("<th>Number</th><th>Serial</th><th>Print Run</th>")
+                            .append("<th>Rookie</th><th>Game Used</th><th>Autograph</th><th>Grade</th>")
+                            .append("</tr>");
+
+                    for (CardJson c : seasonCardList) {
+                        htmlBuilder.append("<tr>")
+                                .append("<td>").append(escapeHtml(c.player)).append("</td>")
+                                .append("<td>").append(escapeHtml(c.team)).append("</td>")
+                                .append("<td>Basketball</td>")
+                                .append("<td>").append(escapeHtml(c.season)).append("</td>")
+                                .append("<td>").append(escapeHtml(c.company)).append("</td>")
+                                .append("<td>").append(escapeHtml(c.brand)).append("</td>")
+                                .append("<td>").append(escapeHtml(c.theme)).append("</td>")
+                                .append("<td>").append(escapeHtml(c.variant)).append("</td>")
+                                .append("<td>").append(escapeHtml(c.cardNumber)).append("</td>")
+                                .append("<td>").append(escapeHtml(c.serialNumber != null ? c.serialNumber : "0")).append("</td>")
+                                .append("<td>").append(c.printRun != null ? c.printRun : 0).append("</td>")
+                                .append("<td>").append(c.isRookie ? "Yes" : "No").append("</td>")
+                                .append("<td>").append(c.isPatch ? "Yes" : "No").append("</td>")
+                                .append("<td>").append(c.isAutograph ? "Yes" : "No").append("</td>")
+                                .append("<td>").append(escapeHtml(c.grade != null ? c.grade : "No")).append("</td>")
+                                .append("</tr>");
                     }
+                    htmlBuilder.append("</table>");
 
-                    String rawContent = Files.readString(file.toPath(), StandardCharsets.UTF_8);
-
-                    // NEU: Analysiert das HTML, isoliert NUR die Tabelle und zählt die Reihen
-                    Document doc = Jsoup.parse(rawContent, "UTF-8");
-                    Element table = doc.selectFirst("table");
-
-                    int seasonCardCount = 0;
-                    if (table != null) {
-                        // Alle Reihen (tr) zählen minus 1 (für die Kopfzeile)
-                        seasonCardCount = Math.max(0, table.select("tr").size() - 1);
-                        seasonMap.put("content", cleanOldPlaceholders(table.outerHtml()));
-                    } else {
-                        seasonMap.put("content", "<p>No cards found.</p>");
-                    }
-
+                    int seasonCardCount = seasonCardList.size();
                     cumulativeTotal += seasonCardCount;
 
-                    // Schreibt die errechneten Werte in die Map für FreeMarker
+                    seasonMap.put("content", htmlBuilder.toString());
                     seasonMap.put("seasonCount", String.valueOf(seasonCardCount));
                     seasonMap.put("cumulativeTotal", String.valueOf(cumulativeTotal));
 
                     seasons.add(seasonMap);
+                }
+            } else {
+                File contentDir = new File(pathSource);
+                File[] seasonFiles = contentDir.listFiles((dir, name) -> name.endsWith(".html") && (name.matches(".*\\d.*") || name.equalsIgnoreCase("College.html")));
+
+                if (seasonFiles != null) {
+                    Arrays.sort(seasonFiles, (f1, f2) -> {
+                        if (f1.getName().equalsIgnoreCase("College.html")) return -1;
+                        if (f2.getName().equalsIgnoreCase("College.html")) return 1;
+                        return f1.getName().compareTo(f2.getName());
+                    });
+
+                    for (File file : seasonFiles) {
+                        Map<String, String> seasonMap = new HashMap<>();
+                        String rawName = file.getName().replace(".html", "");
+                        seasonMap.put("id", rawName.toLowerCase());
+
+                        if (rawName.equalsIgnoreCase("College")) {
+                            seasonMap.put("name", "College");
+                        } else {
+                            seasonMap.put("name", "Season " + rawName);
+                        }
+
+                        String rawContent = Files.readString(file.toPath(), StandardCharsets.UTF_8);
+                        Document doc = Jsoup.parse(rawContent, "UTF-8");
+                        Element table = doc.selectFirst("table");
+
+                        int seasonCardCount = 0;
+                        if (table != null) {
+                            seasonCardCount = Math.max(0, table.select("tr").size() - 1);
+                            seasonMap.put("content", cleanOldPlaceholders(table.outerHtml()));
+                        } else {
+                            seasonMap.put("content", "<p>No cards found.</p>");
+                        }
+
+                        cumulativeTotal += seasonCardCount;
+
+                        seasonMap.put("seasonCount", String.valueOf(seasonCardCount));
+                        seasonMap.put("cumulativeTotal", String.valueOf(cumulativeTotal));
+
+                        seasons.add(seasonMap);
+                    }
                 }
             }
             data.put("seasons", seasons);
@@ -460,6 +522,27 @@ public class FileGenerator {
         }
 
         Files.writeString(out.toPath(), finalHtml, StandardCharsets.UTF_8);
+    }
+
+    public static List<CardJson> loadCardsFromJson() {
+        File jsonFile = new File(pathSource + "json/cards.json");
+        if (!jsonFile.exists()) return Collections.emptyList();
+        try {
+            com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+            return mapper.readValue(jsonFile, mapper.getTypeFactory().constructCollectionType(List.class, CardJson.class));
+        } catch (Exception e) {
+            System.err.println("Failed to read cards.json: " + e.getMessage());
+            return Collections.emptyList();
+        }
+    }
+
+    private static String escapeHtml(String input) {
+        if (input == null) return "";
+        return input.replace("&", "&amp;")
+                    .replace("<", "&lt;")
+                    .replace(">", "&gt;")
+                    .replace("\"", "&quot;")
+                    .replace("'", "&#39;");
     }
 
     public static void main(String[] args) {

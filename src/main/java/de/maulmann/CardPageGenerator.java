@@ -74,6 +74,39 @@ public class CardPageGenerator {
             calculatePaths(uniqueId);
         }
 
+        public CardData(CardJson c, String uniqueId) {
+            this.attributes = new HashMap<>();
+            if (c.player != null) this.attributes.put("Player", c.player);
+            if (c.season != null) this.attributes.put("Season", c.season);
+            if (c.team != null) this.attributes.put("Team", c.team);
+            if (c.company != null) this.attributes.put("Company", c.company);
+            if (c.brand != null) this.attributes.put("Brand", c.brand);
+            if (c.theme != null) this.attributes.put("Theme", c.theme);
+            if (c.variant != null) this.attributes.put("Variant", c.variant);
+            if (c.cardNumber != null) this.attributes.put("Number", c.cardNumber);
+            if (c.serialNumber != null) this.attributes.put("Serial", c.serialNumber);
+            if (c.printRun != null) this.attributes.put("Print Run", String.valueOf(c.printRun));
+            if (c.gradingCompany != null) this.attributes.put("Grading Co.", c.gradingCompany);
+            if (c.grade != null) this.attributes.put("Grade", c.grade);
+            if (c.notes != null) this.attributes.put("Notes", c.notes);
+            this.attributes.put("Auto", c.isAutograph ? "Yes" : "No");
+            this.attributes.put("Mem / Patch", c.isPatch ? "Yes" : "No");
+            this.attributes.put("Rookie", c.isRookie ? "Yes" : "No");
+
+            String calculatedId = generateStableId(this.attributes);
+            this.stableId = (uniqueId != null && !uniqueId.isEmpty()) ? uniqueId : calculatedId;
+
+            String currentTeam = this.attributes.get("Team");
+            if (!isValid(currentTeam)) {
+                String player = this.attributes.get("Player");
+                if (player != null && player.startsWith("Juwan Howard")) {
+                    String calculatedTeam = getTeamBySeason(this.attributes.get("Season"));
+                    this.attributes.put("Team", calculatedTeam);
+                }
+            }
+            calculatePaths(this.stableId);
+        }
+
         private void calculatePaths(String uniqueId) {
             List<String> filenameTokens = new ArrayList<>();
             String pStr = attributes.get("Player");
@@ -138,7 +171,17 @@ public class CardPageGenerator {
             }
         }
 
-        processCollection("output/Juwan-Howard-Collection.html", "output/Juwan-Howard-Collection.html", "Juwan-Howard-Collection.html");
+        List<CardJson> jsonCards = FileGenerator.loadCardsFromJson();
+        if (!jsonCards.isEmpty()) {
+            log.info("Generating Juwan Howard card pages from content/json/cards.json ({} cards)...", jsonCards.size());
+            List<CardData> juwanCards = new ArrayList<>();
+            for (CardJson c : jsonCards) {
+                juwanCards.add(new CardData(c, null));
+            }
+            generateSubPagesMultithreaded(juwanCards, "Juwan-Howard-Collection.html");
+        } else {
+            processCollection("output/Juwan-Howard-Collection.html", "output/Juwan-Howard-Collection.html", "Juwan-Howard-Collection.html");
+        }
 
         String[] otherFiles = {
                 "output/Baseball.html",
