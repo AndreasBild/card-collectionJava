@@ -89,9 +89,21 @@ public class CardPageGenerator {
             if (c.gradingCompany != null) this.attributes.put("Grading Co.", c.gradingCompany);
             if (c.grade != null) this.attributes.put("Grade", c.grade);
             if (c.notes != null) this.attributes.put("Notes", c.notes);
-            this.attributes.put("Auto", c.isAutograph ? "Yes" : "No");
-            this.attributes.put("Mem / Patch", c.isPatch ? "Yes" : "No");
-            this.attributes.put("Rookie", c.isRookie ? "Yes" : "No");
+            String autoVal = c.isAutograph ? "Yes" : "No";
+            this.attributes.put("Autograph", autoVal);
+            this.attributes.put("Auto", autoVal);
+            this.attributes.put("isAutograph", autoVal);
+
+            String memVal = c.isPatch ? "Yes" : "No";
+            this.attributes.put("Memorabilia", memVal);
+            this.attributes.put("Game Used", memVal);
+            this.attributes.put("Mem / Patch", memVal);
+            this.attributes.put("isPatch", memVal);
+
+            String rookieVal = c.isRookie ? "Yes" : "No";
+            this.attributes.put("Rookie", rookieVal);
+            this.attributes.put("Rookie Card", rookieVal);
+            this.attributes.put("isRookie", rookieVal);
 
             String calculatedId = generateStableId(this.attributes);
             this.stableId = (uniqueId != null && !uniqueId.isEmpty()) ? uniqueId : calculatedId;
@@ -142,7 +154,34 @@ public class CardPageGenerator {
         }
 
         public String get(String key) {
-            return attributes.getOrDefault(key, "").trim();
+            if (key == null) return "";
+            String val = attributes.get(key);
+            if (val != null) return val.trim();
+
+            String lower = key.toLowerCase();
+            for (Map.Entry<String, String> entry : attributes.entrySet()) {
+                if (entry.getKey().toLowerCase().equals(lower)) {
+                    return entry.getValue().trim();
+                }
+            }
+
+            if (lower.equals("autograph") || lower.equals("auto") || lower.equals("isautograph")) {
+                String a = attributes.get("Autograph");
+                if (a == null) a = attributes.get("Auto");
+                return a != null ? a.trim() : "";
+            }
+            if (lower.equals("memorabilia") || lower.equals("game used") || lower.equals("mem / patch") || lower.equals("ispatch")) {
+                String m = attributes.get("Memorabilia");
+                if (m == null) m = attributes.get("Game Used");
+                if (m == null) m = attributes.get("Mem / Patch");
+                return m != null ? m.trim() : "";
+            }
+            if (lower.equals("rookie") || lower.equals("rookie card") || lower.equals("isrookie")) {
+                String r = attributes.get("Rookie");
+                if (r == null) r = attributes.get("Rookie Card");
+                return r != null ? r.trim() : "";
+            }
+            return "";
         }
 
         public boolean has(String key) {
@@ -495,9 +534,9 @@ public class CardPageGenerator {
         data.put("theme", isValid(c.get("Theme")) ? c.get("Theme") : "-");
         data.put("variant", isValid(c.get("Variant")) ? c.get("Variant") : "-");
         data.put("number", isValid(c.get("Number")) ? c.get("Number") : "-");
-        data.put("rookie", isValid(c.get("Rookie")) ? c.get("Rookie") : "-");
-        data.put("memorabilia", isValid(c.get("Game Used")) ? c.get("Game Used") : "-");
-        data.put("autograph", isValid(c.get("Autograph")) ? c.get("Autograph") : "-");
+        data.put("rookie", c.has("Rookie") ? c.get("Rookie") : "-");
+        data.put("memorabilia", c.has("Memorabilia") ? c.get("Memorabilia") : "-");
+        data.put("autograph", c.has("Autograph") ? c.get("Autograph") : "-");
 
         String combined = c.get("Serial/Print Run");
         String serialDisplay = "-";

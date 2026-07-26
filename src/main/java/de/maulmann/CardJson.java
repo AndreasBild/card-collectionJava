@@ -81,6 +81,15 @@ public class CardJson {
             case "collection" -> {
                 return collection;
             }
+            case "autograph", "auto", "isautograph" -> {
+                return isAutograph ? "Yes" : "No";
+            }
+            case "memorabilia", "game used", "patch", "ispatch", "mem / patch" -> {
+                return isPatch ? "Yes" : "No";
+            }
+            case "rookie", "rookie card", "isrookie" -> {
+                return isRookie ? "Yes" : "No";
+            }
             default -> {
                 return null;
             }
