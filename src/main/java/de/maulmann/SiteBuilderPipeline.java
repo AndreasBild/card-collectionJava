@@ -147,13 +147,14 @@ public class SiteBuilderPipeline {
         AtomicInteger skipCount = new AtomicInteger(0);
         final int BROTLI_FAST_QUALITY = 9;
 
+        List<CompletableFuture<Void>> futures = new ArrayList<>();
         try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
             try (Stream<Path> paths = Files.walk(outputDir)) {
                 paths.filter(Files::isRegularFile).forEach(file -> {
                     String fileName = file.getFileName().toString().toLowerCase();
                     String s3Key = outputDir.relativize(file).toString().replace("\\", "/");
 
-                    if (fileName.equals("sitemap.xml") || fileName.equals("sitemap.xml.gz") || fileName.equals("sync-hashes.properties")) {
+                    if (fileName.equals("sitemap.xml") || fileName.equals("sitemap.xml.gz") || fileName.endsWith(".properties")) {
                         return;
                     }
 
@@ -164,7 +165,7 @@ public class SiteBuilderPipeline {
                         return;
                     }
 
-                    executor.submit(() -> {
+                    futures.add(CompletableFuture.runAsync(() -> {
                         try {
                             if (fileName.endsWith(".html")) {
                                 byte[] brData = BrotliCompressor.compressBytes(HTMLMinifier.minifyHTMLToBytes(file.toFile()), BROTLI_FAST_QUALITY);
@@ -191,9 +192,10 @@ public class SiteBuilderPipeline {
                         } catch (Exception e) {
                             System.err.println("Failed to process " + fileName + ": " + e.getMessage());
                         }
-                    });
+                    }, executor));
                 });
             }
+            CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
         }
 
         System.out.println("-> Uploaded " + uploadCount.get() + " web files. (Skipped " + skipCount.get() + " unmodified files).");
@@ -211,6 +213,7 @@ public class SiteBuilderPipeline {
         AtomicInteger uploadCount = new AtomicInteger(0);
         AtomicInteger skipCount = new AtomicInteger(0);
 
+        List<CompletableFuture<Void>> futures = new ArrayList<>();
         try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
             try (Stream<Path> paths = Files.walk(imagesDir)) {
                 paths.filter(Files::isRegularFile).forEach(file -> {
@@ -226,22 +229,22 @@ public class SiteBuilderPipeline {
                         }
 
                         String s3Key = outputDir.relativize(file).toString().replace("\\", "/");
-                        executor.submit(() -> {
+                        futures.add(CompletableFuture.runAsync(() -> {
                             try {
                                 uploadRawFile(s3Client, file, s3Key, contentType, CACHE_LONG, uploadCount, tracker, currentHash);
                             } catch (Exception e) {
                                 System.err.println("Failed to upload image " + fileName + ": " + e.getMessage());
                             }
-                        });
+                        }, executor));
                     }
                 });
             }
+            CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
         }
 
         System.out.println("-> Synced " + uploadCount.get() + " images. (Skipped " + skipCount.get() + " unmodified images).");
     }
 
-    // ... (cleanOrphanedS3Files bleibt absolut unverändert) ...
     private static void cleanOrphanedS3Files(S3AsyncClient s3Client) {
         try {
             Path localOutputDir = Paths.get(OUTPUT_DIR);
@@ -267,11 +270,13 @@ public class SiteBuilderPipeline {
                     totalS3FilesScanned++;
                     String s3Key = s3Object.key();
 
-                    if (s3Key.startsWith("cards/") || s3Key.startsWith("images/")) {
-                        Path expectedLocalFile = localOutputDir.resolve(s3Key);
-                        if (!Files.exists(expectedLocalFile)) {
-                            objectsToDelete.add(ObjectIdentifier.builder().key(s3Key).build());
-                        }
+                    if (s3Key.endsWith("-hashes.properties") || s3Key.endsWith("-timestamps.properties")) {
+                        continue;
+                    }
+
+                    Path expectedLocalFile = localOutputDir.resolve(s3Key);
+                    if (!Files.exists(expectedLocalFile)) {
+                        objectsToDelete.add(ObjectIdentifier.builder().key(s3Key).build());
                     }
                 }
 
