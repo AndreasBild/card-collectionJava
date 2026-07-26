@@ -41,12 +41,6 @@ ${topNavHtml?no_esc}
     <div class="card-images-container">
         <div class="card-image-wrapper">
             <picture>
-                <source type="image/avif"
-                        srcset="${frontImgPath?replace('.webp', '-400w.avif')} 400w,
-                                ${frontImgPath?replace('.webp', '-600w.avif')} 600w,
-                                ${frontImgPath?replace('.webp', '-900w.avif')} 900w,
-                                ${frontImgPath?replace('.webp', '.avif')} 1200w"
-                        sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, (max-width: 1300px) 45vw, 600px">
                 <source type="image/webp"
                         srcset="${frontImgPath?replace('.webp', '-400w.webp')} 400w,
                                 ${frontImgPath?replace('.webp', '-600w.webp')} 600w,
@@ -68,12 +62,6 @@ ${topNavHtml?no_esc}
         </div>
         <div class="card-image-wrapper">
             <picture>
-                <source type="image/avif"
-                        srcset="${backImgPath?replace('.webp', '-400w.avif')} 400w,
-                                ${backImgPath?replace('.webp', '-600w.avif')} 600w,
-                                ${backImgPath?replace('.webp', '-900w.avif')} 900w,
-                                ${backImgPath?replace('.webp', '.avif')} 1200w"
-                        sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, (max-width: 1300px) 45vw, 600px">
                 <source type="image/webp"
                         srcset="${backImgPath?replace('.webp', '-400w.webp')} 400w,
                                 ${backImgPath?replace('.webp', '-600w.webp')} 600w,
