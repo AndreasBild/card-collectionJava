@@ -123,15 +123,21 @@ public class FileGenerator {
                             .append("</tr>");
 
                     for (CardJson c : seasonCardList) {
+                        CardPageGenerator.CardData cardData = new CardPageGenerator.CardData(c, null);
+                        String detailPath = cardData.fullRelativePath;
+                        String playerTitle = "View " + escapeHtml(c.player) + " " + escapeHtml(c.season) + " " + escapeHtml(c.brand) + " #" + escapeHtml(c.cardNumber != null ? c.cardNumber : "") + " card detail page";
+                        String variantText = escapeHtml(c.variant != null ? c.variant : "Base");
+                        String variantTitle = "View details for " + escapeHtml(c.player) + " " + escapeHtml(c.season) + " " + escapeHtml(c.brand) + " " + variantText + " parallel";
+
                         htmlBuilder.append("<tr>")
-                                .append("<td>").append(escapeHtml(c.player)).append("</td>")
+                                .append("<td><a href=\"").append(detailPath).append("\" class=\"table-button\" title=\"").append(playerTitle).append("\" itemprop=\"url\"><span itemprop=\"name\">").append(escapeHtml(c.player)).append("</span></a></td>")
                                 .append("<td>").append(escapeHtml(c.team)).append("</td>")
                                 .append("<td>Basketball</td>")
                                 .append("<td>").append(escapeHtml(c.season)).append("</td>")
                                 .append("<td>").append(escapeHtml(c.company)).append("</td>")
                                 .append("<td>").append(escapeHtml(c.brand)).append("</td>")
                                 .append("<td>").append(escapeHtml(c.theme)).append("</td>")
-                                .append("<td>").append(escapeHtml(c.variant)).append("</td>")
+                                .append("<td><a href=\"").append(detailPath).append("\" title=\"").append(variantTitle).append("\">").append(variantText).append("</a></td>")
                                 .append("<td>").append(escapeHtml(c.cardNumber)).append("</td>")
                                 .append("<td>").append(escapeHtml(c.serialNumber != null ? c.serialNumber : "0")).append("</td>")
                                 .append("<td>").append(c.printRun != null ? c.printRun : 0).append("</td>")
