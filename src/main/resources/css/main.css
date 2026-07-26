@@ -1288,21 +1288,23 @@ tr:hover {
 .related-cards-section {
     margin: 40px 0;
     padding: 24px;
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.5), rgba(51, 65, 85, 0.35));
+    border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 16px;
     backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
 .related-cards-section h2 {
     font-size: 1.5rem;
     margin-bottom: 6px;
-    color: #f8fafc;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .related-cards-subtitle {
     font-size: 0.92rem;
-    color: #94a3b8;
+    color: #cbd5e1;
     margin-bottom: 20px;
 }
 
@@ -1315,25 +1317,27 @@ tr:hover {
 .related-card-item {
     display: flex;
     flex-direction: column;
-    background: rgba(30, 41, 59, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 12px;
     overflow: hidden;
     text-decoration: none;
     color: inherit;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(8px);
 }
 
 .related-card-item:hover {
     transform: translateY(-6px) scale(1.02);
-    border-color: rgba(96, 165, 250, 0.5);
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4), 0 0 15px rgba(59, 130, 246, 0.25);
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(96, 165, 250, 0.7);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35), 0 0 20px rgba(59, 130, 246, 0.3);
 }
 
 .related-card-thumb-wrapper {
     width: 100%;
     aspect-ratio: 5 / 7;
-    background: #0f172a;
+    background: rgba(15, 23, 42, 0.35);
     display: flex;
     align-items: center;
     justify-content: center;
