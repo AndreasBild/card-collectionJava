@@ -210,7 +210,7 @@ public class SitemapGenerator {
             xml.append("</urlset>");
 
             File sitemapFile = new File(OUTPUT_DIR + "/sitemap.xml");
-            try (FileWriter writer = new FileWriter(sitemapFile)) {
+            try (FileWriter writer = new FileWriter(sitemapFile, StandardCharsets.UTF_8)) {
                 writer.write(xml.toString());
             }
 
@@ -272,7 +272,7 @@ public class SitemapGenerator {
         }
 
         File llmsFullFile = new File(OUTPUT_DIR + "/llms-full.txt");
-        try (FileWriter writer = new FileWriter(llmsFullFile)) {
+        try (FileWriter writer = new FileWriter(llmsFullFile, StandardCharsets.UTF_8)) {
             writer.write(sb.toString());
             System.out.println("-> llms-full.txt successfully generated!");
         } catch (IOException e) {
@@ -398,7 +398,7 @@ public class SitemapGenerator {
         robots.append("Sitemap: ").append(BASE_URL).append("/llms-full.txt\n");
 
         File robotsFile = new File(OUTPUT_DIR + "/robots.txt");
-        try (FileWriter writer = new FileWriter(robotsFile)) {
+        try (FileWriter writer = new FileWriter(robotsFile, StandardCharsets.UTF_8)) {
             writer.write(robots.toString());
         }
     }

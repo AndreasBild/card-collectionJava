@@ -1,11 +1,8 @@
 package de.maulmann;
 
-import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -13,10 +10,10 @@ import org.jsoup.nodes.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -81,7 +78,7 @@ public class FirestoreRatingInjector {
     private static void loadCache() {
         File file = new File(CACHE_FILE);
         if (file.exists()) {
-            try (FileInputStream in = new FileInputStream(file)) {
+            try (InputStream in = Files.newInputStream(file.toPath())) {
                 ratingCache.load(in);
             } catch (IOException e) {
                 log.warn("Could not load rating cache: {}", e.getMessage());
@@ -95,7 +92,7 @@ public class FirestoreRatingInjector {
         if (parent != null && !parent.exists()) {
             parent.mkdirs();
         }
-        try (java.io.FileOutputStream out = new java.io.FileOutputStream(file)) {
+        try (OutputStream out = Files.newOutputStream(file.toPath())) {
             ratingCache.store(out, "Firestore Rating Injection Cache");
         } catch (IOException e) {
             log.warn("Could not save rating cache: {}", e.getMessage());

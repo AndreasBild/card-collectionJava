@@ -101,8 +101,9 @@ public class FirebaseConfigManager {
         } else {
             File serviceAccountFile = new File(DEFAULT_SERVICE_ACCOUNT_PATH);
             if (serviceAccountFile.exists()) {
-                optionsBuilder.setCredentials(GoogleCredentials.fromStream(
-                        new FileInputStream(serviceAccountFile)));
+                try (InputStream is = new FileInputStream(serviceAccountFile)) {
+                    optionsBuilder.setCredentials(GoogleCredentials.fromStream(is));
+                }
             } else {
                 throw new IllegalStateException("Firebase credentials not found. Set FIREBASE_SERVICE_ACCOUNT_JSON or ensure the service account file exists at " + DEFAULT_SERVICE_ACCOUNT_PATH);
             }
