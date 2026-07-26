@@ -499,6 +499,17 @@ tr:hover {
     box-shadow: 0 4px 15px rgb(0 0 0 / 15%);
 }
 
+.card-3d-interactive {
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.card-3d-interactive:hover {
+    transform: translateY(-4px) rotateX(2deg) rotateY(-2deg) scale(1.015);
+    box-shadow: 0 12px 30px rgb(0 0 0 / 25%);
+}
+
 .img-caption {
     margin-top: 10px;
     font-size: 0.85em;

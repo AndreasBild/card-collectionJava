@@ -131,19 +131,19 @@ ${topNavHtml?no_esc}
                             if (searchVal === '') {
                                 isMatch = true;
                             } else {
-                                let searchTriggers = [searchVal];
-
-                                if (searchVal.includes('1/1') || searchVal.includes('masterpiece') || searchVal.includes('1 of 1')) {
-                                    searchTriggers = ['1/1', '1 / 1', '1 of 1', 'masterpiece'];
-                                } else if (searchVal.includes('pmg') || searchVal.includes('precious metal gems')) {
-                                    searchTriggers = ['pmg', 'precious metal gems'];
-                                } else if (searchVal.includes('auto') || searchVal.includes('autograph')) {
-                                    searchTriggers = ['auto', 'sign'];
-                                } else if (searchVal.includes('game used') || searchVal.includes('patch')) {
-                                    searchTriggers = ['game used', 'patch', 'jersey'];
-                                }
-
-                                isMatch = searchTriggers.some(trigger => text.includes(trigger));
+                                const terms = searchVal.split(/\s+/).filter(t => t.length > 0);
+                                isMatch = terms.every(term => {
+                                    if (term === '1/1' || term === 'masterpiece') {
+                                        return text.includes('1/1') || text.includes('1 / 1') || text.includes('masterpiece');
+                                    } else if (term === 'pmg') {
+                                        return text.includes('pmg') || text.includes('precious metal gems');
+                                    } else if (term === 'auto' || term === 'autograph') {
+                                        return text.includes('auto') || text.includes('sign');
+                                    } else if (term === 'patch' || term === 'jersey') {
+                                        return text.includes('patch') || text.includes('jersey') || text.includes('game used');
+                                    }
+                                    return text.includes(term);
+                                });
                             }
                         }
 
