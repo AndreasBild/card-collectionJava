@@ -494,6 +494,9 @@ public class CardPageGenerator {
         data.put("eraContext", getNbaEraContext(c.get("Season"), c.get("Player")));
         data.put("cardBackText", "");
 
+        data.put("relatedCards", findRelatedCards(c, allCards, 4));
+        data.put("externalLinks", generateExternalLinks(c));
+
         data.put("faqHtml", faqHtml);
         data.put("firebaseConfig", firebaseConfigManager.getConfig());
 
@@ -539,6 +542,76 @@ public class CardPageGenerator {
         context.put("Season", season);
         context.put("Player", player);
         return triviaManager.getTrivia("eraContext", context);
+    }
+
+    private static List<Map<String, String>> findRelatedCards(CardData current, List<CardData> allCards, int limit) {
+        if (allCards == null || allCards.size() <= 1) return Collections.emptyList();
+
+        class ScoredCard {
+            CardData card;
+            int score;
+            ScoredCard(CardData card, int score) { this.card = card; this.score = score; }
+        }
+
+        List<ScoredCard> scored = new ArrayList<>();
+        String curTheme = current.get("Theme").toLowerCase();
+        String curVariant = current.get("Variant").toLowerCase();
+        String curBrand = current.get("Brand").toLowerCase();
+        String curCompany = current.get("Company").toLowerCase();
+        String curSeason = current.get("Season").toLowerCase();
+
+        for (CardData other : allCards) {
+            if (other.stableId != null && other.stableId.equals(current.stableId)) continue;
+
+            int score = 0;
+            String oTheme = other.get("Theme").toLowerCase();
+            String oVariant = other.get("Variant").toLowerCase();
+            String oBrand = other.get("Brand").toLowerCase();
+            String oCompany = other.get("Company").toLowerCase();
+            String oSeason = other.get("Season").toLowerCase();
+
+            if (!curTheme.isEmpty() && !curTheme.equals("-") && oTheme.equals(curTheme)) score += 4;
+            if (!curVariant.isEmpty() && !curVariant.equals("-") && oVariant.equals(curVariant)) score += 4;
+            if (!curBrand.isEmpty() && !curBrand.equals("-") && oBrand.equals(curBrand)) score += 3;
+            if (!curSeason.isEmpty() && !curSeason.equals("-") && oSeason.equals(curSeason)) score += 2;
+            if (!curCompany.isEmpty() && !curCompany.equals("-") && oCompany.equals(curCompany)) score += 1;
+
+            if (score > 0) {
+                scored.add(new ScoredCard(other, score));
+            }
+        }
+
+        scored.sort((a, b) -> Integer.compare(b.score, a.score));
+
+        List<Map<String, String>> result = new ArrayList<>();
+        for (int i = 0; i < Math.min(limit, scored.size()); i++) {
+            CardData other = scored.get(i).card;
+            Map<String, String> m = new HashMap<>();
+            m.put("title", generateH1(other));
+            m.put("url", "../" + other.seasonFolder + "/" + other.filename);
+
+            String imageBaseName = other.filenameBase.substring(0, other.filenameBase.lastIndexOf("-"));
+            m.put("thumb", RELATIVE_IMAGES_PATH + "/" + other.seasonFolder + "/" + imageBaseName + "-front.webp");
+            m.put("season", isValid(other.get("Season")) ? other.get("Season") : "NBA");
+            m.put("variant", isValid(other.get("Variant")) ? other.get("Variant") : (isValid(other.get("Theme")) ? other.get("Theme") : "Base Card"));
+            m.put("brand", isValid(other.get("Brand")) ? other.get("Brand") : other.get("Company"));
+            result.add(m);
+        }
+        return result;
+    }
+
+    private static List<Map<String, String>> generateExternalLinks(CardData c) {
+        List<Map<String, String>> links = new ArrayList<>();
+        String p = getPrimaryPlayer(c);
+        if (p.equalsIgnoreCase("Juwan Howard")) {
+            links.add(Map.of("name", "Basketball-Reference Stats", "url", "https://www.basketball-reference.com/players/h/howarju01.html", "icon", "📊"));
+            links.add(Map.of("name", "Wikipedia Bio", "url", "https://en.wikipedia.org/wiki/Juwan_Howard", "icon", "📖"));
+            links.add(Map.of("name", "Fab Five NCAA Era", "url", "https://en.wikipedia.org/wiki/Fab_Five_(University_of_Michigan)", "icon", "🏀"));
+        } else if (isValid(p)) {
+            String wikiUrl = "https://en.wikipedia.org/wiki/" + p.replace(" ", "_");
+            links.add(Map.of("name", p + " Wikipedia", "url", wikiUrl, "icon", "📖"));
+        }
+        return links;
     }
 
     private static String getTeamBySeason(String season) {

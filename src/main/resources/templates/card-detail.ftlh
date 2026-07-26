@@ -194,7 +194,40 @@ ${topNavHtml?no_esc}
                     <pre class="card-back-content">${cardBackText}</pre>
                 </div>
             </#if>
+
+            <#if externalLinks?? && (externalLinks?size > 0)>
+                <div class="context-card full-width external-references-card">
+                    <h3>&#x1F517; Collector Reference Profiles & History</h3>
+                    <div class="external-pills-wrapper">
+                        <#list externalLinks as link>
+                            <a href="${link.url}" target="_blank" rel="noopener" class="external-link-pill" title="Explore ${link.name}">
+                                <span class="pill-icon">${link.icon}</span> ${link.name} &nearr;
+                            </a>
+                        </#list>
+                    </div>
+                </div>
+            </#if>
         </div>
+    </#if>
+    <#if relatedCards?? && (relatedCards?size > 0)>
+        <section class="related-cards-section">
+            <h2>&#x1F48E; Related Chase Cards in Collection</h2>
+            <p class="related-cards-subtitle">Explore similar parallel variants, card technology, and basketball era highlights.</p>
+            <div class="related-cards-grid">
+                <#list relatedCards as card>
+                    <a href="${card.url}" class="related-card-item" title="${card.title}">
+                        <div class="related-card-thumb-wrapper">
+                            <img src="${card.thumb}" alt="${card.title}" loading="lazy" width="180" height="252" class="related-card-thumb">
+                        </div>
+                        <div class="related-card-info">
+                            <span class="related-card-tag">${card.variant}</span>
+                            <h4 class="related-card-title">${card.title}</h4>
+                            <span class="related-card-meta">${card.season} &bull; ${card.brand}</span>
+                        </div>
+                    </a>
+                </#list>
+            </div>
+        </section>
     </#if>
     <section class="vote-section">
         <h2>Collector Sentiment</h2>
