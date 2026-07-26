@@ -712,9 +712,41 @@ public class CardPageGenerator {
         StringBuilder sb = new StringBuilder();
         String season = c.get("Season");
         String company = c.get("Company");
+        String brand = c.get("Brand");
+        String theme = c.get("Theme");
+        String variant = c.get("Variant");
+        String number = c.get("Number");
         String player = formatMulti(c.get("Player"));
         String primaryPlayer = getPrimaryPlayer(c);
+        String team = isValid(c.get("Team")) ? formatMulti(c.get("Team")) : "NBA";
 
+        // 1. Unique Dynamic Collector FAQ item for every page
+        String variantTag = isValid(variant) ? variant : (isValid(theme) ? theme : "Base Edition");
+        String uniqueQuestion = "What makes this " + season + " " + brand + " #" + (isValid(number) ? number : "N/A") + " " + variantTag + " unique for collectors?";
+
+        StringBuilder uniqueAns = new StringBuilder();
+        uniqueAns.append("This specific card (#").append(isValid(number) ? number : "N/A").append(") from the ").append(season).append(" ").append(company).append(" ").append(brand).append(" release ");
+        if (isValid(variant) && !variant.equalsIgnoreCase("Base")) {
+            uniqueAns.append("features the rare ").append(variant).append(" parallel finish. ");
+        } else if (isValid(theme) && !theme.equalsIgnoreCase("Base Set")) {
+            uniqueAns.append("is part of the popular '").append(theme).append("' insert set. ");
+        } else {
+            uniqueAns.append("captures ").append(primaryPlayer).append(" during his tenure with the ").append(team).append(". ");
+        }
+
+        if (isHolyGrail(c)) {
+            uniqueAns.append("As an elite parallel, it represents a centerpiece chase card highly coveted by 90s basketball super collectors due to extreme scarcity and premium foil printing.");
+        } else if (c.has("Variant") && c.get("Variant").toLowerCase().contains("refractor")) {
+            uniqueAns.append("Utilizing ").append(company).append("'s iconic Chromium technology, the light-diffracting coating gives this card a stunning rainbow sheen under direct light.");
+        } else if (c.has("Autograph") && c.get("Autograph").equalsIgnoreCase("Yes")) {
+            uniqueAns.append("Featuring a certified signature guaranteed by ").append(company).append(", it bridges authentic player memorabilia with high-end card design.");
+        } else {
+            uniqueAns.append("Produced by ").append(company).append(", it stands out as an authentic piece of ").append(season).append(" basketball hobby history in this private collection.");
+        }
+
+        sb.append(createFaqItem(uniqueQuestion, uniqueAns.toString()));
+
+        // 2. Conditional FAQs
         if (isHolyGrail(c)) {
             sb.append(createFaqItem("Is this a 'Holy Grail' card?", "Yes, this card belongs to one of the most prestigious parallel series in the hobby. These are extremely rare and heavily targeted by high-end investors."));
         }
