@@ -456,12 +456,9 @@ ${topNavHtml?no_esc}
             })
         });
     } catch (e) {
-        console.warn("Firestore persistent cache not supported in this browser mode (e.g. Private Tab), falling back to standard Firestore:", e);
         try {
             db = getFirestore(app);
-        } catch (e2) {
-            console.error("Firestore init fallback error:", e2);
-        }
+        } catch (e2) {}
     }
 
     function getStorage(key) {
@@ -496,23 +493,21 @@ ${topNavHtml?no_esc}
 
     // Web Share API implementation
     const shareBtn = document.getElementById('shareBtn');
-    if (navigator.share) {
+    if (shareBtn && navigator.share) {
         shareBtn.style.display = 'inline-flex';
         shareBtn.addEventListener('click', async () => {
             try {
+                const h1 = document.querySelector('h1');
                 await navigator.share({
                     title: document.title,
-                    text: 'Check out this rare Juwan Howard card: ' + document.querySelector('h1').textContent,
+                    text: 'Check out this rare Juwan Howard card: ' + (h1 ? h1.textContent : document.title),
                     url: window.location.href
                 });
-                console.log('Successfully shared');
-            } catch (error) {
-                console.log('Error sharing:', error);
-            }
+            } catch (error) {}
         });
     }
 
-    if (getStorage(localStorageKey)) {
+    if (likeBtn && dislikeBtn && getStorage(localStorageKey)) {
         likeBtn.disabled = true;
         dislikeBtn.disabled = true;
         likeBtn.title = "You have already voted on this card";
@@ -525,45 +520,42 @@ ${topNavHtml?no_esc}
 
     function disableStarInteraction() {
         starInputs.forEach(input => input.disabled = true);
-        ratingLabel.textContent = "Thank you for rating!";
-        ratingLabel.style.color = "#3a7504";
+        if (ratingLabel) {
+            ratingLabel.textContent = "Thank you for rating!";
+            ratingLabel.style.color = "#3a7504";
+        }
     }
 
-    const cardRef = doc(db, "Trading_cards", cardId);
+    if (db) {
+        try {
+            const cardRef = doc(db, "Trading_cards", cardId);
 
-    onSnapshot(cardRef, (docSnap) => {
-        if (docSnap.exists()) {
-            const data = docSnap.data();
-            likeCountSpan.textContent = data.likes || 0;
-            dislikeCountSpan.textContent = data.dislikes || 0;
+            onSnapshot(cardRef, (docSnap) => {
+                if (docSnap && docSnap.exists()) {
+                    const data = docSnap.data();
+                    if (likeCountSpan) likeCountSpan.textContent = data.likes || 0;
+                    if (dislikeCountSpan) dislikeCountSpan.textContent = data.dislikes || 0;
 
-            const sum = data.ratingSum || 0;
-            const count = data.ratingCount || 0;
-            const average = count > 0 ? (sum / count).toFixed(1) : "0.0";
+                    const sum = data.ratingSum || 0;
+                    const count = data.ratingCount || 0;
+                    const average = count > 0 ? (sum / count).toFixed(1) : "0.0";
 
-            averageRatingSpan.textContent = average;
-            ratingCountSpan.textContent = count;
-
-            // Update visual stars
-            const visualPercentage = (parseFloat(average) / 5) * 100;
-            starsInner.style.width = visualPercentage + "%";
-        } else {
-            likeCountSpan.textContent = "0";
-            dislikeCountSpan.textContent = "0";
-            averageRatingSpan.textContent = "0.0";
-            ratingCountSpan.textContent = "0";
-            starsInner.style.width = "0%";
-        }
-    }, (error) => {
-        console.warn("Firestore snapshot error for card " + cardId + ":", error);
-    });
+                    if (averageRatingSpan) averageRatingSpan.textContent = average;
+                    if (ratingCountSpan) ratingCountSpan.textContent = count;
+                    if (starsInner) {
+                        const visualPercentage = (parseFloat(average) / 5) * 100;
+                        starsInner.style.width = visualPercentage + "%";
+                    }
+                }
+            }, () => {});
+        } catch (e) {}
+    }
 
     function checkConsent() {
         if (getStorage('user_consent') !== 'accepted') {
             if (window.showConsentBanner) {
                 window.showConsentBanner();
             }
-            // Highlight the banner briefly
             const banner = document.getElementById('consent-banner');
             if (banner) {
                 banner.style.backgroundColor = '#fff9c4';
@@ -576,10 +568,11 @@ ${topNavHtml?no_esc}
     }
 
     async function handleVote(type) {
-        if (getStorage(localStorageKey)) return;
+        if (!db || getStorage(localStorageKey)) return;
         if (!checkConsent()) return;
 
         try {
+            const cardRef = doc(db, "Trading_cards", cardId);
             await setDoc(cardRef, {
                 likes: type === 'likes' ? increment(1) : increment(0),
                 dislikes: type === 'dislikes' ? increment(1) : increment(0),
@@ -588,21 +581,23 @@ ${topNavHtml?no_esc}
             }, {merge: true});
 
             setStorage(localStorageKey, 'true');
-            likeBtn.disabled = true;
-            dislikeBtn.disabled = true;
-            likeBtn.title = "You have already voted on this card";
-            dislikeBtn.title = "You have already voted on this card";
+            if (likeBtn && dislikeBtn) {
+                likeBtn.disabled = true;
+                dislikeBtn.disabled = true;
+                likeBtn.title = "You have already voted on this card";
+                dislikeBtn.title = "You have already voted on this card";
+            }
         } catch (error) {
-            console.error("Error voting:", error);
             alert("Could not submit your vote. Please check your network connection or ad-blocker settings.");
         }
     }
 
     async function submitRating() {
-        if (!pendingRating || getStorage(localStorageRatingKey)) return;
+        if (!db || !pendingRating || getStorage(localStorageRatingKey)) return;
         if (!checkConsent()) return;
 
         try {
+            const cardRef = doc(db, "Trading_cards", cardId);
             await setDoc(cardRef, {
                 likes: increment(0),
                 dislikes: increment(0),
@@ -612,48 +607,53 @@ ${topNavHtml?no_esc}
 
             setStorage(localStorageRatingKey, 'true');
             disableStarInteraction();
-            ratingConfirmation.style.display = 'none';
+            if (ratingConfirmation) ratingConfirmation.style.display = 'none';
             pendingRating = null;
         } catch (error) {
-            console.error("Error rating:", error);
             alert("Could not submit your rating. Please check your network connection or ad-blocker settings.");
         }
     }
 
-    // Interaction Listeners
-    likeBtn.addEventListener('click', () => handleVote('likes'));
-    dislikeBtn.addEventListener('click', () => handleVote('dislikes'));
+    if (likeBtn) likeBtn.addEventListener('click', () => handleVote('likes'));
+    if (dislikeBtn) dislikeBtn.addEventListener('click', () => handleVote('dislikes'));
 
     starLabels.forEach(label => {
         label.addEventListener('mouseenter', (e) => {
-            if (!localStorage.getItem(localStorageRatingKey)) {
+            if (!localStorage.getItem(localStorageRatingKey) && ratingLabel) {
                 ratingLabel.textContent = e.target.title;
             }
         });
     });
 
-    document.getElementById('interactive-stars').addEventListener('mouseleave', () => {
-        if (!localStorage.getItem(localStorageRatingKey)) {
-            ratingLabel.textContent = "Rate it!";
-        }
-    });
+    const interactiveStars = document.getElementById('interactive-stars');
+    if (interactiveStars) {
+        interactiveStars.addEventListener('mouseleave', () => {
+            if (!localStorage.getItem(localStorageRatingKey) && ratingLabel) {
+                ratingLabel.textContent = "Rate it!";
+            }
+        });
+    }
 
     starInputs.forEach(input => {
         input.addEventListener('change', (e) => {
             if (localStorage.getItem(localStorageRatingKey)) return;
             pendingRating = e.target.value;
-            selectedRatingText.textContent = pendingRating;
-            ratingConfirmation.style.display = 'block';
-            ratingConfirmation.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+            if (selectedRatingText) selectedRatingText.textContent = pendingRating;
+            if (ratingConfirmation) {
+                ratingConfirmation.style.display = 'block';
+                ratingConfirmation.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+            }
         });
     });
 
-    submitRatingBtn.addEventListener('click', submitRating);
-    cancelRatingBtn.addEventListener('click', () => {
-        ratingConfirmation.style.display = 'none';
-        pendingRating = null;
-        starInputs.forEach(input => input.checked = false);
-    });
+    if (submitRatingBtn) submitRatingBtn.addEventListener('click', submitRating);
+    if (cancelRatingBtn) {
+        cancelRatingBtn.addEventListener('click', () => {
+            if (ratingConfirmation) ratingConfirmation.style.display = 'none';
+            pendingRating = null;
+            starInputs.forEach(input => input.checked = false);
+        });
+    }
 </script>
 </body>
 </html>
