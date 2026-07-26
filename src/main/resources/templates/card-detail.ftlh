@@ -3,11 +3,11 @@
 <head>
     ${headHtml?no_esc}
     <#-- PRELOAD UPDATE: Teilt dem Browser mit, welche Bildgröße er vorab laden soll -->
-    <link rel="preload" as="image" href="${frontImgPath}"
-          imagesrcset="${frontImgPath?replace('.webp', '-400w.webp')} 400w,
-                       ${frontImgPath?replace('.webp', '-600w.webp')} 600w,
-                       ${frontImgPath?replace('.webp', '-900w.webp')} 900w,
-                       ${frontImgPath} 1200w"
+    <link rel="preload" as="image" href="${frontImgPath?replace('.webp', '.avif')}" type="image/avif"
+          imagesrcset="${frontImgPath?replace('.webp', '-400w.avif')} 400w,
+                       ${frontImgPath?replace('.webp', '-600w.avif')} 600w,
+                       ${frontImgPath?replace('.webp', '-900w.avif')} 900w,
+                       ${frontImgPath?replace('.webp', '.avif')} 1200w"
           imagesizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, (max-width: 1300px) 45vw, 600px"
           fetchpriority="high">
     ${jsonLd?no_esc}
@@ -217,7 +217,15 @@ ${topNavHtml?no_esc}
                 <#list relatedCards as card>
                     <a href="${card.url}" class="related-card-item" title="${card.title}">
                         <div class="related-card-thumb-wrapper">
-                            <img src="${card.thumb}" alt="${card.title}" loading="lazy" width="180" height="252" class="related-card-thumb">
+                            <picture>
+                                <#if card.thumbAvif??>
+                                    <source type="image/avif" srcset="${card.thumbAvif}">
+                                </#if>
+                                <#if card.thumbWebp??>
+                                    <source type="image/webp" srcset="${card.thumbWebp}">
+                                </#if>
+                                <img src="${card.thumb}" alt="${card.title}" loading="lazy" decoding="async" width="180" height="252" class="related-card-thumb">
+                            </picture>
                         </div>
                         <div class="related-card-info">
                             <span class="related-card-tag">${card.variant}</span>

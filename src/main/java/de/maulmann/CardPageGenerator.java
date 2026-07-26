@@ -614,7 +614,16 @@ public class CardPageGenerator {
             m.put("url", "../" + other.seasonFolder + "/" + other.filename);
 
             String imageBaseName = other.filenameBase.substring(0, other.filenameBase.lastIndexOf("-"));
-            m.put("thumb", RELATIVE_IMAGES_PATH + "/" + other.seasonFolder + "/" + imageBaseName + "-front.webp");
+            String basePath = RELATIVE_IMAGES_PATH + "/" + other.seasonFolder + "/" + imageBaseName + "-front";
+            String diskPath400Avif = "output/images/" + other.seasonFolder + "/" + imageBaseName + "-front-400w.avif";
+            String diskPath400Webp = "output/images/" + other.seasonFolder + "/" + imageBaseName + "-front-400w.webp";
+
+            String thumbAvif = new File(diskPath400Avif).exists() ? (basePath + "-400w.avif") : (basePath + ".avif");
+            String thumbWebp = new File(diskPath400Webp).exists() ? (basePath + "-400w.webp") : (basePath + ".webp");
+
+            m.put("thumbAvif", thumbAvif);
+            m.put("thumbWebp", thumbWebp);
+            m.put("thumb", thumbWebp);
             m.put("season", isValid(other.get("Season")) ? other.get("Season") : "NBA");
             m.put("variant", isValid(other.get("Variant")) ? other.get("Variant") : (isValid(other.get("Theme")) ? other.get("Theme") : "Base Card"));
             m.put("brand", isValid(other.get("Brand")) ? other.get("Brand") : other.get("Company"));
