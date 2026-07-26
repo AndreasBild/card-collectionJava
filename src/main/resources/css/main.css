@@ -298,6 +298,8 @@ tr:hover {
 .season-table-wrapper {
     margin-bottom: 40px;
     scroll-margin-top: 70px;
+    content-visibility: auto;
+    contain-intrinsic-size: 800px;
 }
 
 .season-table-wrapper th {
@@ -492,6 +494,7 @@ tr:hover {
 .card-image-wrapper img:not(.zoomable-img) {
     max-width: 100%;
     height: auto;
+    aspect-ratio: 2.5 / 3.5;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgb(0 0 0 / 15%);
 }
@@ -500,6 +503,7 @@ tr:hover {
     width: 100%;
     max-width: 600px;
     height: auto;
+    aspect-ratio: 2.5 / 3.5;
     display: block;
     object-fit: contain;
     cursor: zoom-in;

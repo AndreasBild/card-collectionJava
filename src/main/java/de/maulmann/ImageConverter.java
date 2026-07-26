@@ -15,11 +15,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ImageConverter {
 
     // --- Configuration ---
-    private static final int MAX_WIDTH = 900;
-    private static final int MAX_HEIGHT = 1200;
+    private static final int MAX_WIDTH = 1200;
+    private static final int MAX_HEIGHT = 1680;
 
     // Definition der Responsive-Breiten für das srcset
-    private static final int[] RESPONSIVE_WIDTHS = {400, 600};
+    private static final int[] RESPONSIVE_WIDTHS = {400, 600, 900};
 
     // Dynamic discovery of cwebp
     private static final String CWEBP_PATH = findCwebp();
@@ -132,14 +132,15 @@ public class ImageConverter {
         // --- CLI GENERIERUNG ---
 
         // A) Hauptbild (z.B. jordan.webp)
-        writeWebpViaCLI(sourceFile, mainWebpFile, mainW, mainH);
+        writeWebpViaCLI(sourceFile, mainWebpFile, mainW, mainH, 78);
 
         // B) Responsive Varianten (z.B. jordan-400w.webp)
         for (int targetW : RESPONSIVE_WIDTHS) {
             if (targetW < mainW) {
                 int targetH = (int) (mainH * ((double) targetW / mainW));
                 File respFile = currentWebpOutDir.resolve(baseName + "-" + targetW + "w.webp").toFile();
-                writeWebpViaCLI(sourceFile, respFile, targetW, targetH);
+                int quality = (targetW <= 400) ? 70 : 75;
+                writeWebpViaCLI(sourceFile, respFile, targetW, targetH, quality);
             }
         }
 
@@ -148,10 +149,12 @@ public class ImageConverter {
         return true;
     }
 
-    private static void writeWebpViaCLI(Path sourceFile, File outputFile, int targetW, int targetH) throws IOException, InterruptedException {
+    private static void writeWebpViaCLI(Path sourceFile, File outputFile, int targetW, int targetH, int quality) throws IOException, InterruptedException {
         ProcessBuilder pb = new ProcessBuilder(
                 CWEBP_PATH,
-                "-q", "75",
+                "-q", String.valueOf(quality),
+                "-m", "6",
+                "-sharp_yuv",
                 "-resize", String.valueOf(targetW), String.valueOf(targetH),
                 "-mt",
                 "-quiet",

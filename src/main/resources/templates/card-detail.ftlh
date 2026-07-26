@@ -6,6 +6,7 @@
     <link rel="preload" as="image" href="${frontImgPath}"
           imagesrcset="${frontImgPath?replace('.webp', '-400w.webp')} 400w,
                        ${frontImgPath?replace('.webp', '-600w.webp')} 600w,
+                       ${frontImgPath?replace('.webp', '-900w.webp')} 900w,
                        ${frontImgPath} 1200w"
           imagesizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, (max-width: 1300px) 45vw, 600px"
           fetchpriority="high">
@@ -41,23 +42,27 @@ ${topNavHtml?no_esc}
         <div class="card-image-wrapper">
             <#-- SRCSET FÜR DAS FRONT-BILD -->
             <img src="${frontImgPath}"
+                 width="600" height="840"
                  srcset="${frontImgPath?replace('.webp', '-400w.webp')} 400w,
                          ${frontImgPath?replace('.webp', '-600w.webp')} 600w,
+                         ${frontImgPath?replace('.webp', '-900w.webp')} 900w,
                          ${frontImgPath} 1200w"
                  sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, (max-width: 1300px) 45vw, 600px"
                  alt="${frontAlt}" title="${frontImgTitle}"
-                 fetchpriority="high" class="zoomable-img"
+                 fetchpriority="high" decoding="async" class="zoomable-img"
                  onclick="openModal('${frontImgPath}', '${backImgPath}')">
             <p class="img-caption">&#x1F50D; Click to Enlarge Front</p>
         </div>
         <div class="card-image-wrapper">
             <#-- SRCSET FÜR DAS BACK-BILD -->
             <img src="${backImgPath}"
+                 width="600" height="840"
                  srcset="${backImgPath?replace('.webp', '-400w.webp')} 400w,
                          ${backImgPath?replace('.webp', '-600w.webp')} 600w,
+                         ${backImgPath?replace('.webp', '-900w.webp')} 900w,
                          ${backImgPath} 1200w"
                  sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, (max-width: 1300px) 45vw, 600px"
-                 alt="${backAlt}" title="${backImgTitle}" loading="lazy"
+                 alt="${backAlt}" title="${backImgTitle}" loading="lazy" decoding="async"
                  class="zoomable-img"
                  onclick="openModal('${backImgPath}', '${frontImgPath}')">
             <p class="img-caption">&#x1F50D; Click to Enlarge Back</p>
