@@ -415,8 +415,8 @@ footer.detail-footer,
 }
 
 .archive-box {
-    max-width: 800px;
-    margin: 40px auto 0;
+    width: 100%;
+    margin: 40px 0 0;
     text-align: left;
     line-height: 1.8;
     background: var(--bg-surface);
