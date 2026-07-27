@@ -314,8 +314,6 @@ public class FileGenerator {
             String detailPath = cardData.fullRelativePath;
             String playerTitle = "View " + escapeHtml(c.player) + " " + escapeHtml(c.season) + " " + escapeHtml(c.brand) + " #" + escapeHtml(c.cardNumber != null ? c.cardNumber : "") + " card detail page";
             String variantText = escapeHtml(c.variant != null ? c.variant : "Base");
-            String variantTitle = "View details for " + escapeHtml(c.player) + " " + escapeHtml(c.season) + " " + escapeHtml(c.brand) + " " + variantText + " parallel";
-
             htmlBuilder.append("<tr id=\"").append(cardData.filenameBase).append("\">")
                     .append("<td data-label=\"Card\"><a href=\"").append(detailPath).append("\" class=\"table-button\" title=\"").append(playerTitle).append("\" itemprop=\"url\"><span itemprop=\"name\">").append(escapeHtml(c.player)).append("</span></a></td>")
                     .append("<td data-label=\"Team\">").append(escapeHtml(c.team)).append("</td>")
@@ -324,7 +322,7 @@ public class FileGenerator {
                     .append("<td data-label=\"Company\">").append(escapeHtml(c.company)).append("</td>")
                     .append("<td data-label=\"Brand\">").append(escapeHtml(c.brand)).append("</td>")
                     .append("<td data-label=\"Set / Theme\">").append(escapeHtml(c.theme)).append("</td>")
-                    .append("<td data-label=\"Variant\"><a href=\"").append(detailPath).append("\" title=\"").append(variantTitle).append("\">").append(variantText).append("</a></td>")
+                    .append("<td data-label=\"Variant\">").append(variantText).append("</td>")
                     .append("<td data-label=\"Card #\">").append(escapeHtml(c.cardNumber)).append("</td>")
                     .append("<td data-label=\"Serial #\">").append(escapeHtml(c.serialNumber != null ? c.serialNumber : "0")).append("</td>")
                     .append("<td data-label=\"Print Run\">").append(c.printRun != null ? c.printRun : 0).append("</td>")

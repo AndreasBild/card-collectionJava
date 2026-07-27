@@ -139,26 +139,34 @@ a:not(.plain), button.modern-button, button.flip-modal-btn, button.close-modal-b
 }
 
 .table-button {
-    width: auto;
-    min-width: 130px;
-    padding: 8px 14px !important;
+    width: 180px !important;
+    min-width: 180px !important;
+    max-width: 180px !important;
+    padding: 8px 12px !important;
     margin: 2px !important;
-    font-size: 0.85rem !important;
+    font-size: 0.88rem !important;
+    font-weight: 700 !important;
     display: inline-flex !important;
+    align-items: center;
     justify-content: center;
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    background: var(--bg-card) !important;
-    color: var(--accent-gold-light) !important;
-    border: 1px solid var(--border-color) !important;
-}
-
-.table-button:hover {
     background: var(--accent-gold) !important;
     color: #0b0f19 !important;
-    border-color: var(--accent-gold) !important;
+    border: 1px solid var(--accent-gold) !important;
+    border-radius: var(--radius-sm);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    transition: var(--transition-fast);
+}
+
+.table-button:hover, .table-button:focus {
+    background: var(--accent-gold-hover) !important;
+    color: #000 !important;
+    border-color: var(--accent-gold-hover) !important;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-gold);
 }
 
 .back-to-top-btn {
