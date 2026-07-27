@@ -833,10 +833,10 @@ public class CardPageGenerator {
     private static String resolveDiskImageBaseInternal(String seasonFolder, String imageBaseName, CardData c) {
         if (checkExists(seasonFolder, imageBaseName)) return imageBaseName;
 
-        String altBase = imageBaseName.replaceAll("-sn(\\d+)-\\d+", "-sn$1");
+        String altBase = imageBaseName.replaceAll("-sn(-?\\d+)-\\d+", "-sn$1");
         if (checkExists(seasonFolder, altBase)) return altBase;
 
-        String altBaseNoZero = altBase.replaceAll("-sn0(\\d+)", "-sn$1");
+        String altBaseNoZero = altBase.replaceAll("-sn(-?)0(\\d+)", "-sn$1$2");
         if (checkExists(seasonFolder, altBaseNoZero)) return altBaseNoZero;
 
         String altBaseNegative = imageBaseName.replaceAll("-sn-(\\d+)", "-sn$1");
