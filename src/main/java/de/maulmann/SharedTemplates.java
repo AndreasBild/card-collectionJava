@@ -165,7 +165,7 @@ public class SharedTemplates {
         }
         return template.replace("{{ROOT}}", root)
                 .replace("{{ACTIVE_INDEX}}", activePage.equals("index") ? "class=\"active\"" : "")
-                .replace("{{ACTIVE_COLLECTION}}", activePage.equals("collection") ? "class=\"active\"" : "")
+                .replace("{{ACTIVE_COLLECTION}}", (activePage.equals("collection") || activePage.equals("juwan-howard-collection")) ? "class=\"active\"" : "")
                 .replace("{{ACTIVE_BASEBALL}}", activePage.equals("baseball") ? "class=\"active\"" : "")
                 .replace("{{ACTIVE_FLAWLESS}}", activePage.equals("flawless") ? "class=\"active\"" : "")
                 .replace("{{ACTIVE_WANTLIST}}", activePage.equals("wantlist") ? "class=\"active\"" : "")

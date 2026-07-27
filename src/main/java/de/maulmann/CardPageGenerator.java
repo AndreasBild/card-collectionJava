@@ -340,11 +340,27 @@ public class CardPageGenerator {
         String frontImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + resolvedImageBase + "-front.avif";
         data.put("headHtml", SharedTemplates.getHead(browserTitle, metaDesc, ROOT, c.fullRelativePath, frontImgUrl));
         data.put("jsonLd", CardSchemaGenerator.generateJsonLd(c, metaDesc, h1Title, overviewPage, resolvedImageBase, faqHtml));
-        data.put("topNavHtml", SharedTemplates.getTopNav(ROOT, "collection"));
+        String collectionName = "Collection";
+        String activeNav = "collection";
+        if ("Flawless.html".equals(overviewPage)) {
+            collectionName = "Flawless";
+            activeNav = "flawless";
+        } else if ("Baseball.html".equals(overviewPage)) {
+            collectionName = "Baseball";
+            activeNav = "baseball";
+        } else if ("Panini.html".equals(overviewPage)) {
+            collectionName = "Panini";
+            activeNav = "panini";
+        } else if ("Wantlist.html".equals(overviewPage)) {
+            collectionName = "Wantlist";
+            activeNav = "wantlist";
+        }
+
+        data.put("topNavHtml", SharedTemplates.getTopNav(ROOT, activeNav));
 
         List<Map<String, String>> breadcrumbItems = new ArrayList<>();
         breadcrumbItems.add(Map.of("name", "Home", "link", ROOT + "index.html"));
-        breadcrumbItems.add(Map.of("name", "Collection", "link", ROOT + overviewPage));
+        breadcrumbItems.add(Map.of("name", collectionName, "link", ROOT + overviewPage));
         breadcrumbItems.add(Map.of("name", c.get("Season"), "link", ROOT + overviewPage + "#" + c.seasonFolder.toLowerCase()));
         breadcrumbItems.add(Map.of("name", h1Title, "link", ""));
         data.put("breadcrumbHtml", SharedTemplates.getBreadcrumb(breadcrumbItems));
