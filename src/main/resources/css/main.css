@@ -1169,31 +1169,33 @@ tr:hover {
     min-width: 240px !important;
     max-width: 100% !important;
     flex: 0 0 240px !important;
-    display: inline-flex;
+    display: inline-flex !important;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 10px 16px;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
+    padding: 10px 16px !important;
+    background: var(--accent-gold) !important;
+    border: 1px solid var(--accent-gold) !important;
     border-radius: var(--radius-sm);
-    color: var(--text-primary) !important;
-    font-size: 0.9rem;
-    font-weight: 600;
-    text-decoration: none;
+    color: #0b0f19 !important;
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
     text-align: center;
     white-space: nowrap !important;
     overflow: hidden;
     text-overflow: ellipsis;
     transition: var(--transition-fast);
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
 }
 
 .external-pills-wrapper .external-link-pill:hover,
-.external-link-pill:hover {
-    background: var(--accent-gold);
-    border-color: var(--accent-gold);
-    color: #0b0f19 !important;
+.external-pills-wrapper .external-link-pill:focus,
+.external-link-pill:hover,
+.external-link-pill:focus {
+    background: var(--accent-gold-hover) !important;
+    border-color: var(--accent-gold-hover) !important;
+    color: #000000 !important;
     transform: translateY(-2px);
     box-shadow: var(--shadow-gold);
 }
