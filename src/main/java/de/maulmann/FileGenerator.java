@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.concurrent.Executors;
 
 public class FileGenerator {
 
@@ -202,97 +203,101 @@ public class FileGenerator {
                 "Legal notice and contact information for Maulmann Trading Cards."
         });
 
-        for (Map.Entry<String, String[]> entry : collectionMetas.entrySet()) {
-            String coll = entry.getKey();
-            String title = entry.getValue()[0];
-            String description = entry.getValue()[1];
+        try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+            for (Map.Entry<String, String[]> entry : collectionMetas.entrySet()) {
+                executor.submit(() -> {
+                    String coll = entry.getKey();
+                    String title = entry.getValue()[0];
+                    String description = entry.getValue()[1];
 
-            try {
-                System.out.println("-> Baue " + coll + ".html...");
-                Map<String, Object> data = createBaseData(title, description, coll + ".html", coll.toLowerCase(), "");
+                    try {
+                        System.out.println("-> Baue " + coll + ".html...");
+                        Map<String, Object> data = createBaseData(title, description, coll + ".html", coll.toLowerCase(), "");
 
-                List<Map<String, String>> breadcrumbItems = new ArrayList<>();
-                breadcrumbItems.add(Map.of("name", "Home", "link", "index.html"));
-                breadcrumbItems.add(Map.of("name", coll, "link", ""));
-                data.put("breadcrumbHtml", SharedTemplates.getBreadcrumb(breadcrumbItems));
+                        List<Map<String, String>> breadcrumbItems = new ArrayList<>();
+                        breadcrumbItems.add(Map.of("name", "Home", "link", "index.html"));
+                        breadcrumbItems.add(Map.of("name", coll, "link", ""));
+                        data.put("breadcrumbHtml", SharedTemplates.getBreadcrumb(breadcrumbItems));
 
-                // Initial Breadcrumb & CollectionPage
-                List<Map<String, String>> collBcItems = new ArrayList<>();
-                collBcItems.add(Map.of("name", "Home", "link", BASE_URL + "/index.html"));
-                collBcItems.add(Map.of("name", coll, "link", BASE_URL + "/" + coll + ".html"));
+                        // Initial Breadcrumb & CollectionPage
+                        List<Map<String, String>> collBcItems = new ArrayList<>();
+                        collBcItems.add(Map.of("name", "Home", "link", BASE_URL + "/index.html"));
+                        collBcItems.add(Map.of("name", coll, "link", BASE_URL + "/" + coll + ".html"));
 
-                String jsonLd = "<script type=\"application/ld+json\">\n" +
-                        "{\n" +
-                        "  \"@context\": \"https://schema.org\",\n" +
-                        "  \"@graph\": [\n" +
-                        "    " + SharedTemplates.getBreadcrumbJsonLd(collBcItems) + ",\n" +
-                        "    {\n" +
-                        "      \"@type\": \"CollectionPage\",\n" +
-                        "      \"@id\": \"" + BASE_URL + "/" + coll + ".html\",\n" +
-                        "      \"name\": \"" + title.split("\\|")[0].trim() + "\",\n" +
-                        "      \"description\": \"" + description + "\"\n" +
-                        "    }\n" +
-                        "  ]\n" +
-                        "}\n" +
-                        "</script>";
-                data.put("jsonLd", jsonLd);
+                        String jsonLd = "<script type=\"application/ld+json\">\n" +
+                                "{\n" +
+                                "  \"@context\": \"https://schema.org\",\n" +
+                                "  \"@graph\": [\n" +
+                                "    " + SharedTemplates.getBreadcrumbJsonLd(collBcItems) + ",\n" +
+                                "    {\n" +
+                                "      \"@type\": \"CollectionPage\",\n" +
+                                "      \"@id\": \"" + BASE_URL + "/" + coll + ".html\",\n" +
+                                "      \"name\": \"" + title.split("\\|")[0].trim() + "\",\n" +
+                                "      \"description\": \"" + description + "\"\n" +
+                                "    }\n" +
+                                "  ]\n" +
+                                "}\n" +
+                                "</script>";
+                        data.put("jsonLd", jsonLd);
 
-                Path jsonPath = Paths.get(pathSource, "json", coll.toLowerCase() + ".json");
-                String tableHtml = "";
-                if (Files.exists(jsonPath)) {
-                    List<CardJson> cardList = CardDataLoader.loadCardsFromJson(jsonPath.toString());
-                    tableHtml = generateHtmlTableFromJson(cardList);
-                }
-
-                Path sourcePath = Paths.get(pathSource, "other", coll + ".html");
-                if (Files.exists(sourcePath)) {
-                    String rawContent = Files.readString(sourcePath, StandardCharsets.UTF_8);
-                    Document doc = Jsoup.parse(rawContent);
-
-                    // Extrahiere FAQ aus dem Content für das JSON-LD (falls vorhanden)
-                    if (rawContent.contains("application/ld+json") && rawContent.contains("FAQPage")) {
-                        try {
-                            Element faqScript = doc.selectFirst("script[type=application/ld+json]");
-                            if (faqScript != null) {
-                                String faqJson = faqScript.data().trim();
-                                jsonLd = "<script type=\"application/ld+json\">\n" +
-                                        "{\n" +
-                                        "  \"@context\": \"https://schema.org\",\n" +
-                                        "  \"@graph\": [\n" +
-                                        "    " + SharedTemplates.getBreadcrumbJsonLd(collBcItems) + ",\n" +
-                                        "    {\n" +
-                                        "      \"@type\": \"CollectionPage\",\n" +
-                                        "      \"@id\": \"" + BASE_URL + "/" + coll + ".html\",\n" +
-                                        "      \"name\": \"" + title.split("\\|")[0].trim() + "\",\n" +
-                                        "      \"description\": \"" + description + "\"\n" +
-                                        "    },\n" +
-                                        "    " + faqJson + "\n" +
-                                        "  ]\n" +
-                                        "}\n" +
-                                        "</script>";
-                                data.put("jsonLd", jsonLd);
-                            }
-                        } catch (Exception e) {
-                            System.err.println("FAQ Extraction failed for " + coll);
+                        Path jsonPath = Paths.get(pathSource, "json", coll.toLowerCase() + ".json");
+                        String tableHtml = "";
+                        if (Files.exists(jsonPath)) {
+                            List<CardJson> cardList = CardDataLoader.loadCardsFromJson(jsonPath.toString());
+                            tableHtml = generateHtmlTableFromJson(cardList);
                         }
-                    }
 
-                    Element mainElement = doc.selectFirst("main");
-                    String processedContent;
-                    if (mainElement != null) {
-                        mainElement.select("table, .table-responsive").remove();
-                        processedContent = mainElement.html() + "\n" + tableHtml;
-                    } else {
-                        processedContent = rawContent + "\n" + tableHtml;
-                    }
+                        Path sourcePath = Paths.get(pathSource, "other", coll + ".html");
+                        if (Files.exists(sourcePath)) {
+                            String rawContent = Files.readString(sourcePath, StandardCharsets.UTF_8);
+                            Document doc = Jsoup.parse(rawContent);
 
-                    data.put("pageContent", cleanOldPlaceholders(processedContent));
-                } else {
-                    data.put("pageContent", tableHtml.isEmpty() ? "<p>No data found for this collection yet.</p>" : tableHtml);
-                }
+                            // Extrahiere FAQ aus dem Content für das JSON-LD (falls vorhanden)
+                            if (rawContent.contains("application/ld+json") && rawContent.contains("FAQPage")) {
+                                try {
+                                    Element faqScript = doc.selectFirst("script[type=application/ld+json]");
+                                    if (faqScript != null) {
+                                        String faqJson = faqScript.data().trim();
+                                        jsonLd = "<script type=\"application/ld+json\">\n" +
+                                                "{\n" +
+                                                "  \"@context\": \"https://schema.org\",\n" +
+                                                "  \"@graph\": [\n" +
+                                                "    " + SharedTemplates.getBreadcrumbJsonLd(collBcItems) + ",\n" +
+                                                "    {\n" +
+                                                "      \"@type\": \"CollectionPage\",\n" +
+                                                "      \"@id\": \"" + BASE_URL + "/" + coll + ".html\",\n" +
+                                                "      \"name\": \"" + title.split("\\|")[0].trim() + "\",\n" +
+                                                "      \"description\": \"" + description + "\"\n" +
+                                                "    },\n" +
+                                                "    " + faqJson + "\n" +
+                                                "  ]\n" +
+                                                "}\n" +
+                                                "</script>";
+                                        data.put("jsonLd", jsonLd);
+                                    }
+                                } catch (Exception e) {
+                                    System.err.println("FAQ Extraction failed for " + coll);
+                                }
+                            }
 
-                processTemplate("generic-collection.ftlh", data, pathOutput + coll + ".html");
-            } catch (Exception e) { System.err.println("Fehler bei " + coll + ": " + e.getMessage()); }
+                            Element mainElement = doc.selectFirst("main");
+                            String processedContent;
+                            if (mainElement != null) {
+                                mainElement.select("table, .table-responsive").remove();
+                                processedContent = mainElement.html() + "\n" + tableHtml;
+                            } else {
+                                processedContent = rawContent + "\n" + tableHtml;
+                            }
+
+                            data.put("pageContent", cleanOldPlaceholders(processedContent));
+                        } else {
+                            data.put("pageContent", tableHtml.isEmpty() ? "<p>No data found for this collection yet.</p>" : tableHtml);
+                        }
+
+                        processTemplate("generic-collection.ftlh", data, pathOutput + coll + ".html");
+                    } catch (Exception e) { System.err.println("Fehler bei " + coll + ": " + e.getMessage()); }
+                });
+            }
         }
     }
 

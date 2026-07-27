@@ -18,6 +18,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
@@ -38,6 +39,8 @@ public class CardPageGenerator {
     private static final TriviaManager triviaManager = new TriviaManager();
     private static final FirebaseConfigManager firebaseConfigManager = new FirebaseConfigManager();
     private static TimestampTracker timestampTracker;
+
+    private static final Map<String, String> DISK_IMAGE_CACHE = new ConcurrentHashMap<>();
 
     public static void setTimestampTracker(TimestampTracker tracker) {
         timestampTracker = tracker;
@@ -736,6 +739,11 @@ public class CardPageGenerator {
     }
 
     private static String resolveDiskImageBase(String seasonFolder, String imageBaseName) {
+        String cacheKey = seasonFolder + ":" + imageBaseName;
+        return DISK_IMAGE_CACHE.computeIfAbsent(cacheKey, k -> resolveDiskImageBaseInternal(seasonFolder, imageBaseName));
+    }
+
+    private static String resolveDiskImageBaseInternal(String seasonFolder, String imageBaseName) {
         if (checkExists(seasonFolder, imageBaseName)) return imageBaseName;
 
         String altBase = imageBaseName.replaceAll("-sn(\\d+)-\\d+", "-sn$1");
