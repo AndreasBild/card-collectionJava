@@ -298,12 +298,6 @@ ${topNavHtml?no_esc}
             </div>
         </div>
     </section>
-    <section class="market-section" id="market-section" style="display: none;">
-        <h2>Cards on the market</h2>
-        <div id="market-results">
-            <div class="market-loading">Searching for active listings...</div>
-        </div>
-    </section>
     <section class="faq-section" id="faq-section">
         <h2>Collector FAQs</h2>
         ${faqHtml?no_esc}
@@ -357,62 +351,6 @@ ${topNavHtml?no_esc}
             if (backLink) {
                 backLink.href += '#' + cardId;
             }
-        }
-
-        // Market Search functionality
-        const faqSection = document.getElementById('faq-section');
-        const marketSection = document.getElementById('market-section');
-        const marketResults = document.getElementById('market-results');
-        let hasSearched = false;
-
-        if (faqSection && marketSection) {
-            const observer = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting && !hasSearched) {
-                    hasSearched = true;
-                    marketSection.style.display = 'block';
-                    searchMarket();
-                }
-            }, {threshold: 0.1});
-
-            observer.observe(faqSection);
-        }
-
-        function searchMarket() {
-            const cardName = encodeURIComponent("${h1Title?js_string}");
-            const ebaySearchUrl = "https://www.ebay.com/sch/i.html?_nkw=" + cardName;
-
-            marketResults.innerHTML = ''; // Clear loading
-
-            const container = document.createElement('div');
-            container.className = "market-listing";
-
-            const detailsDiv = document.createElement('div');
-            detailsDiv.className = "market-details";
-
-            const titleDiv = document.createElement('div');
-            titleDiv.className = "market-title";
-            titleDiv.textContent = "Search for ${h1Title?js_string}";
-
-            const descDiv = document.createElement('div');
-            descDiv.style.fontSize = '0.9rem';
-            descDiv.style.color = '#555';
-            descDiv.style.marginTop = '4px';
-            descDiv.textContent = "Check current active listings on eBay";
-
-            detailsDiv.appendChild(titleDiv);
-            detailsDiv.appendChild(descDiv);
-
-            const actionA = document.createElement('a');
-            actionA.href = ebaySearchUrl;
-            actionA.target = "_blank";
-            actionA.rel = "noopener noreferrer";
-            actionA.className = "market-action modern-button no-text-decoration";
-            actionA.textContent = "View on eBay";
-
-            container.appendChild(detailsDiv);
-            container.appendChild(actionA);
-
-            marketResults.appendChild(container);
         }
     });
     document.addEventListener('keydown', function (event) {
