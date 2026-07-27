@@ -110,33 +110,12 @@ public class CardPageGenerator {
 
         private void calculatePaths(String uniqueId) {
             List<String> filenameTokens = new ArrayList<>();
-
-            String playerRaw = attributes.get("Player");
-            String teamRaw = attributes.get("Team");
-
-            String pStr = playerRaw;
-            String tStr = teamRaw;
-
-            if (playerRaw != null && playerRaw.contains("Juwan Howard")) {
-                String[] players = playerRaw.split(",");
-                String[] teams = (teamRaw != null) ? teamRaw.split(",") : new String[0];
-                for (int i = 0; i < players.length; i++) {
-                    if (players[i].trim().equals("Juwan Howard")) {
-                        pStr = "Juwan Howard";
-                        if (i < teams.length) {
-                            tStr = teams[i].trim();
-                        } else if (teams.length > 0) {
-                            tStr = teams[0].trim();
-                        }
-                        break;
-                    }
-                }
-            } else {
-                if (pStr != null && pStr.contains(",")) pStr = pStr.split(",")[0].trim();
-                if (tStr != null && tStr.contains(",")) tStr = tStr.split(",")[0].trim();
-            }
-
+            String pStr = attributes.get("Player");
+            if (pStr != null && pStr.contains(",")) pStr = pStr.split(",")[0].trim();
             addIfPresent(filenameTokens, pStr);
+
+            String tStr = attributes.get("Team");
+            if (tStr != null && tStr.contains(",")) tStr = tStr.split(",")[0].trim();
             addIfPresent(filenameTokens, tStr);
             addIfPresent(filenameTokens, attributes.get("Season"));
             addIfPresent(filenameTokens, attributes.get("Company"));
@@ -149,25 +128,22 @@ public class CardPageGenerator {
             if (!isValid(serial)) {
                 serial = attributes.get("Serial/Print Run");
             }
+            String printRun = attributes.get("Print Run");
             if (isValid(serial) && !serial.equals("0")) {
                 String cleanSerial = serial.replace("#", "").replace("/", "-");
-                if (cleanSerial.startsWith("-")) {
-                    cleanSerial = cleanSerial.substring(1);
-                }
-                if (cleanSerial.contains("-")) {
-                    cleanSerial = cleanSerial.split("-")[0];
+                if (!cleanSerial.contains("-") && isValid(printRun) && !printRun.equals("0")) {
+                    int prInt = 0;
+                    try { prInt = Integer.parseInt(printRun); } catch (Exception ignored) {}
+                    if (cleanSerial.length() == 1 && Character.isDigit(cleanSerial.charAt(0)) && prInt >= 10) {
+                        cleanSerial = "0" + cleanSerial;
+                    }
+                    cleanSerial = cleanSerial + "-" + printRun;
                 }
                 filenameTokens.add("sn" + cleanSerial);
             }
 
-            String gradingCo = attributes.get("Grading Co.");
             String grade = attributes.get("Grade");
-            if (isValid(grade)) {
-                if (isValid(gradingCo)) {
-                    filenameTokens.add(gradingCo);
-                }
-                filenameTokens.add(grade);
-            }
+            if (isValid(grade)) filenameTokens.add(grade);
 
             this.filenameBase = cleanFilename(String.join("-", filenameTokens)) + "-" + uniqueId;
             this.filename = this.filenameBase + ".html";
