@@ -78,11 +78,11 @@ public class ImageConverter {
                     String baseName = getBaseName(relativePath.getFileName().toString());
                     Path relativeParent = relativePath.getParent();
                     Path currentWebpOutDir = relativeParent != null ? webpOutDir.resolve(relativeParent) : webpOutDir;
-                    File mainWebpFile = currentWebpOutDir.resolve(baseName + ".webp").toFile();
                     File mainAvifFile = currentWebpOutDir.resolve(baseName + ".avif").toFile();
-                    boolean mainAvifMissing = (AVIFENC_PATH != null && !mainAvifFile.exists());
+                    File thumbAvifFile = currentWebpOutDir.resolve(baseName + "-400w.avif").toFile();
+                    boolean avifMissing = (AVIFENC_PATH != null && (!mainAvifFile.exists() || !thumbAvifFile.exists()));
 
-                    if (mainWebpFile.exists() && !mainAvifMissing && !tracker.hasChanged(file)) {
+                    if (!avifMissing && !tracker.hasChanged(file)) {
                         skippedCount.incrementAndGet();
                         continue;
                     }
@@ -120,13 +120,12 @@ public class ImageConverter {
         Path currentWebpOutDir = relativeParent != null ? webpOutDir.resolve(relativeParent) : webpOutDir;
         Files.createDirectories(currentWebpOutDir);
 
-        File mainWebpFile = currentWebpOutDir.resolve(baseName + ".webp").toFile();
-
         File mainAvifFile = currentWebpOutDir.resolve(baseName + ".avif").toFile();
-        boolean mainAvifMissing = (AVIFENC_PATH != null && !mainAvifFile.exists());
+        File thumbAvifFile = currentWebpOutDir.resolve(baseName + "-400w.avif").toFile();
+        boolean avifMissing = (AVIFENC_PATH != null && (!mainAvifFile.exists() || !thumbAvifFile.exists()));
 
         // 1. PRE-CHECK: Müssen wir dieses Bild-Set neu generieren?
-        if (mainWebpFile.exists() && !mainAvifMissing && !tracker.hasChanged(sourceFile)) {
+        if (!avifMissing && !tracker.hasChanged(sourceFile)) {
             return false;
         }
 
@@ -154,25 +153,22 @@ public class ImageConverter {
 
         // --- CLI GENERIERUNG ---
 
-        // A) Hauptbild (z.B. jordan.webp & jordan.avif)
-        writeWebpViaCLI(sourceFile, mainWebpFile, mainW, mainH, 78);
+        // A) Hauptbild (z.B. jordan.avif)
         if (AVIFENC_PATH != null) {
             writeAvifViaCLI(sourceFile, mainAvifFile, mainW, mainH, 48);
         }
 
-        // B) Responsive Varianten (z.B. jordan-400w.webp & jordan-400w.avif)
+        // B) Responsive Varianten (z.B. jordan-400w.avif, jordan-600w.avif, jordan-900w.avif)
         for (int targetW : RESPONSIVE_WIDTHS) {
-            if (targetW < mainW) {
-                int targetH = (int) (mainH * ((double) targetW / mainW));
-                File respFile = currentWebpOutDir.resolve(baseName + "-" + targetW + "w.webp").toFile();
-                int quality = (targetW <= 400) ? 70 : 75;
-                writeWebpViaCLI(sourceFile, respFile, targetW, targetH, quality);
-
-                if (AVIFENC_PATH != null) {
-                    File respAvifFile = currentWebpOutDir.resolve(baseName + "-" + targetW + "w.avif").toFile();
-                    int avifQuality = (targetW <= 400) ? 38 : (targetW <= 600 ? 40 : 44);
-                    writeAvifViaCLI(sourceFile, respAvifFile, targetW, targetH, avifQuality);
-                }
+            int w = Math.min(targetW, mainW);
+            int h = (w == mainW) ? mainH : (int) (mainH * ((double) w / mainW));
+            
+            File respAvifFile = currentWebpOutDir.resolve(baseName + "-" + targetW + "w.avif").toFile();
+            int avifQuality = (targetW <= 400) ? 38 : (targetW <= 600 ? 40 : 44);
+            if (w == mainW && mainAvifFile.exists()) {
+                Files.copy(mainAvifFile.toPath(), respAvifFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            } else if (AVIFENC_PATH != null) {
+                writeAvifViaCLI(sourceFile, respAvifFile, w, h, avifQuality);
             }
         }
 
