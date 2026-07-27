@@ -218,7 +218,12 @@ public class CardSchemaGenerator {
 
     private static String escapeHtml(String text) {
         if (text == null) return "";
-        return text.replace("&", "&amp;")
+        String unescaped = text.replace("&quot;", "\"")
+                               .replace("&amp;", "&")
+                               .replace("&#39;", "'")
+                               .replace("&lt;", "<")
+                               .replace("&gt;", ">");
+        return unescaped.replace("&", "&amp;")
                 .replace("<", "&lt;")
                 .replace(">", "&gt;")
                 .replace("\"", "&quot;")

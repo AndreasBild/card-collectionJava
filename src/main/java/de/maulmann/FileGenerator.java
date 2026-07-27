@@ -571,7 +571,12 @@ public class FileGenerator {
 
     private static String escapeHtml(String input) {
         if (input == null) return "";
-        return input.replace("&", "&amp;")
+        String unescaped = input.replace("&quot;", "\"")
+                               .replace("&amp;", "&")
+                               .replace("&#39;", "'")
+                               .replace("&lt;", "<")
+                               .replace("&gt;", ">");
+        return unescaped.replace("&", "&amp;")
                     .replace("<", "&lt;")
                     .replace(">", "&gt;")
                     .replace("\"", "&quot;")

@@ -33,7 +33,7 @@ ${topNavHtml?no_esc}
     </nav>
     <#if breadcrumbHtml??>${breadcrumbHtml?no_esc}</#if>
     <header class="detail-header">
-        <h1>${h1Title}</h1>
+        <h1>${h1Title?no_esc}</h1>
     </header>
     <div class="ai-summary">
         <p><strong>Card Snapshot:</strong> ${aiSnapshotText?no_esc}</p>
@@ -101,31 +101,31 @@ ${topNavHtml?no_esc}
             </tr>
             <tr>
                 <th class="specs-th">Player</th>
-                <td class="specs-td">${player}</td>
+                <td class="specs-td">${player?no_esc}</td>
             </tr>
             <tr>
                 <th class="specs-th">Season</th>
-                <td class="specs-td">${season}</td>
+                <td class="specs-td">${season?no_esc}</td>
             </tr>
             <tr>
                 <th class="specs-th">Team</th>
-                <td class="specs-td">${team}</td>
+                <td class="specs-td">${team?no_esc}</td>
             </tr>
             <tr>
                 <th class="specs-th">Manufacturer</th>
-                <td class="specs-td">${company}</td>
+                <td class="specs-td">${company?no_esc}</td>
             </tr>
             <tr>
                 <th class="specs-th">Brand</th>
-                <td class="specs-td">${brand}</td>
+                <td class="specs-td">${brand?no_esc}</td>
             </tr>
             <tr>
                 <th class="specs-th">Theme</th>
-                <td class="specs-td">${theme}</td>
+                <td class="specs-td">${theme?no_esc}</td>
             </tr>
             <tr>
                 <th class="specs-th">Variant</th>
-                <td class="specs-td">${variant}</td>
+                <td class="specs-td">${variant?no_esc}</td>
             </tr>
             <tr>
                 <th class="specs-th">Card Number</th>
@@ -203,7 +203,7 @@ ${topNavHtml?no_esc}
                         <div class="external-pills-wrapper">
                             <#list externalLinks as link>
                                 <a href="${link.url}" target="_blank" rel="noopener" class="external-link-pill" title="Explore ${link.name}">
-                                    <span class="pill-icon">${link.icon}</span> ${link.name} &nearr;
+                                     <span class="pill-icon">${link.icon}</span> ${link.name?no_esc} &nearr;
                                 </a>
                             </#list>
                         </div>
@@ -231,8 +231,8 @@ ${topNavHtml?no_esc}
                             </picture>
                         </div>
                         <div class="related-card-info">
-                            <span class="related-card-tag">${card.variant}</span>
-                            <h3 class="related-card-title">${card.title}</h3>
+                            <span class="related-card-tag">${card.variant?no_esc}</span>
+                            <h3 class="related-card-title">${card.title?no_esc}</h3>
                             <span class="related-card-meta">${card.season} &bull; ${card.brand}</span>
                         </div>
                     </a>

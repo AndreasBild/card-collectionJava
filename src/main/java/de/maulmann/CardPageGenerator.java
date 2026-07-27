@@ -590,7 +590,8 @@ public class CardPageGenerator {
             item.put("url", relUrl);
             item.put("link", relUrl);
 
-            String imageBaseName = c.filenameBase.substring(0, c.filenameBase.lastIndexOf("-"));
+            String rawImageBase = c.filenameBase.substring(0, c.filenameBase.lastIndexOf("-"));
+            String imageBaseName = resolveDiskImageBase(c.seasonFolder, rawImageBase);
             String thumbWebp = RELATIVE_IMAGES_PATH + "/" + c.seasonFolder + "/" + imageBaseName + "-front-400w.webp";
             String thumbAvif = RELATIVE_IMAGES_PATH + "/" + c.seasonFolder + "/" + imageBaseName + "-front-400w.avif";
             String thumbFallback = RELATIVE_IMAGES_PATH + "/" + c.seasonFolder + "/" + imageBaseName + "-front.webp";
