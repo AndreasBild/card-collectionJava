@@ -942,6 +942,36 @@ tr:hover {
     font-size: 0.85rem;
 }
 
+.rating-scale-legend {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 320px;
+    margin: 0 auto 8px auto;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.rating-scale-legend .min-point {
+    color: var(--text-muted);
+}
+
+.rating-scale-legend .max-point {
+    color: var(--accent-gold);
+    text-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+}
+
+.highlight-rating-text {
+    color: var(--accent-gold);
+    font-size: 1.2em;
+    font-weight: 800;
+    padding: 2px 6px;
+    background: rgba(212, 175, 55, 0.2);
+    border-radius: 4px;
+}
+
 .star-rating label {
     color: #4b5563;
 }

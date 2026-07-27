@@ -221,37 +221,39 @@ ${topNavHtml?no_esc}
         </div>
         <div class="rating-stars-wrapper">
             <h3>Rate this Card</h3>
+            <div class="rating-scale-legend">
+                <span class="scale-point min-point">← 0.5 ★ (Lowest)</span>
+                <span class="scale-point max-point">5.0 ★ (Highest) →</span>
+            </div>
             <div class="rating-interaction-container">
                 <div class="star-rating" id="interactive-stars">
                     <input type="radio" id="star5" name="rating" value="5"/><label class="full" for="star5"
-                                                                                   title="Exceptional"></label>
+                                                                                   title="5.0 ★ (Exceptional - Highest Rating)"></label>
                     <input type="radio" id="star4half" name="rating" value="4.5"/><label class="half" for="star4half"
-                                                                                         title="Very Good"></label>
+                                                                                         title="4.5 ★ (Very Good)"></label>
                     <input type="radio" id="star4" name="rating" value="4"/><label class="full" for="star4"
-                                                                                   title="Good"></label>
+                                                                                   title="4.0 ★ (Good)"></label>
                     <input type="radio" id="star3half" name="rating" value="3.5"/><label class="half" for="star3half"
-                                                                                         title="Nice"></label>
+                                                                                         title="3.5 ★ (Nice)"></label>
                     <input type="radio" id="star3" name="rating" value="3"/><label class="full" for="star3"
-                                                                                   title="Average"></label>
+                                                                                   title="3.0 ★ (Average)"></label>
                     <input type="radio" id="star2half" name="rating" value="2.5"/><label class="half" for="star2half"
-                                                                                         title="Ok"></label>
+                                                                                         title="2.5 ★ (Ok)"></label>
                     <input type="radio" id="star2" name="rating" value="2"/><label class="full" for="star2"
-                                                                                   title="Acceptable"></label>
+                                                                                   title="2.0 ★ (Acceptable)"></label>
                     <input type="radio" id="star1half" name="rating" value="1.5"/><label class="half" for="star1half"
-                                                                                         title="Not Good"></label>
+                                                                                         title="1.5 ★ (Not Good)"></label>
                     <input type="radio" id="star1" name="rating" value="1"/><label class="full" for="star1"
-                                                                                   title="Poor"></label>
+                                                                                   title="1.0 ★ (Poor)"></label>
                     <input type="radio" id="star0half" name="rating" value="0.5"/><label class="half" for="star0half"
-                                                                                         title="Very Poor"></label>
+                                                                                         title="0.5 ★ (Very Poor - Lowest Rating)"></label>
                 </div>
-                <div id="rating-value-label" class="rating-label">Rate it!</div>
+                <div id="rating-value-label" class="rating-label">Hover stars (0.5 = Lowest, 5.0 = Highest)</div>
             </div>
             <div id="rating-confirmation" class="rating-confirmation" style="display: none;">
-                <p>Your Rating: <span id="selected-rating-text">0</span> Stars. Send it now?</p>
+                <p>Selected: <span id="selected-rating-text" class="highlight-rating-text">5.0</span> Stars (<span id="selected-rating-desc">Exceptional</span>). Confirm submission?</p>
                 <div class="confirmation-buttons">
-                    <button id="submit-rating-btn" class="modern-button confirm-btn" title="Submit Rating">Submit
-                        Rating
-                    </button>
+                    <button id="submit-rating-btn" class="modern-button confirm-btn" title="Submit Rating">Submit Rating</button>
                     <button id="cancel-rating-btn" class="cancel-btn" title="Cancel Rating">Cancel</button>
                 </div>
             </div>
@@ -526,6 +528,19 @@ ${topNavHtml?no_esc}
     if (likeBtn) likeBtn.addEventListener('click', () => handleVote('likes'));
     if (dislikeBtn) dislikeBtn.addEventListener('click', () => handleVote('dislikes'));
 
+    const ratingDescMap = {
+        '5': 'Exceptional - Highest Rating',
+        '4.5': 'Very Good',
+        '4': 'Good',
+        '3.5': 'Nice',
+        '3': 'Average',
+        '2.5': 'Ok',
+        '2': 'Acceptable',
+        '1.5': 'Not Good',
+        '1': 'Poor',
+        '0.5': 'Very Poor - LOWEST RATING'
+    };
+
     starLabels.forEach(label => {
         label.addEventListener('mouseenter', (e) => {
             if (!localStorage.getItem(localStorageRatingKey) && ratingLabel) {
@@ -538,16 +553,20 @@ ${topNavHtml?no_esc}
     if (interactiveStars) {
         interactiveStars.addEventListener('mouseleave', () => {
             if (!localStorage.getItem(localStorageRatingKey) && ratingLabel) {
-                ratingLabel.textContent = "Rate it!";
+                ratingLabel.textContent = "Hover stars (0.5 = Lowest, 5.0 = Highest)";
             }
         });
     }
+
+    const selectedRatingDesc = document.getElementById('selected-rating-desc');
 
     starInputs.forEach(input => {
         input.addEventListener('change', (e) => {
             if (localStorage.getItem(localStorageRatingKey)) return;
             pendingRating = e.target.value;
             if (selectedRatingText) selectedRatingText.textContent = pendingRating;
+            if (selectedRatingDesc) selectedRatingDesc.textContent = ratingDescMap[pendingRating] || "";
+            if (ratingLabel) ratingLabel.textContent = e.target.title;
             if (ratingConfirmation) {
                 ratingConfirmation.style.display = 'block';
                 ratingConfirmation.scrollIntoView({behavior: 'smooth', block: 'nearest'});
@@ -561,6 +580,7 @@ ${topNavHtml?no_esc}
             if (ratingConfirmation) ratingConfirmation.style.display = 'none';
             pendingRating = null;
             starInputs.forEach(input => input.checked = false);
+            if (ratingLabel) ratingLabel.textContent = "Hover stars (0.5 = Lowest, 5.0 = Highest)";
         });
     }
 </script>
