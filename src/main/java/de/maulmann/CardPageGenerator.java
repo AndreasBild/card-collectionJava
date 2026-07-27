@@ -35,7 +35,7 @@ public class CardPageGenerator {
     private static final Logger log = LoggerFactory.getLogger(CardPageGenerator.class);
     public static final String ROOT = "../../";
 
-    private static final List<String> duplicateLog = new ArrayList<>();
+    private static final List<String> duplicateLog = Collections.synchronizedList(new ArrayList<>());
     private static final TriviaManager triviaManager = new TriviaManager();
     private static final FirebaseConfigManager firebaseConfigManager = new FirebaseConfigManager();
     private static TimestampTracker timestampTracker;
@@ -331,7 +331,7 @@ public class CardPageGenerator {
 
         String seasonImgFolder = RELATIVE_IMAGES_PATH + "/" + c.seasonFolder;
         String imageBaseName = c.filenameBase.substring(0, c.filenameBase.lastIndexOf("-"));
-        String resolvedImageBase = resolveDiskImageBase(c.seasonFolder, imageBaseName);
+        String resolvedImageBase = resolveDiskImageBase(c.seasonFolder, imageBaseName, c);
 
         String frontImgPath = seasonImgFolder + "/" + resolvedImageBase + "-front.avif";
         String backImgPath = seasonImgFolder + "/" + resolvedImageBase + "-back.avif";
@@ -606,7 +606,7 @@ public class CardPageGenerator {
             item.put("link", relUrl);
 
             String rawImageBase = c.filenameBase.substring(0, c.filenameBase.lastIndexOf("-"));
-            String imageBaseName = resolveDiskImageBase(c.seasonFolder, rawImageBase);
+            String imageBaseName = resolveDiskImageBase(c.seasonFolder, rawImageBase, c);
             String thumbAvif = RELATIVE_IMAGES_PATH + "/" + c.seasonFolder + "/" + imageBaseName + "-front-400w.avif";
             String thumbFallback = RELATIVE_IMAGES_PATH + "/" + c.seasonFolder + "/" + imageBaseName + "-front.avif";
 
@@ -831,12 +831,12 @@ public class CardPageGenerator {
         return value != null && !value.trim().isEmpty() && !value.equals("0");
     }
 
-    private static String resolveDiskImageBase(String seasonFolder, String imageBaseName) {
+    private static String resolveDiskImageBase(String seasonFolder, String imageBaseName, CardData c) {
         String cacheKey = seasonFolder + ":" + imageBaseName;
-        return DISK_IMAGE_CACHE.computeIfAbsent(cacheKey, k -> resolveDiskImageBaseInternal(seasonFolder, imageBaseName));
+        return DISK_IMAGE_CACHE.computeIfAbsent(cacheKey, k -> resolveDiskImageBaseInternal(seasonFolder, imageBaseName, c));
     }
 
-    private static String resolveDiskImageBaseInternal(String seasonFolder, String imageBaseName) {
+    private static String resolveDiskImageBaseInternal(String seasonFolder, String imageBaseName, CardData c) {
         if (checkExists(seasonFolder, imageBaseName)) return imageBaseName;
 
         String altBase = imageBaseName.replaceAll("-sn(\\d+)-\\d+", "-sn$1");
@@ -850,6 +850,8 @@ public class CardPageGenerator {
 
         String altVariant2 = imageBaseName.replaceAll("-[^-]+-[^-]+-(\\d+|[A-Z0-9]+)$", "-Base-$1");
         if (checkExists(seasonFolder, altVariant2)) return altVariant2;
+
+        String playerPrefix = cleanFilename(getPrimaryPlayer(c));
 
         try {
             Path seasonPath = Paths.get("images", seasonFolder);
@@ -874,6 +876,11 @@ public class CardPageGenerator {
                 String base = f.getFileName().toString()
                         .replaceAll("-front\\.(jpg|png|avif|webp)$", "")
                         .replaceAll("-\\d+w$", "");
+
+                if (!base.startsWith(playerPrefix)) {
+                    continue;
+                }
+
                 Set<String> fTokens = new HashSet<>(Arrays.asList(base.split("-")));
                 Set<String> intersection = new HashSet<>(tokens);
                 intersection.retainAll(fTokens);
