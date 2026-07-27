@@ -240,8 +240,7 @@ public class FileGenerator {
                 Path jsonPath = Paths.get(pathSource, "json", coll.toLowerCase() + ".json");
                 String tableHtml = "";
                 if (Files.exists(jsonPath)) {
-                    com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
-                    List<CardJson> cardList = mapper.readValue(jsonPath.toFile(), mapper.getTypeFactory().constructCollectionType(List.class, CardJson.class));
+                    List<CardJson> cardList = CardDataLoader.loadCardsFromJson(jsonPath.toString());
                     tableHtml = generateHtmlTableFromJson(cardList);
                 }
 
@@ -535,15 +534,7 @@ public class FileGenerator {
     }
 
     public static List<CardJson> loadCardsFromJson() {
-        File jsonFile = new File(pathSource + "json/cards.json");
-        if (!jsonFile.exists()) return Collections.emptyList();
-        try {
-            com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
-            return mapper.readValue(jsonFile, mapper.getTypeFactory().constructCollectionType(List.class, CardJson.class));
-        } catch (Exception e) {
-            System.err.println("Failed to read cards.json: " + e.getMessage());
-            return Collections.emptyList();
-        }
+        return CardDataLoader.loadCardsFromJson(pathSource + "json/cards.json");
     }
 
     public static List<CardJson> filterDuplicateJsonCards(List<CardJson> rawCards) {

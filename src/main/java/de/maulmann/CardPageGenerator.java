@@ -1,31 +1,38 @@
 package de.maulmann;
 
-import org.jsoup.Jsoup;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
-import java.io.StringWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.Comparator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * High-speed parallel Card Page Generator for generating rich HTML detail pages.
+ */
 public class CardPageGenerator {
 
     private static final String BASE_FOLDER = "output/cards";
@@ -51,28 +58,13 @@ public class CardPageGenerator {
         fmConfig.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
     }
 
-    static class CardData {
+    public static class CardData {
         Map<String, String> attributes;
         String stableId;
         String filenameBase;
         String filename;
         String seasonFolder;
         String fullRelativePath;
-
-        public CardData(Map<String, String> attributes, String uniqueId) {
-            this.attributes = new HashMap<>(attributes);
-            this.stableId = uniqueId;
-
-            String currentTeam = this.attributes.get("Team");
-            if (!isValid(currentTeam)) {
-                String player = this.attributes.get("Player");
-                if (player != null && player.startsWith("Juwan Howard")) {
-                    String calculatedTeam = getTeamBySeason(this.attributes.get("Season"));
-                    this.attributes.put("Team", calculatedTeam);
-                }
-            }
-            calculatePaths(uniqueId);
-        }
 
         public CardData(CardJson c, String uniqueId) {
             this.attributes = new HashMap<>();
@@ -98,15 +90,9 @@ public class CardPageGenerator {
             this.attributes.put("Memorabilia", memVal);
             this.attributes.put("Game Used", memVal);
             this.attributes.put("Mem / Patch", memVal);
-            this.attributes.put("isPatch", memVal);
 
-            String rookieVal = c.isRookie ? "Yes" : "No";
-            this.attributes.put("Rookie", rookieVal);
-            this.attributes.put("Rookie Card", rookieVal);
-            this.attributes.put("isRookie", rookieVal);
-
-            String calculatedId = generateStableId(this.attributes);
-            this.stableId = (uniqueId != null && !uniqueId.isEmpty()) ? uniqueId : calculatedId;
+            String rkVal = c.isRookie ? "Yes" : "No";
+            this.attributes.put("Rookie", rkVal);
 
             String currentTeam = this.attributes.get("Team");
             if (!isValid(currentTeam)) {
@@ -116,6 +102,13 @@ public class CardPageGenerator {
                     this.attributes.put("Team", calculatedTeam);
                 }
             }
+
+            if (uniqueId != null && !uniqueId.isEmpty()) {
+                this.stableId = uniqueId;
+            } else {
+                this.stableId = generateStableId(this.attributes);
+            }
+
             calculatePaths(this.stableId);
         }
 
@@ -164,50 +157,22 @@ public class CardPageGenerator {
         }
 
         public String get(String key) {
-            if (key == null) return "";
-            String val = attributes.get(key);
-            if (val != null) return val.trim();
-
-            String lower = key.toLowerCase();
-            for (Map.Entry<String, String> entry : attributes.entrySet()) {
-                if (entry.getKey().toLowerCase().equals(lower)) {
-                    return entry.getValue().trim();
-                }
-            }
-
-            if (lower.equals("autograph") || lower.equals("auto") || lower.equals("isautograph")) {
-                String a = attributes.get("Autograph");
-                if (a == null) a = attributes.get("Auto");
-                return a != null ? a.trim() : "";
-            }
-            if (lower.equals("memorabilia") || lower.equals("game used") || lower.equals("mem / patch") || lower.equals("ispatch")) {
-                String m = attributes.get("Memorabilia");
-                if (m == null) m = attributes.get("Game Used");
-                if (m == null) m = attributes.get("Mem / Patch");
-                return m != null ? m.trim() : "";
-            }
-            if (lower.equals("rookie") || lower.equals("rookie card") || lower.equals("isrookie")) {
-                String r = attributes.get("Rookie");
-                if (r == null) r = attributes.get("Rookie Card");
-                return r != null ? r.trim() : "";
-            }
-            return "";
+            return attributes.getOrDefault(key, "");
         }
 
         public boolean has(String key) {
-            String val = get(key);
-            return isValid(val) && !val.equalsIgnoreCase("No") && !val.equalsIgnoreCase("None");
+            String val = attributes.get(key);
+            return isValid(val);
         }
     }
 
     public static void run() {
         log.info("Starting high-speed Card Page Generation...");
         long startTime = System.currentTimeMillis();
-
         duplicateLog.clear();
-        duplicateLog.add("FILTERED DUPLICATES LOG");
-        duplicateLog.add("=======================");
-        duplicateLog.add("These un-numbered base/insert cards were skipped during HTML generation because a duplicate already exists in the collection.\n");
+        duplicateLog.add("=== DUPLICATE CARDS LOG ===");
+        duplicateLog.add("Generated: " + new java.util.Date());
+        duplicateLog.add("This file lists all un-numbered cards that were filtered out to prevent duplicate pages.\n");
 
         Path cardsDir = Paths.get(BASE_FOLDER);
         if (Files.exists(cardsDir)) {
@@ -220,7 +185,7 @@ public class CardPageGenerator {
             }
         }
 
-        List<CardJson> jsonCards = FileGenerator.loadCardsFromJson();
+        List<CardJson> jsonCards = CardDataLoader.loadCardsFromJson("content/json/cards.json");
         if (!jsonCards.isEmpty()) {
             log.info("Generating Juwan Howard card pages from content/json/cards.json ({} cards)...", jsonCards.size());
             List<CardData> juwanCards = new ArrayList<>();
@@ -231,8 +196,6 @@ public class CardPageGenerator {
             log.info("Deduplication complete: {} cards queued for generation (skipped {} un-numbered duplicates).",
                     filteredJuwanCards.size(), (juwanCards.size() - filteredJuwanCards.size()));
             generateSubPagesMultithreaded(filteredJuwanCards, "Juwan-Howard-Collection.html");
-        } else {
-            processCollection("output/Juwan-Howard-Collection.html", "output/Juwan-Howard-Collection.html", "Juwan-Howard-Collection.html");
         }
 
         Map<String, String> otherJsonBuckets = Map.of(
@@ -245,8 +208,8 @@ public class CardPageGenerator {
         for (Map.Entry<String, String> entry : otherJsonBuckets.entrySet()) {
             String jsonPath = entry.getKey();
             String overviewPage = entry.getValue();
-            
-            List<CardJson> cards = loadCardsFromJsonFile(jsonPath);
+
+            List<CardJson> cards = CardDataLoader.loadCardsFromJson(jsonPath);
             if (!cards.isEmpty()) {
                 log.info("Generating subpages from {} ({} cards)...", jsonPath, cards.size());
                 List<CardData> cardDataList = new ArrayList<>();
@@ -268,19 +231,6 @@ public class CardPageGenerator {
 
         long endTime = System.currentTimeMillis();
         log.info("All card pages generated in {} ms.", (endTime - startTime));
-    }
-
-    private static final com.fasterxml.jackson.databind.ObjectMapper JSON_MAPPER = new com.fasterxml.jackson.databind.ObjectMapper();
-
-    public static List<CardJson> loadCardsFromJsonFile(String jsonPath) {
-        File jsonFile = new File(jsonPath);
-        if (!jsonFile.exists()) return Collections.emptyList();
-        try {
-            return JSON_MAPPER.readValue(jsonFile, new com.fasterxml.jackson.core.type.TypeReference<List<CardJson>>() {});
-        } catch (IOException e) {
-            log.error("Failed to load cards from " + jsonPath, e);
-            return Collections.emptyList();
-        }
     }
 
     public static void main(String[] args) {
@@ -322,77 +272,6 @@ public class CardPageGenerator {
         return filteredCards;
     }
 
-    private static void processCollection(String inputPath, String outputPath, String overviewPage) {
-        try {
-            File input = new File(inputPath);
-            if (!input.exists()) return;
-
-            Document doc = Jsoup.parse(input, "UTF-8");
-            Elements tables = doc.select("table");
-            if (tables.isEmpty()) return;
-
-            List<CardData> rawCards = new ArrayList<>();
-
-            for (Element table : tables) {
-                extractTableDataAndUpdateDom(table, rawCards);
-            }
-
-            if (rawCards.isEmpty()) return;
-
-            List<CardData> filteredCards = filterDuplicateCards(rawCards, overviewPage);
-
-            updateDomLinks(tables, filteredCards);
-
-            File outIndex = new File(outputPath);
-            if (outIndex.getParentFile() != null) outIndex.getParentFile().mkdirs();
-            Files.writeString(outIndex.toPath(), doc.outerHtml(), StandardCharsets.UTF_8);
-
-            generateSubPagesMultithreaded(filteredCards, overviewPage);
-
-        } catch (IOException e) {
-            log.error("Error processing collection " + inputPath, e);
-        }
-    }
-
-    private static void extractTableDataAndUpdateDom(Element table, List<CardData> globalCardList) {
-        Elements rows = table.select("tr");
-        if (rows.isEmpty()) return;
-
-        int headerRowIndex = -1;
-        String[] headers = null;
-
-        for (int i = 0; i < rows.size(); i++) {
-            Elements cells = rows.get(i).children();
-            if (cells.isEmpty()) continue;
-            headers = new String[cells.size()];
-            for (int j = 0; j < cells.size(); j++) {
-                headers[j] = cells.get(j).text().trim();
-            }
-            if (headers.length > 0) {
-                headerRowIndex = i;
-                break;
-            }
-        }
-
-        if (headerRowIndex == -1) return;
-
-        for (int i = headerRowIndex + 1; i < rows.size(); i++) {
-            Element row = rows.get(i);
-            Elements cols = row.children();
-            if (cols.isEmpty()) continue;
-
-            Map<String, String> dataMap = new HashMap<>();
-            for (int j = 0; j < cols.size() && j < headers.length; j++) {
-                dataMap.put(headers[j], cols.get(j).text().trim());
-            }
-
-            String stableId = generateStableId(dataMap);
-            CardData currentCard = new CardData(dataMap, stableId);
-            globalCardList.add(currentCard);
-            row.attr("data-card-id", stableId);
-        }
-    }
-
     public static String generateStableId(Map<String, String> attributes) {
         String[] relevantKeys = {
                 "Player", "Team", "Season", "Company", "Brand",
@@ -423,50 +302,6 @@ public class CardPageGenerator {
             return hexString.toString();
         } catch (NoSuchAlgorithmException e) {
             return String.valueOf(sb.toString().hashCode());
-        }
-    }
-
-    private static void updateDomLinks(Elements tables, List<CardData> filteredCards) {
-        Map<String, CardData> approvedCardMap = filteredCards.stream()
-                .collect(Collectors.toMap(c -> c.stableId, c -> c, (a, b) -> a));
-
-        for (Element table : tables) {
-            Elements rows = table.select("tr");
-            int playerColIndex = 0;
-
-            if (!rows.isEmpty()) {
-                Elements headers = rows.getFirst().children();
-                for (int j = 0; j < headers.size(); j++) {
-                    if (headers.get(j).text().trim().equalsIgnoreCase("Player")) {
-                        playerColIndex = j;
-                        break;
-                    }
-                }
-            }
-
-            for (Element row : rows) {
-                String rowId = row.attr("data-card-id");
-                if (rowId.isEmpty()) continue;
-
-                CardData matchingCard = approvedCardMap.get(rowId);
-                if (matchingCard != null) {
-                    Elements cols = row.children();
-                    if (cols.size() > playerColIndex) {
-                        Element playerCell = cols.get(playerColIndex);
-                        row.attr("id", matchingCard.filenameBase);
-                        String originalText = playerCell.text();
-                        playerCell.empty();
-                        playerCell.appendElement("a")
-                                .attr("href", matchingCard.fullRelativePath)
-                                .attr("class", "table-button")
-                                .attr("title", "View details for " + matchingCard.get("Season") + " " + matchingCard.get("Brand") + " #" + matchingCard.get("Number"))
-                                .text(originalText);
-                    }
-                    row.removeAttr("data-card-id");
-                } else {
-                    row.remove();
-                }
-            }
         }
     }
 
@@ -507,10 +342,10 @@ public class CardPageGenerator {
         Map<String, Object> data = new HashMap<>();
         data.put("cardId", c.stableId);
 
-        String faqHtml = generateFaqHtml(c);
+        String faqHtml = CardSchemaGenerator.generateFaqHtml(c);
         String frontImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + imageBaseName + "-front.webp";
         data.put("headHtml", SharedTemplates.getHead(browserTitle, metaDesc, ROOT, c.fullRelativePath, frontImgUrl));
-        data.put("jsonLd", generateJsonLd(c, metaDesc, h1Title, overviewPage, imageBaseName, faqHtml));
+        data.put("jsonLd", CardSchemaGenerator.generateJsonLd(c, metaDesc, h1Title, overviewPage, imageBaseName, faqHtml));
         data.put("topNavHtml", SharedTemplates.getTopNav(ROOT, "collection"));
 
         List<Map<String, String>> breadcrumbItems = new ArrayList<>();
@@ -560,8 +395,8 @@ public class CardPageGenerator {
         String grading = c.get("Grading Co.") + " " + c.get("Grade");
         data.put("grading", (grading.trim().length() > 1 && !grading.trim().equals("null null")) ? grading : "");
 
-        data.put("hobbyTrivia", getHobbyTrivia(c));
-        data.put("techTrivia", getCardTechTrivia(c));
+        data.put("hobbyTrivia", triviaManager.getTrivia("hobbyTrivia", c.attributes));
+        data.put("techTrivia", triviaManager.getTrivia("cardTechTrivia", c.attributes));
         data.put("playerHighlights", getSeasonHighlights(c.get("Season"), c.get("Player")));
         data.put("eraContext", getNbaEraContext(c.get("Season"), c.get("Player")));
         data.put("cardBackText", "");
@@ -589,391 +424,286 @@ public class CardPageGenerator {
             }
 
             Files.writeString(path, finalHtml, StandardCharsets.UTF_8);
+
         } catch (Exception e) {
-            log.error("Failed to process FreeMarker template for " + c.filename, e);
+            log.error("Error generating detail page for " + path, e);
         }
-    }
-
-    private static String getHobbyTrivia(CardData c) {
-        return triviaManager.getTrivia("hobbyTrivia", c.attributes);
-    }
-
-    private static String getCardTechTrivia(CardData c) {
-        return triviaManager.getTrivia("techTrivia", c.attributes);
-    }
-
-    private static String getSeasonHighlights(String season, String player) {
-        Map<String, String> context = new HashMap<>();
-        context.put("Season", season);
-        context.put("Player", player);
-        return triviaManager.getTrivia("playerHighlights", context);
-    }
-
-    private static String getNbaEraContext(String season, String player) {
-        Map<String, String> context = new HashMap<>();
-        context.put("Season", season);
-        context.put("Player", player);
-        return triviaManager.getTrivia("eraContext", context);
-    }
-
-    private static List<Map<String, String>> findRelatedCards(CardData current, List<CardData> allCards, int limit) {
-        if (allCards == null || allCards.size() <= 1) return Collections.emptyList();
-
-        class ScoredCard {
-            CardData card;
-            int score;
-            ScoredCard(CardData card, int score) { this.card = card; this.score = score; }
-        }
-
-        List<ScoredCard> scored = new ArrayList<>();
-        String curTheme = current.get("Theme").toLowerCase();
-        String curVariant = current.get("Variant").toLowerCase();
-        String curBrand = current.get("Brand").toLowerCase();
-        String curCompany = current.get("Company").toLowerCase();
-        String curSeason = current.get("Season").toLowerCase();
-
-        for (CardData other : allCards) {
-            if (other.stableId != null && other.stableId.equals(current.stableId)) continue;
-
-            int score = 0;
-            String oTheme = other.get("Theme").toLowerCase();
-            String oVariant = other.get("Variant").toLowerCase();
-            String oBrand = other.get("Brand").toLowerCase();
-            String oCompany = other.get("Company").toLowerCase();
-            String oSeason = other.get("Season").toLowerCase();
-
-            if (!curTheme.isEmpty() && !curTheme.equals("-") && oTheme.equals(curTheme)) score += 4;
-            if (!curVariant.isEmpty() && !curVariant.equals("-") && oVariant.equals(curVariant)) score += 4;
-            if (!curBrand.isEmpty() && !curBrand.equals("-") && oBrand.equals(curBrand)) score += 3;
-            if (!curSeason.isEmpty() && !curSeason.equals("-") && oSeason.equals(curSeason)) score += 2;
-            if (!curCompany.isEmpty() && !curCompany.equals("-") && oCompany.equals(curCompany)) score += 1;
-
-            if (score > 0) {
-                scored.add(new ScoredCard(other, score));
-            }
-        }
-
-        scored.sort((a, b) -> Integer.compare(b.score, a.score));
-
-        List<Map<String, String>> result = new ArrayList<>();
-        for (int i = 0; i < Math.min(limit, scored.size()); i++) {
-            CardData other = scored.get(i).card;
-            Map<String, String> m = new HashMap<>();
-            m.put("title", generateH1(other));
-            m.put("url", "../" + other.seasonFolder + "/" + other.filename);
-
-            String imageBaseName = other.filenameBase.substring(0, other.filenameBase.lastIndexOf("-"));
-            String basePath = RELATIVE_IMAGES_PATH + "/" + other.seasonFolder + "/" + imageBaseName + "-front";
-            String diskPath400Avif = "output/images/" + other.seasonFolder + "/" + imageBaseName + "-front-400w.avif";
-            String diskPath400Webp = "output/images/" + other.seasonFolder + "/" + imageBaseName + "-front-400w.webp";
-
-            String thumbAvif = new File(diskPath400Avif).exists() ? (basePath + "-400w.avif") : (basePath + ".avif");
-            String thumbWebp = new File(diskPath400Webp).exists() ? (basePath + "-400w.webp") : (basePath + ".webp");
-
-            m.put("thumbAvif", thumbAvif);
-            m.put("thumbWebp", thumbWebp);
-            m.put("thumb", thumbWebp);
-            m.put("season", isValid(other.get("Season")) ? other.get("Season") : "NBA");
-            m.put("variant", isValid(other.get("Variant")) ? other.get("Variant") : (isValid(other.get("Theme")) ? other.get("Theme") : "Base Card"));
-            m.put("brand", isValid(other.get("Brand")) ? other.get("Brand") : other.get("Company"));
-            result.add(m);
-        }
-        return result;
-    }
-
-    private static List<Map<String, String>> generateExternalLinks(CardData c) {
-        List<Map<String, String>> links = new ArrayList<>();
-        String p = getPrimaryPlayer(c);
-        if (p.equalsIgnoreCase("Juwan Howard")) {
-            links.add(Map.of("name", "Basketball-Reference Stats", "url", "https://www.basketball-reference.com/players/h/howarju01.html", "icon", "📊"));
-            links.add(Map.of("name", "Wikipedia Bio", "url", "https://en.wikipedia.org/wiki/Juwan_Howard", "icon", "📖"));
-            links.add(Map.of("name", "Fab Five NCAA Era", "url", "https://en.wikipedia.org/wiki/Fab_Five_(University_of_Michigan)", "icon", "🏀"));
-        } else if (isValid(p)) {
-            String wikiUrl = "https://en.wikipedia.org/wiki/" + p.replace(" ", "_");
-            links.add(Map.of("name", p + " Wikipedia", "url", wikiUrl, "icon", "📖"));
-        }
-        return links;
-    }
-
-    private static String getTeamBySeason(String season) {
-        if (season == null || season.isEmpty()) return "Unknown Team";
-        String s = season.trim();
-        if (s.startsWith("1994") || s.startsWith("1995") || s.startsWith("1996")) return "Washington Bullets";
-        if (s.startsWith("1997") || s.startsWith("1998") || s.startsWith("1999") || s.startsWith("2000")) return "Washington Wizards";
-        if (s.startsWith("2001")) return "Dallas Mavericks";
-        if (s.startsWith("2002")) return "Denver Nuggets";
-        if (s.startsWith("2003")) return "Orlando Magic";
-        if (s.startsWith("2004") || s.startsWith("2005") || s.startsWith("2006")) return "Houston Rockets";
-        if (s.startsWith("2007")) return "Dallas Mavericks";
-        if (s.startsWith("2008")) return "Charlotte Bobcats";
-        if (s.startsWith("2009")) return "Portland Trail Blazers";
-        if (s.startsWith("2010") || s.startsWith("2011") || s.startsWith("2012")) return "Miami Heat";
-        return "NBA";
-    }
-
-    private static String generateH1(CardData c) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(formatMulti(c.get("Player"))).append(" ");
-        sb.append(c.get("Season")).append(" ");
-        sb.append(c.get("Company")).append(" ");
-        sb.append(c.get("Brand")).append(" ");
-        if (c.has("Theme") && !c.get("Brand").contains(c.get("Theme"))) sb.append(" ").append(c.get("Theme"));
-        if (c.has("Variant")) sb.append(" ").append(c.get("Variant"));
-        if (c.has("Number")) sb.append(" #").append(c.get("Number"));
-        return sb.toString().replaceAll("\\s+", " ").trim();
     }
 
     private static String generateBrowserTitle(CardData c, String overviewPage) {
         String player = getPrimaryPlayer(c);
-        if (!isValid(player)) player = "Card";
-        return generateH1(c) + " | " + player + " Private Collection";
+        String number = c.has("Number") ? " #" + c.get("Number") : "";
+        String brand = c.get("Brand");
+        String season = c.get("Season");
+        return player + " " + season + " " + brand + number + " | " + player + " Private Collection";
+    }
+
+    private static String generateH1(CardData c) {
+        String player = formatMulti(c.get("Player"));
+        String season = c.get("Season");
+        String company = c.get("Company");
+        String brand = c.get("Brand");
+        String theme = c.get("Theme");
+        String variant = c.get("Variant");
+        String number = c.has("Number") ? " #" + c.get("Number") : "";
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(season).append(" ").append(company).append(" ").append(brand);
+        if (isValid(theme) && !theme.equalsIgnoreCase(brand)) {
+            sb.append(" ").append(theme);
+        }
+        if (isValid(variant) && !variant.equalsIgnoreCase("Base")) {
+            sb.append(" ").append(variant);
+        }
+        sb.append(number).append(" - ").append(player);
+        return sb.toString();
+    }
+
+    private static String generateMetaDescription(CardData c) {
+        String player = getPrimaryPlayer(c);
+        String season = c.get("Season");
+        String company = c.get("Company");
+        String brand = c.get("Brand");
+        String theme = c.get("Theme");
+        String variant = c.get("Variant");
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("View details for the ").append(season).append(" ").append(brand).append(" ").append(player);
+
+        if (c.has("Number")) {
+            sb.append(" card #").append(c.get("Number"));
+        }
+        sb.append(" from our ").append(player).append(" Private Collection. ");
+
+        if (isValid(variant) && !variant.equalsIgnoreCase("Base")) {
+            sb.append("Rare ").append(variant).append(" variant. ");
+        } else if (isValid(theme) && !theme.equalsIgnoreCase(brand)) {
+            sb.append("Features ").append(theme).append(" design. ");
+        }
+
+        String serial = c.get("Serial/Print Run");
+        if (isValid(serial)) {
+            sb.append("Numbered ").append(serial).append(". ");
+        }
+
+        sb.append("A must-see for any ").append(player).append(" Super Collector. High-res scans and hobby history.");
+
+        String result = sb.toString();
+        if (result.length() > 160) {
+            result = result.substring(0, 157) + "...";
+        }
+        return result;
     }
 
     private static String generateAltText(CardData c, String view) {
-        String base = formatMulti(c.get("Player")) + " " + c.get("Season") + " " + c.get("Brand") + " #" + c.get("Number");
+        String base = c.get("Season") + " " + c.get("Brand") + " " + formatMulti(c.get("Player"));
         if (view.equals("front")) return "Front scan of " + base + " - " + c.get("Variant") + " edition (" + formatMulti(c.get("Team")) + ") - "+getPrimaryPlayer(c) + " Collector Private Collection";
         else return "Back scan of " + base + " showing stats for " + formatMulti(c.get("Team")) + " - " +getPrimaryPlayer(c) + " Collector Private Collection";
     }
 
-    private static String generateMetaDescription(CardData c) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("View details for the ").append(c.get("Season")).append(" ").append(c.get("Brand")).append(" ");
-        sb.append(formatMulti(c.get("Player"))).append(" card #").append(c.get("Number")).append(" from our ").append(getPrimaryPlayer(c)).append(" Private Collection. ");
-        if (c.has("Variant")) sb.append("Rare ").append(c.get("Variant")).append(" variant. ");
-        String combinedSerial = c.get("Serial/Print Run");
-        if (isValid(combinedSerial)) {
-            if (combinedSerial.contains("1/1") || combinedSerial.equals("1")) sb.append("Includes 1/1 Masterpiece details. ");
-            else sb.append("Serial numbered ").append(combinedSerial).append(". ");
-        }
-        else if (c.has("Serial")) {
-            if (c.get("Serial").equals("1") && c.get("Print Run").equals("1")) sb.append("One-of-One (1/1) Masterpiece. ");
-            else sb.append("Numbered ").append(c.get("Serial")).append("/").append(c.get("Print Run")).append(". ");
-        }
-        sb.append("A must-see for any ").append(c.get("Player")).append(" Super Collector. High-res scans and hobby history.");
-        return sb.toString();
-    }
-
     private static String generateAiSnapshotText(CardData c) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("View details for the ");
-        sb.append("<strong>").append(escapeHtml(c.get("Season"))).append(" ").append(escapeHtml(c.get("Brand"))).append(" ").append(escapeHtml(formatMulti(c.get("Player")))).append("</strong>");
-        sb.append(" card #").append(escapeHtml(c.get("Number"))).append(" from our ").append(escapeHtml(getPrimaryPlayer(c))).append(" Private Collection. ");
-
-        if (c.has("Variant")) {
-            sb.append("Rare <strong>").append(escapeHtml(c.get("Variant"))).append("</strong> variant. ");
-        }
-
-        String combinedSerial = c.get("Serial/Print Run");
-        if (isValid(combinedSerial)) {
-            if (combinedSerial.contains("1/1") || combinedSerial.equals("1")) {
-                sb.append("Includes <strong>1/1 Masterpiece</strong> details. ");
-            } else {
-                sb.append("Serial numbered <strong>").append(escapeHtml(combinedSerial)).append("</strong>. ");
-            }
-        } else if (c.has("Serial")) {
-            if (c.get("Serial").equals("1") && c.get("Print Run").equals("1")) {
-                sb.append("One-of-One (<strong>1/1</strong>) Masterpiece. ");
-            } else {
-                sb.append("Numbered <strong>").append(escapeHtml(c.get("Serial"))).append("/").append(escapeHtml(c.get("Print Run"))).append("</strong>. ");
-            }
-        }
-        sb.append("A must-see for any ").append(escapeHtml(getPrimaryPlayer(c))).append(" Super Collector. High-res scans and hobby history.");
-        return sb.toString();
-    }
-
-    private static boolean isHolyGrail(CardData c) {
-        String theme = c.get("Theme").toLowerCase();
-        String brand = c.get("Brand").toLowerCase();
-        String variant = c.get("Variant").toLowerCase();
-        List<String> grails = Arrays.asList("pmg", "precious metal gems", "star rubies", "legacy collection", "masterpiece", "1/1", "essential credentials");
-        return grails.stream().anyMatch(g -> theme.contains(g) || brand.contains(g) || variant.contains(g));
-    }
-
-    private static String generateFaqHtml(CardData c) {
-        StringBuilder sb = new StringBuilder();
+        String player = formatMulti(c.get("Player"));
         String season = c.get("Season");
         String company = c.get("Company");
         String brand = c.get("Brand");
         String theme = c.get("Theme");
         String variant = c.get("Variant");
         String number = c.get("Number");
-        String player = formatMulti(c.get("Player"));
-        String primaryPlayer = getPrimaryPlayer(c);
-        String team = isValid(c.get("Team")) ? formatMulti(c.get("Team")) : "NBA";
+        String team = formatMulti(c.get("Team"));
+        String serial = c.get("Serial/Print Run");
 
-        // 1. Unique Dynamic Collector FAQ item for every page
-        String variantTag = isValid(variant) ? variant : (isValid(theme) ? theme : "Base Edition");
-        String uniqueQuestion = "What makes this " + season + " " + brand + " #" + (isValid(number) ? number : "N/A") + " " + variantTag + " unique for collectors?";
+        StringBuilder sb = new StringBuilder();
+        sb.append("This ").append(season).append(" ").append(company).append(" ").append(brand);
 
-        StringBuilder uniqueAns = new StringBuilder();
-        uniqueAns.append("This specific card (#").append(isValid(number) ? number : "N/A").append(") from the ").append(season).append(" ").append(company).append(" ").append(brand).append(" release ");
+        if (isValid(theme) && !theme.equalsIgnoreCase(brand)) {
+            sb.append(" (").append(theme).append(")");
+        }
+
+        sb.append(" card features ").append(player).append(" during his tenure with the ").append(team).append(".");
+
+        if (isValid(number) && !number.equals("-")) {
+            sb.append(" Card #").append(number).append(".");
+        }
+
         if (isValid(variant) && !variant.equalsIgnoreCase("Base")) {
-            uniqueAns.append("features the rare ").append(variant).append(" parallel finish. ");
-        } else if (isValid(theme) && !theme.equalsIgnoreCase("Base Set")) {
-            uniqueAns.append("is part of the popular '").append(theme).append("' insert set. ");
-        } else {
-            uniqueAns.append("captures ").append(primaryPlayer).append(" during his tenure with the ").append(team).append(". ");
+            sb.append(" This is the coveted ").append(variant).append(" parallel variation.");
         }
 
-        if (isHolyGrail(c)) {
-            uniqueAns.append("As an elite parallel, it represents a centerpiece chase card highly coveted by 90s basketball super collectors due to extreme scarcity and premium foil printing.");
-        } else if (c.has("Variant") && c.get("Variant").toLowerCase().contains("refractor")) {
-            uniqueAns.append("Utilizing ").append(company).append("'s iconic Chromium technology, the light-diffracting coating gives this card a stunning rainbow sheen under direct light.");
-        } else if (c.has("Autograph") && c.get("Autograph").equalsIgnoreCase("Yes")) {
-            uniqueAns.append("Featuring a certified signature guaranteed by ").append(company).append(", it bridges authentic player memorabilia with high-end card design.");
-        } else {
-            uniqueAns.append("Produced by ").append(company).append(", it stands out as an authentic piece of ").append(season).append(" basketball hobby history in this private collection.");
-        }
-
-        sb.append(createFaqItem(uniqueQuestion, uniqueAns.toString()));
-
-        // 2. Conditional FAQs
-        if (isHolyGrail(c)) {
-            sb.append(createFaqItem("Is this a 'Holy Grail' card?", "Yes, this card belongs to one of the most prestigious parallel series in the hobby. These are extremely rare and heavily targeted by high-end investors."));
-        }
-
-        String combined = c.get("Serial/Print Run");
-        if (isValid(combined)) {
-            sb.append(createFaqItem("How rare is this specific card?", "This card is serially numbered " + combined + ", making it a strictly limited edition collectible."));
-        } else if (c.has("Serial")) {
-            sb.append(createFaqItem("How rare is this specific card?", "This card is serially numbered " + c.get("Serial") + " out of a total print run of " + c.get("Print Run") + "."));
-        }
-
-        if (c.has("Rookie")) {
-            String rookieAns = c.get("Rookie").equalsIgnoreCase("Yes") ?
-                    "Yes, this is an official Rookie Card (RC) from " + primaryPlayer + "'s debut season, holding premium value for collectors." :
-                    "No, this card was released during the " + season + " season, later in " + primaryPlayer + "'s career.";
-            sb.append(createFaqItem("Is this a " + player + " Rookie Card?", rookieAns));
+        if (isValid(serial)) {
+            sb.append(" Strictly limited edition serial numbered ").append(serial).append(".");
         }
 
         if (c.has("Autograph") && c.get("Autograph").equalsIgnoreCase("Yes")) {
-            sb.append(createFaqItem("Is the autograph authentic?", "Yes, this card features a manufacturer-certified autograph guaranteed by " + company + "."));
+            sb.append(" Includes official certified autograph.");
         }
 
-        if (c.has("Grade")) {
-            sb.append(createFaqItem("Is this card professionally graded?", "Yes, this card has been graded by " + c.get("Grading Co.") + " and received a condition score of " + c.get("Grade") + "."));
+        if (c.has("Memorabilia") && c.get("Memorabilia").equalsIgnoreCase("Yes")) {
+            sb.append(" Contains authentic game-used memorabilia patch.");
         }
 
         return sb.toString();
     }
 
-    private static String createFaqItem(String question, String answer) {
-        return "<details class=\"faq-details\">" + "<summary class=\"faq-summary\">" + escapeHtml(question) + "</summary>" + "<p class=\"faq-answer\">" + escapeHtml(answer) + "</p>" + "</details>";
-    }
+    private static List<Map<String, String>> findRelatedCards(CardData target, List<CardData> pool, int limit) {
+        if (pool == null || pool.isEmpty()) return Collections.emptyList();
 
-    private static String generateJsonLd(CardData c, String desc, String h1Title, String overviewPage, String imageBaseName, String faqHtml) {
-        String frontImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + imageBaseName + "-front.webp";
-        String backImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + imageBaseName + "-back.webp";
-        String cardUrl = BASE_URL + "/cards/" + c.seasonFolder + "/" + c.filename;
+        List<CardData> candidates = pool.stream()
+                .filter(c -> !c.stableId.equals(target.stableId))
+                .collect(Collectors.toList());
 
-        StringBuilder sb = new StringBuilder();
+        Map<CardData, Integer> scored = new HashMap<>();
 
-        // --- MAIN VALID SCHEMA BLOCK ---
-        sb.append("<script type=\"application/ld+json\">\n");
-        sb.append("{\n");
-        sb.append("  \"@context\": \"https://schema.org\",\n");
-        sb.append("  \"@graph\": [\n");
+        for (CardData c : candidates) {
+            int score = 0;
+            if (c.get("Season").equals(target.get("Season"))) score += 10;
 
-        // 1. BreadcrumbList
-        List<Map<String, String>> bcItems = new ArrayList<>();
-        bcItems.add(Map.of("name", "Home", "link", BASE_URL + "/index.html"));
-        bcItems.add(Map.of("name", "Collection", "link", BASE_URL + "/" + overviewPage));
-        bcItems.add(Map.of("name", c.get("Season"), "link", BASE_URL + "/" + overviewPage + "#" + c.seasonFolder.toLowerCase()));
-        bcItems.add(Map.of("name", h1Title, "link", cardUrl));
-        sb.append(SharedTemplates.getBreadcrumbJsonLd(bcItems)).append(",\n");
+            String cBrand = c.get("Brand");
+            String tBrand = target.get("Brand");
+            if (cBrand.equalsIgnoreCase(tBrand)) score += 8;
+            else if (cBrand.contains(tBrand) || tBrand.contains(cBrand)) score += 5;
 
-        // 2. ItemPage Node for Search Engine Crawlers
-        sb.append("    {\n");
-        sb.append("      \"@type\": \"ItemPage\",\n");
-        sb.append("      \"@id\": \"").append(cardUrl).append("#webpage\",\n");
-        sb.append("      \"url\": \"").append(cardUrl).append("\",\n");
-        sb.append("      \"name\": \"").append(escapeJson(h1Title)).append("\",\n");
-        sb.append("      \"description\": \"").append(escapeJson(desc)).append("\",\n");
-        sb.append("      \"primaryImageOfPage\": { \"@type\": \"ImageObject\", \"url\": \"").append(frontImgUrl).append("\" },\n");
-        sb.append("      \"breadcrumb\": { \"@id\": \"").append(cardUrl).append("#breadcrumb\" }\n");
-        sb.append("    },\n");
+            if (c.get("Company").equals(target.get("Company"))) score += 3;
 
-        // 3. VisualArtwork
-        sb.append("    {\n");
-        sb.append("      \"@type\": \"VisualArtwork\",\n");
-        sb.append("      \"@id\": \"").append(cardUrl).append("#artwork\",\n");
-        sb.append("      \"mainEntityOfPage\": \"").append(cardUrl).append("\",\n");
-        sb.append("      \"name\": \"").append(escapeJson(h1Title)).append("\",\n");
-        sb.append("      \"image\": [ \"").append(frontImgUrl).append("\", \"").append(backImgUrl).append("\" ],\n");
-        sb.append("      \"description\": \"").append(escapeJson(desc)).append("\",\n");
-        sb.append("      \"creator\": { \"@type\": \"Organization\", \"name\": \"").append(escapeJson(c.get("Company"))).append("\" },\n");
-        sb.append("      \"about\": {\n");
-        sb.append("        \"@type\": \"Person\",\n");
-        sb.append("        \"name\": \"").append(escapeJson(formatMulti(c.get("Player")))).append("\",\n");
-        sb.append("        \"sameAs\": \"https://en.wikipedia.org/wiki/").append(escapeJson(getPrimaryPlayer(c)).replace(" ", "_")).append("\"\n");
-        sb.append("      },\n");
-        sb.append("      \"artMedium\": \"Trading Card\",\n");
-        sb.append("      \"artform\": \"Sports Memorabilia\"\n");
-        sb.append("    }");
+            String cPlayer = c.get("Player");
+            String tPlayer = target.get("Player");
+            if (cPlayer.equals(tPlayer)) score += 15;
 
-        // 3. FAQPage (if present)
-        if (faqHtml != null && !faqHtml.isEmpty()) {
-            sb.append(",\n");
-            sb.append("    {\n");
-            sb.append("      \"@type\": \"FAQPage\",\n");
-            sb.append("      \"name\": \"Frequently Asked Questions\",\n");
-            sb.append("      \"mainEntity\": [\n");
+            boolean targetIsRare = isRareParallel(target);
+            boolean cIsRare = isRareParallel(c);
+            if (targetIsRare && cIsRare) score += 7;
 
-            Document doc = Jsoup.parseBodyFragment(faqHtml);
-            Elements details = doc.select("details");
-            for (int i = 0; i < details.size(); i++) {
-                Element detail = details.get(i);
-                String q = detail.select("summary").text();
-                String a = detail.select("p").text();
-                sb.append("        {\n");
-                sb.append("          \"@type\": \"Question\",\n");
-                sb.append("          \"name\": \"").append(escapeJson(q)).append("\",\n");
-                sb.append("          \"acceptedAnswer\": {\n");
-                sb.append("            \"@type\": \"Answer\",\n");
-                sb.append("            \"text\": \"").append(escapeJson(a)).append("\"\n");
-                sb.append("          }\n");
-                sb.append("        }");
-                if (i < details.size() - 1) sb.append(",");
-                sb.append("\n");
-            }
-            sb.append("      ]\n");
-            sb.append("    }\n");
-        } else {
-            sb.append("\n");
+            scored.put(c, score);
         }
 
-        sb.append("  ]\n");
-        sb.append("}\n");
-        sb.append("</script>\n");
+        List<CardData> top = scored.entrySet().stream()
+                .sorted((e1, e2) -> Integer.compare(e2.getValue(), e1.getValue()))
+                .limit(limit)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
 
-        // --- DORMANT PRODUCT TEMPLATE ---
-        // Hidden from Google until activated by FirestoreRatingInjector
-        sb.append("<script type=\"application/json\" id=\"product-schema-template\">\n");
-        sb.append("{\n");
-        sb.append("  \"@context\": \"https://schema.org\",\n");
-        sb.append("  \"@type\": \"Product\",\n");
-        sb.append("  \"@id\": \"").append(cardUrl).append("#product\",\n");
-        sb.append("  \"mainEntityOfPage\": \"").append(cardUrl).append("\",\n");
-        sb.append("  \"name\": \"").append(escapeJson(h1Title)).append("\",\n");
-        sb.append("  \"image\": [ \"").append(frontImgUrl).append("\", \"").append(backImgUrl).append("\" ],\n");
-        sb.append("  \"description\": \"").append(escapeJson(desc)).append("\",\n");
-        sb.append("  \"sku\": \"").append(c.stableId).append("\",\n");
-        sb.append("  \"mpn\": \"").append(escapeJson(c.get("Number"))).append("\",\n");
-        sb.append("  \"brand\": { \"@type\": \"Brand\", \"name\": \"").append(escapeJson(c.get("Brand"))).append("\" },\n");
-        sb.append("  \"manufacturer\": { \"@type\": \"Organization\", \"name\": \"").append(escapeJson(c.get("Company"))).append("\" },\n");
+        List<Map<String, String>> result = new ArrayList<>();
+        for (CardData c : top) {
+            Map<String, String> item = new HashMap<>();
+            String relUrl = "../" + c.seasonFolder + "/" + c.filename;
+            item.put("title", generateH1(c));
+            item.put("url", relUrl);
+            item.put("link", relUrl);
 
-        if (isHolyGrail(c)) {
-            sb.append("  \"category\": \"Sports Trading Cards\",\n");
-            sb.append("  \"material\": \"Premium Hobby Parallel\"\n");
-        } else {
-            sb.append("  \"category\": \"Sports Trading Cards\"\n");
+            String imageBaseName = c.filenameBase.substring(0, c.filenameBase.lastIndexOf("-"));
+            String thumbWebp = RELATIVE_IMAGES_PATH + "/" + c.seasonFolder + "/" + imageBaseName + "-front-400w.webp";
+            String thumbAvif = RELATIVE_IMAGES_PATH + "/" + c.seasonFolder + "/" + imageBaseName + "-front-400w.avif";
+            String thumbFallback = RELATIVE_IMAGES_PATH + "/" + c.seasonFolder + "/" + imageBaseName + "-front.webp";
+
+            item.put("thumbWebp", thumbWebp);
+            item.put("thumbAvif", thumbAvif);
+            item.put("thumb", thumbFallback);
+            item.put("thumbFallback", thumbFallback);
+            item.put("alt", generateAltText(c, "front"));
+            item.put("variant", c.has("Variant") ? c.get("Variant") : "Base");
+            item.put("season", c.get("Season"));
+            item.put("brand", c.get("Brand"));
+            item.put("meta", c.get("Season") + " " + c.get("Brand") + (c.has("Variant") ? " - " + c.get("Variant") : ""));
+
+            result.add(item);
         }
-        sb.append("}\n");
-        sb.append("</script>\n");
-
-        return sb.toString();
+        return result;
     }
 
+    private static boolean isRareParallel(CardData c) {
+        String variant = c.get("Variant").toLowerCase();
+        String theme = c.get("Theme").toLowerCase();
+        return variant.contains("refractor") || variant.contains("pmg") || variant.contains("ruby") ||
+                variant.contains("autograph") || variant.contains("patch") || c.has("Serial") ||
+                theme.contains("flawless") || theme.contains("exquisite");
+    }
+
+    private static List<Map<String, String>> generateExternalLinks(CardData c) {
+        List<Map<String, String>> links = new ArrayList<>();
+
+        String primaryPlayer = getPrimaryPlayer(c);
+        String season = c.get("Season");
+        String brand = c.get("Brand");
+        String variant = c.get("Variant");
+        String number = c.get("Number");
+
+        String ebayQuery = primaryPlayer + " " + season + " " + brand + " " + (isValid(variant) && !variant.equals("Base") ? variant : "") + " " + (isValid(number) ? "#" + number : "");
+        String ebayUrl = "https://www.ebay.com/sch/i.html?_nkw=" + ebayQuery.trim().replace(" ", "+");
+        links.add(Map.of("name", "Search similar cards on eBay", "url", ebayUrl, "icon", "ebay"));
+
+        String bkpQuery = primaryPlayer + " " + season + " " + brand;
+        String bkpUrl = "https://www.beckett.com/search?q=" + bkpQuery.trim().replace(" ", "+");
+        links.add(Map.of("name", "Check Beckett Checklist", "url", bkpUrl, "icon", "beckett"));
+
+        if (primaryPlayer.equalsIgnoreCase("Juwan Howard")) {
+            links.add(Map.of("name", "Juwan Howard Career Stats (Basketball-Reference)", "url", "https://www.basketball-reference.com/players/h/howarju01.html", "icon", "bref"));
+        } else {
+            String wikiUrl = "https://en.wikipedia.org/wiki/" + primaryPlayer.replace(" ", "_");
+            links.add(Map.of("name", primaryPlayer + " Wikipedia Profile", "url", wikiUrl, "icon", "wiki"));
+        }
+
+        return links;
+    }
+
+
+
+    private static String getSeasonHighlights(String season, String player) {
+        if (season == null) return null;
+        if (player != null && !player.contains("Juwan Howard")) {
+            return player + " continued his professional career during the " + season + " season, contributing key performances on the court.";
+        }
+        return switch (season) {
+            case "1994-95", "1994" -> "Rookie Season with Washington Bullets: Named to NBA All-Rookie First Team (17.0 PPG, 8.4 RPG).";
+            case "1995-96", "1995" -> "Career Year: NBA All-Star selection, All-NBA Third Team. Averaged a career-high 22.1 PPG, 8.1 RPG, 4.4 APG. Scored 42 pts vs Toronto.";
+            case "1996-97", "1996" -> "Led Bullets to the NBA Playoffs for the first time since 1988 (19.1 PPG, 8.0 RPG). Signed historic $100M contract.";
+            case "1997-98", "1997" -> "Washington Wizards Rebranding Era: Co-captain alongside Chris Webber (18.5 PPG, 7.0 RPG).";
+            case "1998-99", "1998" -> "Lockout Season: Co-captain leading Washington in scoring (18.9 PPG, 8.1 RPG).";
+            case "1999-00", "1999" -> "Final full season in Washington: Averaged 14.9 PPG and 5.7 RPG.";
+            case "2000-01", "2000" -> "Traded to Dallas Mavericks mid-season: Strong playoff performance alongside Dirk Nowitzki (17.8 PPG).";
+            case "2001-02", "2001" -> "Dallas & Denver Nuggets transition: Reliable veteran presence (14.6 PPG, 7.6 RPG).";
+            case "2002-03", "2002" -> "Denver Nuggets Leader: Primary frontcourt scoring option (18.4 PPG, 7.6 RPG).";
+            case "2003-04", "2003" -> "Orlando Magic: Veteran anchor alongside Tracy McGrady (17.0 PPG, 7.0 RPG).";
+            case "2004-05", "2004" -> "Houston Rockets: Key frontcourt starter with Yao Ming and Tracy McGrady (9.6 PPG, 5.7 RPG).";
+            case "2005-06", "2005" -> "Houston Rockets: Contributed 11.8 PPG and 6.7 RPG in Western Conference competition.";
+            case "2006-07", "2006" -> "Houston Rockets: Helped guide Houston to 52 wins and Western Conference Playoff berth.";
+            case "2007-08", "2007" -> "Dallas Mavericks Return: Provided playoff experience and frontcourt depth.";
+            case "2008-09", "2008" -> "Denver Nuggets & Charlotte Bobcats: Veteran leadership across 50 NBA games.";
+            case "2009-10", "2009" -> "Portland Trail Blazers: Played 73 games, key reserve in Western Conference Playoffs (6.0 PPG, 4.6 RPG).";
+            case "2010-11", "2010" -> "Miami Heat 'Big Three' Era: Reached 2011 NBA Finals alongside LeBron James, Dwyane Wade, and Chris Bosh.";
+            case "2011-12", "2011" -> "NBA Champion with Miami Heat: Won his 1st NBA Championship ring.";
+            case "2012-13", "2012" -> "Back-to-Back NBA Champion with Miami Heat: Retired as a 2x NBA Champion after 19 seasons.";
+            default -> "Juwan Howard enjoyed a remarkable 19-season NBA career (1994-2013), winning 2 NBA Championships with the Miami Heat.";
+        };
+    }
+
+    private static String getNbaEraContext(String season, String player) {
+        if (season == null) return null;
+        return switch (season) {
+            case "1994-95", "1994", "1995-96", "1995" -> "Mid-90s NBA Golden Era: Peak physical play, expansion teams, and Michael Jordan's first comeback.";
+            case "1996-97", "1996", "1997-98", "1997" -> "Late 90s Premium Insert Craze: Introduction of high-end parallels (PMG, Rubies, Refractors).";
+            case "1998-99", "1998", "1999-00", "1999" -> "Post-Jordan Transition Era: Rise of Kobe Bryant, Allen Iverson, and new young superstars.";
+            case "2000-01", "2000", "2001-02", "2001", "2002-03", "2002" -> "Early 2000s Autograph & Relic Revolution: Upper Deck Exquisite and SP Authentic define modern high-end collecting.";
+            case "2003-04", "2003", "2004-05", "2004", "2005-06", "2005" -> "Mid-2000s Era: Legendary 2003 draft class (LeBron, Wade, Carmelo) elevates hobby interest.";
+            case "2010-11", "2010", "2011-12", "2011", "2012-13", "2012" -> "Panini Exclusive Era: Debut of Panini Flawless, National Treasures Logomans, and Immaculate Collection.";
+            default -> "Modern NBA Hobby Era: Continuous innovation in card technology, serial numbering, and certified autographs.";
+        };
+    }
+
+    private static String getTeamBySeason(String season) {
+        if (season == null) return "Washington Bullets";
+        return switch (season) {
+            case "1994-95", "1994", "1995-96", "1995", "1996-97", "1996" -> "Washington Bullets";
+            case "1997-98", "1997", "1998-99", "1998", "1999-00", "1999", "2000-01" -> "Washington Wizards";
+            case "2001-02" -> "Dallas Mavericks";
+            case "2002-03" -> "Denver Nuggets";
+            case "2003-04" -> "Orlando Magic";
+            case "2004-05", "2005-06", "2006-07" -> "Houston Rockets";
+            case "2007-08" -> "Dallas Mavericks";
+            case "2008-09" -> "Charlotte Bobcats";
+            case "2009-10" -> "Portland Trail Blazers";
+            case "2010-11", "2011-12", "2012-13" -> "Miami Heat";
+            default -> "Washington Bullets";
+        };
+    }
 
     private static String getPrimaryPlayer(CardData c) {
         String p = c.get("Player");
@@ -997,24 +727,8 @@ public class CardPageGenerator {
 
     private static String cleanFilename(String text) {
         if (text == null) return "";
-        String clean = text.replace("/", "-").replace("\\", "-").replace("\"", "");
-        clean = clean.replaceAll("[^a-zA-Z0-9\\s-]", "");
-        clean = clean.trim().replace(" ", "-");
-        clean = clean.replaceAll("-+", "-");
-        return clean;
-    }
-
-    private static String escapeJson(String text) {
-        if (text == null) return "";
-        return text.replace("\"", "\\\"");
-    }
-
-    private static String escapeHtml(String text) {
-        if (text == null) return "";
-        return text.replace("&", "&amp;")
-                .replace("<", "&lt;")
-                .replace(">", "&gt;")
-                .replace("\"", "&quot;")
-                .replace("'", "&#39;");
+        return text.replaceAll("[^a-zA-Z0-9\\-_]", "-")
+                .replaceAll("-+", "-")
+                .replaceAll("^-|-$", "");
     }
 }
