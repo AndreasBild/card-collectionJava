@@ -17,14 +17,7 @@ import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
@@ -727,27 +720,66 @@ public class CardPageGenerator {
     }
 
     private static String resolveDiskImageBase(String seasonFolder, String imageBaseName) {
-        Path p1 = Paths.get("images", seasonFolder, imageBaseName + "-front.jpg");
-        Path p1Png = Paths.get("images", seasonFolder, imageBaseName + "-front.png");
-        if (Files.exists(p1) || Files.exists(p1Png)) {
-            return imageBaseName;
-        }
+        if (checkExists(seasonFolder, imageBaseName)) return imageBaseName;
 
         String altBase = imageBaseName.replaceAll("-sn(\\d+)-\\d+", "-sn$1");
-        Path p2 = Paths.get("images", seasonFolder, altBase + "-front.jpg");
-        Path p2Png = Paths.get("images", seasonFolder, altBase + "-front.png");
-        if (Files.exists(p2) || Files.exists(p2Png)) {
-            return altBase;
-        }
+        if (checkExists(seasonFolder, altBase)) return altBase;
 
         String altBaseNoZero = altBase.replaceAll("-sn0(\\d+)", "-sn$1");
-        Path p3 = Paths.get("images", seasonFolder, altBaseNoZero + "-front.jpg");
-        Path p3Png = Paths.get("images", seasonFolder, altBaseNoZero + "-front.png");
-        if (Files.exists(p3) || Files.exists(p3Png)) {
-            return altBaseNoZero;
-        }
+        if (checkExists(seasonFolder, altBaseNoZero)) return altBaseNoZero;
+
+        String altVariant1 = imageBaseName.replaceAll("-[^-]+-(\\d+|[A-Z0-9]+)$", "-Base-$1");
+        if (checkExists(seasonFolder, altVariant1)) return altVariant1;
+
+        String altVariant2 = imageBaseName.replaceAll("-[^-]+-[^-]+-(\\d+|[A-Z0-9]+)$", "-Base-$1");
+        if (checkExists(seasonFolder, altVariant2)) return altVariant2;
+
+        try {
+            Path seasonPath = Paths.get("images", seasonFolder);
+            Path outSeasonPath = Paths.get("output", "images", seasonFolder);
+            List<Path> files = new ArrayList<>();
+            if (Files.exists(seasonPath)) {
+                try (Stream<Path> stream = Files.list(seasonPath)) {
+                    files.addAll(stream.filter(p -> p.toString().contains("-front.")).toList());
+                }
+            }
+            if (Files.exists(outSeasonPath)) {
+                try (Stream<Path> stream = Files.list(outSeasonPath)) {
+                    files.addAll(stream.filter(p -> p.toString().contains("-front.")).toList());
+                }
+            }
+
+            Set<String> tokens = new HashSet<>(Arrays.asList(imageBaseName.split("-")));
+            String bestMatch = null;
+            int bestScore = -1;
+
+            for (Path f : files) {
+                String base = f.getFileName().toString()
+                        .replaceAll("-front\\.(jpg|png|avif|webp)$", "")
+                        .replaceAll("-\\d+w$", "");
+                Set<String> fTokens = new HashSet<>(Arrays.asList(base.split("-")));
+                Set<String> intersection = new HashSet<>(tokens);
+                intersection.retainAll(fTokens);
+                int score = intersection.size();
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestMatch = base;
+                }
+            }
+
+            if (bestMatch != null && bestScore >= 4) {
+                return bestMatch;
+            }
+        } catch (Exception ignored) {}
 
         return imageBaseName;
+    }
+
+    private static boolean checkExists(String seasonFolder, String name) {
+        Path pJpg = Paths.get("images", seasonFolder, name + "-front.jpg");
+        Path pPng = Paths.get("images", seasonFolder, name + "-front.png");
+        Path pAvif = Paths.get("output", "images", seasonFolder, name + "-front.avif");
+        return Files.exists(pJpg) || Files.exists(pPng) || Files.exists(pAvif);
     }
 
     private static String cleanFilename(String text) {
