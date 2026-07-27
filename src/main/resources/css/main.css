@@ -297,6 +297,12 @@ footer.detail-footer,
     align-items: center;
 }
 
+.footer-container h2 {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 0;
+}
+
 .footer-buttons-container .modern-button,
 .footer-container .modern-button,
 .modern-button-footer,
