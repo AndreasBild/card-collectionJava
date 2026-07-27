@@ -24529,7 +24529,7 @@
   "isRookie" : false
 }, {
   "id" : "2022-23-panini-immaculate-collection-triple-autographs-ta-jmr-sn3",
-  "player" : "Mitch Richmond, Rod Strickland, Juwan Howard",
+  "player" : "Juwan Howard,Mitch Richmond, Rod Strickland",
   "season" : "2022-23",
   "team" : "Washington Wizards",
   "company" : "Panini",
@@ -25555,9 +25555,9 @@
   "isRookie" : false
 }, {
   "id" : "2023-24-topps-chrome-dna-dna-3",
-  "player" : "Jett Howard, Juwan Howard",
+  "player" : "Juwan Howard, Jett Howard",
   "season" : "2023-24",
-  "team" : "Orlando Magic, Washington Wizards",
+  "team" : "Washington Wizards, Orlando Magic",
   "company" : "Topps",
   "brand" : "Topps Chrome",
   "theme" : "DNA",
