@@ -122,7 +122,7 @@ ${topNavHtml?no_esc}
                      title="Juwan Howard Private Collection - 1998-99 SPx Finite Spectrum">
                 </picture>
                 <div class="hover-overlay">
-                    <a href="cards/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-SPx-Finite-Base-Set-Spectrum-76-sn350-350-4c2036e7.html"
+                    <a href="cards/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-SPx-Finite-Base-Set-Spectrum-76-sn291-350-0dd7be42.html"
                        class="view-button" title="View details for Juwan Howard 1998-99 SPx Finite Base Spectrum">View
                         Details</a>
                 </div>
@@ -359,7 +359,7 @@ ${topNavHtml?no_esc}
                      title="Juwan Howard Private Collection - 1998-99 SPx Finite Spectrum">
                 </picture>
                 <div class="hover-overlay">
-                    <a href="cards/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-SPx-Finite-Base-Set-Spectrum-76-sn350-350-4c2036e7.html"
+                    <a href="cards/1998-99/Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-SPx-Finite-Base-Set-Spectrum-76-sn291-350-0dd7be42.html"
                        class="view-button" title="View details for Juwan Howard 1998-99 SPx Finite Base Spectrum">View
                         Details</a>
                 </div>

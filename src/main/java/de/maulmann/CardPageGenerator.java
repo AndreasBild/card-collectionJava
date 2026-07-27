@@ -335,17 +335,18 @@ public class CardPageGenerator {
 
         String seasonImgFolder = RELATIVE_IMAGES_PATH + "/" + c.seasonFolder;
         String imageBaseName = c.filenameBase.substring(0, c.filenameBase.lastIndexOf("-"));
+        String resolvedImageBase = resolveDiskImageBase(c.seasonFolder, imageBaseName);
 
-        String frontImgPath = seasonImgFolder + "/" + imageBaseName + "-front.webp";
-        String backImgPath = seasonImgFolder + "/" + imageBaseName + "-back.webp";
+        String frontImgPath = seasonImgFolder + "/" + resolvedImageBase + "-front.webp";
+        String backImgPath = seasonImgFolder + "/" + resolvedImageBase + "-back.webp";
 
         Map<String, Object> data = new HashMap<>();
         data.put("cardId", c.stableId);
 
         String faqHtml = CardSchemaGenerator.generateFaqHtml(c);
-        String frontImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + imageBaseName + "-front.webp";
+        String frontImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + resolvedImageBase + "-front.webp";
         data.put("headHtml", SharedTemplates.getHead(browserTitle, metaDesc, ROOT, c.fullRelativePath, frontImgUrl));
-        data.put("jsonLd", CardSchemaGenerator.generateJsonLd(c, metaDesc, h1Title, overviewPage, imageBaseName, faqHtml));
+        data.put("jsonLd", CardSchemaGenerator.generateJsonLd(c, metaDesc, h1Title, overviewPage, resolvedImageBase, faqHtml));
         data.put("topNavHtml", SharedTemplates.getTopNav(ROOT, "collection"));
 
         List<Map<String, String>> breadcrumbItems = new ArrayList<>();
@@ -725,9 +726,34 @@ public class CardPageGenerator {
         return value != null && !value.trim().isEmpty() && !value.equals("0");
     }
 
+    private static String resolveDiskImageBase(String seasonFolder, String imageBaseName) {
+        Path p1 = Paths.get("images", seasonFolder, imageBaseName + "-front.jpg");
+        Path p1Png = Paths.get("images", seasonFolder, imageBaseName + "-front.png");
+        if (Files.exists(p1) || Files.exists(p1Png)) {
+            return imageBaseName;
+        }
+
+        String altBase = imageBaseName.replaceAll("-sn(\\d+)-\\d+", "-sn$1");
+        Path p2 = Paths.get("images", seasonFolder, altBase + "-front.jpg");
+        Path p2Png = Paths.get("images", seasonFolder, altBase + "-front.png");
+        if (Files.exists(p2) || Files.exists(p2Png)) {
+            return altBase;
+        }
+
+        String altBaseNoZero = altBase.replaceAll("-sn0(\\d+)", "-sn$1");
+        Path p3 = Paths.get("images", seasonFolder, altBaseNoZero + "-front.jpg");
+        Path p3Png = Paths.get("images", seasonFolder, altBaseNoZero + "-front.png");
+        if (Files.exists(p3) || Files.exists(p3Png)) {
+            return altBaseNoZero;
+        }
+
+        return imageBaseName;
+    }
+
     private static String cleanFilename(String text) {
         if (text == null) return "";
-        return text.replaceAll("[^a-zA-Z0-9\\-_]", "-")
+        return text.replace("'", "")
+                .replaceAll("[^a-zA-Z0-9\\-_]", "-")
                 .replaceAll("-+", "-")
                 .replaceAll("^-|-$", "");
     }
