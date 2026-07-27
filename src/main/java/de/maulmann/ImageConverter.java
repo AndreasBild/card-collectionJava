@@ -79,8 +79,10 @@ public class ImageConverter {
                     Path relativeParent = relativePath.getParent();
                     Path currentWebpOutDir = relativeParent != null ? webpOutDir.resolve(relativeParent) : webpOutDir;
                     File mainAvifFile = currentWebpOutDir.resolve(baseName + ".avif").toFile();
-                    File thumbAvifFile = currentWebpOutDir.resolve(baseName + "-400w.avif").toFile();
-                    boolean avifMissing = (AVIFENC_PATH != null && (!mainAvifFile.exists() || !thumbAvifFile.exists()));
+                    File f400 = currentWebpOutDir.resolve(baseName + "-400w.avif").toFile();
+                    File f600 = currentWebpOutDir.resolve(baseName + "-600w.avif").toFile();
+                    File f900 = currentWebpOutDir.resolve(baseName + "-900w.avif").toFile();
+                    boolean avifMissing = (AVIFENC_PATH != null && (!mainAvifFile.exists() || !f400.exists() || !f600.exists() || !f900.exists()));
 
                     if (!avifMissing && !tracker.hasChanged(file)) {
                         skippedCount.incrementAndGet();
@@ -121,8 +123,10 @@ public class ImageConverter {
         Files.createDirectories(currentWebpOutDir);
 
         File mainAvifFile = currentWebpOutDir.resolve(baseName + ".avif").toFile();
-        File thumbAvifFile = currentWebpOutDir.resolve(baseName + "-400w.avif").toFile();
-        boolean avifMissing = (AVIFENC_PATH != null && (!mainAvifFile.exists() || !thumbAvifFile.exists()));
+        File f400 = currentWebpOutDir.resolve(baseName + "-400w.avif").toFile();
+        File f600 = currentWebpOutDir.resolve(baseName + "-600w.avif").toFile();
+        File f900 = currentWebpOutDir.resolve(baseName + "-900w.avif").toFile();
+        boolean avifMissing = (AVIFENC_PATH != null && (!mainAvifFile.exists() || !f400.exists() || !f600.exists() || !f900.exists()));
 
         // 1. PRE-CHECK: Müssen wir dieses Bild-Set neu generieren?
         if (!avifMissing && !tracker.hasChanged(sourceFile)) {
