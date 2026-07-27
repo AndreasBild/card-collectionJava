@@ -244,6 +244,50 @@ a:not(.plain), button.modern-button, button.flip-modal-btn, button.close-modal-b
     justify-content: center;
 }
 
+/* --- LUXURY METALLIC GOLD PLAIN LINKS & FOOTER LINKS --- */
+a.plain,
+footer.detail-footer a,
+.detail-footer a,
+.home-text-container a,
+.seo-box a,
+.ai-summary a,
+.faq-section a {
+    color: var(--accent-gold) !important;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: rgba(212, 175, 55, 0.45);
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1.5px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-block;
+    padding: 0 2px;
+    border-radius: 2px;
+}
+
+a.plain:hover,
+footer.detail-footer a:hover,
+.detail-footer a:hover,
+.home-text-container a:hover,
+.seo-box a:hover,
+.ai-summary a:hover,
+.faq-section a:hover {
+    color: var(--accent-gold-light) !important;
+    text-decoration-color: var(--accent-gold);
+    text-underline-offset: 6px;
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    background: rgba(212, 175, 55, 0.08);
+}
+
+footer.detail-footer,
+.detail-footer {
+    text-align: center;
+    padding: 30px 20px;
+    margin-top: 40px;
+    border-top: 1px solid var(--border-subtle);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
 .footer-buttons-container,
 .footer-container {
     display: flex;
