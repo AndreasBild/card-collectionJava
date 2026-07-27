@@ -21,6 +21,7 @@
         <org.jsoup.version>1.22.2</org.jsoup.version>
         <com.yahoo.platform.yui.version>2.4.8</com.yahoo.platform.yui.version>
         <com.google.firebase.version>9.10.0</com.google.firebase.version>
+        <httpclient5.version>5.6.2</httpclient5.version>
     </properties>
 
     <dependencyManagement>
@@ -39,6 +40,11 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents.client5</groupId>
+                <artifactId>httpclient5</artifactId>
+                <version>${httpclient5.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -47,6 +53,10 @@
             <groupId>com.google.firebase</groupId>
             <artifactId>firebase-admin</artifactId>
             <version>${com.google.firebase.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents.client5</groupId>
+            <artifactId>httpclient5</artifactId>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
