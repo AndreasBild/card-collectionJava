@@ -37,6 +37,13 @@ ${topNavHtml?no_esc}
             </datalist>
         </div>
 
+        <nav class="season-jump-bar" aria-label="Season Quick Navigation">
+            <span class="season-jump-title">&#9889; Jump:</span>
+            <#list seasons as season>
+                <a href="#${season.id}" class="season-jump-pill">${season.name}</a>
+            </#list>
+        </nav>
+
     <#list seasons as season>
         <div class="season-table-wrapper" id="${season.id}" data-season="${season.id}">
             <div class="season-header">
