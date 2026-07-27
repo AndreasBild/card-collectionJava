@@ -158,7 +158,7 @@ ${topNavHtml?no_esc}
 
                 <#if eraContext != "">
                     <div class="context-card">
-                        <h3>&#x1F3C0; NBA Era & Pop Culture</h3>
+                        <h3><#if eraTitle??>${eraTitle?no_esc}<#else>&#x1F3C0; Era & Pop Culture</#if></h3>
                         <p>${eraContext?no_esc}</p>
                     </div>
                 </#if>
