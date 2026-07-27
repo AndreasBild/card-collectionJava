@@ -464,14 +464,14 @@ public class CardPageGenerator {
         String number = c.has("Number") ? " #" + c.get("Number") : "";
 
         StringBuilder sb = new StringBuilder();
-        sb.append(season).append(" ").append(company).append(" ").append(brand);
+        sb.append(player).append(" ").append(season).append(" ").append(company).append(" ").append(brand);
         if (isValid(theme) && !theme.equalsIgnoreCase(brand)) {
             sb.append(" ").append(theme);
         }
         if (isValid(variant) && !variant.equalsIgnoreCase("Base")) {
             sb.append(" ").append(variant);
         }
-        sb.append(number).append(" - ").append(player);
+        sb.append(number);
         return sb.toString();
     }
 
