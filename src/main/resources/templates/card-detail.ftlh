@@ -203,7 +203,7 @@ ${topNavHtml?no_esc}
                         <div class="external-pills-wrapper">
                             <#list externalLinks as link>
                                 <a href="${link.url}" target="_blank" rel="noopener" class="external-link-pill" title="Explore ${link.name}">
-                                     <span class="pill-icon">${link.icon}</span> ${link.name?no_esc} &nearr;
+                                     ${link.name?no_esc} &nearr;
                                 </a>
                             </#list>
                         </div>

@@ -630,14 +630,14 @@ public class CardPageGenerator {
 
         String ebayQuery = primaryPlayer + " " + season + " " + brand + " " + (isValid(variant) && !variant.equals("Base") ? variant : "") + " " + (isValid(number) ? "#" + number : "");
         String ebayUrl = "https://www.ebay.com/sch/i.html?_nkw=" + ebayQuery.trim().replace(" ", "+");
-        links.add(Map.of("name", "Search similar cards on eBay", "url", ebayUrl, "icon", "ebay"));
+        links.add(Map.of("name", "Similar cards on eBay", "url", ebayUrl, "icon", "ebay"));
 
         String bkpQuery = primaryPlayer + " " + season + " " + brand;
         String bkpUrl = "https://www.beckett.com/search?q=" + bkpQuery.trim().replace(" ", "+");
-        links.add(Map.of("name", "Check Beckett Checklist", "url", bkpUrl, "icon", "beckett"));
+        links.add(Map.of("name", "Beckett Checklist", "url", bkpUrl, "icon", "beckett"));
 
         if (primaryPlayer.equalsIgnoreCase("Juwan Howard")) {
-            links.add(Map.of("name", "Juwan Howard Career Stats (Basketball-Reference)", "url", "https://www.basketball-reference.com/players/h/howarju01.html", "icon", "bref"));
+            links.add(Map.of("name", "Juwan Howard Career Stats", "url", "https://www.basketball-reference.com/players/h/howarju01.html", "icon", "bref"));
         } else {
             String wikiUrl = "https://en.wikipedia.org/wiki/" + primaryPlayer.replace(" ", "_");
             links.add(Map.of("name", primaryPlayer + " Wikipedia Profile", "url", wikiUrl, "icon", "wiki"));
