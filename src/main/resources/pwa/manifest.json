@@ -1,25 +1,32 @@
 {
-  "short_name": "Maulmann | Trading Cards",
-  "name": "Basketball and Baseball Trading Card Collection",
+  "short_name": "Maulmann Cards",
+  "name": "Maulmann | Trading Card Collection",
   "orientation": "portrait-primary",
   "icons": [
     {
       "src": "favicon/android-chrome-192x192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any maskable"
     },
     {
       "src": "favicon/android-chrome-512x512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "favicon/apple-touch-icon.png",
+      "type": "image/png",
+      "sizes": "180x180"
     }
   ],
   "id": "./?source=pwa",
   "start_url": "./index.html?source=pwa",
-  "background_color": "#3367D6",
+  "background_color": "#0b0f19",
   "display": "standalone",
   "scope": "./",
-  "theme_color": "#317EFB",
+  "theme_color": "#0b0f19",
   "categories": ["sports", "collection", "hobby"],
   "shortcuts": [
     {
@@ -41,6 +48,13 @@
       "short_name": "Flawless",
       "description": "Panini Flawless Card Subset",
       "url": "./Flawless.html?source=pwa",
+      "icons": [{ "src": "favicon/android-chrome-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Panini Collection",
+      "short_name": "Panini",
+      "description": "Panini High-End Trading Cards",
+      "url": "./Panini.html?source=pwa",
       "icons": [{ "src": "favicon/android-chrome-192x192.png", "sizes": "192x192" }]
     },
     {
