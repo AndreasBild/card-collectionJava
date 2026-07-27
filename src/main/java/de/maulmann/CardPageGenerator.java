@@ -851,51 +851,6 @@ public class CardPageGenerator {
         String altVariant2 = imageBaseName.replaceAll("-[^-]+-[^-]+-(\\d+|[A-Z0-9]+)$", "-Base-$1");
         if (checkExists(seasonFolder, altVariant2)) return altVariant2;
 
-        String playerPrefix = cleanFilename(getPrimaryPlayer(c));
-
-        try {
-            Path seasonPath = Paths.get("images", seasonFolder);
-            Path outSeasonPath = Paths.get("output", "images", seasonFolder);
-            List<Path> files = new ArrayList<>();
-            if (Files.exists(seasonPath)) {
-                try (Stream<Path> stream = Files.list(seasonPath)) {
-                    files.addAll(stream.filter(p -> p.toString().contains("-front.")).toList());
-                }
-            }
-            if (Files.exists(outSeasonPath)) {
-                try (Stream<Path> stream = Files.list(outSeasonPath)) {
-                    files.addAll(stream.filter(p -> p.toString().contains("-front.")).toList());
-                }
-            }
-
-            Set<String> tokens = new HashSet<>(Arrays.asList(imageBaseName.split("-")));
-            String bestMatch = null;
-            int bestScore = -1;
-
-            for (Path f : files) {
-                String base = f.getFileName().toString()
-                        .replaceAll("-front\\.(jpg|png|avif|webp)$", "")
-                        .replaceAll("-\\d+w$", "");
-
-                if (!base.startsWith(playerPrefix)) {
-                    continue;
-                }
-
-                Set<String> fTokens = new HashSet<>(Arrays.asList(base.split("-")));
-                Set<String> intersection = new HashSet<>(tokens);
-                intersection.retainAll(fTokens);
-                int score = intersection.size();
-                if (score > bestScore) {
-                    bestScore = score;
-                    bestMatch = base;
-                }
-            }
-
-            if (bestMatch != null && bestScore >= 4) {
-                return bestMatch;
-            }
-        } catch (Exception ignored) {}
-
         return imageBaseName;
     }
 
