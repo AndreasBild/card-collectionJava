@@ -244,11 +244,29 @@ a:not(.plain), button.modern-button, button.flip-modal-btn, button.close-modal-b
     justify-content: center;
 }
 
-.footer-buttons-container {
+.footer-buttons-container,
+.footer-container {
     display: flex;
-    gap: 12px;
+    gap: 14px;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
+}
+
+.footer-buttons-container .modern-button,
+.footer-container .modern-button,
+.modern-button-footer,
+.footer-button-fixed {
+    width: 240px !important;
+    min-width: 240px !important;
+    max-width: 100% !important;
+    flex: 0 0 240px !important;
+    text-align: center !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 4px !important;
 }
 
 /* --- BREADCRUMBS --- */
@@ -1136,6 +1154,50 @@ tr:hover {
     color: var(--text-muted);
 }
 
+/* --- EXTERNAL PLAYER REFERENCE PILLS --- */
+.external-pills-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 14px;
+}
+
+.external-pills-wrapper .external-link-pill,
+.external-link-pill {
+    width: 240px !important;
+    min-width: 240px !important;
+    max-width: 100% !important;
+    flex: 0 0 240px !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary) !important;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    white-space: nowrap !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+}
+
+.external-pills-wrapper .external-link-pill:hover,
+.external-link-pill:hover {
+    background: var(--accent-gold);
+    border-color: var(--accent-gold);
+    color: #0b0f19 !important;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-gold);
+}
+
 /* --- MOBILE RESPONSIVE MEDIA QUERIES --- */
 @media screen and (max-width: 800px) {
     table td:nth-child(3), table th:nth-child(3),
@@ -1153,7 +1215,7 @@ tr:hover {
 
     .detail-nav { padding: 8px 0; gap: 8px; }
 
-    .modern-button {
+    .modern-button:not(.modern-button-footer):not(.footer-button-fixed) {
         width: auto !important;
         flex: 1;
         padding: 10px 8px !important;
