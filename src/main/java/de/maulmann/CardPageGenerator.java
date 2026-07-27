@@ -128,19 +128,13 @@ public class CardPageGenerator {
             if (!isValid(serial)) {
                 serial = attributes.get("Serial/Print Run");
             }
-            String printRun = attributes.get("Print Run");
             if (isValid(serial) && !serial.equals("0")) {
                 String cleanSerial = serial.replace("#", "").replace("/", "-");
-                if (!cleanSerial.contains("-") && isValid(printRun) && !printRun.equals("0")) {
-                    int prInt = 0;
-                    try { prInt = Integer.parseInt(printRun); } catch (Exception ignored) {}
-                    if (cleanSerial.length() == 1 && Character.isDigit(cleanSerial.charAt(0)) && prInt >= 10) {
-                        cleanSerial = "0" + cleanSerial;
-                    }
-                    cleanSerial = cleanSerial + "-" + printRun;
-                }
                 filenameTokens.add("sn" + cleanSerial);
             }
+
+            String gradingCo = attributes.get("Grading Co.");
+            if (isValid(gradingCo)) filenameTokens.add(gradingCo);
 
             String grade = attributes.get("Grade");
             if (isValid(grade)) filenameTokens.add(grade);
