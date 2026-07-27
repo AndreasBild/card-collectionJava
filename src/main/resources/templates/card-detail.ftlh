@@ -3,11 +3,11 @@
 <head>
     ${headHtml?no_esc}
     <#-- PRELOAD UPDATE: Teilt dem Browser mit, welche Bildgröße er vorab laden soll -->
-    <link rel="preload" as="image" href="${frontImgPath?replace('.webp', '.avif')}" type="image/avif"
-          imagesrcset="${frontImgPath?replace('.webp', '-400w.avif')} 400w,
-                       ${frontImgPath?replace('.webp', '-600w.avif')} 600w,
-                       ${frontImgPath?replace('.webp', '-900w.avif')} 900w,
-                       ${frontImgPath?replace('.webp', '.avif')} 1200w"
+    <link rel="preload" as="image" href="${frontImgPath}" type="image/avif"
+          imagesrcset="${frontImgPath?replace('.avif', '-400w.avif')} 400w,
+                       ${frontImgPath?replace('.avif', '-600w.avif')} 600w,
+                       ${frontImgPath?replace('.avif', '-900w.avif')} 900w,
+                       ${frontImgPath} 1200w"
           imagesizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, (max-width: 1300px) 45vw, 600px"
           fetchpriority="high">
     ${jsonLd?no_esc}
@@ -41,23 +41,11 @@ ${topNavHtml?no_esc}
     <div class="card-images-container">
         <div class="card-image-wrapper">
             <picture>
-                <source type="image/avif"
-                        srcset="${frontImgPath?replace('.webp', '-400w.avif')} 400w,
-                                ${frontImgPath?replace('.webp', '-600w.avif')} 600w,
-                                ${frontImgPath?replace('.webp', '-900w.avif')} 900w,
-                                ${frontImgPath?replace('.webp', '.avif')} 1200w"
-                        sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, (max-width: 1300px) 45vw, 600px">
-                <source type="image/webp"
-                        srcset="${frontImgPath?replace('.webp', '-400w.webp')} 400w,
-                                ${frontImgPath?replace('.webp', '-600w.webp')} 600w,
-                                ${frontImgPath?replace('.webp', '-900w.webp')} 900w,
-                                ${frontImgPath} 1200w"
-                        sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, (max-width: 1300px) 45vw, 600px">
                 <img src="${frontImgPath}"
                      width="600" height="840"
-                     srcset="${frontImgPath?replace('.webp', '-400w.webp')} 400w,
-                             ${frontImgPath?replace('.webp', '-600w.webp')} 600w,
-                             ${frontImgPath?replace('.webp', '-900w.webp')} 900w,
+                     srcset="${frontImgPath?replace('.avif', '-400w.avif')} 400w,
+                             ${frontImgPath?replace('.avif', '-600w.avif')} 600w,
+                             ${frontImgPath?replace('.avif', '-900w.avif')} 900w,
                              ${frontImgPath} 1200w"
                      sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, (max-width: 1300px) 45vw, 600px"
                      alt="${frontAlt}" title="${frontImgTitle}"
@@ -68,23 +56,11 @@ ${topNavHtml?no_esc}
         </div>
         <div class="card-image-wrapper">
             <picture>
-                <source type="image/avif"
-                        srcset="${backImgPath?replace('.webp', '-400w.avif')} 400w,
-                                ${backImgPath?replace('.webp', '-600w.avif')} 600w,
-                                ${backImgPath?replace('.webp', '-900w.avif')} 900w,
-                                ${backImgPath?replace('.webp', '.avif')} 1200w"
-                        sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, (max-width: 1300px) 45vw, 600px">
-                <source type="image/webp"
-                        srcset="${backImgPath?replace('.webp', '-400w.webp')} 400w,
-                                ${backImgPath?replace('.webp', '-600w.webp')} 600w,
-                                ${backImgPath?replace('.webp', '-900w.webp')} 900w,
-                                ${backImgPath} 1200w"
-                        sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, (max-width: 1300px) 45vw, 600px">
                 <img src="${backImgPath}"
                      width="600" height="840"
-                     srcset="${backImgPath?replace('.webp', '-400w.webp')} 400w,
-                             ${backImgPath?replace('.webp', '-600w.webp')} 600w,
-                             ${backImgPath?replace('.webp', '-900w.webp')} 900w,
+                     srcset="${backImgPath?replace('.avif', '-400w.avif')} 400w,
+                             ${backImgPath?replace('.avif', '-600w.avif')} 600w,
+                             ${backImgPath?replace('.avif', '-900w.avif')} 900w,
                              ${backImgPath} 1200w"
                      sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, (max-width: 1300px) 45vw, 600px"
                      alt="${backAlt}" title="${backImgTitle}" loading="lazy" decoding="async"
@@ -220,15 +196,7 @@ ${topNavHtml?no_esc}
                 <#list relatedCards as card>
                     <a href="${card.url}" class="related-card-item" title="${card.title}" aria-label="${card.title}">
                         <div class="related-card-thumb-wrapper">
-                            <picture>
-                                <#if card.thumbAvif??>
-                                    <source type="image/avif" srcset="${card.thumbAvif}">
-                                </#if>
-                                <#if card.thumbWebp??>
-                                    <source type="image/webp" srcset="${card.thumbWebp}">
-                                </#if>
-                                <img src="${card.thumb}" alt="${card.title}" loading="lazy" decoding="async" width="180" height="252" class="related-card-thumb">
-                            </picture>
+                            <img src="${card.thumbAvif}" alt="${card.title}" loading="lazy" decoding="async" width="180" height="252" class="related-card-thumb">
                         </div>
                         <div class="related-card-info">
                             <span class="related-card-tag">${card.variant?no_esc}</span>

@@ -21,7 +21,7 @@ import java.util.*;
 public class FileGenerator {
 
     private static final String BASE_URL = "https://www.maulmann.de";
-    public static final String DEFAULT_IMAGE = "images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-PMG-sn7-front.webp";
+    public static final String DEFAULT_IMAGE = "images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-PMG-sn7-front.avif";
     static String pathSource = "content/";
     static String pathOutput = "output/";
 

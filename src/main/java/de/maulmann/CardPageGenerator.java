@@ -337,14 +337,14 @@ public class CardPageGenerator {
         String imageBaseName = c.filenameBase.substring(0, c.filenameBase.lastIndexOf("-"));
         String resolvedImageBase = resolveDiskImageBase(c.seasonFolder, imageBaseName);
 
-        String frontImgPath = seasonImgFolder + "/" + resolvedImageBase + "-front.webp";
-        String backImgPath = seasonImgFolder + "/" + resolvedImageBase + "-back.webp";
+        String frontImgPath = seasonImgFolder + "/" + resolvedImageBase + "-front.avif";
+        String backImgPath = seasonImgFolder + "/" + resolvedImageBase + "-back.avif";
 
         Map<String, Object> data = new HashMap<>();
         data.put("cardId", c.stableId);
 
         String faqHtml = CardSchemaGenerator.generateFaqHtml(c);
-        String frontImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + resolvedImageBase + "-front.webp";
+        String frontImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + resolvedImageBase + "-front.avif";
         data.put("headHtml", SharedTemplates.getHead(browserTitle, metaDesc, ROOT, c.fullRelativePath, frontImgUrl));
         data.put("jsonLd", CardSchemaGenerator.generateJsonLd(c, metaDesc, h1Title, overviewPage, resolvedImageBase, faqHtml));
         data.put("topNavHtml", SharedTemplates.getTopNav(ROOT, "collection"));
@@ -592,13 +592,12 @@ public class CardPageGenerator {
 
             String rawImageBase = c.filenameBase.substring(0, c.filenameBase.lastIndexOf("-"));
             String imageBaseName = resolveDiskImageBase(c.seasonFolder, rawImageBase);
-            String thumbWebp = RELATIVE_IMAGES_PATH + "/" + c.seasonFolder + "/" + imageBaseName + "-front-400w.webp";
             String thumbAvif = RELATIVE_IMAGES_PATH + "/" + c.seasonFolder + "/" + imageBaseName + "-front-400w.avif";
-            String thumbFallback = RELATIVE_IMAGES_PATH + "/" + c.seasonFolder + "/" + imageBaseName + "-front.webp";
+            String thumbFallback = RELATIVE_IMAGES_PATH + "/" + c.seasonFolder + "/" + imageBaseName + "-front.avif";
 
-            item.put("thumbWebp", thumbWebp);
+            item.put("thumbWebp", thumbAvif);
             item.put("thumbAvif", thumbAvif);
-            item.put("thumb", thumbFallback);
+            item.put("thumb", thumbAvif);
             item.put("thumbFallback", thumbFallback);
             item.put("alt", generateAltText(c, "front"));
             item.put("variant", c.has("Variant") ? c.get("Variant") : "Base");

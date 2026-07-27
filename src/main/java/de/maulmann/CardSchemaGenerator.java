@@ -78,8 +78,8 @@ public class CardSchemaGenerator {
     }
 
     public static String generateJsonLd(CardPageGenerator.CardData c, String desc, String h1Title, String overviewPage, String imageBaseName, String faqHtml) {
-        String frontImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + imageBaseName + "-front.webp";
-        String backImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + imageBaseName + "-back.webp";
+        String frontImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + imageBaseName + "-front.avif";
+        String backImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + imageBaseName + "-back.avif";
         String cardUrl = BASE_URL + "/cards/" + c.seasonFolder + "/" + c.filename;
 
         StringBuilder sb = new StringBuilder();
