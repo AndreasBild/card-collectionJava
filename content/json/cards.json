@@ -24529,7 +24529,7 @@
   "isRookie" : false
 }, {
   "id" : "2022-23-panini-immaculate-collection-triple-autographs-ta-jmr-sn3",
-  "player" : "Juwan Howard, Mitch Richmond, Rod Strickland",
+  "player" : "Juwan Howard, Rod Strickland, Mitch Richmond",
   "season" : "2022-23",
   "team" : "Washington Wizards",
   "company" : "Panini",
@@ -24541,7 +24541,7 @@
   "printRun" : 25,
   "gradingCompany" : null,
   "grade" : null,
-  "collection" : "Juwan Howard, Mitch Richmond, Rod Strickland",
+  "collection" : "Juwan Howard, Rod Strickland, Mitch Richmond",
   "notes" : null,
   "isAutograph" : true,
   "isPatch" : false,
@@ -26580,7 +26580,7 @@
   "isPatch" : false,
   "isRookie" : false
 }, {
-  "id" : "1994-classic-classic-picks-5-sn24900",
+  "id" : "1994-classic-classic-picks-5",
   "player" : "Juwan Howard",
   "season" : "1994",
   "team" : "Michigan Wolverines",
@@ -26589,8 +26589,8 @@
   "theme" : "Classic Picks",
   "variant" : "Base",
   "cardNumber" : "5",
-  "serialNumber" : "24900",
-  "printRun" : null,
+  "serialNumber" : null,
+  "printRun" : 24900,
   "gradingCompany" : null,
   "grade" : null,
   "collection" : "Juwan Howard",
@@ -26694,7 +26694,7 @@
   "isPatch" : false,
   "isRookie" : false
 }, {
-  "id" : "1994-classic-4-sports-printers-proof-5-sn1000",
+  "id" : "1994-classic-4-sports-printers-proof-5",
   "player" : "Juwan Howard",
   "season" : "1994",
   "team" : "Michigan Wolverines",
@@ -26703,8 +26703,8 @@
   "theme" : "Base Set",
   "variant" : "Printers Proof",
   "cardNumber" : "5",
-  "serialNumber" : "1000",
-  "printRun" : null,
+  "serialNumber" : null,
+  "printRun" : 1000,
   "gradingCompany" : null,
   "grade" : null,
   "collection" : "Juwan Howard",
