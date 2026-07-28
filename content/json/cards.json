@@ -16,7 +16,7 @@
   "notes" : null,
   "isAutograph" : false,
   "isPatch" : false,
-  "isRookie" : false
+  "isRookie" : true
 }, {
   "id" : "1994-95-collectors-choice-signature-silver-278",
   "player" : "Juwan Howard",
@@ -1463,7 +1463,7 @@
   "isRookie" : false
 }, {
   "id" : "1995-96-topps-finest-dish-and-swish-ds29",
-  "player" : "Chris Webber, Juwan Howard",
+  "player" : "Juwan Howard, Chris Webber",
   "season" : "1995-96",
   "team" : "Washington Bullets",
   "company" : "Topps",
@@ -1475,7 +1475,7 @@
   "printRun" : null,
   "gradingCompany" : null,
   "grade" : null,
-  "collection" : "Chris Webber, Juwan Howard",
+  "collection" : "Juwan Howard, Chris Webber",
   "notes" : null,
   "isAutograph" : false,
   "isPatch" : false,
@@ -2945,9 +2945,9 @@
   "isRookie" : false
 }, {
   "id" : "1996-97-topps-bowman-s-best-honor-roll-hr9",
-  "player" : "Grant Hill, Juwan Howard",
+  "player" : "Juwan Howard, Grant Hill",
   "season" : "1996-97",
-  "team" : "Detroit Pistons, Washington Bullets",
+  "team" : "Washington Bullets, Detroit Pistons",
   "company" : "Topps",
   "brand" : "Topps Bowman's Best",
   "theme" : "Honor Roll",
@@ -2957,7 +2957,7 @@
   "printRun" : null,
   "gradingCompany" : null,
   "grade" : null,
-  "collection" : "Grant Hill, Juwan Howard",
+  "collection" : "Juwan Howard, Grant Hill",
   "notes" : null,
   "isAutograph" : false,
   "isPatch" : false,
@@ -2983,9 +2983,9 @@
   "isRookie" : false
 }, {
   "id" : "1996-97-topps-bowman-s-best-honor-roll-refractor-hr9-card170",
-  "player" : "Grant Hill, Juwan Howard",
+  "player" : "Juwan Howard, Grant Hill",
   "season" : "1996-97",
-  "team" : "Detroit Pistons, Washington Bullets",
+  "team" : "Washington Bullets, Detroit Pistons",
   "company" : "Topps",
   "brand" : "Topps Bowman's Best",
   "theme" : "Honor Roll",
@@ -2995,7 +2995,7 @@
   "printRun" : null,
   "gradingCompany" : null,
   "grade" : null,
-  "collection" : "Grant Hill, Juwan Howard",
+  "collection" : "Juwan Howard, Grant Hill",
   "notes" : null,
   "isAutograph" : false,
   "isPatch" : false,
@@ -4104,7 +4104,7 @@
   "isRookie" : false
 }, {
   "id" : "1996-97-topps-stadium-club-class-acts-ca4",
-  "player" : "Chris Webber, Juwan Howard",
+  "player" : "Juwan Howard, Chris Webber",
   "season" : "1996-97",
   "team" : "Washington Bullets",
   "company" : "Topps",
@@ -4116,14 +4116,14 @@
   "printRun" : null,
   "gradingCompany" : null,
   "grade" : null,
-  "collection" : "Chris Webber, Juwan Howard",
+  "collection" : "Juwan Howard, Chris Webber",
   "notes" : null,
   "isAutograph" : false,
   "isPatch" : false,
   "isRookie" : false
 }, {
   "id" : "1996-97-topps-stadium-club-class-acts-refractor-ca4",
-  "player" : "Chris Webber, Juwan Howard",
+  "player" : "Juwan Howard, Chris Webber",
   "season" : "1996-97",
   "team" : "Washington Bullets",
   "company" : "Topps",
@@ -4135,7 +4135,7 @@
   "printRun" : null,
   "gradingCompany" : null,
   "grade" : null,
-  "collection" : "Chris Webber, Juwan Howard",
+  "collection" : "Juwan Howard, Chris Webber",
   "notes" : null,
   "isAutograph" : false,
   "isPatch" : false,
@@ -24529,7 +24529,7 @@
   "isRookie" : false
 }, {
   "id" : "2022-23-panini-immaculate-collection-triple-autographs-ta-jmr-sn3",
-  "player" : "Juwan Howard,Mitch Richmond, Rod Strickland",
+  "player" : "Juwan Howard, Mitch Richmond, Rod Strickland",
   "season" : "2022-23",
   "team" : "Washington Wizards",
   "company" : "Panini",
@@ -24541,7 +24541,7 @@
   "printRun" : 25,
   "gradingCompany" : null,
   "grade" : null,
-  "collection" : "Mitch Richmond, Rod Strickland, Juwan Howard",
+  "collection" : "Juwan Howard, Mitch Richmond, Rod Strickland",
   "notes" : null,
   "isAutograph" : true,
   "isPatch" : false,
@@ -25516,7 +25516,7 @@
   "isPatch" : false,
   "isRookie" : false
 }, {
-  "id" : "2023-24-topps-chrome-frozenfractor-101",
+  "id" : "2023-24-topps-chrome-frozenfractor-101-sn-4",
   "player" : "Juwan Howard",
   "season" : "2023-24",
   "team" : "Washington Bullets",
@@ -25526,7 +25526,7 @@
   "variant" : "Frozenfractor",
   "cardNumber" : "101",
   "serialNumber" : "-4",
-  "printRun" : null,
+  "printRun" : 5,
   "gradingCompany" : "PSA",
   "grade" : "9",
   "collection" : "Juwan Howard",
@@ -25567,7 +25567,7 @@
   "printRun" : null,
   "gradingCompany" : null,
   "grade" : null,
-  "collection" : "Jett Howard, Juwan Howard",
+  "collection" : "Juwan Howard, Jett Howard",
   "notes" : null,
   "isAutograph" : false,
   "isPatch" : false,
