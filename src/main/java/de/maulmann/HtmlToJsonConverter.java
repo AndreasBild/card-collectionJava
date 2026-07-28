@@ -124,11 +124,17 @@ public class HtmlToJsonConverter {
                         if (val.contains("/")) {
                             String[] parts = val.split("/");
                             card.serialNumber = parts[0].replace("#", "").trim();
+                            if ("—".equals(card.serialNumber) || "-".equals(card.serialNumber)) {
+                                card.serialNumber = "";
+                            }
                             try {
                                 card.printRun = Integer.parseInt(parts[1].trim());
                             } catch (Exception ignored) {}
                         } else {
                             card.serialNumber = val.replace("#", "").trim();
+                            if ("—".equals(card.serialNumber) || "-".equals(card.serialNumber)) {
+                                card.serialNumber = "";
+                            }
                         }
                         break;
                     case "print run":

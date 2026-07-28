@@ -112,7 +112,7 @@ ${topNavHtml?no_esc}
                             let cardPrintRun = NaN;
 
                             const extractPR = (cellText) => {
-                                if (!cellText || cellText.trim() === '-' || cellText.trim() === '') return NaN;
+                                if (!cellText || cellText.trim() === '-' || cellText.trim() === '—' || cellText.trim() === '') return NaN;
                                 if (cellText.includes('/')) {
                                     const parts = cellText.split('/');
                                     return parseInt(parts[1].replace(/\D/g, ''), 10);

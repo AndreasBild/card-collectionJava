@@ -392,11 +392,11 @@ public class CardPageGenerator {
         data.put("autograph", c.has("Autograph") ? c.get("Autograph") : "-");
 
         String combined = c.get("Serial/Print Run");
-        String serialDisplay = "-";
+        String serialDisplay = "—";
         if (isValid(combined)) {
             serialDisplay = combined;
         } else if (c.has("Serial") || c.has("Print Run")) {
-            serialDisplay = (c.has("Serial") ? c.get("Serial") : "?") + " / " + (c.has("Print Run") ? c.get("Print Run") : "?");
+            serialDisplay = (c.has("Serial") ? c.get("Serial") : "—") + " / " + (c.has("Print Run") ? c.get("Print Run") : "—");
         }
         data.put("serialDisplay", serialDisplay);
 
@@ -860,7 +860,7 @@ public class CardPageGenerator {
     }
 
     private static boolean isValid(String value) {
-        return value != null && !value.trim().isEmpty() && !value.equals("0");
+        return value != null && !value.trim().isEmpty() && !value.equals("0") && !value.equals("-") && !value.equals("—");
     }
 
     private static String resolveDiskImageBase(String seasonFolder, String imageBaseName, CardData c) {
