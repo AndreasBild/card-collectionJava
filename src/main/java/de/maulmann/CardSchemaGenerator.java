@@ -15,6 +15,7 @@ import java.util.Map;
 public class CardSchemaGenerator {
 
     private static final String BASE_URL = "https://www.maulmann.de";
+    private static final TriviaManager TRIVIA_MANAGER = new TriviaManager();
 
     public static String generateFaqHtml(CardPageGenerator.CardData c) {
         StringBuilder sb = new StringBuilder();
@@ -68,6 +69,11 @@ public class CardSchemaGenerator {
 
         if (c.has("Grade")) {
             sb.append(createFaqItem("Is this card professionally graded?", "Yes, this card has been graded by " + c.get("Grading Co.") + " and received a condition score of " + c.get("Grade") + "."));
+        }
+
+        List<TriviaManager.FaqItem> rookieFaqs = TRIVIA_MANAGER.getFaqs("rookieFaq", c.attributes);
+        for (TriviaManager.FaqItem faq : rookieFaqs) {
+            sb.append(createFaqItem(faq.question, faq.answer));
         }
 
         return sb.toString();

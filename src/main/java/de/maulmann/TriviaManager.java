@@ -27,6 +27,34 @@ public class TriviaManager {
     public TriviaManager() {
     }
 
+    public static class FaqItem {
+        public final String question;
+        public final String answer;
+
+        public FaqItem(String question, String answer) {
+            this.question = question;
+            this.answer = answer;
+        }
+    }
+
+    public java.util.List<FaqItem> getFaqs(String type, Map<String, String> cardData) {
+        JsonNode configNode = config.get();
+        if (configNode == null || !configNode.has(type)) return java.util.Collections.emptyList();
+
+        java.util.List<FaqItem> list = new java.util.ArrayList<>();
+        Set<String> seenQuestions = new java.util.HashSet<>();
+        for (JsonNode rule : configNode.get(type)) {
+            if (matches(rule.get("condition"), cardData)) {
+                String q = rule.has("question") ? rule.get("question").asText() : "";
+                String a = rule.has("answer") ? rule.get("answer").asText() : "";
+                if (!q.isEmpty() && seenQuestions.add(q)) {
+                    list.add(new FaqItem(q, a));
+                }
+            }
+        }
+        return list;
+    }
+
     public String getTrivia(String type, Map<String, String> cardData) {
         JsonNode configNode = config.get();
         if (configNode == null || !configNode.has(type)) return "";

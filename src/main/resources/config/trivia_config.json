@@ -470,5 +470,67 @@
       "condition": { "Player": "Juwan Howard", "Season": "college" },
       "text": "The early 90s college basketball scene was revolutionized by the Fab Five. They introduced baggy shorts, black socks, and a trash-talking swagger that heavily influenced the aesthetic of 90s hip-hop and sports pop culture."
     }
+  ],
+  "rookieFaq": [
+    {
+      "condition": { "Season": "1994" },
+      "question": "What is the exact definition of a true Rookie Card (RC)?",
+      "answer": "A true Rookie Card is defined as the single base card for a player from an officially licensed, major manufacturer's complete base set during their first active season in the league."
+    },
+    {
+      "condition": { "Season": "1995" },
+      "question": "What is the exact definition of a true Rookie Card (RC)?",
+      "answer": "A true Rookie Card is defined as the single base card for a player from an officially licensed, major manufacturer's complete base set during their first active season in the league."
+    },
+    {
+      "condition": { "Season": "1994-95" },
+      "question": "What is the exact definition of a true Rookie Card (RC)?",
+      "answer": "A true Rookie Card is defined as the single base card for a player from an officially licensed, major manufacturer's complete base set during their first active season in the league."
+    },
+    {
+      "condition": { "Season": "1994" },
+      "question": "Why aren't 1994 Classic cards considered true Rookie Cards?",
+      "answer": "1994 Classic cards are categorized as Extended Rookie Cards (XRC). They were released prior to the NBA Draft, without official NBA or team licenses, showing the player in college uniform or draft wear. While valuable to character/team collectors, hobby encyclopedias like Beckett exclude non-licensed pre-draft cards from the official RC count."
+    },
+    {
+      "condition": { "Season": "1995" },
+      "question": "Why aren't 1994 Classic cards considered true Rookie Cards?",
+      "answer": "1994 Classic cards are categorized as Extended Rookie Cards (XRC). They were released prior to the NBA Draft, without official NBA or team licenses, showing the player in college uniform or draft wear. While valuable to character/team collectors, hobby encyclopedias like Beckett exclude non-licensed pre-draft cards from the official RC count."
+    },
+    {
+      "condition": { "Season": "1994-95" },
+      "question": "Why aren't 1994 Classic cards considered true Rookie Cards?",
+      "answer": "1994 Classic cards are categorized as Extended Rookie Cards (XRC). They were released prior to the NBA Draft, without official NBA or team licenses, showing the player in college uniform or draft wear. While valuable to character/team collectors, hobby encyclopedias like Beckett exclude non-licensed pre-draft cards from the official RC count."
+    },
+    {
+      "condition": { "Season": "1994" },
+      "question": "How do parallels like Finest Refractors or Electric Court differ from RCs?",
+      "answer": "Parallels share the exact card number, design layout, and photography as the base Rookie Card, differing only in print effect, foil stamping, or finish. The hobby treats the base card as the true RC, while the parallel is classified as a \"Rookie Parallel.\""
+    },
+    {
+      "condition": { "Season": "1995" },
+      "question": "How do parallels like Finest Refractors or Electric Court differ from RCs?",
+      "answer": "Parallels share the exact card number, design layout, and photography as the base Rookie Card, differing only in print effect, foil stamping, or finish. The hobby treats the base card as the true RC, while the parallel is classified as a \"Rookie Parallel.\""
+    },
+    {
+      "condition": { "Season": "1994-95" },
+      "question": "How do parallels like Finest Refractors or Electric Court differ from RCs?",
+      "answer": "Parallels share the exact card number, design layout, and photography as the base Rookie Card, differing only in print effect, foil stamping, or finish. The hobby treats the base card as the true RC, while the parallel is classified as a \"Rookie Parallel.\""
+    },
+    {
+      "condition": { "Season": "1994" },
+      "question": "Why are cards like \"Fleer Ultra All-Rookies\" flagged as [NOT RC] if they say \"Rookie\" on the card?",
+      "answer": "The word \"Rookie\" on the card face often indicates an insert sub-set theme. Because these cards are randomly inserted at specific odds rather than included in the sequential base set checklist, they are classified as Rookie Inserts, not true Base RCs."
+    },
+    {
+      "condition": { "Season": "1995" },
+      "question": "Why are cards like \"Fleer Ultra All-Rookies\" flagged as [NOT RC] if they say \"Rookie\" on the card?",
+      "answer": "The word \"Rookie\" on the card face often indicates an insert sub-set theme. Because these cards are randomly inserted at specific odds rather than included in the sequential base set checklist, they are classified as Rookie Inserts, not true Base RCs."
+    },
+    {
+      "condition": { "Season": "1994-95" },
+      "question": "Why are cards like \"Fleer Ultra All-Rookies\" flagged as [NOT RC] if they say \"Rookie\" on the card?",
+      "answer": "The word \"Rookie\" on the card face often indicates an insert sub-set theme. Because these cards are randomly inserted at specific odds rather than included in the sequential base set checklist, they are classified as Rookie Inserts, not true Base RCs."
+    }
   ]
 }
