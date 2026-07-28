@@ -141,6 +141,26 @@ public class CardSchemaGenerator {
         if (isValid(companyName)) {
             sb.append("      \"creator\": { \"@type\": \"Organization\", \"name\": \"").append(escapeJson(companyName)).append("\" },\n");
         }
+
+        String year = extractYear(c.get("Season"));
+        if (year != null) {
+            sb.append("      \"dateCreated\": \"").append(year).append("\",\n");
+        }
+
+        String editionInfo = c.get("Serial/Print Run");
+        if (!isValid(editionInfo)) {
+            if (c.has("Serial") && c.has("Print Run")) {
+                editionInfo = c.get("Serial") + " / " + c.get("Print Run");
+            } else if (c.has("Print Run")) {
+                editionInfo = "Print Run: " + c.get("Print Run");
+            } else if (c.has("Serial")) {
+                editionInfo = "Serial #" + c.get("Serial");
+            }
+        }
+        if (isValid(editionInfo)) {
+            sb.append("      \"artEdition\": \"").append(escapeJson(editionInfo)).append("\",\n");
+        }
+
         sb.append("      \"about\": {\n");
         sb.append("        \"@type\": \"Person\",\n");
         sb.append("        \"name\": \"").append(escapeJson(formatMulti(c.get("Player")))).append("\"");
@@ -211,6 +231,15 @@ public class CardSchemaGenerator {
             sb.append(",\n  \"manufacturer\": { \"@type\": \"Organization\", \"name\": \"").append(escapeJson(c.get("Company"))).append("\" }");
         }
 
+        if (c.has("Grade") || c.has("Grading Co.")) {
+            sb.append(",\n  \"itemCondition\": \"https://schema.org/UsedCondition\"");
+        }
+
+        String color = detectColor(c.get("Variant"));
+        if (color != null) {
+            sb.append(",\n  \"color\": \"").append(color).append("\"");
+        }
+
         if (isHolyGrail(c)) {
             sb.append(",\n  \"category\": \"Sports Trading Cards\",\n");
             sb.append("  \"material\": \"Premium Hobby Parallel\"\n");
@@ -221,6 +250,36 @@ public class CardSchemaGenerator {
         sb.append("</script>\n");
 
         return sb.toString();
+    }
+
+    private static String extractYear(String season) {
+        if (season == null) return null;
+        java.util.regex.Matcher matcher = java.util.regex.Pattern.compile("\\b(19\\d{2}|20\\d{2})\\b").matcher(season);
+        if (matcher.find()) {
+            return matcher.group(1);
+        }
+        return null;
+    }
+
+    private static String detectColor(String variant) {
+        if (!isValid(variant)) return null;
+        String lower = variant.toLowerCase();
+        if (lower.contains("ruby")) return "Ruby";
+        if (lower.contains("gold")) return "Gold";
+        if (lower.contains("emerald")) return "Emerald";
+        if (lower.contains("red")) return "Red";
+        if (lower.contains("blue")) return "Blue";
+        if (lower.contains("green")) return "Green";
+        if (lower.contains("purple")) return "Purple";
+        if (lower.contains("orange")) return "Orange";
+        if (lower.contains("black")) return "Black";
+        if (lower.contains("silver")) return "Silver";
+        if (lower.contains("bronze")) return "Bronze";
+        if (lower.contains("platinum")) return "Platinum";
+        if (lower.contains("pink")) return "Pink";
+        if (lower.contains("yellow")) return "Yellow";
+        if (lower.contains("teal")) return "Teal";
+        return null;
     }
 
     private static boolean isHolyGrail(CardPageGenerator.CardData c) {

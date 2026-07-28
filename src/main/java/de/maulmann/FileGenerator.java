@@ -75,7 +75,11 @@ public class FileGenerator {
                     "      \"@id\": \"" + BASE_URL + "/Juwan-Howard-Collection.html\",\n" +
                     "      \"name\": \"Juwan Howard Private Collection\",\n" +
                     "      \"description\": \"A massive private collection featuring 1,000+ unique cards, including 1/1 Masterpieces, PMGs, Rubies, and rare 90s basketball inserts.\",\n" +
-                    "      \"publisher\": { \"@type\": \"Person\", \"name\": \"Mauli Maulmann\" }\n" +
+                    "      \"publisher\": { \"@type\": \"Person\", \"name\": \"Mauli Maulmann\" },\n" +
+                    "      \"mainEntity\": {\n" +
+                    "        \"@type\": \"ItemList\",\n" +
+                    "        \"name\": \"Juwan Howard Trading Card Collection\"\n" +
+                    "      }\n" +
                     "    }\n" +
                     "  ]\n" +
                     "}\n" +
@@ -211,7 +215,11 @@ public class FileGenerator {
                                 "      \"@type\": \"CollectionPage\",\n" +
                                 "      \"@id\": \"" + BASE_URL + "/" + coll + ".html\",\n" +
                                 "      \"name\": \"" + title.split("\\|")[0].trim() + "\",\n" +
-                                "      \"description\": \"" + description + "\"\n" +
+                                "      \"description\": \"" + description + "\",\n" +
+                                "      \"mainEntity\": {\n" +
+                                "        \"@type\": \"ItemList\",\n" +
+                                "        \"name\": \"" + title.split("\\|")[0].trim() + " List\"\n" +
+                                "      }\n" +
                                 "    }\n" +
                                 "  ]\n" +
                                 "}\n" +
@@ -443,7 +451,15 @@ public class FileGenerator {
                     "      \"@type\": \"WebSite\",\n" +
                     "      \"name\": \"Maulmann Trading Cards\",\n" +
                     "      \"url\": \"" + BASE_URL + "\",\n" +
-                    "      \"description\": \"Private collection of the Juwan Howard Super Collector\"\n" +
+                    "      \"description\": \"Private collection of the Juwan Howard Super Collector\",\n" +
+                    "      \"potentialAction\": {\n" +
+                    "        \"@type\": \"SearchAction\",\n" +
+                    "        \"target\": {\n" +
+                    "          \"@type\": \"EntryPoint\",\n" +
+                    "          \"urlTemplate\": \"" + BASE_URL + "/Juwan-Howard-Collection.html?search={search_term_string}\"\n" +
+                    "        },\n" +
+                    "        \"query-input\": \"required name=search_term_string\"\n" +
+                    "      }\n" +
                     "    },\n" +
                     "    {\n" +
                     "      \"@type\": \"Person\",\n" +
@@ -452,6 +468,14 @@ public class FileGenerator {
                     "      \"url\": \"" + BASE_URL + "\",\n" +
                     "      \"sameAs\": [\n" +
                     "        \"https://www.instagram.com/maulmann_cards/\"\n" +
+                    "      ],\n" +
+                    "      \"knowsAbout\": [\n" +
+                    "        \"Juwan Howard\",\n" +
+                    "        \"Trading Cards\",\n" +
+                    "        \"90s Basketball Cards\",\n" +
+                    "        \"NBA Collectibles\",\n" +
+                    "        \"Precious Metal Gems\",\n" +
+                    "        \"Panini Flawless\"\n" +
                     "      ]\n" +
                     "    },\n" +
                     "    {\n" +
