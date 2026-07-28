@@ -175,33 +175,11 @@ public class FileGenerator {
         } catch (Exception e) { System.err.println("Fehler bei Haupt-Collection: " + e.getMessage()); }
     }
 
+    private static final com.fasterxml.jackson.databind.ObjectMapper MAPPER = new com.fasterxml.jackson.databind.ObjectMapper();
+
     // --- 2. NEBEN-SAMMLUNGEN BAUEN (Baseball, Panini, etc.) ---
     public static void buildOtherCollections() {
-        Map<String, String[]> collectionMetas = new HashMap<>();
-        collectionMetas.put("Baseball", new String[]{
-                "Ultimate Signature Edition Baseball Private Collection",
-                "A curated gallery from a private collection of 2005 Upper Deck Ultimate Signature Edition baseball cards. Featuring 'Immortal Inscriptions' and rare Ken Griffey Jr. autographs."
-        });
-        collectionMetas.put("Flawless", new String[]{
-                "2008 Upper Deck Exquisite Flawless Basketball Private Collection",
-                "The peak of Upper Deck's Exquisite era. View rare 2008 Flawless 1/1s and autographs of Michael Jordan, Bill Russell, and Kobe Bryant in this private collection."
-        });
-        collectionMetas.put("Panini", new String[]{
-                "2012-13 Panini Flawless Basketball Private Collection",
-                "A showcase of the historic 2012-13 Panini Flawless Basketball set from a private collector. Features 1/1 Masterpiece cards and rare gemstone-embedded NBA legends."
-        });
-        collectionMetas.put("Wantlist", new String[]{
-                "Juwan Howard Wantlist | Super Collector Searching for 1/1, PMG, Ruby",
-                "Help a Juwan Howard Super Collector complete the master collection. We are searching for rare 1/1 Masterpieces, Precious Metal Gems (PMG), SkyBox Premium Rubies, and Legacy Collection parallels."
-        });
-        collectionMetas.put("privacy", new String[]{
-                "Privacy Policy | Maulmann Trading Cards",
-                "Privacy policy for Maulmann Trading Cards. Information on data collection and usage."
-        });
-        collectionMetas.put("imprint", new String[]{
-                "Imprint | Maulmann Trading Cards",
-                "Legal notice and contact information for Maulmann Trading Cards."
-        });
+        Map<String, String[]> collectionMetas = loadCollectionMetas();
 
         try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
             for (Map.Entry<String, String[]> entry : collectionMetas.entrySet()) {
@@ -299,6 +277,27 @@ public class FileGenerator {
                 });
             }
         }
+    }
+
+    private static Map<String, String[]> loadCollectionMetas() {
+        Map<String, String[]> map = new HashMap<>();
+        try (java.io.InputStream is = FileGenerator.class.getResourceAsStream("/config/collections_config.json")) {
+            if (is != null) {
+                com.fasterxml.jackson.databind.JsonNode root = MAPPER.readTree(is);
+                Iterator<Map.Entry<String, com.fasterxml.jackson.databind.JsonNode>> fields = root.fields();
+                while (fields.hasNext()) {
+                    Map.Entry<String, com.fasterxml.jackson.databind.JsonNode> entry = fields.next();
+                    String key = entry.getKey();
+                    com.fasterxml.jackson.databind.JsonNode val = entry.getValue();
+                    String title = val.has("title") ? val.get("title").asText() : "";
+                    String desc = val.has("description") ? val.get("description").asText() : "";
+                    map.put(key, new String[]{title, desc});
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error loading collections_config.json: " + e.getMessage());
+        }
+        return map;
     }
 
     public static String generateHtmlTableFromJson(List<CardJson> cardList) {

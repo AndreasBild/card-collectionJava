@@ -4,10 +4,7 @@
     ${headHtml?no_esc}
     <#-- PRELOAD UPDATE: Teilt dem Browser mit, welche Bildgröße er vorab laden soll -->
     <link rel="preload" as="image" href="${frontImgPath}" type="image/avif"
-          imagesrcset="${frontImgPath?replace('.avif', '-400w.avif')} 400w,
-                       ${frontImgPath?replace('.avif', '-600w.avif')} 600w,
-                       ${frontImgPath?replace('.avif', '-900w.avif')} 900w,
-                       ${frontImgPath} 1200w"
+          imagesrcset="${frontImgPath?replace('.avif', '-400w.avif')} 400w, ${frontImgPath?replace('.avif', '-600w.avif')} 600w, ${frontImgPath?replace('.avif', '-900w.avif')} 900w, ${frontImgPath} 1200w"
           imagesizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, (max-width: 1300px) 45vw, 600px"
           fetchpriority="high">
     ${jsonLd?no_esc}
@@ -42,10 +39,7 @@ ${topNavHtml?no_esc}
         <div class="card-image-wrapper">
             <picture>
                 <source type="image/avif"
-                        srcset="${frontImgPath?replace('.avif', '-400w.avif')} 400w,
-                                ${frontImgPath?replace('.avif', '-600w.avif')} 600w,
-                                ${frontImgPath?replace('.avif', '-900w.avif')} 900w,
-                                ${frontImgPath} 1200w"
+                        srcset="${frontImgPath?replace('.avif', '-400w.avif')} 400w, ${frontImgPath?replace('.avif', '-600w.avif')} 600w, ${frontImgPath?replace('.avif', '-900w.avif')} 900w, ${frontImgPath} 1200w"
                         sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, (max-width: 1300px) 45vw, 600px">
                 <img src="${frontImgPath}"
                      width="600" height="840"
@@ -58,10 +52,7 @@ ${topNavHtml?no_esc}
         <div class="card-image-wrapper">
             <picture>
                 <source type="image/avif"
-                        srcset="${backImgPath?replace('.avif', '-400w.avif')} 400w,
-                                ${backImgPath?replace('.avif', '-600w.avif')} 600w,
-                                ${backImgPath?replace('.avif', '-900w.avif')} 900w,
-                                ${backImgPath} 1200w"
+                        srcset="${backImgPath?replace('.avif', '-400w.avif')} 400w, ${backImgPath?replace('.avif', '-600w.avif')} 600w, ${backImgPath?replace('.avif', '-900w.avif')} 900w, ${backImgPath} 1200w"
                         sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, (max-width: 1300px) 45vw, 600px">
                 <img src="${backImgPath}"
                      width="600" height="840"

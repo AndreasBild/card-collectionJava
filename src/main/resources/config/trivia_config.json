@@ -407,9 +407,133 @@
     {
       "condition": { "Player": "Juwan Howard", "Season": "college" },
       "text": "At the University of Michigan, Juwan Howard was a cornerstone of the legendary 'Fab Five'. Alongside Chris Webber, Jalen Rose, Jimmy King, and Ray Jackson, they reached consecutive NCAA championship games and permanently altered basketball culture."
+    },
+    {
+      "condition": { "Player": "Eric Gagne" },
+      "text": "2003 NL Cy Young Award winner with the LA Dodgers. Set the all-time MLB record with 84 consecutive converted saves (2002–2004) and earned 3 NL All-Star selections."
+    },
+    {
+      "condition": { "Player": "Jim Bunning" },
+      "text": "National Baseball Hall of Fame (1996). 9x All-Star pitcher who pitched a perfect game on Father's Day 1964 with the Phillies and accumulated 2,855 career strikeouts."
+    },
+    {
+      "condition": { "Player": "Ozzie Smith" },
+      "text": "National Baseball Hall of Fame (2002). 'The Wizard' won 13 consecutive Gold Glove Awards at shortstop, 15 All-Star selections, and the 1982 World Series title with St. Louis."
+    },
+    {
+      "condition": { "Player": "Steve Carlton" },
+      "text": "National Baseball Hall of Fame (1994). 4x NL Cy Young Award winner (1972, 1977, 1980, 1982), 10x All-Star, 1980 World Champion, and 3,988 career strikeouts."
+    },
+    {
+      "condition": { "Player": "Will Clark" },
+      "text": "6x MLB All-Star first baseman, 1989 NLCS MVP with the San Francisco Giants (.650 AVG in NLCS), and Golden Spikes Award winner."
+    },
+    {
+      "condition": { "Player": "Ken Griffey" },
+      "text": "National Baseball Hall of Fame (2016). 13x All-Star, 10x Gold Glove winner, 1997 AL MVP with Seattle, and 630 career home runs."
+    },
+    {
+      "condition": { "Player": "Michael Jordan" },
+      "text": "6x NBA Champion, 6x Finals MVP, 5x NBA MVP, 14x All-Star. Widely revered as the greatest basketball player of all time."
+    },
+    {
+      "condition": { "Player": "Kobe Bryant" },
+      "text": "5x NBA Champion, 2x Finals MVP, 2008 NBA MVP, 18x All-Star. Legendary guard who spent his entire 20-year career with the Los Angeles Lakers."
+    },
+    {
+      "condition": { "Player": "LeBron James" },
+      "text": "4x NBA Champion, 4x Finals MVP, 4x NBA MVP. During the 2008-09 season, LeBron won his 1st NBA MVP award with 66 wins for Cleveland."
+    },
+    {
+      "condition": { "Player": "Bill Russell" },
+      "text": "11x NBA Champion, 5x NBA MVP, 12x All-Star. The ultimate winner in sports history and defensive anchor of the Boston Celtics dynasty."
+    },
+    {
+      "condition": { "Player": "Kareem Abdul-Jabbar" },
+      "text": "6x NBA MVP, 6x NBA Champion, 19x All-Star. Held the NBA all-time scoring record for 39 years with his unstoppable Skyhook."
+    },
+    {
+      "condition": { "Player": "Julius Erving" },
+      "text": "1983 NBA Champion, 1981 NBA MVP, 11x NBA All-Star. 'Dr. J' revolutionized the game above the rim for the Philadelphia 76ers and Nets."
+    },
+    {
+      "condition": { "Player": "Jerry West" },
+      "text": "1972 NBA Champion, 1969 Finals MVP, 14x All-Star. Hall of Fame guard whose iconic silhouette serves as the official NBA logo."
+    },
+    {
+      "condition": { "Player": "Isiah Thomas" },
+      "text": "2x NBA Champion, 1990 Finals MVP, 12x All-Star. Legendary point guard and floor general of the Detroit Pistons 'Bad Boys' dynasty."
+    },
+    {
+      "condition": { "Player": "Clyde Drexler" },
+      "text": "1995 NBA Champion with Houston, 10x All-Star, Hall of Famer. 'The Glide' was one of the most dynamic guards in NBA history."
+    },
+    {
+      "condition": { "Player": "Alonzo Mourning" },
+      "text": "2006 NBA Champion with Miami, 2x Defensive Player of the Year, 7x All-Star center for the Heat and Hornets."
     }
   ],
   "eraContext": [
+    {
+      "condition": { "Season": "1994" },
+      "text": "Mid-90s NBA Golden Era: Peak physical play, expansion teams, and Michael Jordan's first comeback."
+    },
+    {
+      "condition": { "Season": "1995" },
+      "text": "Mid-90s NBA Golden Era: Peak physical play, expansion teams, and Michael Jordan's first comeback."
+    },
+    {
+      "condition": { "Season": "1996" },
+      "text": "Late 90s Premium Insert Craze: Introduction of high-end parallels (PMG, Rubies, Refractors)."
+    },
+    {
+      "condition": { "Season": "1997" },
+      "text": "Late 90s Premium Insert Craze: Introduction of high-end parallels (PMG, Rubies, Refractors)."
+    },
+    {
+      "condition": { "Season": "1998" },
+      "text": "Post-Jordan Transition Era: Rise of Kobe Bryant, Allen Iverson, and new young superstars."
+    },
+    {
+      "condition": { "Season": "1999" },
+      "text": "Post-Jordan Transition Era: Rise of Kobe Bryant, Allen Iverson, and new young superstars."
+    },
+    {
+      "condition": { "Season": "2000" },
+      "text": "Early 2000s Autograph & Relic Revolution: Upper Deck Exquisite and SP Authentic define modern high-end collecting."
+    },
+    {
+      "condition": { "Season": "2001" },
+      "text": "Early 2000s Autograph & Relic Revolution: Upper Deck Exquisite and SP Authentic define modern high-end collecting."
+    },
+    {
+      "condition": { "Season": "2002" },
+      "text": "Early 2000s Autograph & Relic Revolution: Upper Deck Exquisite and SP Authentic define modern high-end collecting."
+    },
+    {
+      "condition": { "Season": "2003" },
+      "text": "Mid-2000s Era: Legendary 2003 draft class (LeBron, Wade, Carmelo) elevates hobby interest."
+    },
+    {
+      "condition": { "Season": "2004" },
+      "text": "Mid-2000s Era: Legendary 2003 draft class (LeBron, Wade, Carmelo) elevates hobby interest."
+    },
+    {
+      "condition": { "Season": "2005" },
+      "text": "Mid-2000s Era: Legendary 2003 draft class (LeBron, Wade, Carmelo) elevates hobby interest."
+    },
+    {
+      "condition": { "Season": "2010" },
+      "text": "Panini Exclusive Era: Debut of Panini Flawless, National Treasures Logomans, and Immaculate Collection."
+    },
+    {
+      "condition": { "Season": "2011" },
+      "text": "Panini Exclusive Era: Debut of Panini Flawless, National Treasures Logomans, and Immaculate Collection."
+    },
+    {
+      "condition": { "Season": "2012" },
+      "text": "Panini Exclusive Era: Debut of Panini Flawless, National Treasures Logomans, and Immaculate Collection."
+    },
     {
       "condition": { "Player": "Juwan Howard", "Season": "1994" },
       "text": "The 1994-95 season marked the return of Michael Jordan from his first retirement. It was an era of heavy-hitting post play and the rise of a new generation of superstars that would dominate the decade."

@@ -405,8 +405,8 @@ public class CardPageGenerator {
 
         data.put("hobbyTrivia", triviaManager.getTrivia("hobbyTrivia", c.attributes));
         data.put("techTrivia", triviaManager.getTrivia("cardTechTrivia", c.attributes));
-        data.put("playerHighlights", getSeasonHighlights(c.get("Season"), c.get("Player"), overviewPage));
-        data.put("eraContext", getEraContext(c.get("Season"), c.get("Player"), overviewPage));
+        data.put("playerHighlights", getSeasonHighlights(c, overviewPage));
+        data.put("eraContext", getEraContext(c, overviewPage));
         String primaryP = getPrimaryPlayerName(c.get("Player"));
         boolean isBaseball = "Baseball.html".equals(overviewPage) || isBaseballPlayer(primaryP);
         data.put("eraTitle", isBaseball ? "&#x26BE; MLB Era & Pop Culture" : "&#x1F3C0; NBA Era & Pop Culture");
@@ -694,111 +694,34 @@ public class CardPageGenerator {
 
 
 
-    private static String getSeasonHighlights(String season, String player, String overviewPage) {
-        if (season == null) return null;
-        String p = getPrimaryPlayerName(player);
+    private static String getSeasonHighlights(CardData c, String overviewPage) {
+        String triviaText = triviaManager.getTrivia("playerHighlights", c.attributes);
+        if (triviaText != null && !triviaText.trim().isEmpty()) {
+            return triviaText;
+        }
 
+        String p = getPrimaryPlayerName(c.get("Player"));
         if ("Baseball.html".equals(overviewPage) || isBaseballPlayer(p)) {
-            return getBaseballPlayerHighlights(p, season);
+            return p + " is an iconic Major League Baseball player featured in this premium sports memorabilia release.";
         }
-
-        if (p.equalsIgnoreCase("Juwan Howard")) {
-            return getJuwanHowardHighlights(season);
-        }
-
-        return getOtherNbaPlayerHighlights(p, season);
+        return p + " is an iconic professional basketball star featured in this ultra-premium collection release.";
     }
 
-    private static String getBaseballPlayerHighlights(String p, String season) {
-        return switch (p.toLowerCase()) {
-            case "eric gagne", "eric \"game over\" gagne" -> "2003 NL Cy Young Award winner with the LA Dodgers. Set the all-time MLB record with 84 consecutive converted saves (2002–2004) and earned 3 NL All-Star selections.";
-            case "jim bunning", "jim \"hof 96\" bunning" -> "National Baseball Hall of Fame (1996). 9x All-Star pitcher who pitched a perfect game on Father's Day 1964 with the Phillies and accumulated 2,855 career strikeouts.";
-            case "ozzie smith", "ozzie \"the wiz\" smith" -> "National Baseball Hall of Fame (2002). 'The Wizard' won 13 consecutive Gold Glove Awards at shortstop, 15 All-Star selections, and the 1982 World Series title with St. Louis.";
-            case "steve carlton", "steve \"lefty\" carlton" -> "National Baseball Hall of Fame (1994). 4x NL Cy Young Award winner (1972, 1977, 1980, 1982), 10x All-Star, 1980 World Champion, and 3,988 career strikeouts.";
-            case "will clark", "will \"the thrill\" clark" -> "6x MLB All-Star first baseman, 1989 NLCS MVP with the San Francisco Giants (.650 AVG in NLCS), and Golden Spikes Award winner.";
-            case "ken griffey jr.", "ken griffey jr" -> "National Baseball Hall of Fame (2016). 13x All-Star, 10x Gold Glove winner, 1997 AL MVP with Seattle, and 630 career home runs.";
-            default -> p + " is an iconic Major League Baseball player featured in this premium sports memorabilia release.";
-        };
-    }
-
-    private static String getJuwanHowardHighlights(String season) {
-        return switch (season) {
-            case "1994-95", "1994" -> "Rookie Season with Washington Bullets: Named to NBA All-Rookie First Team (17.0 PPG, 8.4 RPG).";
-            case "1995-96", "1995" -> "Career Year: NBA All-Star selection, All-NBA Third Team. Averaged a career-high 22.1 PPG, 8.1 RPG, 4.4 APG. Scored 42 pts vs Toronto.";
-            case "1996-97", "1996" -> "Led Bullets to the NBA Playoffs for the first time since 1988 (19.1 PPG, 8.0 RPG). Signed historic $100M contract.";
-            case "1997-98", "1997" -> "Washington Wizards Rebranding Era: Co-captain alongside Chris Webber (18.5 PPG, 7.0 RPG).";
-            case "1998-99", "1998" -> "Lockout Season: Co-captain leading Washington in scoring (18.9 PPG, 8.1 RPG).";
-            case "1999-00", "1999" -> "Final full season in Washington: Averaged 14.9 PPG and 5.7 RPG.";
-            case "2000-01", "2000" -> "Traded to Dallas Mavericks mid-season: Strong playoff performance alongside Dirk Nowitzki (17.8 PPG).";
-            case "2001-02", "2001" -> "Dallas & Denver Nuggets transition: Reliable veteran presence (14.6 PPG, 7.6 RPG).";
-            case "2002-03", "2002" -> "Denver Nuggets Leader: Primary frontcourt scoring option (18.4 PPG, 7.6 RPG).";
-            case "2003-04", "2003" -> "Orlando Magic: Veteran anchor alongside Tracy McGrady (17.0 PPG, 7.0 RPG).";
-            case "2004-05", "2004" -> "Houston Rockets: Key frontcourt starter with Yao Ming and Tracy McGrady (9.6 PPG, 5.7 RPG).";
-            case "2005-06", "2005" -> "Houston Rockets: Contributed 11.8 PPG and 6.7 RPG in Western Conference competition.";
-            case "2006-07", "2006" -> "Houston Rockets: Helped guide Houston to 52 wins and Western Conference Playoff berth.";
-            case "2007-08", "2007" -> "Dallas Mavericks Return: Provided playoff experience and frontcourt depth.";
-            case "2008-09", "2008" -> "Denver Nuggets & Charlotte Bobcats: Veteran leadership across 50 NBA games.";
-            case "2009-10", "2009" -> "Portland Trail Blazers: Played 73 games, key reserve in Western Conference Playoffs (6.0 PPG, 4.6 RPG).";
-            case "2010-11", "2010" -> "Miami Heat 'Big Three' Era: Reached 2011 NBA Finals alongside LeBron James, Dwyane Wade, and Chris Bosh.";
-            case "2011-12", "2011" -> "NBA Champion with Miami Heat: Won his 1st NBA Championship ring.";
-            case "2012-13", "2012" -> "Back-to-Back NBA Champion with Miami Heat: Retired as a 2x NBA Champion after 19 seasons.";
-            default -> "Juwan Howard enjoyed a remarkable 19-season NBA career (1994-2013), winning 2 NBA Championships with the Miami Heat.";
-        };
-    }
-
-    private static String getOtherNbaPlayerHighlights(String p, String season) {
-        return switch (p.toLowerCase()) {
-            case "michael jordan" -> "6x NBA Champion, 6x Finals MVP, 5x NBA MVP, 14x All-Star. Widely revered as the greatest basketball player of all time.";
-            case "kobe bryant" -> "5x NBA Champion, 2x Finals MVP, 2008 NBA MVP, 18x All-Star. Legendary guard who spent his entire 20-year career with the Los Angeles Lakers.";
-            case "lebron james" -> "4x NBA Champion, 4x Finals MVP, 4x NBA MVP. During the 2008-09 season, LeBron won his 1st NBA MVP award with 66 wins for Cleveland.";
-            case "bill russell" -> "11x NBA Champion, 5x NBA MVP, 12x All-Star. The ultimate winner in sports history and defensive anchor of the Boston Celtics dynasty.";
-            case "kareem abdul-jabbar" -> "6x NBA MVP, 6x NBA Champion, 19x All-Star. Held the NBA all-time scoring record for 39 years with his unstoppable Skyhook.";
-            case "julius erving" -> "1983 NBA Champion, 1981 NBA MVP, 11x NBA All-Star. 'Dr. J' revolutionized the game above the rim for the Philadelphia 76ers and Nets.";
-            case "jerry west" -> "1972 NBA Champion, 1969 Finals MVP, 14x All-Star. Hall of Fame guard whose iconic silhouette serves as the official NBA logo.";
-            case "isiah thomas" -> "2x NBA Champion, 1990 Finals MVP, 12x All-Star. Legendary point guard and floor general of the Detroit Pistons 'Bad Boys' dynasty.";
-            case "clyde drexler" -> "1995 NBA Champion with Houston, 10x All-Star, Hall of Famer. 'The Glide' was one of the most dynamic guards in NBA history.";
-            case "alonzo mourning" -> "2006 NBA Champion with Miami, 2x Defensive Player of the Year, 7x All-Star center for the Heat and Hornets.";
-            case "oscar robertson" -> "1971 NBA Champion, 1964 NBA MVP, 12x All-Star. 'The Big O' was the first player in NBA history to average a season triple-double.";
-            case "rick barry" -> "1975 NBA Champion & Finals MVP with Golden State, 12x All-Star, Hall of Famer famous for his flawless underhand free throws.";
-            case "kevin durant" -> "2014 NBA MVP, 2x NBA Champion, 2x Finals MVP. 2008-09 marked his standout sophomore campaign following his Rookie of the Year season.";
-            case "chris paul" -> "12x All-Star, 11x All-NBA. Finished runner-up for 2008 MVP, leading the NBA in assists (11.6 APG) and steals (2.7 SPG) for New Orleans.";
-            case "paul pierce" -> "2008 NBA Champion and 2008 Finals MVP with the Boston Celtics, 10x All-Star known as 'The Truth'.";
-            case "kevin garnett" -> "2008 NBA Champion and 2008 Defensive Player of the Year with Boston, 2004 NBA MVP, 15x All-Star.";
-            case "ray allen" -> "2x NBA Champion (2008 Celtics, 2013 Heat), 10x All-Star, one of the greatest 3-point shooters in NBA history.";
-            case "vince carter" -> "8x All-Star, 2000 Slam Dunk Champion. High-flying superstar for the New Jersey Nets during the 2008 season.";
-            case "tracy mcgrady" -> "7x All-Star, 2x NBA Scoring Champion, Hall of Fame swingman for the Houston Rockets and Magic.";
-            case "deron williams" -> "3x All-Star, 2x All-NBA point guard, led the Utah Jazz to consecutive Western Conference playoff appearances.";
-            case "brandon roy" -> "2007 NBA Rookie of the Year, 3x All-Star franchise guard for the Portland Trail Blazers.";
-            case "baron davis" -> "2x All-Star point guard who led the 'We Believe' Warriors before joining the Los Angeles Clippers in 2008.";
-            case "derek fisher" -> "5x NBA Champion point guard with the Los Angeles Lakers, famous for clutch postseason shooting.";
-            case "al horford" -> "5x All-Star, 2024 NBA Champion, 2008 All-Rookie First Team center for the Atlanta Hawks after winning back-to-back NCAA titles at Florida.";
-            case "joakim noah" -> "2014 NBA Defensive Player of the Year, 2x All-Star center for the Chicago Bulls and 2x NCAA Champion at Florida.";
-            case "andrew bynum" -> "2x NBA Champion starting center for the Los Angeles Lakers (2009, 2010), 2012 All-Star.";
-            case "rodney stuckey" -> "2008 NBA All-Rookie Second Team guard for the Detroit Pistons.";
-            case "michael cooper" -> "5x NBA Champion, 1987 NBA Defensive Player of the Year, elite perimeter defender for the 'Showtime' Lakers.";
-            case "mitch kupchak" -> "3x NBA Champion player with the Lakers and Wizards, long-time General Manager who built multiple Lakers championship teams.";
-            case "hakeem olajuwon" -> "2x NBA Champion, 2x Finals MVP, 1994 NBA MVP, all-time NBA leader in blocked shots. 'The Dream' for Houston.";
-            case "walt frazier" -> "2x NBA Champion with the New York Knicks (1970, 1973), 7x All-Star, Hall of Fame point guard 'Clyde'.";
-            case "spencer haywood" -> "1980 NBA Champion, 1970 ABA MVP & Rookie of the Year, 4x NBA All-Star, Basketball Hall of Famer.";
-            case "hal greer" -> "1967 NBA Champion with the 76ers, 10x All-NBA, 10x All-Star guard, 76ers all-time leading scorer.";
-            case "nate archibald", "nate \"tiny\" archibald" -> "1981 NBA Champion with Celtics, 6x All-Star. Only player in NBA history to lead the league in Scoring (34.0 PPG) and Assists (11.4 APG) in the same season (1972-73).";
-            case "earl monroe", "earl \"the pearl\" monroe" -> "1973 NBA Champion with the Knicks, 1968 Rookie of the Year, 4x All-Star, 'The Pearl' of basketball showmanship.";
-            case "bob lanier" -> "8x All-Star center for the Detroit Pistons and Bucks, Hall of Famer known for his dominant left-handed hook shot.";
-            case "james worthy" -> "3x NBA Champion, 1988 NBA Finals MVP, 7x All-Star. 'Big Game James' for the Showtime Los Angeles Lakers.";
-            case "roy hibbert" -> "2x NBA All-Star center, elite rim protector and defensive anchor for the Indiana Pacers.";
-            default -> p + " is an iconic professional basketball star featured in this ultra-premium collection release.";
-        };
-    }
-
-    private static String getEraContext(String season, String player, String overviewPage) {
-        String p = getPrimaryPlayerName(player);
+    private static String getEraContext(CardData c, String overviewPage) {
+        String p = getPrimaryPlayerName(c.get("Player"));
         if ("Baseball.html".equals(overviewPage) || isBaseballPlayer(p)) {
             return "MLB Baseball Autograph & Relic Era: Premium certified signatures and authentic game-used memorabilia preserved for baseball collectors.";
         }
         if ("Flawless.html".equals(overviewPage) || "Panini.html".equals(overviewPage)) {
             return "Ultra-High-End Premium Era: Featuring low-numbered parallel cards, certified signatures, and game-worn patch swatches of basketball icons.";
         }
-        return getNbaEraContext(season, player);
+
+        String triviaText = triviaManager.getTrivia("eraContext", c.attributes);
+        if (triviaText != null && !triviaText.trim().isEmpty()) {
+            return triviaText;
+        }
+
+        return "Modern NBA Hobby Era: Continuous innovation in card technology, serial numbering, and certified autographs.";
     }
 
     private static String getPrimaryPlayerName(String player) {
