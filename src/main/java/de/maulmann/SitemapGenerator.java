@@ -325,7 +325,7 @@ public class SitemapGenerator {
                     "{\n" +
                     "  \"@context\": \"https://schema.org\",\n" +
                     "  \"@graph\": [\n" +
-                    "    " + SharedTemplates.getBreadcrumbJsonLd(bcItems) + ",\n" +
+                    "    " + SharedTemplates.getBreadcrumbJsonLd(bcItems, BASE_URL + "/sitemap.html#breadcrumb") + ",\n" +
                     "    {\n" +
                     "      \"@type\": \"WebPage\",\n" +
                     "      \"@id\": \"" + BASE_URL + "/sitemap.html\",\n" +

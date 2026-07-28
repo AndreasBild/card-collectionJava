@@ -88,6 +88,18 @@ public class CardSchemaGenerator {
         String backImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + imageBaseName + "-back.avif";
         String cardUrl = BASE_URL + "/cards/" + c.seasonFolder + "/" + c.filename;
 
+        // Determine matching collection name for breadcrumb
+        String collectionName = "Collection";
+        if ("Flawless.html".equals(overviewPage)) {
+            collectionName = "Flawless";
+        } else if ("Baseball.html".equals(overviewPage)) {
+            collectionName = "Baseball";
+        } else if ("Panini.html".equals(overviewPage)) {
+            collectionName = "Panini";
+        } else if ("Wantlist.html".equals(overviewPage)) {
+            collectionName = "Wantlist";
+        }
+
         StringBuilder sb = new StringBuilder();
 
         sb.append("<script type=\"application/ld+json\">\n");
@@ -98,10 +110,10 @@ public class CardSchemaGenerator {
         // 1. BreadcrumbList
         List<Map<String, String>> bcItems = new ArrayList<>();
         bcItems.add(Map.of("name", "Home", "link", BASE_URL + "/index.html"));
-        bcItems.add(Map.of("name", "Collection", "link", BASE_URL + "/" + overviewPage));
+        bcItems.add(Map.of("name", collectionName, "link", BASE_URL + "/" + overviewPage));
         bcItems.add(Map.of("name", c.get("Season"), "link", BASE_URL + "/" + overviewPage + "#" + c.seasonFolder.toLowerCase()));
         bcItems.add(Map.of("name", h1Title, "link", cardUrl));
-        sb.append(SharedTemplates.getBreadcrumbJsonLd(bcItems)).append(",\n");
+        sb.append(SharedTemplates.getBreadcrumbJsonLd(bcItems, cardUrl + "#breadcrumb")).append(",\n");
 
         // 2. ItemPage Node
         sb.append("    {\n");
@@ -117,6 +129,7 @@ public class CardSchemaGenerator {
         // 3. VisualArtwork
         String playerPrimary = c.get("Player");
         if (playerPrimary != null && playerPrimary.contains(",")) playerPrimary = playerPrimary.split(",")[0].trim();
+        String companyName = c.get("Company");
 
         sb.append("    {\n");
         sb.append("      \"@type\": \"VisualArtwork\",\n");
@@ -125,11 +138,17 @@ public class CardSchemaGenerator {
         sb.append("      \"name\": \"").append(escapeJson(h1Title)).append("\",\n");
         sb.append("      \"image\": [ \"").append(frontImgUrl).append("\", \"").append(backImgUrl).append("\" ],\n");
         sb.append("      \"description\": \"").append(escapeJson(desc)).append("\",\n");
-        sb.append("      \"creator\": { \"@type\": \"Organization\", \"name\": \"").append(escapeJson(c.get("Company"))).append("\" },\n");
+        if (isValid(companyName)) {
+            sb.append("      \"creator\": { \"@type\": \"Organization\", \"name\": \"").append(escapeJson(companyName)).append("\" },\n");
+        }
         sb.append("      \"about\": {\n");
         sb.append("        \"@type\": \"Person\",\n");
-        sb.append("        \"name\": \"").append(escapeJson(formatMulti(c.get("Player")))).append("\",\n");
-        sb.append("        \"sameAs\": \"https://en.wikipedia.org/wiki/").append(escapeJson(playerPrimary != null ? playerPrimary : "").replace(" ", "_")).append("\"\n");
+        sb.append("        \"name\": \"").append(escapeJson(formatMulti(c.get("Player")))).append("\"");
+        if (isValid(playerPrimary)) {
+            sb.append(",\n        \"sameAs\": \"https://en.wikipedia.org/wiki/").append(escapeJson(playerPrimary.replace(" ", "_"))).append("\"\n");
+        } else {
+            sb.append("\n");
+        }
         sb.append("      },\n");
         sb.append("      \"artMedium\": \"Trading Card\",\n");
         sb.append("      \"artform\": \"Sports Memorabilia\"\n");
@@ -180,16 +199,23 @@ public class CardSchemaGenerator {
         sb.append("  \"name\": \"").append(escapeJson(h1Title)).append("\",\n");
         sb.append("  \"image\": [ \"").append(frontImgUrl).append("\", \"").append(backImgUrl).append("\" ],\n");
         sb.append("  \"description\": \"").append(escapeJson(desc)).append("\",\n");
-        sb.append("  \"sku\": \"").append(c.stableId).append("\",\n");
-        sb.append("  \"mpn\": \"").append(escapeJson(c.get("Number"))).append("\",\n");
-        sb.append("  \"brand\": { \"@type\": \"Brand\", \"name\": \"").append(escapeJson(c.get("Brand"))).append("\" },\n");
-        sb.append("  \"manufacturer\": { \"@type\": \"Organization\", \"name\": \"").append(escapeJson(c.get("Company"))).append("\" },\n");
+        sb.append("  \"sku\": \"").append(c.stableId).append("\"");
+
+        if (isValid(c.get("Number"))) {
+            sb.append(",\n  \"mpn\": \"").append(escapeJson(c.get("Number"))).append("\"");
+        }
+        if (isValid(c.get("Brand"))) {
+            sb.append(",\n  \"brand\": { \"@type\": \"Brand\", \"name\": \"").append(escapeJson(c.get("Brand"))).append("\" }");
+        }
+        if (isValid(c.get("Company"))) {
+            sb.append(",\n  \"manufacturer\": { \"@type\": \"Organization\", \"name\": \"").append(escapeJson(c.get("Company"))).append("\" }");
+        }
 
         if (isHolyGrail(c)) {
-            sb.append("  \"category\": \"Sports Trading Cards\",\n");
+            sb.append(",\n  \"category\": \"Sports Trading Cards\",\n");
             sb.append("  \"material\": \"Premium Hobby Parallel\"\n");
         } else {
-            sb.append("  \"category\": \"Sports Trading Cards\"\n");
+            sb.append(",\n  \"category\": \"Sports Trading Cards\"\n");
         }
         sb.append("}\n");
         sb.append("</script>\n");

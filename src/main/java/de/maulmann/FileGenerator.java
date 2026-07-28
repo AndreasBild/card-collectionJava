@@ -69,7 +69,7 @@ public class FileGenerator {
                     "{\n" +
                     "  \"@context\": \"https://schema.org\",\n" +
                     "  \"@graph\": [\n" +
-                    "    " + SharedTemplates.getBreadcrumbJsonLd(bcItems) + ",\n" +
+                    "    " + SharedTemplates.getBreadcrumbJsonLd(bcItems, BASE_URL + "/Juwan-Howard-Collection.html#breadcrumb") + ",\n" +
                     "    {\n" +
                     "      \"@type\": \"CollectionPage\",\n" +
                     "      \"@id\": \"" + BASE_URL + "/Juwan-Howard-Collection.html\",\n" +
@@ -206,7 +206,7 @@ public class FileGenerator {
                                 "{\n" +
                                 "  \"@context\": \"https://schema.org\",\n" +
                                 "  \"@graph\": [\n" +
-                                "    " + SharedTemplates.getBreadcrumbJsonLd(collBcItems) + ",\n" +
+                                "    " + SharedTemplates.getBreadcrumbJsonLd(collBcItems, BASE_URL + "/" + coll + ".html#breadcrumb") + ",\n" +
                                 "    {\n" +
                                 "      \"@type\": \"CollectionPage\",\n" +
                                 "      \"@id\": \"" + BASE_URL + "/" + coll + ".html\",\n" +
@@ -240,7 +240,7 @@ public class FileGenerator {
                                                 "{\n" +
                                                 "  \"@context\": \"https://schema.org\",\n" +
                                                 "  \"@graph\": [\n" +
-                                                "    " + SharedTemplates.getBreadcrumbJsonLd(collBcItems) + ",\n" +
+                                                "    " + SharedTemplates.getBreadcrumbJsonLd(collBcItems, BASE_URL + "/" + coll + ".html#breadcrumb") + ",\n" +
                                                 "    {\n" +
                                                 "      \"@type\": \"CollectionPage\",\n" +
                                                 "      \"@id\": \"" + BASE_URL + "/" + coll + ".html\",\n" +
@@ -438,7 +438,7 @@ public class FileGenerator {
                     "{\n" +
                     "  \"@context\": \"https://schema.org\",\n" +
                     "  \"@graph\": [\n" +
-                    "    " + SharedTemplates.getBreadcrumbJsonLd(indexBcItems) + ",\n" +
+                    "    " + SharedTemplates.getBreadcrumbJsonLd(indexBcItems, BASE_URL + "/#breadcrumb") + ",\n" +
                     "    {\n" +
                     "      \"@type\": \"WebSite\",\n" +
                     "      \"name\": \"Maulmann Trading Cards\",\n" +

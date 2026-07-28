@@ -119,34 +119,28 @@ public class SharedTemplates {
     }
 
     public static String getBreadcrumbJsonLd(List<Map<String, String>> items) {
+        return getBreadcrumbJsonLd(items, null);
+    }
+
+    public static String getBreadcrumbJsonLd(List<Map<String, String>> items, String id) {
         StringBuilder sb = new StringBuilder();
         sb.append("    {\n");
         sb.append("      \"@type\": \"BreadcrumbList\",\n");
+        if (id != null && !id.isEmpty()) {
+            sb.append("      \"@id\": \"").append(escapeJson(id)).append("\",\n");
+        }
         sb.append("      \"name\": \"Breadcrumbs\",\n");
         sb.append("      \"itemListElement\": [\n");
 
         for (int i = 0; i < items.size(); i++) {
             Map<String, String> item = items.get(i);
-            String name = escapeHtml(item.get("name")); // Using existing escapeHtml for JSON-safe strings if they don't contain quotes
-            // Actually it's better to escape JSON specifically
-            name = name.replace("\"", "\\\"");
+            String rawName = item.get("name");
+            String name = escapeJson(rawName);
             String link = item.get("link");
-            if (link == null || link.isEmpty()) {
-                // If link is empty, we still need a valid URL for schema.org usually,
-                // but some parsers allow omitting 'item' for the last item.
-                // However, Google recommends including it.
-                // For now we'll just skip 'item' if link is empty.
-            }
 
             sb.append("        { \"@type\": \"ListItem\", \"position\": ").append(i + 1).append(", \"name\": \"").append(name).append("\"");
             if (link != null && !link.isEmpty()) {
-                // Prepend BASE_URL if relative
-                String absoluteLink = link;
-                if (!link.startsWith("http")) {
-                    // This is tricky because we don't know the full context here easily.
-                    // But in this project, BASE_URL is https://www.maulmann.de
-                }
-                sb.append(", \"item\": \"").append(link).append("\"");
+                sb.append(", \"item\": \"").append(escapeJson(link)).append("\"");
             }
             sb.append(" }");
             if (i < items.size() - 1) sb.append(",");
@@ -156,6 +150,15 @@ public class SharedTemplates {
         sb.append("      ]\n");
         sb.append("    }");
         return sb.toString();
+    }
+
+    public static String escapeJson(String text) {
+        if (text == null) return "";
+        return text.replace("\\", "\\\\")
+                .replace("\"", "\\\"")
+                .replace("\n", "\\n")
+                .replace("\r", "\\r")
+                .replace("\t", "\\t");
     }
 
     public static String getTopNav(String root, String activePage) {
