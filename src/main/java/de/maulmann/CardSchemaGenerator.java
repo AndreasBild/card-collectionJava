@@ -59,7 +59,7 @@ public class CardSchemaGenerator {
         if (c.has("Rookie")) {
             String rookieAns = c.get("Rookie").equalsIgnoreCase("Yes") ?
                     "Yes, this is an official Rookie Card (RC) from " + player + "'s debut season, holding premium value for collectors." :
-                    "No, this card was released during the " + season + " season, later in " + player + "'s career.";
+                    "No, this card was released during the " + season + " season, which was not " + player + "'s debut season.";
             sb.append(createFaqItem("Is this a " + player + " Rookie Card?", rookieAns));
         }
 
