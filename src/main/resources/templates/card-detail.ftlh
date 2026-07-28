@@ -41,13 +41,14 @@ ${topNavHtml?no_esc}
     <div class="card-images-container">
         <div class="card-image-wrapper">
             <picture>
+                <source type="image/avif"
+                        srcset="${frontImgPath?replace('.avif', '-400w.avif')} 400w,
+                                ${frontImgPath?replace('.avif', '-600w.avif')} 600w,
+                                ${frontImgPath?replace('.avif', '-900w.avif')} 900w,
+                                ${frontImgPath} 1200w"
+                        sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, (max-width: 1300px) 45vw, 600px">
                 <img src="${frontImgPath}"
                      width="600" height="840"
-                     srcset="${frontImgPath?replace('.avif', '-400w.avif')} 400w,
-                             ${frontImgPath?replace('.avif', '-600w.avif')} 600w,
-                             ${frontImgPath?replace('.avif', '-900w.avif')} 900w,
-                             ${frontImgPath} 1200w"
-                     sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, (max-width: 1300px) 45vw, 600px"
                      alt="${frontAlt}" title="${frontImgTitle}"
                      fetchpriority="high" decoding="async" class="zoomable-img card-3d-interactive"
                      onclick="openModal('${frontImgPath}', '${backImgPath}')">
@@ -56,13 +57,14 @@ ${topNavHtml?no_esc}
         </div>
         <div class="card-image-wrapper">
             <picture>
+                <source type="image/avif"
+                        srcset="${backImgPath?replace('.avif', '-400w.avif')} 400w,
+                                ${backImgPath?replace('.avif', '-600w.avif')} 600w,
+                                ${backImgPath?replace('.avif', '-900w.avif')} 900w,
+                                ${backImgPath} 1200w"
+                        sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, (max-width: 1300px) 45vw, 600px">
                 <img src="${backImgPath}"
                      width="600" height="840"
-                     srcset="${backImgPath?replace('.avif', '-400w.avif')} 400w,
-                             ${backImgPath?replace('.avif', '-600w.avif')} 600w,
-                             ${backImgPath?replace('.avif', '-900w.avif')} 900w,
-                             ${backImgPath} 1200w"
-                     sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, (max-width: 1300px) 45vw, 600px"
                      alt="${backAlt}" title="${backImgTitle}" loading="lazy" decoding="async"
                      class="zoomable-img card-3d-interactive"
                      onclick="openModal('${backImgPath}', '${frontImgPath}')">
@@ -196,7 +198,13 @@ ${topNavHtml?no_esc}
                 <#list relatedCards as card>
                     <a href="${card.url}" class="related-card-item" title="${card.title}" aria-label="${card.title}">
                         <div class="related-card-thumb-wrapper">
-                            <img src="${card.thumbAvif}" alt="${card.title}" loading="lazy" decoding="async" width="180" height="252" class="related-card-thumb">
+                            <picture>
+                                <source type="image/avif"
+                                        srcset="${card.thumbAvif} 400w,
+                                                ${card.thumbAvif?replace('-400w.avif', '-600w.avif')} 600w"
+                                        sizes="180px">
+                                <img src="${card.thumbAvif}" alt="${card.title}" loading="lazy" decoding="async" width="180" height="252" class="related-card-thumb">
+                            </picture>
                         </div>
                         <div class="related-card-info">
                             <span class="related-card-tag">${card.variant?no_esc}</span>
