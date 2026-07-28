@@ -33,7 +33,7 @@ ${topNavHtml?no_esc}
     </nav>
     <#if breadcrumbHtml??>${breadcrumbHtml?no_esc}</#if>
     <header class="detail-header">
-        <h1>${h1Title?no_esc}</h1>
+        <h1>${h1Html?no_esc}</h1>
     </header>
     <div class="ai-summary">
         <p><strong>Card Snapshot:</strong> ${aiSnapshotText?no_esc}</p>

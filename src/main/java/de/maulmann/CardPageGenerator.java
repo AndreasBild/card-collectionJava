@@ -369,6 +369,7 @@ public class CardPageGenerator {
         data.put("nextLink", next != null ? "../" + next.seasonFolder + "/" + next.filename : null);
 
         data.put("h1Title", h1Title);
+        data.put("h1Html", generateH1Html(c));
         data.put("aiSnapshotText", generateAiSnapshotText(c));
 
         data.put("frontImgPath", frontImgPath);
@@ -469,6 +470,28 @@ public class CardPageGenerator {
         return sb.toString();
     }
 
+    private static String generateH1Html(CardData c) {
+        String player = formatMulti(c.get("Player"));
+        String season = c.get("Season");
+        String company = c.get("Company");
+        String brand = c.get("Brand");
+        String theme = c.get("Theme");
+        String variant = c.get("Variant");
+        String number = c.has("Number") ? " #" + c.get("Number") : "";
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("<span class=\"player-name\">").append(player).append("</span><br>");
+        sb.append("<span class=\"sub-title\">").append(season).append(" ").append(company).append(" ").append(brand);
+        if (isValid(theme) && !theme.equalsIgnoreCase(brand)) {
+            sb.append(" ").append(theme);
+        }
+        if (isValid(variant) && !variant.equalsIgnoreCase("Base")) {
+            sb.append(" ").append(variant);
+        }
+        sb.append(number).append("</span>");
+        return sb.toString();
+    }
+
     private static String generateMetaDescription(CardData c) {
         String player = getPrimaryPlayer(c);
         String season = c.get("Season");
@@ -520,7 +543,8 @@ public class CardPageGenerator {
         String variant = c.get("Variant");
         String number = c.get("Number");
         String team = formatMulti(c.get("Team"));
-        String serial = c.get("Serial/Print Run");
+        String serial = c.get("Serial");
+        String printRun = c.get("Print Run");
 
         StringBuilder sb = new StringBuilder();
         sb.append("This ").append(season).append(" ").append(company).append(" ").append(brand);
@@ -532,15 +556,29 @@ public class CardPageGenerator {
         sb.append(" card features ").append(player).append(" during his tenure with the ").append(team).append(".");
 
         if (isValid(number) && !number.equals("-")) {
-            sb.append(" Card #").append(number).append(".");
+            sb.append(" Card number #").append(number).append(".");
         }
 
         if (isValid(variant) && !variant.equalsIgnoreCase("Base")) {
-            sb.append(" This is the coveted ").append(variant).append(" parallel variation.");
+            sb.append(" This is the coveted ").append(variant).append(" parallel variation");
         }
 
-        if (isValid(serial)) {
-            sb.append(" Strictly limited edition serial numbered ").append(serial).append(".");
+        if (isValid(printRun)) {
+            if ("1".equals(printRun)) {
+                if (isValid(variant) && !variant.equalsIgnoreCase("Base")) {
+                    sb.append(" with a printrun of 1. Masterpiece.");
+                } else {
+                    sb.append(" Masterpiece with a printrun of 1.");
+                }
+            } else {
+                if (isValid(variant) && !variant.equalsIgnoreCase("Base")) {
+                    sb.append(" with a printrun of ").append(isValid(serial) ? serial + "/" + printRun : printRun).append(".");
+                } else {
+                    sb.append(" This card has a printrun of ").append(isValid(serial) ? serial + "/" + printRun : printRun).append(".");
+                }
+            }
+        } else if (isValid(variant) && !variant.equalsIgnoreCase("Base")) {
+            sb.append(".");
         }
 
         if (c.has("Autograph") && c.get("Autograph").equalsIgnoreCase("Yes")) {
