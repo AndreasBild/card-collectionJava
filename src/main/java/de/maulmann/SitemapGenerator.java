@@ -140,12 +140,29 @@ public class SitemapGenerator {
                     if (!relativePath.contains("/")) {
                         coreLinks.add(linkMap);
                     } else if (relativePath.startsWith("cards/")) {
+                        String theme = getSpecValue(doc, "Theme");
+                        String variant = getSpecValue(doc, "Variant");
+
                         linkMap.put("player", pageTitle);
                         linkMap.put("company", getSpecValue(doc, "Manufacturer"));
                         linkMap.put("brand", getSpecValue(doc, "Brand"));
-                        linkMap.put("theme", getSpecValue(doc, "Theme"));
-                        linkMap.put("variant", getSpecValue(doc, "Variant"));
+                        linkMap.put("theme", theme);
+                        linkMap.put("variant", variant);
                         linkMap.put("number", getSpecValue(doc, "Card Number"));
+
+                        // Build unique anchor text including Theme and Variant
+                        StringBuilder anchorText = new StringBuilder(pageTitle);
+                        List<String> extra = new ArrayList<>();
+                        if (!theme.isEmpty() && !theme.equals("-")) {
+                            extra.add("Theme: " + theme);
+                        }
+                        if (!variant.isEmpty() && !variant.equals("-")) {
+                            extra.add("Variant: " + variant);
+                        }
+                        if (!extra.isEmpty()) {
+                            anchorText.append(" - ").append(String.join(" | ", extra));
+                        }
+                        linkMap.put("text", anchorText.toString());
 
                         String[] parts = relativePath.split("/");
                         if (parts.length >= 3) {
