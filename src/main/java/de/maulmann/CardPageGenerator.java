@@ -686,7 +686,7 @@ public class CardPageGenerator {
             links.add(Map.of("name", "Juwan Howard Career Stats", "url", "https://www.basketball-reference.com/players/h/howarju01.html", "icon", "bref"));
         } else {
             String wikiUrl = "https://en.wikipedia.org/wiki/" + primaryPlayer.replace(" ", "_");
-            links.add(Map.of("name", primaryPlayer + " Wikipedia Profile", "url", wikiUrl, "icon", "wiki"));
+            links.add(Map.of("name", " Wikipedia Profile", "url", wikiUrl, "icon", "wiki"));
         }
 
         return links;
