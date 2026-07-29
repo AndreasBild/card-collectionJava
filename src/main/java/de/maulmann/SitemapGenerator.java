@@ -150,17 +150,17 @@ public class SitemapGenerator {
                         linkMap.put("variant", variant);
                         linkMap.put("number", getSpecValue(doc, "Card Number"));
 
-                        // Build unique anchor text including Theme and Variant
+                        // Build unique anchor text including Theme and Variant without "Theme:" / "Variant:" prefixes
                         StringBuilder anchorText = new StringBuilder(pageTitle);
                         List<String> extra = new ArrayList<>();
-                        if (!theme.isEmpty() && !theme.equals("-")) {
-                            extra.add("Theme: " + theme);
+                        if (!theme.isEmpty() && !theme.equals("-") && !pageTitle.toLowerCase().contains(theme.toLowerCase())) {
+                            extra.add(theme);
                         }
-                        if (!variant.isEmpty() && !variant.equals("-")) {
-                            extra.add("Variant: " + variant);
+                        if (!variant.isEmpty() && !variant.equals("-") && !variant.equalsIgnoreCase("Base") && !pageTitle.toLowerCase().contains(variant.toLowerCase())) {
+                            extra.add(variant);
                         }
                         if (!extra.isEmpty()) {
-                            anchorText.append(" - ").append(String.join(" | ", extra));
+                            anchorText.append(" - ").append(String.join(" - ", extra));
                         }
                         linkMap.put("text", anchorText.toString());
 
