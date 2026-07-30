@@ -592,5 +592,127 @@ ${topNavHtml?no_esc}
         });
     }
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const container = document.querySelector('.card-images-container');
+        if (!container) return;
+
+        const wrappers = container.querySelectorAll('.card-image-wrapper');
+        if (wrappers.length < 2) return;
+
+        const frontWrapper = wrappers[0];
+        const backWrapper = wrappers[1];
+
+        const frontImg = frontWrapper.querySelector('img');
+        const backImg = backWrapper.querySelector('img');
+
+        if (!frontImg || !backImg) return;
+
+        // Function to determine orientation based on dimensions or classes
+        const getOrientation = (img) => {
+            // Check natural dimensions if already loaded
+            if (img.complete && img.naturalWidth && img.naturalHeight) {
+                return img.naturalWidth > img.naturalHeight ? 'landscape' : 'portrait';
+            }
+            // Fallback to HTML width/height attributes
+            const widthAttr = parseInt(img.getAttribute('width'));
+            const heightAttr = parseInt(img.getAttribute('height'));
+            if (!isNaN(widthAttr) && !isNaN(heightAttr)) {
+                return widthAttr > heightAttr ? 'landscape' : 'portrait';
+            }
+            // Assume portrait as default fallback
+            return 'portrait';
+        };
+
+        let processImagesCalled = false;
+
+        const processImages = () => {
+            if (processImagesCalled) return;
+            processImagesCalled = true;
+
+            const frontOrientation = getOrientation(frontImg);
+            const backOrientation = getOrientation(backImg);
+
+            // Constraint: If orientations do not match, abort the operation
+            if (frontOrientation !== backOrientation) {
+                return;
+            }
+
+            // Create flip container elements
+            const flipContainer = document.createElement('div');
+            flipContainer.className = 'flip-container';
+
+            const flipInner = document.createElement('div');
+            flipInner.className = 'flip-card-inner';
+
+            const flipFront = document.createElement('div');
+            flipFront.className = 'flip-face-front';
+
+            const flipBack = document.createElement('div');
+            flipBack.className = 'flip-face-back';
+
+            const flipIcon = document.createElement('div');
+            flipIcon.className = 'flip-icon-overlay';
+
+            // Get original figures
+            const frontFigure = frontWrapper.querySelector('figure');
+            const backFigure = backWrapper.querySelector('figure');
+
+            if (!frontFigure || !backFigure) return;
+
+            // Adjust some attributes to prevent modal on original clicks
+            if (frontImg) frontImg.removeAttribute('onclick');
+            if (backImg) backImg.removeAttribute('onclick');
+
+            // Move nodes instead of clone to keep any state
+            flipFront.appendChild(frontFigure);
+            flipBack.appendChild(backFigure);
+
+            flipInner.appendChild(flipFront);
+            flipInner.appendChild(flipBack);
+
+            flipContainer.appendChild(flipInner);
+            flipContainer.appendChild(flipIcon);
+
+            // Add click listener to toggle is-flipped
+            flipContainer.addEventListener('click', (e) => {
+                flipContainer.classList.toggle('is-flipped');
+            });
+
+            // Reconstruct the DOM
+            // Remove other children of frontWrapper if any (like caption)
+            while (frontWrapper.firstChild) {
+                frontWrapper.removeChild(frontWrapper.firstChild);
+            }
+
+            frontWrapper.appendChild(flipContainer);
+
+            // Recreate caption from frontWrapper
+            const frontCaption = document.createElement('p');
+            frontCaption.className = 'img-caption';
+            frontCaption.innerHTML = '&#x1F50D; Tap Card to Flip';
+            frontWrapper.appendChild(frontCaption);
+
+            // Hide the backWrapper completely as it is now part of the flip
+            backWrapper.style.display = 'none';
+        };
+
+        // If images aren't fully loaded, wait for them.
+        if (frontImg.complete && backImg.complete) {
+            processImages();
+        } else {
+            let loadedCount = 0;
+            const onloadHandler = () => {
+                loadedCount++;
+                if (loadedCount >= 2) processImages();
+            };
+            frontImg.addEventListener('load', onloadHandler);
+            backImg.addEventListener('load', onloadHandler);
+            // Also listen to error so it proceeds even if it fails to load image
+            frontImg.addEventListener('error', onloadHandler);
+            backImg.addEventListener('error', onloadHandler);
+        }
+    });
+</script>
 </body>
 </html>
