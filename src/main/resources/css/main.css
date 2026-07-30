@@ -737,6 +737,70 @@ tr:hover {
 }
 
 /* --- CARD IMAGES & SHOWCASE --- */
+/* 3D Flip Card specific additions */
+.flip-container {
+    perspective: 1000px;
+    width: 100%;
+    max-width: 580px;
+    aspect-ratio: 2.5 / 3.5;
+    position: relative;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.flip-container.is-flipped .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-face-front, .flip-face-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.flip-face-front {
+    transform: rotateY(0deg);
+}
+
+.flip-face-back {
+    transform: rotateY(180deg);
+}
+
+.flip-icon-overlay {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    width: 36px;
+    height: 36px;
+    background: rgba(11, 15, 25, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-gold);
+    font-size: 20px;
+    z-index: 10;
+    pointer-events: none; /* Let clicks pass through to container */
+    backdrop-filter: blur(4px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+.flip-icon-overlay::after {
+    content: "↻";
+    line-height: 1;
+}
+
 .card-images-container {
     display: flex;
     justify-content: center;
