@@ -14,8 +14,12 @@ ${topNavHtml?no_esc}
         <p class="sub-title">Welcome to our Private Sports Card Collection</p>
     </header>
     <div class="carousel-wrapper">
-        <button class="carousel-nav left-arrow" aria-label="Previous image">&lt;</button>
-        <button class="carousel-nav right-arrow" aria-label="Next image">&gt;</button>
+        <button class="carousel-nav left-arrow" aria-label="Previous image">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button class="carousel-nav right-arrow" aria-label="Next image">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
         <section class="card-carousel">
             <!-- First Set -->
             <div class="carousel-item">
