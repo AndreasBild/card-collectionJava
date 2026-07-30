@@ -130,12 +130,13 @@ public class FileGenerator {
                     for (CardJson c : seasonCardList) {
                         CardPageGenerator.CardData cardData = new CardPageGenerator.CardData(c, null);
                         String detailPath = cardData.fullRelativePath;
-                        String playerTitle = "View " + escapeHtml(c.player) + " " + escapeHtml(c.season) + " " + escapeHtml(c.brand) + " #" + escapeHtml(c.cardNumber != null ? c.cardNumber : "") + " card detail page";
+                        String cleanPlayer = CardPageGenerator.cleanPlayerName(c.player);
+                        String playerTitle = "View " + escapeHtml(cleanPlayer) + " " + escapeHtml(c.season) + " " + escapeHtml(c.brand) + " #" + escapeHtml(c.cardNumber != null ? c.cardNumber : "") + " card detail page";
                         String variantText = escapeHtml(c.variant != null ? c.variant : "Base");
-                        String variantTitle = "View details for " + escapeHtml(c.player) + " " + escapeHtml(c.season) + " " + escapeHtml(c.brand) + " " + variantText + " parallel";
+                        String variantTitle = "View details for " + escapeHtml(cleanPlayer) + " " + escapeHtml(c.season) + " " + escapeHtml(c.brand) + " " + variantText + " parallel";
 
                         htmlBuilder.append("<tr>")
-                                .append("<td data-label=\"Card\"><a href=\"").append(detailPath).append("\" class=\"table-button\" title=\"").append(playerTitle).append("\" itemprop=\"url\"><span itemprop=\"name\">").append(escapeHtml(c.player)).append("</span></a></td>")
+                                .append("<td data-label=\"Card\"><a href=\"").append(detailPath).append("\" class=\"table-button\" title=\"").append(playerTitle).append("\" itemprop=\"url\"><span itemprop=\"name\">").append(escapeHtml(cleanPlayer)).append("</span></a></td>")
                                 .append("<td data-label=\"Team\">").append(escapeHtml(c.team)).append("</td>")
                                 .append("<td data-label=\"Sport\">Basketball</td>")
                                 .append("<td data-label=\"Season\">").append(escapeHtml(c.season)).append("</td>")
@@ -324,10 +325,11 @@ public class FileGenerator {
         for (CardJson c : cardList) {
             CardPageGenerator.CardData cardData = new CardPageGenerator.CardData(c, null);
             String detailPath = cardData.fullRelativePath;
-            String playerTitle = "View " + escapeHtml(c.player) + " " + escapeHtml(c.season) + " " + escapeHtml(c.brand) + " #" + escapeHtml(c.cardNumber != null ? c.cardNumber : "") + " card detail page";
+            String cleanPlayer = CardPageGenerator.cleanPlayerName(c.player);
+            String playerTitle = "View " + escapeHtml(cleanPlayer) + " " + escapeHtml(c.season) + " " + escapeHtml(c.brand) + " #" + escapeHtml(c.cardNumber != null ? c.cardNumber : "") + " card detail page";
             String variantText = escapeHtml(c.variant != null ? c.variant : "Base");
             htmlBuilder.append("<tr id=\"").append(cardData.filenameBase).append("\">")
-                    .append("<td data-label=\"Card\"><a href=\"").append(detailPath).append("\" class=\"table-button\" title=\"").append(playerTitle).append("\" itemprop=\"url\"><span itemprop=\"name\">").append(escapeHtml(c.player)).append("</span></a></td>")
+                    .append("<td data-label=\"Card\"><a href=\"").append(detailPath).append("\" class=\"table-button\" title=\"").append(playerTitle).append("\" itemprop=\"url\"><span itemprop=\"name\">").append(escapeHtml(cleanPlayer)).append("</span></a></td>")
                     .append("<td data-label=\"Team\">").append(escapeHtml(c.team)).append("</td>")
                     .append("<td data-label=\"Sport\">Basketball</td>")
                     .append("<td data-label=\"Season\">").append(escapeHtml(c.season)).append("</td>")

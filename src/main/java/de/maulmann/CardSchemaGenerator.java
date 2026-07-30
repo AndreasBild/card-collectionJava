@@ -165,7 +165,8 @@ public class CardSchemaGenerator {
         sb.append("        \"@type\": \"Person\",\n");
         sb.append("        \"name\": \"").append(escapeJson(formatMulti(c.get("Player")))).append("\"");
         if (isValid(playerPrimary)) {
-            sb.append(",\n        \"sameAs\": \"https://en.wikipedia.org/wiki/").append(escapeJson(playerPrimary.replace(" ", "_"))).append("\"\n");
+            String cleanPrimary = CardPageGenerator.cleanPlayerName(playerPrimary);
+            sb.append(",\n        \"sameAs\": \"https://en.wikipedia.org/wiki/").append(escapeJson(cleanPrimary.replace(" ", "_"))).append("\"\n");
         } else {
             sb.append("\n");
         }

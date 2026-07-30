@@ -669,23 +669,24 @@ public class CardPageGenerator {
         List<Map<String, String>> links = new ArrayList<>();
 
         String primaryPlayer = getPrimaryPlayer(c);
+        String cleanPlayer = cleanPlayerName(primaryPlayer);
         String season = c.get("Season");
         String brand = c.get("Brand");
         String variant = c.get("Variant");
         String number = c.get("Number");
 
-        String ebayQuery = primaryPlayer + " " + season + " " + brand + " " + (isValid(variant) && !variant.equals("Base") ? variant : "") + " " + (isValid(number) ? "#" + number : "");
+        String ebayQuery = cleanPlayer + " " + season + " " + brand + " " + (isValid(variant) && !variant.equals("Base") ? variant : "") + " " + (isValid(number) ? "#" + number : "");
         String ebayUrl = "https://www.ebay.com/sch/i.html?_nkw=" + ebayQuery.trim().replace(" ", "+");
         links.add(Map.of("name", "Similar cards on eBay", "url", ebayUrl, "icon", "ebay"));
 
-        String bkpQuery = primaryPlayer + " " + season + " " + brand;
+        String bkpQuery = cleanPlayer + " " + season + " " + brand;
         String bkpUrl = "https://www.beckett.com/search?q=" + bkpQuery.trim().replace(" ", "+");
         links.add(Map.of("name", "Beckett Checklist", "url", bkpUrl, "icon", "beckett"));
 
-        if (primaryPlayer.equalsIgnoreCase("Juwan Howard")) {
+        if (cleanPlayer.equalsIgnoreCase("Juwan Howard")) {
             links.add(Map.of("name", "Juwan Howard Career Stats", "url", "https://www.basketball-reference.com/players/h/howarju01.html", "icon", "bref"));
         } else {
-            String wikiUrl = "https://en.wikipedia.org/wiki/" + primaryPlayer.replace(" ", "_");
+            String wikiUrl = "https://en.wikipedia.org/wiki/" + cleanPlayer.replace(" ", "_");
             links.add(Map.of("name", " Wikipedia Profile", "url", wikiUrl, "icon", "wiki"));
         }
 
@@ -764,6 +765,12 @@ public class CardPageGenerator {
             case "2010-11", "2011-12", "2012-13" -> "Miami Heat";
             default -> "Washington Bullets";
         };
+    }
+
+    public static String cleanPlayerName(String player) {
+        if (player == null || player.trim().isEmpty()) return "";
+        String cleaned = player.replaceAll("[\"“„”«»'].*?[\"“„”«»']", "");
+        return cleaned.replaceAll("\\s+", " ").trim();
     }
 
     private static String getPrimaryPlayer(CardData c) {
