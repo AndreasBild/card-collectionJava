@@ -31,7 +31,7 @@ ${topNavHtml?no_esc}
                          width="260" height="358"
                          alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Red"
                          title="Juwan Howard Private Collection - 1997-98 PMG Red"
-                         fetchpriority="high" decoding="async">
+                         fetchpriority="high" loading="eager" decoding="async">
                 </picture>
                     <figcaption>Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Red</figcaption>
                 </figure>
@@ -55,7 +55,7 @@ ${topNavHtml?no_esc}
                          width="260" height="358"
                          alt="Juwan Howard 1998-99 Fleer Vintage 61 Base Classic 5C"
                          title="Juwan Howard Private Collection - 1998-99 Fleer Vintage 61"
-                         fetchpriority="high" decoding="async">
+                         loading="lazy" decoding="async">
                 </picture>
                     <figcaption>Juwan Howard 1998-99 Fleer Vintage 61 Base Classic 5C</figcaption>
                 </figure>
@@ -78,7 +78,7 @@ ${topNavHtml?no_esc}
                          width="260" height="358"
                          alt="Juwan Howard 1998-99 Fleer Metal Universe Precious Metal Gems 5"
                          title="Juwan Howard Private Collection - 1998-99 PMG"
-                         fetchpriority="high" decoding="async">
+                         loading="lazy" decoding="async">
                 </picture>
                     <figcaption>Juwan Howard 1998-99 Fleer Metal Universe Precious Metal Gems 5</figcaption>
                 </figure>
@@ -102,7 +102,7 @@ ${topNavHtml?no_esc}
                          width="260" height="358"
                          alt="Juwan Howard 1998-99 Fleer Brilliants Base 24 K Gold 97TG"
                          title="Juwan Howard Private Collection - 1998-99 Fleer Brilliants 24K Gold"
-                         fetchpriority="high" decoding="async">
+                         loading="lazy" decoding="async">
                 </picture>
                     <figcaption>Juwan Howard 1998-99 Fleer Brilliants Base 24 K Gold 97TG</figcaption>
                 </figure>
@@ -126,7 +126,7 @@ ${topNavHtml?no_esc}
                          width="260" height="358"
                          alt="Juwan Howard 2018-19 Panini Panini Contenders Optic Contenders Autographs Gold Vinyl LC JWH"
                          title="Juwan Howard Private Collection - 2018-19 Contenders Optic Gold Vinyl 1/1"
-                         fetchpriority="high" decoding="async">
+                         loading="lazy" decoding="async">
                 </picture>
                     <figcaption>Juwan Howard 2018-19 Panini Panini Contenders Optic Contenders Autographs Gold Vinyl LC JWH</figcaption>
                 </figure>
@@ -150,7 +150,7 @@ ${topNavHtml?no_esc}
                          width="260" height="358"
                          alt="Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Green"
                          title="Juwan Howard Private Collection - 1997-98 PMG Green 1/10"
-                         fetchpriority="high" decoding="async">
+                         loading="lazy" decoding="async">
                 </picture>
                     <figcaption>Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Green</figcaption>
                 </figure>
@@ -762,10 +762,11 @@ ${footerHtml?no_esc}
         const rightArrow = document.querySelector(".right-arrow");
         const wrapper = document.querySelector(".carousel-wrapper");
 
-        if (!carousel) return;
+        if (!carousel || !wrapper) return;
 
         let isPaused = false;
-        let animationFrameId;
+        let animationFrameId = null;
+        let isVisible = true;
         const scrollSpeed = 60;
         let lastTime = 0;
         let exactScrollLeft = carousel.scrollLeft;
@@ -781,9 +782,13 @@ ${footerHtml?no_esc}
         }
 
         updateCarouselWidth();
-        window.addEventListener('resize', updateCarouselWidth);
+        window.addEventListener('resize', updateCarouselWidth, { passive: true });
 
         function scroll(currentTime) {
+            if (!isVisible) {
+                animationFrameId = null;
+                return;
+            }
             if (!lastTime) lastTime = currentTime;
             const deltaTime = currentTime - lastTime;
             lastTime = currentTime;
@@ -801,38 +806,53 @@ ${footerHtml?no_esc}
             animationFrameId = requestAnimationFrame(scroll);
         }
 
-        animationFrameId = requestAnimationFrame(scroll);
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                isVisible = entries[0].isIntersecting;
+                if (isVisible && !animationFrameId) {
+                    lastTime = performance.now();
+                    animationFrameId = requestAnimationFrame(scroll);
+                }
+            }, { threshold: 0.05 });
+            observer.observe(wrapper);
+        } else {
+            animationFrameId = requestAnimationFrame(scroll);
+        }
 
         wrapper.addEventListener("mouseenter", () => isPaused = true);
         wrapper.addEventListener("mouseleave", () => {
             isPaused = false;
             lastTime = performance.now();
         });
-        wrapper.addEventListener("touchstart", () => isPaused = true, {passive: true});
+        wrapper.addEventListener("touchstart", () => isPaused = true, { passive: true });
         wrapper.addEventListener("touchend", () => {
             isPaused = false;
             lastTime = performance.now();
-        }, {passive: true});
+        }, { passive: true });
 
         const scrollAmount = 300;
 
-        leftArrow.addEventListener("click", () => {
-            let target = carousel.scrollLeft - scrollAmount;
-            if (target <= 0) {
-                target += getCarouselWidth();
-            }
-            carousel.scrollLeft = target;
-            exactScrollLeft = target;
-        });
+        if (leftArrow) {
+            leftArrow.addEventListener("click", () => {
+                let target = carousel.scrollLeft - scrollAmount;
+                if (target <= 0) {
+                    target += getCarouselWidth();
+                }
+                carousel.scrollLeft = target;
+                exactScrollLeft = target;
+            });
+        }
 
-        rightArrow.addEventListener("click", () => {
-            let target = carousel.scrollLeft + scrollAmount;
-            if (target >= getCarouselWidth()) {
-                target -= getCarouselWidth();
-            }
-            carousel.scrollLeft = target;
-            exactScrollLeft = target;
-        });
+        if (rightArrow) {
+            rightArrow.addEventListener("click", () => {
+                let target = carousel.scrollLeft + scrollAmount;
+                if (target >= getCarouselWidth()) {
+                    target -= getCarouselWidth();
+                }
+                carousel.scrollLeft = target;
+                exactScrollLeft = target;
+            });
+        }
 
         let isDown = false;
         let startX;

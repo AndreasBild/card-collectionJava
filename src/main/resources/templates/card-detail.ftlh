@@ -1,12 +1,12 @@
 <!doctype html>
 <html lang="en">
 <head>
-    ${headHtml?no_esc}
-    <#-- PRELOAD UPDATE: Teilt dem Browser mit, welche Bildgröße er vorab laden soll -->
-    <link rel="preload" as="image" href="${frontImgPath}" type="image/avif"
+    <#-- PRELOAD LCP IMAGE FIRST: Placed before CSS/JS to maximize preload scanner efficiency -->
+    <link rel="preload" as="image" href="${frontImgPath?replace('.avif', '-400w.avif')}" type="image/avif"
           imagesrcset="${frontImgPath?replace('.avif', '-400w.avif')} 400w, ${frontImgPath?replace('.avif', '-600w.avif')} 600w, ${frontImgPath?replace('.avif', '-900w.avif')} 900w, ${frontImgPath} 1200w"
-          imagesizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, (max-width: 1300px) 45vw, 600px"
+          imagesizes="(max-width: 600px) 380px, (max-width: 1024px) 50vw, 580px"
           fetchpriority="high">
+    ${headHtml?no_esc}
     ${jsonLd?no_esc}
 </head>
 <body>
@@ -37,36 +37,40 @@ ${topNavHtml?no_esc}
     </div>
     <div class="card-images-container">
         <div class="card-image-wrapper">
-            <figure>
-                <picture>
-                <source type="image/avif"
-                        srcset="${frontImgPath?replace('.avif', '-400w.avif')} 400w, ${frontImgPath?replace('.avif', '-600w.avif')} 600w, ${frontImgPath?replace('.avif', '-900w.avif')} 900w, ${frontImgPath} 1200w"
-                        sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, (max-width: 1300px) 45vw, 600px">
-                <img src="${frontImgPath}"
-                     width="600" height="840"
-                     alt="${frontAlt}" title="${frontImgTitle}"
-                     fetchpriority="high" decoding="async" class="zoomable-img card-3d-interactive"
-                     onclick="openModal('${frontImgPath}', '${backImgPath}')">
-            </picture>
-                <figcaption>${frontAlt}</figcaption>
-            </figure>
-            <p class="img-caption">&#x1F50D; Click to Enlarge Front</p>
-        </div>
-        <div class="card-image-wrapper">
-            <figure>
-                <picture>
-                <source type="image/avif"
-                        srcset="${backImgPath?replace('.avif', '-400w.avif')} 400w, ${backImgPath?replace('.avif', '-600w.avif')} 600w, ${backImgPath?replace('.avif', '-900w.avif')} 900w, ${backImgPath} 1200w"
-                        sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, (max-width: 1300px) 45vw, 600px">
-                <img src="${backImgPath}"
-                     width="600" height="840"
-                     alt="${backAlt}" title="${backImgTitle}" loading="lazy" decoding="async"
-                     class="zoomable-img card-3d-interactive"
-                     onclick="openModal('${backImgPath}', '${frontImgPath}')">
-            </picture>
-                <figcaption>${backAlt}</figcaption>
-            </figure>
-            <p class="img-caption">&#x1F50D; Click to Enlarge Back</p>
+            <div class="flip-container">
+                <div class="flip-card-inner">
+                    <div class="flip-face-front">
+                        <figure>
+                            <picture>
+                                <source type="image/avif"
+                                        srcset="${frontImgPath?replace('.avif', '-400w.avif')} 400w, ${frontImgPath?replace('.avif', '-600w.avif')} 600w, ${frontImgPath?replace('.avif', '-900w.avif')} 900w, ${frontImgPath} 1200w"
+                                        sizes="(max-width: 600px) 380px, (max-width: 1024px) 50vw, 580px">
+                                <img src="${frontImgPath?replace('.avif', '-400w.avif')}"
+                                     width="600" height="840"
+                                     alt="${frontAlt}" title="${frontImgTitle}"
+                                     fetchpriority="high" decoding="async" class="zoomable-img card-3d-interactive">
+                            </picture>
+                            <figcaption>${frontAlt}</figcaption>
+                        </figure>
+                    </div>
+                    <div class="flip-face-back">
+                        <figure>
+                            <picture>
+                                <source type="image/avif"
+                                        srcset="${backImgPath?replace('.avif', '-400w.avif')} 400w, ${backImgPath?replace('.avif', '-600w.avif')} 600w, ${backImgPath?replace('.avif', '-900w.avif')} 900w, ${backImgPath} 1200w"
+                                        sizes="(max-width: 600px) 380px, (max-width: 1024px) 50vw, 580px">
+                                <img src="${backImgPath?replace('.avif', '-400w.avif')}"
+                                     width="600" height="840"
+                                     alt="${backAlt}" title="${backImgTitle}" loading="lazy" decoding="async"
+                                     class="zoomable-img card-3d-interactive">
+                            </picture>
+                            <figcaption>${backAlt}</figcaption>
+                        </figure>
+                    </div>
+                </div>
+                <div class="flip-icon-overlay"></div>
+            </div>
+            <p class="img-caption">&#x1F50D; Tap Card to Flip</p>
         </div>
     </div>
     <div class="card-data">
@@ -594,124 +598,65 @@ ${topNavHtml?no_esc}
 </script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const container = document.querySelector('.card-images-container');
-        if (!container) return;
+        const flipContainer = document.querySelector('.flip-container');
+        if (!flipContainer) return;
 
-        const wrappers = container.querySelectorAll('.card-image-wrapper');
-        if (wrappers.length < 2) return;
+        const frontImg = flipContainer.querySelector('.flip-face-front img');
+        const backImg = flipContainer.querySelector('.flip-face-back img');
 
-        const frontWrapper = wrappers[0];
-        const backWrapper = wrappers[1];
+        if (!frontImg) return;
 
-        const frontImg = frontWrapper.querySelector('img');
-        const backImg = backWrapper.querySelector('img');
+        const getOri = (img) => (img && img.naturalWidth && img.naturalHeight && img.naturalWidth > img.naturalHeight) ? 'landscape' : 'portrait';
 
-        if (!frontImg || !backImg) return;
-
-        // Function to determine orientation based on dimensions or classes
-        const getOrientation = (img) => {
-            // Check natural dimensions if already loaded
-            if (img.complete && img.naturalWidth && img.naturalHeight) {
-                return img.naturalWidth > img.naturalHeight ? 'landscape' : 'portrait';
+        const updateFrontOrientation = () => {
+            if (frontImg.naturalWidth) {
+                const frontOri = getOri(frontImg);
+                if (!flipContainer.classList.contains('is-flipped')) {
+                    flipContainer.classList.remove('is-portrait', 'is-landscape');
+                    flipContainer.classList.add('is-' + frontOri);
+                }
             }
-            // Fallback to HTML width/height attributes
-            const widthAttr = parseInt(img.getAttribute('width'));
-            const heightAttr = parseInt(img.getAttribute('height'));
-            if (!isNaN(widthAttr) && !isNaN(heightAttr)) {
-                return widthAttr > heightAttr ? 'landscape' : 'portrait';
-            }
-            // Assume portrait as default fallback
-            return 'portrait';
         };
 
-        let processImagesCalled = false;
-
-        const processImages = () => {
-            if (processImagesCalled) return;
-            processImagesCalled = true;
-
-            const frontOrientation = getOrientation(frontImg);
-            const backOrientation = getOrientation(backImg);
-
-            // Constraint: If orientations do not match, abort the operation
-            if (frontOrientation !== backOrientation) {
-                return;
+        const updateBackOrientation = () => {
+            if (backImg && backImg.naturalWidth) {
+                const backOri = getOri(backImg);
+                if (flipContainer.classList.contains('is-flipped')) {
+                    flipContainer.classList.remove('is-portrait', 'is-landscape');
+                    flipContainer.classList.add('is-' + backOri);
+                }
             }
-
-            // Create flip container elements
-            const flipContainer = document.createElement('div');
-            flipContainer.className = 'flip-container';
-
-            const flipInner = document.createElement('div');
-            flipInner.className = 'flip-card-inner';
-
-            const flipFront = document.createElement('div');
-            flipFront.className = 'flip-face-front';
-
-            const flipBack = document.createElement('div');
-            flipBack.className = 'flip-face-back';
-
-            const flipIcon = document.createElement('div');
-            flipIcon.className = 'flip-icon-overlay';
-
-            // Get original figures
-            const frontFigure = frontWrapper.querySelector('figure');
-            const backFigure = backWrapper.querySelector('figure');
-
-            if (!frontFigure || !backFigure) return;
-
-            // Adjust some attributes to prevent modal on original clicks
-            if (frontImg) frontImg.removeAttribute('onclick');
-            if (backImg) backImg.removeAttribute('onclick');
-
-            // Move nodes instead of clone to keep any state
-            flipFront.appendChild(frontFigure);
-            flipBack.appendChild(backFigure);
-
-            flipInner.appendChild(flipFront);
-            flipInner.appendChild(flipBack);
-
-            flipContainer.appendChild(flipInner);
-            flipContainer.appendChild(flipIcon);
-
-            // Add click listener to toggle is-flipped
-            flipContainer.addEventListener('click', (e) => {
-                flipContainer.classList.toggle('is-flipped');
-            });
-
-            // Reconstruct the DOM
-            // Remove other children of frontWrapper if any (like caption)
-            while (frontWrapper.firstChild) {
-                frontWrapper.removeChild(frontWrapper.firstChild);
-            }
-
-            frontWrapper.appendChild(flipContainer);
-
-            // Recreate caption from frontWrapper
-            const frontCaption = document.createElement('p');
-            frontCaption.className = 'img-caption';
-            frontCaption.innerHTML = '&#x1F50D; Tap Card to Flip';
-            frontWrapper.appendChild(frontCaption);
-
-            // Hide the backWrapper completely as it is now part of the flip
-            backWrapper.style.display = 'none';
         };
 
-        // If images aren't fully loaded, wait for them.
-        if (frontImg.complete && backImg.complete) {
-            processImages();
-        } else {
-            let loadedCount = 0;
-            const onloadHandler = () => {
-                loadedCount++;
-                if (loadedCount >= 2) processImages();
-            };
-            frontImg.addEventListener('load', onloadHandler);
-            backImg.addEventListener('load', onloadHandler);
-            // Also listen to error so it proceeds even if it fails to load image
-            frontImg.addEventListener('error', onloadHandler);
-            backImg.addEventListener('error', onloadHandler);
+        if (frontImg.complete && frontImg.naturalWidth) updateFrontOrientation();
+        else frontImg.addEventListener('load', updateFrontOrientation);
+
+        if (backImg) {
+            if (backImg.complete && backImg.naturalWidth) updateBackOrientation();
+            else backImg.addEventListener('load', updateBackOrientation);
         }
+
+        flipContainer.addEventListener('click', () => {
+            const isFlipped = flipContainer.classList.toggle('is-flipped');
+            const frontOri = getOri(frontImg);
+            const backOri = getOri(backImg);
+
+            if (isFlipped && backImg && !backImg.naturalWidth) {
+                backImg.loading = 'eager';
+            }
+
+            const targetOri = isFlipped ? backOri : frontOri;
+
+            if (frontOri !== backOri) {
+                setTimeout(() => {
+                    flipContainer.classList.remove('is-portrait', 'is-landscape');
+                    flipContainer.classList.add('is-' + targetOri);
+                }, 220);
+            } else {
+                flipContainer.classList.remove('is-portrait', 'is-landscape');
+                flipContainer.classList.add('is-' + targetOri);
+            }
+        });
     });
 </script>
 </body>

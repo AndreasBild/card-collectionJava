@@ -644,6 +644,48 @@ tr:hover {
     box-shadow: var(--shadow-lg);
 }
 
+.carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    border-radius: 50%;
+    background: rgba(11, 15, 25, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: var(--accent-gold);
+    font-size: 1.25rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+    transition: var(--transition-fast);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    touch-action: manipulation;
+    user-select: none;
+}
+
+.carousel-nav:hover,
+.carousel-nav:focus-visible {
+    background: rgba(30, 41, 59, 0.95);
+    border-color: var(--accent-gold);
+    color: #ffffff;
+    scale: 1.08;
+}
+
+.carousel-nav.left-arrow {
+    left: 14px;
+}
+
+.carousel-nav.right-arrow {
+    right: 14px;
+}
+
 .carousel-wrapper::before,
 .carousel-wrapper::after {
     content: "";
@@ -737,7 +779,7 @@ tr:hover {
 }
 
 /* --- CARD IMAGES & SHOWCASE --- */
-/* 3D Flip Card specific additions */
+/* --- 3D FLIP CARD & SHOWCASE --- */
 .flip-container {
     perspective: 1000px;
     width: 100%;
@@ -746,6 +788,19 @@ tr:hover {
     position: relative;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
+    transition: aspect-ratio 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.flip-container.is-landscape,
+.card-image-wrapper picture.is-landscape,
+.zoomable-img.is-landscape {
+    aspect-ratio: 3.5 / 2.5;
+}
+
+.flip-container.is-portrait,
+.card-image-wrapper picture.is-portrait,
+.zoomable-img.is-portrait {
+    aspect-ratio: 2.5 / 3.5;
 }
 
 .flip-card-inner {
@@ -761,12 +816,51 @@ tr:hover {
     transform: rotateY(180deg);
 }
 
-.flip-face-front, .flip-face-back {
+.flip-face-front,
+.flip-face-back {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.flip-face-front figure,
+.flip-face-back figure {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.flip-face-front picture,
+.flip-face-back picture {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+}
+
+.flip-face-front img,
+.flip-face-back img {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    object-fit: contain;
+    border-radius: var(--radius-lg);
 }
 
 .flip-face-front {
@@ -792,10 +886,11 @@ tr:hover {
     color: var(--accent-gold);
     font-size: 20px;
     z-index: 10;
-    pointer-events: none; /* Let clicks pass through to container */
+    pointer-events: none;
     backdrop-filter: blur(4px);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
+
 .flip-icon-overlay::after {
     content: "↻";
     line-height: 1;
@@ -1151,6 +1246,38 @@ tr:hover {
     color: var(--accent-gold-light);
 }
 
+.confirmation-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.cancel-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 10px 20px;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    min-height: 44px;
+    box-sizing: border-box;
+}
+
+.cancel-btn:hover,
+.cancel-btn:focus-visible {
+    border-color: var(--accent-red);
+    color: var(--accent-red);
+    background: rgba(239, 68, 68, 0.1);
+}
+
 .card-back-text-container {
     background-color: var(--bg-surface);
     border: 1px solid var(--border-color);
@@ -1408,6 +1535,7 @@ tr:hover {
         font-size: 0.85rem !important;
         min-width: 0 !important;
         margin: 2px !important;
+        min-height: 44px !important;
     }
 
     .table-button {
@@ -1415,6 +1543,7 @@ tr:hover {
         padding: 8px 6px !important;
         font-size: 0.8rem !important;
         margin: 2px 0 !important;
+        min-height: 44px !important;
     }
 
     .detail-header h1 { font-size: 1.65rem; }
