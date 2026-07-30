@@ -1423,3 +1423,26 @@ tr:hover {
         padding-right: 12px;
     }
 }
+
+/* Figure and figcaption styles added for semantic picture wrapping */
+figure {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+/* Ensure the figcaption is semantically available but visually hidden to not break existing layout */
+figcaption {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
