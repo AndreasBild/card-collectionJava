@@ -239,6 +239,7 @@ public class SitemapGenerator {
 
             generateHtmlSitemap(coreLinks, seasonGroups);
             generateLlmsFullTxt(allPaths);
+            generateRssFeed(allPaths);
 
         } catch (Exception e) {
             System.err.println("Failed to generate Sitemap: " + e.getMessage());
@@ -294,6 +295,73 @@ public class SitemapGenerator {
             System.out.println("-> llms-full.txt successfully generated!");
         } catch (IOException e) {
             System.err.println("Failed to write llms-full.txt: " + e.getMessage());
+        }
+    }
+
+    private static void generateRssFeed(List<Path> allPaths) {
+        System.out.println("-> Generating RSS feed (rss.xml)...");
+        StringBuilder rss = new StringBuilder();
+        rss.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+        rss.append("<rss version=\"2.0\" xmlns:atom=\"http://www.w3.org/2005/Atom\">\n");
+        rss.append("  <channel>\n");
+        rss.append("    <title>Maulmann Trading Cards - Private Collection Updates</title>\n");
+        rss.append("    <link>").append(BASE_URL).append("/</link>\n");
+        rss.append("    <description>Latest additions and rare card highlights from the Maulmann Private Card Vault.</description>\n");
+        rss.append("    <language>en-us</language>\n");
+        rss.append("    <atom:link href=\"").append(BASE_URL).append("/rss.xml\" rel=\"self\" type=\"application/rss+xml\" />\n");
+
+        SimpleDateFormat rfc822 = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
+        rfc822.setTimeZone(TimeZone.getTimeZone("UTC"));
+        rss.append("    <pubDate>").append(rfc822.format(new Date())).append("</pubDate>\n");
+
+        Path outputDirPath = Paths.get(OUTPUT_DIR);
+        int itemCap = 50;
+        int addedCount = 0;
+
+        for (Path path : allPaths) {
+            String relativePath = outputDirPath.relativize(path).toString().replace("\\", "/");
+            if (!relativePath.startsWith("cards/")) continue;
+
+            String loc = BASE_URL + "/" + relativePath;
+
+            try {
+                Document doc = Jsoup.parse(path.toFile(), "UTF-8");
+                String title = doc.select("h1").text();
+                String desc = doc.select("meta[name=description]").attr("content");
+                if (title.isEmpty()) title = path.getFileName().toString().replace(".html", "");
+
+                String pubDate;
+                try {
+                    pubDate = rfc822.format(new Date(Files.getLastModifiedTime(path).toMillis()));
+                } catch (Exception e) {
+                    pubDate = rfc822.format(new Date());
+                }
+
+                rss.append("    <item>\n");
+                rss.append("      <title>").append(escapeXml(title)).append("</title>\n");
+                rss.append("      <link>").append(escapeXml(loc)).append("</link>\n");
+                rss.append("      <guid isPermaLink=\"true\">").append(escapeXml(loc)).append("</guid>\n");
+                rss.append("      <pubDate>").append(pubDate).append("</pubDate>\n");
+                if (!desc.isEmpty()) {
+                    rss.append("      <description>").append(escapeXml(desc)).append("</description>\n");
+                }
+                rss.append("    </item>\n");
+
+                addedCount++;
+                if (addedCount >= itemCap) break;
+            } catch (Exception ignored) {
+            }
+        }
+
+        rss.append("  </channel>\n");
+        rss.append("</rss>");
+
+        File rssFile = new File(OUTPUT_DIR + "/rss.xml");
+        try (FileWriter writer = new FileWriter(rssFile, StandardCharsets.UTF_8)) {
+            writer.write(rss.toString());
+            System.out.println("-> rss.xml successfully generated! (" + addedCount + " items)");
+        } catch (IOException e) {
+            System.err.println("Failed to write rss.xml: " + e.getMessage());
         }
     }
 

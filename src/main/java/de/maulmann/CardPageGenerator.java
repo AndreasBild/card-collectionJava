@@ -418,6 +418,17 @@ public class CardPageGenerator {
         data.put("faqHtml", faqHtml);
         data.put("firebaseConfig", firebaseConfigManager.getConfig());
 
+        String fullCardUrl = BASE_URL + "/cards/" + c.seasonFolder + "/" + c.filename;
+        String fullImageUrl = BASE_URL + "/" + frontImgPath.replace("../../", "");
+        String bbCode = "[url=" + fullCardUrl + "][img]" + fullImageUrl + "[/img][/url]\n[b]" + h1Title + "[/b]";
+        String markdownCode = "[![" + h1Title + "](" + fullImageUrl + ")](" + fullCardUrl + ")";
+
+        data.put("fullCardUrl", fullCardUrl);
+        data.put("fullImageUrl", fullImageUrl);
+        data.put("bbCode", bbCode);
+        data.put("markdownCode", markdownCode);
+        data.put("cardStableId", c.stableId);
+
         try {
             Template template = fmConfig.getTemplate("card-detail.ftlh");
             StringWriter sw = new StringWriter();

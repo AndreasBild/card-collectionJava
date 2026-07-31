@@ -492,6 +492,9 @@ public class FileGenerator {
 
             processTemplate("index.ftlh", indexData, pathOutput + "index.html");
 
+            // Build Rainbow Tracker page
+            buildRainbowsPage();
+
             // Error 404 (Kein Navigations-Highlight)
             // Hier nutzen wir "/" als Root, damit Links auch bei tiefen Pfaden funktionieren (404-Handling im Server)
             Map<String, Object> errorData = createBaseData("Error Page| Maulmann Trading Cards", "The page you are looking for does not exist in the Maulmann Trading Cards collection.", "error.html", "", "/");
@@ -504,6 +507,94 @@ public class FileGenerator {
             processTemplate("error.ftlh", errorData, pathOutput + "error.html");
 
         } catch (Exception e) { System.err.println("Fehler bei statischen Seiten: " + e.getMessage()); }
+    }
+
+    public static void buildRainbowsPage() {
+        try {
+            System.out.println("-> Baue rainbows.html (Parallel Rainbow Tracker)...");
+            Map<String, Object> data = createBaseData(
+                    "Parallel Rainbow Tracker & Set Checklists | Maulmann Private Vault",
+                    "Track completion progress of Juwan Howard parallel rainbows, Precious Metal Gems, and rare 90s basketball card sets.",
+                    "rainbows.html", "rainbows", "");
+
+            List<Map<String, String>> bcItems = new ArrayList<>();
+            bcItems.add(Map.of("name", "Home", "link", "index.html"));
+            bcItems.add(Map.of("name", "Rainbow Tracker", "link", ""));
+            data.put("breadcrumbHtml", SharedTemplates.getBreadcrumb(bcItems));
+
+            List<CardJson> allCards = filterDuplicateJsonCards(loadCardsFromJson());
+            List<Map<String, Object>> rainbowSets = new ArrayList<>();
+
+            Map<String, List<Map<String, String>>> setSpecs = new LinkedHashMap<>();
+            setSpecs.put("1997-98 Fleer Metal Universe PMGs", List.of(
+                    Map.of("variant", "Precious Metal Gems Red", "serial", "/90"),
+                    Map.of("variant", "Precious Metal Gems Green", "serial", "/10")
+            ));
+            setSpecs.put("1998-99 Fleer Vintage 61", List.of(
+                    Map.of("variant", "Classic 5C", "serial", "Parallel"),
+                    Map.of("variant", "Classic 61", "serial", "Parallel")
+            ));
+            setSpecs.put("2018-19 Panini Contenders Optic", List.of(
+                    Map.of("variant", "Gold Vinyl", "serial", "1/1"),
+                    Map.of("variant", "Gold", "serial", "/10"),
+                    Map.of("variant", "Contenders Autographs", "serial", "Auto")
+            ));
+
+            for (Map.Entry<String, List<Map<String, String>>> entry : setSpecs.entrySet()) {
+                String setName = entry.getKey();
+                List<Map<String, String>> expectedCards = entry.getValue();
+
+                Map<String, Object> setMap = new HashMap<>();
+                setMap.put("name", setName);
+                setMap.put("season", setName.split(" ")[0]);
+                setMap.put("brand", setName);
+
+                List<Map<String, Object>> cardItems = new ArrayList<>();
+                int acquiredCount = 0;
+
+                for (Map<String, String> spec : expectedCards) {
+                    String reqVariant = spec.get("variant");
+                    String reqSerial = spec.get("serial");
+
+                    CardJson matched = allCards.stream()
+                            .filter(c -> c.variant != null && (c.variant.equalsIgnoreCase(reqVariant) || c.variant.contains(reqVariant)))
+                            .findFirst().orElse(null);
+
+                    Map<String, Object> itemMap = new HashMap<>();
+                    itemMap.put("variant", reqVariant);
+                    itemMap.put("serial", reqSerial);
+
+                    if (matched != null) {
+                        acquiredCount++;
+                        itemMap.put("acquired", true);
+                        CardPageGenerator.CardData cd = new CardPageGenerator.CardData(matched, null);
+                        itemMap.put("url", cd.fullRelativePath.replace("../../", ""));
+                        itemMap.put("title", matched.player + " " + matched.season + " " + matched.brand + " " + matched.variant);
+                        String frontImg = "images/" + cd.seasonFolder + "/" + cd.filenameBase + "-front-400w.avif";
+                        itemMap.put("imgPath", frontImg);
+                    } else {
+                        itemMap.put("acquired", false);
+                    }
+                    cardItems.add(itemMap);
+                }
+
+                int totalCount = expectedCards.size();
+                int pct = (int) Math.round(((double) acquiredCount / totalCount) * 100);
+
+                setMap.put("cards", cardItems);
+                setMap.put("acquiredCount", acquiredCount);
+                setMap.put("totalCount", totalCount);
+                setMap.put("percentage", pct);
+
+                rainbowSets.add(setMap);
+            }
+
+            data.put("rainbowSets", rainbowSets);
+            processTemplate("rainbows.ftlh", data, pathOutput + "rainbows.html");
+
+        } catch (Exception e) {
+            System.err.println("Fehler bei Rainbows Page: " + e.getMessage());
+        }
     }
 
     // --- HILFSMETHODEN ---

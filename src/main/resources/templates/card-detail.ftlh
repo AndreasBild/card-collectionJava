@@ -26,6 +26,7 @@ ${topNavHtml?no_esc}
                    class="modern-button no-text-decoration">Next &raquo;</a>
             </#if>
             <button id="shareBtn" title="Share this card" class="modern-button" style="display: none;">Share</button>
+            <button id="compareBtn" title="Compare this card with others" class="modern-button compare-toggle-btn" data-card-id="${cardStableId}" data-card-title="${h1Title}" data-card-img="${frontImgPath}" data-card-url="${fullCardUrl}" data-card-player="${player}" data-card-serial="${serialDisplay}">+ Compare</button>
         </div>
     </nav>
     <#if breadcrumbHtml??>${breadcrumbHtml?no_esc}</#if>
@@ -134,6 +135,35 @@ ${topNavHtml?no_esc}
             </#if>
         </table>
     </div>
+    
+    <section class="share-snippets-section context-card full-width">
+        <h3>&#x1F4AC; Community & Forum Sharing</h3>
+        <p class="share-subtitle">Instantly copy formatted BBCode or Markdown snippets to share this card scan on Blowout Cards, Reddit (r/sportscards), or Discord.</p>
+        <div class="snippet-grid">
+            <div class="snippet-group">
+                <label for="bbcode-input"><strong>Blowout Cards / BBCode:</strong></label>
+                <div class="snippet-input-wrapper">
+                    <input type="text" id="bbcode-input" readonly value="${bbCode}">
+                    <button class="modern-button copy-snippet-btn" onclick="copySnippet('bbcode-input', this)">Copy BBCode</button>
+                </div>
+            </div>
+            <div class="snippet-group">
+                <label for="markdown-input"><strong>Reddit / Markdown:</strong></label>
+                <div class="snippet-input-wrapper">
+                    <input type="text" id="markdown-input" readonly value="${markdownCode}">
+                    <button class="modern-button copy-snippet-btn" onclick="copySnippet('markdown-input', this)">Copy Markdown</button>
+                </div>
+            </div>
+            <div class="snippet-group">
+                <label for="directurl-input"><strong>Direct Image Scan URL:</strong></label>
+                <div class="snippet-input-wrapper">
+                    <input type="text" id="directurl-input" readonly value="${fullImageUrl}">
+                    <button class="modern-button copy-snippet-btn" onclick="copySnippet('directurl-input', this)">Copy Image Link</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <#if (hobbyTrivia != "") || (techTrivia != "") || (playerHighlights != "") || (eraContext != "") || (cardBackText != "")>
         <section class="context-section">
             <h2 class="context-section-title">&#x1F4CA; Collector Insights & Card Highlights</h2>

@@ -10,6 +10,8 @@
 {{FAVICON}}
 {{OPENGRAPH}}
 <link rel="manifest" href="{{ROOT}}manifest.json">
+<link rel="alternate" type="application/rss+xml" title="Maulmann Card Collection Feed" href="{{ROOT}}rss.xml">
+<script src="{{ROOT}}collector-features.js?v={{BUILD_ID}}" defer></script>
 <script>
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {

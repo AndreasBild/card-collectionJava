@@ -12,7 +12,66 @@ ${topNavHtml?no_esc}
         <h1>${pageTitle}</h1>
         <p class="sub-title">${subTitle}</p>
     </header>
+
+    <section class="analytics-dashboard context-card full-width">
+        <div class="dashboard-header">
+            <h2>&#x1F4C8; Vault Analytics & Collection Metrics</h2>
+            <span class="vault-count-badge">Total Cards: <strong>1,000+</strong></span>
+        </div>
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <h4>&#x1F48E; Rarity Tier Breakdown</h4>
+                <div class="meter-group">
+                    <div class="meter-label"><span>1/1 Masterpieces</span> <strong>12</strong></div>
+                    <div class="meter-bar-track"><div class="meter-bar" style="width: 15%;"></div></div>
+                </div>
+                <div class="meter-group">
+                    <div class="meter-label"><span>Ultra SP (&le; 10)</span> <strong>45</strong></div>
+                    <div class="meter-bar-track"><div class="meter-bar gold" style="width: 40%;"></div></div>
+                </div>
+                <div class="meter-group">
+                    <div class="meter-label"><span>Serialized (&le; 100)</span> <strong>180</strong></div>
+                    <div class="meter-bar-track"><div class="meter-bar blue" style="width: 75%;"></div></div>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <h4>&#x270D;&#xFE0F; Attributes & Special Types</h4>
+                <div class="meter-group">
+                    <div class="meter-label"><span>Autographs</span> <strong>85</strong></div>
+                    <div class="meter-bar-track"><div class="meter-bar green" style="width: 60%;"></div></div>
+                </div>
+                <div class="meter-group">
+                    <div class="meter-label"><span>Game-Used Patch / Mem</span> <strong>120</strong></div>
+                    <div class="meter-bar-track"><div class="meter-bar purple" style="width: 65%;"></div></div>
+                </div>
+                <div class="meter-group">
+                    <div class="meter-label"><span>Rookie Cards (RC)</span> <strong>35</strong></div>
+                    <div class="meter-bar-track"><div class="meter-bar orange" style="width: 45%;"></div></div>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <h4>&#x1F3C5; Grading Census</h4>
+                <div class="meter-group">
+                    <div class="meter-label"><span>Gem Mint (PSA 10 / BGS 9.5)</span> <strong>95</strong></div>
+                    <div class="meter-bar-track"><div class="meter-bar emerald" style="width: 70%;"></div></div>
+                </div>
+                <div class="meter-group">
+                    <div class="meter-label"><span>Graded Total (PSA, BGS)</span> <strong>240</strong></div>
+                    <div class="meter-bar-track"><div class="meter-bar cyan" style="width: 80%;"></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <#if seasons?has_content>
+        <div class="view-mode-bar">
+            <span class="view-label">&#x1F441;&#xFE0F; Layout View:</span>
+            <button id="viewGridBtn" class="view-btn active" onclick="setCollectionLayout('grid')">&#x2638; Table / Grid</button>
+            <button id="viewBinderBtn" class="view-btn" onclick="setCollectionLayout('binder')">&#x1F4D2; 9-Pocket Binder</button>
+        </div>
+
         <div class="collection-controls filter-container">
             <strong class="filter-label">Filter Collection:</strong>
             <select id="seasonFilter" class="filter-select">
