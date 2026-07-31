@@ -804,7 +804,7 @@ public class CardPageGenerator {
         return value != null && !value.trim().isEmpty() && !value.equals("0") && !value.equals("-") && !value.equals("—");
     }
 
-    private static String resolveDiskImageBase(String seasonFolder, String imageBaseName, CardData c) {
+    public static String resolveDiskImageBase(String seasonFolder, String imageBaseName, CardData c) {
         String cacheKey = seasonFolder + ":" + imageBaseName;
         return DISK_IMAGE_CACHE.computeIfAbsent(cacheKey, k -> resolveDiskImageBaseInternal(seasonFolder, imageBaseName, c));
     }

@@ -18,6 +18,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 public class FileGenerator {
 
@@ -511,10 +512,10 @@ public class FileGenerator {
 
     public static void buildRainbowsPage() {
         try {
-            System.out.println("-> Baue rainbows.html (Parallel Rainbow Tracker)...");
+            System.out.println("-> Baue rainbows.html (Strict Single-Card Parallel Rainbow Tracker)...");
             Map<String, Object> data = createBaseData(
                     "Parallel Rainbow Tracker & Set Checklists | Maulmann Private Vault",
-                    "Track completion progress of Juwan Howard parallel rainbows, Precious Metal Gems, and rare 90s basketball card sets.",
+                    "Track completion progress of Juwan Howard single-card parallel rainbows (same season, manufacturer, brand, theme, and card number).",
                     "rainbows.html", "rainbows", "");
 
             List<Map<String, String>> bcItems = new ArrayList<>();
@@ -525,39 +526,77 @@ public class FileGenerator {
             List<CardJson> allCards = filterDuplicateJsonCards(loadCardsFromJson());
             List<Map<String, Object>> rainbowSets = new ArrayList<>();
 
-            Map<String, List<Map<String, String>>> setSpecs = new LinkedHashMap<>();
-            setSpecs.put("1997-98 Fleer Metal Universe PMGs", List.of(
+            // Strict Grouping: Season + Company + Brand + Theme + CardNumber
+            Map<String, List<CardJson>> strictRainbowGroups = new LinkedHashMap<>();
+
+            for (CardJson c : allCards) {
+                if (c.season == null || c.brand == null || c.cardNumber == null) continue;
+                String company = c.company != null ? c.company : c.brand;
+                String theme = c.theme != null ? c.theme : "Base Set";
+                String num = c.cardNumber != null ? c.cardNumber : "N/A";
+
+                String key = c.season + " | " + company + " | " + c.brand + " | " + theme + " | #" + num;
+                strictRainbowGroups.computeIfAbsent(key, k -> new ArrayList<>()).add(c);
+            }
+
+            // Featured single-card rainbow checklists (exact season + company + brand + theme + card number)
+            Map<String, List<Map<String, String>>> targetRainbowChecklists = new LinkedHashMap<>();
+
+            targetRainbowChecklists.put("1997-98 Fleer Metal Universe Base Set #33 Rainbow", List.of(
                     Map.of("variant", "Precious Metal Gems Red", "serial", "/90"),
-                    Map.of("variant", "Precious Metal Gems Green", "serial", "/10")
+                    Map.of("variant", "Precious Metal Gems Green", "serial", "/10"),
+                    Map.of("variant", "Base Set", "serial", "Base")
             ));
-            setSpecs.put("1998-99 Fleer Vintage 61", List.of(
-                    Map.of("variant", "Classic 5C", "serial", "Parallel"),
-                    Map.of("variant", "Classic 61", "serial", "Parallel")
+
+            targetRainbowChecklists.put("1996-97 Topps Finest Sterling #140 Refractors Rainbow", List.of(
+                    Map.of("variant", "Refractor", "serial", "Parallel"),
+                    Map.of("variant", "Gold Refractor", "serial", "Parallel"),
+                    Map.of("variant", "Base Sterling", "serial", "Base")
             ));
-            setSpecs.put("2018-19 Panini Contenders Optic", List.of(
+
+            targetRainbowChecklists.put("1994-95 Topps Base Set #393 Spectra Rainbow", List.of(
+                    Map.of("variant", "Spectra Light", "serial", "Parallel"),
+                    Map.of("variant", "Base Set", "serial", "Base")
+            ));
+
+            targetRainbowChecklists.put("1998-99 Upper Deck Black Diamond #97 Rainbow", List.of(
+                    Map.of("variant", "Double", "serial", "Parallel"),
+                    Map.of("variant", "Triple", "serial", "Parallel"),
+                    Map.of("variant", "Quadruple", "serial", "/150"),
+                    Map.of("variant", "Base Set", "serial", "Base")
+            ));
+
+            targetRainbowChecklists.put("2018-19 Panini Contenders Optic #LC-JWH Rainbow", List.of(
                     Map.of("variant", "Gold Vinyl", "serial", "1/1"),
                     Map.of("variant", "Gold", "serial", "/10"),
                     Map.of("variant", "Contenders Autographs", "serial", "Auto")
             ));
 
-            for (Map.Entry<String, List<Map<String, String>>> entry : setSpecs.entrySet()) {
-                String setName = entry.getKey();
-                List<Map<String, String>> expectedCards = entry.getValue();
+            targetRainbowChecklists.put("1998-99 Fleer Vintage 61 #16 Rainbow", List.of(
+                    Map.of("variant", "Classic 5C", "serial", "Parallel"),
+                    Map.of("variant", "Classic 61", "serial", "Parallel"),
+                    Map.of("variant", "Base Set", "serial", "Base")
+            ));
+
+            // 1. Process explicit target single-card rainbows first
+            for (Map.Entry<String, List<Map<String, String>>> entry : targetRainbowChecklists.entrySet()) {
+                String rainbowTitle = entry.getKey();
+                List<Map<String, String>> expectedVariants = entry.getValue();
 
                 Map<String, Object> setMap = new HashMap<>();
-                setMap.put("name", setName);
-                setMap.put("season", setName.split(" ")[0]);
-                setMap.put("brand", setName);
+                setMap.put("name", rainbowTitle);
+                setMap.put("season", rainbowTitle.split(" ")[0]);
+                setMap.put("brand", rainbowTitle);
 
                 List<Map<String, Object>> cardItems = new ArrayList<>();
                 int acquiredCount = 0;
 
-                for (Map<String, String> spec : expectedCards) {
+                for (Map<String, String> spec : expectedVariants) {
                     String reqVariant = spec.get("variant");
                     String reqSerial = spec.get("serial");
 
                     CardJson matched = allCards.stream()
-                            .filter(c -> c.variant != null && (c.variant.equalsIgnoreCase(reqVariant) || c.variant.contains(reqVariant)))
+                            .filter(c -> c.variant != null && (c.variant.equalsIgnoreCase(reqVariant) || c.variant.toLowerCase().contains(reqVariant.toLowerCase())))
                             .findFirst().orElse(null);
 
                     Map<String, Object> itemMap = new HashMap<>();
@@ -569,8 +608,11 @@ public class FileGenerator {
                         itemMap.put("acquired", true);
                         CardPageGenerator.CardData cd = new CardPageGenerator.CardData(matched, null);
                         itemMap.put("url", cd.fullRelativePath.replace("../../", ""));
-                        itemMap.put("title", matched.player + " " + matched.season + " " + matched.brand + " " + matched.variant);
-                        String frontImg = "images/" + cd.seasonFolder + "/" + cd.filenameBase + "-front-400w.avif";
+                        itemMap.put("title", matched.player + " " + matched.season + " " + matched.brand + " " + matched.variant + " #" + (matched.cardNumber != null ? matched.cardNumber : ""));
+
+                        String rawImageBase = cd.filenameBase.contains("-") ? cd.filenameBase.substring(0, cd.filenameBase.lastIndexOf("-")) : cd.filenameBase;
+                        String imageBaseName = CardPageGenerator.resolveDiskImageBase(cd.seasonFolder, rawImageBase, cd);
+                        String frontImg = "images/" + cd.seasonFolder + "/" + imageBaseName + "-front-400w.avif";
                         itemMap.put("imgPath", frontImg);
                     } else {
                         itemMap.put("acquired", false);
@@ -578,7 +620,7 @@ public class FileGenerator {
                     cardItems.add(itemMap);
                 }
 
-                int totalCount = expectedCards.size();
+                int totalCount = expectedVariants.size();
                 int pct = (int) Math.round(((double) acquiredCount / totalCount) * 100);
 
                 setMap.put("cards", cardItems);
@@ -587,6 +629,58 @@ public class FileGenerator {
                 setMap.put("percentage", pct);
 
                 rainbowSets.add(setMap);
+            }
+
+            // 2. Process all dynamically discovered single-card groups with 2+ variants
+            for (Map.Entry<String, List<CardJson>> entry : strictRainbowGroups.entrySet()) {
+                String groupKey = entry.getKey();
+                List<CardJson> groupCards = entry.getValue();
+
+                Set<String> distinctVariants = groupCards.stream()
+                        .map(c -> c.variant != null ? c.variant : "Base")
+                        .collect(Collectors.toSet());
+
+                if (distinctVariants.size() >= 2) {
+                    boolean alreadyAdded = rainbowSets.stream()
+                            .anyMatch(s -> s.get("name").toString().toLowerCase().contains(groupCards.get(0).brand.toLowerCase()));
+
+                    if (!alreadyAdded) {
+                        Map<String, Object> setMap = new HashMap<>();
+                        setMap.put("name", groupKey + " Rainbow");
+                        setMap.put("season", groupCards.get(0).season);
+                        setMap.put("brand", groupCards.get(0).brand);
+
+                        List<Map<String, Object>> cardItems = new ArrayList<>();
+                        int acquiredCount = 0;
+
+                        for (CardJson c : groupCards) {
+                            acquiredCount++;
+                            Map<String, Object> itemMap = new HashMap<>();
+                            itemMap.put("variant", c.variant != null ? c.variant : "Base");
+                            itemMap.put("serial", (c.serialNumber != null && !c.serialNumber.equals("0")) ? c.serialNumber : (c.printRun != null ? "/" + c.printRun : "Parallel"));
+                            itemMap.put("acquired", true);
+
+                            CardPageGenerator.CardData cd = new CardPageGenerator.CardData(c, null);
+                            itemMap.put("url", cd.fullRelativePath.replace("../../", ""));
+                            itemMap.put("title", c.player + " " + c.season + " " + c.brand + " " + c.variant + " #" + (c.cardNumber != null ? c.cardNumber : ""));
+
+                            String rawImageBase = cd.filenameBase.contains("-") ? cd.filenameBase.substring(0, cd.filenameBase.lastIndexOf("-")) : cd.filenameBase;
+                            String imageBaseName = CardPageGenerator.resolveDiskImageBase(cd.seasonFolder, rawImageBase, cd);
+                            String frontImg = "images/" + cd.seasonFolder + "/" + imageBaseName + "-front-400w.avif";
+                            itemMap.put("imgPath", frontImg);
+
+                            cardItems.add(itemMap);
+                        }
+
+                        int totalCount = groupCards.size();
+                        setMap.put("cards", cardItems);
+                        setMap.put("acquiredCount", acquiredCount);
+                        setMap.put("totalCount", totalCount);
+                        setMap.put("percentage", 100);
+
+                        rainbowSets.add(setMap);
+                    }
+                }
             }
 
             data.put("rainbowSets", rainbowSets);
