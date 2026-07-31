@@ -88,6 +88,7 @@ public class FileGenerator {
             data.put("jsonLd", jsonLd);
 
             List<CardJson> jsonCards = filterDuplicateJsonCards(loadCardsFromJson());
+            data.put("stats", computeCollectionStats(jsonCards));
             List<Map<String, String>> seasons = new ArrayList<>();
             int cumulativeTotal = 0;
 
@@ -837,6 +838,102 @@ public class FileGenerator {
             }
         }
         return filtered;
+    }
+
+    public static Map<String, Object> computeCollectionStats(List<CardJson> jsonCards) {
+        Map<String, Object> stats = new HashMap<>();
+        if (jsonCards == null || jsonCards.isEmpty()) {
+            stats.put("totalCards", "0");
+            stats.put("count1of1", 0);
+            stats.put("pct1of1", 0);
+            stats.put("countUltraSp", 0);
+            stats.put("pctUltraSp", 0);
+            stats.put("countSerialized", 0);
+            stats.put("pctSerialized", 0);
+            stats.put("countAutographs", 0);
+            stats.put("pctAutographs", 0);
+            stats.put("countPatches", 0);
+            stats.put("pctPatches", 0);
+            stats.put("countRookies", 0);
+            stats.put("pctRookies", 0);
+            stats.put("countGradedTotal", 0);
+            stats.put("pctGradedTotal", 0);
+            stats.put("countGemMint", 0);
+            stats.put("pctGemMint", 0);
+            return stats;
+        }
+
+        int count1of1 = 0;
+        int countUltraSp = 0;
+        int countSerialized = 0;
+        int countAutographs = 0;
+        int countPatches = 0;
+        int countRookies = 0;
+        int countGradedTotal = 0;
+        int countGemMint = 0;
+
+        for (CardJson c : jsonCards) {
+            Integer pr = c.printRun;
+            String sn = c.serialNumber != null ? c.serialNumber.trim() : "";
+            String v = c.variant != null ? c.variant.trim() : "";
+            String t = c.theme != null ? c.theme.trim() : "";
+
+            boolean isOneOfOne = (pr != null && pr == 1) ||
+                    "1/1".equalsIgnoreCase(sn) || "1/1".equalsIgnoreCase(v) || "1/1".equalsIgnoreCase(t) ||
+                    v.toLowerCase().contains("masterpiece") || t.toLowerCase().contains("masterpiece");
+            if (isOneOfOne) count1of1++;
+
+            if (pr != null && pr > 0 && pr <= 10) countUltraSp++;
+
+            boolean isSerialized100 = (pr != null && pr > 0 && pr <= 100) ||
+                    ((pr == null || pr == 0) && !sn.isEmpty() && !sn.equals("0"));
+            if (isSerialized100) countSerialized++;
+
+            if (c.isAutograph) countAutographs++;
+            if (c.isPatch) countPatches++;
+            if (c.isRookie) countRookies++;
+
+            String gCo = c.gradingCompany;
+            String g = c.grade;
+            boolean isGraded = (gCo != null && !gCo.trim().isEmpty() && !gCo.trim().equalsIgnoreCase("No")) ||
+                    (g != null && !g.trim().isEmpty() && !g.trim().equalsIgnoreCase("No") && !g.trim().equals("-"));
+            if (isGraded) {
+                countGradedTotal++;
+                if (g != null && (g.contains("10") || g.contains("9.5"))) {
+                    countGemMint++;
+                }
+            }
+        }
+
+        int totalCardCount = jsonCards.size();
+        stats.put("totalCards", String.format(Locale.US, "%,d", totalCardCount));
+        stats.put("rawTotalCards", totalCardCount);
+
+        stats.put("count1of1", count1of1);
+        stats.put("pct1of1", count1of1 > 0 ? Math.max(5, (int) Math.round((count1of1 * 100.0) / totalCardCount)) : 0);
+
+        stats.put("countUltraSp", countUltraSp);
+        stats.put("pctUltraSp", countUltraSp > 0 ? Math.max(5, (int) Math.round((countUltraSp * 100.0) / totalCardCount)) : 0);
+
+        stats.put("countSerialized", countSerialized);
+        stats.put("pctSerialized", countSerialized > 0 ? Math.max(5, (int) Math.round((countSerialized * 100.0) / totalCardCount)) : 0);
+
+        stats.put("countAutographs", countAutographs);
+        stats.put("pctAutographs", countAutographs > 0 ? Math.max(5, (int) Math.round((countAutographs * 100.0) / totalCardCount)) : 0);
+
+        stats.put("countPatches", countPatches);
+        stats.put("pctPatches", countPatches > 0 ? Math.max(5, (int) Math.round((countPatches * 100.0) / totalCardCount)) : 0);
+
+        stats.put("countRookies", countRookies);
+        stats.put("pctRookies", countRookies > 0 ? Math.max(5, (int) Math.round((countRookies * 100.0) / totalCardCount)) : 0);
+
+        stats.put("countGradedTotal", countGradedTotal);
+        stats.put("pctGradedTotal", countGradedTotal > 0 ? Math.max(5, (int) Math.round((countGradedTotal * 100.0) / totalCardCount)) : 0);
+
+        stats.put("countGemMint", countGemMint);
+        stats.put("pctGemMint", countGradedTotal > 0 ? Math.max(5, (int) Math.round((countGemMint * 100.0) / countGradedTotal)) : 0);
+
+        return stats;
     }
 
     private static String escapeHtml(String input) {

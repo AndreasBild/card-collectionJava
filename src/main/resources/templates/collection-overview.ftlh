@@ -16,50 +16,50 @@ ${topNavHtml?no_esc}
     <section class="analytics-dashboard context-card full-width">
         <div class="dashboard-header">
             <h2>&#x1F4C8; Vault Analytics & Collection Metrics</h2>
-            <span class="vault-count-badge">Total Cards: <strong>1,000+</strong></span>
+            <span class="vault-count-badge">Total Cards: <strong>${(stats.totalCards)!"1,000+"}</strong></span>
         </div>
         <div class="metrics-grid">
             <div class="metric-card">
                 <h4>&#x1F48E; Rarity Tier Breakdown</h4>
                 <div class="meter-group">
-                    <div class="meter-label"><span>1/1 Masterpieces</span> <strong>12</strong></div>
-                    <div class="meter-bar-track"><div class="meter-bar" style="width: 15%;"></div></div>
+                    <div class="meter-label"><span>1/1 Masterpieces</span> <strong>${(stats.count1of1)!0}</strong></div>
+                    <div class="meter-bar-track"><div class="meter-bar" style="width: ${(stats.pct1of1)!0}%;"></div></div>
                 </div>
                 <div class="meter-group">
-                    <div class="meter-label"><span>Ultra SP (&le; 10)</span> <strong>45</strong></div>
-                    <div class="meter-bar-track"><div class="meter-bar gold" style="width: 40%;"></div></div>
+                    <div class="meter-label"><span>Ultra SP (&le; 10)</span> <strong>${(stats.countUltraSp)!0}</strong></div>
+                    <div class="meter-bar-track"><div class="meter-bar gold" style="width: ${(stats.pctUltraSp)!0}%;"></div></div>
                 </div>
                 <div class="meter-group">
-                    <div class="meter-label"><span>Serialized (&le; 100)</span> <strong>180</strong></div>
-                    <div class="meter-bar-track"><div class="meter-bar blue" style="width: 75%;"></div></div>
+                    <div class="meter-label"><span>Serialized (&le; 100)</span> <strong>${(stats.countSerialized)!0}</strong></div>
+                    <div class="meter-bar-track"><div class="meter-bar blue" style="width: ${(stats.pctSerialized)!0}%;"></div></div>
                 </div>
             </div>
 
             <div class="metric-card">
                 <h4>&#x270D;&#xFE0F; Attributes & Special Types</h4>
                 <div class="meter-group">
-                    <div class="meter-label"><span>Autographs</span> <strong>85</strong></div>
-                    <div class="meter-bar-track"><div class="meter-bar green" style="width: 60%;"></div></div>
+                    <div class="meter-label"><span>Autographs</span> <strong>${(stats.countAutographs)!0}</strong></div>
+                    <div class="meter-bar-track"><div class="meter-bar green" style="width: ${(stats.pctAutographs)!0}%;"></div></div>
                 </div>
                 <div class="meter-group">
-                    <div class="meter-label"><span>Game-Used Patch / Mem</span> <strong>120</strong></div>
-                    <div class="meter-bar-track"><div class="meter-bar purple" style="width: 65%;"></div></div>
+                    <div class="meter-label"><span>Game-Used Patch / Mem</span> <strong>${(stats.countPatches)!0}</strong></div>
+                    <div class="meter-bar-track"><div class="meter-bar purple" style="width: ${(stats.pctPatches)!0}%;"></div></div>
                 </div>
                 <div class="meter-group">
-                    <div class="meter-label"><span>Rookie Cards (RC)</span> <strong>35</strong></div>
-                    <div class="meter-bar-track"><div class="meter-bar orange" style="width: 45%;"></div></div>
+                    <div class="meter-label"><span>Rookie Cards (RC)</span> <strong>${(stats.countRookies)!0}</strong></div>
+                    <div class="meter-bar-track"><div class="meter-bar orange" style="width: ${(stats.pctRookies)!0}%;"></div></div>
                 </div>
             </div>
 
             <div class="metric-card">
                 <h4>&#x1F3C5; Grading Census</h4>
                 <div class="meter-group">
-                    <div class="meter-label"><span>Gem Mint (PSA 10 / BGS 9.5)</span> <strong>95</strong></div>
-                    <div class="meter-bar-track"><div class="meter-bar emerald" style="width: 70%;"></div></div>
+                    <div class="meter-label"><span>Gem Mint (PSA 10 / BGS 9.5)</span> <strong>${(stats.countGemMint)!0}</strong></div>
+                    <div class="meter-bar-track"><div class="meter-bar emerald" style="width: ${(stats.pctGemMint)!0}%;"></div></div>
                 </div>
                 <div class="meter-group">
-                    <div class="meter-label"><span>Graded Total (PSA, BGS)</span> <strong>240</strong></div>
-                    <div class="meter-bar-track"><div class="meter-bar cyan" style="width: 80%;"></div></div>
+                    <div class="meter-label"><span>Graded Total (PSA, BGS)</span> <strong>${(stats.countGradedTotal)!0}</strong></div>
+                    <div class="meter-bar-track"><div class="meter-bar cyan" style="width: ${(stats.pctGradedTotal)!0}%;"></div></div>
                 </div>
             </div>
         </div>

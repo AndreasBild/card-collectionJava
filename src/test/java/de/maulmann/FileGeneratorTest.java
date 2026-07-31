@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -81,4 +83,27 @@ class FileGeneratorTest {
         assertTrue(errorContent.contains("Error Page"), "Error page should contain Error Page");
         assertTrue(errorContent.contains("index.html"), "Error page should contain a link back to home");
     }
+
+    @Test
+    void testComputeCollectionStats() {
+        List<CardJson> cards = FileGenerator.filterDuplicateJsonCards(CardDataLoader.loadCardsFromJson("content/json/cards.json"));
+        Map<String, Object> stats = FileGenerator.computeCollectionStats(cards);
+
+        assertNotNull(stats, "Stats map should not be null");
+        assertEquals(1376, stats.get("rawTotalCards"));
+        assertEquals("1,376", stats.get("totalCards"));
+        assertEquals(58, stats.get("count1of1"));
+        assertEquals(155, stats.get("countUltraSp"));
+        assertEquals(465, stats.get("countSerialized"));
+        assertEquals(202, stats.get("countAutographs"));
+        assertEquals(107, stats.get("countPatches"));
+        assertEquals(16, stats.get("countRookies"));
+        assertEquals(12, stats.get("countGradedTotal"));
+        assertEquals(4, stats.get("countGemMint"));
+    }
 }
+
+
+
+
+
