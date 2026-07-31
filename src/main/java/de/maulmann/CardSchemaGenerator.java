@@ -253,6 +253,103 @@ public class CardSchemaGenerator {
         return sb.toString();
     }
 
+    public static String generateRainbowJsonLd(List<Map<String, Object>> rainbowSets) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<script type=\"application/ld+json\">\n");
+        sb.append("{\n");
+        sb.append("  \"@context\": \"https://schema.org\",\n");
+        sb.append("  \"@type\": \"CollectionPage\",\n");
+        sb.append("  \"name\": \"Parallel Rainbow Tracker & Set Checklists\",\n");
+        sb.append("  \"description\": \"Tracking the hunt for complete parallel rainbow sets, PMGs, Refractors, and rare 90s basketball card variants.\",\n");
+        sb.append("  \"url\": \"").append(BASE_URL).append("/rainbows.html\",\n");
+        sb.append("  \"isPartOf\": {\n");
+        sb.append("    \"@type\": \"WebSite\",\n");
+        sb.append("    \"name\": \"Maulmann Private Vault\",\n");
+        sb.append("    \"url\": \"").append(BASE_URL).append("\"\n");
+        sb.append("  },\n");
+        sb.append("  \"breadcrumb\": {\n");
+        sb.append("    \"@type\": \"BreadcrumbList\",\n");
+        sb.append("    \"itemListElement\": [\n");
+        sb.append("      {\"@type\": \"ListItem\", \"position\": 1, \"name\": \"Home\", \"item\": \"").append(BASE_URL).append("/index.html\"},\n");
+        sb.append("      {\"@type\": \"ListItem\", \"position\": 2, \"name\": \"Rainbow Tracker\", \"item\": \"").append(BASE_URL).append("/rainbows.html\"}\n");
+        sb.append("    ]\n");
+        sb.append("  },\n");
+        sb.append("  \"mainEntity\": {\n");
+        sb.append("    \"@type\": \"ItemList\",\n");
+        sb.append("    \"name\": \"Juwan Howard Single-Card Parallel Rainbow Checklists\",\n");
+        sb.append("    \"numberOfItems\": ").append(rainbowSets.size()).append(",\n");
+        sb.append("    \"itemListElement\": [\n");
+
+        for (int i = 0; i < rainbowSets.size(); i++) {
+            Map<String, Object> set = rainbowSets.get(i);
+            String name = (String) set.get("name");
+            String season = (String) set.get("season");
+            String company = (String) set.get("company");
+            String brand = (String) set.get("brand");
+            String theme = (String) set.get("theme");
+            String number = (String) set.get("number");
+            int acquiredCount = (int) set.get("acquiredCount");
+            int totalCount = (int) set.get("totalCount");
+
+            @SuppressWarnings("unchecked")
+            List<Map<String, Object>> cards = (List<Map<String, Object>>) set.get("cards");
+
+            sb.append("      {\n");
+            sb.append("        \"@type\": \"ListItem\",\n");
+            sb.append("        \"position\": ").append(i + 1).append(",\n");
+            sb.append("        \"item\": {\n");
+            sb.append("          \"@type\": \"ItemList\",\n");
+            sb.append("          \"name\": \"").append(escapeJson(name)).append("\",\n");
+            sb.append("          \"description\": \"Season: ").append(escapeJson(season))
+                    .append(" | Company: ").append(escapeJson(company))
+                    .append(" | Brand: ").append(escapeJson(brand))
+                    .append(" | Set: ").append(escapeJson(theme))
+                    .append(" | Card #: ").append(escapeJson(number))
+                    .append(" | Progress: ").append(acquiredCount).append("/").append(totalCount).append(" acquired\",\n");
+            sb.append("          \"numberOfItems\": ").append(cards.size()).append(",\n");
+            sb.append("          \"itemListElement\": [\n");
+
+            for (int j = 0; j < cards.size(); j++) {
+                Map<String, Object> card = cards.get(j);
+                String variant = (String) card.get("variant");
+                String serial = (String) card.get("serial");
+                boolean acquired = Boolean.TRUE.equals(card.get("acquired"));
+                String url = card.containsKey("url") ? BASE_URL + "/" + card.get("url") : "";
+                String imgPath = card.containsKey("imgPath") ? BASE_URL + "/" + card.get("imgPath") : "";
+                String cardTitle = card.containsKey("title") ? (String) card.get("title") : name + " - " + variant;
+
+                sb.append("            {\n");
+                sb.append("              \"@type\": \"ListItem\",\n");
+                sb.append("              \"position\": ").append(j + 1).append(",\n");
+                sb.append("              \"item\": {\n");
+                sb.append("                \"@type\": \"VisualArtwork\",\n");
+                sb.append("                \"name\": \"").append(escapeJson(cardTitle)).append("\",\n");
+                sb.append("                \"artMedium\": \"Sports Trading Card\",\n");
+                sb.append("                \"artworkSurface\": \"").append(escapeJson(variant)).append("\",\n");
+                if (!url.isEmpty()) sb.append("                \"url\": \"").append(escapeJson(url)).append("\",\n");
+                if (!imgPath.isEmpty()) sb.append("                \"image\": \"").append(escapeJson(imgPath)).append("\",\n");
+                sb.append("                \"offers\": {\n");
+                sb.append("                  \"@type\": \"Offer\",\n");
+                sb.append("                  \"availability\": \"https://schema.org/").append(acquired ? "InStock" : "OutOfStock").append("\",\n");
+                sb.append("                  \"description\": \"").append(acquired ? "Acquired parallel variant serially numbered " + escapeJson(serial) : "Unacquired target variant (" + escapeJson(serial) + ")").append("\"\n");
+                sb.append("                }\n");
+                sb.append("              }\n");
+                sb.append("            }").append(j < cards.size() - 1 ? "," : "").append("\n");
+            }
+
+            sb.append("          ]\n");
+            sb.append("        }\n");
+            sb.append("      }").append(i < rainbowSets.size() - 1 ? "," : "").append("\n");
+        }
+
+        sb.append("    ]\n");
+        sb.append("  }\n");
+        sb.append("}\n");
+        sb.append("</script>\n");
+
+        return sb.toString();
+    }
+
     private static String extractYear(String season) {
         if (season == null) return null;
         java.util.regex.Matcher matcher = java.util.regex.Pattern.compile("\\b(19\\d{2}|20\\d{2})\\b").matcher(season);

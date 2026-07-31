@@ -26,7 +26,7 @@ ${topNavHtml?no_esc}
                     <div class="rainbow-set-header">
                         <div>
                             <h3 class="rainbow-set-title">${set.name}</h3>
-                            <span class="rainbow-set-subtitle">${set.season} &bull; ${set.brand}</span>
+                            <span class="rainbow-set-subtitle">Season: ${set.season} &bull; Manufacturer: ${set.company} &bull; Brand: ${set.brand} &bull; Set: ${set.theme} &bull; Card #: ${set.number}</span>
                         </div>
                         <div class="rainbow-badge-box">
                             <span class="rainbow-completion-badge">${set.acquiredCount} / ${set.totalCount} Collected (${set.percentage}%)</span>
