@@ -631,6 +631,7 @@ public class FileGenerator {
                         CardPageGenerator.CardData cd = new CardPageGenerator.CardData(matched, null);
                         itemMap.put("url", cd.fullRelativePath.replace("../../", ""));
                         itemMap.put("title", matched.player + " " + matched.season + " " + matched.brand + " " + matched.variant + " #" + matched.cardNumber);
+                        itemMap.put("serial", formatSerialAndPrintRun(matched.serialNumber, matched.printRun, reqSerial));
 
                         String rawImageBase = cd.filenameBase.contains("-") ? cd.filenameBase.substring(0, cd.filenameBase.lastIndexOf("-")) : cd.filenameBase;
                         String imageBaseName = CardPageGenerator.resolveDiskImageBase(cd.seasonFolder, rawImageBase, cd);
@@ -638,9 +639,12 @@ public class FileGenerator {
                         itemMap.put("imgPath", frontImg);
                     } else {
                         itemMap.put("acquired", false);
+                        itemMap.put("title", "Juwan Howard " + season + " " + brand + " " + reqVariant + " #" + number);
                     }
                     cardItems.add(itemMap);
                 }
+
+                if (acquiredCount == 0) continue; // Do not display rainbow sets without any acquired cards
 
                 int totalCount = expectedVariants.size();
                 int pct = (int) Math.round(((double) acquiredCount / totalCount) * 100);
@@ -691,7 +695,7 @@ public class FileGenerator {
                             acquiredCount++;
                             Map<String, Object> itemMap = new HashMap<>();
                             itemMap.put("variant", c.variant != null ? c.variant : "Base");
-                            itemMap.put("serial", (c.serialNumber != null && !c.serialNumber.equals("0")) ? c.serialNumber : (c.printRun != null ? "/" + c.printRun : "Parallel"));
+                            itemMap.put("serial", formatSerialAndPrintRun(c.serialNumber, c.printRun, null));
                             itemMap.put("acquired", true);
 
                             CardPageGenerator.CardData cd = new CardPageGenerator.CardData(c, null);
@@ -727,6 +731,22 @@ public class FileGenerator {
     }
 
     // --- HILFSMETHODEN ---
+    public static String formatSerialAndPrintRun(String serialNum, Integer printRun, String fallback) {
+        boolean hasSerial = serialNum != null && !serialNum.trim().isEmpty() && !serialNum.equals("0");
+        boolean hasPrintRun = printRun != null && printRun > 0;
+
+        if (hasSerial && hasPrintRun) {
+            return serialNum.contains("/") ? serialNum : serialNum + "/" + printRun;
+        } else if (hasSerial) {
+            return serialNum.startsWith("#") ? serialNum : "#" + serialNum;
+        } else if (hasPrintRun) {
+            return "/" + printRun;
+        } else if (fallback != null && !fallback.trim().isEmpty()) {
+            return fallback;
+        }
+        return "Parallel";
+    }
+
     private static Map<String, Object> createBaseData(String title, String subTitle, String filename, String navTargetUrl, String root) throws Exception {
         Map<String, Object> data = new HashMap<>();
 
