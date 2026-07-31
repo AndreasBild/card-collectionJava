@@ -41,22 +41,26 @@ ${topNavHtml?no_esc}
                         <#list set.cards as card>
                             <div class="rainbow-item <#if card.acquired>acquired<#else>unacquired</#if>">
                                 <#if card.acquired>
-                                    <a href="${card.url}" title="${card.title}">
-                                        <picture>
+                                    <a href="${card.url}" title="${card.title}" class="rainbow-card-link">
+                                        <picture class="rainbow-card-media">
                                             <source type="image/avif" srcset="${card.imgPath}">
-                                            <img src="${card.imgPath}" alt="${card.variant}" loading="lazy">
+                                            <img src="${card.imgPath}" alt="${card.variant}" loading="lazy" class="rainbow-card-img">
                                         </picture>
-                                        <div class="rainbow-item-caption">
+                                        <div class="rainbow-hover-overlay">
                                             <span class="rainbow-item-variant">${card.variant}</span>
                                             <span class="rainbow-item-serial">${card.serial}</span>
+                                            <span class="rainbow-status-badge acquired">ACQUIRED</span>
                                         </div>
                                     </a>
                                 <#else>
-                                    <div class="rainbow-item-placeholder">
+                                    <div class="rainbow-card-placeholder">
                                         <div class="silhouette-icon">&#x1F0CF;</div>
-                                        <span class="rainbow-item-variant">${card.variant}</span>
-                                        <span class="rainbow-item-serial">${card.serial}</span>
-                                        <span class="rainbow-status-needed">NEEDED</span>
+                                        <span class="placeholder-label">${card.variant}</span>
+                                        <div class="rainbow-hover-overlay">
+                                            <span class="rainbow-item-variant">${card.variant}</span>
+                                            <span class="rainbow-item-serial">${card.serial}</span>
+                                            <span class="rainbow-status-badge needed">NEEDED</span>
+                                        </div>
                                     </div>
                                 </#if>
                             </div>

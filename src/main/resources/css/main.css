@@ -1796,74 +1796,148 @@ figcaption {
 
 .rainbow-items-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 1.25rem;
+    align-items: stretch;
 }
 
 .rainbow-item {
-    background: var(--bg-surface);
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2.5 / 3.5;
+    background: #0f172a;
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-md);
-    padding: 10px;
-    text-align: center;
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .rainbow-item:hover {
-    transform: translateY(-3px);
+    transform: translateY(-4px) scale(1.02);
     border-color: var(--accent-gold);
+    box-shadow: 0 10px 24px rgba(212, 175, 55, 0.25);
+    z-index: 5;
 }
 
-.rainbow-item.unacquired {
-    opacity: 0.6;
-    border-style: dashed;
+.rainbow-card-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    text-decoration: none;
 }
 
-.rainbow-item img {
-    max-width: 100%;
-    height: auto;
-    border-radius: var(--radius-sm);
-    box-shadow: var(--shadow-sm);
+.rainbow-card-media {
+    display: block;
+    width: 100%;
+    height: 100%;
 }
 
-.rainbow-item-caption {
-    margin-top: 8px;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
+.rainbow-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: var(--radius-md);
+    transition: transform 0.3s ease;
 }
 
-.rainbow-item-variant {
-    font-weight: 700;
-    font-size: 0.85rem;
-    color: var(--text-primary);
+.rainbow-item:hover .rainbow-card-img {
+    transform: scale(1.04);
 }
 
-.rainbow-item-serial {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-}
-
-.rainbow-item-placeholder {
+.rainbow-card-placeholder {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 1.5rem 1rem;
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    background: radial-gradient(circle at center, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.95));
+    border: 2px dashed rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-md);
+    text-align: center;
+    position: relative;
 }
 
-.silhouette-icon {
-    font-size: 2.5rem;
-    opacity: 0.3;
-    margin-bottom: 8px;
+.rainbow-card-placeholder .silhouette-icon {
+    font-size: 2.2rem;
+    opacity: 0.35;
+    margin-bottom: 0.5rem;
 }
 
-.rainbow-status-needed {
-    margin-top: 6px;
-    font-size: 0.7rem;
+.rainbow-card-placeholder .placeholder-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    opacity: 0.8;
+    line-height: 1.2;
+}
+
+/* Hover Overlay */
+.rainbow-hover-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(11, 15, 25, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.85rem;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.rainbow-item:hover .rainbow-hover-overlay,
+.rainbow-item:focus-within .rainbow-hover-overlay {
+    opacity: 1;
+    visibility: visible;
+}
+
+.rainbow-item-variant {
     font-weight: 800;
-    color: #f87171;
+    font-size: 0.85rem;
+    color: #ffffff;
+    line-height: 1.25;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.rainbow-item-serial {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent-gold);
+    margin-top: 4px;
+}
+
+.rainbow-status-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.65rem;
+    font-weight: 800;
     letter-spacing: 0.5px;
+    margin-top: 8px;
+    text-transform: uppercase;
+}
+
+.rainbow-status-badge.acquired {
+    background: rgba(16, 185, 129, 0.2);
+    color: #34d399;
+    border: 1px solid rgba(52, 211, 153, 0.4);
+}
+
+.rainbow-status-badge.needed {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+    border: 1px solid rgba(248, 113, 113, 0.4);
 }
 
 /* --- VAULT ANALYTICS DASHBOARD --- */
