@@ -101,6 +101,40 @@ class FileGeneratorTest {
         assertEquals(12, stats.get("countGradedTotal"));
         assertEquals(4, stats.get("countGemMint"));
     }
+
+    @Test
+    void testBuildRainbowsPageOrderingAndDeduplication() throws Exception {
+        Path jsonDir = Files.createDirectories(contentDir.resolve("json"));
+        // Create 2 rainbow sets: Set A with 4 cards, Set B with 5 cards (including 2 cards with different serial numbers and 1 duplicate)
+        String jsonContent = "[" +
+                "{\"player\":\"Juwan Howard\",\"season\":\"2020-21\",\"team\":\"Bullets\",\"company\":\"Panini\",\"brand\":\"Panini Prizm\",\"theme\":\"Base Set\",\"variant\":\"Base\",\"cardNumber\":\"10\",\"serialNumber\":\"0\",\"printRun\":0}," +
+                "{\"player\":\"Juwan Howard\",\"season\":\"2020-21\",\"team\":\"Bullets\",\"company\":\"Panini\",\"brand\":\"Panini Prizm\",\"theme\":\"Base Set\",\"variant\":\"Silver\",\"cardNumber\":\"10\",\"serialNumber\":\"0\",\"printRun\":0}," +
+                "{\"player\":\"Juwan Howard\",\"season\":\"2020-21\",\"team\":\"Bullets\",\"company\":\"Panini\",\"brand\":\"Panini Prizm\",\"theme\":\"Base Set\",\"variant\":\"Green\",\"cardNumber\":\"10\",\"serialNumber\":\"0\",\"printRun\":0}," +
+                "{\"player\":\"Juwan Howard\",\"season\":\"2020-21\",\"team\":\"Bullets\",\"company\":\"Panini\",\"brand\":\"Panini Prizm\",\"theme\":\"Base Set\",\"variant\":\"Gold\",\"cardNumber\":\"10\",\"serialNumber\":\"5\",\"printRun\":10}," +
+
+                "{\"player\":\"Juwan Howard\",\"season\":\"2021-22\",\"team\":\"Bullets\",\"company\":\"Topps\",\"brand\":\"Topps Chrome\",\"theme\":\"Base Set\",\"variant\":\"Base\",\"cardNumber\":\"20\",\"serialNumber\":\"0\",\"printRun\":0}," +
+                "{\"player\":\"Juwan Howard\",\"season\":\"2021-22\",\"team\":\"Bullets\",\"company\":\"Topps\",\"brand\":\"Topps Chrome\",\"theme\":\"Base Set\",\"variant\":\"Refractor\",\"cardNumber\":\"20\",\"serialNumber\":\"0\",\"printRun\":0}," +
+                "{\"player\":\"Juwan Howard\",\"season\":\"2021-22\",\"team\":\"Bullets\",\"company\":\"Topps\",\"brand\":\"Topps Chrome\",\"theme\":\"Base Set\",\"variant\":\"Blue Refractor\",\"cardNumber\":\"20\",\"serialNumber\":\"12\",\"printRun\":99}," +
+                "{\"player\":\"Juwan Howard\",\"season\":\"2021-22\",\"team\":\"Bullets\",\"company\":\"Topps\",\"brand\":\"Topps Chrome\",\"theme\":\"Base Set\",\"variant\":\"Blue Refractor\",\"cardNumber\":\"20\",\"serialNumber\":\"45\",\"printRun\":99}," + // Different serial! Must be distinct!
+                "{\"player\":\"Juwan Howard\",\"season\":\"2021-22\",\"team\":\"Bullets\",\"company\":\"Topps\",\"brand\":\"Topps Chrome\",\"theme\":\"Base Set\",\"variant\":\"Gold Refractor\",\"cardNumber\":\"20\",\"serialNumber\":\"5\",\"printRun\":50}," +
+                "{\"player\":\"Juwan Howard\",\"season\":\"2021-22\",\"team\":\"Bullets\",\"company\":\"Topps\",\"brand\":\"Topps Chrome\",\"theme\":\"Base Set\",\"variant\":\"Gold Refractor\",\"cardNumber\":\"20\",\"serialNumber\":\"5\",\"printRun\":50}" + // Duplicate of previous! Must be deduplicated!
+                "]";
+        Files.writeString(jsonDir.resolve("cards.json"), jsonContent);
+
+        FileGenerator.buildRainbowsPage();
+
+        Path rainbowHtml = outputDir.resolve("rainbows.html");
+        assertTrue(Files.exists(rainbowHtml), "rainbows.html should be generated");
+
+        String html = Files.readString(rainbowHtml);
+        assertTrue(html.contains("2021-22 Topps Chrome Base Set #20 Rainbow"), "Should contain 2021-22 set");
+        assertTrue(html.contains("2020-21 Panini Prizm Base Set #10 Rainbow"), "Should contain 2020-21 set");
+
+        // Set with 5 cards (2021-22) should appear BEFORE set with 4 cards (2020-21)
+        int posSet2021 = html.indexOf("2021-22 Topps Chrome Base Set #20 Rainbow");
+        int posSet2020 = html.indexOf("2020-21 Panini Prizm Base Set #10 Rainbow");
+        assertTrue(posSet2021 < posSet2020, "Set with more cards should appear first");
+    }
 }
 
 

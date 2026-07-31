@@ -664,13 +664,15 @@ public class FileGenerator {
                 CardJson sample = groupCards.get(0);
                 String normNum = normalizeCardNumber(sample.cardNumber);
 
-                Map<String, CardJson> uniqueVariantMap = new LinkedHashMap<>();
+                Map<String, CardJson> distinctCardsMap = new LinkedHashMap<>();
                 for (CardJson c : groupCards) {
-                    String v = c.variant != null ? c.variant : "Base";
-                    uniqueVariantMap.putIfAbsent(v, c);
+                    String v = (c.variant != null && !c.variant.trim().isEmpty()) ? c.variant.trim() : "Base";
+                    String serial = (c.serialNumber != null) ? c.serialNumber.trim() : "";
+                    String cardKey = v.toLowerCase() + "||" + serial.toLowerCase();
+                    distinctCardsMap.putIfAbsent(cardKey, c);
                 }
 
-                if (uniqueVariantMap.size() > 3) {
+                if (distinctCardsMap.size() > 3) {
                     boolean alreadyFeatured = rainbowSets.stream()
                             .anyMatch(s -> s.get("season").equals(sample.season)
                                     && s.get("brand").equals(sample.brand)
@@ -691,7 +693,7 @@ public class FileGenerator {
                         List<Map<String, Object>> cardItems = new ArrayList<>();
                         int acquiredCount = 0;
 
-                        for (Map.Entry<String, CardJson> varEntry : uniqueVariantMap.entrySet()) {
+                        for (Map.Entry<String, CardJson> varEntry : distinctCardsMap.entrySet()) {
                             CardJson c = varEntry.getValue();
                             acquiredCount++;
                             Map<String, Object> itemMap = new HashMap<>();
@@ -711,7 +713,7 @@ public class FileGenerator {
                             cardItems.add(itemMap);
                         }
 
-                        int totalCount = uniqueVariantMap.size();
+                        int totalCount = distinctCardsMap.size();
                         setMap.put("cards", cardItems);
                         setMap.put("acquiredCount", acquiredCount);
                         setMap.put("totalCount", totalCount);
@@ -721,6 +723,21 @@ public class FileGenerator {
                     }
                 }
             }
+
+            // Sort rainbow sets descending by card count (acquiredCount descending, totalCount descending, then name ascending)
+            rainbowSets.sort((a, b) -> {
+                int acqA = (Integer) a.get("acquiredCount");
+                int acqB = (Integer) b.get("acquiredCount");
+                if (acqA != acqB) {
+                    return Integer.compare(acqB, acqA);
+                }
+                int totA = (Integer) a.get("totalCount");
+                int totB = (Integer) b.get("totalCount");
+                if (totA != totB) {
+                    return Integer.compare(totB, totA);
+                }
+                return ((String) a.get("name")).compareTo((String) b.get("name"));
+            });
 
             data.put("rainbowSets", rainbowSets);
             data.put("jsonLd", CardSchemaGenerator.generateRainbowJsonLd(rainbowSets));
