@@ -544,7 +544,7 @@ public class FileGenerator {
                 strictRainbowGroups.computeIfAbsent(key, k -> new ArrayList<>()).add(c);
             }
 
-            // Featured Target Checklists (Single-Card Level)
+            // 1. Explicit Featured Single-Card Rainbow Checklists (with > 3 cards in the list)
             List<Map<String, Object>> targetRainbows = List.of(
                     Map.of(
                             "title", "1997-98 Fleer Metal Universe Base Set #33 Rainbow",
@@ -552,6 +552,7 @@ public class FileGenerator {
                             "variants", List.of(
                                     Map.of("variant", "Precious Metal Gems Red", "serial", "/90"),
                                     Map.of("variant", "Precious Metal Gems Green", "serial", "/10"),
+                                    Map.of("variant", "Precious Metal Gems Gold", "serial", "1/1"),
                                     Map.of("variant", "Base Set", "serial", "Base")
                             )
                     ),
@@ -561,25 +562,18 @@ public class FileGenerator {
                             "variants", List.of(
                                     Map.of("variant", "Refractor", "serial", "Parallel"),
                                     Map.of("variant", "Gold Refractor", "serial", "Parallel"),
+                                    Map.of("variant", "Atomic Refractor", "serial", "Parallel"),
                                     Map.of("variant", "Base Sterling", "serial", "Base")
-                            )
-                    ),
-                    Map.of(
-                            "title", "1994-95 Topps Base Set #393 Rainbow",
-                            "season", "1994-95", "company", "Topps", "brand", "Topps", "theme", "Base Set", "number", "393",
-                            "variants", List.of(
-                                    Map.of("variant", "Spectra Light", "serial", "Parallel"),
-                                    Map.of("variant", "Base Set", "serial", "Base")
                             )
                     ),
                     Map.of(
                             "title", "1998-99 Upper Deck Black Diamond Base Set #97 Rainbow",
                             "season", "1998-99", "company", "Upper Deck", "brand", "Upper Deck Black Diamond", "theme", "Base Set", "number", "97",
                             "variants", List.of(
+                                    Map.of("variant", "Single", "serial", "Base"),
                                     Map.of("variant", "Double", "serial", "Parallel"),
                                     Map.of("variant", "Triple", "serial", "Parallel"),
-                                    Map.of("variant", "Quadruple", "serial", "/150"),
-                                    Map.of("variant", "Base Set", "serial", "Base")
+                                    Map.of("variant", "Quadruple", "serial", "/150")
                             )
                     ),
                     Map.of(
@@ -588,16 +582,8 @@ public class FileGenerator {
                             "variants", List.of(
                                     Map.of("variant", "Gold Vinyl", "serial", "1/1"),
                                     Map.of("variant", "Gold", "serial", "/10"),
+                                    Map.of("variant", "Blue", "serial", "/99"),
                                     Map.of("variant", "Contenders Autographs", "serial", "Auto")
-                            )
-                    ),
-                    Map.of(
-                            "title", "1998-99 Fleer Vintage 61 Base Set #16 Rainbow",
-                            "season", "1998-99", "company", "Fleer", "brand", "Fleer Vintage 61", "theme", "Base Set", "number", "16",
-                            "variants", List.of(
-                                    Map.of("variant", "Classic 5C", "serial", "Parallel"),
-                                    Map.of("variant", "Classic 61", "serial", "Parallel"),
-                                    Map.of("variant", "Base Set", "serial", "Base")
                             )
                     )
             );
@@ -611,6 +597,8 @@ public class FileGenerator {
                 String number = (String) target.get("number");
                 @SuppressWarnings("unchecked")
                 List<Map<String, String>> expectedVariants = (List<Map<String, String>>) target.get("variants");
+
+                if (expectedVariants.size() <= 3) continue; // Rainbows must have more than 3 cards in the list
 
                 Map<String, Object> setMap = new HashMap<>();
                 setMap.put("name", title);
@@ -665,7 +653,7 @@ public class FileGenerator {
                 rainbowSets.add(setMap);
             }
 
-            // 2. Process all dynamically discovered single-card groups with 2+ distinct variants
+            // 2. Process all dynamically discovered single-card groups with MORE THAN 3 distinct variants (> 3 cards)
             for (Map.Entry<String, List<CardJson>> entry : strictRainbowGroups.entrySet()) {
                 List<CardJson> groupCards = entry.getValue();
                 CardJson sample = groupCards.get(0);
@@ -677,7 +665,7 @@ public class FileGenerator {
                     uniqueVariantMap.putIfAbsent(v, c);
                 }
 
-                if (uniqueVariantMap.size() >= 2) {
+                if (uniqueVariantMap.size() > 3) {
                     boolean alreadyFeatured = rainbowSets.stream()
                             .anyMatch(s -> s.get("season").equals(sample.season)
                                     && s.get("brand").equals(sample.brand)
