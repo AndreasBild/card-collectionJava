@@ -1,0 +1,193 @@
+/* Maulmann Card Collection - Collector UX & Interactive Features */
+
+// --- 1. COPY SNIPPET TO CLIPBOARD ---
+function copySnippet(inputId, btn) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+    input.select();
+    input.setSelectionRange(0, 99999);
+    
+    navigator.clipboard.writeText(input.value).then(() => {
+        const originalText = btn.innerText;
+        btn.innerText = 'Copied!';
+        btn.classList.add('copied-success');
+        setTimeout(() => {
+            btn.innerText = originalText;
+            btn.classList.remove('copied-success');
+        }, 2000);
+    }).catch(err => {
+        console.error('Copy failed: ', err);
+    });
+}
+
+// --- 2. 9-POCKET BINDER VIEW TOGGLE ---
+function setCollectionLayout(layout) {
+    const main = document.querySelector('.detail-main');
+    const gridBtn = document.getElementById('viewGridBtn');
+    const binderBtn = document.getElementById('viewBinderBtn');
+
+    if (!main) return;
+
+    if (layout === 'binder') {
+        main.classList.add('binder-view-active');
+        if (gridBtn) gridBtn.classList.remove('active');
+        if (binderBtn) binderBtn.classList.add('active');
+        localStorage.setItem('collectorLayout', 'binder');
+    } else {
+        main.classList.remove('binder-view-active');
+        if (gridBtn) gridBtn.classList.add('active');
+        if (binderBtn) binderBtn.classList.remove('active');
+        localStorage.setItem('collectorLayout', 'grid');
+    }
+}
+
+// Restore layout preference on page load
+document.addEventListener('DOMContentLoaded', () => {
+    const savedLayout = localStorage.getItem('collectorLayout');
+    if (savedLayout === 'binder') {
+        setCollectionLayout('binder');
+    }
+
+    initCompareButtons();
+    updateCompareBar();
+});
+
+// --- 3. SIDE-BY-SIDE CARD COMPARISON TOOL ---
+const COMPARE_KEY = 'maulmann_compare_list';
+
+function getCompareList() {
+    try {
+        return JSON.parse(sessionStorage.getItem(COMPARE_KEY)) || [];
+    } catch (e) {
+        return [];
+    }
+}
+
+function saveCompareList(list) {
+    sessionStorage.setItem(COMPARE_KEY, JSON.stringify(list));
+    updateCompareBar();
+}
+
+function initCompareButtons() {
+    const btn = document.getElementById('compareBtn');
+    if (!btn) return;
+
+    const id = btn.getAttribute('data-card-id');
+    const list = getCompareList();
+    const isSelected = list.some(item => item.id === id);
+
+    if (isSelected) {
+        btn.innerText = '✓ Compared';
+        btn.classList.add('active-compare');
+    } else {
+        btn.innerText = '+ Compare';
+        btn.classList.remove('active-compare');
+    }
+
+    btn.addEventListener('click', () => {
+        const title = btn.getAttribute('data-card-title');
+        const img = btn.getAttribute('data-card-img');
+        const url = btn.getAttribute('data-card-url');
+        const player = btn.getAttribute('data-card-player');
+        const serial = btn.getAttribute('data-card-serial');
+
+        toggleCompareCard({ id, title, img, url, player, serial });
+    });
+}
+
+function toggleCompareCard(card) {
+    let list = getCompareList();
+    const index = list.findIndex(item => item.id === card.id);
+
+    if (index >= 0) {
+        list.splice(index, 1);
+    } else {
+        if (list.length >= 3) {
+            alert('You can compare up to 3 cards side-by-side.');
+            return;
+        }
+        list.push(card);
+    }
+
+    saveCompareList(list);
+    initCompareButtons();
+}
+
+function clearCompareList() {
+    sessionStorage.removeItem(COMPARE_KEY);
+    initCompareButtons();
+    updateCompareBar();
+    closeCompareModal();
+}
+
+function updateCompareBar() {
+    let bar = document.getElementById('compareBar');
+    const list = getCompareList();
+
+    if (!bar) {
+        bar = document.createElement('div');
+        bar.id = 'compareBar';
+        bar.className = 'compare-sticky-bar';
+        bar.innerHTML = `
+            <div class="compare-bar-content">
+                <span>&#x2696;&#xFE0F; <strong>Card Comparison</strong> (<span id="compareCount">0</span>/3)</span>
+                <div class="compare-bar-actions">
+                    <button class="modern-button compare-now-btn" onclick="openCompareModal()">View Comparison</button>
+                    <button class="modern-button secondary" onclick="clearCompareList()">Clear</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(bar);
+    }
+
+    const countSpan = document.getElementById('compareCount');
+    if (countSpan) countSpan.innerText = list.length;
+
+    if (list.length > 0) {
+        bar.style.display = 'block';
+    } else {
+        bar.style.display = 'none';
+    }
+}
+
+function openCompareModal() {
+    const list = getCompareList();
+    if (list.length === 0) return;
+
+    let modal = document.getElementById('compareModal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'compareModal';
+        modal.className = 'compare-modal-overlay';
+        modal.onclick = (e) => { if (e.target === modal) closeCompareModal(); };
+        modal.innerHTML = `
+            <div class="compare-modal-box">
+                <div class="compare-modal-header">
+                    <h3>&#x2696;&#xFE0F; Side-by-Side Card Comparison</h3>
+                    <button class="modal-close-btn" onclick="closeCompareModal()">&times;</button>
+                </div>
+                <div id="compareModalGrid" class="compare-modal-grid"></div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+
+    const grid = document.getElementById('compareModalGrid');
+    grid.innerHTML = list.map(item => `
+        <div class="compare-card-col">
+            <button class="remove-col-btn" onclick="toggleCompareCard({id: '${item.id}'})">&times;</button>
+            <img src="${item.img}" alt="${item.title}">
+            <h4>${item.title}</h4>
+            <p><strong>Player:</strong> ${item.player || '-'}</p>
+            <p><strong>Serial:</strong> ${item.serial || '-'}</p>
+            <a href="${item.url}" class="modern-button view-detail-link">View Full Specs &rarr;</a>
+        </div>
+    `).join('');
+
+    modal.style.display = 'flex';
+}
+
+function closeCompareModal() {
+    const modal = document.getElementById('compareModal');
+    if (modal) modal.style.display = 'none';
+}
