@@ -145,7 +145,7 @@ public class SiteBuilderPipeline {
             }
 
             long pipelineEnd = System.currentTimeMillis();
-            log.info("\n==================================================");
+            log.info("==================================================");
             log.info("✅ PIPELINE COMPLETE IN {} ms", pipelineEnd - pipelineStart);
             log.info("==================================================");
 
@@ -267,7 +267,7 @@ public class SiteBuilderPipeline {
             Path localOutputDir = Paths.get(OUTPUT_DIR);
             List<ObjectIdentifier> objectsToDelete = new ArrayList<>();
 
-            log.info("    Scanning S3 bucket for pagination...");
+            log.info("-> Scanning S3 bucket for pagination...");
 
             boolean isDone = false;
             String continuationToken = null;
@@ -304,10 +304,10 @@ public class SiteBuilderPipeline {
                 }
             }
 
-            log.info("    Finished scanning {} objects in S3.", totalS3FilesScanned);
+            log.info("-> Finished scanning {} objects in S3.", totalS3FilesScanned);
 
             if (!objectsToDelete.isEmpty()) {
-                log.info("    -> Found {} orphaned files. Deleting from S3 in batches...", objectsToDelete.size());
+                log.info("-> Found {} orphaned files. Deleting from S3 in batches...", objectsToDelete.size());
 
                 objectsToDelete.stream()
                         .gather(java.util.stream.Gatherers.windowFixed(1000))
@@ -320,9 +320,9 @@ public class SiteBuilderPipeline {
                             s3Client.deleteObjects(deleteReq).join();
                             log.info("       Deleted batch of {} files.", batch.size());
                         });
-                log.info("    -> S3 Cleanup complete.");
+                log.info("-> S3 Cleanup complete.");
             } else {
-                log.info("    -> S3 is perfectly in sync. No ghost files found.");
+                log.info("-> S3 is perfectly in sync. No ghost files found.");
             }
 
         } catch (Exception e) {

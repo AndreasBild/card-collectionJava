@@ -147,7 +147,7 @@
                 <version>${org.codehaus.mojo.version}</version>
                 <configuration>
                     <mainClass>de.maulmann.SiteBuilderPipeline</mainClass>
-                    <commandlineArgs>--enable-native-access=ALL-UNNAMED</commandlineArgs>
+                    <cleanupDaemonThreads>false</cleanupDaemonThreads>
                 </configuration>
             </plugin>
             <plugin>
@@ -155,7 +155,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.5.6</version>
                 <configuration>
-                    <argLine>--enable-native-access=ALL-UNNAMED</argLine>
+                    <argLine>--enable-native-access=ALL-UNNAMED --sun-misc-unsafe-memory-access=allow</argLine>
                 </configuration>
             </plugin>
         </plugins>
