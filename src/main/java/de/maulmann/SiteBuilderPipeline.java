@@ -111,27 +111,35 @@ public class SiteBuilderPipeline {
                 CompletableFuture.allOf(htmlTask, imageTask).join();
             }
 
-            // --- PHASE 3: Compress & Upload HTML/CSS/JS/XML ---
-            System.out.println("\n[PHASE 3] Minifying, Compressing, and Uploading Web Files...");
-            processAndUploadWebFiles(s3AsyncClient, tracker);
+            try {
+                // --- PHASE 3: Compress & Upload HTML/CSS/JS/XML ---
+                System.out.println("\n[PHASE 3] Minifying, Compressing, and Uploading Web Files...");
+                processAndUploadWebFiles(s3AsyncClient, tracker);
 
-            // --- PHASE 4: Upload Images (No Compression) ---
-            System.out.println("\n[PHASE 4] Syncing Images to S3...");
-            processAndUploadImages(s3AsyncClient, tracker);
+                // --- PHASE 4: Upload Images (No Compression) ---
+                System.out.println("\n[PHASE 4] Syncing Images to S3...");
+                processAndUploadImages(s3AsyncClient, tracker);
 
-            // Speichere die neuen Hashes, damit sie beim nächsten Build bekannt sind
-            tracker.save();
+                // Speichere die neuen Hashes, damit sie beim nächsten Build bekannt sind
+                tracker.save();
 
-            // --- PHASE 4.5: Clean up Orphaned Files on S3 ---
-            System.out.println("\n[PHASE 4.5] Sweeping S3 for ghost files...");
-            cleanOrphanedS3Files(s3AsyncClient);
+                // --- PHASE 4.5: Clean up Orphaned Files on S3 ---
+                System.out.println("\n[PHASE 4.5] Sweeping S3 for ghost files...");
+                cleanOrphanedS3Files(s3AsyncClient);
 
-            // --- PHASE 5: Compress & Upload Sitemap GZ ---
-            System.out.println("\n[PHASE 5] Processing Sitemap GZ...");
-            processAndUploadSitemapGz(s3AsyncClient, tracker);
+                // --- PHASE 5: Compress & Upload Sitemap GZ ---
+                System.out.println("\n[PHASE 5] Processing Sitemap GZ...");
+                processAndUploadSitemapGz(s3AsyncClient, tracker);
 
-            // --- PHASE 6: Invalidate CDN Cache ---
-            invalidateCloudFrontCache();
+                // --- PHASE 6: Invalidate CDN Cache ---
+                invalidateCloudFrontCache();
+            } catch (Exception e) {
+                if (e.toString().contains("SdkClientException") || (e.getCause() != null && e.getCause().toString().contains("SdkClientException"))) {
+                    System.out.println("ℹ️ Local build: AWS credentials not found. Skipping S3 upload phases.");
+                } else {
+                    throw e;
+                }
+            }
 
             long pipelineEnd = System.currentTimeMillis();
             System.out.println("\n==================================================");
@@ -192,7 +200,9 @@ public class SiteBuilderPipeline {
                                 uploadBytes(s3Client, s3Key, brData, "text/plain", "br", CACHE_SHORT, uploadCount, tracker, file, currentHash);
                             }
                         } catch (Exception e) {
-                            System.err.println("Failed to process " + fileName + ": " + e.getMessage());
+                            if (!e.toString().contains("SdkClientException") && (e.getCause() == null || !e.getCause().toString().contains("SdkClientException"))) {
+                                System.err.println("Failed to process " + fileName + ": " + e.getMessage());
+                            }
                         }
                     }, executor));
                 });
@@ -235,7 +245,9 @@ public class SiteBuilderPipeline {
                             try {
                                 uploadRawFile(s3Client, file, s3Key, contentType, CACHE_LONG, uploadCount, tracker, currentHash);
                             } catch (Exception e) {
-                                System.err.println("Failed to upload image " + fileName + ": " + e.getMessage());
+                                if (!e.toString().contains("SdkClientException") && (e.getCause() == null || !e.getCause().toString().contains("SdkClientException"))) {
+                                    System.err.println("Failed to upload image " + fileName + ": " + e.getMessage());
+                                }
                             }
                         }, executor));
                     }
