@@ -134,6 +134,7 @@ class FileGeneratorTest {
         int posSet2021 = html.indexOf("2021-22 Topps Chrome Base Set #20 Rainbow");
         int posSet2020 = html.indexOf("2020-21 Panini Prizm Base Set #10 Rainbow");
         assertTrue(posSet2021 < posSet2020, "Set with more cards should appear first");
+        assertTrue(html.contains("?from=rainbows"), "Card links on rainbows page should include ?from=rainbows parameter");
     }
 }
 

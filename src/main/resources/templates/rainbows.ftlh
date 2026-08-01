@@ -41,7 +41,7 @@ ${topNavHtml?no_esc}
                         <#list set.cards as card>
                             <#if card.acquired>
                                 <div class="rainbow-item acquired">
-                                    <a href="${card.url}" title="${card.title}" class="rainbow-card-link">
+                                    <a href="${card.url}?from=rainbows" title="${card.title}" class="rainbow-card-link">
                                         <picture class="rainbow-card-media">
                                             <source type="image/avif" srcset="${card.imgPath}">
                                             <img src="${card.imgPath}" alt="${card.variant}" loading="lazy" class="rainbow-card-img">

@@ -359,6 +359,26 @@ footer.detail-footer,
     text-decoration: underline !important;
 }
 
+.breadcrumb-item.breadcrumb-history a {
+    color: var(--accent-gold);
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: var(--transition-fast);
+}
+
+.breadcrumb-item.breadcrumb-history a:hover {
+    background: rgba(212, 175, 55, 0.22);
+    border-color: var(--accent-gold);
+    text-decoration: none !important;
+    color: #fff;
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+}
+
+
 .breadcrumb-item[aria-current="page"] {
     color: var(--text-muted);
     font-weight: normal;

@@ -3,3 +3,50 @@
         {{ITEMS}}
     </ol>
 </nav>
+<script>
+    (function() {
+        document.addEventListener('DOMContentLoaded', function() {
+            var list = document.querySelector('.breadcrumb-list');
+            if (!list) return;
+
+            var params = new URLSearchParams(window.location.search);
+            var fromParam = params.get('from');
+            var referrer = document.referrer || '';
+
+            var historyItem = null;
+            if (fromParam === 'rainbows' || referrer.indexOf('rainbows.html') !== -1) {
+                historyItem = { name: '🌈 Rainbow Tracker', page: 'rainbows.html', title: 'Return to Parallel Rainbow Tracker' };
+            } else if (fromParam === 'wantlist' || referrer.indexOf('Wantlist.html') !== -1) {
+                historyItem = { name: '📋 Wantlist', page: 'Wantlist.html', title: 'Return to Wantlist' };
+            }
+
+            if (!historyItem) return;
+
+            var homeLink = list.querySelector('a[href$="index.html"]');
+            var rootPath = '';
+            if (homeLink) {
+                var href = homeLink.getAttribute('href');
+                rootPath = href.substring(0, href.lastIndexOf('index.html'));
+            }
+
+            var li = document.createElement('li');
+            li.className = 'breadcrumb-item breadcrumb-history';
+            
+            var a = document.createElement('a');
+            a.href = rootPath + historyItem.page;
+            a.className = 'plain history-crumb-link';
+            a.title = historyItem.title;
+            a.textContent = historyItem.name;
+
+            li.appendChild(a);
+
+            var homeItem = list.firstElementChild;
+            if (homeItem && homeItem.nextElementSibling) {
+                list.insertBefore(li, homeItem.nextElementSibling);
+            } else {
+                list.appendChild(li);
+            }
+        });
+    })();
+</script>
+
