@@ -1789,13 +1789,13 @@ figcaption {
 }
 
 .rainbow-completion-badge {
-    background: rgba(212, 175, 55, 0.15);
-    color: var(--accent-gold-light);
-    border: 1px solid var(--accent-gold);
-    padding: 6px 14px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 5px 12px;
     border-radius: var(--radius-full);
-    font-weight: 700;
-    font-size: 0.85rem;
+    font-weight: 600;
+    font-size: 0.8rem;
 }
 
 .rainbow-progress-track {
@@ -1824,47 +1824,47 @@ figcaption {
 .rainbow-item {
     position: relative;
     width: 100%;
-    aspect-ratio: 2.5 / 3.5;
-    background: #0f172a;
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-md);
+    height: auto;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-sm);
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    box-shadow: none;
     transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .rainbow-item:hover {
-    transform: translateY(-4px) scale(1.02);
+    transform: translateY(-2px) scale(1.02);
     border-color: var(--accent-gold);
-    box-shadow: 0 10px 24px rgba(212, 175, 55, 0.25);
+    box-shadow: 0 4px 16px rgba(212, 175, 55, 0.2);
     z-index: 5;
 }
 
 .rainbow-card-link {
     display: block;
     width: 100%;
-    height: 100%;
+    height: auto;
     position: relative;
     text-decoration: none;
+    padding: 0;
 }
 
 .rainbow-card-media {
     display: block;
     width: 100%;
-    height: 100%;
+    height: auto;
 }
 
 .rainbow-card-img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
     display: block;
-    border-radius: var(--radius-md);
+    border-radius: calc(var(--radius-md) - 1px);
     transition: transform 0.3s ease;
 }
 
 .rainbow-item:hover .rainbow-card-img {
-    transform: scale(1.04);
+    transform: scale(1.05);
 }
 
 .rainbow-card-placeholder {
