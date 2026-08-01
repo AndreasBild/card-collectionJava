@@ -74,40 +74,42 @@ public class SiteBuilderPipeline {
             // --- PARALLEL PHASES: HTML Generation & Image WebP Conversion ---
             System.out.println("\n[PHASE 1 & 2] Launching HTML Generation and Image WebP Conversion in parallel...");
 
-            CompletableFuture<Void> htmlTask = CompletableFuture.runAsync(() -> {
-                System.out.println("  -> [PHASE 1] Generating HTML files and Sitemap...");
-                FileGenerator.setTimestampTracker(timeTracker);
-                CardPageGenerator.setTimestampTracker(timeTracker);
-                SitemapGenerator.setTimestampTracker(timeTracker);
+            try (ExecutorService phaseExecutor = Executors.newVirtualThreadPerTaskExecutor()) {
+                CompletableFuture<Void> htmlTask = CompletableFuture.runAsync(() -> {
+                    System.out.println("  -> [PHASE 1] Generating HTML files and Sitemap...");
+                    FileGenerator.setTimestampTracker(timeTracker);
+                    CardPageGenerator.setTimestampTracker(timeTracker);
+                    SitemapGenerator.setTimestampTracker(timeTracker);
 
-                FileGenerator.copyResources();
-                FileGenerator.buildCollectionOverview();
-                FileGenerator.buildOtherCollections();
-                FileGenerator.buildStaticPages();
-                CardPageGenerator.run();
+                    FileGenerator.copyResources();
+                    FileGenerator.buildCollectionOverview();
+                    FileGenerator.buildOtherCollections();
+                    FileGenerator.buildStaticPages();
+                    CardPageGenerator.run();
 
-                timeTracker.save();
-                SitemapGenerator.generate(); // Sitemap & robots.txt now ready for Phase 3
+                    timeTracker.save();
+                    SitemapGenerator.generate(); // Sitemap & robots.txt now ready for Phase 3
 
-                // --- PHASE 1.5: Inject Firestore Ratings ---
-                System.out.println("  -> [PHASE 1.5] Injecting Firestore ratings...");
-                String firebaseCreds = System.getenv("FIREBASE_SERVICE_ACCOUNT_JSON");
-                File firebaseFile = new File("firebase/maulmann-3f90d-firebase-adminsdk-fbsvc-78c9f10838");
+                    // --- PHASE 1.5: Inject Firestore Ratings ---
+                    System.out.println("  -> [PHASE 1.5] Injecting Firestore ratings...");
+                    String firebaseCreds = System.getenv("FIREBASE_SERVICE_ACCOUNT_JSON");
+                    File firebaseFile = new File("firebase/maulmann-3f90d-firebase-adminsdk-fbsvc-78c9f10838");
 
-                if ((firebaseCreds == null || firebaseCreds.isEmpty()) && !firebaseFile.exists()) {
-                    System.err.println("⚠️ WARNING: Firebase credentials (env or file) are missing! Ratings will NOT be injected.");
-                } else {
-                    FirestoreRatingInjector.main(new String[0]);
-                }
-            });
+                    if ((firebaseCreds == null || firebaseCreds.isEmpty()) && !firebaseFile.exists()) {
+                        System.err.println("⚠️ WARNING: Firebase credentials (env or file) are missing! Ratings will NOT be injected.");
+                    } else {
+                        FirestoreRatingInjector.main(new String[0]);
+                    }
+                }, phaseExecutor);
 
-            CompletableFuture<Void> imageTask = CompletableFuture.runAsync(() -> {
-                System.out.println("  -> [PHASE 2] Converting images to WebP...");
-                ImageConverter.main(new String[0]);
-            });
+                CompletableFuture<Void> imageTask = CompletableFuture.runAsync(() -> {
+                    System.out.println("  -> [PHASE 2] Converting images to WebP...");
+                    ImageConverter.main(new String[0]);
+                }, phaseExecutor);
 
-            // Wait for both tasks to complete concurrently
-            CompletableFuture.allOf(htmlTask, imageTask).join();
+                // Wait for both tasks to complete concurrently
+                CompletableFuture.allOf(htmlTask, imageTask).join();
+            }
 
             // --- PHASE 3: Compress & Upload HTML/CSS/JS/XML ---
             System.out.println("\n[PHASE 3] Minifying, Compressing, and Uploading Web Files...");
