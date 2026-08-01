@@ -295,9 +295,7 @@ public class FileGenerator {
         try (java.io.InputStream is = FileGenerator.class.getResourceAsStream("/config/collections_config.json")) {
             if (is != null) {
                 com.fasterxml.jackson.databind.JsonNode root = MAPPER.readTree(is);
-                Iterator<Map.Entry<String, com.fasterxml.jackson.databind.JsonNode>> fields = root.fields();
-                while (fields.hasNext()) {
-                    Map.Entry<String, com.fasterxml.jackson.databind.JsonNode> entry = fields.next();
+                for (Map.Entry<String, com.fasterxml.jackson.databind.JsonNode> entry : root.properties()) {
                     String key = entry.getKey();
                     com.fasterxml.jackson.databind.JsonNode val = entry.getValue();
                     String title = val.has("title") ? val.get("title").asText() : "";
@@ -661,7 +659,7 @@ public class FileGenerator {
             // 2. Process all dynamically discovered single-card groups with MORE THAN 3 distinct variants (> 3 cards)
             for (Map.Entry<String, List<CardJson>> entry : strictRainbowGroups.entrySet()) {
                 List<CardJson> groupCards = entry.getValue();
-                CardJson sample = groupCards.get(0);
+                CardJson sample = groupCards.getFirst();
                 String normNum = normalizeCardNumber(sample.cardNumber);
 
                 Map<String, CardJson> distinctCardsMap = new LinkedHashMap<>();

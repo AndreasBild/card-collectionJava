@@ -42,10 +42,13 @@ ${topNavHtml?no_esc}
                             <#if card.acquired>
                                 <div class="rainbow-item acquired">
                                     <a href="${card.url}?from=rainbows" title="${card.title}" class="rainbow-card-link">
-                                        <picture class="rainbow-card-media">
-                                            <source type="image/avif" srcset="${card.imgPath}">
-                                            <img src="${card.imgPath}" alt="${card.variant}" loading="lazy" class="rainbow-card-img">
-                                        </picture>
+                                        <figure class="rainbow-card-figure">
+                                            <picture class="rainbow-card-media">
+                                                <source type="image/avif" srcset="${card.imgPath}">
+                                                <img src="${card.imgPath}" alt="${card.title} - ${card.variant}" loading="lazy" class="rainbow-card-img">
+                                            </picture>
+                                            <figcaption>${card.title} - ${card.variant}</figcaption>
+                                        </figure>
                                         <div class="rainbow-hover-overlay">
                                             <span class="rainbow-card-title">${card.title}</span>
                                             <span class="rainbow-item-variant">${card.variant}</span>
