@@ -42,25 +42,34 @@ public class TimestampTracker {
      * @param content The generated HTML content (should contain a placeholder for the timestamp).
      * @return A stable timestamp string.
      */
+    public record TimestampEntry(String hash, String timestamp) {
+        public static TimestampEntry parse(String raw) {
+            if (raw == null) return null;
+            String[] parts = raw.split(":", 2);
+            return parts.length == 2 ? new TimestampEntry(parts[0], parts[1]) : null;
+        }
+
+        public String toRaw() {
+            return hash + ":" + timestamp;
+        }
+    }
+
     public String getStableTimestamp(String identifier, String content) {
         String contentToHash = MAIN_CSS_PATTERN.matcher(content.replace("[[STABLE_TIME]]", ""))
                 .replaceAll("main.css?v=STABLE");
         String currentHash = calculateHash(contentToHash);
-        String entry = (String) storedData.get(identifier);
+        TimestampEntry entry = TimestampEntry.parse((String) storedData.get(identifier));
 
-        if (entry != null) {
-            String[] parts = entry.split(":", 2);
-            if (parts.length == 2 && parts[0].equals(currentHash)) {
-                // Content is the same, reuse the old timestamp
-                String stableTime = parts[1];
-                currentSessionData.put(identifier, currentHash + ":" + stableTime);
-                return stableTime;
-            }
+        if (entry != null && entry.hash().equals(currentHash)) {
+            // Content is the same, reuse the old timestamp
+            String stableTime = entry.timestamp();
+            currentSessionData.put(identifier, new TimestampEntry(currentHash, stableTime).toRaw());
+            return stableTime;
         }
 
         // Content changed or new file, generate new timestamp
         String newTime = LocalDateTime.now().format(formatter);
-        currentSessionData.put(identifier, currentHash + ":" + newTime);
+        currentSessionData.put(identifier, new TimestampEntry(currentHash, newTime).toRaw());
         return newTime;
     }
 
@@ -98,7 +107,7 @@ public class TimestampTracker {
                 sb.append(String.format("%02x", b));
             }
             return sb.toString();
-        } catch (Exception e) {
+        } catch (Exception _) {
             return String.valueOf(content.hashCode());
         }
     }

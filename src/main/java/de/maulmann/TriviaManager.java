@@ -18,8 +18,8 @@ public class TriviaManager {
             } else {
                 System.err.println("trivia_config.json wurde im Pfad /config/ nicht gefunden!");
             }
-        } catch (Exception e) {
-            System.err.println("Fehler beim Laden der trivia_config.json: " + e.getMessage());
+        } catch (Exception _) {
+            System.err.println("Fehler beim Laden der trivia_config.json");
         }
         return MAPPER.createObjectNode();
     });
@@ -27,15 +27,7 @@ public class TriviaManager {
     public TriviaManager() {
     }
 
-    public static class FaqItem {
-        public final String question;
-        public final String answer;
-
-        public FaqItem(String question, String answer) {
-            this.question = question;
-            this.answer = answer;
-        }
-    }
+    public record FaqItem(String question, String answer) {}
 
     public java.util.List<FaqItem> getFaqs(String type, Map<String, String> cardData) {
         JsonNode configNode = config.get();

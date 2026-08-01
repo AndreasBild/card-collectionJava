@@ -73,7 +73,7 @@ public class CardSchemaGenerator {
 
         List<TriviaManager.FaqItem> rookieFaqs = TRIVIA_MANAGER.getFaqs("rookieFaq", c.attributes);
         for (TriviaManager.FaqItem faq : rookieFaqs) {
-            sb.append(createFaqItem(faq.question, faq.answer));
+            sb.append(createFaqItem(faq.question(), faq.answer()));
         }
 
         return sb.toString();
