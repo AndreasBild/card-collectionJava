@@ -306,18 +306,17 @@ public class SiteBuilderPipeline {
             if (!objectsToDelete.isEmpty()) {
                 System.out.println("    -> Found " + objectsToDelete.size() + " orphaned files. Deleting from S3 in batches...");
 
-                for (int i = 0; i < objectsToDelete.size(); i += 1000) {
-                    int end = Math.min(objectsToDelete.size(), i + 1000);
-                    List<ObjectIdentifier> batch = objectsToDelete.subList(i, end);
+                objectsToDelete.stream()
+                        .gather(java.util.stream.Gatherers.windowFixed(1000))
+                        .forEach(batch -> {
+                            DeleteObjectsRequest deleteReq = DeleteObjectsRequest.builder()
+                                    .bucket(BUCKET_NAME)
+                                    .delete(Delete.builder().objects(batch).build())
+                                    .build();
 
-                    DeleteObjectsRequest deleteReq = DeleteObjectsRequest.builder()
-                            .bucket(BUCKET_NAME)
-                            .delete(Delete.builder().objects(batch).build())
-                            .build();
-
-                    s3Client.deleteObjects(deleteReq).join();
-                    System.out.println("       Deleted batch of " + batch.size() + " files.");
-                }
+                            s3Client.deleteObjects(deleteReq).join();
+                            System.out.println("       Deleted batch of " + batch.size() + " files.");
+                        });
                 System.out.println("    -> S3 Cleanup complete.");
             } else {
                 System.out.println("    -> S3 is perfectly in sync. No ghost files found.");
