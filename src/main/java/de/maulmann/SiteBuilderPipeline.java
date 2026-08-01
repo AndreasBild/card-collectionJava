@@ -1,5 +1,7 @@
 package de.maulmann;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import software.amazon.awssdk.http.nio.netty.NettyNioAsyncHttpClient;
 import java.time.Duration;
 import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
@@ -24,7 +26,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -44,12 +45,13 @@ public class SiteBuilderPipeline {
     // --- CACHE CONTROL CONSTANTS ---
     private static final String CACHE_LONG = "public, max-age=31536000, immutable";
     private static final String CACHE_SHORT = "max-age=0, must-revalidate";
+    private static final Logger log = LoggerFactory.getLogger(SiteBuilderPipeline.class);
 
     public static void main(String[] args) {
         long pipelineStart = System.currentTimeMillis();
-        System.out.println("==================================================");
-        System.out.println("🚀 STARTING MASTER BUILD PIPELINE");
-        System.out.println("==================================================");
+        log.info("==================================================");
+        log.info("🚀 STARTING MASTER BUILD PIPELINE");
+        log.info("==================================================");
 
         try (S3AsyncClient s3AsyncClient = S3AsyncClient.builder()
                 .region(REGION)
@@ -73,11 +75,11 @@ public class SiteBuilderPipeline {
             }
 
             // --- PARALLEL PHASES: HTML Generation & Image WebP Conversion ---
-            System.out.println("\n[PHASE 1 & 2] Launching HTML Generation and Image WebP Conversion in parallel...");
+            log.info("\n[PHASE 1 & 2] Launching HTML Generation and Image WebP Conversion in parallel...");
 
             try (ExecutorService phaseExecutor = Executors.newVirtualThreadPerTaskExecutor()) {
                 CompletableFuture<Void> htmlTask = CompletableFuture.runAsync(() -> {
-                    System.out.println("  -> [PHASE 1] Generating HTML files and Sitemap...");
+                    log.info("  -> [PHASE 1] Generating HTML files and Sitemap...");
                     FileGenerator.setTimestampTracker(timeTracker);
                     CardPageGenerator.setTimestampTracker(timeTracker);
                     SitemapGenerator.setTimestampTracker(timeTracker);
@@ -92,19 +94,19 @@ public class SiteBuilderPipeline {
                     SitemapGenerator.generate(); // Sitemap & robots.txt now ready for Phase 3
 
                     // --- PHASE 1.5: Inject Firestore Ratings ---
-                    System.out.println("  -> [PHASE 1.5] Injecting Firestore ratings...");
+                    log.info("  -> [PHASE 1.5] Injecting Firestore ratings...");
                     String firebaseCreds = System.getenv("FIREBASE_SERVICE_ACCOUNT_JSON");
                     File firebaseFile = new File("firebase/maulmann-3f90d-firebase-adminsdk-fbsvc-78c9f10838");
 
                     if ((firebaseCreds == null || firebaseCreds.isEmpty()) && !firebaseFile.exists()) {
-                        System.err.println("⚠️ WARNING: Firebase credentials (env or file) are missing! Ratings will NOT be injected.");
+                        log.error("⚠️ WARNING: Firebase credentials (env or file) are missing! Ratings will NOT be injected.");
                     } else {
                         FirestoreRatingInjector.main(new String[0]);
                     }
                 }, phaseExecutor);
 
                 CompletableFuture<Void> imageTask = CompletableFuture.runAsync(() -> {
-                    System.out.println("  -> [PHASE 2] Converting images to WebP...");
+                    log.info("  -> [PHASE 2] Converting images to WebP...");
                     ImageConverter.main(new String[0]);
                 }, phaseExecutor);
 
@@ -114,41 +116,41 @@ public class SiteBuilderPipeline {
 
             try {
                 // --- PHASE 3: Compress & Upload HTML/CSS/JS/XML ---
-                System.out.println("\n[PHASE 3] Minifying, Compressing, and Uploading Web Files...");
+                log.info("\n[PHASE 3] Minifying, Compressing, and Uploading Web Files...");
                 processAndUploadWebFiles(s3AsyncClient, tracker);
 
                 // --- PHASE 4: Upload Images (No Compression) ---
-                System.out.println("\n[PHASE 4] Syncing Images to S3...");
+                log.info("\n[PHASE 4] Syncing Images to S3...");
                 processAndUploadImages(s3AsyncClient, tracker);
 
                 // Speichere die neuen Hashes, damit sie beim nächsten Build bekannt sind
                 tracker.save();
 
                 // --- PHASE 4.5: Clean up Orphaned Files on S3 ---
-                System.out.println("\n[PHASE 4.5] Sweeping S3 for ghost files...");
+                log.info("\n[PHASE 4.5] Sweeping S3 for ghost files...");
                 cleanOrphanedS3Files(s3AsyncClient);
 
                 // --- PHASE 5: Compress & Upload Sitemap GZ ---
-                System.out.println("\n[PHASE 5] Processing Sitemap GZ...");
+                log.info("\n[PHASE 5] Processing Sitemap GZ...");
                 processAndUploadSitemapGz(s3AsyncClient, tracker);
 
                 // --- PHASE 6: Invalidate CDN Cache ---
                 invalidateCloudFrontCache();
             } catch (Exception e) {
                 if (e.toString().contains("SdkClientException") || (e.getCause() != null && e.getCause().toString().contains("SdkClientException"))) {
-                    System.out.println("ℹ️ Local build: AWS credentials not found. Skipping S3 upload phases.");
+                    log.info("ℹ️ Local build: AWS credentials not found. Skipping S3 upload phases.");
                 } else {
                     throw e;
                 }
             }
 
             long pipelineEnd = System.currentTimeMillis();
-            System.out.println("\n==================================================");
-            System.out.println("✅ PIPELINE COMPLETE IN " + (pipelineEnd - pipelineStart) + " ms");
-            System.out.println("==================================================");
+            log.info("\n==================================================");
+            log.info("✅ PIPELINE COMPLETE IN {} ms", pipelineEnd - pipelineStart);
+            log.info("==================================================");
 
         } catch (Exception e) {
-            System.err.println("\n❌ PIPELINE FAILED: " + e.getMessage());
+            log.error("\n❌ PIPELINE FAILED: {}", e.getMessage());
         }
     }
 
@@ -202,7 +204,7 @@ public class SiteBuilderPipeline {
                             }
                         } catch (Exception e) {
                             if (!e.toString().contains("SdkClientException") && (e.getCause() == null || !e.getCause().toString().contains("SdkClientException"))) {
-                                System.err.println("Failed to process " + fileName + ": " + e.getMessage());
+                                log.error("Failed to process {}: {}", fileName, e.getMessage());
                             }
                         }
                     }, executor));
@@ -211,7 +213,7 @@ public class SiteBuilderPipeline {
             CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new)).join();
         }
 
-        System.out.println("-> Uploaded " + uploadCount.get() + " web files. (Skipped " + skipCount.get() + " unmodified files).");
+        log.info("-> Uploaded {} web files. (Skipped {} unmodified files).", uploadCount.get(), skipCount.get());
     }
 
     private static void processAndUploadImages(S3AsyncClient s3Client, FileTracker tracker) throws Exception {
@@ -219,7 +221,7 @@ public class SiteBuilderPipeline {
         Path outputDir = Paths.get(OUTPUT_DIR);
 
         if (!Files.exists(imagesDir)) {
-            System.out.println("-> Images directory not found, skipping phase.");
+            log.info("-> Images directory not found, skipping phase.");
             return;
         }
 
@@ -247,7 +249,7 @@ public class SiteBuilderPipeline {
                                 uploadRawFile(s3Client, file, s3Key, contentType, CACHE_LONG, uploadCount, tracker, currentHash);
                             } catch (Exception e) {
                                 if (!e.toString().contains("SdkClientException") && (e.getCause() == null || !e.getCause().toString().contains("SdkClientException"))) {
-                                    System.err.println("Failed to upload image " + fileName + ": " + e.getMessage());
+                                    log.error("Failed to upload image {}: {}", fileName, e.getMessage());
                                 }
                             }
                         }, executor));
@@ -257,7 +259,7 @@ public class SiteBuilderPipeline {
             CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new)).join();
         }
 
-        System.out.println("-> Synced " + uploadCount.get() + " images. (Skipped " + skipCount.get() + " unmodified images).");
+        log.info("-> Synced {} images. (Skipped {} unmodified images).", uploadCount.get(), skipCount.get());
     }
 
     private static void cleanOrphanedS3Files(S3AsyncClient s3Client) {
@@ -265,7 +267,7 @@ public class SiteBuilderPipeline {
             Path localOutputDir = Paths.get(OUTPUT_DIR);
             List<ObjectIdentifier> objectsToDelete = new ArrayList<>();
 
-            System.out.println("    Scanning S3 bucket for pagination...");
+            log.info("    Scanning S3 bucket for pagination...");
 
             boolean isDone = false;
             String continuationToken = null;
@@ -302,10 +304,10 @@ public class SiteBuilderPipeline {
                 }
             }
 
-            System.out.println("    Finished scanning " + totalS3FilesScanned + " objects in S3.");
+            log.info("    Finished scanning {} objects in S3.", totalS3FilesScanned);
 
             if (!objectsToDelete.isEmpty()) {
-                System.out.println("    -> Found " + objectsToDelete.size() + " orphaned files. Deleting from S3 in batches...");
+                log.info("    -> Found {} orphaned files. Deleting from S3 in batches...", objectsToDelete.size());
 
                 objectsToDelete.stream()
                         .gather(java.util.stream.Gatherers.windowFixed(1000))
@@ -316,15 +318,15 @@ public class SiteBuilderPipeline {
                                     .build();
 
                             s3Client.deleteObjects(deleteReq).join();
-                            System.out.println("       Deleted batch of " + batch.size() + " files.");
+                            log.info("       Deleted batch of {} files.", batch.size());
                         });
-                System.out.println("    -> S3 Cleanup complete.");
+                log.info("    -> S3 Cleanup complete.");
             } else {
-                System.out.println("    -> S3 is perfectly in sync. No ghost files found.");
+                log.info("    -> S3 is perfectly in sync. No ghost files found.");
             }
 
         } catch (Exception e) {
-            System.err.println("-> WARNING: Failed to clean orphaned S3 files: " + e.getMessage());
+            log.error("-> WARNING: Failed to clean orphaned S3 files: {}", e.getMessage());
         }
     }
 
@@ -333,12 +335,12 @@ public class SiteBuilderPipeline {
         File sitemapGzFile = new File(OUTPUT_DIR + "/sitemap.xml.gz");
 
         if (!sitemapFile.exists()) {
-            System.err.println("-> WARNING: sitemap.xml not found. Skipping Sitemap upload.");
+            log.error("-> WARNING: sitemap.xml not found. Skipping Sitemap upload.");
             return;
         }
 
         if (!tracker.hasChanged(sitemapFile.toPath()) && sitemapGzFile.exists()) {
-            System.out.println("-> Sitemap unchanged. Skipping upload.");
+            log.info("-> Sitemap unchanged. Skipping upload.");
             return;
         }
 
@@ -350,11 +352,11 @@ public class SiteBuilderPipeline {
                 .cacheControl(CACHE_SHORT)
                 .build();
         s3Client.putObject(xmlReq, AsyncRequestBody.fromFile(sitemapFile)).join();
-        System.out.println("-> Successfully uploaded sitemap.xml to S3");
+        log.info("-> Successfully uploaded sitemap.xml to S3");
 
         // 2. Compress & upload sitemap.xml.gz
         GZIPCompressor.compressFile(sitemapFile, sitemapGzFile, 9);
-        System.out.println("-> Compressed sitemap to sitemap.xml.gz");
+        log.info("-> Compressed sitemap to sitemap.xml.gz");
 
         PutObjectRequest gzReq = PutObjectRequest.builder()
                 .bucket(BUCKET_NAME)
@@ -365,16 +367,16 @@ public class SiteBuilderPipeline {
                 .build();
 
         s3Client.putObject(gzReq, AsyncRequestBody.fromFile(sitemapGzFile)).join();
-        System.out.println("-> Successfully uploaded sitemap.xml.gz to S3");
+        log.info("-> Successfully uploaded sitemap.xml.gz to S3");
 
         tracker.updateHash(sitemapFile.toPath());
     }
 
     private static void invalidateCloudFrontCache() {
-        System.out.println("\n[PHASE 6] Invalidating CloudFront Edge Caches...");
+        log.info("\n[PHASE 6] Invalidating CloudFront Edge Caches...");
 
         if (CLOUDFRONT_DIST_ID.equals("YOUR_DISTRIBUTION_ID_HERE")) {
-            System.out.println("-> WARNING: CloudFront ID not set. Skipping invalidation.");
+            log.info("-> WARNING: CloudFront ID not set. Skipping invalidation.");
             return;
         }
 
@@ -400,10 +402,10 @@ public class SiteBuilderPipeline {
                     .build();
 
             cloudFrontClient.createInvalidation(request);
-            System.out.println("-> Successfully requested CloudFront invalidation for '/*'");
+            log.info("-> Successfully requested CloudFront invalidation for '/*'");
 
         } catch (Exception e) {
-            System.err.println("-> WARNING: Failed to invalidate CloudFront: " + e.getMessage());
+            log.error("-> WARNING: Failed to invalidate CloudFront: {}", e.getMessage());
         }
     }
 
