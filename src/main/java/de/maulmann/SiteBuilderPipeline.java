@@ -17,6 +17,7 @@ import software.amazon.awssdk.services.s3.model.S3Object;
 import software.amazon.awssdk.services.s3.model.DeleteObjectsRequest;
 import software.amazon.awssdk.services.s3.model.Delete;
 import software.amazon.awssdk.services.s3.model.ObjectIdentifier;
+import software.amazon.awssdk.services.s3.model.StorageClass;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -429,6 +430,7 @@ public class SiteBuilderPipeline {
                 .key(s3Key)
                 .contentType(contentType)
                 .cacheControl(cacheControl)
+                .storageClass(StorageClass.INTELLIGENT_TIERING)
                 .build();
 
         s3Client.putObject(request, AsyncRequestBody.fromFile(localFile)).join();
