@@ -103,72 +103,76 @@ public class FirestoreRatingInjector {
         try {
             File file = path.toFile();
             Document doc = Jsoup.parse(file, "UTF-8");
-
-            Element templateScript = doc.selectFirst("script#product-schema-template");
-            if (templateScript == null) {
-                return false;
-            }
-
-            Element cardElement = doc.select("[data-card-id]").first();
-            String cardId = cardElement != null ? cardElement.attr("data-card-id") : null;
-            Map<String, Object> data = cardId != null ? firestoreData.get(cardId) : null;
-
-            boolean isDomModified = false;
-
-            if (data != null) {
-                long ratingCount = parseLong(data.get("ratingCount"));
-                double ratingSum = parseDouble(data.get("ratingSum"));
-
-                if (ratingCount > 0) {
-                    double averageRating = ratingSum / ratingCount;
-                    String jsonContent = templateScript.html();
-                    int lastBraceIndex = jsonContent.lastIndexOf("}");
-
-                    if (lastBraceIndex != -1) {
-                        String ratingInjection = String.format(Locale.US,
-                                ",\n  \"aggregateRating\": {\n" +
-                                        "    \"@type\": \"AggregateRating\",\n" +
-                                        "    \"ratingValue\": %.1f,\n" +
-                                        "    \"reviewCount\": %d\n" +
-                                        "  }\n", averageRating, ratingCount);
-
-                        jsonContent = jsonContent.substring(0, lastBraceIndex) + ratingInjection + "}";
-
-                        // Activate script for crawlers
-                        templateScript.text(jsonContent);
-                        templateScript.attr("type", "application/ld+json");
-                        templateScript.removeAttr("id");
-                        isDomModified = true;
-
-                        // Only log if data changed since last build
-                        String cacheKey = cardId;
-                        String cacheValue = ratingCount + ":" + ratingSum;
-                        String storedValue = ratingCache.getProperty(cacheKey);
-
-                        if (!cacheValue.equals(storedValue)) {
-                            log.info("Injected NEW ratings into: {} (Count: {}, Sum: {})",
-                                    path.getFileName(), ratingCount, ratingSum);
-                            ratingCache.setProperty(cacheKey, cacheValue);
-                        }
-                    }
-                }
-            }
-
-            // Clean up DOM: Remove the template if no rating was found
-            if (!isDomModified) {
-                templateScript.remove();
-                isDomModified = true;
-            }
-
-            if (isDomModified) {
+            boolean modified = processDocument(doc, path.getFileName().toString(), firestoreData);
+            if (modified) {
                 Files.writeString(path, doc.outerHtml(), StandardCharsets.UTF_8);
                 return true;
             }
-
         } catch (Exception e) {
             log.error("Failed to process HTML file: {}", path, e);
         }
         return false;
+    }
+
+    static boolean processDocument(Document doc, String fileName, Map<String, Map<String, Object>> firestoreData) {
+        Element templateScript = doc.selectFirst("script#product-schema-template");
+        if (templateScript == null) {
+            return false;
+        }
+
+        Element cardElement = doc.select("[data-card-id]").first();
+        String cardId = cardElement != null ? cardElement.attr("data-card-id") : null;
+        Map<String, Object> data = cardId != null ? firestoreData.get(cardId) : null;
+
+        boolean isDomModified = false;
+
+        if (data != null) {
+            long ratingCount = parseLong(data.get("ratingCount"));
+            double ratingSum = parseDouble(data.get("ratingSum"));
+
+            if (ratingCount > 0 && ratingSum >= 0) {
+                double rawAverage = ratingSum / ratingCount;
+                double averageRating = Math.clamp(rawAverage, 1.0, 5.0);
+                String jsonContent = templateScript.html();
+                int lastBraceIndex = jsonContent.lastIndexOf("}");
+
+                if (lastBraceIndex != -1) {
+                    String ratingInjection = String.format(Locale.US,
+                            ",\n  \"aggregateRating\": {\n" +
+                                    "    \"@type\": \"AggregateRating\",\n" +
+                                    "    \"ratingValue\": %.1f,\n" +
+                                    "    \"reviewCount\": %d\n" +
+                                    "  }\n", averageRating, ratingCount);
+
+                    jsonContent = jsonContent.substring(0, lastBraceIndex) + ratingInjection + "}";
+
+                    // Activate script for crawlers
+                    templateScript.text(jsonContent);
+                    templateScript.attr("type", "application/ld+json");
+                    templateScript.removeAttr("id");
+                    isDomModified = true;
+
+                    // Only log if data changed since last build
+                    String cacheKey = cardId != null ? cardId : fileName;
+                    String cacheValue = ratingCount + ":" + ratingSum;
+                    String storedValue = ratingCache.getProperty(cacheKey);
+
+                    if (!cacheValue.equals(storedValue)) {
+                        log.info("Injected NEW ratings into: {} (Count: {}, Sum: {})",
+                                fileName, ratingCount, ratingSum);
+                        ratingCache.setProperty(cacheKey, cacheValue);
+                    }
+                }
+            }
+        }
+
+        // Clean up DOM: Remove the template if no rating was found
+        if (!isDomModified) {
+            templateScript.remove();
+            isDomModified = true;
+        }
+
+        return isDomModified;
     }
 
     private static long parseLong(Object obj) {
