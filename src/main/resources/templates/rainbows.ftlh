@@ -45,7 +45,7 @@ ${topNavHtml?no_esc}
                                         <figure class="rainbow-card-figure">
                                             <picture class="rainbow-card-media">
                                                 <source type="image/avif" srcset="${card.imgPath}">
-                                                <img src="${card.imgPath}" alt="${card.title} - ${card.variant}" loading="lazy" class="rainbow-card-img">
+                                                <img src="${card.imgPath}" alt="${card.title} - ${card.variant}" width="400" height="560" loading="lazy" decoding="async" class="rainbow-card-img">
                                             </picture>
                                             <figcaption>${card.title} - ${card.variant}</figcaption>
                                         </figure>
