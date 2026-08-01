@@ -129,8 +129,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${org.apache.maven.plugins.version}</version>
                 <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
+                    <source>24</source>
+                    <target>24</target>
                     <release>${maven.compiler.release}</release>
                     <showWarnings>true</showWarnings>
                     <showDeprecation>true</showDeprecation>
