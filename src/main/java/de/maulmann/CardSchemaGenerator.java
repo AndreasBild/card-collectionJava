@@ -89,16 +89,13 @@ public class CardSchemaGenerator {
         String cardUrl = BASE_URL + "/cards/" + c.seasonFolder + "/" + c.filename;
 
         // Determine matching collection name for breadcrumb
-        String collectionName = "Collection";
-        if ("Flawless.html".equals(overviewPage)) {
-            collectionName = "Flawless";
-        } else if ("Baseball.html".equals(overviewPage)) {
-            collectionName = "Baseball";
-        } else if ("Panini.html".equals(overviewPage)) {
-            collectionName = "Panini";
-        } else if ("Wantlist.html".equals(overviewPage)) {
-            collectionName = "Wantlist";
-        }
+        String collectionName = switch (overviewPage != null ? overviewPage : "") {
+            case "Flawless.html" -> "Flawless";
+            case "Baseball.html" -> "Baseball";
+            case "Panini.html" -> "Panini";
+            case "Wantlist.html" -> "Wantlist";
+            default -> "Collection";
+        };
 
         StringBuilder sb = new StringBuilder();
 

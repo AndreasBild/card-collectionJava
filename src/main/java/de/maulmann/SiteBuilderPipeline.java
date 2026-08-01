@@ -180,27 +180,35 @@ public class SiteBuilderPipeline {
 
                     futures.add(CompletableFuture.runAsync(() -> {
                         try {
-                            if (fileName.endsWith(".html")) {
-                                byte[] brData = BrotliCompressor.compressBytes(HTMLMinifier.minifyHTMLToBytes(file.toFile()), BROTLI_FAST_QUALITY);
-                                uploadBytes(s3Client, s3Key, brData, "text/html", "br", CACHE_SHORT, uploadCount, tracker, file, currentHash);
-                            } else if (fileName.endsWith(".css")) {
-                                byte[] brData = BrotliCompressor.compressBytes(CSSMinifier.minifyCSSToBytes(file.toFile()), BROTLI_FAST_QUALITY);
-                                uploadBytes(s3Client, s3Key, brData, "text/css", "br", CACHE_LONG, uploadCount, tracker, file, currentHash);
-                            } else if (fileName.endsWith(".js")) {
-                                String cacheControl = fileName.equalsIgnoreCase("serviceworker.js") ? CACHE_SHORT : CACHE_LONG;
-                                byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BROTLI_FAST_QUALITY);
-                                uploadBytes(s3Client, s3Key, brData, "application/javascript", "br", cacheControl, uploadCount, tracker, file, currentHash);
-                            } else if (fileName.endsWith(".json")) {
-                                byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BROTLI_FAST_QUALITY);
-                                uploadBytes(s3Client, s3Key, brData, "application/json", "br", CACHE_SHORT, uploadCount, tracker, file, currentHash);
-                            } else if (fileName.endsWith(".xml") || fileName.endsWith(".xsl")) {
-                                byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BROTLI_FAST_QUALITY);
-                                uploadBytes(s3Client, s3Key, brData, "application/xml", "br", CACHE_SHORT, uploadCount, tracker, file, currentHash);
-                            } else if (fileName.endsWith(".ico")) {
-                                uploadRawFile(s3Client, file, s3Key, "image/x-icon", CACHE_LONG, uploadCount, tracker, currentHash);
-                            } else if (fileName.startsWith("robots") || fileName.endsWith(".txt")) {
-                                byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BROTLI_FAST_QUALITY);
-                                uploadBytes(s3Client, s3Key, brData, "text/plain", "br", CACHE_SHORT, uploadCount, tracker, file, currentHash);
+                            String ext = fileName.contains(".") ? fileName.substring(fileName.lastIndexOf('.') + 1) : "";
+                            switch (ext) {
+                                case "html" -> {
+                                    byte[] brData = BrotliCompressor.compressBytes(HTMLMinifier.minifyHTMLToBytes(file.toFile()), BROTLI_FAST_QUALITY);
+                                    uploadBytes(s3Client, s3Key, brData, "text/html", "br", CACHE_SHORT, uploadCount, tracker, file, currentHash);
+                                }
+                                case "css" -> {
+                                    byte[] brData = BrotliCompressor.compressBytes(CSSMinifier.minifyCSSToBytes(file.toFile()), BROTLI_FAST_QUALITY);
+                                    uploadBytes(s3Client, s3Key, brData, "text/css", "br", CACHE_LONG, uploadCount, tracker, file, currentHash);
+                                }
+                                case "js" -> {
+                                    String cacheControl = fileName.equalsIgnoreCase("serviceworker.js") ? CACHE_SHORT : CACHE_LONG;
+                                    byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BROTLI_FAST_QUALITY);
+                                    uploadBytes(s3Client, s3Key, brData, "application/javascript", "br", cacheControl, uploadCount, tracker, file, currentHash);
+                                }
+                                case "json" -> {
+                                    byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BROTLI_FAST_QUALITY);
+                                    uploadBytes(s3Client, s3Key, brData, "application/json", "br", CACHE_SHORT, uploadCount, tracker, file, currentHash);
+                                }
+                                case "xml", "xsl" -> {
+                                    byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BROTLI_FAST_QUALITY);
+                                    uploadBytes(s3Client, s3Key, brData, "application/xml", "br", CACHE_SHORT, uploadCount, tracker, file, currentHash);
+                                }
+                                case "ico" -> uploadRawFile(s3Client, file, s3Key, "image/x-icon", CACHE_LONG, uploadCount, tracker, currentHash);
+                                case "txt" -> {
+                                    byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BROTLI_FAST_QUALITY);
+                                    uploadBytes(s3Client, s3Key, brData, "text/plain", "br", CACHE_SHORT, uploadCount, tracker, file, currentHash);
+                                }
+                                default -> {}
                             }
                         } catch (Exception e) {
                             if (!e.toString().contains("SdkClientException") && (e.getCause() == null || !e.getCause().toString().contains("SdkClientException"))) {
