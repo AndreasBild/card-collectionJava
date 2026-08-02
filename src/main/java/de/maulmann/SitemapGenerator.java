@@ -9,6 +9,7 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -22,6 +23,11 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
+/**
+ * Refactored XML Sitemap Generator.
+ * Implements a high-performance hierarchical Sitemap Index (sitemap.xml)
+ * with dynamic <lastmod> timestamps per URL and specialized sub-sitemaps.
+ */
 public class SitemapGenerator {
 
     private static final Configuration fmConfig;
@@ -44,6 +50,19 @@ public class SitemapGenerator {
         timestampTracker = tracker;
     }
 
+    public record ImageEntry(String loc, String caption) {}
+
+    public record SitemapUrlEntry(
+            String relativePath,
+            String loc,
+            String lastModDate,
+            String changeFreq,
+            String priority,
+            List<ImageEntry> images
+    ) {}
+
+    public record ChildSitemapInfo(String fileName, String maxLastMod) {}
+
     public static void generate() {
         AtomicInteger imagesAdded = new AtomicInteger(0);
         AtomicInteger imagesMissing = new AtomicInteger(0);
@@ -55,25 +74,31 @@ public class SitemapGenerator {
             System.out.println("-> Generating best-in-class robots.txt...");
             generateRobotsTxt();
 
-            System.out.println("-> Scanning output directory for sitemap.xml and sitemap.html...");
-            StringBuilder xml = new StringBuilder();
-            xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-            xml.append("<?xml-stylesheet type=\"text/xsl\" href=\"sitemap.xsl\"?>\n");
-            xml.append("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"\n");
-            xml.append("        xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\">\n");
-
-            String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+            System.out.println("-> Cleaning up old sitemap files...");
             Path outputDirPath = Paths.get(OUTPUT_DIR);
-
-            // Collect paths first to sort them
-            List<Path> allPaths = new ArrayList<>();
-            try (Stream<Path> paths = Files.walk(outputDirPath)) {
-                paths.filter(Files::isRegularFile)
-                        .filter(p -> p.toString().endsWith(".html"))
-                        .forEach(allPaths::add);
+            if (Files.exists(outputDirPath)) {
+                try (Stream<Path> sitemapFiles = Files.list(outputDirPath)) {
+                    sitemapFiles.filter(p -> p.getFileName().toString().startsWith("sitemap") &&
+                                            (p.getFileName().toString().endsWith(".gz") || p.getFileName().toString().endsWith(".xml")))
+                                .forEach(p -> {
+                                    try { Files.deleteIfExists(p); } catch (Exception ignored) {}
+                                });
+                }
             }
 
-            // Sort paths: Core files first, then cards by season
+            System.out.println("-> Scanning output directory for sitemaps...");
+
+            // Collect all HTML paths
+            List<Path> allPaths = new ArrayList<>();
+            if (Files.exists(outputDirPath)) {
+                try (Stream<Path> paths = Files.walk(outputDirPath)) {
+                    paths.filter(Files::isRegularFile)
+                            .filter(p -> p.toString().endsWith(".html"))
+                            .forEach(allPaths::add);
+                }
+            }
+
+            // Sort paths: Core files first, then cards alphabetically
             allPaths.sort((p1, p2) -> {
                 String s1 = outputDirPath.relativize(p1).toString().replace("\\", "/");
                 String s2 = outputDirPath.relativize(p2).toString().replace("\\", "/");
@@ -86,47 +111,36 @@ public class SitemapGenerator {
 
             SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd");
             isoFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+            String todayIso = isoFormat.format(new Date());
+
+            List<SitemapUrlEntry> mainEntries = new ArrayList<>();
+            List<SitemapUrlEntry> highlightEntries = new ArrayList<>();
+            Map<String, List<SitemapUrlEntry>> cardGroupEntries = new TreeMap<>();
 
             for (Path path : allPaths) {
                 String relativePath = outputDirPath.relativize(path).toString().replace("\\", "/");
                 String loc = BASE_URL + "/" + relativePath;
 
-                // SEO Best Practice: index.html auf die reine Root-Domain leiten
                 if (loc.endsWith("/index.html")) {
                     loc = loc.replace("/index.html", "/");
                 }
 
-                // File-based lastmod timestamp for Search Engine accuracy
+                // Dynamic lastmod: read content-tracked timestamp if available
                 String lastModDate;
-                try {
-                    lastModDate = isoFormat.format(new Date(Files.getLastModifiedTime(path).toMillis()));
-                } catch (Exception e) {
-                    lastModDate = isoFormat.format(new Date());
+                if (timestampTracker != null) {
+                    lastModDate = timestampTracker.getIsoDate(relativePath);
+                } else {
+                    try {
+                        lastModDate = isoFormat.format(new Date(Files.getLastModifiedTime(path).toMillis()));
+                    } catch (Exception e) {
+                        lastModDate = todayIso;
+                    }
                 }
 
-                // Smarte SEO Prioritäten und Crawl-Frequenzen
-                String priority = "0.6";
-                String changeFreq = "yearly";
-
-                if (relativePath.equals("index.html")) {
-                    priority = "1.0";
-                    changeFreq = "weekly";
-                } else if (relativePath.equals("Juwan-Howard-Collection.html")) {
-                    priority = "0.9";
-                    changeFreq = "daily";
-                } else if (!relativePath.contains("/")) {
-                    priority = "0.8";
-                    changeFreq = "weekly";
-                }
-
-                xml.append("  <url>\n");
-                xml.append("    <loc>").append(escapeXml(loc)).append("</loc>\n");
-                xml.append("    <lastmod>").append(lastModDate).append("</lastmod>\n");
-                xml.append("    <changefreq>").append(changeFreq).append("</changefreq>\n");
-                xml.append("    <priority>").append(priority).append("</priority>\n");
-
+                List<ImageEntry> images = new ArrayList<>();
+                Document doc = null;
                 try {
-                    Document doc = Jsoup.parse(path.toFile(), "UTF-8");
+                    doc = Jsoup.parse(path.toFile(), "UTF-8");
                     String pageTitle = doc.title();
                     if (pageTitle.contains("|")) {
                         pageTitle = pageTitle.split("\\|")[0].trim();
@@ -150,7 +164,6 @@ public class SitemapGenerator {
                         linkMap.put("variant", variant);
                         linkMap.put("number", getSpecValue(doc, "Card Number"));
 
-                        // Build unique anchor text including Theme and Variant without "Theme:" / "Variant:" prefixes
                         StringBuilder anchorText = new StringBuilder(pageTitle);
                         List<String> extra = new ArrayList<>();
                         if (!theme.isEmpty() && !theme.equals("-") && !pageTitle.toLowerCase().contains(theme.toLowerCase())) {
@@ -171,7 +184,7 @@ public class SitemapGenerator {
                         }
                     }
 
-                    // Extract Images from <img> and <picture>/<source> elements for Image Sitemap
+                    // Extract images for sitemap
                     Set<String> processedImageUrls = new HashSet<>();
                     Elements pictureSources = doc.select("picture source[srcset]");
                     for (Element source : pictureSources) {
@@ -181,7 +194,7 @@ public class SitemapGenerator {
                             String firstCandidate = candidates[0].trim().split("\\s+")[0];
                             String absLoc = resolveImageLoc(relativePath, firstCandidate);
                             if (!absLoc.isEmpty() && processedImageUrls.add(absLoc)) {
-                                addImageToXml(xml, absLoc, pageTitle);
+                                images.add(new ImageEntry(absLoc, pageTitle));
                                 imagesAdded.incrementAndGet();
                             }
                         }
@@ -198,12 +211,10 @@ public class SitemapGenerator {
                         boolean exists = false;
                         if (src.startsWith("http") || src.startsWith("//")) {
                             exists = true;
-                        } else {
-                            if (absImageLoc.startsWith(BASE_URL + "/")) {
-                                String relPath = absImageLoc.substring((BASE_URL + "/").length());
-                                if (Files.exists(Paths.get(OUTPUT_DIR, relPath))) {
-                                    exists = true;
-                                }
+                        } else if (absImageLoc.startsWith(BASE_URL + "/")) {
+                            String relPath = absImageLoc.substring((BASE_URL + "/").length());
+                            if (Files.exists(Paths.get(OUTPUT_DIR, relPath))) {
+                                exists = true;
                             }
                         }
 
@@ -211,7 +222,7 @@ public class SitemapGenerator {
                             String alt = img.attr("alt");
                             if (alt.isEmpty()) alt = img.attr("title");
                             if (alt.isEmpty()) alt = pageTitle;
-                            addImageToXml(xml, absImageLoc, alt);
+                            images.add(new ImageEntry(absImageLoc, alt));
                             imagesAdded.incrementAndGet();
                         } else {
                             imagesMissing.incrementAndGet();
@@ -221,17 +232,53 @@ public class SitemapGenerator {
                     System.err.println("Could not parse " + path + ": " + e.getMessage());
                 }
 
-                xml.append("  </url>\n");
+                // Categorize URL into correct sitemap bucket
+                if (!relativePath.contains("/") || relativePath.equalsIgnoreCase("sitemap.html")) {
+                    // sitemap-main.xml: Priority 1.0, Changefreq daily
+                    mainEntries.add(new SitemapUrlEntry(relativePath, loc, lastModDate, "daily", "1.0", images));
+                } else if (relativePath.startsWith("cards/")) {
+                    boolean isHighlight = isHighlightCard(doc, relativePath);
+                    if (isHighlight) {
+                        // sitemap-highlights.xml: Priority 0.9, Changefreq weekly
+                        highlightEntries.add(new SitemapUrlEntry(relativePath, loc, lastModDate, "weekly", "0.9", images));
+                    } else {
+                        // sitemap-cards-[group].xml: Priority 0.5, Changefreq yearly
+                        String groupName = extractGroupName(relativePath);
+                        cardGroupEntries.computeIfAbsent(groupName, k -> new ArrayList<>())
+                                .add(new SitemapUrlEntry(relativePath, loc, lastModDate, "yearly", "0.5", images));
+                    }
+                } else {
+                    // Other static pages: Priority 0.8, Changefreq weekly
+                    mainEntries.add(new SitemapUrlEntry(relativePath, loc, lastModDate, "weekly", "0.8", images));
+                }
             }
 
-            xml.append("</urlset>");
+            List<ChildSitemapInfo> childSitemaps = new ArrayList<>();
 
-            File sitemapFile = new File(OUTPUT_DIR + "/sitemap.xml");
-            try (FileWriter writer = new FileWriter(sitemapFile, StandardCharsets.UTF_8)) {
-                writer.write(xml.toString());
+            // 1. Generate sitemap-main.xml
+            if (!mainEntries.isEmpty()) {
+                ChildSitemapInfo mainInfo = writeSubSitemap("sitemap-main.xml", mainEntries);
+                childSitemaps.add(mainInfo);
             }
 
-            System.out.println("-> Sitemap.xml successfully generated!");
+            // 2. Generate sitemap-highlights.xml
+            if (!highlightEntries.isEmpty()) {
+                ChildSitemapInfo hInfo = writeSubSitemap("sitemap-highlights.xml", highlightEntries);
+                childSitemaps.add(hInfo);
+            }
+
+            // 3. Generate sitemap-cards-[group].xml
+            for (Map.Entry<String, List<SitemapUrlEntry>> entry : cardGroupEntries.entrySet()) {
+                String fileName = "sitemap-cards-" + sanitizeFilename(entry.getKey()) + ".xml";
+                ChildSitemapInfo cInfo = writeSubSitemap(fileName, entry.getValue());
+                childSitemaps.add(cInfo);
+            }
+
+            // 4. Generate Root sitemap.xml (Sitemap Index)
+            writeSitemapIndex("sitemap.xml", childSitemaps);
+
+            System.out.println("-> Sitemap Index & Sub-Sitemaps successfully generated!");
+            System.out.println("   > Total Sub-Sitemaps: " + childSitemaps.size());
             System.out.println("   > Images added: " + imagesAdded.get());
             if (imagesMissing.get() > 0) {
                 System.out.println("   > Images missing: " + imagesMissing.get());
@@ -244,6 +291,113 @@ public class SitemapGenerator {
         } catch (Exception e) {
             System.err.println("Failed to generate Sitemap: " + e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    private static boolean isHighlightCard(Document doc, String relativePath) {
+        if (doc == null) return false;
+        String pathLower = relativePath.toLowerCase();
+        if (pathLower.contains("flawless")) return true;
+
+        String printRunStr = getSpecValue(doc, "Print Run");
+        if (printRunStr.isEmpty()) printRunStr = getSpecValue(doc, "Serial/Print Run");
+        if (printRunStr.isEmpty()) printRunStr = getSpecValue(doc, "Serial");
+
+        String variant = getSpecValue(doc, "Variant").toLowerCase();
+        String auto = getSpecValue(doc, "Autograph").toLowerCase();
+
+        if (variant.contains("1/1") || variant.contains("superfractor") || variant.contains("masterpiece") ||
+            variant.contains("logoman") || variant.contains("frozenfractor")) {
+            return true;
+        }
+
+        if (!printRunStr.isEmpty()) {
+            try {
+                String cleanRun = printRunStr;
+                if (cleanRun.contains("/")) {
+                    cleanRun = cleanRun.substring(cleanRun.lastIndexOf("/") + 1).trim();
+                }
+                int run = Integer.parseInt(cleanRun.replaceAll("[^0-9]", ""));
+                if (run > 0 && run <= 5) {
+                    return true;
+                }
+                if (auto.equalsIgnoreCase("yes") && run <= 25) {
+                    return true;
+                }
+            } catch (NumberFormatException ignored) {}
+        }
+
+        return auto.equalsIgnoreCase("yes") && (variant.contains("patch") || variant.contains("ruby") || variant.contains("pmg"));
+    }
+
+    private static String extractGroupName(String relativePath) {
+        String[] parts = relativePath.split("/");
+        if (parts.length >= 3) {
+            return parts[1];
+        }
+        return "general";
+    }
+
+    private static String sanitizeFilename(String raw) {
+        return raw.toLowerCase()
+                .replaceAll("[^a-z0-9\\-]", "-")
+                .replaceAll("-+", "-")
+                .replaceAll("^-|-$", "");
+    }
+
+    private static ChildSitemapInfo writeSubSitemap(String fileName, List<SitemapUrlEntry> entries) throws IOException {
+        File file = new File(OUTPUT_DIR, fileName);
+        String maxLastMod = "1970-01-01";
+
+        try (BufferedWriter writer = Files.newBufferedWriter(file.toPath(), StandardCharsets.UTF_8)) {
+            writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+            writer.write("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"\n");
+            writer.write("        xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\">\n");
+
+            for (SitemapUrlEntry entry : entries) {
+                if (entry.lastModDate().compareTo(maxLastMod) > 0) {
+                    maxLastMod = entry.lastModDate();
+                }
+
+                writer.write("  <url>\n");
+                writer.write("    <loc>" + escapeXml(entry.loc()) + "</loc>\n");
+                writer.write("    <lastmod>" + entry.lastModDate() + "</lastmod>\n");
+                writer.write("    <changefreq>" + entry.changeFreq() + "</changefreq>\n");
+                writer.write("    <priority>" + entry.priority() + "</priority>\n");
+
+                for (ImageEntry img : entry.images()) {
+                    writer.write("    <image:image>\n");
+                    writer.write("      <image:loc>" + escapeXml(img.loc()) + "</image:loc>\n");
+                    if (img.caption() != null && !img.caption().trim().isEmpty()) {
+                        writer.write("      <image:caption>" + escapeXml(img.caption().trim()) + "</image:caption>\n");
+                    }
+                    writer.write("    </image:image>\n");
+                }
+
+                writer.write("  </url>\n");
+            }
+
+            writer.write("</urlset>");
+        }
+
+        return new ChildSitemapInfo(fileName, maxLastMod);
+    }
+
+    private static void writeSitemapIndex(String indexFileName, List<ChildSitemapInfo> childSitemaps) throws IOException {
+        File indexFile = new File(OUTPUT_DIR, indexFileName);
+
+        try (BufferedWriter writer = Files.newBufferedWriter(indexFile.toPath(), StandardCharsets.UTF_8)) {
+            writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+            writer.write("<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n");
+
+            for (ChildSitemapInfo info : childSitemaps) {
+                writer.write("  <sitemap>\n");
+                writer.write("    <loc>" + BASE_URL + "/" + info.fileName() + "</loc>\n");
+                writer.write("    <lastmod>" + info.maxLastMod() + "</lastmod>\n");
+                writer.write("  </sitemap>\n");
+            }
+
+            writer.write("</sitemapindex>");
         }
     }
 
@@ -384,7 +538,6 @@ public class SitemapGenerator {
 
             String footerHtml = SharedTemplates.getFooter("");
 
-            // Generate JSON-LD for Sitemap
             List<Map<String, String>> bcItems = new ArrayList<>();
             bcItems.add(Map.of("name", "Home", "link", BASE_URL + "/index.html"));
             bcItems.add(Map.of("name", "Sitemap", "link", BASE_URL + "/sitemap.html"));
@@ -444,27 +597,15 @@ public class SitemapGenerator {
         }
     }
 
-    private static void addImageToXml(StringBuilder xml, String imageLoc, String caption) {
-        xml.append("    <image:image>\n");
-        xml.append("      <image:loc>").append(escapeXml(imageLoc)).append("</image:loc>\n");
-        if (caption != null && !caption.trim().isEmpty()) {
-            xml.append("      <image:caption>").append(escapeXml(caption.trim())).append("</image:caption>\n");
-        }
-        xml.append("    </image:image>\n");
-    }
-
     private static void generateRobotsTxt() throws IOException {
         StringBuilder robots = new StringBuilder();
 
-        // Standard Search Engine Crawling
         robots.append("User-agent: *\n");
         robots.append("Allow: /\n\n");
 
-        // High Priority Image Indexing for Collector Websites
         robots.append("User-agent: Googlebot-Image\n");
         robots.append("Allow: /images/\n\n");
 
-        // AI Search Discovery Bots & LLM Crawlers
         robots.append("User-agent: GPTBot\nAllow: /\n\n");
         robots.append("User-agent: ChatGPT-User\nAllow: /\n\n");
         robots.append("User-agent: ClaudeBot\nAllow: /\n\n");
@@ -476,9 +617,7 @@ public class SitemapGenerator {
         robots.append("User-agent: Amazonbot\nAllow: /\n\n");
         robots.append("User-agent: ByteDance\nAllow: /\n\n");
 
-        // Dual Sitemap Indexing & LLM Manifests
         robots.append("Sitemap: ").append(BASE_URL).append("/sitemap.xml\n");
-        robots.append("Sitemap: ").append(BASE_URL).append("/sitemap.xml.gz\n");
         robots.append("Sitemap: ").append(BASE_URL).append("/llms.txt\n");
         robots.append("Sitemap: ").append(BASE_URL).append("/llms-full.txt\n");
 
@@ -499,24 +638,17 @@ public class SitemapGenerator {
             return baseUrlStripped + imgSrc;
         }
 
-        // Wir gehen davon aus, dass alle Pfade im Output-Verzeichnis relativ zueinander sind.
-        // pageRelativePath ist z.B. "cards/2005/some-card.html"
-        // imgSrc ist z.B. "../../images/2005/some-card-front.webp"
-
         try {
             Path pagePath = Paths.get(pageRelativePath);
             Path parent = pagePath.getParent();
 
             String resultPath;
             if (parent == null) {
-                // Datei liegt im Root, z.B. "index.html"
                 resultPath = imgSrc;
             } else {
-                // Normalisiere den Pfad relativ zur aktuellen Seite
                 resultPath = parent.resolve(imgSrc).normalize().toString().replace("\\", "/");
             }
 
-            // Bereinige führende ./ oder /
             while (resultPath.startsWith("/")) resultPath = resultPath.substring(1);
             while (resultPath.startsWith("./")) resultPath = resultPath.substring(2);
 
@@ -527,6 +659,7 @@ public class SitemapGenerator {
     }
 
     private static String getSpecValue(Document doc, String specName) {
+        if (doc == null) return "";
         Elements rows = doc.select("tr");
         for (Element row : rows) {
             Element th = row.selectFirst("th.specs-th");

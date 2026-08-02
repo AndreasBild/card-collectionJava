@@ -490,6 +490,49 @@ public class FileGenerator {
                     "</script>";
             indexData.put("jsonLd", indexJsonLd);
 
+            // SEO "New In" Linkjuice internal links (1 < printRun < 10) - Limited to 6
+            List<CardJson> allCardsForNewIn = filterDuplicateJsonCards(loadCardsFromJson());
+            List<CardJson> rareNewInCards = allCardsForNewIn.stream()
+                    .filter(c -> c.printRun != null && c.printRun > 1 && c.printRun < 10)
+                    .limit(6)
+                    .toList();
+
+            List<Map<String, String>> newInLinks = new ArrayList<>();
+            for (CardJson c : rareNewInCards) {
+                CardPageGenerator.CardData cardData = new CardPageGenerator.CardData(c, null);
+                String cleanPlayer = CardPageGenerator.cleanPlayerName(c.player);
+                String brandText = c.brand != null ? c.brand : "";
+                String variantText = c.variant != null ? c.variant : "Base";
+                String seasonText = c.season != null ? c.season : "";
+                String cardTitle = cleanPlayer + " " + seasonText + " " + brandText + " " + variantText + " (/" + c.printRun + ")";
+                newInLinks.add(Map.of(
+                        "url", cardData.fullRelativePath,
+                        "title", cardTitle.trim()
+                ));
+            }
+            indexData.put("newInLinks", newInLinks);
+
+            // SEO "Masterpieces" Linkjuice internal links (1/1 Non-Plate, Non-Proof cards) - Limited to 6
+            List<CardJson> masterpieceCards = allCardsForNewIn.stream()
+                    .filter(FileGenerator::isOneOfOneMasterpiece)
+                    .limit(6)
+                    .toList();
+
+            List<Map<String, String>> masterpieceLinks = new ArrayList<>();
+            for (CardJson c : masterpieceCards) {
+                CardPageGenerator.CardData cardData = new CardPageGenerator.CardData(c, null);
+                String cleanPlayer = CardPageGenerator.cleanPlayerName(c.player);
+                String brandText = c.brand != null ? c.brand : "";
+                String variantText = c.variant != null ? c.variant : "1/1";
+                String seasonText = c.season != null ? c.season : "";
+                String cardTitle = cleanPlayer + " " + seasonText + " " + brandText + " " + variantText + " (1/1)";
+                masterpieceLinks.add(Map.of(
+                        "url", cardData.fullRelativePath,
+                        "title", cardTitle.trim()
+                ));
+            }
+            indexData.put("masterpieceLinks", masterpieceLinks);
+
             processTemplate("index.ftlh", indexData, pathOutput + "index.html");
 
             // Build Rainbow Tracker page
@@ -949,6 +992,31 @@ public class FileGenerator {
         stats.put("pctGemMint", countGradedTotal > 0 ? Math.max(5, (int) Math.round((countGemMint * 100.0) / countGradedTotal)) : 0);
 
         return stats;
+    }
+
+    public static boolean isOneOfOneMasterpiece(CardJson c) {
+        if (c == null) return false;
+        String var = c.variant != null ? c.variant.toLowerCase() : "";
+        String theme = c.theme != null ? c.theme.toLowerCase() : "";
+        String brand = c.brand != null ? c.brand.toLowerCase() : "";
+        String sn = c.serialNumber != null ? c.serialNumber.trim() : "";
+
+        // Exclude Printing Plates & Proofs
+        if (var.contains("plate") || theme.contains("plate") || brand.contains("plate") ||
+            var.contains("proof") || theme.contains("proof") || brand.contains("proof")) {
+            return false;
+        }
+
+        if (c.printRun != null && c.printRun == 1) {
+            return true;
+        }
+        if (sn.equals("1/1") || sn.equalsIgnoreCase("1 of 1") || (c.printRun != null && c.printRun == 1 && sn.equals("1"))) {
+            return true;
+        }
+        if (var.contains("1/1") || var.contains("1 of 1") || (var.equals("masterpiece") && c.printRun != null && c.printRun == 1)) {
+            return true;
+        }
+        return false;
     }
 
     private static String escapeHtml(String input) {

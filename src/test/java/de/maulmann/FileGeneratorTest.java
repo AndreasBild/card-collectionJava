@@ -136,6 +136,50 @@ class FileGeneratorTest {
         assertTrue(posSet2021 < posSet2020, "Set with more cards should appear first");
         assertTrue(html.contains("?from=rainbows"), "Card links on rainbows page should include ?from=rainbows parameter");
     }
+
+    @Test
+    void testBuildIndexPageNewInFooterLinks() throws Exception {
+        Path jsonDir = Files.createDirectories(contentDir.resolve("json"));
+        String jsonContent = "[" +
+                "{\"player\":\"Juwan Howard\",\"season\":\"2004-05\",\"team\":\"Bullets\",\"company\":\"Panini\",\"brand\":\"UD Black Diamond\",\"theme\":\"Base Set\",\"variant\":\"Black\",\"cardNumber\":\"10\",\"serialNumber\":\"3\",\"printRun\":5}," +
+                "{\"player\":\"Juwan Howard\",\"season\":\"2005-06\",\"team\":\"Bullets\",\"company\":\"Topps\",\"brand\":\"Topps Bazooka\",\"theme\":\"Base Set\",\"variant\":\"Blue\",\"cardNumber\":\"20\",\"serialNumber\":\"2\",\"printRun\":5}" +
+                "]";
+        Files.writeString(jsonDir.resolve("cards.json"), jsonContent);
+
+        FileGenerator.buildStaticPages();
+
+        Path indexPath = outputDir.resolve("index.html");
+        assertTrue(Files.exists(indexPath), "index.html should be generated");
+
+        String content = Files.readString(indexPath);
+        assertTrue(content.contains("<section class=\"seo-showcase-footer\""), "Should contain SEO showcase footer section");
+        assertTrue(content.contains("<h2 class=\"seo-showcase-title\">New In</h2>"), "Should contain New In title");
+        assertTrue(content.contains("UD Black Diamond"), "Should contain rare card link");
+        assertTrue(content.contains("(/5)"), "Should contain print run in title");
+    }
+
+    @Test
+    void testBuildIndexPageMasterpiecesFooterLinks() throws Exception {
+        Path jsonDir = Files.createDirectories(contentDir.resolve("json"));
+        String jsonContent = "[" +
+                "{\"player\":\"Juwan Howard\",\"season\":\"2022-23\",\"team\":\"Bullets\",\"company\":\"Panini\",\"brand\":\"Panini Spectra\",\"theme\":\"Base Set\",\"variant\":\"Nebula\",\"cardNumber\":\"1\",\"serialNumber\":\"1/1\",\"printRun\":1}," +
+                "{\"player\":\"Juwan Howard\",\"season\":\"2022-23\",\"team\":\"Bullets\",\"company\":\"Panini\",\"brand\":\"Panini Spectra\",\"theme\":\"Base Set\",\"variant\":\"Black Printing Plate Cyan\",\"cardNumber\":\"1\",\"serialNumber\":\"1/1\",\"printRun\":1}," +
+                "{\"player\":\"Juwan Howard\",\"season\":\"2024-25\",\"team\":\"Bullets\",\"company\":\"Leaf\",\"brand\":\"Leaf Metal\",\"theme\":\"Base Set\",\"variant\":\"Pre Production Proof Orange\",\"cardNumber\":\"1\",\"serialNumber\":\"1/1\",\"printRun\":1}" +
+                "]";
+        Files.writeString(jsonDir.resolve("cards.json"), jsonContent);
+
+        FileGenerator.buildStaticPages();
+
+        Path indexPath = outputDir.resolve("index.html");
+        assertTrue(Files.exists(indexPath), "index.html should be generated");
+
+        String content = Files.readString(indexPath);
+        assertTrue(content.contains("<section class=\"seo-showcase-footer\""), "Should contain Masterpieces footer section");
+        assertTrue(content.contains("<h2 class=\"seo-showcase-title\">Masterpieces (1/1)</h2>"), "Should contain Masterpieces title");
+        assertTrue(content.contains("Nebula"), "Should contain 1/1 Masterpiece Nebula link");
+        assertFalse(content.contains("Black Printing Plate Cyan"), "Should EXCLUDE printing plates from Masterpieces section");
+        assertFalse(content.contains("Pre Production Proof Orange"), "Should EXCLUDE proof cards from Masterpieces section");
+    }
 }
 
 

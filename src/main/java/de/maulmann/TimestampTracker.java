@@ -73,6 +73,42 @@ public class TimestampTracker {
         return newTime;
     }
 
+    /**
+     * Returns an ISO 8601 date string (yyyy-MM-dd) for the given file identifier based on tracked timestamps.
+     * @param identifier Relative file path identifier.
+     * @return ISO formatted date string (e.g. 2026-08-02).
+     */
+    public String getIsoDate(String identifier) {
+        return getIsoDateOrDefault(identifier, DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDateTime.now()));
+    }
+
+    /**
+     * Returns an ISO 8601 date string (yyyy-MM-dd) for the given file identifier, falling back to default if unavailable.
+     * @param identifier Relative file path identifier.
+     * @param defaultIsoDate Fallback ISO date string.
+     * @return ISO formatted date string.
+     */
+    public String getIsoDateOrDefault(String identifier, String defaultIsoDate) {
+        String raw = currentSessionData.get(identifier);
+        if (raw == null) {
+            raw = storedData.getProperty(identifier);
+        }
+        TimestampEntry entry = TimestampEntry.parse(raw);
+        if (entry != null && entry.timestamp() != null) {
+            String ts = entry.timestamp();
+            String[] spaceParts = ts.split(" ");
+            if (spaceParts.length >= 1 && spaceParts[0].contains(".")) {
+                String[] dotParts = spaceParts[0].split("\\.");
+                if (dotParts.length == 3) {
+                    return String.format("%s-%s-%s", dotParts[2], dotParts[1], dotParts[0]);
+                }
+            } else if (ts.matches("\\d{4}-\\d{2}-\\d{2}.*")) {
+                return ts.substring(0, 10);
+            }
+        }
+        return defaultIsoDate;
+    }
+
     public void save() {
         try {
             File parent = storeFile.getParentFile();

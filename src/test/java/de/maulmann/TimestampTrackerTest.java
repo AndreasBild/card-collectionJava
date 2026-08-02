@@ -49,4 +49,18 @@ class TimestampTrackerTest {
         String time3 = newTracker.getStableTimestamp(identifier, content1);
         assertEquals(time1, time3, "Timestamp loaded from store file must match original.");
     }
+
+    @Test
+    void testGetIsoDate() throws Exception {
+        Path storeFile = tempDir.resolve("timestamps.properties");
+        TimestampTracker tracker = new TimestampTracker(storeFile.toString());
+
+        String identifier = "index.html";
+        String content = "<html><body>Hello [[STABLE_TIME]]</body></html>";
+        tracker.getStableTimestamp(identifier, content);
+
+        String isoDate = tracker.getIsoDate(identifier);
+        assertNotNull(isoDate);
+        assertTrue(isoDate.matches("\\d{4}-\\d{2}-\\d{2}"), "ISO date must be in YYYY-MM-DD format, got: " + isoDate);
+    }
 }

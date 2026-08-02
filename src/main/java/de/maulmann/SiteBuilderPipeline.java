@@ -167,7 +167,7 @@ public class SiteBuilderPipeline {
                     String fileName = file.getFileName().toString().toLowerCase();
                     String s3Key = outputDir.relativize(file).toString().replace("\\", "/");
 
-                    if (fileName.equals("sitemap.xml") || fileName.equals("sitemap.xml.gz") || fileName.endsWith(".properties")) {
+                    if ((fileName.startsWith("sitemap") && fileName.endsWith(".xml")) || fileName.endsWith(".xml.gz") || fileName.endsWith(".properties")) {
                         return;
                     }
 
@@ -339,45 +339,32 @@ public class SiteBuilderPipeline {
     }
 
     private static void processAndUploadSitemapGz(S3AsyncClient s3Client, FileTracker tracker) throws Exception {
-        File sitemapFile = new File(OUTPUT_DIR + "/sitemap.xml");
-        File sitemapGzFile = new File(OUTPUT_DIR + "/sitemap.xml.gz");
+        Path outputDir = Paths.get(OUTPUT_DIR);
+        List<File> sitemapFiles = new ArrayList<>();
 
-        if (!sitemapFile.exists()) {
-            log.error("-> WARNING: sitemap.xml not found. Skipping Sitemap upload.");
+        if (Files.exists(outputDir)) {
+            try (Stream<Path> paths = Files.walk(outputDir)) {
+                paths.filter(Files::isRegularFile)
+                        .map(Path::toFile)
+                        .filter(f -> f.getName().startsWith("sitemap") && f.getName().endsWith(".xml"))
+                        .forEach(sitemapFiles::add);
+            }
+        }
+
+        if (sitemapFiles.isEmpty()) {
+            log.error("-> WARNING: No sitemap XML files found. Skipping Sitemap upload.");
             return;
         }
 
-        if (!tracker.hasChanged(sitemapFile.toPath()) && sitemapGzFile.exists()) {
-            log.info("-> Sitemap unchanged. Skipping upload.");
-            return;
+        AtomicInteger count = new AtomicInteger(0);
+
+        for (File sitemapFile : sitemapFiles) {
+            String s3Key = sitemapFile.getName();
+            String currentHash = tracker.getHash(sitemapFile.toPath());
+
+            uploadRawFile(s3Client, sitemapFile.toPath(), s3Key, "application/xml; charset=utf-8", CACHE_SHORT, count, tracker, currentHash);
+            log.info("-> Uploaded sitemap {} to S3", s3Key);
         }
-
-        // 1. Upload uncompressed sitemap.xml
-        PutObjectRequest xmlReq = PutObjectRequest.builder()
-                .bucket(BUCKET_NAME)
-                .key("sitemap.xml")
-                .contentType("application/xml; charset=utf-8")
-                .cacheControl(CACHE_SHORT)
-                .build();
-        s3Client.putObject(xmlReq, AsyncRequestBody.fromFile(sitemapFile)).join();
-        log.info("-> Successfully uploaded sitemap.xml to S3");
-
-        // 2. Compress & upload sitemap.xml.gz
-        GZIPCompressor.compressFile(sitemapFile, sitemapGzFile, 9);
-        log.info("-> Compressed sitemap to sitemap.xml.gz");
-
-        PutObjectRequest gzReq = PutObjectRequest.builder()
-                .bucket(BUCKET_NAME)
-                .key("sitemap.xml.gz")
-                .contentType("application/xml")
-                .contentEncoding("gzip")
-                .cacheControl(CACHE_SHORT)
-                .build();
-
-        s3Client.putObject(gzReq, AsyncRequestBody.fromFile(sitemapGzFile)).join();
-        log.info("-> Successfully uploaded sitemap.xml.gz to S3");
-
-        tracker.updateHash(sitemapFile.toPath());
     }
 
     private static void invalidateCloudFrontCache() {

@@ -2255,3 +2255,71 @@ figcaption {
     border-radius: 50%;
     cursor: pointer;
 }
+/* --- SEO Showcase 2-Column Footer Layout --- */
+.seo-showcase-footer {
+    background: var(--bg-card, #161b22);
+    border-top: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.1));
+    border-bottom: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.1));
+    padding: 28px 20px;
+    margin-top: 36px;
+}
+
+.seo-showcase-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.seo-showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 32px;
+}
+
+.seo-showcase-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.seo-showcase-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-gold, #f1c40f);
+    margin-bottom: 14px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(241, 196, 15, 0.2);
+}
+
+.seo-showcase-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.seo-showcase-item {
+    display: block;
+}
+
+a.plain.seo-showcase-link {
+    display: inline-block;
+    font-size: 0.9rem;
+    color: var(--text-secondary, #c9d1d9);
+    text-decoration: none;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+a.plain.seo-showcase-link:hover,
+a.plain.seo-showcase-link:focus {
+    color: var(--color-gold, #f1c40f) !important;
+    text-decoration: underline !important;
+    background: transparent !important;
+}

@@ -758,6 +758,38 @@ ${topNavHtml?no_esc}
         </div>
     </div>
 </main>
+<#if (newInLinks?? && (newInLinks?size > 0)) || (masterpieceLinks?? && (masterpieceLinks?size > 0))>
+<section class="seo-showcase-footer" aria-label="Featured Cards Showcase">
+    <div class="seo-showcase-container">
+        <div class="seo-showcase-grid">
+            <#if newInLinks?? && (newInLinks?size > 0)>
+            <div class="seo-showcase-col">
+                <h2 class="seo-showcase-title">New In</h2>
+                <ul class="seo-showcase-list">
+                    <#list newInLinks as item>
+                    <li class="seo-showcase-item">
+                        <a href="${item.url}" title="View details for ${item.title}" class="plain seo-showcase-link">${item.title}</a>
+                    </li>
+                    </#list>
+                </ul>
+            </div>
+            </#if>
+            <#if masterpieceLinks?? && (masterpieceLinks?size > 0)>
+            <div class="seo-showcase-col">
+                <h2 class="seo-showcase-title">Masterpieces (1/1)</h2>
+                <ul class="seo-showcase-list">
+                    <#list masterpieceLinks as item>
+                    <li class="seo-showcase-item">
+                        <a href="${item.url}" title="View details for ${item.title}" class="plain seo-showcase-link">${item.title}</a>
+                    </li>
+                    </#list>
+                </ul>
+            </div>
+            </#if>
+        </div>
+    </div>
+</section>
+</#if>
 ${footerHtml?no_esc}
 <script>
     document.addEventListener("DOMContentLoaded", () => {
