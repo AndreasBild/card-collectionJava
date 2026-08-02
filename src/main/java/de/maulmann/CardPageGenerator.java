@@ -412,6 +412,18 @@ public class CardPageGenerator {
         data.put("eraTitle", isBaseball ? "&#x26BE; MLB Era & Pop Culture" : "&#x1F3C0; NBA Era & Pop Culture");
         data.put("cardBackText", "");
 
+        List<Map<String, String>> sameBrandCards = findSameBrandCards(c, allCards, 6);
+        Set<String> brandCardIds = sameBrandCards.stream().map(m -> m.get("stableId")).filter(Objects::nonNull).collect(Collectors.toSet());
+        List<Map<String, String>> sameCompanyCards = findSameCompanyCards(c, allCards, brandCardIds, 6);
+
+        String sameBrandTitle = isValid(c.get("Season")) ? "More from " + c.get("Season") + " " + c.get("Brand") : "More from " + c.get("Brand");
+        String sameCompanyTitle = isValid(c.get("Season")) ? "More from " + c.get("Season") + " " + c.get("Company") : "More from " + c.get("Company");
+
+        data.put("sameBrandCards", sameBrandCards);
+        data.put("sameBrandTitle", sameBrandTitle);
+        data.put("sameCompanyCards", sameCompanyCards);
+        data.put("sameCompanyTitle", sameCompanyTitle);
+
         data.put("relatedCards", findRelatedCards(c, allCards, 4));
         data.put("externalLinks", generateExternalLinks(c));
 
@@ -470,7 +482,7 @@ public class CardPageGenerator {
         String number = c.has("Number") ? " #" + c.get("Number") : "";
 
         StringBuilder sb = new StringBuilder();
-        sb.append(player).append(" | ").append(season).append(" ").append(company).append(" ").append(brand);
+        sb.append(player).append(" | ").append(season).append(" ").append(brand);
         if (isValid(theme) && !theme.equalsIgnoreCase(brand)) {
             sb.append(" ").append(theme);
         }
@@ -492,7 +504,7 @@ public class CardPageGenerator {
 
         StringBuilder sb = new StringBuilder();
         sb.append("<span class=\"player-name\">").append(player).append("</span><br>");
-        sb.append("<span class=\"sub-title\">").append(season).append(" ").append(company).append(" ").append(brand);
+        sb.append("<span class=\"sub-title\">").append(season).append(" ").append(brand);
         if (isValid(theme) && !theme.equalsIgnoreCase(brand)) {
             sb.append(" ").append(theme);
         }
@@ -843,5 +855,116 @@ public class CardPageGenerator {
                 .replaceAll("[^a-zA-Z0-9\\-_]", "-")
                 .replaceAll("-+", "-")
                 .replaceAll("^-|-$", "");
+    }
+
+    public static List<Map<String, String>> findSameBrandCards(CardData currentCard, List<CardData> allCards, int limit) {
+        if (currentCard == null || allCards == null || limit <= 0) return Collections.emptyList();
+
+        String season = currentCard.get("Season");
+        String brand = currentCard.get("Brand");
+        if (!isValid(brand)) return Collections.emptyList();
+
+        List<CardData> selected = new ArrayList<>();
+        Set<String> addedIds = new HashSet<>();
+        if (currentCard.stableId != null) addedIds.add(currentCard.stableId);
+
+        // Pass 1: Same season & same brand
+        if (isValid(season)) {
+            for (CardData c : allCards) {
+                if (selected.size() >= limit) break;
+                if (c.stableId != null && !addedIds.contains(c.stableId) && season.equalsIgnoreCase(c.get("Season")) && brand.equalsIgnoreCase(c.get("Brand"))) {
+                    selected.add(c);
+                    addedIds.add(c.stableId);
+                }
+            }
+        }
+
+        // Pass 2: Fallback across other seasons if count < limit
+        if (selected.size() < limit) {
+            for (CardData c : allCards) {
+                if (selected.size() >= limit) break;
+                if (c.stableId != null && !addedIds.contains(c.stableId) && brand.equalsIgnoreCase(c.get("Brand"))) {
+                    selected.add(c);
+                    addedIds.add(c.stableId);
+                }
+            }
+        }
+
+        List<Map<String, String>> result = new ArrayList<>();
+        for (CardData c : selected) {
+            String title = formatShowcaseCardTitle(c);
+            String url = getRelativeCardUrl(currentCard, c);
+            result.add(Map.of("title", title, "url", url, "stableId", c.stableId != null ? c.stableId : ""));
+        }
+        return result;
+    }
+
+    public static List<Map<String, String>> findSameCompanyCards(CardData currentCard, List<CardData> allCards, Set<String> excludeStableIds, int limit) {
+        if (currentCard == null || allCards == null || limit <= 0) return Collections.emptyList();
+
+        String season = currentCard.get("Season");
+        String company = currentCard.get("Company");
+        if (!isValid(company)) return Collections.emptyList();
+
+        List<CardData> selected = new ArrayList<>();
+        Set<String> addedIds = new HashSet<>(excludeStableIds != null ? excludeStableIds : Collections.emptySet());
+        if (currentCard.stableId != null) addedIds.add(currentCard.stableId);
+
+        // Pass 1: Same season & same company
+        if (isValid(season)) {
+            for (CardData c : allCards) {
+                if (selected.size() >= limit) break;
+                if (c.stableId != null && !addedIds.contains(c.stableId) && season.equalsIgnoreCase(c.get("Season")) && company.equalsIgnoreCase(c.get("Company"))) {
+                    selected.add(c);
+                    addedIds.add(c.stableId);
+                }
+            }
+        }
+
+        // Pass 2: Fallback across other seasons if count < limit
+        if (selected.size() < limit) {
+            for (CardData c : allCards) {
+                if (selected.size() >= limit) break;
+                if (c.stableId != null && !addedIds.contains(c.stableId) && company.equalsIgnoreCase(c.get("Company"))) {
+                    selected.add(c);
+                    addedIds.add(c.stableId);
+                }
+            }
+        }
+
+        List<Map<String, String>> result = new ArrayList<>();
+        for (CardData c : selected) {
+            String title = formatShowcaseCardTitle(c);
+            String url = getRelativeCardUrl(currentCard, c);
+            result.add(Map.of("title", title, "url", url));
+        }
+        return result;
+    }
+
+    private static String formatShowcaseCardTitle(CardData c) {
+        String cleanPlayer = cleanPlayerName(getPrimaryPlayer(c));
+        String seasonText = isValid(c.get("Season")) ? c.get("Season") : "";
+        String brandText = isValid(c.get("Brand")) ? c.get("Brand") : "";
+        String variantText = isValid(c.get("Variant")) ? c.get("Variant") : "";
+        String printRunText = isValid(c.get("Print Run")) ? "(/" + c.get("Print Run") + ")" : "";
+        if ("1".equals(c.get("Print Run")) || "1/1".equalsIgnoreCase(c.get("Serial"))) {
+            printRunText = "(1/1)";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(cleanPlayer);
+        if (!seasonText.isEmpty()) sb.append(" ").append(seasonText);
+        if (!brandText.isEmpty()) sb.append(" ").append(brandText);
+        if (!variantText.isEmpty() && !variantText.equalsIgnoreCase("Base")) sb.append(" ").append(variantText);
+        if (!printRunText.isEmpty()) sb.append(" ").append(printRunText);
+        return sb.toString().trim();
+    }
+
+    private static String getRelativeCardUrl(CardData currentCard, CardData targetCard) {
+        if (currentCard.seasonFolder != null && currentCard.seasonFolder.equalsIgnoreCase(targetCard.seasonFolder)) {
+            return targetCard.filename;
+        } else {
+            return "../" + targetCard.seasonFolder + "/" + targetCard.filename;
+        }
     }
 }

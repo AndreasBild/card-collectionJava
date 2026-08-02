@@ -285,6 +285,7 @@ public class SitemapGenerator {
             }
 
             generateHtmlSitemap(coreLinks, seasonGroups);
+            generateLlmsTxt();
             generateLlmsFullTxt(allPaths);
             generateRssFeed(allPaths);
 
@@ -398,6 +399,30 @@ public class SitemapGenerator {
             }
 
             writer.write("</sitemapindex>");
+        }
+    }
+
+    private static void generateLlmsTxt() {
+        System.out.println("-> Generating llms.txt standard index for AI/LLMs...");
+        StringBuilder sb = new StringBuilder();
+        sb.append("# maulmann.de\n\n");
+        sb.append("> Maulmann Private Collection: High-end sports card database featuring Juwan Howard, rare 1/1 Masterpieces, and low-numbered serial cards.\n\n");
+        sb.append("## Core Pages\n");
+        sb.append("- [Collection Overview](").append(BASE_URL).append("/Juwan-Howard-Collection.html): Main private collection index with 1,300+ cards.\n");
+        sb.append("- [Rainbow Tracker](").append(BASE_URL).append("/rainbows.html): Interactive tracker for full parallel rainbow sets.\n");
+        sb.append("- [Flawless Collection](").append(BASE_URL).append("/Flawless.html): Ultra-high-end Panini Flawless autographs and patches.\n");
+        sb.append("- [Panini Showcase](").append(BASE_URL).append("/Panini.html): Panini basketball card release highlights.\n");
+        sb.append("- [Baseball Collection](").append(BASE_URL).append("/Baseball.html): Certified MLB autograph and game-used memorabilia cards.\n");
+        sb.append("- [Wantlist](").append(BASE_URL).append("/Wantlist.html): Cards actively sought after for the collection.\n\n");
+        sb.append("## Full Database Index\n");
+        sb.append("- [llms-full.txt](").append(BASE_URL).append("/llms-full.txt): Complete detailed text index of all 1,300+ card pages with metadata.\n");
+
+        File llmsFile = new File(OUTPUT_DIR + "/llms.txt");
+        try (FileWriter writer = new FileWriter(llmsFile, StandardCharsets.UTF_8)) {
+            writer.write(sb.toString());
+            System.out.println("-> llms.txt successfully generated!");
+        } catch (IOException e) {
+            System.err.println("Failed to write llms.txt: " + e.getMessage());
         }
     }
 

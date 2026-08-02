@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -179,6 +180,43 @@ class FileGeneratorTest {
         assertTrue(content.contains("Nebula"), "Should contain 1/1 Masterpiece Nebula link");
         assertFalse(content.contains("Black Printing Plate Cyan"), "Should EXCLUDE printing plates from Masterpieces section");
         assertFalse(content.contains("Pre Production Proof Orange"), "Should EXCLUDE proof cards from Masterpieces section");
+    }
+
+    @Test
+    void testSingleCardPageShowcaseFooter() throws Exception {
+        CardJson c1 = createTestCardJson("Juwan Howard", "1997-98", "Wizards", "Fleer", "Fleer Metal Universe", "Base Set", "Rubies", "1", "1/50", 50);
+        CardJson c2 = createTestCardJson("Juwan Howard", "1997-98", "Wizards", "Fleer", "Fleer Metal Universe", "Base Set", "Precious Metal Gems", "1", "1/100", 100);
+        CardJson c3 = createTestCardJson("Juwan Howard", "1997-98", "Wizards", "Fleer", "Fleer Ultra", "Base Set", "Gold Medallion", "5", null, null);
+
+        CardPageGenerator.CardData card1 = new CardPageGenerator.CardData(c1, "id1");
+        CardPageGenerator.CardData card2 = new CardPageGenerator.CardData(c2, "id2");
+        CardPageGenerator.CardData card3 = new CardPageGenerator.CardData(c3, "id3");
+
+        List<CardPageGenerator.CardData> allCards = List.of(card1, card2, card3);
+
+        List<Map<String, String>> brandCards = CardPageGenerator.findSameBrandCards(card1, allCards, 6);
+        assertEquals(1, brandCards.size());
+        assertEquals("Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems (/100)", brandCards.get(0).get("title"));
+
+        Set<String> brandIds = Set.of(card2.stableId);
+        List<Map<String, String>> companyCards = CardPageGenerator.findSameCompanyCards(card1, allCards, brandIds, 6);
+        assertEquals(1, companyCards.size());
+        assertEquals("Juwan Howard 1997-98 Fleer Ultra Gold Medallion", companyCards.get(0).get("title"));
+    }
+
+    private CardJson createTestCardJson(String player, String season, String team, String company, String brand, String theme, String variant, String number, String serialNumber, Integer printRun) {
+        CardJson c = new CardJson();
+        c.player = player;
+        c.season = season;
+        c.team = team;
+        c.company = company;
+        c.brand = brand;
+        c.theme = theme;
+        c.variant = variant;
+        c.cardNumber = number;
+        c.serialNumber = serialNumber;
+        c.printRun = printRun;
+        return c;
     }
 }
 

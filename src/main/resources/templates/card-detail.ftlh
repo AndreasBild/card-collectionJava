@@ -314,6 +314,38 @@ ${topNavHtml?no_esc}
         <h2>Collector FAQs</h2>
         ${faqHtml?no_esc}
     </section>
+    <#if (sameBrandCards?? && (sameBrandCards?size > 0)) || (sameCompanyCards?? && (sameCompanyCards?size > 0))>
+    <section class="seo-showcase-footer" aria-label="Related Brand & Manufacturer Cards">
+        <div class="seo-showcase-container">
+            <div class="seo-showcase-grid">
+                <#if sameBrandCards?? && (sameBrandCards?size > 0)>
+                <div class="seo-showcase-col">
+                    <h2 class="seo-showcase-title">${sameBrandTitle}</h2>
+                    <ul class="seo-showcase-list">
+                        <#list sameBrandCards as item>
+                        <li class="seo-showcase-item">
+                            <a href="${item.url}" title="View details for ${item.title}" class="plain seo-showcase-link">${item.title}</a>
+                        </li>
+                        </#list>
+                    </ul>
+                </div>
+                </#if>
+                <#if sameCompanyCards?? && (sameCompanyCards?size > 0)>
+                <div class="seo-showcase-col">
+                    <h2 class="seo-showcase-title">${sameCompanyTitle}</h2>
+                    <ul class="seo-showcase-list">
+                        <#list sameCompanyCards as item>
+                        <li class="seo-showcase-item">
+                            <a href="${item.url}" title="View details for ${item.title}" class="plain seo-showcase-link">${item.title}</a>
+                        </li>
+                        </#list>
+                    </ul>
+                </div>
+                </#if>
+            </div>
+        </div>
+    </section>
+    </#if>
     ${footerHtml?no_esc}
 </main>
 <div id="cardModal" class="modal" aria-hidden="true">
