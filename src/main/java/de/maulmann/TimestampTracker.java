@@ -54,6 +54,14 @@ public class TimestampTracker {
         }
     }
 
+    public boolean isModified(String identifier, String content) {
+        String contentToHash = MAIN_CSS_PATTERN.matcher(content.replace("[[STABLE_TIME]]", ""))
+                .replaceAll("main.css?v=STABLE");
+        String currentHash = calculateHash(contentToHash);
+        TimestampEntry entry = TimestampEntry.parse((String) storedData.get(identifier));
+        return entry == null || !entry.hash().equals(currentHash);
+    }
+
     public String getStableTimestamp(String identifier, String content) {
         String contentToHash = MAIN_CSS_PATTERN.matcher(content.replace("[[STABLE_TIME]]", ""))
                 .replaceAll("main.css?v=STABLE");

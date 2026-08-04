@@ -159,6 +159,7 @@ public class CardPageGenerator {
     public static void run() {
         log.info("Starting high-speed Card Page Generation...");
         long startTime = System.currentTimeMillis();
+        IndexNowService.ensureValidationFile();
         duplicateLog.clear();
         duplicateLog.add("=== DUPLICATE CARDS LOG ===");
         duplicateLog.add("Generated: " + new java.util.Date());
@@ -218,6 +219,8 @@ public class CardPageGenerator {
         } catch (IOException e) {
             log.error("Failed to write Duplicates.txt", e);
         }
+
+        IndexNowService.flushQueueAsync();
 
         long endTime = System.currentTimeMillis();
         log.info("All card pages generated in {} ms.", (endTime - startTime));
@@ -447,8 +450,10 @@ public class CardPageGenerator {
             template.process(data, sw);
             String finalHtml = sw.toString();
 
+            boolean isCardModified = true;
             if (timestampTracker != null && finalHtml.contains("[[STABLE_TIME]]")) {
                 String relativeOutputPath = Paths.get("output").toUri().relativize(path.toUri()).getPath();
+                isCardModified = timestampTracker.isModified(relativeOutputPath, finalHtml);
                 String stableTime = timestampTracker.getStableTimestamp(relativeOutputPath, finalHtml);
                 finalHtml = finalHtml.replace("[[STABLE_TIME]]", stableTime);
             }
@@ -458,6 +463,9 @@ public class CardPageGenerator {
             }
 
             Files.writeString(path, finalHtml, StandardCharsets.UTF_8);
+            if (isCardModified) {
+                IndexNowService.queueUrl(fullCardUrl);
+            }
 
         } catch (Exception e) {
             log.error("Error generating detail page for " + path, e);

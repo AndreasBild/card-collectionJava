@@ -85,6 +85,7 @@ public class SiteBuilderPipeline {
                     SitemapGenerator.setTimestampTracker(timeTracker);
 
                     FileGenerator.copyResources();
+                    IndexNowService.ensureValidationFile();
                     FileGenerator.buildCollectionOverview();
                     FileGenerator.buildOtherCollections();
                     FileGenerator.buildStaticPages();
@@ -136,6 +137,10 @@ public class SiteBuilderPipeline {
 
                 // --- PHASE 6: Invalidate CDN Cache ---
                 invalidateCloudFrontCache();
+
+                // --- PHASE 7: Notify IndexNow API ---
+                log.info("\n[PHASE 7] Submitting updated card URLs to IndexNow API...");
+                IndexNowService.flushQueueAsync();
             } catch (Exception e) {
                 if (e.toString().contains("SdkClientException") || (e.getCause() != null && e.getCause().toString().contains("SdkClientException"))) {
                     log.info("ℹ️ Local build: AWS credentials not found. Skipping S3 upload phases.");
