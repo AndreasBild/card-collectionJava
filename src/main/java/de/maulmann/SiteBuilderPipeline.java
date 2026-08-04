@@ -178,7 +178,7 @@ public class SiteBuilderPipeline {
 
                     String currentHash = tracker.getHash(file);
                     String storedHash = tracker.getStoredHash(file);
-                    if (currentHash != null && currentHash.equals(storedHash)) {
+                    if (!fileName.endsWith(".txt") && currentHash != null && currentHash.equals(storedHash)) {
                         skipCount.incrementAndGet();
                         return;
                     }
