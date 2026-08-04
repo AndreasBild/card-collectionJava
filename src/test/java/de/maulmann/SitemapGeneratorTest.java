@@ -30,12 +30,16 @@ class SitemapGeneratorTest {
         Path indexPage = outputDir.resolve("index.html");
         Files.writeString(indexPage, "<html><head><title>Home Page</title></head><body><h1>Welcome</h1></body></html>");
 
-        // Create mock highlight card page (1/1)
+        // Create mock highlight card page (1/1) with responsive image
         Path cardDir = outputDir.resolve("cards/1994-95");
         Files.createDirectories(cardDir);
         Path highlightCard = cardDir.resolve("rare-card-1.html");
         String highlightHtml = "<html><head><title>Rare Juwan Howard 1/1</title></head><body>" +
                 "<h1>Juwan Howard 1/1</h1>" +
+                "<figure><picture>" +
+                "<source type=\"image/avif\" srcset=\"rare-front-400w.avif 400w, rare-front-600w.avif 600w, rare-front.avif 1200w\">" +
+                "<img src=\"rare-front-400w.avif\" alt=\"Rare Front Scan\" title=\"Rare Juwan Howard 1/1 Front\">" +
+                "</picture><figcaption>Rare Front Scan</figcaption></figure>" +
                 "<table><tr><th class=\"specs-th\">Variant</th><td class=\"specs-td\">1/1 Masterpiece</td></tr>" +
                 "<tr><th class=\"specs-th\">Print Run</th><td class=\"specs-td\">1</td></tr></table>" +
                 "</body></html>";
@@ -78,12 +82,18 @@ class SitemapGeneratorTest {
         assertTrue(mainContent.contains("<priority>1.0</priority>"), "Main sitemap must have priority 1.0");
         assertTrue(mainContent.contains("<changefreq>daily</changefreq>"), "Main sitemap must have changefreq daily");
 
-        // Check sitemap-highlights.xml
+        // Check sitemap-highlights.xml for Image SEO namespace and tags
         Path sitemapHighlightsFile = outputDir.resolve("sitemap-highlights.xml");
         assertTrue(Files.exists(sitemapHighlightsFile), "sitemap-highlights.xml must exist");
         String highlightsContent = Files.readString(sitemapHighlightsFile);
         assertTrue(highlightsContent.contains("<priority>0.9</priority>"), "Highlights sitemap must have priority 0.9");
         assertTrue(highlightsContent.contains("rare-card-1.html"), "Highlights sitemap must contain rare card");
+        assertTrue(highlightsContent.contains("xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\""), "Highlights sitemap must include image namespace");
+        assertTrue(highlightsContent.contains("<image:image>"), "Highlights sitemap must contain <image:image> block");
+        assertTrue(highlightsContent.contains("rare-front.avif"), "Image loc must pick highest resolution candidate (rare-front.avif), not 400w thumbnail");
+        assertFalse(highlightsContent.contains("rare-front-400w.avif"), "Image loc must NOT use thumbnail");
+        assertTrue(highlightsContent.contains("<image:title>Rare Juwan Howard 1/1 Front</image:title>"), "Image title must be set");
+        assertTrue(highlightsContent.contains("<image:caption>Rare Front Scan</image:caption>"), "Image caption must be set");
 
         // Check sitemap-cards-1994-95.xml
         Path sitemapCardsFile = outputDir.resolve("sitemap-cards-1994-95.xml");
@@ -91,5 +101,16 @@ class SitemapGeneratorTest {
         String cardsContent = Files.readString(sitemapCardsFile);
         assertTrue(cardsContent.contains("<priority>0.5</priority>"), "Cards sitemap must have priority 0.5");
         assertTrue(cardsContent.contains("base-card-2.html"), "Cards sitemap must contain base card");
+    }
+
+    @Test
+    void testExtractHighestResCandidate() {
+        String srcset = "img-400w.avif 400w, img-600w.avif 600w, img-900w.avif 900w, img-1200w.avif 1200w";
+        String result = SitemapGenerator.extractHighestResCandidate(srcset);
+        assertEquals("img-1200w.avif", result, "Must select highest width candidate");
+
+        String srcsetWithOriginal = "img-400w.avif 400w, img.avif";
+        String resultOriginal = SitemapGenerator.extractHighestResCandidate(srcsetWithOriginal);
+        assertEquals("img.avif", resultOriginal, "Must select candidate without thumbnail suffix when unweighted");
     }
 }

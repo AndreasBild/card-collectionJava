@@ -50,7 +50,7 @@ public class SitemapGenerator {
         timestampTracker = tracker;
     }
 
-    public record ImageEntry(String loc, String caption) {}
+    public record ImageEntry(String loc, String title, String caption) {}
 
     public record SitemapUrlEntry(
             String relativePath,
@@ -186,47 +186,67 @@ public class SitemapGenerator {
 
                     // Extract images for sitemap
                     Set<String> processedImageUrls = new HashSet<>();
-                    Elements pictureSources = doc.select("picture source[srcset]");
-                    for (Element source : pictureSources) {
-                        String srcset = source.attr("srcset");
-                        if (!srcset.isEmpty()) {
-                            String[] candidates = srcset.split(",");
-                            String firstCandidate = candidates[0].trim().split("\\s+")[0];
-                            String absLoc = resolveImageLoc(relativePath, firstCandidate);
-                            if (!absLoc.isEmpty() && processedImageUrls.add(absLoc)) {
-                                images.add(new ImageEntry(absLoc, pageTitle));
+                    Elements pictureElements = doc.select("picture");
+                    for (Element picture : pictureElements) {
+                        Element img = picture.selectFirst("img");
+                        String imgTitle = (img != null) ? img.attr("title").trim() : "";
+                        String imgAlt = (img != null) ? img.attr("alt").trim() : "";
+
+                        Element figcaption = picture.parents().select("figcaption").first();
+                        String figText = (figcaption != null) ? figcaption.text().trim() : "";
+
+                        String imageTitle = !imgTitle.isEmpty() ? imgTitle : pageTitle;
+                        String imageCaption = !figText.isEmpty() ? figText : (!imgAlt.isEmpty() ? imgAlt : pageTitle);
+
+                        String bestCandidate = "";
+                        Elements sources = picture.select("source[srcset]");
+                        for (Element source : sources) {
+                            String candidate = extractHighestResCandidate(source.attr("srcset"));
+                            if (!candidate.isEmpty()) {
+                                bestCandidate = candidate;
+                                break;
+                            }
+                        }
+                        if (bestCandidate.isEmpty() && img != null) {
+                            String srcset = img.attr("srcset");
+                            if (!srcset.isEmpty()) {
+                                bestCandidate = extractHighestResCandidate(srcset);
+                            } else {
+                                bestCandidate = img.attr("src");
+                            }
+                        }
+
+                        if (!bestCandidate.isEmpty() && !bestCandidate.startsWith("data:")) {
+                            String absLoc = resolveImageLoc(relativePath, bestCandidate);
+                            String highResLoc = toHighResLoc(absLoc);
+                            if (!highResLoc.isEmpty() && processedImageUrls.add(highResLoc)) {
+                                images.add(new ImageEntry(highResLoc, imageTitle, imageCaption));
                                 imagesAdded.incrementAndGet();
                             }
                         }
                     }
 
-                    Elements imgs = doc.select("img");
-                    for (Element img : imgs) {
+                    // Fallback for standalone <img> elements (not inside <picture>)
+                    Elements standaloneImgs = doc.select("img");
+                    for (Element img : standaloneImgs) {
+                        if (img.parents().is("picture")) continue;
+
                         String src = img.attr("src");
-                        if (src.isEmpty() || src.startsWith("data:")) continue;
+                        String srcset = img.attr("srcset");
+                        String bestCandidate = !srcset.isEmpty() ? extractHighestResCandidate(srcset) : src;
+                        if (bestCandidate.isEmpty() || bestCandidate.startsWith("data:")) continue;
 
-                        String absImageLoc = resolveImageLoc(relativePath, src);
-                        if (absImageLoc.isEmpty() || !processedImageUrls.add(absImageLoc)) continue;
+                        String absImageLoc = resolveImageLoc(relativePath, bestCandidate);
+                        String highResLoc = toHighResLoc(absImageLoc);
+                        if (highResLoc.isEmpty() || !processedImageUrls.add(highResLoc)) continue;
 
-                        boolean exists = false;
-                        if (src.startsWith("http") || src.startsWith("//")) {
-                            exists = true;
-                        } else if (absImageLoc.startsWith(BASE_URL + "/")) {
-                            String relPath = absImageLoc.substring((BASE_URL + "/").length());
-                            if (Files.exists(Paths.get(OUTPUT_DIR, relPath))) {
-                                exists = true;
-                            }
-                        }
+                        String imgTitle = img.attr("title").trim();
+                        String imgAlt = img.attr("alt").trim();
+                        String imageTitle = !imgTitle.isEmpty() ? imgTitle : pageTitle;
+                        String imageCaption = !imgAlt.isEmpty() ? imgAlt : pageTitle;
 
-                        if (exists) {
-                            String alt = img.attr("alt");
-                            if (alt.isEmpty()) alt = img.attr("title");
-                            if (alt.isEmpty()) alt = pageTitle;
-                            images.add(new ImageEntry(absImageLoc, alt));
-                            imagesAdded.incrementAndGet();
-                        } else {
-                            imagesMissing.incrementAndGet();
-                        }
+                        images.add(new ImageEntry(highResLoc, imageTitle, imageCaption));
+                        imagesAdded.incrementAndGet();
                     }
                 } catch (IOException e) {
                     System.err.println("Could not parse " + path + ": " + e.getMessage());
@@ -369,6 +389,9 @@ public class SitemapGenerator {
                 for (ImageEntry img : entry.images()) {
                     writer.write("    <image:image>\n");
                     writer.write("      <image:loc>" + escapeXml(img.loc()) + "</image:loc>\n");
+                    if (img.title() != null && !img.title().trim().isEmpty()) {
+                        writer.write("      <image:title>" + escapeXml(img.title().trim()) + "</image:title>\n");
+                    }
                     if (img.caption() != null && !img.caption().trim().isEmpty()) {
                         writer.write("      <image:caption>" + escapeXml(img.caption().trim()) + "</image:caption>\n");
                     }
@@ -681,6 +704,69 @@ public class SitemapGenerator {
         } catch (Exception _) {
             return baseUrlStripped + "/" + imgSrc;
         }
+    }
+
+    public static String extractHighestResCandidate(String srcset) {
+        if (srcset == null || srcset.isBlank()) return "";
+        String[] candidates = srcset.split(",");
+        String bestUrl = "";
+        double maxScore = -1.0;
+
+        for (String candidate : candidates) {
+            String trimmed = candidate.trim();
+            if (trimmed.isEmpty()) continue;
+            String[] parts = trimmed.split("\\s+");
+            String url = parts[0];
+            double score = 0.0;
+
+            if (parts.length > 1) {
+                String descriptor = parts[1].toLowerCase();
+                if (descriptor.endsWith("w")) {
+                    try {
+                        score = Double.parseDouble(descriptor.substring(0, descriptor.length() - 1));
+                    } catch (NumberFormatException ignored) {}
+                } else if (descriptor.endsWith("x")) {
+                    try {
+                        score = Double.parseDouble(descriptor.substring(0, descriptor.length() - 1)) * 1000.0;
+                    } catch (NumberFormatException ignored) {}
+                }
+            } else {
+                if (!url.matches(".*-\\d+w\\.[a-zA-Z0-9]+$")) {
+                    score = 1000.0;
+                } else {
+                    score = 1.0;
+                }
+            }
+
+            if (score > maxScore) {
+                maxScore = score;
+                bestUrl = url;
+            }
+        }
+        return bestUrl;
+    }
+
+    private static String toHighResLoc(String absImageLoc) {
+        if (absImageLoc == null || absImageLoc.isEmpty()) return "";
+        String highRes = absImageLoc.replaceAll("-\\d+w(\\.[a-zA-Z0-9]+)$", "$1");
+
+        if (highRes.startsWith(BASE_URL + "/")) {
+            String relPath = highRes.substring((BASE_URL + "/").length());
+            if (Files.exists(Paths.get(OUTPUT_DIR, relPath))) {
+                return highRes;
+            }
+            if (relPath.endsWith(".avif")) {
+                String jpgRel = relPath.substring(0, relPath.length() - 5) + ".jpg";
+                if (Files.exists(Paths.get(OUTPUT_DIR, jpgRel))) {
+                    return BASE_URL + "/" + jpgRel;
+                }
+                String pngRel = relPath.substring(0, relPath.length() - 5) + ".png";
+                if (Files.exists(Paths.get(OUTPUT_DIR, pngRel))) {
+                    return BASE_URL + "/" + pngRel;
+                }
+            }
+        }
+        return highRes;
     }
 
     private static String getSpecValue(Document doc, String specName) {
