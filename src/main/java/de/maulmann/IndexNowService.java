@@ -27,7 +27,88 @@ import java.util.concurrent.Executors;
 public class IndexNowService {
 
     private static final Logger log = LoggerFactory.getLogger(IndexNowService.class);
-    private static final String INDEXNOW_ENDPOINT = "https://api.indexnow.org/indexnow";
+    private static final List<String> INDEXNOW_ENDPOINTS = List.of(
+            "https://api.indexnow.org/indexnow",
+            "https://yandex.com/indexnow",
+            "https://search.seznam.cz/indexnow"
+    );
+
+    /**
+     * Sends the IndexNow JSON payload with retry handling for HTTP 429 and fallback to participating IndexNow endpoints.
+     */
+    private static void sendPayloadWithRetry(List<String> urlList) {
+        String key = getKey();
+        String host = getHost();
+        String keyLocation = "https://" + host + "/" + key + ".txt";
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("host", host);
+        payload.put("key", key);
+        payload.put("keyLocation", keyLocation);
+        payload.put("urlList", urlList);
+
+        String jsonBody;
+        try {
+            jsonBody = objectMapper.writeValueAsString(payload);
+        } catch (Exception e) {
+            log.error("Failed to serialize IndexNow JSON payload", e);
+            return;
+        }
+
+        for (String endpoint : INDEXNOW_ENDPOINTS) {
+            int attempt = 0;
+            long backoffMs = 2000;
+
+            while (attempt <= MAX_RETRIES_ON_429) {
+                attempt++;
+                try {
+                    HttpRequest request = HttpRequest.newBuilder()
+                            .uri(URI.create(endpoint))
+                            .header("Content-Type", "application/json; charset=utf-8")
+                            .POST(HttpRequest.BodyPublishers.ofString(jsonBody, StandardCharsets.UTF_8))
+                            .timeout(Duration.ofSeconds(20))
+                            .build();
+
+                    HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+                    int status = response.statusCode();
+
+                    if (status == 200 || status == 202) {
+                        log.info("✅ IndexNow notification successful via {} for {} URL(s). Response Code: {}", endpoint, urlList.size(), status);
+                        return;
+                    } else if (status == 429) {
+                        log.warn("⚠️ IndexNow API ({}) responded with HTTP 429. Attempt {}/{} - Retrying in {} ms...",
+                                endpoint, attempt, MAX_RETRIES_ON_429 + 1, backoffMs);
+                        if (attempt <= MAX_RETRIES_ON_429) {
+                            Thread.sleep(backoffMs);
+                            backoffMs *= 2;
+                            continue;
+                        }
+                    } else if (status == 403) {
+                        log.warn("ℹ️ IndexNow endpoint {} returned HTTP 403. Trying fallback participating endpoint...", endpoint);
+                        break;
+                    } else {
+                        log.warn("⚠️ IndexNow endpoint {} responded with HTTP {}: {}", endpoint, status, response.body());
+                        break;
+                    }
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                    log.error("IndexNow API request interrupted", ie);
+                    return;
+                } catch (Exception e) {
+                    log.error("Failed to send IndexNow notification via {} for {} URL(s) (Attempt {}/{})", endpoint, urlList.size(), attempt, MAX_RETRIES_ON_429 + 1, e);
+                    if (attempt <= MAX_RETRIES_ON_429) {
+                        try {
+                            Thread.sleep(backoffMs);
+                            backoffMs *= 2;
+                        } catch (InterruptedException ie) {
+                            Thread.currentThread().interrupt();
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
     private static final String DEFAULT_HOST = "www.maulmann.de";
     private static final String DEFAULT_KEY = "527d7f6c267a449b8c4812117f05b108";
     private static final int MAX_URLS_PER_REQUEST = 10000;
@@ -165,80 +246,5 @@ public class IndexNowService {
                 sendPayloadWithRetry(batch);
             }
         }, executor);
-    }
-
-    /**
-     * Sends the IndexNow JSON payload with retry handling for HTTP 429 rate limiting.
-     */
-    private static void sendPayloadWithRetry(List<String> urlList) {
-        String key = getKey();
-        String host = getHost();
-        String keyLocation = "https://" + host + "/" + key + ".txt";
-
-        Map<String, Object> payload = new HashMap<>();
-        payload.put("host", host);
-        payload.put("key", key);
-        payload.put("keyLocation", keyLocation);
-        payload.put("urlList", urlList);
-
-        String jsonBody;
-        try {
-            jsonBody = objectMapper.writeValueAsString(payload);
-        } catch (Exception e) {
-            log.error("Failed to serialize IndexNow JSON payload", e);
-            return;
-        }
-
-        int attempt = 0;
-        long backoffMs = 2000;
-
-        while (attempt <= MAX_RETRIES_ON_429) {
-            attempt++;
-            try {
-                HttpRequest request = HttpRequest.newBuilder()
-                        .uri(URI.create(INDEXNOW_ENDPOINT))
-                        .header("Content-Type", "application/json; charset=utf-8")
-                        .POST(HttpRequest.BodyPublishers.ofString(jsonBody, StandardCharsets.UTF_8))
-                        .timeout(Duration.ofSeconds(20))
-                        .build();
-
-                HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-                int status = response.statusCode();
-
-                if (status == 200 || status == 202) {
-                    log.info("✅ IndexNow notification successful for {} URL(s). Response Code: {}", urlList.size(), status);
-                    return;
-                } else if (status == 429) {
-                    log.warn("⚠️ IndexNow API responded with HTTP 429 (Too Many Requests). Attempt {}/{} - Retrying in {} ms...",
-                            attempt, MAX_RETRIES_ON_429 + 1, backoffMs);
-                    if (attempt <= MAX_RETRIES_ON_429) {
-                        Thread.sleep(backoffMs);
-                        backoffMs *= 2;
-                        continue;
-                    }
-                } else if (status == 403) {
-                    log.warn("ℹ️ IndexNow API responded with HTTP 403 (Unauthorized). The validation file https://{}/{}.txt is not yet publicly deployed on the live domain.", host, key);
-                    return;
-                } else {
-                    log.warn("⚠️ IndexNow API responded with HTTP {}: {}", status, response.body());
-                    return;
-                }
-            } catch (InterruptedException ie) {
-                Thread.currentThread().interrupt();
-                log.error("IndexNow API request interrupted", ie);
-                return;
-            } catch (Exception e) {
-                log.error("Failed to send IndexNow notification for {} URL(s) (Attempt {}/{})", urlList.size(), attempt, MAX_RETRIES_ON_429 + 1, e);
-                if (attempt <= MAX_RETRIES_ON_429) {
-                    try {
-                        Thread.sleep(backoffMs);
-                        backoffMs *= 2;
-                    } catch (InterruptedException ie) {
-                        Thread.currentThread().interrupt();
-                        return;
-                    }
-                }
-            }
-        }
     }
 }

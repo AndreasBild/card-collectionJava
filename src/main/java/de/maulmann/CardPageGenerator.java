@@ -220,8 +220,6 @@ public class CardPageGenerator {
             log.error("Failed to write Duplicates.txt", e);
         }
 
-        IndexNowService.flushQueueAsync();
-
         long endTime = System.currentTimeMillis();
         log.info("All card pages generated in {} ms.", (endTime - startTime));
     }
