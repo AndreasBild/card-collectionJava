@@ -209,10 +209,7 @@ public class SiteBuilderPipeline {
                                     uploadBytes(s3Client, s3Key, brData, "application/xml", "br", CACHE_SHORT, uploadCount, tracker, file, currentHash);
                                 }
                                 case "ico" -> uploadRawFile(s3Client, file, s3Key, "image/x-icon", CACHE_LONG, uploadCount, tracker, currentHash);
-                                case "txt" -> {
-                                    byte[] brData = BrotliCompressor.compressBytes(Files.readAllBytes(file), BROTLI_FAST_QUALITY);
-                                    uploadBytes(s3Client, s3Key, brData, "text/plain", "br", CACHE_SHORT, uploadCount, tracker, file, currentHash);
-                                }
+                                case "txt" -> uploadRawFile(s3Client, file, s3Key, "text/plain; charset=utf-8", CACHE_SHORT, uploadCount, tracker, currentHash);
                                 default -> {}
                             }
                         } catch (Exception e) {
