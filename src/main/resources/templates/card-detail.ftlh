@@ -417,12 +417,9 @@ ${topNavHtml?no_esc}
     });
 </script>
 <script type="module">
-    import {initializeApp} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import {
         getFirestore,
-        initializeFirestore,
-        persistentLocalCache,
-        persistentMultipleTabManager,
         doc,
         setDoc,
         increment,
@@ -439,18 +436,18 @@ ${topNavHtml?no_esc}
         measurementId: "G-78BKZH6R67"
     };
 
-    const app = initializeApp(firebaseConfig);
+    let app;
+    if (!getApps().length) {
+        app = initializeApp(firebaseConfig);
+    } else {
+        app = getApp();
+    }
+
     let db;
     try {
-        db = initializeFirestore(app, {
-            localCache: persistentLocalCache({
-                tabManager: persistentMultipleTabManager()
-            })
-        });
+        db = getFirestore(app);
     } catch (e) {
-        try {
-            db = getFirestore(app);
-        } catch (e2) {}
+        console.warn("Could not initialize Firestore:", e);
     }
 
     function getStorage(key) {
