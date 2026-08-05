@@ -256,9 +256,11 @@ public class CardSchemaGenerator {
         sb.append("{\n");
         sb.append("  \"@context\": \"https://schema.org\",\n");
         sb.append("  \"@type\": \"CollectionPage\",\n");
+        sb.append("  \"@id\": \"").append(BASE_URL).append("/rainbows.html\",\n");
         sb.append("  \"name\": \"Parallel Rainbow Tracker & Set Checklists\",\n");
         sb.append("  \"description\": \"Tracking the hunt for complete parallel rainbow sets, PMGs, Refractors, and rare 90s basketball card variants.\",\n");
         sb.append("  \"url\": \"").append(BASE_URL).append("/rainbows.html\",\n");
+        sb.append("  \"publisher\": { \"@type\": \"Person\", \"name\": \"Mauli Maulmann\" },\n");
         sb.append("  \"isPartOf\": {\n");
         sb.append("    \"@type\": \"WebSite\",\n");
         sb.append("    \"name\": \"Maulmann Private Vault\",\n");

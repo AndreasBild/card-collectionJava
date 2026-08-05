@@ -18,7 +18,7 @@ public class TriviaManager {
             } else {
                 System.err.println("trivia_config.json wurde im Pfad /config/ nicht gefunden!");
             }
-        } catch (Exception _) {
+        } catch (Exception e) {
             System.err.println("Fehler beim Laden der trivia_config.json");
         }
         return MAPPER.createObjectNode();
