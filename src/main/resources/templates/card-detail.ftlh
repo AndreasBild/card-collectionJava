@@ -252,6 +252,13 @@ ${topNavHtml?no_esc}
     </#if>
     <section class="vote-section">
         <h2>Collector Sentiment</h2>
+        <div id="consent-needed-warning" class="consent-needed-warning" style="display: none; background: rgba(212, 175, 55, 0.12); border: 1px solid var(--accent-gold); color: var(--text-primary); padding: 16px; border-radius: var(--radius-md); margin: 0 auto 20px auto; max-width: 550px; text-align: center; font-size: 0.95rem;">
+            ⚠️ <strong>Zustimmung erforderlich:</strong> Bitte stimme den Website-Einstellungen zu, um Karten zu bewerten und zu liken.
+            <div style="margin-top: 12px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                <button id="inline-consent-accept" type="button" onclick="if(window.setConsent){window.setConsent('accepted');}else{localStorage.setItem('user_consent','accepted');const w=document.getElementById('consent-needed-warning');if(w)w.style.display='none';window.dispatchEvent(new Event('consent-given'));}" class="modern-button confirm-btn" style="padding: 6px 18px; font-size: 0.9rem;" title="Zustimmen">Zustimmen</button>
+                <button id="inline-consent-reject" type="button" onclick="if(window.setConsent){window.setConsent('rejected');}else{localStorage.setItem('user_consent','rejected');const w=document.getElementById('consent-needed-warning');if(w)w.style.display='none';}" class="modern-button cancel-btn" style="padding: 6px 18px; font-size: 0.9rem;" title="Ablehnen">Ablehnen</button>
+            </div>
+        </div>
         <div class="vote-container" data-card-id="${cardId}">
             <button id="like-btn" title="I like this card" class="vote-btn like">
                 <span class="icon">👍</span> <span class="label">Like</span> <span id="like-count" class="count">0</span>
@@ -536,17 +543,30 @@ ${topNavHtml?no_esc}
         } catch (e) {}
     }
 
+    let pendingVoteType = null;
+
+    window.addEventListener('consent-given', () => {
+        const warningEl = document.getElementById('consent-needed-warning');
+        if (warningEl) warningEl.style.display = 'none';
+
+        if (pendingRating) {
+            submitRating();
+        } else if (pendingVoteType) {
+            handleVote(pendingVoteType);
+            pendingVoteType = null;
+        }
+    });
+
     function checkConsent() {
         if (getStorage('user_consent') !== 'accepted') {
             if (window.showConsentBanner) {
                 window.showConsentBanner();
             }
-            const banner = document.getElementById('consent-banner');
-            if (banner) {
-                banner.style.backgroundColor = '#fff9c4';
-                setTimeout(() => banner.style.backgroundColor = '#fff', 2000);
+            const warningEl = document.getElementById('consent-needed-warning');
+            if (warningEl) {
+                warningEl.style.display = 'block';
+                warningEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
-            alert("Please accept site preferences in the banner below to rate cards.");
             return false;
         }
         return true;
@@ -554,6 +574,7 @@ ${topNavHtml?no_esc}
 
     async function handleVote(type) {
         if (!db || getStorage(localStorageKey)) return;
+        pendingVoteType = type;
         if (!checkConsent()) return;
 
         try {
@@ -566,6 +587,7 @@ ${topNavHtml?no_esc}
             }, {merge: true});
 
             setStorage(localStorageKey, 'true');
+            pendingVoteType = null;
             if (likeBtn && dislikeBtn) {
                 likeBtn.disabled = true;
                 dislikeBtn.disabled = true;

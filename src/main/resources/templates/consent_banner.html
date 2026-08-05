@@ -19,16 +19,25 @@
         const CONSENT_KEY = 'user_consent';
 
         function showBanner() {
+            if (!banner) return;
             banner.style.display = 'block';
+            banner.classList.add('pulse-highlight');
+            try {
+                banner.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            } catch(e) {}
         }
 
         function hideBanner() {
+            if (!banner) return;
             banner.style.display = 'none';
+            banner.classList.remove('pulse-highlight');
         }
 
         function setConsent(status) {
             localStorage.setItem(CONSENT_KEY, status);
             hideBanner();
+            const warningEl = document.getElementById('consent-needed-warning');
+            if (warningEl) warningEl.style.display = 'none';
             if (status === 'accepted') {
                 window.dispatchEvent(new Event('consent-given'));
             }
@@ -39,10 +48,18 @@
             showBanner();
         }
 
-        acceptBtn.addEventListener('click', () => setConsent('accepted'));
-        rejectBtn.addEventListener('click', () => setConsent('rejected'));
+        if (acceptBtn) acceptBtn.addEventListener('click', () => setConsent('accepted'));
+        if (rejectBtn) rejectBtn.addEventListener('click', () => setConsent('rejected'));
 
-        // Expose a function to re-show the banner
+        document.addEventListener('click', (e) => {
+            if (e.target && e.target.id === 'inline-consent-accept') {
+                setConsent('accepted');
+            } else if (e.target && e.target.id === 'inline-consent-reject') {
+                setConsent('rejected');
+            }
+        });
+
+        window.setConsent = setConsent;
         window.showConsentBanner = showBanner;
     })();
 </script>
