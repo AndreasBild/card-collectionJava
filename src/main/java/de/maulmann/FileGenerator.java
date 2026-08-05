@@ -663,38 +663,31 @@ public class FileGenerator {
                                     && c.variant != null && (c.variant.equalsIgnoreCase(reqVariant) || c.variant.toLowerCase().contains(reqVariant.toLowerCase())))
                             .findFirst().orElse(null);
 
-                    Map<String, Object> itemMap = new HashMap<>();
-                    itemMap.put("variant", reqVariant);
-                    itemMap.put("serial", reqSerial);
-
                     if (matched != null) {
                         acquiredCount++;
+                        Map<String, Object> itemMap = new HashMap<>();
+                        itemMap.put("variant", reqVariant);
+                        itemMap.put("serial", formatSerialAndPrintRun(matched.serialNumber, matched.printRun, reqSerial));
                         itemMap.put("acquired", true);
                         CardPageGenerator.CardData cd = new CardPageGenerator.CardData(matched, null);
                         itemMap.put("url", cd.fullRelativePath.replace("../../", ""));
                         itemMap.put("title", matched.player + " " + matched.season + " " + matched.brand + " " + matched.variant + " #" + matched.cardNumber);
-                        itemMap.put("serial", formatSerialAndPrintRun(matched.serialNumber, matched.printRun, reqSerial));
 
                         String rawImageBase = cd.filenameBase.contains("-") ? cd.filenameBase.substring(0, cd.filenameBase.lastIndexOf("-")) : cd.filenameBase;
                         String imageBaseName = CardPageGenerator.resolveDiskImageBase(cd.seasonFolder, rawImageBase, cd);
                         String frontImg = "images/" + cd.seasonFolder + "/" + imageBaseName + "-front-400w.avif";
                         itemMap.put("imgPath", frontImg);
-                    } else {
-                        itemMap.put("acquired", false);
-                        itemMap.put("title", "Juwan Howard " + season + " " + brand + " " + reqVariant + " #" + number);
+
+                        cardItems.add(itemMap);
                     }
-                    cardItems.add(itemMap);
                 }
 
-                if (acquiredCount == 0) continue; // Do not display rainbow sets without any acquired cards
-
-                int totalCount = expectedVariants.size();
-                int pct = (int) Math.round(((double) acquiredCount / totalCount) * 100);
+                if (acquiredCount <= 1) continue; // Do not display sets with only 1 card
 
                 setMap.put("cards", cardItems);
                 setMap.put("acquiredCount", acquiredCount);
-                setMap.put("totalCount", totalCount);
-                setMap.put("percentage", pct);
+                setMap.put("totalCount", acquiredCount);
+                setMap.put("percentage", 100);
 
                 rainbowSets.add(setMap);
             }

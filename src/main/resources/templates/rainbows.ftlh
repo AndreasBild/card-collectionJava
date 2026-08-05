@@ -57,17 +57,6 @@ ${topNavHtml?no_esc}
                                         </div>
                                     </a>
                                 </div>
-                            <#else>
-                                <div class="rainbow-item unacquired">
-                                    <a href="Wantlist.html" title="Seeking target parallel variant: ${card.title} (${card.variant}) - Click to view Wantlist" class="rainbow-card-link">
-                                        <div class="rainbow-card-placeholder">
-                                            <span class="silhouette-icon" aria-hidden="true">&#x1F50D;</span>
-                                            <span class="rainbow-item-variant" style="margin-top: 8px; font-size: 0.8rem;">${card.variant}</span>
-                                            <span class="rainbow-item-serial">${card.serial}</span>
-                                            <span class="rainbow-status-badge needed">SEEKING</span>
-                                        </div>
-                                    </a>
-                                </div>
                             </#if>
                         </#list>
                     </div>
