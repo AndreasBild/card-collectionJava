@@ -21,11 +21,27 @@ public class SharedTemplates {
     private static final SimpleLazyConstant<DateTimeFormatter> TIMESTAMP_FORMATTER =
             SimpleLazyConstant.of(() -> DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
 
-    // 3. NEW: Generate a unique ID for this specific site build
-    static String BUILD_ID = String.valueOf(System.currentTimeMillis());
+    // 3. Generate a stable cache buster ID derived from css/main.css content hash
+    static String BUILD_ID = calculateBuildId();
 
     public static void setBuildId(String id) {
         BUILD_ID = id;
+    }
+
+    private static String calculateBuildId() {
+        try {
+            String cssContent = loadResource("/css/main.css");
+            if (cssContent == null || cssContent.isEmpty()) cssContent = loadResource("/templates/head.html");
+            java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
+            byte[] digest = md.digest(cssContent.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+            StringBuilder sb = new StringBuilder();
+            for (byte b : digest) {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString().substring(0, 8);
+        } catch (Exception e) {
+            return "1.0";
+        }
     }
     static String loadResource(String path) {
         // If the template is already in RAM, return it instantly (0 Disk I/O)

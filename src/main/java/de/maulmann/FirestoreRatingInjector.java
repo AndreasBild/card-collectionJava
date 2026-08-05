@@ -105,6 +105,7 @@ public class FirestoreRatingInjector {
             Document doc = Jsoup.parse(file, "UTF-8");
             boolean modified = processDocument(doc, path.getFileName().toString(), firestoreData);
             if (modified) {
+                log.info("MODIFIED DISK FILE IN FIRESTORE INJECTOR: {}", path);
                 Files.writeString(path, doc.outerHtml(), StandardCharsets.UTF_8);
                 return true;
             }
@@ -120,6 +121,9 @@ public class FirestoreRatingInjector {
         Map<String, Object> data = cardId != null ? firestoreData.get(cardId) : null;
 
         Element templateScript = doc.selectFirst("script#product-schema-template");
+        boolean isJsonTemplate = templateScript != null && "application/json".equalsIgnoreCase(templateScript.attr("type"));
+
+        boolean modified = false;
 
         if (data != null) {
             long ratingCount = parseLong(data.get("ratingCount"));
@@ -130,14 +134,24 @@ public class FirestoreRatingInjector {
                 String cacheValue = ratingCount + ":" + ratingSum;
                 String storedValue = ratingCache.getProperty(cacheKey);
 
-                if (!cacheValue.equals(storedValue)) {
+                if (!cacheValue.equals(storedValue) || isJsonTemplate) {
                     double rawAverage = ratingSum / ratingCount;
                     double averageRating = Math.clamp(rawAverage, 1.0, 5.0);
 
-                    if (templateScript != null) {
-                        String jsonContent = templateScript.html();
+                    Element productScript = templateScript;
+                    if (productScript == null) {
+                        for (Element script : doc.select("script[type=application/ld+json]")) {
+                            if (script.html().contains("\"@type\": \"Product\"")) {
+                                productScript = script;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (productScript != null) {
+                        String jsonContent = productScript.html();
                         int lastBraceIndex = jsonContent.lastIndexOf("}");
-                        if (lastBraceIndex != -1) {
+                        if (lastBraceIndex != -1 && !jsonContent.contains("\"aggregateRating\"")) {
                             String ratingInjection = String.format(Locale.US,
                                     ",\n  \"aggregateRating\": {\n" +
                                             "    \"@type\": \"AggregateRating\",\n" +
@@ -146,25 +160,31 @@ public class FirestoreRatingInjector {
                                             "  }\n", averageRating, ratingCount);
 
                             jsonContent = jsonContent.substring(0, lastBraceIndex) + ratingInjection + "}";
-                            templateScript.text(jsonContent);
-                            templateScript.attr("type", "application/ld+json");
-                            templateScript.removeAttr("id");
+                            productScript.text(jsonContent);
+                            productScript.attr("type", "application/ld+json");
+                            productScript.removeAttr("id");
+                            modified = true;
+                        } else if (isJsonTemplate) {
+                            productScript.attr("type", "application/ld+json");
+                            productScript.removeAttr("id");
+                            modified = true;
                         }
                     }
 
-                    log.info("Injected NEW ratings into: {} (Count: {}, Sum: {})", fileName, ratingCount, ratingSum);
-                    ratingCache.setProperty(cacheKey, cacheValue);
-                    return true;
+                    if (!cacheValue.equals(storedValue)) {
+                        log.info("Injected NEW ratings into: {} (Count: {}, Sum: {})", fileName, ratingCount, ratingSum);
+                        ratingCache.setProperty(cacheKey, cacheValue);
+                    }
                 }
             }
         }
 
-        if (templateScript != null) {
+        if (isJsonTemplate && (data == null || parseLong(data.get("ratingCount")) <= 0)) {
             templateScript.remove();
-            return true;
+            modified = true;
         }
 
-        return false;
+        return modified;
     }
 
     private static long parseLong(Object obj) {

@@ -159,10 +159,10 @@ public class CardPageGenerator {
     public static void run() {
         log.info("Starting high-speed Card Page Generation...");
         long startTime = System.currentTimeMillis();
+        CardSchemaGenerator.loadRatingCache();
         IndexNowService.ensureValidationFile();
         duplicateLog.clear();
         duplicateLog.add("=== DUPLICATE CARDS LOG ===");
-        duplicateLog.add("Generated: " + new java.util.Date());
         duplicateLog.add("This file lists all un-numbered cards that were filtered out to prevent duplicate pages.\n");
 
         Path cardsDir = Paths.get(BASE_FOLDER);
@@ -653,7 +653,14 @@ public class CardPageGenerator {
         }
 
         List<CardData> top = scored.entrySet().stream()
-                .sorted((e1, e2) -> Integer.compare(e2.getValue(), e1.getValue()))
+                .sorted((e1, e2) -> {
+                    int cmp = Integer.compare(e2.getValue(), e1.getValue());
+                    if (cmp != 0) return cmp;
+                    if (e1.getKey().stableId != null && e2.getKey().stableId != null) {
+                        return e1.getKey().stableId.compareTo(e2.getKey().stableId);
+                    }
+                    return e1.getKey().filename.compareTo(e2.getKey().filename);
+                })
                 .limit(limit)
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());

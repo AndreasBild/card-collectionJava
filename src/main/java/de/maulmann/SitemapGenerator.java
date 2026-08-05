@@ -19,6 +19,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
@@ -304,10 +306,10 @@ public class SitemapGenerator {
                 System.out.println("   > Images missing: " + imagesMissing.get());
             }
 
-            generateHtmlSitemap(coreLinks, seasonGroups);
+            generateHtmlSitemap(coreLinks, seasonGroups, timestampTracker);
             generateLlmsTxt();
             generateLlmsFullTxt(allPaths);
-            generateRssFeed(allPaths);
+            generateRssFeed(allPaths, timestampTracker);
 
         } catch (Exception e) {
             System.err.println("Failed to generate Sitemap: " + e.getMessage());
@@ -500,7 +502,7 @@ public class SitemapGenerator {
         }
     }
 
-    private static void generateRssFeed(List<Path> allPaths) {
+    private static void generateRssFeed(List<Path> allPaths, TimestampTracker timestampTracker) {
         System.out.println("-> Generating RSS feed (rss.xml)...");
         StringBuilder rss = new StringBuilder();
         rss.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
@@ -514,7 +516,22 @@ public class SitemapGenerator {
 
         SimpleDateFormat rfc822 = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
         rfc822.setTimeZone(TimeZone.getTimeZone("UTC"));
-        rss.append("    <pubDate>").append(rfc822.format(new Date())).append("</pubDate>\n");
+
+        String channelPubDate;
+        if (timestampTracker != null) {
+            String stableTime = timestampTracker.getStableTimestamp("rss.xml", "RSS_FEED_STATIC_MARKER");
+            try {
+                DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+                LocalDateTime ldt = LocalDateTime.parse(stableTime, fmt);
+                channelPubDate = rfc822.format(java.util.Date.from(ldt.atZone(java.time.ZoneId.of("UTC")).toInstant()));
+            } catch (Exception e) {
+                channelPubDate = rfc822.format(new Date());
+            }
+        } else {
+            channelPubDate = rfc822.format(new Date());
+        }
+
+        rss.append("    <pubDate>").append(channelPubDate).append("</pubDate>\n");
 
         Path outputDirPath = Paths.get(OUTPUT_DIR);
         int itemCap = 50;
@@ -533,10 +550,18 @@ public class SitemapGenerator {
                 if (title.isEmpty()) title = path.getFileName().toString().replace(".html", "");
 
                 String pubDate;
-                try {
-                    pubDate = rfc822.format(new Date(Files.getLastModifiedTime(path).toMillis()));
-                } catch (Exception e) {
-                    pubDate = rfc822.format(new Date());
+                if (timestampTracker != null) {
+                    String isoDate = timestampTracker.getIsoDate(relativePath);
+                    try {
+                        SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                        isoFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+                        Date d = isoFormat.parse(isoDate);
+                        pubDate = rfc822.format(d);
+                    } catch (Exception e) {
+                        pubDate = channelPubDate;
+                    }
+                } else {
+                    pubDate = channelPubDate;
                 }
 
                 rss.append("    <item>\n");
@@ -567,7 +592,7 @@ public class SitemapGenerator {
         }
     }
 
-    private static void generateHtmlSitemap(List<Map<String, String>> coreLinks, Map<String, List<Map<String, String>>> seasonGroups) {
+    private static void generateHtmlSitemap(List<Map<String, String>> coreLinks, Map<String, List<Map<String, String>>> seasonGroups, TimestampTracker timestampTracker) {
         try {
             System.out.println("-> Generating sitemap.html...");
 

@@ -47,7 +47,7 @@ public class FileGenerator {
             System.out.println("-> Generiere latest.json...");
             String json = "{\n" +
                     "  \"cardCount\": " + totalCardCount + ",\n" +
-                    "  \"lastUpdate\": \"" + System.currentTimeMillis() + "\"\n" +
+                    "  \"lastUpdate\": \"" + SharedTemplates.BUILD_ID + "\"\n" +
                     "}";
             Files.writeString(Paths.get(pathOutput, "latest.json"), json, StandardCharsets.UTF_8);
         } catch (IOException e) {

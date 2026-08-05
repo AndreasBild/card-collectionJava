@@ -222,7 +222,7 @@ public class CardSchemaGenerator {
         sb.append("}\n");
         sb.append("</script>\n");
 
-        // 5. Product Schema (Active JSON-LD if cached, or template for new ratings)
+        // 5. Product Schema (Active JSON-LD)
         if (!ratingCacheLoaded) {
             loadRatingCache();
         }
@@ -246,11 +246,7 @@ public class CardSchemaGenerator {
 
         boolean hasCachedRating = ratingCount > 0 && ratingSum >= 0;
 
-        if (hasCachedRating) {
-            sb.append("<script type=\"application/ld+json\">\n");
-        } else {
-            sb.append("<script type=\"application/json\" id=\"product-schema-template\">\n");
-        }
+        sb.append("<script type=\"application/ld+json\" id=\"product-schema-template\">\n");
 
         sb.append("{\n");
         sb.append("  \"@context\": \"https://schema.org\",\n");

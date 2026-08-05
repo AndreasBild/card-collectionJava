@@ -91,8 +91,8 @@ public class SiteBuilderPipeline {
                     FileGenerator.buildStaticPages();
                     CardPageGenerator.run();
 
-                    timeTracker.save();
                     SitemapGenerator.generate(); // Sitemap & robots.txt now ready for Phase 3
+                    timeTracker.save();
 
                     // --- PHASE 1.5: Inject Firestore Ratings ---
                     log.info("  -> [PHASE 1.5] Injecting Firestore ratings...");
@@ -147,6 +147,8 @@ public class SiteBuilderPipeline {
                 } else {
                     throw e;
                 }
+            } finally {
+                tracker.save();
             }
 
             long pipelineEnd = System.currentTimeMillis();
@@ -172,13 +174,13 @@ public class SiteBuilderPipeline {
                     String fileName = file.getFileName().toString().toLowerCase();
                     String s3Key = outputDir.relativize(file).toString().replace("\\", "/");
 
-                    if ((fileName.startsWith("sitemap") && fileName.endsWith(".xml")) || fileName.endsWith(".xml.gz") || fileName.endsWith(".properties")) {
+                    if (fileName.equalsIgnoreCase(".ds_store") || (fileName.startsWith("sitemap") && fileName.endsWith(".xml")) || fileName.endsWith(".xml.gz") || fileName.endsWith(".properties")) {
                         return;
                     }
 
                     String currentHash = tracker.getHash(file);
                     String storedHash = tracker.getStoredHash(file);
-                    if (!fileName.endsWith(".txt") && currentHash != null && currentHash.equals(storedHash)) {
+                    if (currentHash != null && currentHash.equals(storedHash)) {
                         skipCount.incrementAndGet();
                         return;
                     }
@@ -224,6 +226,9 @@ public class SiteBuilderPipeline {
         }
 
         log.info("-> Uploaded {} web files. (Skipped {} unmodified files).", uploadCount.get(), skipCount.get());
+        if (tracker != null) {
+            tracker.save();
+        }
     }
 
     private static void processAndUploadImages(S3AsyncClient s3Client, FileTracker tracker) throws Exception {
@@ -270,6 +275,9 @@ public class SiteBuilderPipeline {
         }
 
         log.info("-> Synced {} images. (Skipped {} unmodified images).", uploadCount.get(), skipCount.get());
+        if (tracker != null) {
+            tracker.save();
+        }
     }
 
     private static void cleanOrphanedS3Files(S3AsyncClient s3Client) {
@@ -407,6 +415,12 @@ public class SiteBuilderPipeline {
     }
 
     private static void uploadBytes(S3AsyncClient s3Client, String s3Key, byte[] data, String contentType, String contentEncoding, String cacheControl, AtomicInteger counter, FileTracker tracker, Path localFile, String preCalculatedHash) {
+        if (tracker != null && localFile != null) {
+            tracker.updateHash(localFile, preCalculatedHash);
+        }
+
+        if (s3Client == null) return;
+
         PutObjectRequest request = PutObjectRequest.builder()
                 .bucket(BUCKET_NAME)
                 .key(s3Key)
@@ -418,12 +432,15 @@ public class SiteBuilderPipeline {
 
         s3Client.putObject(request, AsyncRequestBody.fromBytes(data)).join();
         counter.incrementAndGet();
-        if (tracker != null && localFile != null) {
-            tracker.updateHash(localFile, preCalculatedHash);
-        }
     }
 
     private static void uploadRawFile(S3AsyncClient s3Client, Path localFile, String s3Key, String contentType, String cacheControl, AtomicInteger counter, FileTracker tracker, String preCalculatedHash) {
+        if (tracker != null && localFile != null) {
+            tracker.updateHash(localFile, preCalculatedHash);
+        }
+
+        if (s3Client == null) return;
+
         PutObjectRequest request = PutObjectRequest.builder()
                 .bucket(BUCKET_NAME)
                 .key(s3Key)
@@ -434,9 +451,6 @@ public class SiteBuilderPipeline {
 
         s3Client.putObject(request, AsyncRequestBody.fromFile(localFile)).join();
         counter.incrementAndGet();
-        if (tracker != null && localFile != null) {
-            tracker.updateHash(localFile, preCalculatedHash);
-        }
     }
 
     private static String determineImageContentType(String fileName) {
