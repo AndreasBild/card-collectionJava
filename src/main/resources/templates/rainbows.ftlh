@@ -41,7 +41,7 @@ ${topNavHtml?no_esc}
                         <#list set.cards as card>
                             <#if card.acquired>
                                 <div class="rainbow-item acquired">
-                                    <a href="${card.url}?from=rainbows" title="${card.title}" class="rainbow-card-link">
+                                    <a href="${card.url}?from=rainbows" title="View details for ${card.title} (${card.variant})" class="rainbow-card-link">
                                         <figure class="rainbow-card-figure">
                                             <picture class="rainbow-card-media">
                                                 <source type="image/avif" srcset="${card.imgPath}">
@@ -57,6 +57,17 @@ ${topNavHtml?no_esc}
                                         </div>
                                     </a>
                                 </div>
+                            <#else>
+                                <div class="rainbow-item unacquired">
+                                    <a href="Wantlist.html" title="Seeking target parallel variant: ${card.title} (${card.variant}) - Click to view Wantlist" class="rainbow-card-link">
+                                        <div class="rainbow-card-placeholder">
+                                            <span class="silhouette-icon" aria-hidden="true">&#x1F50D;</span>
+                                            <span class="rainbow-item-variant" style="margin-top: 8px; font-size: 0.8rem;">${card.variant}</span>
+                                            <span class="rainbow-item-serial">${card.serial}</span>
+                                            <span class="rainbow-status-badge needed">SEEKING</span>
+                                        </div>
+                                    </a>
+                                </div>
                             </#if>
                         </#list>
                     </div>
@@ -65,6 +76,22 @@ ${topNavHtml?no_esc}
         <#else>
             <p>Loading Rainbow Tracker data...</p>
         </#if>
+    </section>
+
+    <section class="faq-section seo-box" style="margin-top: 2rem;">
+        <h2>Frequently Asked Questions</h2>
+        <details class="faq-details">
+            <summary class="faq-summary">What is a sports card Parallel Rainbow?</summary>
+            <p class="faq-answer">A "Rainbow" in sports card collecting represents acquiring every single parallel color, serial-numbered variant, and 1/1 Masterpiece produced for a specific card set during a release season.</p>
+        </details>
+        <details class="faq-details">
+            <summary class="faq-summary">How is parallel rainbow completion progress calculated?</summary>
+            <p class="faq-answer">Completion progress is calculated by dividing the count of acquired parallel cards by the total known manufactured parallel variants in that specific card set.</p>
+        </details>
+        <details class="faq-details">
+            <summary class="faq-summary">What happens if a parallel card variant is missing from the rainbow?</summary>
+            <p class="faq-answer">Unacquired parallel variants are marked as "SEEKING" and actively tracked on our <a href="Wantlist.html" title="Juwan Howard Wantlist">Juwan Howard Wantlist</a> for future acquisition.</p>
+        </details>
     </section>
 </main>
 ${footerHtml?no_esc}

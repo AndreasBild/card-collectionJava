@@ -21489,9 +21489,9 @@
   "isRookie" : false
 }, {
   "id" : "2010-11-panini-gold-standard-gold-mining-autograph-33-sn32",
-  "player" : "Juwan Howard",
+  "player" : "Juwan Howard, Jalen Rose",
   "season" : "2010-11",
-  "team" : "Miami Heat",
+  "team" : "Miami Heat, Denver Nuggets",
   "company" : "Panini",
   "brand" : "Panini Gold Standard",
   "theme" : "Gold Mining",
@@ -21501,7 +21501,7 @@
   "printRun" : 50,
   "gradingCompany" : null,
   "grade" : null,
-  "collection" : "Juwan Howard",
+  "collection" : "Juwan Howard, Jalen Rose",
   "notes" : null,
   "isAutograph" : true,
   "isPatch" : false,
@@ -23389,9 +23389,9 @@
   "isRookie" : false
 }, {
   "id" : "2019-20-panini-immaculate-collection-dual-patch-jersey-number-jersey-patch-dp-jkg-sn2",
-  "player" : "Juwan Howard",
+  "player" : "Juwan Howard, Kevin Garnett",
   "season" : "2019-20",
-  "team" : "Washington Wizards",
+  "team" : "Washington Wizards, Boston Celtics",
   "company" : "Panini",
   "brand" : "Panini Immaculate Collection",
   "theme" : "Dual Patch Jersey Number",
@@ -23401,7 +23401,7 @@
   "printRun" : 5,
   "gradingCompany" : null,
   "grade" : null,
-  "collection" : "Juwan Howard",
+  "collection" : "Juwan Howard, Kevin Garnett",
   "notes" : null,
   "isAutograph" : false,
   "isPatch" : true,

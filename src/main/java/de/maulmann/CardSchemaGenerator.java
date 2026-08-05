@@ -16,6 +16,21 @@ public class CardSchemaGenerator {
 
     private static final String BASE_URL = "https://www.maulmann.de";
     private static final TriviaManager TRIVIA_MANAGER = new TriviaManager();
+    private static final java.util.Properties RATING_CACHE = new java.util.Properties();
+    private static boolean ratingCacheLoaded = false;
+
+    public static synchronized void loadRatingCache() {
+        java.io.File cacheFile = new java.io.File("output/rating-cache.properties");
+        if (cacheFile.exists()) {
+            try (java.io.InputStream in = java.nio.file.Files.newInputStream(cacheFile.toPath())) {
+                RATING_CACHE.clear();
+                RATING_CACHE.load(in);
+                ratingCacheLoaded = true;
+            } catch (Exception _) {
+                // Ignore
+            }
+        }
+    }
 
     public static String generateFaqHtml(CardPageGenerator.CardData c) {
         StringBuilder sb = new StringBuilder();
@@ -207,8 +222,36 @@ public class CardSchemaGenerator {
         sb.append("}\n");
         sb.append("</script>\n");
 
-        // 5. Product Schema Template (for rating injection)
-        sb.append("<script type=\"application/json\" id=\"product-schema-template\">\n");
+        // 5. Product Schema (Active JSON-LD if cached, or template for new ratings)
+        if (!ratingCacheLoaded) {
+            loadRatingCache();
+        }
+
+        String cachedRating = c.stableId != null ? RATING_CACHE.getProperty(c.stableId) : null;
+        if (cachedRating == null && c.filename != null) {
+            cachedRating = RATING_CACHE.getProperty(c.filename);
+        }
+
+        long ratingCount = 0;
+        double ratingSum = 0.0;
+        if (cachedRating != null) {
+            String[] parts = cachedRating.split(":", 2);
+            if (parts.length == 2) {
+                try {
+                    ratingCount = Long.parseLong(parts[0]);
+                    ratingSum = Double.parseDouble(parts[1]);
+                } catch (Exception _) {}
+            }
+        }
+
+        boolean hasCachedRating = ratingCount > 0 && ratingSum >= 0;
+
+        if (hasCachedRating) {
+            sb.append("<script type=\"application/ld+json\">\n");
+        } else {
+            sb.append("<script type=\"application/json\" id=\"product-schema-template\">\n");
+        }
+
         sb.append("{\n");
         sb.append("  \"@context\": \"https://schema.org\",\n");
         sb.append("  \"@type\": \"Product\",\n");
@@ -240,13 +283,25 @@ public class CardSchemaGenerator {
 
         if (isHolyGrail(c)) {
             sb.append(",\n  \"category\": \"Sports Trading Cards\",\n");
-            sb.append("  \"material\": \"Premium Hobby Parallel\"\n");
+            sb.append("  \"material\": \"Premium Hobby Parallel\"");
         } else {
-            sb.append(",\n  \"category\": \"Sports Trading Cards\"\n");
+            sb.append(",\n  \"category\": \"Sports Trading Cards\"");
         }
-        sb.append("}\n");
-        sb.append("</script>\n");
 
+        if (hasCachedRating) {
+            double rawAverage = ratingSum / ratingCount;
+            double averageRating = Math.clamp(rawAverage, 1.0, 5.0);
+            sb.append(String.format(java.util.Locale.US,
+                    ",\n  \"aggregateRating\": {\n" +
+                    "    \"@type\": \"AggregateRating\",\n" +
+                    "    \"ratingValue\": %.1f,\n" +
+                    "    \"reviewCount\": %d\n" +
+                    "  }\n", averageRating, ratingCount));
+        } else {
+            sb.append("\n");
+        }
+
+        sb.append("}\n");
         return sb.toString();
     }
 
@@ -255,27 +310,37 @@ public class CardSchemaGenerator {
         sb.append("<script type=\"application/ld+json\">\n");
         sb.append("{\n");
         sb.append("  \"@context\": \"https://schema.org\",\n");
-        sb.append("  \"@type\": \"CollectionPage\",\n");
-        sb.append("  \"name\": \"Parallel Rainbow Tracker & Set Checklists\",\n");
-        sb.append("  \"description\": \"Tracking the hunt for complete parallel rainbow sets, PMGs, Refractors, and rare 90s basketball card variants.\",\n");
-        sb.append("  \"url\": \"").append(BASE_URL).append("/rainbows.html\",\n");
-        sb.append("  \"isPartOf\": {\n");
-        sb.append("    \"@type\": \"WebSite\",\n");
-        sb.append("    \"name\": \"Maulmann Private Vault\",\n");
-        sb.append("    \"url\": \"").append(BASE_URL).append("\"\n");
-        sb.append("  },\n");
-        sb.append("  \"breadcrumb\": {\n");
-        sb.append("    \"@type\": \"BreadcrumbList\",\n");
-        sb.append("    \"itemListElement\": [\n");
-        sb.append("      {\"@type\": \"ListItem\", \"position\": 1, \"name\": \"Home\", \"item\": \"").append(BASE_URL).append("/index.html\"},\n");
-        sb.append("      {\"@type\": \"ListItem\", \"position\": 2, \"name\": \"Rainbow Tracker\", \"item\": \"").append(BASE_URL).append("/rainbows.html\"}\n");
-        sb.append("    ]\n");
-        sb.append("  },\n");
-        sb.append("  \"mainEntity\": {\n");
-        sb.append("    \"@type\": \"ItemList\",\n");
-        sb.append("    \"name\": \"Juwan Howard Single-Card Parallel Rainbow Checklists\",\n");
-        sb.append("    \"numberOfItems\": ").append(rainbowSets.size()).append(",\n");
-        sb.append("    \"itemListElement\": [\n");
+        sb.append("  \"@graph\": [\n");
+
+        // 1. CollectionPage Node
+        sb.append("    {\n");
+        sb.append("      \"@type\": \"CollectionPage\",\n");
+        sb.append("      \"@id\": \"").append(BASE_URL).append("/rainbows.html#webpage\",\n");
+        sb.append("      \"url\": \"").append(BASE_URL).append("/rainbows.html\",\n");
+        sb.append("      \"name\": \"Parallel Rainbow Tracker & Set Checklists\",\n");
+        sb.append("      \"description\": \"Tracking the hunt for complete parallel rainbow sets, PMGs, Refractors, and rare 90s basketball card variants in the Juwan Howard private vault.\",\n");
+        sb.append("      \"inLanguage\": \"en\",\n");
+        sb.append("      \"isPartOf\": { \"@type\": \"WebSite\", \"name\": \"Maulmann Private Vault\", \"url\": \"").append(BASE_URL).append("\" },\n");
+        sb.append("      \"publisher\": { \"@type\": \"Organization\", \"name\": \"Maulmann Private Vault\", \"url\": \"").append(BASE_URL).append("\" },\n");
+        sb.append("      \"about\": { \"@type\": \"Person\", \"name\": \"Juwan Howard\", \"sameAs\": \"https://en.wikipedia.org/wiki/Juwan_Howard\" },\n");
+        sb.append("      \"breadcrumb\": { \"@id\": \"").append(BASE_URL).append("/rainbows.html#breadcrumb\" },\n");
+        sb.append("      \"mainEntity\": { \"@id\": \"").append(BASE_URL).append("/rainbows.html#mainlist\" }\n");
+        sb.append("    },\n");
+
+        // 2. BreadcrumbList Node
+        List<Map<String, String>> bcItems = List.of(
+                Map.of("name", "Home", "link", BASE_URL + "/index.html"),
+                Map.of("name", "Rainbow Tracker", "link", BASE_URL + "/rainbows.html")
+        );
+        sb.append(SharedTemplates.getBreadcrumbJsonLd(bcItems, BASE_URL + "/rainbows.html#breadcrumb")).append(",\n");
+
+        // 3. Main ItemList Node
+        sb.append("    {\n");
+        sb.append("      \"@type\": \"ItemList\",\n");
+        sb.append("      \"@id\": \"").append(BASE_URL).append("/rainbows.html#mainlist\",\n");
+        sb.append("      \"name\": \"Juwan Howard Single-Card Parallel Rainbow Checklists\",\n");
+        sb.append("      \"numberOfItems\": ").append(rainbowSets.size()).append(",\n");
+        sb.append("      \"itemListElement\": [\n");
 
         for (int i = 0; i < rainbowSets.size(); i++) {
             Map<String, Object> set = rainbowSets.get(i);
@@ -291,56 +356,96 @@ public class CardSchemaGenerator {
             @SuppressWarnings("unchecked")
             List<Map<String, Object>> cards = (List<Map<String, Object>>) set.get("cards");
 
-            sb.append("      {\n");
-            sb.append("        \"@type\": \"ListItem\",\n");
-            sb.append("        \"position\": ").append(i + 1).append(",\n");
-            sb.append("        \"item\": {\n");
-            sb.append("          \"@type\": \"ItemList\",\n");
-            sb.append("          \"name\": \"").append(escapeJson(name)).append("\",\n");
-            sb.append("          \"description\": \"Season: ").append(escapeJson(season))
+            sb.append("        {\n");
+            sb.append("          \"@type\": \"ListItem\",\n");
+            sb.append("          \"position\": ").append(i + 1).append(",\n");
+            sb.append("          \"item\": {\n");
+            sb.append("            \"@type\": \"ItemList\",\n");
+            sb.append("            \"name\": \"").append(escapeJson(name)).append("\",\n");
+            sb.append("            \"description\": \"Season: ").append(escapeJson(season))
                     .append(" | Company: ").append(escapeJson(company))
                     .append(" | Brand: ").append(escapeJson(brand))
                     .append(" | Set: ").append(escapeJson(theme))
                     .append(" | Card #: ").append(escapeJson(number))
                     .append(" | Progress: ").append(acquiredCount).append("/").append(totalCount).append(" acquired\",\n");
-            sb.append("          \"numberOfItems\": ").append(cards.size()).append(",\n");
-            sb.append("          \"itemListElement\": [\n");
+            sb.append("            \"numberOfItems\": ").append(cards.size()).append(",\n");
+            sb.append("            \"itemListElement\": [\n");
 
             for (int j = 0; j < cards.size(); j++) {
                 Map<String, Object> card = cards.get(j);
                 String variant = (String) card.get("variant");
                 String serial = (String) card.get("serial");
                 boolean acquired = Boolean.TRUE.equals(card.get("acquired"));
-                String url = card.containsKey("url") ? BASE_URL + "/" + card.get("url") : "";
-                String imgPath = card.containsKey("imgPath") ? BASE_URL + "/" + card.get("imgPath") : "";
-                String cardTitle = card.containsKey("title") ? (String) card.get("title") : name + " - " + variant;
+                String url = card.containsKey("url") ? BASE_URL + "/" + card.get("url") : BASE_URL + "/Wantlist.html";
+                String imgPath = card.containsKey("imgPath") ? BASE_URL + "/" + card.get("imgPath") : BASE_URL + "/images/logo.png";
+                String cardTitle = card.containsKey("title") ? (String) card.get("title") : "Juwan Howard " + season + " " + brand + " " + variant + " #" + number;
 
-                sb.append("            {\n");
-                sb.append("              \"@type\": \"ListItem\",\n");
-                sb.append("              \"position\": ").append(j + 1).append(",\n");
-                sb.append("              \"item\": {\n");
-                sb.append("                \"@type\": \"VisualArtwork\",\n");
-                sb.append("                \"name\": \"").append(escapeJson(cardTitle)).append("\",\n");
-                sb.append("                \"artMedium\": \"Sports Trading Card\",\n");
-                sb.append("                \"artworkSurface\": \"").append(escapeJson(variant)).append("\",\n");
-                if (!url.isEmpty()) sb.append("                \"url\": \"").append(escapeJson(url)).append("\",\n");
-                if (!imgPath.isEmpty()) sb.append("                \"image\": \"").append(escapeJson(imgPath)).append("\",\n");
-                sb.append("                \"offers\": {\n");
-                sb.append("                  \"@type\": \"Offer\",\n");
-                sb.append("                  \"availability\": \"https://schema.org/").append(acquired ? "InStock" : "OutOfStock").append("\",\n");
-                sb.append("                  \"description\": \"").append(acquired ? "Acquired parallel variant serially numbered " + escapeJson(serial) : "Unacquired target variant (" + escapeJson(serial) + ")").append("\"\n");
+                sb.append("              {\n");
+                sb.append("                \"@type\": \"ListItem\",\n");
+                sb.append("                \"position\": ").append(j + 1).append(",\n");
+                sb.append("                \"item\": {\n");
+                sb.append("                  \"@type\": [\"VisualArtwork\", \"Product\"],\n");
+                sb.append("                  \"name\": \"").append(escapeJson(cardTitle)).append("\",\n");
+                sb.append("                  \"description\": \"").append(escapeJson(cardTitle)).append(" (Serial/Print Run: ").append(escapeJson(serial)).append(")\",\n");
+                sb.append("                  \"artMedium\": \"Sports Trading Card\",\n");
+                sb.append("                  \"artworkSurface\": \"").append(escapeJson(variant)).append("\",\n");
+                sb.append("                  \"category\": \"Sports Trading Cards\",\n");
+                sb.append("                  \"brand\": { \"@type\": \"Brand\", \"name\": \"").append(escapeJson(brand)).append("\" },\n");
+                sb.append("                  \"manufacturer\": { \"@type\": \"Organization\", \"name\": \"").append(escapeJson(company)).append("\" },\n");
+                sb.append("                  \"url\": \"").append(escapeJson(url)).append("\",\n");
+                sb.append("                  \"image\": \"").append(escapeJson(imgPath)).append("\",\n");
+                sb.append("                  \"offers\": {\n");
+                sb.append("                    \"@type\": \"Offer\",\n");
+                sb.append("                    \"price\": \"0.00\",\n");
+                sb.append("                    \"priceCurrency\": \"USD\",\n");
+                sb.append("                    \"availability\": \"https://schema.org/").append(acquired ? "InStock" : "OutOfStock").append("\",\n");
+                sb.append("                    \"description\": \"").append(acquired ? "Acquired parallel variant serially numbered " + escapeJson(serial) : "Unacquired target variant (" + escapeJson(serial) + ")").append("\"\n");
+                sb.append("                  }\n");
                 sb.append("                }\n");
-                sb.append("              }\n");
-                sb.append("            }").append(j < cards.size() - 1 ? "," : "").append("\n");
+                sb.append("              }").append(j < cards.size() - 1 ? "," : "").append("\n");
             }
 
-            sb.append("          ]\n");
-            sb.append("        }\n");
-            sb.append("      }").append(i < rainbowSets.size() - 1 ? "," : "").append("\n");
+            sb.append("            ]\n");
+            sb.append("          }\n");
+            sb.append("        }").append(i < rainbowSets.size() - 1 ? "," : "").append("\n");
         }
 
-        sb.append("    ]\n");
-        sb.append("  }\n");
+        sb.append("      ]\n");
+        sb.append("    },\n");
+
+        // 4. FAQPage Node
+        sb.append("    {\n");
+        sb.append("      \"@type\": \"FAQPage\",\n");
+        sb.append("      \"@id\": \"").append(BASE_URL).append("/rainbows.html#faq\",\n");
+        sb.append("      \"name\": \"Parallel Rainbow Tracker FAQs\",\n");
+        sb.append("      \"mainEntity\": [\n");
+        sb.append("        {\n");
+        sb.append("          \"@type\": \"Question\",\n");
+        sb.append("          \"name\": \"What is a sports card Parallel Rainbow?\",\n");
+        sb.append("          \"acceptedAnswer\": {\n");
+        sb.append("            \"@type\": \"Answer\",\n");
+        sb.append("            \"text\": \"A Rainbow in sports card collecting represents acquiring every single parallel color, serial-numbered variant, and 1/1 Masterpiece produced for a specific card set during a release season.\"\n");
+        sb.append("          }\n");
+        sb.append("        },\n");
+        sb.append("        {\n");
+        sb.append("          \"@type\": \"Question\",\n");
+        sb.append("          \"name\": \"How is parallel rainbow completion progress calculated?\",\n");
+        sb.append("          \"acceptedAnswer\": {\n");
+        sb.append("            \"@type\": \"Answer\",\n");
+        sb.append("            \"text\": \"Completion progress is calculated by dividing the count of acquired parallel cards by the total known manufactured parallel variants in that specific card set.\"\n");
+        sb.append("          }\n");
+        sb.append("        },\n");
+        sb.append("        {\n");
+        sb.append("          \"@type\": \"Question\",\n");
+        sb.append("          \"name\": \"What happens if a parallel card variant is missing from the rainbow?\",\n");
+        sb.append("          \"acceptedAnswer\": {\n");
+        sb.append("            \"@type\": \"Answer\",\n");
+        sb.append("            \"text\": \"Unacquired parallel variants are marked as SEEKING and actively tracked on our Juwan Howard Wantlist for future acquisition.\"\n");
+        sb.append("          }\n");
+        sb.append("        }\n");
+        sb.append("      ]\n");
+        sb.append("    }\n");
+        sb.append("  ]\n");
         sb.append("}\n");
         sb.append("</script>\n");
 
