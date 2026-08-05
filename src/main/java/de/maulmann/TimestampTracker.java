@@ -151,7 +151,7 @@ public class TimestampTracker {
                 sb.append(String.format("%02x", b));
             }
             return sb.toString();
-        } catch (Exception _) {
+        } catch (Exception e) {
             return String.valueOf(content.hashCode());
         }
     }

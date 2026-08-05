@@ -701,7 +701,7 @@ public class SitemapGenerator {
             while (resultPath.startsWith("./")) resultPath = resultPath.substring(2);
 
             return baseUrlStripped + "/" + resultPath;
-        } catch (Exception _) {
+        } catch (Exception e) {
             return baseUrlStripped + "/" + imgSrc;
         }
     }
