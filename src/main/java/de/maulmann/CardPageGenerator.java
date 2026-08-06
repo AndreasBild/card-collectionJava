@@ -64,7 +64,11 @@ public class CardPageGenerator {
 
         public CardData(CardJson c, String uniqueId) {
             this.attributes = new HashMap<>();
-            if (c.player != null) this.attributes.put("Player", c.player);
+            if (c.player != null) {
+                this.attributes.put("Player", c.player);
+            } else if (c.collection != null && !c.collection.trim().isEmpty()) {
+                this.attributes.put("Player", c.collection);
+            }
             if (c.season != null) this.attributes.put("Season", c.season);
             if (c.team != null) this.attributes.put("Team", c.team);
             if (c.company != null) this.attributes.put("Company", c.company);

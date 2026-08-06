@@ -2173,6 +2173,7 @@ figcaption {
 .target-badge.ultra-sp { background: rgba(59, 130, 246, 0.2); color: #bfdbfe; border: 1px solid #3b82f6; }
 .target-badge.masterpiece { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid #ef4444; }
 .target-badge.pmg { background: rgba(16, 185, 129, 0.2); color: #a7f3d0; border: 1px solid #10b981; }
+.target-badge.grail { background: rgba(212, 175, 55, 0.2); color: #fef08a; border: 1px solid #d4af37; }
 
 .status-seeking {
     font-size: 0.75rem;
