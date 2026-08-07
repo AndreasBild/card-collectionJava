@@ -474,12 +474,20 @@ public class CardPageGenerator {
         }
     }
 
-    private static String generateBrowserTitle(CardData c, String overviewPage) {
+    static String generateBrowserTitle(CardData c, String overviewPage) {
         String player = getPrimaryPlayer(c);
         String number = c.has("Number") ? " #" + c.get("Number") : "";
         String brand = c.get("Brand");
         String season = c.get("Season");
-        return player + " " + season + " " + brand + number + " | " + player + " Private Collection";
+        String variant = c.get("Variant");
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(player).append(" ").append(season).append(" ").append(brand);
+        if (isValid(variant) && !variant.equalsIgnoreCase("Base")) {
+            sb.append(" ").append(variant);
+        }
+        sb.append(number).append(" | ").append(player).append(" Private Collection");
+        return sb.toString();
     }
 
     private static String generateH1(CardData c) {

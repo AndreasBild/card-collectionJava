@@ -91,15 +91,15 @@ class FileGeneratorTest {
         Map<String, Object> stats = FileGenerator.computeCollectionStats(cards);
 
         assertNotNull(stats, "Stats map should not be null");
-        assertEquals(1377, stats.get("rawTotalCards"));
-        assertEquals("1,377", stats.get("totalCards"));
-        assertEquals(58, stats.get("count1of1"));
-        assertEquals(155, stats.get("countUltraSp"));
-        assertEquals(465, stats.get("countSerialized"));
-        assertEquals(202, stats.get("countAutographs"));
-        assertEquals(107, stats.get("countPatches"));
+        assertEquals(1385, stats.get("rawTotalCards"));
+        assertEquals("1,385", stats.get("totalCards"));
+        assertEquals(59, stats.get("count1of1"));
+        assertEquals(159, stats.get("countUltraSp"));
+        assertEquals(472, stats.get("countSerialized"));
+        assertEquals(205, stats.get("countAutographs"));
+        assertEquals(108, stats.get("countPatches"));
         assertEquals(16, stats.get("countRookies"));
-        assertEquals(13, stats.get("countGradedTotal"));
+        assertEquals(14, stats.get("countGradedTotal"));
         assertEquals(4, stats.get("countGemMint"));
     }
 

@@ -122,4 +122,29 @@ class CardSchemaGeneratorTest {
         assertNotNull(artworkNode);
         assertFalse(artworkNode.get("about").has("sameAs"), "Missing player should not generate invalid Wikipedia link");
     }
+
+    @Test
+    void testGenerateBrowserTitleIncludesVariant() {
+        CardJson cVariant = new CardJson();
+        cVariant.player = "Juwan Howard";
+        cVariant.season = "1997-98";
+        cVariant.brand = "Fleer Metal Universe";
+        cVariant.variant = "Precious Metal Gems Green";
+        cVariant.cardNumber = "33";
+
+        CardPageGenerator.CardData cardDataVariant = new CardPageGenerator.CardData(cVariant, "pmg-green-33");
+        String titleVariant = CardPageGenerator.generateBrowserTitle(cardDataVariant, "Juwan-Howard-Collection.html");
+        assertEquals("Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Green #33 | Juwan Howard Private Collection", titleVariant);
+
+        CardJson cBase = new CardJson();
+        cBase.player = "Juwan Howard";
+        cBase.season = "1994-95";
+        cBase.brand = "Collectors Choice";
+        cBase.variant = "Base";
+        cBase.cardNumber = "278";
+
+        CardPageGenerator.CardData cardDataBase = new CardPageGenerator.CardData(cBase, "cc-278");
+        String titleBase = CardPageGenerator.generateBrowserTitle(cardDataBase, "Juwan-Howard-Collection.html");
+        assertEquals("Juwan Howard 1994-95 Collectors Choice #278 | Juwan Howard Private Collection", titleBase);
+    }
 }
