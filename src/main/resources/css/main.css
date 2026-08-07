@@ -519,7 +519,7 @@ footer.detail-footer,
     transition: var(--transition-fast);
 }
 
-.season-jump-pill:hover, .season-jump-pill:focus {
+.season-jump-pill:hover, .season-jump-pill:focus, .season-jump-pill.active {
     background: var(--accent-gold);
     color: #0b0f19;
     border-color: var(--accent-gold);
@@ -565,7 +565,7 @@ tr:hover {
 
 .season-table-wrapper {
     margin-bottom: 44px;
-    scroll-margin-top: 80px;
+    scroll-margin-top: 140px;
     content-visibility: auto;
     contain-intrinsic-size: 800px;
 }

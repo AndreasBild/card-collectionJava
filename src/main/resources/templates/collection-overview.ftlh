@@ -121,8 +121,50 @@ ${topNavHtml?no_esc}
     </#list>
 
         <script>
-            document.getElementById('seasonFilter').addEventListener('change', applyFilters);
+            document.getElementById('seasonFilter').addEventListener('change', () => {
+                applyFilters();
+                const seasonVal = document.getElementById('seasonFilter').value;
+                if (seasonVal !== 'all') {
+                    scrollToSeason(seasonVal, false);
+                }
+            });
             document.getElementById('textSearch').addEventListener('input', applyFilters);
+
+            function scrollToSeason(seasonId, updateFilter = true) {
+                if (!seasonId) return;
+                const target = document.getElementById(seasonId);
+                const filterSelect = document.getElementById('seasonFilter');
+
+                if (updateFilter && filterSelect) {
+                    if (filterSelect.value !== 'all' && filterSelect.value !== seasonId) {
+                        const options = Array.from(filterSelect.options);
+                        const match = options.find(o => o.value === seasonId);
+                        if (match) {
+                            filterSelect.value = seasonId;
+                        } else {
+                            filterSelect.value = 'all';
+                        }
+                        applyFilters();
+                    }
+                }
+
+                // Update active pill state in jump bar
+                document.querySelectorAll('.season-jump-pill').forEach(pill => {
+                    const href = pill.getAttribute('href');
+                    if (href === '#' + seasonId) {
+                        pill.classList.add('active');
+                    } else {
+                        pill.classList.remove('active');
+                    }
+                });
+
+                const targetEl = document.getElementById(seasonId);
+                if (targetEl && targetEl.style.display !== 'none') {
+                    setTimeout(() => {
+                        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 50);
+                }
+            }
 
             function applyFilters() {
                 const seasonVal = document.getElementById('seasonFilter').value;
@@ -232,22 +274,27 @@ ${topNavHtml?no_esc}
             }
 
             document.addEventListener('DOMContentLoaded', () => {
-                // --- Fragment Handling ---
-                const hash = window.location.hash;
-                if (hash && hash.length > 1) {
-                    const seasonId = hash.substring(1);
-                    const filterSelect = document.getElementById('seasonFilter');
-                    if (filterSelect) {
-                        const options = Array.from(filterSelect.options);
-                        const match = options.find(o => o.value === seasonId);
-                        if (match) {
-                            filterSelect.value = seasonId;
-                            applyFilters();
+                // Attach click handlers to season jump pills
+                document.querySelectorAll('.season-jump-pill').forEach(pill => {
+                    pill.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const href = pill.getAttribute('href');
+                        if (href && href.startsWith('#')) {
+                            const seasonId = href.substring(1);
+                            history.pushState(null, '', href);
+                            scrollToSeason(seasonId, true);
                         }
-                    }
-                }
+                    });
+                });
 
-                // --- Scroll Restoration Logic ---
+                window.addEventListener('hashchange', () => {
+                    const hash = window.location.hash;
+                    if (hash && hash.length > 1) {
+                        scrollToSeason(hash.substring(1), true);
+                    }
+                });
+
+                // --- Scroll Restoration Logic or Fragment Jump ---
                 const savedCardId = sessionStorage.getItem('lastClickedCard');
                 if (savedCardId) {
                     const targetRow = document.getElementById(savedCardId);
@@ -261,6 +308,11 @@ ${topNavHtml?no_esc}
                         }, 100);
                     }
                     sessionStorage.removeItem('lastClickedCard');
+                } else {
+                    const hash = window.location.hash;
+                    if (hash && hash.length > 1) {
+                        scrollToSeason(hash.substring(1), true);
+                    }
                 }
 
                 document.querySelectorAll('.season-table-wrapper table').forEach(table => {
