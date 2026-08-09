@@ -147,4 +147,27 @@ class CardSchemaGeneratorTest {
         String titleBase = CardPageGenerator.generateBrowserTitle(cardDataBase, "Juwan-Howard-Collection.html");
         assertEquals("Juwan Howard 1994-95 Collectors Choice #278 | Juwan Howard Private Collection", titleBase);
     }
+
+    @Test
+    void testGenerateBrowserTitleAndH1IncludeGrading() {
+        CardJson cGraded = new CardJson();
+        cGraded.player = "Juwan Howard";
+        cGraded.season = "1995-96";
+        cGraded.brand = "Topps Finest";
+        cGraded.theme = "Mystery Bordered Test";
+        cGraded.variant = "Refractor";
+        cGraded.cardNumber = "M20";
+        cGraded.gradingCompany = "PSA";
+        cGraded.grade = "9";
+
+        CardPageGenerator.CardData cardDataGraded = new CardPageGenerator.CardData(cGraded, "finest-m20");
+        String titleGraded = CardPageGenerator.generateBrowserTitle(cardDataGraded, "Juwan-Howard-Collection.html");
+        assertEquals("Juwan Howard 1995-96 Topps Finest Refractor #M20 PSA-9 | Juwan Howard Private Collection", titleGraded);
+
+        String h1Graded = CardPageGenerator.generateH1(cardDataGraded);
+        assertEquals("Juwan Howard | 1995-96 Topps Finest Mystery Bordered Test Refractor #M20 PSA-9", h1Graded);
+
+        String h1HtmlGraded = CardPageGenerator.generateH1Html(cardDataGraded);
+        assertTrue(h1HtmlGraded.contains("<br><span class=\"sub-title grading-subtitle\">PSA-9</span>"));
+    }
 }

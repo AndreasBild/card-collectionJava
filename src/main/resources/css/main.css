@@ -432,6 +432,13 @@ footer.detail-footer,
     margin-top: 4px;
 }
 
+.sub-title.grading-subtitle {
+    display: inline-block;
+    margin-top: 6px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
 .card-container-box {
     background: var(--bg-surface);
     padding: 24px;

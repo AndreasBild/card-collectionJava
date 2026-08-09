@@ -474,23 +474,41 @@ public class CardPageGenerator {
         }
     }
 
+    private static String getGradingString(CardData c) {
+        String gradingCo = c.get("Grading Co.");
+        String grade = c.get("Grade");
+        if (isValid(gradingCo) && isValid(grade)) {
+            return gradingCo + "-" + grade;
+        } else if (isValid(gradingCo)) {
+            return gradingCo;
+        } else if (isValid(grade)) {
+            return grade;
+        }
+        return "";
+    }
+
     static String generateBrowserTitle(CardData c, String overviewPage) {
         String player = getPrimaryPlayer(c);
         String number = c.has("Number") ? " #" + c.get("Number") : "";
         String brand = c.get("Brand");
         String season = c.get("Season");
         String variant = c.get("Variant");
+        String gradingStr = getGradingString(c);
 
         StringBuilder sb = new StringBuilder();
         sb.append(player).append(" ").append(season).append(" ").append(brand);
         if (isValid(variant) && !variant.equalsIgnoreCase("Base")) {
             sb.append(" ").append(variant);
         }
-        sb.append(number).append(" | ").append(player).append(" Private Collection");
+        sb.append(number);
+        if (!gradingStr.isEmpty()) {
+            sb.append(" ").append(gradingStr);
+        }
+        sb.append(" | ").append(player).append(" Private Collection");
         return sb.toString();
     }
 
-    private static String generateH1(CardData c) {
+    static String generateH1(CardData c) {
         String player = formatMulti(c.get("Player"));
         String season = c.get("Season");
         String company = c.get("Company");
@@ -498,6 +516,7 @@ public class CardPageGenerator {
         String theme = c.get("Theme");
         String variant = c.get("Variant");
         String number = c.has("Number") ? " #" + c.get("Number") : "";
+        String gradingStr = getGradingString(c);
 
         StringBuilder sb = new StringBuilder();
         sb.append(player).append(" | ").append(season).append(" ").append(brand);
@@ -508,10 +527,13 @@ public class CardPageGenerator {
             sb.append(" ").append(variant);
         }
         sb.append(number);
+        if (!gradingStr.isEmpty()) {
+            sb.append(" ").append(gradingStr);
+        }
         return sb.toString();
     }
 
-    private static String generateH1Html(CardData c) {
+    static String generateH1Html(CardData c) {
         String player = formatMulti(c.get("Player"));
         String season = c.get("Season");
         String company = c.get("Company");
@@ -519,6 +541,7 @@ public class CardPageGenerator {
         String theme = c.get("Theme");
         String variant = c.get("Variant");
         String number = c.has("Number") ? " #" + c.get("Number") : "";
+        String gradingStr = getGradingString(c);
 
         StringBuilder sb = new StringBuilder();
         sb.append("<span class=\"player-name\">").append(player).append("</span><br>");
@@ -530,6 +553,9 @@ public class CardPageGenerator {
             sb.append(" ").append(variant);
         }
         sb.append(number).append("</span>");
+        if (!gradingStr.isEmpty()) {
+            sb.append("<br><span class=\"sub-title grading-subtitle\">").append(gradingStr).append("</span>");
+        }
         return sb.toString();
     }
 
