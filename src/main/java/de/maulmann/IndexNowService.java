@@ -206,8 +206,9 @@ public class IndexNowService {
             return CompletableFuture.completedFuture(null);
         }
 
-        List<String> urlsToSubmit = new ArrayList<>(QUEUED_URLS);
-        QUEUED_URLS.clear();
+        // Atomic drain: move all URLs out of the set in one pass to prevent TOCTOU race
+        List<String> urlsToSubmit = new ArrayList<>();
+        QUEUED_URLS.removeIf(url -> { urlsToSubmit.add(url); return true; });
         log.info("Flushing {} queued card URL(s) to IndexNow API...", urlsToSubmit.size());
         return submitUrlsAsync(urlsToSubmit);
     }

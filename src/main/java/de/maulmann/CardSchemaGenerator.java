@@ -496,24 +496,10 @@ public class CardSchemaGenerator {
     }
 
     private static String escapeJson(String text) {
-        if (text == null) return "";
-        return text.replace("\\", "\\\\")
-                .replace("\"", "\\\"")
-                .replace("\n", "\\n")
-                .replace("\r", "\\r");
+        return CardUtils.escapeJson(text);
     }
 
     private static String escapeHtml(String text) {
-        if (text == null) return "";
-        String unescaped = text.replace("&quot;", "\"")
-                               .replace("&amp;", "&")
-                               .replace("&#39;", "'")
-                               .replace("&lt;", "<")
-                               .replace("&gt;", ">");
-        return unescaped.replace("&", "&amp;")
-                .replace("<", "&lt;")
-                .replace(">", "&gt;")
-                .replace("\"", "&quot;")
-                .replace("'", "&#39;");
+        return CardUtils.escapeHtml(text);
     }
 }

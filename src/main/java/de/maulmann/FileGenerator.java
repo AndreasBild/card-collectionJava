@@ -1003,27 +1003,17 @@ public class FileGenerator {
         if (c.printRun != null && c.printRun == 1) {
             return true;
         }
-        if (sn.equals("1/1") || sn.equalsIgnoreCase("1 of 1") || (c.printRun != null && c.printRun == 1 && sn.equals("1"))) {
+        if (sn.equals("1/1") || sn.equalsIgnoreCase("1 of 1")) {
             return true;
         }
-        if (var.contains("1/1") || var.contains("1 of 1") || (var.equals("masterpiece") && c.printRun != null && c.printRun == 1)) {
+        if (var.contains("1/1") || var.contains("1 of 1")) {
             return true;
         }
         return false;
     }
 
     private static String escapeHtml(String input) {
-        if (input == null) return "";
-        String unescaped = input.replace("&quot;", "\"")
-                               .replace("&amp;", "&")
-                               .replace("&#39;", "'")
-                               .replace("&lt;", "<")
-                               .replace("&gt;", ">");
-        return unescaped.replace("&", "&amp;")
-                    .replace("<", "&lt;")
-                    .replace(">", "&gt;")
-                    .replace("\"", "&quot;")
-                    .replace("'", "&#39;");
+        return CardUtils.escapeHtml(input);
     }
 
     public static void main(String[] args) {

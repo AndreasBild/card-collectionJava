@@ -75,6 +75,9 @@ public class CardJson {
             case "grade" -> {
                 return grade;
             }
+            case "print run", "printrun" -> {
+                return printRun != null ? String.valueOf(printRun) : null;
+            }
             case "notes" -> {
                 return notes;
             }
