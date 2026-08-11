@@ -39,6 +39,12 @@ public class IndexNowService {
     private static void sendPayloadWithRetry(List<String> urlList) {
         String key = getKey();
         String host = getHost();
+
+        if ("true".equalsIgnoreCase(System.getProperty("INDEXNOW_TEST_MODE")) || host.contains("example.com") || host.contains("localhost")) {
+            log.info("ℹ️ Test mode active (host={}): Skipping live IndexNow HTTP request for {} URL(s).", host, urlList.size());
+            return;
+        }
+
         String keyLocation = "https://" + host + "/" + key + ".txt";
 
         Map<String, Object> payload = new HashMap<>();
@@ -203,6 +209,7 @@ public class IndexNowService {
      */
     public static CompletableFuture<Void> flushQueueAsync() {
         if (QUEUED_URLS.isEmpty()) {
+            log.info("ℹ️ IndexNow: No updated card URLs queued for submission.");
             return CompletableFuture.completedFuture(null);
         }
 

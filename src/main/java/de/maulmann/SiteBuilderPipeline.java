@@ -137,11 +137,6 @@ public class SiteBuilderPipeline {
 
                 // --- PHASE 6: Invalidate CDN Cache ---
                 invalidateCloudFrontCache();
-
-                // --- PHASE 7: Notify IndexNow API ---
-                log.info("\n[PHASE 7] Submitting updated card URLs to IndexNow API...");
-                IndexNowService.flushQueueAsync();
-                IndexNowService.shutdown();
             } catch (Exception e) {
                 if (e.toString().contains("SdkClientException") || (e.getCause() != null && e.getCause().toString().contains("SdkClientException"))) {
                     log.info("ℹ️ Local build: AWS credentials not found. Skipping S3 upload phases.");
@@ -150,6 +145,19 @@ public class SiteBuilderPipeline {
                 }
             } finally {
                 tracker.save();
+            }
+
+            // --- PHASE 7: Notify IndexNow API ---
+            log.info("\n[PHASE 7] Submitting updated card URLs to IndexNow API...");
+            try {
+                CompletableFuture<Void> indexNowFuture = IndexNowService.flushQueueAsync();
+                if (indexNowFuture != null) {
+                    indexNowFuture.join();
+                }
+            } catch (Exception e) {
+                log.error("⚠️ IndexNow submission error: {}", e.getMessage());
+            } finally {
+                IndexNowService.shutdown();
             }
 
             long pipelineEnd = System.currentTimeMillis();

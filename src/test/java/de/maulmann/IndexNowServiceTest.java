@@ -1,5 +1,6 @@
 package de.maulmann;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -13,6 +14,11 @@ import java.util.concurrent.CompletableFuture;
 import static org.junit.jupiter.api.Assertions.*;
 
 class IndexNowServiceTest {
+
+    @BeforeAll
+    static void setUp() {
+        System.setProperty("INDEXNOW_TEST_MODE", "true");
+    }
 
     @Test
     void testGetKeyAndHostDefaults() {
@@ -50,7 +56,7 @@ class IndexNowServiceTest {
 
     @Test
     void testSubmitUrlAsyncCompletesWithoutException() {
-        String testCardUrl = "https://www.maulmann.de/cards/2021-22/test-card-1.html";
+        String testCardUrl = "https://test.example.com/cards/2021-22/test-card-1.html";
         CompletableFuture<Void> future = IndexNowService.submitUrlAsync(testCardUrl);
         assertNotNull(future);
         assertDoesNotThrow(() -> future.join());
@@ -60,7 +66,7 @@ class IndexNowServiceTest {
     void testSubmitUrlsAsyncBatching() {
         List<String> urls = new ArrayList<>();
         for (int i = 0; i < 25; i++) {
-            urls.add("https://www.maulmann.de/cards/2021-22/card-" + i + ".html");
+            urls.add("https://test.example.com/cards/2021-22/card-" + i + ".html");
         }
         CompletableFuture<Void> future = IndexNowService.submitUrlsAsync(urls);
         assertNotNull(future);
@@ -69,11 +75,11 @@ class IndexNowServiceTest {
 
     @Test
     void testQueueAndFlushUrls() {
-        IndexNowService.queueUrl("https://www.maulmann.de/cards/2021-22/card-q1.html");
-        IndexNowService.queueUrl("https://www.maulmann.de/cards/2021-22/card-q2.html");
+        IndexNowService.queueUrl("https://test.example.com/cards/2021-22/card-q1.html");
+        IndexNowService.queueUrl("https://test.example.com/cards/2021-22/card-q2.html");
         IndexNowService.queueUrls(List.of(
-                "https://www.maulmann.de/cards/2021-22/card-q3.html",
-                "https://www.maulmann.de/cards/2021-22/card-q4.html"
+                "https://test.example.com/cards/2021-22/card-q3.html",
+                "https://test.example.com/cards/2021-22/card-q4.html"
         ));
 
         CompletableFuture<Void> future = IndexNowService.flushQueueAsync();
