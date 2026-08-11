@@ -15,7 +15,7 @@ import java.util.Map;
 public class CardSchemaGenerator {
 
     private static final String BASE_URL = "https://www.maulmann.de";
-    private static final TriviaManager TRIVIA_MANAGER = new TriviaManager();
+    private static final TriviaManager TRIVIA_MANAGER = TriviaManager.getInstance();
     private static final java.util.Properties RATING_CACHE = new java.util.Properties();
     private static boolean ratingCacheLoaded = false;
 

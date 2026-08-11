@@ -25,8 +25,6 @@ public class ImageConverter {
     // Definition der Responsive-Breiten für das srcset
     private static final int[] RESPONSIVE_WIDTHS = {400, 600, 900};
 
-    // Dynamic discovery of cwebp
-    private static final String CWEBP_PATH = findCwebp();
 
     // Zähler für die Zusammenfassung
     private static final AtomicInteger successCount = new AtomicInteger(0);
@@ -183,25 +181,6 @@ public class ImageConverter {
 
     private static final String AVIFENC_PATH = findAvifenc();
 
-    private static void writeWebpViaCLI(Path sourceFile, File outputFile, int targetW, int targetH, int quality) throws IOException, InterruptedException {
-        ProcessBuilder pb = new ProcessBuilder(
-                CWEBP_PATH,
-                "-q", String.valueOf(quality),
-                "-m", "6",
-                "-sharp_yuv",
-                "-resize", String.valueOf(targetW), String.valueOf(targetH),
-                "-mt",
-                "-quiet",
-                sourceFile.toAbsolutePath().toString(),
-                "-o", outputFile.getAbsolutePath()
-        );
-
-        Process process = pb.start();
-        int exitCode = process.waitFor();
-        if (exitCode != 0) {
-            throw new IOException("cwebp fehlerhaft mit Code " + exitCode);
-        }
-    }
 
     private static void writeAvifViaCLI(Path sourceFile, File outputFile, int targetW, int targetH, int quality) {
         if (AVIFENC_PATH == null) return;
@@ -238,23 +217,6 @@ public class ImageConverter {
         }
     }
 
-    private static String findCwebp() {
-        String[] paths = {
-            "cwebp",
-            "/usr/bin/cwebp",
-            "/usr/local/bin/cwebp",
-            "/opt/homebrew/bin/cwebp",
-            "/usr/sbin/cwebp",
-            "/bin/cwebp"
-        };
-        for (String path : paths) {
-            try {
-                Process p = new ProcessBuilder(path, "-version").start();
-                if (p.waitFor() == 0) return path;
-            } catch (Exception ignored) {}
-        }
-        return "cwebp"; // Fallback to PATH
-    }
 
     private static String findAvifenc() {
         String[] paths = {

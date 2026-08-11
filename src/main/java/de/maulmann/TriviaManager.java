@@ -11,6 +11,17 @@ import java.util.Set;
 public class TriviaManager {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
+    private static final SimpleLazyConstant<TriviaManager> INSTANCE =
+            SimpleLazyConstant.of(TriviaManager::new);
+
+    /**
+     * Returns the shared TriviaManager singleton instance.
+     * Avoids duplicate config loading across CardPageGenerator and CardSchemaGenerator.
+     */
+    public static TriviaManager getInstance() {
+        return INSTANCE.get();
+    }
+
     private final SimpleLazyConstant<JsonNode> config = SimpleLazyConstant.of(() -> {
         try (InputStream is = getClass().getResourceAsStream("/config/trivia_config.json")) {
             if (is != null) {

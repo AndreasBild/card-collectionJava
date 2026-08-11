@@ -248,4 +248,21 @@ public class IndexNowService {
             }
         }, executor);
     }
+
+    /**
+     * Cleanly shuts down the static ExecutorService and HttpClient.
+     * Should be called at the end of the pipeline to ensure a clean JVM exit.
+     */
+    public static void shutdown() {
+        try {
+            executor.close();
+        } catch (Exception e) {
+            log.warn("Error closing IndexNow executor: {}", e.getMessage());
+        }
+        try {
+            httpClient.close();
+        } catch (Exception e) {
+            log.warn("Error closing IndexNow HttpClient: {}", e.getMessage());
+        }
+    }
 }

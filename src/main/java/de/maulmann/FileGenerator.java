@@ -28,9 +28,21 @@ public class FileGenerator {
     static String pathOutput = "output/";
 
     private static TimestampTracker timestampTracker;
+    private static List<CardJson> cachedFilteredCards;
 
     public static void setTimestampTracker(TimestampTracker tracker) {
         timestampTracker = tracker;
+    }
+
+    /**
+     * Returns the filtered card list, loading and caching it on first access.
+     * Avoids parsing cards.json from disk multiple times during a single build.
+     */
+    private static synchronized List<CardJson> getCachedCards() {
+        if (cachedFilteredCards == null) {
+            cachedFilteredCards = filterDuplicateJsonCards(loadCardsFromJson());
+        }
+        return cachedFilteredCards;
     }
 
     private static final SimpleLazyConstant<Configuration> FM_CONFIG = SimpleLazyConstant.of(() -> {
@@ -87,7 +99,7 @@ public class FileGenerator {
                     "</script>";
             data.put("jsonLd", jsonLd);
 
-            List<CardJson> jsonCards = filterDuplicateJsonCards(loadCardsFromJson());
+            List<CardJson> jsonCards = getCachedCards();
             data.put("stats", computeCollectionStats(jsonCards));
             List<Map<String, String>> seasons = new ArrayList<>();
             int cumulativeTotal = 0;
@@ -130,7 +142,7 @@ public class FileGenerator {
                             .append("</tr>");
 
                     for (CardJson c : seasonCardList) {
-                        CardPageGenerator.CardData cardData = new CardPageGenerator.CardData(c, null);
+                        CardPageGenerator.CardData cardData = CardPageGenerator.computeCardData(c);
                         String detailPath = cardData.fullRelativePath;
                         String cleanPlayer = CardPageGenerator.cleanPlayerName(c.player);
                         String playerTitle = "View " + escapeHtml(cleanPlayer) + " " + escapeHtml(c.season) + " " + escapeHtml(c.brand) + " #" + escapeHtml(c.cardNumber != null ? c.cardNumber : "") + " card detail page";
@@ -323,7 +335,7 @@ public class FileGenerator {
                 .append("</tr></thead><tbody>");
 
         for (CardJson c : cardList) {
-            CardPageGenerator.CardData cardData = new CardPageGenerator.CardData(c, null);
+            CardPageGenerator.CardData cardData = CardPageGenerator.computeCardData(c);
             String detailPath = cardData.fullRelativePath;
             String cleanPlayer = CardPageGenerator.cleanPlayerName(c.player);
             String playerTitle = "View " + escapeHtml(cleanPlayer) + " " + escapeHtml(c.season) + " " + escapeHtml(c.brand) + " #" + escapeHtml(c.cardNumber != null ? c.cardNumber : "") + " card detail page";
@@ -491,7 +503,7 @@ public class FileGenerator {
             indexData.put("jsonLd", indexJsonLd);
 
             // SEO "New In" Linkjuice internal links (1 < printRun < 10) - Limited to 6
-            List<CardJson> allCardsForNewIn = filterDuplicateJsonCards(loadCardsFromJson());
+            List<CardJson> allCardsForNewIn = getCachedCards();
             List<CardJson> rareNewInCards = allCardsForNewIn.stream()
                     .filter(c -> c.printRun != null && c.printRun > 1 && c.printRun < 10)
                     .limit(6)
@@ -499,7 +511,7 @@ public class FileGenerator {
 
             List<Map<String, String>> newInLinks = new ArrayList<>();
             for (CardJson c : rareNewInCards) {
-                CardPageGenerator.CardData cardData = new CardPageGenerator.CardData(c, null);
+                CardPageGenerator.CardData cardData = CardPageGenerator.computeCardData(c);
                 String cleanPlayer = CardPageGenerator.cleanPlayerName(c.player);
                 String brandText = c.brand != null ? c.brand : "";
                 String variantText = c.variant != null ? c.variant : "Base";
@@ -520,7 +532,7 @@ public class FileGenerator {
 
             List<Map<String, String>> masterpieceLinks = new ArrayList<>();
             for (CardJson c : masterpieceCards) {
-                CardPageGenerator.CardData cardData = new CardPageGenerator.CardData(c, null);
+                CardPageGenerator.CardData cardData = CardPageGenerator.computeCardData(c);
                 String cleanPlayer = CardPageGenerator.cleanPlayerName(c.player);
                 String brandText = c.brand != null ? c.brand : "";
                 String variantText = c.variant != null ? c.variant : "1/1";
@@ -570,7 +582,7 @@ public class FileGenerator {
             bcItems.add(Map.of("name", "Rainbow Tracker", "link", ""));
             data.put("breadcrumbHtml", SharedTemplates.getBreadcrumb(bcItems));
 
-            List<CardJson> allCards = filterDuplicateJsonCards(loadCardsFromJson());
+            List<CardJson> allCards = getCachedCards();
             List<Map<String, Object>> rainbowSets = new ArrayList<>();
 
             // Group all cards strictly by: Season | Company | Brand | Theme | Normalized Card Number
@@ -735,7 +747,7 @@ public class FileGenerator {
                             itemMap.put("serial", formatSerialAndPrintRun(c.serialNumber, c.printRun, null));
                             itemMap.put("acquired", true);
 
-                            CardPageGenerator.CardData cd = new CardPageGenerator.CardData(c, null);
+                            CardPageGenerator.CardData cd = CardPageGenerator.computeCardData(c);
                             itemMap.put("url", cd.fullRelativePath.replace("../../", ""));
                             itemMap.put("title", c.player + " " + c.season + " " + c.brand + " " + c.variant + " #" + c.cardNumber);
 

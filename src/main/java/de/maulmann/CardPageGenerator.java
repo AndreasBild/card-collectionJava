@@ -36,7 +36,7 @@ public class CardPageGenerator {
     public static final String ROOT = "../../";
 
     private static final List<String> duplicateLog = Collections.synchronizedList(new ArrayList<>());
-    private static final TriviaManager triviaManager = new TriviaManager();
+    private static final TriviaManager triviaManager = TriviaManager.getInstance();
     private static final FirebaseConfigManager firebaseConfigManager = new FirebaseConfigManager();
     private static TimestampTracker timestampTracker;
 
@@ -158,6 +158,25 @@ public class CardPageGenerator {
             String val = attributes.get(key);
             return isValid(val);
         }
+    }
+
+    // Cache for CardData objects to avoid redundant MD5 hash computation across multiple passes
+    private static final ConcurrentHashMap<String, CardData> CARD_DATA_CACHE = new ConcurrentHashMap<>();
+
+    /**
+     * Returns a cached CardData for the given CardJson, avoiding redundant attribute mapping and MD5 hashing.
+     * Used by FileGenerator to get path info without reconstructing CardData for each pass.
+     */
+    public static CardData computeCardData(CardJson c) {
+        String fingerprint = (c.player != null ? c.player : "") + "|" +
+                (c.season != null ? c.season : "") + "|" +
+                (c.brand != null ? c.brand : "") + "|" +
+                (c.variant != null ? c.variant : "") + "|" +
+                (c.cardNumber != null ? c.cardNumber : "") + "|" +
+                (c.serialNumber != null ? c.serialNumber : "") + "|" +
+                (c.gradingCompany != null ? c.gradingCompany : "") + "|" +
+                (c.grade != null ? c.grade : "");
+        return CARD_DATA_CACHE.computeIfAbsent(fingerprint, k -> new CardData(c, null));
     }
 
     public static void run() {
@@ -301,6 +320,12 @@ public class CardPageGenerator {
     }
 
     private static void generateSubPagesMultithreaded(List<CardData> allCards, String overviewPage) {
+        // Pre-compute rare card IDs once to avoid redundant isRareParallel() calls in O(n²) findRelatedCards
+        Set<String> rareCardIds = allCards.stream()
+                .filter(CardPageGenerator::isRareParallel)
+                .map(c -> c.stableId)
+                .collect(Collectors.toSet());
+
         try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
             for (int i = 0; i < allCards.size(); i++) {
                 final int index = i;
@@ -314,7 +339,7 @@ public class CardPageGenerator {
                         Files.createDirectories(folderPath);
                         Path filePath = folderPath.resolve(currentCard.filename);
 
-                        createSubPage(currentCard, filePath, prevCard, nextCard, allCards, overviewPage);
+                        createSubPage(currentCard, filePath, prevCard, nextCard, allCards, overviewPage, rareCardIds);
                     } catch (Exception e) {
                         log.error("Failed to generate subpage for card at index " + index, e);
                     }
@@ -323,7 +348,7 @@ public class CardPageGenerator {
         }
     }
 
-    private static void createSubPage(CardData c, Path path, CardData prev, CardData next, List<CardData> allCards, String overviewPage) {
+    private static void createSubPage(CardData c, Path path, CardData prev, CardData next, List<CardData> allCards, String overviewPage, Set<String> rareCardIds) {
         String h1Title = generateH1(c);
         String browserTitle = generateBrowserTitle(c, overviewPage);
         String metaDesc = generateMetaDescription(c);
@@ -429,7 +454,7 @@ public class CardPageGenerator {
         data.put("sameCompanyCards", sameCompanyCards);
         data.put("sameCompanyTitle", sameCompanyTitle);
 
-        data.put("relatedCards", findRelatedCards(c, allCards, 4));
+        data.put("relatedCards", findRelatedCards(c, allCards, 4, rareCardIds));
         data.put("externalLinks", generateExternalLinks(c));
 
         data.put("faqHtml", faqHtml);
@@ -659,7 +684,7 @@ public class CardPageGenerator {
         return sb.toString();
     }
 
-    private static List<Map<String, String>> findRelatedCards(CardData target, List<CardData> pool, int limit) {
+    private static List<Map<String, String>> findRelatedCards(CardData target, List<CardData> pool, int limit, Set<String> rareCardIds) {
         if (pool == null || pool.isEmpty()) return Collections.emptyList();
 
         List<CardData> candidates = pool.stream()
@@ -683,8 +708,8 @@ public class CardPageGenerator {
             String tPlayer = target.get("Player");
             if (cPlayer.equals(tPlayer)) score += 15;
 
-            boolean targetIsRare = isRareParallel(target);
-            boolean cIsRare = isRareParallel(c);
+            boolean targetIsRare = rareCardIds.contains(target.stableId);
+            boolean cIsRare = rareCardIds.contains(c.stableId);
             if (targetIsRare && cIsRare) score += 7;
 
             scored.put(c, score);
@@ -811,18 +836,7 @@ public class CardPageGenerator {
                l.contains("carlton") || l.contains("will clark") || l.contains("griffey");
     }
 
-    private static String getNbaEraContext(String season, String player) {
-        if (season == null) return null;
-        return switch (season) {
-            case "1994-95", "1994", "1995-96", "1995" -> "Mid-90s NBA Golden Era: Peak physical play, expansion teams, and Michael Jordan's first comeback.";
-            case "1996-97", "1996", "1997-98", "1997" -> "Late 90s Premium Insert Craze: Introduction of high-end parallels (PMG, Rubies, Refractors).";
-            case "1998-99", "1998", "1999-00", "1999" -> "Post-Jordan Transition Era: Rise of Kobe Bryant, Allen Iverson, and new young superstars.";
-            case "2000-01", "2000", "2001-02", "2001", "2002-03", "2002" -> "Early 2000s Autograph & Relic Revolution: Upper Deck Exquisite and SP Authentic define modern high-end collecting.";
-            case "2003-04", "2003", "2004-05", "2004", "2005-06", "2005" -> "Mid-2000s Era: Legendary 2003 draft class (LeBron, Wade, Carmelo) elevates hobby interest.";
-            case "2010-11", "2010", "2011-12", "2011", "2012-13", "2012" -> "Panini Exclusive Era: Debut of Panini Flawless, National Treasures Logomans, and Immaculate Collection.";
-            default -> "Modern NBA Hobby Era: Continuous innovation in card technology, serial numbering, and certified autographs.";
-        };
-    }
+
 
     private static String getTeamBySeason(String season) {
         if (season == null) return "Washington Bullets";
