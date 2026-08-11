@@ -21,7 +21,7 @@
         <org.jsoup.version>1.23.1</org.jsoup.version>
         <com.yahoo.platform.yui.version>2.4.8</com.yahoo.platform.yui.version>
         <com.google.firebase.version>9.10.0</com.google.firebase.version>
-        <httpclient5.version>5.6.3</httpclient5.version>
+        <httpclient5.version>5.6.4</httpclient5.version>
     </properties>
 
     <dependencyManagement>
