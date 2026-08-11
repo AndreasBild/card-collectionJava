@@ -2,7 +2,8 @@ package de.maulmann;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import freemarker.template.TemplateExceptionHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 // --- NEU: Jsoup Imports für die Tabellen-Analyse ---
 import org.jsoup.Jsoup;
@@ -22,7 +23,8 @@ import java.util.stream.Collectors;
 
 public class FileGenerator {
 
-    private static final String BASE_URL = "https://www.maulmann.de";
+    private static final Logger log = LoggerFactory.getLogger(FileGenerator.class);
+    private static final String BASE_URL = CardUtils.BASE_URL;
     public static final String DEFAULT_IMAGE = "images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-PMG-sn7-front.avif";
     static String pathSource = "content/";
     static String pathOutput = "output/";
@@ -45,32 +47,26 @@ public class FileGenerator {
         return cachedFilteredCards;
     }
 
-    private static final SimpleLazyConstant<Configuration> FM_CONFIG = SimpleLazyConstant.of(() -> {
-        Configuration cfg = new Configuration(Configuration.VERSION_2_3_34);
-        cfg.setClassForTemplateLoading(FileGenerator.class, "/templates");
-        cfg.setDefaultEncoding("UTF-8");
-        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-        return cfg;
-    });
+    private static final SimpleLazyConstant<Configuration> FM_CONFIG = SimpleLazyConstant.of(CardUtils::getFreeMarkerConfig);
 
     // --- 0. LATEST METADATA FÜR PWA ---
     public static void generateLatestMetadata(int totalCardCount) {
         try {
-            System.out.println("-> Generiere latest.json...");
+            log.info("Generiere latest.json...");
             String json = "{\n" +
                     "  \"cardCount\": " + totalCardCount + ",\n" +
                     "  \"lastUpdate\": \"" + SharedTemplates.BUILD_ID + "\"\n" +
                     "}";
             Files.writeString(Paths.get(pathOutput, "latest.json"), json, StandardCharsets.UTF_8);
         } catch (IOException e) {
-            System.err.println("Fehler bei latest.json: " + e.getMessage());
+            log.error("Fehler bei latest.json: {}", e.getMessage());
         }
     }
 
     // --- 1. HAUPT-SAMMLUNG BAUEN ---
     public static void buildCollectionOverview() {
         try {
-            System.out.println("-> Baue Juwan-Howard-Collection.html...");
+            log.info("Baue Juwan-Howard-Collection.html...");
             Map<String, Object> data = createBaseData("Juwan Howard Private Collection | Juwan Howard Super Collector", "Explore the Juwan Howard Masterpiece Collection. A massive private collection featuring 1,000+ unique cards, including 1/1 Masterpieces, PMGs, Rubies, and rare 90s basketball inserts.", "Juwan-Howard-Collection.html", "collection", "");
 
             // Schema.org Breadcrumb & CollectionPage
@@ -191,7 +187,7 @@ public class FileGenerator {
             // Metadaten für PWA generieren
             generateLatestMetadata(cumulativeTotal);
 
-        } catch (Exception e) { System.err.println("Fehler bei Haupt-Collection: " + e.getMessage()); }
+        } catch (Exception e) { log.error("Fehler bei Haupt-Collection: {}", e.getMessage()); }
     }
 
     private static final com.fasterxml.jackson.databind.ObjectMapper MAPPER = new com.fasterxml.jackson.databind.ObjectMapper();
@@ -208,7 +204,7 @@ public class FileGenerator {
                     String description = entry.getValue()[1];
 
                     try {
-                        System.out.println("-> Baue " + coll + ".html...");
+                        log.info("Baue {}.html...", coll);
                         Map<String, Object> data = createBaseData(title, description, coll + ".html", coll.toLowerCase(), "");
 
                         List<Map<String, String>> breadcrumbItems = new ArrayList<>();
@@ -277,7 +273,7 @@ public class FileGenerator {
                                         data.put("jsonLd", jsonLd);
                                     }
                                 } catch (Exception e) {
-                                    System.err.println("FAQ Extraction failed for " + coll);
+                                    log.error("FAQ Extraction failed for {}", coll);
                                 }
                             }
 
@@ -296,7 +292,7 @@ public class FileGenerator {
                         }
 
                         processTemplate("generic-collection.ftlh", data, pathOutput + coll + ".html");
-                    } catch (Exception e) { System.err.println("Fehler bei " + coll + ": " + e.getMessage()); }
+                    } catch (Exception e) { log.error("Fehler bei {}: {}", coll, e.getMessage()); }
                 });
             }
         }
@@ -316,7 +312,7 @@ public class FileGenerator {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Error loading collections_config.json: " + e.getMessage());
+            log.error("Error loading collections_config.json: {}", e.getMessage());
         }
         return map;
     }
@@ -395,7 +391,7 @@ public class FileGenerator {
                                 Files.copy(source, target, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
                             }
                         } catch (IOException e) {
-                            System.err.println("Error copying PWA asset " + source + ": " + e.getMessage());
+                            log.error("Error copying PWA asset {}: {}", source, e.getMessage());
                         }
                     });
                 }
@@ -411,7 +407,7 @@ public class FileGenerator {
                             Files.createDirectories(target.getParent());
                             Files.copy(source, target, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
                         } catch (IOException e) {
-                            System.err.println("Error copying Favicon asset " + source + ": " + e.getMessage());
+                            log.error("Error copying Favicon asset {}: {}", source, e.getMessage());
                         }
                     });
                 }
@@ -427,20 +423,20 @@ public class FileGenerator {
                             Files.createDirectories(target.getParent());
                             Files.copy(source, target, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
                         } catch (IOException e) {
-                            System.err.println("Error copying SEO asset " + source + ": " + e.getMessage());
+                            log.error("Error copying SEO asset {}: {}", source, e.getMessage());
                         }
                     });
                 }
             }
         } catch (IOException e) {
-            System.err.println("Error copying resources: " + e.getMessage());
+            log.error("Error copying resources: {}", e.getMessage());
         }
     }
 
     // --- 3. STATISCHE SEITEN BAUEN (Index, Error) ---
     public static void buildStaticPages() {
         try {
-            System.out.println("-> Baue index.html & error.html...");
+            log.info("Baue index.html & error.html...");
 
             // Index (Navigations-Highlight für "index.html")
             Map<String, Object> indexData = createBaseData(
@@ -561,7 +557,7 @@ public class FileGenerator {
 
             processTemplate("error.ftlh", errorData, pathOutput + "error.html");
 
-        } catch (Exception e) { System.err.println("Fehler bei statischen Seiten: " + e.getMessage()); }
+        } catch (Exception e) { log.error("Fehler bei statischen Seiten: {}", e.getMessage()); }
     }
 
     public static String normalizeCardNumber(String num) {
@@ -571,7 +567,7 @@ public class FileGenerator {
 
     public static void buildRainbowsPage() {
         try {
-            System.out.println("-> Baue rainbows.html (Strict Single-Card Parallel Rainbow Tracker)...");
+            log.info("Baue rainbows.html (Strict Single-Card Parallel Rainbow Tracker)...");
             Map<String, Object> data = createBaseData(
                     "Parallel Rainbow Tracker & Set Checklists | Maulmann Private Vault",
                     "Track completion progress of Juwan Howard single-card parallel rainbows (cards with identical season, manufacturer, brand, theme, and card number).",
@@ -790,7 +786,7 @@ public class FileGenerator {
             processTemplate("rainbows.ftlh", data, pathOutput + "rainbows.html");
 
         } catch (Exception e) {
-            System.err.println("Fehler bei Rainbows Page: " + e.getMessage());
+            log.error("Fehler bei Rainbows Page: {}", e.getMessage());
         }
     }
 
@@ -1033,6 +1029,6 @@ public class FileGenerator {
         buildCollectionOverview();
         buildOtherCollections();
         buildStaticPages();
-        System.out.println("-> Alle statischen Seiten erfolgreich generiert!");
+        log.info("Alle statischen Seiten erfolgreich generiert!");
     }
 }

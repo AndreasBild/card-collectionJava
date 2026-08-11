@@ -2,6 +2,8 @@ package de.maulmann;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -16,6 +18,7 @@ import java.util.*;
 
 public class HtmlToJsonConverter {
 
+    private static final Logger log = LoggerFactory.getLogger(HtmlToJsonConverter.class);
     private static final ObjectMapper MAPPER = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
 
     public static void main(String[] args) {
@@ -30,7 +33,7 @@ public class HtmlToJsonConverter {
         for (String name : files) {
             Path htmlPath = Paths.get("content/other", name + ".html");
             if (!Files.exists(htmlPath)) {
-                System.out.println("Skipping " + htmlPath + " (file not found)");
+                log.info("Skipping {} (file not found)", htmlPath);
                 continue;
             }
 
@@ -38,7 +41,7 @@ public class HtmlToJsonConverter {
                 Document doc = Jsoup.parse(htmlPath.toFile(), "UTF-8");
                 Elements tables = doc.select("table");
                 if (tables.isEmpty()) {
-                    System.out.println("No tables found in " + htmlPath);
+                    log.info("No tables found in {}", htmlPath);
                     continue;
                 }
 
@@ -49,9 +52,9 @@ public class HtmlToJsonConverter {
 
                 File jsonFile = new File("content/json", name.toLowerCase() + ".json");
                 MAPPER.writeValue(jsonFile, cards);
-                System.out.println("Successfully generated " + jsonFile.getPath() + " with " + cards.size() + " entries.");
+                log.info("Successfully generated {} with {} entries.", jsonFile.getPath(), cards.size());
             } catch (IOException e) {
-                System.err.println("Error parsing " + htmlPath + ": " + e.getMessage());
+                log.error("Error parsing {}: {}", htmlPath, e.getMessage());
             }
         }
     }

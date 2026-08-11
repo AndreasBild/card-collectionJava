@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class CardSchemaGenerator {
 
-    private static final String BASE_URL = "https://www.maulmann.de";
+    private static final String BASE_URL = CardUtils.BASE_URL;
     private static final TriviaManager TRIVIA_MANAGER = TriviaManager.getInstance();
     private static final java.util.Properties RATING_CACHE = new java.util.Properties();
     private static boolean ratingCacheLoaded = false;
@@ -487,12 +487,11 @@ public class CardSchemaGenerator {
     }
 
     private static boolean isValid(String str) {
-        return str != null && !str.trim().isEmpty() && !str.equalsIgnoreCase("null") && !str.equals("-");
+        return CardUtils.isValidForSchema(str);
     }
 
     private static String formatMulti(String val) {
-        if (val == null) return "";
-        return val.replaceAll("\\s*,\\s*", " / ");
+        return CardUtils.formatMulti(val);
     }
 
     private static String escapeJson(String text) {

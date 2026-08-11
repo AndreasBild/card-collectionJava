@@ -2,7 +2,6 @@ package de.maulmann;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import freemarker.template.TemplateExceptionHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +30,7 @@ public class CardPageGenerator {
 
     private static final String BASE_FOLDER = "output/cards";
     private static final String RELATIVE_IMAGES_PATH = "../../images";
-    private static final String BASE_URL = "https://www.maulmann.de";
+    private static final String BASE_URL = CardUtils.BASE_URL;
     private static final Logger log = LoggerFactory.getLogger(CardPageGenerator.class);
     public static final String ROOT = "../../";
 
@@ -46,13 +45,7 @@ public class CardPageGenerator {
         timestampTracker = tracker;
     }
 
-    private static final Configuration fmConfig;
-    static {
-        fmConfig = new Configuration(Configuration.VERSION_2_3_34);
-        fmConfig.setClassForTemplateLoading(CardPageGenerator.class, "/templates");
-        fmConfig.setDefaultEncoding("UTF-8");
-        fmConfig.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-    }
+    private static final Configuration fmConfig = CardUtils.getFreeMarkerConfig();
 
     public static class CardData {
         Map<String, String> attributes;
@@ -869,8 +862,7 @@ public class CardPageGenerator {
     }
 
     private static String formatMulti(String val) {
-        if (val == null) return "";
-        return val.replaceAll("\\s*,\\s*", " / ");
+        return CardUtils.formatMulti(val);
     }
 
     private static void addIfPresent(List<String> list, String value) {
@@ -878,7 +870,7 @@ public class CardPageGenerator {
     }
 
     private static boolean isValid(String value) {
-        return value != null && !value.trim().isEmpty() && !value.equals("0") && !value.equals("-") && !value.equals("—");
+        return CardUtils.isValidForDisplay(value);
     }
 
     public static String resolveDiskImageBase(String seasonFolder, String imageBaseName, CardData c) {

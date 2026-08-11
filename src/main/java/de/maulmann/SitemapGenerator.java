@@ -4,10 +4,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import freemarker.template.TemplateExceptionHandler;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -32,14 +33,9 @@ import java.util.stream.Stream;
  */
 public class SitemapGenerator {
 
-    private static final Configuration fmConfig;
-    static {
-        fmConfig = new Configuration(Configuration.VERSION_2_3_34);
-        fmConfig.setClassForTemplateLoading(SitemapGenerator.class, "/templates");
-        fmConfig.setDefaultEncoding("UTF-8");
-        fmConfig.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-    }
-    private static final String BASE_URL = "https://www.maulmann.de";
+    private static final Logger log = LoggerFactory.getLogger(SitemapGenerator.class);
+    private static final Configuration fmConfig = CardUtils.getFreeMarkerConfig();
+    private static final String BASE_URL = CardUtils.BASE_URL;
     private static final String OUTPUT_DIR = "output";
 
     public static void main(String[] args) {
@@ -73,10 +69,10 @@ public class SitemapGenerator {
         Map<String, List<Map<String, String>>> seasonGroups = new TreeMap<>();
 
         try {
-            System.out.println("-> Generating best-in-class robots.txt...");
+            log.info("Generating best-in-class robots.txt...");
             generateRobotsTxt();
 
-            System.out.println("-> Cleaning up old sitemap files...");
+            log.info("Cleaning up old sitemap files...");
             Path outputDirPath = Paths.get(OUTPUT_DIR);
             if (Files.exists(outputDirPath)) {
                 try (Stream<Path> sitemapFiles = Files.list(outputDirPath)) {
@@ -88,7 +84,7 @@ public class SitemapGenerator {
                 }
             }
 
-            System.out.println("-> Scanning output directory for sitemaps...");
+            log.info("Scanning output directory for sitemaps...");
 
             // Collect all HTML paths
             List<Path> allPaths = new ArrayList<>();
@@ -251,7 +247,7 @@ public class SitemapGenerator {
                         imagesAdded.incrementAndGet();
                     }
                 } catch (IOException e) {
-                    System.err.println("Could not parse " + path + ": " + e.getMessage());
+                    log.error("Could not parse {}: {}", path, e.getMessage());
                 }
 
                 // Categorize URL into correct sitemap bucket
@@ -299,11 +295,11 @@ public class SitemapGenerator {
             // 4. Generate Root sitemap.xml (Sitemap Index)
             writeSitemapIndex("sitemap.xml", childSitemaps);
 
-            System.out.println("-> Sitemap Index & Sub-Sitemaps successfully generated!");
-            System.out.println("   > Total Sub-Sitemaps: " + childSitemaps.size());
-            System.out.println("   > Images added: " + imagesAdded.get());
+            log.info("Sitemap Index & Sub-Sitemaps successfully generated!");
+            log.info("   > Total Sub-Sitemaps: {}", childSitemaps.size());
+            log.info("   > Images added: {}", imagesAdded.get());
             if (imagesMissing.get() > 0) {
-                System.out.println("   > Images missing: " + imagesMissing.get());
+                log.info("   > Images missing: {}", imagesMissing.get());
             }
 
             generateHtmlSitemap(coreLinks, seasonGroups, timestampTracker);
@@ -312,7 +308,7 @@ public class SitemapGenerator {
             generateRssFeed(allPaths, timestampTracker);
 
         } catch (Exception e) {
-            System.err.println("Failed to generate Sitemap: " + e.getMessage());
+            log.error("Failed to generate Sitemap: {}", e.getMessage());
             e.printStackTrace();
         }
     }
@@ -428,7 +424,7 @@ public class SitemapGenerator {
     }
 
     private static void generateLlmsTxt() {
-        System.out.println("-> Generating llms.txt standard index for AI/LLMs...");
+        log.info("Generating llms.txt standard index for AI/LLMs...");
         StringBuilder sb = new StringBuilder();
         sb.append("# maulmann.de\n\n");
         sb.append("> Maulmann Private Collection: High-end sports card database featuring Juwan Howard, rare 1/1 Masterpieces, and low-numbered serial cards.\n\n");
@@ -445,14 +441,14 @@ public class SitemapGenerator {
         File llmsFile = new File(OUTPUT_DIR + "/llms.txt");
         try (FileWriter writer = new FileWriter(llmsFile, StandardCharsets.UTF_8)) {
             writer.write(sb.toString());
-            System.out.println("-> llms.txt successfully generated!");
+            log.info("llms.txt successfully generated!");
         } catch (IOException e) {
-            System.err.println("Failed to write llms.txt: " + e.getMessage());
+            log.error("Failed to write llms.txt: {}", e.getMessage());
         }
     }
 
     private static void generateLlmsFullTxt(List<Path> allPaths) {
-        System.out.println("-> Generating llms-full.txt for AI/LLM RAG Indexing...");
+        log.info("Generating llms-full.txt for AI/LLM RAG Indexing...");
         StringBuilder sb = new StringBuilder();
         sb.append("# maulmann.de - Full Private Collection Knowledge Base for LLMs\n\n");
         sb.append("> Full dataset index for the Juwan Howard Basketball Card Private Collection.\n");
@@ -496,14 +492,14 @@ public class SitemapGenerator {
         File llmsFullFile = new File(OUTPUT_DIR + "/llms-full.txt");
         try (FileWriter writer = new FileWriter(llmsFullFile, StandardCharsets.UTF_8)) {
             writer.write(sb.toString());
-            System.out.println("-> llms-full.txt successfully generated!");
+            log.info("llms-full.txt successfully generated!");
         } catch (IOException e) {
-            System.err.println("Failed to write llms-full.txt: " + e.getMessage());
+            log.error("Failed to write llms-full.txt: {}", e.getMessage());
         }
     }
 
     private static void generateRssFeed(List<Path> allPaths, TimestampTracker timestampTracker) {
-        System.out.println("-> Generating RSS feed (rss.xml)...");
+        log.info("Generating RSS feed (rss.xml)...");
         StringBuilder rss = new StringBuilder();
         rss.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
         rss.append("<rss version=\"2.0\" xmlns:atom=\"http://www.w3.org/2005/Atom\">\n");
@@ -586,15 +582,15 @@ public class SitemapGenerator {
         File rssFile = new File(OUTPUT_DIR + "/rss.xml");
         try (FileWriter writer = new FileWriter(rssFile, StandardCharsets.UTF_8)) {
             writer.write(rss.toString());
-            System.out.println("-> rss.xml successfully generated! (" + addedCount + " items)");
+            log.info("rss.xml successfully generated! ({} items)", addedCount);
         } catch (IOException e) {
-            System.err.println("Failed to write rss.xml: " + e.getMessage());
+            log.error("Failed to write rss.xml: {}", e.getMessage());
         }
     }
 
     private static void generateHtmlSitemap(List<Map<String, String>> coreLinks, Map<String, List<Map<String, String>>> seasonGroups, TimestampTracker timestampTracker) {
         try {
-            System.out.println("-> Generating sitemap.html...");
+            log.info("Generating sitemap.html...");
 
             Map<String, Object> data = new HashMap<>();
 
@@ -663,9 +659,9 @@ public class SitemapGenerator {
             }
 
             Files.writeString(outFile.toPath(), finalHtml, StandardCharsets.UTF_8);
-            System.out.println("-> Sitemap.html successfully generated!");
+            log.info("Sitemap.html successfully generated!");
         } catch (Exception e) {
-            System.err.println("Failed to generate HTML Sitemap: " + e.getMessage());
+            log.error("Failed to generate HTML Sitemap: {}", e.getMessage());
             e.printStackTrace();
         }
     }

@@ -1,5 +1,8 @@
 package de.maulmann;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
@@ -17,6 +20,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 public class ImageConverter {
+
+    private static final Logger log = LoggerFactory.getLogger(ImageConverter.class);
 
     // --- Configuration ---
     private static final int MAX_WIDTH = 1200;
@@ -41,21 +46,21 @@ public class ImageConverter {
             processImages(sourceDir, webpOutDir);
             long endTime = System.currentTimeMillis();
 
-            System.out.println("\n--- Image Processing Summary ---");
-            System.out.println("Successfully converted sets: " + successCount.get());
-            System.out.println("Skipped (unchanged):         " + skippedCount.get());
-            System.out.println("Failed to convert:           " + failureCount.get());
-            System.out.println("Total execution time:        " + (endTime - startTime) + " ms");
+            log.info("\n--- Image Processing Summary ---");
+            log.info("Successfully converted sets: {}", successCount.get());
+            log.info("Skipped (unchanged):         {}", skippedCount.get());
+            log.info("Failed to convert:           {}", failureCount.get());
+            log.info("Total execution time:        {} ms", endTime - startTime);
 
         } catch (Exception e) {
-            System.err.println("Critical error during processing: " + e.getMessage());
+            log.error("Critical error during processing: {}", e.getMessage());
             e.printStackTrace();
         }
     }
 
     public static void processImages(Path sourceDir, Path webpOutDir) throws IOException {
-        System.out.println("Starting image processing with virtual threads on: " + sourceDir.toAbsolutePath());
-        System.out.println("AVIFENC_PATH: " + AVIFENC_PATH);
+        log.info("Starting image processing with virtual threads on: {}", sourceDir.toAbsolutePath());
+        log.info("AVIFENC_PATH: {}", AVIFENC_PATH);
 
         // Initialisierung des Hash-Checkers
         FileTracker tracker = new FileTracker("output/image-build-hashes.properties");
@@ -96,7 +101,7 @@ public class ImageConverter {
                                 skippedCount.incrementAndGet();
                             }
                         } catch (Exception e) {
-                            System.err.println("Failed to process " + file + ": " + e.getMessage());
+                            log.error("Failed to process {}: {}", file, e.getMessage());
                             failureCount.incrementAndGet();
                         }
                     }, executor));
@@ -104,7 +109,7 @@ public class ImageConverter {
             }
             CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new)).join();
         } catch (Exception e) {
-            System.err.println("Critical error during parallel image processing: " + e.getMessage());
+            log.error("Critical error during parallel image processing: {}", e.getMessage());
         }
 
         // Speichern der aktualisierten Hashes
@@ -212,7 +217,7 @@ public class ImageConverter {
                 if (tempPng.exists()) tempPng.delete();
             }
         } catch (Exception e) {
-            System.err.println("AVIF conversion error for " + outputFile.getName() + ": " + e.getMessage());
+            log.error("AVIF conversion error for {}: {}", outputFile.getName(), e.getMessage());
             e.printStackTrace();
         }
     }

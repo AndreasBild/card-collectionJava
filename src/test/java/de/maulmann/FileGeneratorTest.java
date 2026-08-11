@@ -38,9 +38,14 @@ class FileGeneratorTest {
     }
 
     @AfterEach
-    void tearDown() {
+    void tearDown() throws Exception {
         FileGenerator.pathSource = originalSourcePath;
         FileGenerator.pathOutput = originalOutputPath;
+        
+        // Reset the static cache to prevent state leakage between tests
+        java.lang.reflect.Field cacheField = FileGenerator.class.getDeclaredField("cachedFilteredCards");
+        cacheField.setAccessible(true);
+        cacheField.set(null, null);
     }
 
     private void createDummyHtmlFile(String fileName, String... lines) throws IOException {
