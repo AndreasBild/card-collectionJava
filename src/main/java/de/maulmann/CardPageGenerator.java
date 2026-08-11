@@ -192,6 +192,8 @@ public class CardPageGenerator {
             }
         }
 
+        List<CardData> allProcessedCards = new ArrayList<>();
+
         List<CardJson> jsonCards = CardDataLoader.loadCardsFromJson("content/json/cards.json");
         if (!jsonCards.isEmpty()) {
             log.info("Generating Juwan Howard card pages from content/json/cards.json ({} cards)...", jsonCards.size());
@@ -200,6 +202,7 @@ public class CardPageGenerator {
                 juwanCards.add(new CardData(c, null));
             }
             List<CardData> filteredJuwanCards = filterDuplicateCards(juwanCards, "content/json/cards.json");
+            allProcessedCards.addAll(filteredJuwanCards);
             log.info("Deduplication complete: {} cards queued for generation (skipped {} un-numbered duplicates).",
                     filteredJuwanCards.size(), (juwanCards.size() - filteredJuwanCards.size()));
             generateSubPagesMultithreaded(filteredJuwanCards, "Juwan-Howard-Collection.html");
@@ -224,6 +227,7 @@ public class CardPageGenerator {
                     cardDataList.add(new CardData(c, null));
                 }
                 List<CardData> filtered = filterDuplicateCards(cardDataList, jsonPath);
+                allProcessedCards.addAll(filtered);
                 generateSubPagesMultithreaded(filtered, overviewPage);
             }
         }
@@ -235,6 +239,8 @@ public class CardPageGenerator {
         } catch (IOException e) {
             log.error("Failed to write Duplicates.txt", e);
         }
+
+        generateMissingImagesReport(allProcessedCards);
 
         long endTime = System.currentTimeMillis();
         log.info("All card pages generated in {} ms.", (endTime - startTime));
@@ -1023,5 +1029,87 @@ public class CardPageGenerator {
         } else {
             return "../" + targetCard.seasonFolder + "/" + targetCard.filename;
         }
+    }
+
+    public static void generateMissingImagesReport(List<CardData> cards) {
+        if (cards == null || cards.isEmpty()) return;
+
+        Map<String, List<String>> missingBySeason = new TreeMap<>();
+        int totalFrontMissing = 0;
+        int totalBackMissing = 0;
+
+        String[] extensions = {".avif"};
+
+        for (CardData c : cards) {
+            String seasonFolder = c.seasonFolder != null ? c.seasonFolder : "Unknown_Season";
+            String rawImageBase = c.filenameBase.contains("-") ? c.filenameBase.substring(0, c.filenameBase.lastIndexOf("-")) : c.filenameBase;
+            String resolvedImageBase = resolveDiskImageBase(seasonFolder, rawImageBase, c);
+
+            boolean frontExists = checkSideImageExists(seasonFolder, resolvedImageBase, "front", extensions);
+            boolean backExists = checkSideImageExists(seasonFolder, resolvedImageBase, "back", extensions);
+
+            if (!frontExists || !backExists) {
+                String player = c.get("Player");
+                String season = c.get("Season");
+                String brand = c.get("Brand");
+                String variant = c.get("Variant");
+                String num = c.get("Number");
+                String serial = c.get("Serial");
+
+                StringBuilder desc = new StringBuilder();
+                if (isValid(player)) desc.append(player);
+                if (isValid(season)) desc.append(" - ").append(season);
+                if (isValid(brand)) desc.append(" ").append(brand);
+                if (isValid(variant) && !variant.equalsIgnoreCase("Base")) desc.append(" ").append(variant);
+                if (isValid(num)) desc.append(" #").append(num);
+                if (isValid(serial) && !serial.equals("0")) desc.append(" (sn").append(serial.replace("#", "").replace("/", "-")).append(")");
+
+                List<String> seasonList = missingBySeason.computeIfAbsent(seasonFolder, k -> new ArrayList<>());
+
+                if (!frontExists) {
+                    totalFrontMissing++;
+                    seasonList.add("[MISSING FRONT] " + desc + " (Expected: " + resolvedImageBase + "-front)");
+                }
+                if (!backExists) {
+                    totalBackMissing++;
+                    seasonList.add("[MISSING BACK]  " + desc + " (Expected: " + resolvedImageBase + "-back)");
+                }
+            }
+        }
+
+        List<String> reportLines = new ArrayList<>();
+        reportLines.add("================================================================================");
+        reportLines.add("MISSING IMAGES SUMMARY REPORT");
+        reportLines.add("Total Missing Entries: " + (totalFrontMissing + totalBackMissing) + " (Front: " + totalFrontMissing + ", Back: " + totalBackMissing + ")");
+        reportLines.add("================================================================================");
+        reportLines.add("");
+
+        for (Map.Entry<String, List<String>> entry : missingBySeason.entrySet()) {
+            reportLines.add("--- SEASON: " + entry.getKey() + " (" + entry.getValue().size() + " missing) ---");
+            reportLines.addAll(entry.getValue());
+            reportLines.add("");
+        }
+
+        try {
+            Path outPath = Paths.get("output", "MissingImages.txt");
+            Path rootPath = Paths.get("MissingImages.txt");
+            Files.write(outPath, reportLines, StandardCharsets.UTF_8);
+            Files.write(rootPath, reportLines, StandardCharsets.UTF_8);
+            log.info("Saved MissingImages.txt with {} entries across {} seasons.",
+                    (totalFrontMissing + totalBackMissing), missingBySeason.size());
+        } catch (IOException e) {
+            log.error("Failed to write MissingImages.txt", e);
+        }
+    }
+
+    private static boolean checkSideImageExists(String seasonFolder, String imageBaseName, String side, String[] extensions) {
+        for (String ext : extensions) {
+            Path pSrc = Paths.get("images", seasonFolder, imageBaseName + "-" + side + ext);
+            Path pOut = Paths.get("output", "images", seasonFolder, imageBaseName + "-" + side + ext);
+            if (Files.exists(pSrc) || Files.exists(pOut)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

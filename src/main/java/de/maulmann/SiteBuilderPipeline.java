@@ -107,7 +107,7 @@ public class SiteBuilderPipeline {
                 }, phaseExecutor);
 
                 CompletableFuture<Void> imageTask = CompletableFuture.runAsync(() -> {
-                    log.info("  -> [PHASE 2] Converting images to WebP...");
+                    log.info("  -> [PHASE 2] Converting images to AVIF ...");
                     ImageConverter.main(new String[0]);
                 }, phaseExecutor);
 

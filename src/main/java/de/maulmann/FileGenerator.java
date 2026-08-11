@@ -19,7 +19,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
 
 public class FileGenerator {
 
@@ -1014,10 +1013,7 @@ public class FileGenerator {
         if (sn.equals("1/1") || sn.equalsIgnoreCase("1 of 1")) {
             return true;
         }
-        if (var.contains("1/1") || var.contains("1 of 1")) {
-            return true;
-        }
-        return false;
+        return var.contains("1/1") || var.contains("1 of 1");
     }
 
     private static String escapeHtml(String input) {

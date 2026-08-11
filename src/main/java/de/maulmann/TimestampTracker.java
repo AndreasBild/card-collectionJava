@@ -38,9 +38,8 @@ public class TimestampTracker {
 
     /**
      * Returns a stable timestamp for the given content.
-     * @param identifier A unique identifier for the file (e.g., its relative path).
-     * @param content The generated HTML content (should contain a placeholder for the timestamp).
-     * @return A stable timestamp string.
+     * @param hash A unique identifier for the file (e.g., its relative path).
+     * @param timestamp The generated HTML content (should contain a placeholder for the timestamp).
      */
     public record TimestampEntry(String hash, String timestamp) {
         public static TimestampEntry parse(String raw) {
