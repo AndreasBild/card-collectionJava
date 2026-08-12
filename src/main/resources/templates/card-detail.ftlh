@@ -49,7 +49,7 @@ ${topNavHtml?no_esc}
                                 <img src="${frontImgPath?replace('.avif', '-400w.avif')}"
                                      width="600" height="840"
                                      alt="${frontAlt}" title="${frontImgTitle}"
-                                     fetchpriority="high" decoding="async" class="zoomable-img card-3d-interactive">
+                                     fetchpriority="high" loading="eager" decoding="async" class="zoomable-img card-3d-interactive">
                             </picture>
                             <figcaption>${frontAlt}</figcaption>
                         </figure>

@@ -134,7 +134,15 @@ public class CardSchemaGenerator {
         sb.append("      \"url\": \"").append(cardUrl).append("\",\n");
         sb.append("      \"name\": \"").append(escapeJson(h1Title)).append("\",\n");
         sb.append("      \"description\": \"").append(escapeJson(desc)).append("\",\n");
-        sb.append("      \"primaryImageOfPage\": { \"@type\": \"ImageObject\", \"url\": \"").append(frontImgUrl).append("\" },\n");
+        sb.append("      \"primaryImageOfPage\": {\n");
+        sb.append("        \"@type\": \"ImageObject\",\n");
+        sb.append("        \"@id\": \"").append(cardUrl).append("#primaryimage\",\n");
+        sb.append("        \"url\": \"").append(frontImgUrl).append("\",\n");
+        sb.append("        \"contentUrl\": \"").append(frontImgUrl).append("\",\n");
+        sb.append("        \"width\": 1200,\n");
+        sb.append("        \"height\": 1680,\n");
+        sb.append("        \"caption\": \"").append(escapeJson(h1Title)).append("\"\n");
+        sb.append("      },\n");
         sb.append("      \"breadcrumb\": { \"@id\": \"").append(cardUrl).append("#breadcrumb\" }\n");
         sb.append("    },\n");
 

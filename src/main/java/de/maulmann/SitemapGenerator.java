@@ -483,6 +483,39 @@ public class SitemapGenerator {
                 if (!desc.isEmpty()) {
                     sb.append("- Description: ").append(desc).append("\n");
                 }
+
+                String player = getSpecValue(doc, "Player");
+                String season = getSpecValue(doc, "Season");
+                String company = getSpecValue(doc, "Company");
+                if (company.isEmpty()) company = getSpecValue(doc, "Manufacturer");
+                String brand = getSpecValue(doc, "Brand");
+                String variant = getSpecValue(doc, "Variant");
+                String number = getSpecValue(doc, "Card Number");
+                if (number.isEmpty()) number = getSpecValue(doc, "Number");
+                String printRun = getSpecValue(doc, "Print Run");
+                if (printRun.isEmpty()) printRun = getSpecValue(doc, "Serial/Print Run");
+                if (printRun.isEmpty()) printRun = getSpecValue(doc, "Serial");
+                String grading = getSpecValue(doc, "Grading Co.");
+                if (!grading.isEmpty()) {
+                    String gVal = getSpecValue(doc, "Grade");
+                    if (!gVal.isEmpty()) grading += " " + gVal;
+                } else {
+                    grading = getSpecValue(doc, "Grading");
+                }
+
+                List<String> specs = new ArrayList<>();
+                if (!player.isEmpty()) specs.add("Player: " + player);
+                if (!season.isEmpty()) specs.add("Season: " + season);
+                if (!company.isEmpty()) specs.add("Company: " + company);
+                if (!brand.isEmpty()) specs.add("Brand: " + brand);
+                if (!variant.isEmpty() && !variant.equalsIgnoreCase("Base")) specs.add("Variant: " + variant);
+                if (!number.isEmpty()) specs.add("Card #: " + number);
+                if (!printRun.isEmpty() && !printRun.equals("-")) specs.add("Serial: " + printRun);
+                if (!grading.isEmpty() && !grading.equals("-")) specs.add("Grading: " + grading);
+
+                if (!specs.isEmpty()) {
+                    sb.append("- Attributes: ").append(String.join(" | ", specs)).append("\n");
+                }
                 sb.append("\n");
             } catch (Exception ignored) {
                 sb.append("- ").append(fileName).append(": ").append(loc).append("\n");
