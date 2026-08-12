@@ -517,7 +517,7 @@ ${topNavHtml?no_esc}
                     <figcaption>Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Green</figcaption>
                 </figure>
                 <div class="hover-overlay">
-                    <a href="cards/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-PMG-sn07-036109be.html"
+                    <a href="cards/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Green-33-PMG-sn7-036109be.html"
                        class="view-button"
                        title="View details for Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Green">View
                         Details</a>
