@@ -153,6 +153,60 @@ public class CardPageGenerator {
         }
     }
 
+    /**
+     * O(1) attribute index for instant relationship and brand/company lookups across large card sets.
+     */
+    public static class CardIndex {
+        private final Map<String, List<CardData>> brandMap = new HashMap<>();
+        private final Map<String, List<CardData>> companyMap = new HashMap<>();
+        private final Map<String, List<CardData>> seasonMap = new HashMap<>();
+        private final Map<String, List<CardData>> playerMap = new HashMap<>();
+
+        public CardIndex(List<CardData> allCards) {
+            if (allCards == null) return;
+            for (CardData c : allCards) {
+                String brand = c.get("Brand");
+                if (isValid(brand)) {
+                    brandMap.computeIfAbsent(brand.toLowerCase(), k -> new ArrayList<>()).add(c);
+                }
+                String company = c.get("Company");
+                if (isValid(company)) {
+                    companyMap.computeIfAbsent(company.toLowerCase(), k -> new ArrayList<>()).add(c);
+                }
+                String season = c.get("Season");
+                if (isValid(season)) {
+                    seasonMap.computeIfAbsent(season.toLowerCase(), k -> new ArrayList<>()).add(c);
+                }
+                String player = c.get("Player");
+                if (isValid(player)) {
+                    playerMap.computeIfAbsent(player.toLowerCase(), k -> new ArrayList<>()).add(c);
+                }
+            }
+        }
+
+        public List<CardData> getByBrand(String brand) {
+            if (brand == null) return Collections.emptyList();
+            return brandMap.getOrDefault(brand.toLowerCase(), Collections.emptyList());
+        }
+
+        public List<CardData> getByCompany(String company) {
+            if (company == null) return Collections.emptyList();
+            return companyMap.getOrDefault(company.toLowerCase(), Collections.emptyList());
+        }
+
+        public List<CardData> getCandidatesForRelated(CardData target) {
+            if (target == null) return Collections.emptyList();
+            Set<CardData> candidates = new LinkedHashSet<>();
+            String player = target.get("Player");
+            if (isValid(player)) candidates.addAll(playerMap.getOrDefault(player.toLowerCase(), Collections.emptyList()));
+            String season = target.get("Season");
+            if (isValid(season)) candidates.addAll(seasonMap.getOrDefault(season.toLowerCase(), Collections.emptyList()));
+            String brand = target.get("Brand");
+            if (isValid(brand)) candidates.addAll(brandMap.getOrDefault(brand.toLowerCase(), Collections.emptyList()));
+            return new ArrayList<>(candidates);
+        }
+    }
+
     // Cache for CardData objects to avoid redundant MD5 hash computation across multiple passes
     private static final ConcurrentHashMap<String, CardData> CARD_DATA_CACHE = new ConcurrentHashMap<>();
 
@@ -319,11 +373,13 @@ public class CardPageGenerator {
     }
 
     private static void generateSubPagesMultithreaded(List<CardData> allCards, String overviewPage) {
-        // Pre-compute rare card IDs once to avoid redundant isRareParallel() calls in O(n²) findRelatedCards
+        // Pre-compute rare card IDs and CardIndex once for O(1) lookups in findRelatedCards/Brand/Company
         Set<String> rareCardIds = allCards.stream()
                 .filter(CardPageGenerator::isRareParallel)
                 .map(c -> c.stableId)
                 .collect(Collectors.toSet());
+
+        CardIndex cardIndex = new CardIndex(allCards);
 
         try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
             for (int i = 0; i < allCards.size(); i++) {
@@ -338,7 +394,7 @@ public class CardPageGenerator {
                         Files.createDirectories(folderPath);
                         Path filePath = folderPath.resolve(currentCard.filename);
 
-                        createSubPage(currentCard, filePath, prevCard, nextCard, allCards, overviewPage, rareCardIds);
+                        createSubPage(currentCard, filePath, prevCard, nextCard, cardIndex, overviewPage, rareCardIds);
                     } catch (Exception e) {
                         log.error("Failed to generate subpage for card at index " + index, e);
                     }
@@ -347,7 +403,7 @@ public class CardPageGenerator {
         }
     }
 
-    private static void createSubPage(CardData c, Path path, CardData prev, CardData next, List<CardData> allCards, String overviewPage, Set<String> rareCardIds) {
+    private static void createSubPage(CardData c, Path path, CardData prev, CardData next, CardIndex cardIndex, String overviewPage, Set<String> rareCardIds) {
         String h1Title = generateH1(c);
         String browserTitle = generateBrowserTitle(c, overviewPage);
         String metaDesc = generateMetaDescription(c);
@@ -441,9 +497,9 @@ public class CardPageGenerator {
         data.put("eraTitle", isBaseball ? "&#x26BE; MLB Era & Pop Culture" : "&#x1F3C0; NBA Era & Pop Culture");
         data.put("cardBackText", "");
 
-        List<Map<String, String>> sameBrandCards = findSameBrandCards(c, allCards, 6);
+        List<Map<String, String>> sameBrandCards = findSameBrandCards(c, cardIndex, 6);
         Set<String> brandCardIds = sameBrandCards.stream().map(m -> m.get("stableId")).filter(Objects::nonNull).collect(Collectors.toSet());
-        List<Map<String, String>> sameCompanyCards = findSameCompanyCards(c, allCards, brandCardIds, 6);
+        List<Map<String, String>> sameCompanyCards = findSameCompanyCards(c, cardIndex, brandCardIds, 6);
 
         String sameBrandTitle = isValid(c.get("Season")) ? "More from " + c.get("Season") + " " + c.get("Brand") : "More from " + c.get("Brand");
         String sameCompanyTitle = isValid(c.get("Season")) ? "More from " + c.get("Season") + " " + c.get("Company") : "More from " + c.get("Company");
@@ -453,7 +509,7 @@ public class CardPageGenerator {
         data.put("sameCompanyCards", sameCompanyCards);
         data.put("sameCompanyTitle", sameCompanyTitle);
 
-        data.put("relatedCards", findRelatedCards(c, allCards, 4, rareCardIds));
+        data.put("relatedCards", findRelatedCards(c, cardIndex, 4, rareCardIds));
         data.put("externalLinks", generateExternalLinks(c));
 
         data.put("faqHtml", faqHtml);
@@ -684,15 +740,18 @@ public class CardPageGenerator {
     }
 
     private static List<Map<String, String>> findRelatedCards(CardData target, List<CardData> pool, int limit, Set<String> rareCardIds) {
-        if (pool == null || pool.isEmpty()) return Collections.emptyList();
+        return findRelatedCards(target, new CardIndex(pool), limit, rareCardIds);
+    }
 
-        List<CardData> candidates = pool.stream()
-                .filter(c -> !c.stableId.equals(target.stableId))
-                .collect(Collectors.toList());
+    private static List<Map<String, String>> findRelatedCards(CardData target, CardIndex index, int limit, Set<String> rareCardIds) {
+        if (target == null || index == null || limit <= 0) return Collections.emptyList();
 
+        List<CardData> candidates = index.getCandidatesForRelated(target);
         Map<CardData, Integer> scored = new HashMap<>();
 
         for (CardData c : candidates) {
+            if (c.stableId != null && c.stableId.equals(target.stableId)) continue;
+
             int score = 0;
             if (c.get("Season").equals(target.get("Season"))) score += 10;
 
@@ -707,8 +766,8 @@ public class CardPageGenerator {
             String tPlayer = target.get("Player");
             if (cPlayer.equals(tPlayer)) score += 15;
 
-            boolean targetIsRare = rareCardIds.contains(target.stableId);
-            boolean cIsRare = rareCardIds.contains(c.stableId);
+            boolean targetIsRare = rareCardIds != null && rareCardIds.contains(target.stableId);
+            boolean cIsRare = rareCardIds != null && rareCardIds.contains(c.stableId);
             if (targetIsRare && cIsRare) score += 7;
 
             scored.put(c, score);
@@ -921,21 +980,26 @@ public class CardPageGenerator {
     }
 
     public static List<Map<String, String>> findSameBrandCards(CardData currentCard, List<CardData> allCards, int limit) {
-        if (currentCard == null || allCards == null || limit <= 0) return Collections.emptyList();
+        return findSameBrandCards(currentCard, new CardIndex(allCards), limit);
+    }
+
+    public static List<Map<String, String>> findSameBrandCards(CardData currentCard, CardIndex index, int limit) {
+        if (currentCard == null || index == null || limit <= 0) return Collections.emptyList();
 
         String season = currentCard.get("Season");
         String brand = currentCard.get("Brand");
         if (!isValid(brand)) return Collections.emptyList();
 
+        List<CardData> pool = index.getByBrand(brand);
         List<CardData> selected = new ArrayList<>();
         Set<String> addedIds = new HashSet<>();
         if (currentCard.stableId != null) addedIds.add(currentCard.stableId);
 
         // Pass 1: Same season & same brand
         if (isValid(season)) {
-            for (CardData c : allCards) {
+            for (CardData c : pool) {
                 if (selected.size() >= limit) break;
-                if (c.stableId != null && !addedIds.contains(c.stableId) && season.equalsIgnoreCase(c.get("Season")) && brand.equalsIgnoreCase(c.get("Brand"))) {
+                if (c.stableId != null && !addedIds.contains(c.stableId) && season.equalsIgnoreCase(c.get("Season"))) {
                     selected.add(c);
                     addedIds.add(c.stableId);
                 }
@@ -944,9 +1008,9 @@ public class CardPageGenerator {
 
         // Pass 2: Fallback across other seasons if count < limit
         if (selected.size() < limit) {
-            for (CardData c : allCards) {
+            for (CardData c : pool) {
                 if (selected.size() >= limit) break;
-                if (c.stableId != null && !addedIds.contains(c.stableId) && brand.equalsIgnoreCase(c.get("Brand"))) {
+                if (c.stableId != null && !addedIds.contains(c.stableId)) {
                     selected.add(c);
                     addedIds.add(c.stableId);
                 }
@@ -963,21 +1027,26 @@ public class CardPageGenerator {
     }
 
     public static List<Map<String, String>> findSameCompanyCards(CardData currentCard, List<CardData> allCards, Set<String> excludeStableIds, int limit) {
-        if (currentCard == null || allCards == null || limit <= 0) return Collections.emptyList();
+        return findSameCompanyCards(currentCard, new CardIndex(allCards), excludeStableIds, limit);
+    }
+
+    public static List<Map<String, String>> findSameCompanyCards(CardData currentCard, CardIndex index, Set<String> excludeStableIds, int limit) {
+        if (currentCard == null || index == null || limit <= 0) return Collections.emptyList();
 
         String season = currentCard.get("Season");
         String company = currentCard.get("Company");
         if (!isValid(company)) return Collections.emptyList();
 
+        List<CardData> pool = index.getByCompany(company);
         List<CardData> selected = new ArrayList<>();
         Set<String> addedIds = new HashSet<>(excludeStableIds != null ? excludeStableIds : Collections.emptySet());
         if (currentCard.stableId != null) addedIds.add(currentCard.stableId);
 
         // Pass 1: Same season & same company
         if (isValid(season)) {
-            for (CardData c : allCards) {
+            for (CardData c : pool) {
                 if (selected.size() >= limit) break;
-                if (c.stableId != null && !addedIds.contains(c.stableId) && season.equalsIgnoreCase(c.get("Season")) && company.equalsIgnoreCase(c.get("Company"))) {
+                if (c.stableId != null && !addedIds.contains(c.stableId) && season.equalsIgnoreCase(c.get("Season"))) {
                     selected.add(c);
                     addedIds.add(c.stableId);
                 }
@@ -986,9 +1055,9 @@ public class CardPageGenerator {
 
         // Pass 2: Fallback across other seasons if count < limit
         if (selected.size() < limit) {
-            for (CardData c : allCards) {
+            for (CardData c : pool) {
                 if (selected.size() >= limit) break;
-                if (c.stableId != null && !addedIds.contains(c.stableId) && company.equalsIgnoreCase(c.get("Company"))) {
+                if (c.stableId != null && !addedIds.contains(c.stableId)) {
                     selected.add(c);
                     addedIds.add(c.stableId);
                 }
