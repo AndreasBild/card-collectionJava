@@ -232,9 +232,39 @@ public class CardPageGenerator {
     private static final java.util.regex.Pattern PATTERN_CLEAN_PLAYER_QUOTES = java.util.regex.Pattern.compile("[\"“„”«»'].*?[\"“„”«»']");
     private static final java.util.regex.Pattern PATTERN_SPACES = java.util.regex.Pattern.compile("\\s+");
 
+    private static volatile Set<String> EXISTING_IMAGE_KEYS = null;
+
+    private static Set<String> getExistingImageKeys() {
+        if (EXISTING_IMAGE_KEYS == null) {
+            synchronized (CardPageGenerator.class) {
+                if (EXISTING_IMAGE_KEYS == null) {
+                    Set<String> keys = new HashSet<>();
+                    indexImageDir(Paths.get("images"), keys);
+                    indexImageDir(Paths.get("output", "images"), keys);
+                    EXISTING_IMAGE_KEYS = Collections.unmodifiableSet(keys);
+                }
+            }
+        }
+        return EXISTING_IMAGE_KEYS;
+    }
+
+    private static void indexImageDir(Path dir, Set<String> keys) {
+        if (Files.exists(dir)) {
+            try (Stream<Path> stream = Files.walk(dir)) {
+                stream.filter(Files::isRegularFile).forEach(p -> {
+                    String rel = dir.relativize(p).toString().replace('\\', '/');
+                    keys.add(rel.toLowerCase());
+                });
+            } catch (IOException e) {
+                log.warn("Could not index images in {}: {}", dir, e.getMessage());
+            }
+        }
+    }
+
     public static List<CardData> run() {
         log.info("Starting high-speed Card Page Generation...");
         long startTime = System.currentTimeMillis();
+        EXISTING_IMAGE_KEYS = null; // Refresh image cache
         CardSchemaGenerator.loadRatingCache();
         IndexNowService.ensureValidationFile();
         duplicateLog.clear();
@@ -973,10 +1003,9 @@ public class CardPageGenerator {
     }
 
     private static boolean checkExists(String seasonFolder, String name) {
-        Path pJpg = Paths.get("images", seasonFolder, name + "-front.jpg");
-        Path pPng = Paths.get("images", seasonFolder, name + "-front.png");
-        Path pAvif = Paths.get("output", "images", seasonFolder, name + "-front.avif");
-        return Files.exists(pJpg) || Files.exists(pPng) || Files.exists(pAvif);
+        Set<String> keys = getExistingImageKeys();
+        String prefix = seasonFolder.toLowerCase() + "/" + name.toLowerCase() + "-front";
+        return keys.contains(prefix + ".jpg") || keys.contains(prefix + ".png") || keys.contains(prefix + ".avif");
     }
 
     private static String cleanFilename(String text) {
@@ -1180,10 +1209,10 @@ public class CardPageGenerator {
     }
 
     private static boolean checkSideImageExists(String seasonFolder, String imageBaseName, String side, String[] extensions) {
+        Set<String> keys = getExistingImageKeys();
+        String prefix = seasonFolder.toLowerCase() + "/" + imageBaseName.toLowerCase() + "-" + side.toLowerCase();
         for (String ext : extensions) {
-            Path pSrc = Paths.get("images", seasonFolder, imageBaseName + "-" + side + ext);
-            Path pOut = Paths.get("output", "images", seasonFolder, imageBaseName + "-" + side + ext);
-            if (Files.exists(pSrc) || Files.exists(pOut)) {
+            if (keys.contains(prefix + ext.toLowerCase())) {
                 return true;
             }
         }

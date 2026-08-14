@@ -637,6 +637,15 @@ public class FileGenerator {
                     )
             );
 
+            // Index cards by season and normalized card number for fast lookup in targetRainbows
+            Map<String, List<CardJson>> cardsBySeasonAndNumber = new HashMap<>();
+            for (CardJson c : allCards) {
+                if (c.season != null && c.cardNumber != null) {
+                    String lookupKey = (c.season + "|" + normalizeCardNumber(c.cardNumber)).toLowerCase();
+                    cardsBySeasonAndNumber.computeIfAbsent(lookupKey, k -> new ArrayList<>()).add(c);
+                }
+            }
+
             for (Map<String, Object> target : targetRainbows) {
                 String title = (String) target.get("title");
                 String season = (String) target.get("season");
@@ -659,16 +668,19 @@ public class FileGenerator {
 
                 List<Map<String, Object>> cardItems = new ArrayList<>();
                 int acquiredCount = 0;
+                List<CardJson> candidates = cardsBySeasonAndNumber.getOrDefault((season + "|" + number).toLowerCase(), Collections.emptyList());
 
                 for (Map<String, String> spec : expectedVariants) {
                     String reqVariant = spec.get("variant");
                     String reqSerial = spec.get("serial");
 
-                    CardJson matched = allCards.stream()
-                            .filter(c -> c.season != null && c.season.equalsIgnoreCase(season)
-                                    && c.cardNumber != null && normalizeCardNumber(c.cardNumber).equalsIgnoreCase(number)
-                                    && c.variant != null && (c.variant.equalsIgnoreCase(reqVariant) || c.variant.toLowerCase().contains(reqVariant.toLowerCase())))
-                            .findFirst().orElse(null);
+                    CardJson matched = null;
+                    for (CardJson c : candidates) {
+                        if (c.variant != null && (c.variant.equalsIgnoreCase(reqVariant) || c.variant.toLowerCase().contains(reqVariant.toLowerCase()))) {
+                            matched = c;
+                            break;
+                        }
+                    }
 
                     if (matched != null) {
                         acquiredCount++;

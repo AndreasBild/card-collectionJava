@@ -171,6 +171,11 @@ public class CardSchemaGenerator {
         sb.append("        \"@id\": \"").append(cardUrl).append("#primaryimage\",\n");
         sb.append("        \"url\": \"").append(frontImgUrl).append("\",\n");
         sb.append("        \"contentUrl\": \"").append(frontImgUrl).append("\",\n");
+        sb.append("        \"license\": \"https://www.maulmann.de/imprint.html\",\n");
+        sb.append("        \"acquireLicensePage\": \"https://www.maulmann.de/imprint.html\",\n");
+        sb.append("        \"creditText\": \"Maulmann Private Collection\",\n");
+        sb.append("        \"creator\": { \"@type\": \"Person\", \"name\": \"Mauli Maulmann\" },\n");
+        sb.append("        \"copyrightNotice\": \"© Maulmann Private Collection\",\n");
         sb.append("        \"width\": 1200,\n");
         sb.append("        \"height\": 1680,\n");
         sb.append("        \"caption\": \"").append(escapeJson(h1Title)).append("\"\n");
