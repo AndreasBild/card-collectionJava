@@ -32,8 +32,10 @@ public class CardSchemaGenerator {
         }
     }
 
-    public static String generateFaqHtml(CardPageGenerator.CardData c) {
-        StringBuilder sb = new StringBuilder();
+    public record FaqItem(String question, String answer) {}
+
+    public static List<FaqItem> computeFaqItems(CardPageGenerator.CardData c) {
+        List<FaqItem> items = new ArrayList<>();
 
         String player = c.get("Player");
         if (player != null && player.contains(",")) player = player.split(",")[0].trim();
@@ -58,39 +60,52 @@ public class CardSchemaGenerator {
             uniqueAns.append("Produced by ").append(company).append(", it stands out as an authentic piece of ").append(season).append(" basketball hobby history in this private collection.");
         }
 
-        sb.append(createFaqItem(uniqueQuestion, uniqueAns.toString()));
+        items.add(new FaqItem(uniqueQuestion, uniqueAns.toString()));
 
         if (isHolyGrail(c)) {
-            sb.append(createFaqItem("Is this a 'Holy Grail' card?", "Yes, this card belongs to one of the most prestigious parallel series in the hobby. These are extremely rare and heavily targeted by high-end collectors."));
+            items.add(new FaqItem("Is this a 'Holy Grail' card?", "Yes, this card belongs to one of the most prestigious parallel series in the hobby. These are extremely rare and heavily targeted by high-end collectors."));
         }
 
         String combined = c.get("Serial/Print Run");
         if (isValid(combined)) {
-            sb.append(createFaqItem("How rare is this specific card?", "This card is serially numbered " + combined + ", making it a strictly limited edition collectible."));
+            items.add(new FaqItem("How rare is this specific card?", "This card is serially numbered " + combined + ", making it a strictly limited edition collectible."));
         } else if (c.has("Serial")) {
-            sb.append(createFaqItem("How rare is this specific card?", "This card is serially numbered " + c.get("Serial") + " out of a total print run of " + c.get("Print Run") + "."));
+            items.add(new FaqItem("How rare is this specific card?", "This card is serially numbered " + c.get("Serial") + " out of a total print run of " + c.get("Print Run") + "."));
         }
 
         if (c.has("Rookie")) {
             String rookieAns = c.get("Rookie").equalsIgnoreCase("Yes") ?
                     "Yes, this is an official Rookie Card (RC) from " + player + "'s debut season, holding premium value for collectors." :
                     "No, this card was released during the " + season + " season, which was not " + player + "'s debut season.";
-            sb.append(createFaqItem("Is this a " + player + " Rookie Card?", rookieAns));
+            items.add(new FaqItem("Is this a " + player + " Rookie Card?", rookieAns));
         }
 
         if (c.has("Autograph") && c.get("Autograph").equalsIgnoreCase("Yes")) {
-            sb.append(createFaqItem("Is the autograph authentic?", "Yes, this card features a manufacturer-certified autograph guaranteed by " + company + "."));
+            items.add(new FaqItem("Is the autograph authentic?", "Yes, this card features a manufacturer-certified autograph guaranteed by " + company + "."));
         }
 
         if (c.has("Grade")) {
-            sb.append(createFaqItem("Is this card professionally graded?", "Yes, this card has been graded by " + c.get("Grading Co.") + " and received a condition score of " + c.get("Grade") + "."));
+            items.add(new FaqItem("Is this card professionally graded?", "Yes, this card has been graded by " + c.get("Grading Co.") + " and received a condition score of " + c.get("Grade") + "."));
         }
 
         List<TriviaManager.FaqItem> rookieFaqs = TRIVIA_MANAGER.getFaqs("rookieFaq", c.attributes);
         for (TriviaManager.FaqItem faq : rookieFaqs) {
-            sb.append(createFaqItem(faq.question(), faq.answer()));
+            items.add(new FaqItem(faq.question(), faq.answer()));
         }
 
+        return items;
+    }
+
+    public static String generateFaqHtml(CardPageGenerator.CardData c) {
+        return generateFaqHtml(computeFaqItems(c));
+    }
+
+    public static String generateFaqHtml(List<FaqItem> items) {
+        if (items == null || items.isEmpty()) return "";
+        StringBuilder sb = new StringBuilder();
+        for (FaqItem item : items) {
+            sb.append(createFaqItem(item.question(), item.answer()));
+        }
         return sb.toString();
     }
 
@@ -99,6 +114,23 @@ public class CardSchemaGenerator {
     }
 
     public static String generateJsonLd(CardPageGenerator.CardData c, String desc, String h1Title, String overviewPage, String imageBaseName, String faqHtml) {
+        List<FaqItem> faqItems = null;
+        if (faqHtml != null && !faqHtml.isEmpty()) {
+            faqItems = new ArrayList<>();
+            Document doc = Jsoup.parseBodyFragment(faqHtml);
+            Elements details = doc.select("details");
+            for (Element detail : details) {
+                String q = detail.select("summary").text();
+                String a = detail.select("p").text();
+                if (!q.isEmpty() || !a.isEmpty()) {
+                    faqItems.add(new FaqItem(q, a));
+                }
+            }
+        }
+        return generateJsonLd(c, desc, h1Title, overviewPage, imageBaseName, faqItems);
+    }
+
+    public static String generateJsonLd(CardPageGenerator.CardData c, String desc, String h1Title, String overviewPage, String imageBaseName, List<FaqItem> faqItems) {
         String frontImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + imageBaseName + "-front.avif";
         String backImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + imageBaseName + "-back.avif";
         String cardUrl = BASE_URL + "/cards/" + c.seasonFolder + "/" + c.filename;
@@ -196,28 +228,24 @@ public class CardSchemaGenerator {
         sb.append("    }");
 
         // 4. FAQPage (if present)
-        if (faqHtml != null && !faqHtml.isEmpty()) {
+        if (faqItems != null && !faqItems.isEmpty()) {
             sb.append(",\n");
             sb.append("    {\n");
             sb.append("      \"@type\": \"FAQPage\",\n");
             sb.append("      \"name\": \"Frequently Asked Questions\",\n");
             sb.append("      \"mainEntity\": [\n");
 
-            Document doc = Jsoup.parseBodyFragment(faqHtml);
-            Elements details = doc.select("details");
-            for (int i = 0; i < details.size(); i++) {
-                Element detail = details.get(i);
-                String q = detail.select("summary").text();
-                String a = detail.select("p").text();
+            for (int i = 0; i < faqItems.size(); i++) {
+                FaqItem item = faqItems.get(i);
                 sb.append("        {\n");
                 sb.append("          \"@type\": \"Question\",\n");
-                sb.append("          \"name\": \"").append(escapeJson(q)).append("\",\n");
+                sb.append("          \"name\": \"").append(escapeJson(item.question())).append("\",\n");
                 sb.append("          \"acceptedAnswer\": {\n");
                 sb.append("            \"@type\": \"Answer\",\n");
-                sb.append("            \"text\": \"").append(escapeJson(a)).append("\"\n");
+                sb.append("            \"text\": \"").append(escapeJson(item.answer())).append("\"\n");
                 sb.append("          }\n");
                 sb.append("        }");
-                if (i < details.size() - 1) sb.append(",");
+                if (i < faqItems.size() - 1) sb.append(",");
                 sb.append("\n");
             }
             sb.append("      ]\n");

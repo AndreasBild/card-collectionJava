@@ -135,22 +135,13 @@ public class ImageConverter {
             return false;
         }
 
-        // 2. Original-Dimensionen auslesen (nur Header-Scan)
-        int origW = 0;
-        int origH = 0;
-        try (ImageInputStream in = ImageIO.createImageInputStream(sourceFile.toFile())) {
-            final Iterator<ImageReader> readers = ImageIO.getImageReaders(in);
-            if (readers.hasNext()) {
-                ImageReader reader = readers.next();
-                try {
-                    reader.setInput(in);
-                    origW = reader.getWidth(0);
-                    origH = reader.getHeight(0);
-                } finally {
-                    reader.dispose();
-                }
-            }
+        // 2. Original-Bild einmalig laden
+        java.awt.image.BufferedImage orig = ImageIO.read(sourceFile.toFile());
+        if (orig == null) {
+            return false;
         }
+        int origW = orig.getWidth();
+        int origH = orig.getHeight();
 
         // 3. Smart Scaling für das Hauptbild
         double ratio = Math.min((double) MAX_WIDTH / origW, (double) MAX_HEIGHT / origH);
@@ -161,7 +152,7 @@ public class ImageConverter {
 
         // A) Hauptbild (z.B. jordan.avif)
         if (AVIFENC_PATH != null) {
-            writeAvifViaCLI(sourceFile, mainAvifFile, mainW, mainH, 48);
+            writeAvifViaCLI(orig, mainAvifFile, mainW, mainH, 48);
         }
 
         // B) Responsive Varianten (z.B. jordan-400w.avif, jordan-600w.avif, jordan-900w.avif)
@@ -174,7 +165,7 @@ public class ImageConverter {
             if (w == mainW && mainAvifFile.exists()) {
                 Files.copy(mainAvifFile.toPath(), respAvifFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
             } else if (AVIFENC_PATH != null) {
-                writeAvifViaCLI(sourceFile, respAvifFile, w, h, avifQuality);
+                writeAvifViaCLI(orig, respAvifFile, w, h, avifQuality);
             }
         }
 
@@ -186,32 +177,29 @@ public class ImageConverter {
     private static final String AVIFENC_PATH = findAvifenc();
 
 
-    private static void writeAvifViaCLI(Path sourceFile, File outputFile, int targetW, int targetH, int quality) {
-        if (AVIFENC_PATH == null) return;
+    private static void writeAvifViaCLI(java.awt.image.BufferedImage orig, File outputFile, int targetW, int targetH, int quality) {
+        if (AVIFENC_PATH == null || orig == null) return;
         try {
             File tempPng = File.createTempFile("avif_resize_", ".png");
             try {
-                java.awt.image.BufferedImage orig = ImageIO.read(sourceFile.toFile());
-                if (orig != null) {
-                    java.awt.image.BufferedImage resized = new java.awt.image.BufferedImage(targetW, targetH, java.awt.image.BufferedImage.TYPE_INT_RGB);
-                    java.awt.Graphics2D g = resized.createGraphics();
-                    g.setRenderingHint(java.awt.RenderingHints.KEY_INTERPOLATION, java.awt.RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-                    g.drawImage(orig, 0, 0, targetW, targetH, null);
-                    g.dispose();
-                    ImageIO.write(resized, "png", tempPng);
+                java.awt.image.BufferedImage resized = new java.awt.image.BufferedImage(targetW, targetH, java.awt.image.BufferedImage.TYPE_INT_RGB);
+                java.awt.Graphics2D g = resized.createGraphics();
+                g.setRenderingHint(java.awt.RenderingHints.KEY_INTERPOLATION, java.awt.RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+                g.drawImage(orig, 0, 0, targetW, targetH, null);
+                g.dispose();
+                ImageIO.write(resized, "png", tempPng);
 
-                    ProcessBuilder pb = new ProcessBuilder(
-                            AVIFENC_PATH,
-                            "-s", "6",
-                            "-q", String.valueOf(quality),
-                            "--yuv", "420",
-                            "-j", "8",
-                            tempPng.getAbsolutePath(),
-                            outputFile.getAbsolutePath()
-                    );
-                    Process p = pb.start();
-                    p.waitFor();
-                }
+                ProcessBuilder pb = new ProcessBuilder(
+                        AVIFENC_PATH,
+                        "-s", "6",
+                        "-q", String.valueOf(quality),
+                        "--yuv", "420",
+                        "-j", "8",
+                        tempPng.getAbsolutePath(),
+                        outputFile.getAbsolutePath()
+                );
+                Process p = pb.start();
+                p.waitFor();
             } finally {
                 if (tempPng.exists()) tempPng.delete();
             }

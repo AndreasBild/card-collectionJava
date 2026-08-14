@@ -226,7 +226,13 @@ public class CardPageGenerator {
         return CARD_DATA_CACHE.computeIfAbsent(fingerprint, k -> new CardData(c, null));
     }
 
-    public static void run() {
+    private static final java.util.regex.Pattern PATTERN_CLEAN_FILENAME_CHARS = java.util.regex.Pattern.compile("[^a-zA-Z0-9\\-_]");
+    private static final java.util.regex.Pattern PATTERN_CLEAN_FILENAME_HYPHENS = java.util.regex.Pattern.compile("-+");
+    private static final java.util.regex.Pattern PATTERN_CLEAN_FILENAME_EDGES = java.util.regex.Pattern.compile("^-|-$");
+    private static final java.util.regex.Pattern PATTERN_CLEAN_PLAYER_QUOTES = java.util.regex.Pattern.compile("[\"“„”«»'].*?[\"“„”«»']");
+    private static final java.util.regex.Pattern PATTERN_SPACES = java.util.regex.Pattern.compile("\\s+");
+
+    public static List<CardData> run() {
         log.info("Starting high-speed Card Page Generation...");
         long startTime = System.currentTimeMillis();
         CardSchemaGenerator.loadRatingCache();
@@ -298,6 +304,7 @@ public class CardPageGenerator {
 
         long endTime = System.currentTimeMillis();
         log.info("All card pages generated in {} ms.", (endTime - startTime));
+        return allProcessedCards;
     }
 
     public static void main(String[] args) {
@@ -418,10 +425,11 @@ public class CardPageGenerator {
         Map<String, Object> data = new HashMap<>();
         data.put("cardId", c.stableId);
 
-        String faqHtml = CardSchemaGenerator.generateFaqHtml(c);
+        List<CardSchemaGenerator.FaqItem> faqItems = CardSchemaGenerator.computeFaqItems(c);
+        String faqHtml = CardSchemaGenerator.generateFaqHtml(faqItems);
         String frontImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + resolvedImageBase + "-front.avif";
         data.put("headHtml", SharedTemplates.getHead(browserTitle, metaDesc, ROOT, c.fullRelativePath, frontImgUrl));
-        data.put("jsonLd", CardSchemaGenerator.generateJsonLd(c, metaDesc, h1Title, overviewPage, resolvedImageBase, faqHtml));
+        data.put("jsonLd", CardSchemaGenerator.generateJsonLd(c, metaDesc, h1Title, overviewPage, resolvedImageBase, faqItems));
         String collectionName = "Collection";
         String activeNav = "collection";
         if ("Flawless.html".equals(overviewPage)) {
@@ -588,7 +596,7 @@ public class CardPageGenerator {
         return sb.toString();
     }
 
-    static String generateH1(CardData c) {
+    public static String generateH1(CardData c) {
         String player = formatMulti(c.get("Player"));
         String season = c.get("Season");
         String company = c.get("Company");
@@ -613,7 +621,7 @@ public class CardPageGenerator {
         return sb.toString();
     }
 
-    static String generateH1Html(CardData c) {
+    public static String generateH1Html(CardData c) {
         String player = formatMulti(c.get("Player"));
         String season = c.get("Season");
         String company = c.get("Company");
@@ -639,7 +647,7 @@ public class CardPageGenerator {
         return sb.toString();
     }
 
-    private static String generateMetaDescription(CardData c) {
+    public static String generateMetaDescription(CardData c) {
         String player = getPrimaryPlayer(c);
         String season = c.get("Season");
         String company = c.get("Company");
@@ -915,8 +923,8 @@ public class CardPageGenerator {
 
     public static String cleanPlayerName(String player) {
         if (player == null || player.trim().isEmpty()) return "";
-        String cleaned = player.replaceAll("[\"“„”«»'].*?[\"“„”«»']", "");
-        return cleaned.replaceAll("\\s+", " ").trim();
+        String cleaned = PATTERN_CLEAN_PLAYER_QUOTES.matcher(player).replaceAll("");
+        return PATTERN_SPACES.matcher(cleaned).replaceAll(" ").trim();
     }
 
     private static String getPrimaryPlayer(CardData c) {
@@ -973,10 +981,10 @@ public class CardPageGenerator {
 
     private static String cleanFilename(String text) {
         if (text == null) return "";
-        return text.replace("'", "")
-                .replaceAll("[^a-zA-Z0-9\\-_]", "-")
-                .replaceAll("-+", "-")
-                .replaceAll("^-|-$", "");
+        String s = text.replace("'", "");
+        s = PATTERN_CLEAN_FILENAME_CHARS.matcher(s).replaceAll("-");
+        s = PATTERN_CLEAN_FILENAME_HYPHENS.matcher(s).replaceAll("-");
+        return PATTERN_CLEAN_FILENAME_EDGES.matcher(s).replaceAll("");
     }
 
     public static List<Map<String, String>> findSameBrandCards(CardData currentCard, List<CardData> allCards, int limit) {

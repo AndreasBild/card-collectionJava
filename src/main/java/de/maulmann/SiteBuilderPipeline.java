@@ -89,9 +89,9 @@ public class SiteBuilderPipeline {
                     FileGenerator.buildCollectionOverview();
                     FileGenerator.buildOtherCollections();
                     FileGenerator.buildStaticPages();
-                    CardPageGenerator.run();
+                    List<CardPageGenerator.CardData> cards = CardPageGenerator.run();
 
-                    SitemapGenerator.generate(); // Sitemap & robots.txt now ready for Phase 3
+                    SitemapGenerator.generate(cards); // Sitemap & robots.txt now ready for Phase 3
                     timeTracker.save();
 
                     // --- PHASE 1.5: Inject Firestore Ratings ---

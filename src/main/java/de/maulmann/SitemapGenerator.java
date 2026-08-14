@@ -62,6 +62,10 @@ public class SitemapGenerator {
     public record ChildSitemapInfo(String fileName, String maxLastMod) {}
 
     public static void generate() {
+        generate(null);
+    }
+
+    public static void generate(List<CardPageGenerator.CardData> inMemoryCards) {
         AtomicInteger imagesAdded = new AtomicInteger(0);
         AtomicInteger imagesMissing = new AtomicInteger(0);
 
@@ -84,28 +88,7 @@ public class SitemapGenerator {
                 }
             }
 
-            log.info("Scanning output directory for sitemaps...");
-
-            // Collect all HTML paths
-            List<Path> allPaths = new ArrayList<>();
-            if (Files.exists(outputDirPath)) {
-                try (Stream<Path> paths = Files.walk(outputDirPath)) {
-                    paths.filter(Files::isRegularFile)
-                            .filter(p -> p.toString().endsWith(".html"))
-                            .forEach(allPaths::add);
-                }
-            }
-
-            // Sort paths: Core files first, then cards alphabetically
-            allPaths.sort((p1, p2) -> {
-                String s1 = outputDirPath.relativize(p1).toString().replace("\\", "/");
-                String s2 = outputDirPath.relativize(p2).toString().replace("\\", "/");
-                boolean p1IsCore = !s1.contains("/");
-                boolean p2IsCore = !s2.contains("/");
-                if (p1IsCore && !p2IsCore) return -1;
-                if (!p1IsCore && p2IsCore) return 1;
-                return s1.compareTo(s2);
-            });
+            log.info("Generating sitemaps...");
 
             SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd");
             isoFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -115,15 +98,24 @@ public class SitemapGenerator {
             List<SitemapUrlEntry> highlightEntries = new ArrayList<>();
             Map<String, List<SitemapUrlEntry>> cardGroupEntries = new TreeMap<>();
 
-            for (Path path : allPaths) {
+            // 1. Process Core HTML Files (always from disk, ~10 files)
+            List<Path> corePaths = new ArrayList<>();
+            if (Files.exists(outputDirPath)) {
+                try (Stream<Path> paths = Files.list(outputDirPath)) {
+                    paths.filter(Files::isRegularFile)
+                            .filter(p -> p.toString().endsWith(".html"))
+                            .sorted()
+                            .forEach(corePaths::add);
+                }
+            }
+
+            for (Path path : corePaths) {
                 String relativePath = outputDirPath.relativize(path).toString().replace("\\", "/");
                 String loc = BASE_URL + "/" + relativePath;
-
                 if (loc.endsWith("/index.html")) {
                     loc = loc.replace("/index.html", "/");
                 }
 
-                // Dynamic lastmod: read content-tracked timestamp if available
                 String lastModDate;
                 if (timestampTracker != null) {
                     lastModDate = timestampTracker.getIsoDate(relativePath);
@@ -136,9 +128,8 @@ public class SitemapGenerator {
                 }
 
                 List<ImageEntry> images = new ArrayList<>();
-                Document doc = null;
                 try {
-                    doc = Jsoup.parse(path.toFile(), "UTF-8");
+                    Document doc = Jsoup.parse(path.toFile(), "UTF-8");
                     String pageTitle = doc.title();
                     if (pageTitle.contains("|")) {
                         pageTitle = pageTitle.split("\\|")[0].trim();
@@ -148,10 +139,123 @@ public class SitemapGenerator {
                     Map<String, String> linkMap = new HashMap<>();
                     linkMap.put("url", relativePath);
                     linkMap.put("text", pageTitle);
+                    coreLinks.add(linkMap);
 
-                    if (!relativePath.contains("/")) {
-                        coreLinks.add(linkMap);
-                    } else if (relativePath.startsWith("cards/")) {
+                    // Extract core page images
+                    Set<String> processedImageUrls = new HashSet<>();
+                    for (Element img : doc.select("img")) {
+                        String src = img.attr("src");
+                        if (src.isEmpty() || src.startsWith("data:")) continue;
+                        String absLoc = resolveImageLoc(relativePath, src);
+                        String highRes = toHighResLoc(absLoc);
+                        if (!highRes.isEmpty() && processedImageUrls.add(highRes)) {
+                            String imgTitle = img.attr("title").trim();
+                            images.add(new ImageEntry(highRes, imgTitle.isEmpty() ? pageTitle : imgTitle, pageTitle));
+                            imagesAdded.incrementAndGet();
+                        }
+                    }
+                } catch (IOException e) {
+                    log.error("Could not parse core page {}: {}", path, e.getMessage());
+                }
+
+                mainEntries.add(new SitemapUrlEntry(relativePath, loc, lastModDate, "daily", "1.0", images));
+            }
+
+            // 2. Process Cards (In-Memory if available, fallback to Disk walk)
+            if (inMemoryCards != null && !inMemoryCards.isEmpty()) {
+                log.info("Processing {} card pages in memory for sitemaps...", inMemoryCards.size());
+                for (CardPageGenerator.CardData c : inMemoryCards) {
+                    String relativePath = c.fullRelativePath;
+                    String loc = BASE_URL + "/" + relativePath;
+
+                    String lastModDate;
+                    if (timestampTracker != null) {
+                        lastModDate = timestampTracker.getIsoDate(relativePath);
+                    } else {
+                        lastModDate = todayIso;
+                    }
+
+                    String h1Title = CardPageGenerator.generateH1(c);
+                    String rawImageBase = c.filenameBase.contains("-") ? c.filenameBase.substring(0, c.filenameBase.lastIndexOf("-")) : c.filenameBase;
+                    String resolvedImageBase = CardPageGenerator.resolveDiskImageBase(c.seasonFolder, rawImageBase, c);
+
+                    String frontImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + resolvedImageBase + "-front.avif";
+                    String backImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + resolvedImageBase + "-back.avif";
+
+                    List<ImageEntry> images = new ArrayList<>();
+                    images.add(new ImageEntry(frontImgUrl, h1Title + " (Front Scan)", h1Title));
+                    images.add(new ImageEntry(backImgUrl, h1Title + " (Back Scan)", h1Title));
+                    imagesAdded.addAndGet(2);
+
+                    // HTML Sitemap link
+                    Map<String, String> linkMap = new HashMap<>();
+                    linkMap.put("url", relativePath);
+                    String player = c.get("Player");
+                    String theme = c.get("Theme");
+                    String variant = c.get("Variant");
+
+                    linkMap.put("player", player);
+                    linkMap.put("company", c.get("Company"));
+                    linkMap.put("brand", c.get("Brand"));
+                    linkMap.put("theme", theme);
+                    linkMap.put("variant", variant);
+                    linkMap.put("number", c.get("Number"));
+
+                    StringBuilder anchorText = new StringBuilder(h1Title);
+                    linkMap.put("text", anchorText.toString());
+
+                    seasonGroups.computeIfAbsent(c.seasonFolder, k -> new ArrayList<>()).add(linkMap);
+
+                    boolean isHighlight = isHighlightCard(c);
+                    if (isHighlight) {
+                        highlightEntries.add(new SitemapUrlEntry(relativePath, loc, lastModDate, "weekly", "0.9", images));
+                    } else {
+                        String groupName = c.seasonFolder;
+                        cardGroupEntries.computeIfAbsent(groupName, k -> new ArrayList<>())
+                                .add(new SitemapUrlEntry(relativePath, loc, lastModDate, "yearly", "0.5", images));
+                    }
+                }
+            } else {
+                // Fallback: Scan disk output/cards directory
+                List<Path> allPaths = new ArrayList<>();
+                if (Files.exists(outputDirPath)) {
+                    try (Stream<Path> paths = Files.walk(outputDirPath)) {
+                        paths.filter(Files::isRegularFile)
+                                .filter(p -> p.toString().endsWith(".html"))
+                                .forEach(allPaths::add);
+                    }
+                }
+
+                for (Path path : allPaths) {
+                    String relativePath = outputDirPath.relativize(path).toString().replace("\\", "/");
+                    if (!relativePath.startsWith("cards/")) continue;
+                    String loc = BASE_URL + "/" + relativePath;
+
+                    String lastModDate;
+                    if (timestampTracker != null) {
+                        lastModDate = timestampTracker.getIsoDate(relativePath);
+                    } else {
+                        try {
+                            lastModDate = isoFormat.format(new Date(Files.getLastModifiedTime(path).toMillis()));
+                        } catch (Exception e) {
+                            lastModDate = todayIso;
+                        }
+                    }
+
+                    List<ImageEntry> images = new ArrayList<>();
+                    Document doc = null;
+                    try {
+                        doc = Jsoup.parse(path.toFile(), "UTF-8");
+                        String pageTitle = doc.title();
+                        if (pageTitle.contains("|")) {
+                            pageTitle = pageTitle.split("\\|")[0].trim();
+                        }
+                        if (pageTitle.isEmpty()) pageTitle = relativePath;
+
+                        Map<String, String> linkMap = new HashMap<>();
+                        linkMap.put("url", relativePath);
+                        linkMap.put("text", pageTitle);
+
                         String theme = getSpecValue(doc, "Theme");
                         String variant = getSpecValue(doc, "Variant");
 
@@ -180,94 +284,83 @@ public class SitemapGenerator {
                             String season = parts[1];
                             seasonGroups.computeIfAbsent(season, k -> new ArrayList<>()).add(linkMap);
                         }
-                    }
 
-                    // Extract images for sitemap
-                    Set<String> processedImageUrls = new HashSet<>();
-                    Elements pictureElements = doc.select("picture");
-                    for (Element picture : pictureElements) {
-                        Element img = picture.selectFirst("img");
-                        String imgTitle = (img != null) ? img.attr("title").trim() : "";
-                        String imgAlt = (img != null) ? img.attr("alt").trim() : "";
+                        // Extract images
+                        Set<String> processedImageUrls = new HashSet<>();
+                        Elements pictureElements = doc.select("picture");
+                        for (Element picture : pictureElements) {
+                            Element img = picture.selectFirst("img");
+                            String imgTitle = (img != null) ? img.attr("title").trim() : "";
+                            String imgAlt = (img != null) ? img.attr("alt").trim() : "";
 
-                        Element figcaption = picture.parents().select("figcaption").first();
-                        String figText = (figcaption != null) ? figcaption.text().trim() : "";
+                            Element figcaption = picture.parents().select("figcaption").first();
+                            String figText = (figcaption != null) ? figcaption.text().trim() : "";
 
-                        String imageTitle = !imgTitle.isEmpty() ? imgTitle : pageTitle;
-                        String imageCaption = !figText.isEmpty() ? figText : (!imgAlt.isEmpty() ? imgAlt : pageTitle);
+                            String imageTitle = !imgTitle.isEmpty() ? imgTitle : pageTitle;
+                            String imageCaption = !figText.isEmpty() ? figText : (!imgAlt.isEmpty() ? imgAlt : pageTitle);
 
-                        String bestCandidate = "";
-                        Elements sources = picture.select("source[srcset]");
-                        for (Element source : sources) {
-                            String candidate = extractHighestResCandidate(source.attr("srcset"));
-                            if (!candidate.isEmpty()) {
-                                bestCandidate = candidate;
-                                break;
+                            String bestCandidate = "";
+                            Elements sources = picture.select("source[srcset]");
+                            for (Element source : sources) {
+                                String candidate = extractHighestResCandidate(source.attr("srcset"));
+                                if (!candidate.isEmpty()) {
+                                    bestCandidate = candidate;
+                                    break;
+                                }
+                            }
+                            if (bestCandidate.isEmpty() && img != null) {
+                                String srcset = img.attr("srcset");
+                                if (!srcset.isEmpty()) {
+                                    bestCandidate = extractHighestResCandidate(srcset);
+                                } else {
+                                    bestCandidate = img.attr("src");
+                                }
+                            }
+
+                            if (!bestCandidate.isEmpty() && !bestCandidate.startsWith("data:")) {
+                                String absLoc = resolveImageLoc(relativePath, bestCandidate);
+                                String highResLoc = toHighResLoc(absLoc);
+                                if (!highResLoc.isEmpty() && processedImageUrls.add(highResLoc)) {
+                                    images.add(new ImageEntry(highResLoc, imageTitle, imageCaption));
+                                    imagesAdded.incrementAndGet();
+                                }
                             }
                         }
-                        if (bestCandidate.isEmpty() && img != null) {
+
+                        // Fallback for standalone <img> elements (not inside <picture>)
+                        Elements standaloneImgs = doc.select("img");
+                        for (Element img : standaloneImgs) {
+                            if (img.parents().is("picture")) continue;
+
+                            String src = img.attr("src");
                             String srcset = img.attr("srcset");
-                            if (!srcset.isEmpty()) {
-                                bestCandidate = extractHighestResCandidate(srcset);
-                            } else {
-                                bestCandidate = img.attr("src");
-                            }
-                        }
+                            String bestCandidate = !srcset.isEmpty() ? extractHighestResCandidate(srcset) : src;
+                            if (bestCandidate.isEmpty() || bestCandidate.startsWith("data:")) continue;
 
-                        if (!bestCandidate.isEmpty() && !bestCandidate.startsWith("data:")) {
-                            String absLoc = resolveImageLoc(relativePath, bestCandidate);
-                            String highResLoc = toHighResLoc(absLoc);
-                            if (!highResLoc.isEmpty() && processedImageUrls.add(highResLoc)) {
-                                images.add(new ImageEntry(highResLoc, imageTitle, imageCaption));
-                                imagesAdded.incrementAndGet();
-                            }
+                            String absImageLoc = resolveImageLoc(relativePath, bestCandidate);
+                            String highResLoc = toHighResLoc(absImageLoc);
+                            if (highResLoc.isEmpty() || !processedImageUrls.add(highResLoc)) continue;
+
+                            String imgTitle = img.attr("title").trim();
+                            String imgAlt = img.attr("alt").trim();
+                            String imageTitle = !imgTitle.isEmpty() ? imgTitle : pageTitle;
+                            String imageCaption = !imgAlt.isEmpty() ? imgAlt : pageTitle;
+
+                            images.add(new ImageEntry(highResLoc, imageTitle, imageCaption));
+                            imagesAdded.incrementAndGet();
                         }
+                    } catch (IOException e) {
+                        log.error("Could not parse {}: {}", path, e.getMessage());
                     }
 
-                    // Fallback for standalone <img> elements (not inside <picture>)
-                    Elements standaloneImgs = doc.select("img");
-                    for (Element img : standaloneImgs) {
-                        if (img.parents().is("picture")) continue;
-
-                        String src = img.attr("src");
-                        String srcset = img.attr("srcset");
-                        String bestCandidate = !srcset.isEmpty() ? extractHighestResCandidate(srcset) : src;
-                        if (bestCandidate.isEmpty() || bestCandidate.startsWith("data:")) continue;
-
-                        String absImageLoc = resolveImageLoc(relativePath, bestCandidate);
-                        String highResLoc = toHighResLoc(absImageLoc);
-                        if (highResLoc.isEmpty() || !processedImageUrls.add(highResLoc)) continue;
-
-                        String imgTitle = img.attr("title").trim();
-                        String imgAlt = img.attr("alt").trim();
-                        String imageTitle = !imgTitle.isEmpty() ? imgTitle : pageTitle;
-                        String imageCaption = !imgAlt.isEmpty() ? imgAlt : pageTitle;
-
-                        images.add(new ImageEntry(highResLoc, imageTitle, imageCaption));
-                        imagesAdded.incrementAndGet();
-                    }
-                } catch (IOException e) {
-                    log.error("Could not parse {}: {}", path, e.getMessage());
-                }
-
-                // Categorize URL into correct sitemap bucket
-                if (!relativePath.contains("/") || relativePath.equalsIgnoreCase("sitemap.html")) {
-                    // sitemap-main.xml: Priority 1.0, Changefreq daily
-                    mainEntries.add(new SitemapUrlEntry(relativePath, loc, lastModDate, "daily", "1.0", images));
-                } else if (relativePath.startsWith("cards/")) {
                     boolean isHighlight = isHighlightCard(doc, relativePath);
                     if (isHighlight) {
-                        // sitemap-highlights.xml: Priority 0.9, Changefreq weekly
                         highlightEntries.add(new SitemapUrlEntry(relativePath, loc, lastModDate, "weekly", "0.9", images));
                     } else {
-                        // sitemap-cards-[group].xml: Priority 0.5, Changefreq yearly
                         String groupName = extractGroupName(relativePath);
                         cardGroupEntries.computeIfAbsent(groupName, k -> new ArrayList<>())
                                 .add(new SitemapUrlEntry(relativePath, loc, lastModDate, "yearly", "0.5", images));
                     }
-                } else {
-                    // Other static pages: Priority 0.8, Changefreq weekly
-                    mainEntries.add(new SitemapUrlEntry(relativePath, loc, lastModDate, "weekly", "0.8", images));
                 }
             }
 
@@ -298,19 +391,52 @@ public class SitemapGenerator {
             log.info("Sitemap Index & Sub-Sitemaps successfully generated!");
             log.info("   > Total Sub-Sitemaps: {}", childSitemaps.size());
             log.info("   > Images added: {}", imagesAdded.get());
-            if (imagesMissing.get() > 0) {
-                log.info("   > Images missing: {}", imagesMissing.get());
-            }
 
             generateHtmlSitemap(coreLinks, seasonGroups, timestampTracker);
             generateLlmsTxt();
-            generateLlmsFullTxt(allPaths);
-            generateRssFeed(allPaths, timestampTracker);
+            generateLlmsFullTxt(inMemoryCards);
+            generateRssFeed(inMemoryCards, timestampTracker);
 
         } catch (Exception e) {
             log.error("Failed to generate Sitemap: {}", e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    public static boolean isHighlightCard(CardPageGenerator.CardData c) {
+        if (c == null) return false;
+        String pathLower = c.fullRelativePath.toLowerCase();
+        if (pathLower.contains("flawless")) return true;
+
+        String printRunStr = c.get("Print Run");
+        if (printRunStr.isEmpty()) printRunStr = c.get("Serial/Print Run");
+        if (printRunStr.isEmpty()) printRunStr = c.get("Serial");
+
+        String variant = c.get("Variant").toLowerCase();
+        String auto = c.get("Autograph").toLowerCase();
+
+        if (variant.contains("1/1") || variant.contains("superfractor") || variant.contains("masterpiece") ||
+            variant.contains("logoman") || variant.contains("frozenfractor")) {
+            return true;
+        }
+
+        if (!printRunStr.isEmpty()) {
+            try {
+                String cleanRun = printRunStr;
+                if (cleanRun.contains("/")) {
+                    cleanRun = cleanRun.substring(cleanRun.lastIndexOf("/") + 1).trim();
+                }
+                int run = Integer.parseInt(cleanRun.replaceAll("[^0-9]", ""));
+                if (run > 0 && run <= 5) {
+                    return true;
+                }
+                if (auto.equalsIgnoreCase("yes") && run <= 25) {
+                    return true;
+                }
+            } catch (NumberFormatException ignored) {}
+        }
+
+        return auto.equalsIgnoreCase("yes") && (variant.contains("patch") || variant.contains("ruby") || variant.contains("pmg"));
     }
 
     private static boolean isHighlightCard(Document doc, String relativePath) {
@@ -447,7 +573,7 @@ public class SitemapGenerator {
         }
     }
 
-    private static void generateLlmsFullTxt(List<Path> allPaths) {
+    private static void generateLlmsFullTxt(List<CardPageGenerator.CardData> inMemoryCards) {
         log.info("Generating llms-full.txt for AI/LLM RAG Indexing...");
         StringBuilder sb = new StringBuilder();
         sb.append("# maulmann.de - Full Private Collection Knowledge Base for LLMs\n\n");
@@ -464,19 +590,11 @@ public class SitemapGenerator {
 
         sb.append("## Complete Card Index & Direct URLs\n\n");
 
-        Path outputDirPath = Paths.get(OUTPUT_DIR);
-        for (Path path : allPaths) {
-            String relativePath = outputDirPath.relativize(path).toString().replace("\\", "/");
-            if (!relativePath.startsWith("cards/")) continue;
-
-            String fileName = path.getFileName().toString().replace(".html", "");
-            String loc = BASE_URL + "/" + relativePath;
-
-            try {
-                Document doc = Jsoup.parse(path.toFile(), "UTF-8");
-                String title = doc.select("h1").text();
-                String desc = doc.select("meta[name=description]").attr("content");
-                if (title.isEmpty()) title = fileName;
+        if (inMemoryCards != null && !inMemoryCards.isEmpty()) {
+            for (CardPageGenerator.CardData c : inMemoryCards) {
+                String loc = BASE_URL + "/" + c.fullRelativePath;
+                String title = CardPageGenerator.generateH1(c);
+                String desc = CardPageGenerator.generateMetaDescription(c);
 
                 sb.append("### ").append(title).append("\n");
                 sb.append("- URL: ").append(loc).append("\n");
@@ -484,23 +602,23 @@ public class SitemapGenerator {
                     sb.append("- Description: ").append(desc).append("\n");
                 }
 
-                String player = getSpecValue(doc, "Player");
-                String season = getSpecValue(doc, "Season");
-                String company = getSpecValue(doc, "Company");
-                if (company.isEmpty()) company = getSpecValue(doc, "Manufacturer");
-                String brand = getSpecValue(doc, "Brand");
-                String variant = getSpecValue(doc, "Variant");
-                String number = getSpecValue(doc, "Card Number");
-                if (number.isEmpty()) number = getSpecValue(doc, "Number");
-                String printRun = getSpecValue(doc, "Print Run");
-                if (printRun.isEmpty()) printRun = getSpecValue(doc, "Serial/Print Run");
-                if (printRun.isEmpty()) printRun = getSpecValue(doc, "Serial");
-                String grading = getSpecValue(doc, "Grading Co.");
+                String player = c.get("Player");
+                String season = c.get("Season");
+                String company = c.get("Company");
+                if (company.isEmpty()) company = c.get("Manufacturer");
+                String brand = c.get("Brand");
+                String variant = c.get("Variant");
+                String number = c.get("Card Number");
+                if (number.isEmpty()) number = c.get("Number");
+                String printRun = c.get("Print Run");
+                if (printRun.isEmpty()) printRun = c.get("Serial/Print Run");
+                if (printRun.isEmpty()) printRun = c.get("Serial");
+                String grading = c.get("Grading Co.");
                 if (!grading.isEmpty()) {
-                    String gVal = getSpecValue(doc, "Grade");
+                    String gVal = c.get("Grade");
                     if (!gVal.isEmpty()) grading += " " + gVal;
                 } else {
-                    grading = getSpecValue(doc, "Grading");
+                    grading = c.get("Grading");
                 }
 
                 List<String> specs = new ArrayList<>();
@@ -517,8 +635,72 @@ public class SitemapGenerator {
                     sb.append("- Attributes: ").append(String.join(" | ", specs)).append("\n");
                 }
                 sb.append("\n");
-            } catch (Exception ignored) {
-                sb.append("- ").append(fileName).append(": ").append(loc).append("\n");
+            }
+        } else {
+            Path outputDirPath = Paths.get(OUTPUT_DIR);
+            List<Path> allPaths = new ArrayList<>();
+            if (Files.exists(outputDirPath)) {
+                try (Stream<Path> paths = Files.walk(outputDirPath)) {
+                    paths.filter(Files::isRegularFile)
+                            .filter(p -> p.toString().endsWith(".html"))
+                            .forEach(allPaths::add);
+                } catch (IOException ignored) {}
+            }
+            for (Path path : allPaths) {
+                String relativePath = outputDirPath.relativize(path).toString().replace("\\", "/");
+                if (!relativePath.startsWith("cards/")) continue;
+
+                String fileName = path.getFileName().toString().replace(".html", "");
+                String loc = BASE_URL + "/" + relativePath;
+
+                try {
+                    Document doc = Jsoup.parse(path.toFile(), "UTF-8");
+                    String title = doc.select("h1").text();
+                    String desc = doc.select("meta[name=description]").attr("content");
+                    if (title.isEmpty()) title = fileName;
+
+                    sb.append("### ").append(title).append("\n");
+                    sb.append("- URL: ").append(loc).append("\n");
+                    if (!desc.isEmpty()) {
+                        sb.append("- Description: ").append(desc).append("\n");
+                    }
+
+                    String player = getSpecValue(doc, "Player");
+                    String season = getSpecValue(doc, "Season");
+                    String company = getSpecValue(doc, "Company");
+                    if (company.isEmpty()) company = getSpecValue(doc, "Manufacturer");
+                    String brand = getSpecValue(doc, "Brand");
+                    String variant = getSpecValue(doc, "Variant");
+                    String number = getSpecValue(doc, "Card Number");
+                    if (number.isEmpty()) number = getSpecValue(doc, "Number");
+                    String printRun = getSpecValue(doc, "Print Run");
+                    if (printRun.isEmpty()) printRun = getSpecValue(doc, "Serial/Print Run");
+                    if (printRun.isEmpty()) printRun = getSpecValue(doc, "Serial");
+                    String grading = getSpecValue(doc, "Grading Co.");
+                    if (!grading.isEmpty()) {
+                        String gVal = getSpecValue(doc, "Grade");
+                        if (!gVal.isEmpty()) grading += " " + gVal;
+                    } else {
+                        grading = getSpecValue(doc, "Grading");
+                    }
+
+                    List<String> specs = new ArrayList<>();
+                    if (!player.isEmpty()) specs.add("Player: " + player);
+                    if (!season.isEmpty()) specs.add("Season: " + season);
+                    if (!company.isEmpty()) specs.add("Company: " + company);
+                    if (!brand.isEmpty()) specs.add("Brand: " + brand);
+                    if (!variant.isEmpty() && !variant.equalsIgnoreCase("Base")) specs.add("Variant: " + variant);
+                    if (!number.isEmpty()) specs.add("Card #: " + number);
+                    if (!printRun.isEmpty() && !printRun.equals("-")) specs.add("Serial: " + printRun);
+                    if (!grading.isEmpty() && !grading.equals("-")) specs.add("Grading: " + grading);
+
+                    if (!specs.isEmpty()) {
+                        sb.append("- Attributes: ").append(String.join(" | ", specs)).append("\n");
+                    }
+                    sb.append("\n");
+                } catch (Exception ignored) {
+                    sb.append("- ").append(fileName).append(": ").append(loc).append("\n");
+                }
             }
         }
 
@@ -531,7 +713,7 @@ public class SitemapGenerator {
         }
     }
 
-    private static void generateRssFeed(List<Path> allPaths, TimestampTracker timestampTracker) {
+    private static void generateRssFeed(List<CardPageGenerator.CardData> inMemoryCards, TimestampTracker timestampTracker) {
         log.info("Generating RSS feed (rss.xml)...");
         StringBuilder rss = new StringBuilder();
         rss.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
@@ -562,21 +744,15 @@ public class SitemapGenerator {
 
         rss.append("    <pubDate>").append(channelPubDate).append("</pubDate>\n");
 
-        Path outputDirPath = Paths.get(OUTPUT_DIR);
         int itemCap = 50;
         int addedCount = 0;
 
-        for (Path path : allPaths) {
-            String relativePath = outputDirPath.relativize(path).toString().replace("\\", "/");
-            if (!relativePath.startsWith("cards/")) continue;
-
-            String loc = BASE_URL + "/" + relativePath;
-
-            try {
-                Document doc = Jsoup.parse(path.toFile(), "UTF-8");
-                String title = doc.select("h1").text();
-                String desc = doc.select("meta[name=description]").attr("content");
-                if (title.isEmpty()) title = path.getFileName().toString().replace(".html", "");
+        if (inMemoryCards != null && !inMemoryCards.isEmpty()) {
+            for (CardPageGenerator.CardData c : inMemoryCards) {
+                String relativePath = c.fullRelativePath;
+                String loc = BASE_URL + "/" + relativePath;
+                String title = CardPageGenerator.generateH1(c);
+                String desc = CardPageGenerator.generateMetaDescription(c);
 
                 String pubDate;
                 if (timestampTracker != null) {
@@ -605,7 +781,59 @@ public class SitemapGenerator {
 
                 addedCount++;
                 if (addedCount >= itemCap) break;
-            } catch (Exception ignored) {
+            }
+        } else {
+            Path outputDirPath = Paths.get(OUTPUT_DIR);
+            List<Path> allPaths = new ArrayList<>();
+            if (Files.exists(outputDirPath)) {
+                try (Stream<Path> paths = Files.walk(outputDirPath)) {
+                    paths.filter(Files::isRegularFile)
+                            .filter(p -> p.toString().endsWith(".html"))
+                            .forEach(allPaths::add);
+                } catch (IOException ignored) {}
+            }
+
+            for (Path path : allPaths) {
+                String relativePath = outputDirPath.relativize(path).toString().replace("\\", "/");
+                if (!relativePath.startsWith("cards/")) continue;
+
+                String loc = BASE_URL + "/" + relativePath;
+
+                try {
+                    Document doc = Jsoup.parse(path.toFile(), "UTF-8");
+                    String title = doc.select("h1").text();
+                    String desc = doc.select("meta[name=description]").attr("content");
+                    if (title.isEmpty()) title = path.getFileName().toString().replace(".html", "");
+
+                    String pubDate;
+                    if (timestampTracker != null) {
+                        String isoDate = timestampTracker.getIsoDate(relativePath);
+                        try {
+                            SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                            isoFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+                            Date d = isoFormat.parse(isoDate);
+                            pubDate = rfc822.format(d);
+                        } catch (Exception e) {
+                            pubDate = channelPubDate;
+                        }
+                    } else {
+                        pubDate = channelPubDate;
+                    }
+
+                    rss.append("    <item>\n");
+                    rss.append("      <title>").append(escapeXml(title)).append("</title>\n");
+                    rss.append("      <link>").append(escapeXml(loc)).append("</link>\n");
+                    rss.append("      <guid isPermaLink=\"true\">").append(escapeXml(loc)).append("</guid>\n");
+                    rss.append("      <pubDate>").append(pubDate).append("</pubDate>\n");
+                    if (!desc.isEmpty()) {
+                        rss.append("      <description>").append(escapeXml(desc)).append("</description>\n");
+                    }
+                    rss.append("    </item>\n");
+
+                    addedCount++;
+                    if (addedCount >= itemCap) break;
+                } catch (Exception ignored) {
+                }
             }
         }
 
