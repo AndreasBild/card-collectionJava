@@ -115,35 +115,47 @@ public class SiteBuilderPipeline {
                 CompletableFuture.allOf(htmlTask, imageTask).join();
             }
 
+            boolean hasAwsCredentials = false;
             try {
-                // --- PHASE 3: Compress & Upload HTML/CSS/JS/XML ---
-                log.info("\n[PHASE 3] Minifying, Compressing, and Uploading Web Files...");
-                processAndUploadWebFiles(s3AsyncClient, tracker);
+                DefaultCredentialsProvider.builder().build().resolveCredentials();
+                hasAwsCredentials = true;
+            } catch (Exception _) {
+                log.info("ℹ️ Local build: AWS credentials not found. Skipping S3 upload & compression phases.");
+            }
 
-                // --- PHASE 4: Upload Images (No Compression) ---
-                log.info("\n[PHASE 4] Syncing Images to S3...");
-                processAndUploadImages(s3AsyncClient, tracker);
+            if (hasAwsCredentials) {
+                try {
+                    // --- PHASE 3: Compress & Upload HTML/CSS/JS/XML ---
+                    log.info("\n[PHASE 3] Minifying, Compressing, and Uploading Web Files...");
+                    processAndUploadWebFiles(s3AsyncClient, tracker);
 
-                // Speichere die neuen Hashes, damit sie beim nächsten Build bekannt sind
-                tracker.save();
+                    // --- PHASE 4: Upload Images (No Compression) ---
+                    log.info("\n[PHASE 4] Syncing Images to S3...");
+                    processAndUploadImages(s3AsyncClient, tracker);
 
-                // --- PHASE 4.5: Clean up Orphaned Files on S3 ---
-                log.info("\n[PHASE 4.5] Sweeping S3 for ghost files...");
-                cleanOrphanedS3Files(s3AsyncClient);
+                    // Speichere die neuen Hashes, damit sie beim nächsten Build bekannt sind
+                    tracker.save();
 
-                // --- PHASE 5: Compress & Upload Sitemap GZ ---
-                log.info("\n[PHASE 5] Processing Sitemap GZ...");
-                processAndUploadSitemapGz(s3AsyncClient, tracker);
+                    // --- PHASE 4.5: Clean up Orphaned Files on S3 ---
+                    log.info("\n[PHASE 4.5] Sweeping S3 for ghost files...");
+                    cleanOrphanedS3Files(s3AsyncClient);
 
-                // --- PHASE 6: Invalidate CDN Cache ---
-                invalidateCloudFrontCache();
-            } catch (Exception e) {
-                if (e.toString().contains("SdkClientException") || (e.getCause() != null && e.getCause().toString().contains("SdkClientException"))) {
-                    log.info("ℹ️ Local build: AWS credentials not found. Skipping S3 upload phases.");
-                } else {
-                    throw e;
+                    // --- PHASE 5: Compress & Upload Sitemap GZ ---
+                    log.info("\n[PHASE 5] Processing Sitemap GZ...");
+                    processAndUploadSitemapGz(s3AsyncClient, tracker);
+
+                    // --- PHASE 6: Invalidate CDN Cache ---
+                    invalidateCloudFrontCache();
+                } catch (Exception e) {
+                    if (e.toString().contains("SdkClientException") || (e.getCause() != null && e.getCause().toString().contains("SdkClientException"))) {
+                        log.info("ℹ️ Local build: AWS credentials not found. Skipping S3 upload phases.");
+                    } else {
+                        throw e;
+                    }
+                } finally {
+                    tracker.save();
                 }
-            } finally {
+            } else {
                 tracker.save();
             }
 

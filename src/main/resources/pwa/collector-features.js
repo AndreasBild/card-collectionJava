@@ -50,7 +50,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initCompareButtons();
     updateCompareBar();
+    initTableFilter();
 });
+
+// --- 2.5 REAL-TIME INSTANT TABLE SEARCH FILTER ---
+function initTableFilter() {
+    const searchInputs = document.querySelectorAll('.table-search-input, #cardSearchInput');
+    if (!searchInputs || searchInputs.length === 0) return;
+
+    searchInputs.forEach(input => {
+        input.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            filterTables(query);
+        });
+    });
+}
+
+function filterTables(query) {
+    const rows = document.querySelectorAll('table tbody tr, table tr');
+    if (!rows || rows.length === 0) return;
+
+    rows.forEach(row => {
+        // Skip table headers
+        if (row.querySelector('th')) return;
+        if (!query) {
+            row.style.display = '';
+            return;
+        }
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(query) ? '' : 'none';
+    });
+}
 
 // --- 3. SIDE-BY-SIDE CARD COMPARISON TOOL ---
 const COMPARE_KEY = 'maulmann_compare_list';

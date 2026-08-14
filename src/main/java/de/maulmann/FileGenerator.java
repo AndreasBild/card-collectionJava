@@ -73,6 +73,34 @@ public class FileGenerator {
             bcItems.add(Map.of("name", "Home", "link", BASE_URL + "/index.html"));
             bcItems.add(Map.of("name", "Collection", "link", BASE_URL + "/Juwan-Howard-Collection.html"));
 
+            List<CardJson> jsonCards = getCachedCards();
+            List<CardJson> masterpieceCards = jsonCards.stream()
+                    .filter(FileGenerator::isOneOfOneMasterpiece)
+                    .limit(10)
+                    .toList();
+
+            StringBuilder itemListSb = new StringBuilder();
+            itemListSb.append("{\n");
+            itemListSb.append("        \"@type\": \"ItemList\",\n");
+            itemListSb.append("        \"name\": \"Juwan Howard Trading Card Collection\",\n");
+            itemListSb.append("        \"numberOfItems\": ").append(jsonCards.size()).append(",\n");
+            itemListSb.append("        \"itemListElement\": [\n");
+
+            for (int i = 0; i < masterpieceCards.size(); i++) {
+                CardJson c = masterpieceCards.get(i);
+                CardPageGenerator.CardData cd = CardPageGenerator.computeCardData(c);
+                String cardTitle = CardPageGenerator.cleanPlayerName(c.player) + " " + (c.season != null ? c.season : "") + " " + (c.brand != null ? c.brand : "") + " " + (c.variant != null ? c.variant : "") + " #" + (c.cardNumber != null ? c.cardNumber : "");
+                String cardUrl = BASE_URL + "/" + cd.fullRelativePath.replace("../../", "");
+                itemListSb.append("          {\n");
+                itemListSb.append("            \"@type\": \"ListItem\",\n");
+                itemListSb.append("            \"position\": ").append(i + 1).append(",\n");
+                itemListSb.append("            \"name\": \"").append(CardUtils.escapeJson(cardTitle.trim())).append("\",\n");
+                itemListSb.append("            \"url\": \"").append(CardUtils.escapeJson(cardUrl)).append("\"\n");
+                itemListSb.append("          }").append(i < masterpieceCards.size() - 1 ? "," : "").append("\n");
+            }
+            itemListSb.append("        ]\n");
+            itemListSb.append("      }");
+
             String jsonLd = "<script type=\"application/ld+json\">\n" +
                     "{\n" +
                     "  \"@context\": \"https://schema.org\",\n" +
@@ -84,17 +112,12 @@ public class FileGenerator {
                     "      \"name\": \"Juwan Howard Private Collection\",\n" +
                     "      \"description\": \"A massive private collection featuring 1,000+ unique cards, including 1/1 Masterpieces, PMGs, Rubies, and rare 90s basketball inserts.\",\n" +
                     "      \"publisher\": { \"@type\": \"Person\", \"name\": \"Mauli Maulmann\" },\n" +
-                    "      \"mainEntity\": {\n" +
-                    "        \"@type\": \"ItemList\",\n" +
-                    "        \"name\": \"Juwan Howard Trading Card Collection\"\n" +
-                    "      }\n" +
+                    "      \"mainEntity\": " + itemListSb.toString() + "\n" +
                     "    }\n" +
                     "  ]\n" +
                     "}\n" +
                     "</script>";
             data.put("jsonLd", jsonLd);
-
-            List<CardJson> jsonCards = getCachedCards();
             data.put("stats", computeCollectionStats(jsonCards));
             List<Map<String, String>> seasons = new ArrayList<>();
             int cumulativeTotal = 0;
