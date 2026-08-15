@@ -231,6 +231,11 @@ public class CardPageGenerator {
     private static final java.util.regex.Pattern PATTERN_CLEAN_FILENAME_EDGES = java.util.regex.Pattern.compile("^-|-$");
     private static final java.util.regex.Pattern PATTERN_CLEAN_PLAYER_QUOTES = java.util.regex.Pattern.compile("[\"“„”«»'].*?[\"“„”«»']");
     private static final java.util.regex.Pattern PATTERN_SPACES = java.util.regex.Pattern.compile("\\s+");
+    private static final java.util.regex.Pattern PATTERN_ALT_BASE = java.util.regex.Pattern.compile("-sn(-?\\d+)-\\d+");
+    private static final java.util.regex.Pattern PATTERN_ALT_BASE_NO_ZERO = java.util.regex.Pattern.compile("-sn(-?)0(\\d+)");
+    private static final java.util.regex.Pattern PATTERN_ALT_BASE_NEG = java.util.regex.Pattern.compile("-sn-(\\d+)");
+    private static final java.util.regex.Pattern PATTERN_ALT_VAR1 = java.util.regex.Pattern.compile("-[^-]+-(\\d+|[A-Z0-9]+)$");
+    private static final java.util.regex.Pattern PATTERN_ALT_VAR2 = java.util.regex.Pattern.compile("-[^-]+-[^-]+-(\\d+|[A-Z0-9]+)$");
 
     private static volatile Set<String> EXISTING_IMAGE_KEYS = null;
 
@@ -363,7 +368,7 @@ public class CardPageGenerator {
                     String dupInfo = card.get("Season") + " " + card.get("Company") + " " +
                             card.get("Brand") + " " + card.get("Theme") + " " +
                             card.get("Variant") + " #" + card.get("Number") + " - " + card.get("Player");
-                    duplicateLog.add("[SKIPPED] " + dupInfo.replaceAll("\\s+", " "));
+                    duplicateLog.add("[SKIPPED] " + PATTERN_SPACES.matcher(dupInfo).replaceAll(" "));
                     continue;
                 } else {
                     filteredCards.add(card);
@@ -984,19 +989,19 @@ public class CardPageGenerator {
     private static String resolveDiskImageBaseInternal(String seasonFolder, String imageBaseName, CardData c) {
         if (checkExists(seasonFolder, imageBaseName)) return imageBaseName;
 
-        String altBase = imageBaseName.replaceAll("-sn(-?\\d+)-\\d+", "-sn$1");
+        String altBase = PATTERN_ALT_BASE.matcher(imageBaseName).replaceAll("-sn$1");
         if (checkExists(seasonFolder, altBase)) return altBase;
 
-        String altBaseNoZero = altBase.replaceAll("-sn(-?)0(\\d+)", "-sn$1$2");
+        String altBaseNoZero = PATTERN_ALT_BASE_NO_ZERO.matcher(altBase).replaceAll("-sn$1$2");
         if (checkExists(seasonFolder, altBaseNoZero)) return altBaseNoZero;
 
-        String altBaseNegative = imageBaseName.replaceAll("-sn-(\\d+)", "-sn$1");
+        String altBaseNegative = PATTERN_ALT_BASE_NEG.matcher(imageBaseName).replaceAll("-sn$1");
         if (checkExists(seasonFolder, altBaseNegative)) return altBaseNegative;
 
-        String altVariant1 = imageBaseName.replaceAll("-[^-]+-(\\d+|[A-Z0-9]+)$", "-Base-$1");
+        String altVariant1 = PATTERN_ALT_VAR1.matcher(imageBaseName).replaceAll("-Base-$1");
         if (checkExists(seasonFolder, altVariant1)) return altVariant1;
 
-        String altVariant2 = imageBaseName.replaceAll("-[^-]+-[^-]+-(\\d+|[A-Z0-9]+)$", "-Base-$1");
+        String altVariant2 = PATTERN_ALT_VAR2.matcher(imageBaseName).replaceAll("-Base-$1");
         if (checkExists(seasonFolder, altVariant2)) return altVariant2;
 
         return imageBaseName;

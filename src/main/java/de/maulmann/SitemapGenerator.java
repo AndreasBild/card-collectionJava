@@ -38,6 +38,12 @@ public class SitemapGenerator {
     private static final String BASE_URL = CardUtils.BASE_URL;
     private static final String OUTPUT_DIR = "output";
 
+    private static final java.util.regex.Pattern PATTERN_NON_DIGITS = java.util.regex.Pattern.compile("[^0-9]");
+    private static final java.util.regex.Pattern PATTERN_NON_SLUG_CHARS = java.util.regex.Pattern.compile("[^a-z0-9\\-]");
+    private static final java.util.regex.Pattern PATTERN_MULTI_HYPHENS = java.util.regex.Pattern.compile("-+");
+    private static final java.util.regex.Pattern PATTERN_SLUG_EDGES = java.util.regex.Pattern.compile("^-|-$");
+    private static final java.util.regex.Pattern PATTERN_HIGH_RES = java.util.regex.Pattern.compile("-\\d+w(\\.[a-zA-Z0-9]+)$");
+
     public static void main(String[] args) {
         generate();
     }
@@ -426,7 +432,7 @@ public class SitemapGenerator {
                 if (cleanRun.contains("/")) {
                     cleanRun = cleanRun.substring(cleanRun.lastIndexOf("/") + 1).trim();
                 }
-                int run = Integer.parseInt(cleanRun.replaceAll("[^0-9]", ""));
+                int run = Integer.parseInt(PATTERN_NON_DIGITS.matcher(cleanRun).replaceAll(""));
                 if (run > 0 && run <= 5) {
                     return true;
                 }
@@ -462,7 +468,7 @@ public class SitemapGenerator {
                 if (cleanRun.contains("/")) {
                     cleanRun = cleanRun.substring(cleanRun.lastIndexOf("/") + 1).trim();
                 }
-                int run = Integer.parseInt(cleanRun.replaceAll("[^0-9]", ""));
+                int run = Integer.parseInt(PATTERN_NON_DIGITS.matcher(cleanRun).replaceAll(""));
                 if (run > 0 && run <= 5) {
                     return true;
                 }
@@ -484,10 +490,9 @@ public class SitemapGenerator {
     }
 
     private static String sanitizeFilename(String raw) {
-        return raw.toLowerCase()
-                .replaceAll("[^a-z0-9\\-]", "-")
-                .replaceAll("-+", "-")
-                .replaceAll("^-|-$", "");
+        String step1 = PATTERN_NON_SLUG_CHARS.matcher(raw.toLowerCase()).replaceAll("-");
+        String step2 = PATTERN_MULTI_HYPHENS.matcher(step1).replaceAll("-");
+        return PATTERN_SLUG_EDGES.matcher(step2).replaceAll("");
     }
 
     private static ChildSitemapInfo writeSubSitemap(String fileName, List<SitemapUrlEntry> entries) throws IOException {
@@ -1030,7 +1035,7 @@ public class SitemapGenerator {
 
     private static String toHighResLoc(String absImageLoc) {
         if (absImageLoc == null || absImageLoc.isEmpty()) return "";
-        String highRes = absImageLoc.replaceAll("-\\d+w(\\.[a-zA-Z0-9]+)$", "$1");
+        String highRes = PATTERN_HIGH_RES.matcher(absImageLoc).replaceAll("$1");
 
         if (highRes.startsWith(BASE_URL + "/")) {
             String relPath = highRes.substring((BASE_URL + "/").length());

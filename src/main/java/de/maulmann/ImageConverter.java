@@ -180,32 +180,33 @@ public class ImageConverter {
     private static void writeAvifViaCLI(java.awt.image.BufferedImage orig, File outputFile, int targetW, int targetH, int quality) {
         if (AVIFENC_PATH == null || orig == null) return;
         try {
-            File tempPng = File.createTempFile("avif_resize_", ".png");
-            try {
-                java.awt.image.BufferedImage resized = new java.awt.image.BufferedImage(targetW, targetH, java.awt.image.BufferedImage.TYPE_INT_RGB);
-                java.awt.Graphics2D g = resized.createGraphics();
-                g.setRenderingHint(java.awt.RenderingHints.KEY_INTERPOLATION, java.awt.RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-                g.drawImage(orig, 0, 0, targetW, targetH, null);
-                g.dispose();
-                ImageIO.write(resized, "png", tempPng);
+            java.awt.image.BufferedImage resized = new java.awt.image.BufferedImage(targetW, targetH, java.awt.image.BufferedImage.TYPE_INT_RGB);
+            java.awt.Graphics2D g = resized.createGraphics();
+            g.setRenderingHint(java.awt.RenderingHints.KEY_INTERPOLATION, java.awt.RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+            g.drawImage(orig, 0, 0, targetW, targetH, null);
+            g.dispose();
 
-                ProcessBuilder pb = new ProcessBuilder(
-                        AVIFENC_PATH,
-                        "-s", "6",
-                        "-q", String.valueOf(quality),
-                        "--yuv", "420",
-                        "-j", "8",
-                        tempPng.getAbsolutePath(),
-                        outputFile.getAbsolutePath()
-                );
-                Process p = pb.start();
-                p.waitFor();
-            } finally {
-                if (tempPng.exists()) tempPng.delete();
+            ProcessBuilder pb = new ProcessBuilder(
+                    AVIFENC_PATH,
+                    "--stdin",
+                    "--input-format", "png",
+                    "-s", "6",
+                    "-q", String.valueOf(quality),
+                    "--yuv", "420",
+                    "-j", "8",
+                    outputFile.getAbsolutePath()
+            );
+            Process p = pb.start();
+            try (java.io.OutputStream os = p.getOutputStream()) {
+                ImageIO.write(resized, "png", os);
+                os.flush();
+            }
+            int exitCode = p.waitFor();
+            if (exitCode != 0) {
+                log.warn("avifenc exited with code {} for {}", exitCode, outputFile.getName());
             }
         } catch (Exception e) {
             log.error("AVIF conversion error for {}: {}", outputFile.getName(), e.getMessage());
-            e.printStackTrace();
         }
     }
 

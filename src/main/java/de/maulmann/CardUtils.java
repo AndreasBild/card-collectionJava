@@ -59,13 +59,15 @@ public final class CardUtils {
                    .replace("\t", "\\t");
     }
 
+    private static final java.util.regex.Pattern COMMA_PATTERN = java.util.regex.Pattern.compile("\\s*,\\s*");
+
     /**
      * Replaces comma-separated values with " / " delimiters for display.
      * Used by CardPageGenerator and CardSchemaGenerator.
      */
     public static String formatMulti(String val) {
         if (val == null) return "";
-        return val.replaceAll("\\s*,\\s*", " / ");
+        return COMMA_PATTERN.matcher(val).replaceAll(" / ");
     }
 
     /**

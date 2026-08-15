@@ -582,9 +582,12 @@ public class FileGenerator {
         } catch (Exception e) { log.error("Fehler bei statischen Seiten: {}", e.getMessage()); }
     }
 
+    private static final java.util.regex.Pattern PATTERN_CLEAN_NUM = java.util.regex.Pattern.compile("(?i)\\s*(PMG|Refractor|Parallel|Base).*$");
+    private static final java.util.regex.Pattern PATTERN_SCRIPT_LDJSON = java.util.regex.Pattern.compile("(?s)<script type=\"application/ld\\+json\">.*?</script>");
+
     public static String normalizeCardNumber(String num) {
         if (num == null || num.trim().isEmpty()) return "N/A";
-        return num.replaceAll("(?i)\\s*(PMG|Refractor|Parallel|Base).*$", "").trim();
+        return PATTERN_CLEAN_NUM.matcher(num).replaceAll("").trim();
     }
 
     public static void buildRainbowsPage() {
@@ -862,7 +865,7 @@ public class FileGenerator {
 
     private static String cleanOldPlaceholders(String content) {
         // Entfernt auch vorhandene ld+json Blöcke aus dem Content, da diese nun im Head via FreeMarker landen
-        String cleaned = content.replaceAll("(?s)<script type=\"application/ld\\+json\">.*?</script>", "");
+        String cleaned = PATTERN_SCRIPT_LDJSON.matcher(content).replaceAll("");
 
         return cleaned.replace("{{HEAD}}", "")
                 .replace("{{TOP_NAV}}", "")

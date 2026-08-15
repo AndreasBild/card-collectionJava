@@ -498,9 +498,11 @@ public class CardSchemaGenerator {
         return sb.toString();
     }
 
+    private static final java.util.regex.Pattern YEAR_PATTERN = java.util.regex.Pattern.compile("\\b(19\\d{2}|20\\d{2})\\b");
+
     private static String extractYear(String season) {
         if (season == null) return null;
-        java.util.regex.Matcher matcher = java.util.regex.Pattern.compile("\\b(19\\d{2}|20\\d{2})\\b").matcher(season);
+        java.util.regex.Matcher matcher = YEAR_PATTERN.matcher(season);
         if (matcher.find()) {
             return matcher.group(1);
         }
