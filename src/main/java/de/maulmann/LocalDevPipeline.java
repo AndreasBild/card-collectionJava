@@ -37,12 +37,17 @@ public class LocalDevPipeline {
         FileTracker tracker = new FileTracker(OUTPUT_DIR + "/sync-hashes.properties");
         TimestampTracker timeTracker = new TimestampTracker(OUTPUT_DIR + "/generation-timestamps.properties");
 
+        SiteBuilderPipeline.DeploymentMetrics metrics = new SiteBuilderPipeline.DeploymentMetrics();
+        long p1_2Start = System.currentTimeMillis();
         List<CardPageGenerator.CardData> cards = SiteBuilderPipeline.buildLocalArtifacts(timeTracker, tracker);
+        metrics.phase1_2Ms = System.currentTimeMillis() - p1_2Start;
+        if (cards != null) {
+            metrics.totalCards.set(cards.size());
+        }
 
         long duration = System.currentTimeMillis() - startTime;
-        log.info("==================================================");
-        log.info("✅ LOCAL BUILD COMPLETE IN {} ms", duration);
-        log.info("==================================================");
+        SiteBuilderPipeline.printDeploymentReport(duration, metrics, false);
+
         log.info("📂 Preview pages locally:");
         log.info("   -> Home:            file://{}/index.html", new File(OUTPUT_DIR).getAbsolutePath());
         log.info("   -> Rainbows:        file://{}/rainbows.html", new File(OUTPUT_DIR).getAbsolutePath());
