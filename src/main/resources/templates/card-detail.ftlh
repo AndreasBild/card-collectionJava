@@ -232,10 +232,15 @@ ${topNavHtml?no_esc}
                             <figure>
                                 <picture>
                                 <source type="image/avif"
-                                        srcset="${card.thumbAvif} 400w,
-                                                ${card.thumbAvif?replace('-400w.avif', '-600w.avif')} 600w"
-                                        sizes="180px">
-                                <img src="${card.thumbAvif}" alt="${card.title}" loading="lazy" decoding="async" width="180" height="252" class="related-card-thumb">
+                                        srcset="${(card.imgBase)???then(card.imgBase, card.thumbAvif?replace('-400w.avif', ''))}-200w.avif 200w,
+                                                ${(card.imgBase)???then(card.imgBase, card.thumbAvif?replace('-400w.avif', ''))}-400w.avif 400w,
+                                                ${(card.imgBase)???then(card.imgBase, card.thumbAvif?replace('-400w.avif', ''))}-600w.avif 600w"
+                                        sizes="(max-width: 600px) 140px, 180px">
+                                <img src="${(card.imgBase)???then(card.imgBase + '-200w.avif', card.thumbAvif?replace('-400w.avif', '-200w.avif'))}"
+                                     srcset="${(card.imgBase)???then(card.imgBase, card.thumbAvif?replace('-400w.avif', ''))}-200w.avif 200w,
+                                             ${(card.imgBase)???then(card.imgBase, card.thumbAvif?replace('-400w.avif', ''))}-400w.avif 400w"
+                                     sizes="(max-width: 600px) 140px, 180px"
+                                     alt="${card.title}" loading="lazy" decoding="async" width="180" height="252" class="related-card-thumb">
                             </picture>
                                 <figcaption>${card.title}</figcaption>
                             </figure>

@@ -860,9 +860,11 @@ public class CardPageGenerator {
 
             String rawImageBase = c.filenameBase.substring(0, c.filenameBase.lastIndexOf("-"));
             String imageBaseName = resolveDiskImageBase(c.seasonFolder, rawImageBase, c);
-            String thumbAvif = RELATIVE_IMAGES_PATH + "/" + c.seasonFolder + "/" + imageBaseName + "-front-400w.avif";
-            String thumbFallback = RELATIVE_IMAGES_PATH + "/" + c.seasonFolder + "/" + imageBaseName + "-front.avif";
+            String imgBase = RELATIVE_IMAGES_PATH + "/" + c.seasonFolder + "/" + imageBaseName + "-front";
+            String thumbAvif = imgBase + "-200w.avif";
+            String thumbFallback = imgBase + ".avif";
 
+            item.put("imgBase", imgBase);
             item.put("thumbWebp", thumbAvif);
             item.put("thumbAvif", thumbAvif);
             item.put("thumb", thumbAvif);
