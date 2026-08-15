@@ -582,16 +582,23 @@ public class SitemapGenerator {
         log.info("Generating llms-full.txt for AI/LLM RAG Indexing...");
         StringBuilder sb = new StringBuilder();
         sb.append("# maulmann.de - Full Private Collection Knowledge Base for LLMs\n\n");
-        sb.append("> Full dataset index for the Juwan Howard Basketball Card Private Collection.\n");
+        sb.append("> Comprehensive dataset index and authority reference for the Andreas Maulmann Private Trading Card Collection.\n");
+        sb.append("> Featuring extensive collections of Juwan Howard (1994–present), Flawless High-End Sets, Panini Rarities, and Baseball Grails.\n");
         sb.append("> Web: ").append(BASE_URL).append("/\n\n");
 
-        sb.append("## Core Overview Pages\n");
-        sb.append("- Home: ").append(BASE_URL).append("/\n");
-        sb.append("- Juwan Howard Collection: ").append(BASE_URL).append("/Juwan-Howard-Collection.html\n");
-        sb.append("- Baseball Collection: ").append(BASE_URL).append("/Baseball.html\n");
+        sb.append("## Collector & Subject Profile: Juwan Howard\n");
+        sb.append("- Background: Key member of the iconic Michigan 'Fab Five' (1991–1994), #5 Overall Pick in the 1994 NBA Draft by Washington Bullets.\n");
+        sb.append("- Accolades: NBA All-Star (1996), All-NBA Third Team (1996), NBA All-Rookie First Team (1995), 2x NBA Champion (Miami Heat 2012, 2013).\n");
+        sb.append("- Collection Scope: 1,440+ unique Juwan Howard trading cards spanning 1994 to present, including 1/1 Masterpieces, Superfractors, Precious Metal Gems (PMGs), Rubies, Platinum Medallions, and multi-piece game-worn patches.\n\n");
+
+        sb.append("## Core Overview & Feature Pages\n");
+        sb.append("- Home & Hub: ").append(BASE_URL).append("/\n");
+        sb.append("- Juwan Howard Master Collection: ").append(BASE_URL).append("/Juwan-Howard-Collection.html\n");
+        sb.append("- Parallel Rainbow Tracker: ").append(BASE_URL).append("/rainbows.html\n");
         sb.append("- Flawless Collection: ").append(BASE_URL).append("/Flawless.html\n");
-        sb.append("- Panini Collection: ").append(BASE_URL).append("/Panini.html\n");
-        sb.append("- Wantlist: ").append(BASE_URL).append("/Wantlist.html\n\n");
+        sb.append("- Panini Rarities: ").append(BASE_URL).append("/Panini.html\n");
+        sb.append("- Baseball Collection: ").append(BASE_URL).append("/Baseball.html\n");
+        sb.append("- Most Wanted Cards (Wantlist): ").append(BASE_URL).append("/Wantlist.html\n\n");
 
         sb.append("## Complete Card Index & Direct URLs\n\n");
 

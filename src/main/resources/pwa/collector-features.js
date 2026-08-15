@@ -51,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initCompareButtons();
     updateCompareBar();
     initTableFilter();
+    init3DCardTilt();
 });
 
 // --- 2.5 REAL-TIME INSTANT TABLE SEARCH FILTER (DEBOUNCED) ---
@@ -235,4 +236,37 @@ function openCompareModal() {
 function closeCompareModal() {
     const modal = document.getElementById('compareModal');
     if (modal) modal.style.display = 'none';
+}
+
+// --- 5. REALISTIC 3D HOLOGRAPHIC CARD TILT EFFECT ---
+function init3DCardTilt() {
+    const cardContainers = document.querySelectorAll('.card-image-wrapper, .flip-container');
+    if (!cardContainers || cardContainers.length === 0) return;
+
+    cardContainers.forEach(container => {
+        const targetCard = container.querySelector('.card-3d-interactive') || container.querySelector('.card-image');
+        if (!targetCard) return;
+
+        let tiltFrame = null;
+        container.addEventListener('mousemove', (e) => {
+            if (tiltFrame) cancelAnimationFrame(tiltFrame);
+            tiltFrame = requestAnimationFrame(() => {
+                const rect = container.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const rotateX = ((y - centerY) / centerY) * -8;
+                const rotateY = ((x - centerX) / centerX) * 8;
+
+                targetCard.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+        });
+
+        container.addEventListener('mouseleave', () => {
+            if (tiltFrame) cancelAnimationFrame(tiltFrame);
+            targetCard.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+        });
+    });
 }

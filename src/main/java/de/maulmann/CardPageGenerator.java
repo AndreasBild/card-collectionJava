@@ -277,12 +277,10 @@ public class CardPageGenerator {
         duplicateLog.add("This file lists all un-numbered cards that were filtered out to prevent duplicate pages.\n");
 
         Path cardsDir = Paths.get(BASE_FOLDER);
-        if (Files.exists(cardsDir)) {
-            try (Stream<Path> walk = Files.walk(cardsDir)) {
-                walk.sorted(Comparator.reverseOrder())
-                        .map(Path::toFile)
-                        .forEach(File::delete);
-            } catch (Exception e) {
+        if (!Files.exists(cardsDir)) {
+            try {
+                Files.createDirectories(cardsDir);
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -335,11 +333,32 @@ public class CardPageGenerator {
             log.error("Failed to write Duplicates.txt", e);
         }
 
+        cleanOrphanedCardFiles(allProcessedCards);
         generateMissingImagesReport(allProcessedCards);
 
         long endTime = System.currentTimeMillis();
         log.info("All card pages generated in {} ms.", (endTime - startTime));
         return allProcessedCards;
+    }
+
+    private static void cleanOrphanedCardFiles(List<CardData> validCards) {
+        Path cardsDir = Paths.get(BASE_FOLDER);
+        if (!Files.exists(cardsDir)) return;
+        Set<Path> validPaths = validCards.stream()
+                .map(c -> Paths.get(BASE_FOLDER, c.seasonFolder, c.filename).toAbsolutePath().normalize())
+                .collect(Collectors.toSet());
+
+        try (Stream<Path> stream = Files.walk(cardsDir)) {
+            stream.filter(Files::isRegularFile)
+                    .filter(p -> p.toString().endsWith(".html"))
+                    .forEach(p -> {
+                        if (!validPaths.contains(p.toAbsolutePath().normalize())) {
+                            try { Files.deleteIfExists(p); } catch (Exception ignored) {}
+                        }
+                    });
+        } catch (Exception e) {
+            log.warn("Could not clean orphaned cards: {}", e.getMessage());
+        }
     }
 
     public static void main(String[] args) {
@@ -587,7 +606,9 @@ public class CardPageGenerator {
                 finalHtml = finalHtml.replace("{{CONSENT_BANNER}}", SharedTemplates.getConsentBanner(ROOT));
             }
 
-            Files.writeString(path, finalHtml, StandardCharsets.UTF_8);
+            if (isCardModified || !Files.exists(path)) {
+                Files.writeString(path, finalHtml, StandardCharsets.UTF_8);
+            }
             if (isCardModified) {
                 IndexNowService.queueUrl(fullCardUrl);
             }

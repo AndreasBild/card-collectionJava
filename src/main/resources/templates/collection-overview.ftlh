@@ -121,6 +121,8 @@ ${topNavHtml?no_esc}
     </#list>
 
         <script>
+            let overviewFilterDebounceTimer = null;
+
             document.getElementById('seasonFilter').addEventListener('change', () => {
                 applyFilters();
                 const seasonVal = document.getElementById('seasonFilter').value;
@@ -128,7 +130,16 @@ ${topNavHtml?no_esc}
                     scrollToSeason(seasonVal, false);
                 }
             });
-            document.getElementById('textSearch').addEventListener('input', applyFilters);
+
+            const overviewSearchInput = document.getElementById('textSearch');
+            if (overviewSearchInput) {
+                overviewSearchInput.addEventListener('input', () => {
+                    clearTimeout(overviewFilterDebounceTimer);
+                    overviewFilterDebounceTimer = setTimeout(() => {
+                        window.requestAnimationFrame(applyFilters);
+                    }, 100);
+                });
+            }
 
             function scrollToSeason(seasonId, updateFilter = true) {
                 if (!seasonId) return;
