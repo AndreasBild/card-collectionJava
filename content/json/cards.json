@@ -4066,9 +4066,9 @@
   "isRookie" : false
 }, {
   "id" : "1996-97-sp-spx-force-f2",
-  "player" : "Juwan Howard, Shawn Kemp, Charles Barkley, Dennis Rodmann",
+  "player" : "Juwan Howard, Charles Barkley, Shawn Kemp, Dennis Rodmann",
   "season" : "1996-97",
-  "team" : "Washington Bullets, Seatlle Supesonics, Phoenix Suns, Chicago Bulls",
+  "team" : "Washington Bullets, Phoenix Suns, Seatlle Supesonics, Chicago Bulls",
   "company" : "Upper Deck",
   "brand" : "SP",
   "theme" : "SPX Force",
@@ -4078,7 +4078,7 @@
   "printRun" : null,
   "gradingCompany" : null,
   "grade" : null,
-  "collection" : "Juwan Howard, Shawn Kemp, Charles Barkley, Dennis Rodmann",
+  "collection" : "Juwan Howard, Charles Barkley, Shawn Kemp, Dennis Rodmann",
   "notes" : null,
   "isAutograph" : false,
   "isPatch" : false,
@@ -6820,6 +6820,25 @@
   "isPatch" : false,
   "isRookie" : false
 }, {
+  "id" : "1997-98-topps-stadium-club-co-signers-co9-card4691",
+  "player" : "Juwan Howard, Clyde Drexler",
+  "season" : "1997-98",
+  "team" : "Washington Wizards, Houston Rockets",
+  "company" : "Topps",
+  "brand" : "Topps Stadium Club",
+  "theme" : "Co-Signers",
+  "variant" : "Base",
+  "cardNumber" : "CO9",
+  "serialNumber" : null,
+  "printRun" : null,
+  "gradingCompany" : null,
+  "grade" : null,
+  "collection" : "Juwan Howard, Clyde Drexler",
+  "notes" : null,
+  "isAutograph" : true,
+  "isPatch" : false,
+  "isRookie" : false
+}, {
   "id" : "1997-98-topps-stadium-club-triumvirate-t3a",
   "player" : "Juwan Howard",
   "season" : "1997-98",
@@ -6912,25 +6931,6 @@
   "collection" : "Juwan Howard",
   "notes" : null,
   "isAutograph" : false,
-  "isPatch" : false,
-  "isRookie" : false
-}, {
-  "id" : "1997-98-topps-stadium-club-co-signers-co9-card4750",
-  "player" : "Juwan Howard, Clyde Drexler",
-  "season" : "1997-98",
-  "team" : "Washington Wizards, Houston Rockets",
-  "company" : "Topps",
-  "brand" : "Topps Stadium Club",
-  "theme" : "Co-Signers",
-  "variant" : "Base",
-  "cardNumber" : "CO9",
-  "serialNumber" : null,
-  "printRun" : null,
-  "gradingCompany" : null,
-  "grade" : null,
-  "collection" : "Juwan Howard, Clyde Drexler",
-  "notes" : null,
-  "isAutograph" : true,
   "isPatch" : false,
   "isRookie" : false
 }, {
@@ -24643,7 +24643,7 @@
   "isRookie" : false
 }, {
   "id" : "2022-23-panini-immaculate-collection-triple-autographs-ta-jmr-sn3",
-  "player" : "Juwan Howard, Mitch Richmond, Rod Strickland",
+  "player" : "Juwan Howard, Rod Strickland, Mitch Richmond",
   "season" : "2022-23",
   "team" : "Washington Wizards",
   "company" : "Panini",
@@ -24655,7 +24655,7 @@
   "printRun" : 25,
   "gradingCompany" : null,
   "grade" : null,
-  "collection" : "Juwan Howard, Mitch Richmond, Rod Strickland",
+  "collection" : "Juwan Howard, Rod Strickland, Mitch Richmond",
   "notes" : null,
   "isAutograph" : true,
   "isPatch" : false,
