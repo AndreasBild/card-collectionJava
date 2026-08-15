@@ -91,11 +91,11 @@ p {
 }
 
 /* --- BUTTONS & INTERACTIVE ELEMENTS --- */
-a.modern-button, button.modern-button, button.flip-modal-btn, button.close-modal-btn, a.view-button {
+a.modern-button, button.modern-button, button.flip-modal-btn, button.close-modal-btn, a.view-button, a.table-button, .table-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    text-decoration: none;
+    text-decoration: none !important;
     background-color: var(--accent-gold);
     color: #0b0f19 !important;
     padding: 12px 24px;
@@ -111,6 +111,10 @@ a.modern-button, button.modern-button, button.flip-modal-btn, button.close-modal
     box-shadow: var(--shadow-sm);
 }
 
+a.modern-button *, button.modern-button *, button.flip-modal-btn *, button.close-modal-btn *, a.view-button *, a.table-button *, .table-button * {
+    text-decoration: none !important;
+}
+
 .modern-button {
     width: 200px;
     min-height: 44px;
@@ -119,6 +123,7 @@ a.modern-button, button.modern-button, button.flip-modal-btn, button.close-modal
     font-size: 0.95rem !important;
     white-space: nowrap !important;
     flex-shrink: 0;
+    text-decoration: none !important;
 }
 
 .modern-button:hover, .flip-modal-btn:hover {
@@ -127,6 +132,7 @@ a.modern-button, button.modern-button, button.flip-modal-btn, button.close-modal
     color: #000 !important;
     transform: translateY(-2px);
     box-shadow: var(--shadow-gold);
+    text-decoration: none !important;
 }
 
 .close-modal-btn:hover {
@@ -134,6 +140,7 @@ a.modern-button, button.modern-button, button.flip-modal-btn, button.close-modal
     border-color: var(--accent-red) !important;
     color: #fff !important;
     transform: translateY(-2px);
+    text-decoration: none !important;
 }
 
 .modern-button-wide {
@@ -160,6 +167,7 @@ a.modern-button, button.modern-button, button.flip-modal-btn, button.close-modal
     border: 1px solid var(--accent-gold) !important;
     border-radius: var(--radius-sm);
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    text-decoration: none !important;
     transition: var(--transition-fast);
 }
 
@@ -169,6 +177,7 @@ a.modern-button, button.modern-button, button.flip-modal-btn, button.close-modal
     border-color: var(--accent-gold-hover) !important;
     transform: translateY(-1px);
     box-shadow: var(--shadow-gold);
+    text-decoration: none !important;
 }
 
 .back-to-top-btn {
@@ -547,6 +556,10 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin: 10px 0;
+}
+
+table a, .table-responsive a, .card-container-box a {
+    text-decoration: none !important;
 }
 
 th {
