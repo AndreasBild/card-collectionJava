@@ -57,6 +57,20 @@ self.addEventListener('activate', function (e) {
     checkForUpdates();
 });
 
+// Maximum number of card scans to store offline in LRU image cache
+const MAX_IMAGE_CACHE_ENTRIES = 80;
+
+async function trimCache(cacheName, maxItems) {
+    try {
+        const cache = await caches.open(cacheName);
+        const keys = await cache.keys();
+        if (keys.length > maxItems) {
+            await cache.delete(keys[0]);
+            await trimCache(cacheName, maxItems);
+        }
+    } catch (_) {}
+}
+
 // Respond with cached resources
 self.addEventListener('fetch', function (event) {
     const request = event.request;
@@ -65,13 +79,16 @@ self.addEventListener('fetch', function (event) {
     // Skip non-GET requests
     if (request.method !== 'GET') return;
 
-    // Strategy for Images: Cache First, then Network
+    // Strategy for Images: Cache First, then Network with LRU pruning
     if (request.destination === 'image') {
         event.respondWith(
             caches.open(IMAGE_CACHE).then(cache => {
                 return cache.match(request).then(response => {
                     return response || fetch(request).then(networkResponse => {
-                        cache.put(request, networkResponse.clone());
+                        if (networkResponse.ok) {
+                            cache.put(request, networkResponse.clone());
+                            trimCache(IMAGE_CACHE, MAX_IMAGE_CACHE_ENTRIES);
+                        }
                         return networkResponse;
                     });
                 });

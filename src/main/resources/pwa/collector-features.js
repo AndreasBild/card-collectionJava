@@ -53,15 +53,20 @@ document.addEventListener('DOMContentLoaded', () => {
     initTableFilter();
 });
 
-// --- 2.5 REAL-TIME INSTANT TABLE SEARCH FILTER ---
+// --- 2.5 REAL-TIME INSTANT TABLE SEARCH FILTER (DEBOUNCED) ---
+let filterDebounceTimer = null;
+
 function initTableFilter() {
-    const searchInputs = document.querySelectorAll('.table-search-input, #cardSearchInput');
+    const searchInputs = document.querySelectorAll('.table-search-input, #cardSearchInput, #textSearch');
     if (!searchInputs || searchInputs.length === 0) return;
 
     searchInputs.forEach(input => {
         input.addEventListener('input', (e) => {
             const query = e.target.value.toLowerCase().trim();
-            filterTables(query);
+            clearTimeout(filterDebounceTimer);
+            filterDebounceTimer = setTimeout(() => {
+                window.requestAnimationFrame(() => filterTables(query));
+            }, 120);
         });
     });
 }
@@ -81,6 +86,13 @@ function filterTables(query) {
         row.style.display = text.includes(query) ? '' : 'none';
     });
 }
+
+// Global Keyboard Accessibility (Escape to close modals)
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' || e.key === 'Esc') {
+        closeCompareModal();
+    }
+});
 
 // --- 3. SIDE-BY-SIDE CARD COMPARISON TOOL ---
 const COMPARE_KEY = 'maulmann_compare_list';
@@ -189,12 +201,15 @@ function openCompareModal() {
         modal = document.createElement('div');
         modal.id = 'compareModal';
         modal.className = 'compare-modal-overlay';
+        modal.setAttribute('role', 'dialog');
+        modal.setAttribute('aria-modal', 'true');
+        modal.setAttribute('aria-label', 'Side-by-Side Card Comparison');
         modal.onclick = (e) => { if (e.target === modal) closeCompareModal(); };
         modal.innerHTML = `
             <div class="compare-modal-box">
                 <div class="compare-modal-header">
                     <h3>&#x2696;&#xFE0F; Side-by-Side Card Comparison</h3>
-                    <button class="modal-close-btn" onclick="closeCompareModal()">&times;</button>
+                    <button class="modal-close-btn" aria-label="Close Comparison" onclick="closeCompareModal()">&times;</button>
                 </div>
                 <div id="compareModalGrid" class="compare-modal-grid"></div>
             </div>

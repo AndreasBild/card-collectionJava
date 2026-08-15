@@ -1066,6 +1066,8 @@ tr:hover {
     padding: 2rem;
     margin-top: 2.5rem;
     box-shadow: var(--shadow-md);
+    content-visibility: auto;
+    contain-intrinsic-size: 260px;
 }
 
 .faq-details {
@@ -1414,6 +1416,8 @@ tr:hover {
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
+    content-visibility: auto;
+    contain-intrinsic-size: 320px;
 }
 
 .related-cards-section h2 {
