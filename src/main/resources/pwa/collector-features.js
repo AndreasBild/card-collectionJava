@@ -52,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCompareBar();
     initTableFilter();
     init3DCardTilt();
+    initRainbowOrientation();
 });
 
 // --- 2.5 REAL-TIME INSTANT TABLE SEARCH FILTER (DEBOUNCED) ---
@@ -268,5 +269,34 @@ function init3DCardTilt() {
             if (tiltFrame) cancelAnimationFrame(tiltFrame);
             targetCard.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
         });
+    });
+}
+
+// --- 6. DYNAMIC ORIENTATION DETECTION FOR RAINBOW & GRID CARDS ---
+function initRainbowOrientation() {
+    const rainbowImgs = document.querySelectorAll('.rainbow-card-img');
+    if (!rainbowImgs || rainbowImgs.length === 0) return;
+
+    rainbowImgs.forEach(img => {
+        const updateOri = () => {
+            if (img.naturalWidth && img.naturalHeight) {
+                const item = img.closest('.rainbow-item');
+                if (item) {
+                    if (img.naturalWidth > img.naturalHeight) {
+                        item.classList.add('is-landscape');
+                        item.classList.remove('is-portrait');
+                    } else {
+                        item.classList.add('is-portrait');
+                        item.classList.remove('is-landscape');
+                    }
+                }
+            }
+        };
+
+        if (img.complete && img.naturalWidth) {
+            updateOri();
+        } else {
+            img.addEventListener('load', updateOri, { once: true });
+        }
     });
 }

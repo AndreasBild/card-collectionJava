@@ -40,12 +40,12 @@ ${topNavHtml?no_esc}
                     <div class="rainbow-items-grid">
                         <#list set.cards as card>
                             <#if card.acquired>
-                                <div class="rainbow-item acquired">
+                                <div class="rainbow-item acquired ${card.orientationClass!'is-portrait'}">
                                     <a href="${card.url}?from=rainbows" title="View details for ${card.title} (${card.variant})" class="rainbow-card-link">
                                         <figure class="rainbow-card-figure">
                                             <picture class="rainbow-card-media">
                                                 <source type="image/avif" srcset="${card.imgPath}">
-                                                <img src="${card.imgPath}" alt="${card.title} - ${card.variant}" width="400" height="560" loading="lazy" decoding="async" class="rainbow-card-img">
+                                                <img src="${card.imgPath}" alt="${card.title} - ${card.variant}" width="${(card.isLandscape!false)?then('560', '400')}" height="${(card.isLandscape!false)?then('400', '560')}" loading="lazy" decoding="async" class="rainbow-card-img">
                                             </picture>
                                             <figcaption>${card.title} - ${card.variant}</figcaption>
                                         </figure>

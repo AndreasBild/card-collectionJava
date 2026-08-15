@@ -23,6 +23,8 @@
     --accent-gold: #d4af37;
     --accent-gold-hover: #b89628;
     --accent-gold-light: #fef08a;
+    --accent-gold-dark: #997b1e;
+    --color-gold: #d4af37;
     --accent-emerald: #10b981;
     --accent-blue: #3b82f6;
     --accent-red: #ef4444;
@@ -89,7 +91,7 @@ p {
 }
 
 /* --- BUTTONS & INTERACTIVE ELEMENTS --- */
-a:not(.plain), button.modern-button, button.flip-modal-btn, button.close-modal-btn {
+a.modern-button, button.modern-button, button.flip-modal-btn, button.close-modal-btn, a.view-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -1835,8 +1837,8 @@ figcaption {
 
 .rainbow-items-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fill, minmax(125px, 1fr));
+    gap: 0.6rem;
     align-items: stretch;
 }
 
@@ -1844,46 +1846,86 @@ figcaption {
     position: relative;
     width: 100%;
     height: auto;
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: var(--radius-sm);
+    background: #000;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
     overflow: hidden;
-    box-shadow: none;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .rainbow-item:hover {
     transform: translateY(-2px) scale(1.02);
     border-color: var(--accent-gold);
-    box-shadow: 0 4px 16px rgba(212, 175, 55, 0.2);
+    box-shadow: 0 4px 16px rgba(212, 175, 55, 0.25);
     z-index: 5;
 }
 
 .rainbow-card-link {
-    display: block;
-    width: 100%;
-    height: auto;
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
     position: relative;
-    text-decoration: none;
-    padding: 0;
+    text-decoration: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+.rainbow-card-figure {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+    height: 100%;
+    display: block;
+    line-height: 0;
 }
 
 .rainbow-card-media {
     display: block;
     width: 100%;
     height: auto;
+    margin: 0;
+    padding: 0;
 }
 
 .rainbow-card-img {
     width: 100%;
-    height: auto;
+    height: 100%;
+    aspect-ratio: 2.5 / 3.5;
+    object-fit: cover;
     display: block;
-    border-radius: calc(var(--radius-md) - 1px);
+    border-radius: 5px;
+    margin: 0;
+    padding: 0;
     transition: transform 0.3s ease;
 }
 
+.rainbow-item.is-landscape {
+    grid-column: span 2;
+    max-height: 155px;
+    align-self: center;
+}
+
+.rainbow-item.is-landscape .rainbow-card-img {
+    aspect-ratio: 3.5 / 2.5;
+    max-height: 155px;
+    object-fit: cover;
+}
+
+.rainbow-item.is-portrait .rainbow-card-img,
+.rainbow-item:not(.is-landscape) .rainbow-card-img {
+    aspect-ratio: 2.5 / 3.5;
+    object-fit: cover;
+}
+
 .rainbow-item:hover .rainbow-card-img {
-    transform: scale(1.05);
+    transform: scale(1.04);
 }
 
 .rainbow-card-placeholder {
@@ -2305,10 +2347,10 @@ figcaption {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--color-gold, #f1c40f);
+    color: var(--accent-gold);
     margin-bottom: 14px;
     padding-bottom: 6px;
-    border-bottom: 1px solid rgba(241, 196, 15, 0.2);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
 }
 
 .seo-showcase-list {
@@ -2327,7 +2369,7 @@ figcaption {
 a.plain.seo-showcase-link {
     display: inline-block;
     font-size: 0.9rem;
-    color: var(--text-secondary, #c9d1d9);
+    color: var(--text-secondary);
     text-decoration: none;
     background: transparent !important;
     border: none !important;
@@ -2339,7 +2381,7 @@ a.plain.seo-showcase-link {
 
 a.plain.seo-showcase-link:hover,
 a.plain.seo-showcase-link:focus {
-    color: var(--color-gold, #f1c40f) !important;
+    color: var(--accent-gold) !important;
     text-decoration: underline !important;
     background: transparent !important;
 }

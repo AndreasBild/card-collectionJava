@@ -722,6 +722,9 @@ public class FileGenerator {
                         String imageBaseName = CardPageGenerator.resolveDiskImageBase(cd.seasonFolder, rawImageBase, cd);
                         String frontImg = "images/" + cd.seasonFolder + "/" + imageBaseName + "-front-400w.avif";
                         itemMap.put("imgPath", frontImg);
+                        boolean isLandscape = CardPageGenerator.isImageLandscape(cd.seasonFolder, imageBaseName);
+                        itemMap.put("isLandscape", isLandscape);
+                        itemMap.put("orientationClass", isLandscape ? "is-landscape" : "is-portrait");
 
                         cardItems.add(itemMap);
                     }
@@ -788,6 +791,9 @@ public class FileGenerator {
                             String imageBaseName = CardPageGenerator.resolveDiskImageBase(cd.seasonFolder, rawImageBase, cd);
                             String frontImg = "images/" + cd.seasonFolder + "/" + imageBaseName + "-front-400w.avif";
                             itemMap.put("imgPath", frontImg);
+                            boolean isLandscape = CardPageGenerator.isImageLandscape(cd.seasonFolder, imageBaseName);
+                            itemMap.put("isLandscape", isLandscape);
+                            itemMap.put("orientationClass", isLandscape ? "is-landscape" : "is-portrait");
 
                             cardItems.add(itemMap);
                         }

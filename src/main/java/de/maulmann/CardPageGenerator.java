@@ -1034,6 +1034,45 @@ public class CardPageGenerator {
         return keys.contains(prefix + ".jpg") || keys.contains(prefix + ".png") || keys.contains(prefix + ".avif");
     }
 
+    private static final Map<String, Boolean> ORIENTATION_CACHE = new ConcurrentHashMap<>();
+
+    public static boolean isImageLandscape(String seasonFolder, String imageBaseName) {
+        if (seasonFolder == null || imageBaseName == null) return false;
+        String cacheKey = seasonFolder + ":" + imageBaseName;
+        return ORIENTATION_CACHE.computeIfAbsent(cacheKey, k -> {
+            Path[] candidates = {
+                    Paths.get("images", seasonFolder, imageBaseName + "-front.jpg"),
+                    Paths.get("images", seasonFolder, imageBaseName + "-front.png"),
+                    Paths.get("images", seasonFolder, imageBaseName + "-front.avif"),
+                    Paths.get("output", "images", seasonFolder, imageBaseName + "-front-400w.avif")
+            };
+            for (Path p : candidates) {
+                if (Files.exists(p)) {
+                    try {
+                        try (var iis = javax.imageio.ImageIO.createImageInputStream(p.toFile())) {
+                            if (iis != null) {
+                                var readers = javax.imageio.ImageIO.getImageReaders(iis);
+                                if (readers.hasNext()) {
+                                    var reader = readers.next();
+                                    reader.setInput(iis);
+                                    int w = reader.getWidth(0);
+                                    int h = reader.getHeight(0);
+                                    reader.dispose();
+                                    return w > h;
+                                }
+                            }
+                        }
+                        var img = javax.imageio.ImageIO.read(p.toFile());
+                        if (img != null) {
+                            return img.getWidth() > img.getHeight();
+                        }
+                    } catch (Exception ignored) {}
+                }
+            }
+            return false;
+        });
+    }
+
     private static String cleanFilename(String text) {
         if (text == null) return "";
         String s = text.replace("'", "");
