@@ -53,6 +53,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initTableFilter();
     init3DCardTilt();
     initRainbowOrientation();
+    initBackToTop();
+    initGlobalKeyboardShortcuts();
+    initTouchSwipeNavigation();
+    initLazyImageFade();
 });
 
 // --- 2.5 REAL-TIME INSTANT TABLE SEARCH FILTER (DEBOUNCED) ---
@@ -297,6 +301,104 @@ function initRainbowOrientation() {
             updateOri();
         } else {
             img.addEventListener('load', updateOri, { once: true });
+        }
+    });
+}
+
+// --- 7. FLOATING BACK TO TOP WITH CIRCULAR PROGRESS RING ---
+function initBackToTop() {
+    const btn = document.getElementById('backToTopBtn');
+    const circle = document.getElementById('scrollProgressCircle');
+    if (!btn || !circle) return;
+
+    const circumference = 2 * Math.PI * 18; // ~113.1px
+    let scrollTicking = false;
+
+    window.addEventListener('scroll', () => {
+        if (!scrollTicking) {
+            window.requestAnimationFrame(() => {
+                const scrollTop = window.scrollY || document.documentElement.scrollTop;
+                const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+                if (scrollTop > 350) {
+                    btn.classList.add('is-visible');
+                } else {
+                    btn.classList.remove('is-visible');
+                }
+
+                if (docHeight > 0) {
+                    const scrollFraction = Math.min(1, Math.max(0, scrollTop / docHeight));
+                    const offset = circumference - (scrollFraction * circumference);
+                    circle.style.strokeDashoffset = offset.toFixed(1);
+                }
+                scrollTicking = false;
+            });
+            scrollTicking = true;
+        }
+    }, { passive: true });
+
+    btn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}
+
+// --- 8. GLOBAL ACCESSIBILITY KEYBOARD SHORTCUTS ---
+function initGlobalKeyboardShortcuts() {
+    document.addEventListener('keydown', (e) => {
+        if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+
+        if (e.key === 'Escape') {
+            if (typeof window.closeModal === 'function') window.closeModal();
+            const compareModal = document.getElementById('compareModal');
+            if (compareModal && compareModal.style.display !== 'none') compareModal.style.display = 'none';
+        } else if (e.key === 'ArrowLeft') {
+            const prevLink = document.querySelector('.nav-button-group a:first-child, a[title*="Prev"], a.prev-card-link');
+            if (prevLink && prevLink.href) prevLink.click();
+        } else if (e.key === 'ArrowRight') {
+            const nextLink = document.querySelector('.nav-button-group a:last-child, a[title*="Next"], a.next-card-link');
+            if (nextLink && nextLink.href) nextLink.click();
+        } else if (e.key === ' ' || e.key === 'f' || e.key === 'F') {
+            const flipTarget = document.querySelector('.flip-modal-btn, .flip-container');
+            if (flipTarget && window.location.pathname.includes('cards/')) {
+                e.preventDefault();
+                flipTarget.click();
+            }
+        }
+    });
+}
+
+// --- 9. MOBILE TOUCH SWIPE FLIP GESTURE ---
+function initTouchSwipeNavigation() {
+    const cardViewport = document.querySelector('.card-viewport, .flip-container');
+    if (!cardViewport) return;
+
+    let touchStartX = 0;
+    cardViewport.addEventListener('touchstart', (e) => {
+        if (e.changedTouches && e.changedTouches.length > 0) {
+            touchStartX = e.changedTouches[0].screenX;
+        }
+    }, { passive: true });
+
+    cardViewport.addEventListener('touchend', (e) => {
+        if (e.changedTouches && e.changedTouches.length > 0) {
+            const touchEndX = e.changedTouches[0].screenX;
+            const diff = touchEndX - touchStartX;
+            if (Math.abs(diff) > 45) {
+                const flipContainer = document.querySelector('.flip-container');
+                if (flipContainer) flipContainer.click();
+            }
+        }
+    }, { passive: true });
+}
+
+// --- 10. SMOOTH LAZY IMAGE FADE-IN TRANSITIONS ---
+function initLazyImageFade() {
+    const lazyImgs = document.querySelectorAll('img[loading="lazy"]');
+    lazyImgs.forEach(img => {
+        if (img.complete && img.naturalWidth) {
+            img.classList.add('loaded');
+        } else {
+            img.addEventListener('load', () => img.classList.add('loaded'), { once: true });
         }
     });
 }

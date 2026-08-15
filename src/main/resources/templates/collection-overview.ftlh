@@ -96,6 +96,18 @@ ${topNavHtml?no_esc}
             </datalist>
         </div>
 
+        <div id="filterResultBar" class="filter-result-bar" style="display: none;">
+            <span id="filterCountBadge" class="filter-count-badge"></span>
+            <button id="clearFiltersBtn" type="button" class="clear-filter-btn" onclick="clearFilters()">✕ Clear Filter</button>
+        </div>
+
+        <div id="searchEmptyState" class="search-empty-state" style="display: none;">
+            <div class="empty-state-icon">🔍</div>
+            <h3>No Cards Match Your Search</h3>
+            <p>No cards were found matching your current filter criteria.</p>
+            <button type="button" class="modern-button" onclick="clearFilters()">Reset Filters</button>
+        </div>
+
         <nav class="season-jump-bar" aria-label="Season Quick Navigation">
             <span class="season-jump-title">&#9889; Jump:</span>
             <#list seasons as season>
@@ -192,14 +204,12 @@ ${topNavHtml?no_esc}
                     prTarget = parseInt(prMatch[2], 10);
                 }
 
+                let totalVisible = 0;
+                let totalCards = 0;
+
                 document.querySelectorAll('.season-table-wrapper').forEach(wrapper => {
                     const wrapperSeason = wrapper.getAttribute('data-season');
                     let visibleRowsInSeason = 0;
-
-                    if (seasonVal !== 'all' && wrapperSeason !== seasonVal) {
-                        wrapper.style.display = 'none';
-                        return;
-                    }
 
                     const table = wrapper.querySelector('table');
                     let serialIdx = -1;
@@ -217,6 +227,12 @@ ${topNavHtml?no_esc}
                     for (let i = 0; i < rows.length; i++) {
                         const row = rows[i];
                         if (row.querySelector('th')) continue;
+                        totalCards++;
+
+                        if (seasonVal !== 'all' && wrapperSeason !== seasonVal) {
+                            row.style.display = 'none';
+                            continue;
+                        }
 
                         let isMatch = false;
 
@@ -269,6 +285,7 @@ ${topNavHtml?no_esc}
                         if (isMatch) {
                             row.style.display = '';
                             visibleRowsInSeason++;
+                            totalVisible++;
                         } else {
                             row.style.display = 'none';
                         }
@@ -279,10 +296,41 @@ ${topNavHtml?no_esc}
                     const counterSpan = wrapper.querySelector('.visible-counter');
                     if (counterSpan) {
                         counterSpan.textContent = visibleRowsInSeason;
-                        counterSpan.style.color = (searchVal !== '') ? '#e74c3c' : '#555';
+                        counterSpan.style.color = (searchVal !== '') ? '#d4af37' : '#555';
                     }
                 });
+
+                const filterResultBar = document.getElementById('filterResultBar');
+                const filterCountBadge = document.getElementById('filterCountBadge');
+                const searchEmptyState = document.getElementById('searchEmptyState');
+                const jumpBar = document.querySelector('.season-jump-bar');
+
+                const isFiltered = (seasonVal !== 'all' || searchVal !== '');
+                if (isFiltered) {
+                    if (filterResultBar) filterResultBar.style.display = 'flex';
+                    if (filterCountBadge) {
+                        filterCountBadge.textContent = 'Showing ' + totalVisible.toLocaleString() + ' of ' + totalCards.toLocaleString() + ' cards';
+                    }
+                } else {
+                    if (filterResultBar) filterResultBar.style.display = 'none';
+                }
+
+                if (totalVisible === 0) {
+                    if (searchEmptyState) searchEmptyState.style.display = 'block';
+                    if (jumpBar) jumpBar.style.display = 'none';
+                } else {
+                    if (searchEmptyState) searchEmptyState.style.display = 'none';
+                    if (jumpBar) jumpBar.style.display = '';
+                }
             }
+
+            window.clearFilters = function() {
+                const s = document.getElementById('seasonFilter');
+                const t = document.getElementById('textSearch');
+                if (s) s.value = 'all';
+                if (t) t.value = '';
+                applyFilters();
+            };
 
             document.addEventListener('DOMContentLoaded', () => {
                 // Attach click handlers to season jump pills

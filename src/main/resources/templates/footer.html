@@ -18,6 +18,13 @@
         </button>
     </div>
 </footer>
+<button id="backToTopBtn" class="back-to-top-btn" title="Back to top" aria-label="Back to top">
+    <svg class="progress-ring" width="44" height="44" viewBox="0 0 44 44">
+        <circle class="progress-ring__circle-bg" stroke="rgba(255,255,255,0.12)" stroke-width="3" fill="transparent" r="18" cx="22" cy="22"/>
+        <circle id="scrollProgressCircle" class="progress-ring__circle" stroke="var(--accent-gold)" stroke-width="3" stroke-dasharray="113.1" stroke-dashoffset="113.1" fill="transparent" r="18" cx="22" cy="22"/>
+    </svg>
+    <span class="back-to-top-arrow">&#x2191;</span>
+</button>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const subscribeBtn = document.getElementById('subscribePush');
