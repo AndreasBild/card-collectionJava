@@ -32,6 +32,16 @@ public class CardSchemaGenerator {
         }
     }
 
+    public static synchronized void setRatingProperty(String key, String value) {
+        RATING_CACHE.setProperty(key, value);
+        ratingCacheLoaded = true;
+    }
+
+    public static synchronized void clearRatingCache() {
+        RATING_CACHE.clear();
+        ratingCacheLoaded = true;
+    }
+
     public record FaqItem(String question, String answer) {}
 
     public static List<FaqItem> computeFaqItems(CardPageGenerator.CardData c) {
@@ -282,7 +292,11 @@ public class CardSchemaGenerator {
 
         boolean hasCachedRating = ratingCount > 0 && ratingSum >= 0;
 
-        sb.append("<script type=\"application/ld+json\" id=\"product-schema-template\">\n");
+        if (hasCachedRating) {
+            sb.append("<script type=\"application/ld+json\">\n");
+        } else {
+            sb.append("<script type=\"application/json\" id=\"product-schema-template\">\n");
+        }
 
         sb.append("{\n");
         sb.append("  \"@context\": \"https://schema.org\",\n");

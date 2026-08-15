@@ -37,6 +37,53 @@ public class FirestoreRatingInjector {
 
     private static final java.util.Properties ratingCache = new java.util.Properties();
 
+    /**
+     * Prefetches ratings from Firestore before page generation starts.
+     * Populates the local cache so FreeMarker can inject ratings directly in-memory.
+     */
+    public static void prefetchRatings() {
+        log.info("Prefetching Firestore ratings into memory and cache...");
+        loadCache();
+        String firebaseCreds = System.getenv("FIREBASE_SERVICE_ACCOUNT_JSON");
+        File firebaseFile = new File("firebase/maulmann-3f90d-firebase-adminsdk-fbsvc-78c9f10838");
+
+        if ((firebaseCreds == null || firebaseCreds.isEmpty()) && !firebaseFile.exists()) {
+            log.info("ℹ️ Firebase credentials not found. Using local rating-cache if present.");
+            CardSchemaGenerator.loadRatingCache();
+            return;
+        }
+
+        try {
+            FirebaseConfigManager.initFirebase();
+            Map<String, Map<String, Object>> firestoreData = fetchFirestoreData();
+            boolean cacheUpdated = false;
+            for (Map.Entry<String, Map<String, Object>> entry : firestoreData.entrySet()) {
+                String cardId = entry.getKey();
+                Map<String, Object> data = entry.getValue();
+                if (data != null) {
+                    long ratingCount = parseLong(data.get("ratingCount"));
+                    double ratingSum = parseDouble(data.get("ratingSum"));
+                    if (ratingCount > 0 && ratingSum >= 0) {
+                        String cacheValue = ratingCount + ":" + ratingSum;
+                        String stored = ratingCache.getProperty(cardId);
+                        if (!cacheValue.equals(stored)) {
+                            ratingCache.setProperty(cardId, cacheValue);
+                            cacheUpdated = true;
+                        }
+                    }
+                }
+            }
+            if (cacheUpdated) {
+                saveCache();
+            }
+            CardSchemaGenerator.loadRatingCache();
+            log.info("Prefetched {} ratings from Firestore into cache.", firestoreData.size());
+        } catch (Exception e) {
+            log.warn("Could not prefetch Firestore ratings: {}", e.getMessage());
+            CardSchemaGenerator.loadRatingCache();
+        }
+    }
+
     public static void main(String[] args) {
         log.info("Starting Firestore rating injection process...");
         try {

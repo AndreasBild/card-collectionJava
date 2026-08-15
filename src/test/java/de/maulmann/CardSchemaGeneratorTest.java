@@ -96,6 +96,40 @@ class CardSchemaGeneratorTest {
     }
 
     @Test
+    void testGenerateJsonLdWithPreCachedRatingsEmitsActiveAggregateRating() throws Exception {
+        CardJson c = new CardJson();
+        c.player = "Juwan Howard";
+        c.season = "1997-98";
+        c.brand = "Fleer Metal Universe";
+        c.variant = "Precious Metal Gems Green";
+        c.cardNumber = "33";
+
+        CardPageGenerator.CardData cardData = new CardPageGenerator.CardData(c, "pmg-33");
+        cardData.seasonFolder = "1997-98";
+        cardData.filename = "juwan-howard-pmg-33.html";
+
+        CardSchemaGenerator.setRatingProperty("pmg-33", "10:48.0");
+
+        try {
+            String jsonLdHtml = CardSchemaGenerator.generateJsonLd(cardData, "PMG Green 33", "1997-98 PMG Green #33", "Juwan-Howard-Collection.html", "pmg-33", "");
+            Document doc = Jsoup.parseBodyFragment(jsonLdHtml);
+
+            // Should have 2 script[type=application/ld+json] tags (Graph + Active Product)
+            var scripts = doc.select("script[type='application/ld+json']");
+            assertEquals(2, scripts.size());
+
+            Element productScript = scripts.get(1);
+            JsonNode productJson = objectMapper.readTree(productScript.html());
+            assertEquals("Product", productJson.get("@type").asText());
+            assertTrue(productJson.has("aggregateRating"));
+            assertEquals(4.8, productJson.get("aggregateRating").get("ratingValue").asDouble(), 0.01);
+            assertEquals(10, productJson.get("aggregateRating").get("reviewCount").asInt());
+        } finally {
+            CardSchemaGenerator.clearRatingCache();
+        }
+    }
+
+    @Test
     void testGenerateJsonLdHandlesMissingPlayerSameAs() throws Exception {
         CardJson c = new CardJson();
         c.season = "1995-96";

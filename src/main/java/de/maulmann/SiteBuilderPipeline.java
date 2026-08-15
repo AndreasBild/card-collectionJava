@@ -74,6 +74,9 @@ public class SiteBuilderPipeline {
                 SharedTemplates.setBuildId("stable");
             }
 
+            // Prefetch latest Firestore ratings into cache before generation starts
+            FirestoreRatingInjector.prefetchRatings();
+
             // --- PARALLEL PHASES: HTML Generation & Image WebP Conversion ---
             log.info("\n[PHASE 1 & 2] Launching HTML Generation and Image WebP Conversion in parallel...");
 
@@ -93,17 +96,6 @@ public class SiteBuilderPipeline {
 
                     SitemapGenerator.generate(cards); // Sitemap & robots.txt now ready for Phase 3
                     timeTracker.save();
-
-                    // --- PHASE 1.5: Inject Firestore Ratings ---
-                    log.info("  -> [PHASE 1.5] Injecting Firestore ratings...");
-                    String firebaseCreds = System.getenv("FIREBASE_SERVICE_ACCOUNT_JSON");
-                    File firebaseFile = new File("firebase/maulmann-3f90d-firebase-adminsdk-fbsvc-78c9f10838");
-
-                    if ((firebaseCreds == null || firebaseCreds.isEmpty()) && !firebaseFile.exists()) {
-                        log.error("⚠️ WARNING: Firebase credentials (env or file) are missing! Ratings will NOT be injected.");
-                    } else {
-                        FirestoreRatingInjector.main(new String[0]);
-                    }
                 }, phaseExecutor);
 
                 CompletableFuture<Void> imageTask = CompletableFuture.runAsync(() -> {
