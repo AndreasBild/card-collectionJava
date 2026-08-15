@@ -21,15 +21,15 @@ ${topNavHtml?no_esc}
         <div class="metrics-grid">
             <div class="metric-card">
                 <h4>&#x1F48E; Rarity Tier Breakdown</h4>
-                <div class="meter-group">
+                <div class="meter-group clickable-metric" onclick="filterByMetric('=1')" title="Click to filter 1/1 Masterpieces">
                     <div class="meter-label"><span>1/1 Masterpieces</span> <strong>${(stats.count1of1)!0}</strong></div>
                     <div class="meter-bar-track"><div class="meter-bar" style="width: ${(stats.pct1of1)!0}%;"></div></div>
                 </div>
-                <div class="meter-group">
+                <div class="meter-group clickable-metric" onclick="filterByMetric('<=10')" title="Click to filter Ultra SP (&le; 10)">
                     <div class="meter-label"><span>Ultra SP (&le; 10)</span> <strong>${(stats.countUltraSp)!0}</strong></div>
                     <div class="meter-bar-track"><div class="meter-bar gold" style="width: ${(stats.pctUltraSp)!0}%;"></div></div>
                 </div>
-                <div class="meter-group">
+                <div class="meter-group clickable-metric" onclick="filterByMetric('<=100')" title="Click to filter Serialized (&le; 100)">
                     <div class="meter-label"><span>Serialized (&le; 100)</span> <strong>${(stats.countSerialized)!0}</strong></div>
                     <div class="meter-bar-track"><div class="meter-bar blue" style="width: ${(stats.pctSerialized)!0}%;"></div></div>
                 </div>
@@ -37,15 +37,15 @@ ${topNavHtml?no_esc}
 
             <div class="metric-card">
                 <h4>&#x270D;&#xFE0F; Attributes & Special Types</h4>
-                <div class="meter-group">
+                <div class="meter-group clickable-metric" onclick="filterByMetric('auto')" title="Click to filter Autographs">
                     <div class="meter-label"><span>Autographs</span> <strong>${(stats.countAutographs)!0}</strong></div>
                     <div class="meter-bar-track"><div class="meter-bar green" style="width: ${(stats.pctAutographs)!0}%;"></div></div>
                 </div>
-                <div class="meter-group">
+                <div class="meter-group clickable-metric" onclick="filterByMetric('patch')" title="Click to filter Game-Used Patch / Mem">
                     <div class="meter-label"><span>Game-Used Patch / Mem</span> <strong>${(stats.countPatches)!0}</strong></div>
                     <div class="meter-bar-track"><div class="meter-bar purple" style="width: ${(stats.pctPatches)!0}%;"></div></div>
                 </div>
-                <div class="meter-group">
+                <div class="meter-group clickable-metric" onclick="filterByMetric('rookie')" title="Click to filter Rookie Cards">
                     <div class="meter-label"><span>Rookie Cards (RC)</span> <strong>${(stats.countRookies)!0}</strong></div>
                     <div class="meter-bar-track"><div class="meter-bar orange" style="width: ${(stats.pctRookies)!0}%;"></div></div>
                 </div>
@@ -53,11 +53,11 @@ ${topNavHtml?no_esc}
 
             <div class="metric-card">
                 <h4>&#x1F3C5; Grading Census</h4>
-                <div class="meter-group">
+                <div class="meter-group clickable-metric" onclick="filterByMetric('gem mint')" title="Click to filter Gem Mint cards">
                     <div class="meter-label"><span>Gem Mint (PSA 10 / BGS 9.5)</span> <strong>${(stats.countGemMint)!0}</strong></div>
                     <div class="meter-bar-track"><div class="meter-bar emerald" style="width: ${(stats.pctGemMint)!0}%;"></div></div>
                 </div>
-                <div class="meter-group">
+                <div class="meter-group clickable-metric" onclick="filterByMetric('graded')" title="Click to filter Graded cards">
                     <div class="meter-label"><span>Graded Total (PSA, BGS)</span> <strong>${(stats.countGradedTotal)!0}</strong></div>
                     <div class="meter-bar-track"><div class="meter-bar cyan" style="width: ${(stats.pctGradedTotal)!0}%;"></div></div>
                 </div>
@@ -211,18 +211,6 @@ ${topNavHtml?no_esc}
                     const wrapperSeason = wrapper.getAttribute('data-season');
                     let visibleRowsInSeason = 0;
 
-                    const table = wrapper.querySelector('table');
-                    let serialIdx = -1;
-                    let prIdx = -1;
-                    if (table) {
-                        const headers = Array.from(table.querySelectorAll('th'));
-                        headers.forEach((th, idx) => {
-                            const thText = th.textContent.toLowerCase();
-                            if (thText.includes('serial')) serialIdx = idx;
-                            if (thText.includes('print')) prIdx = idx;
-                        });
-                    }
-
                     const rows = wrapper.querySelectorAll('tr');
                     for (let i = 0; i < rows.length; i++) {
                         const row = rows[i];
@@ -236,24 +224,44 @@ ${topNavHtml?no_esc}
 
                         let isMatch = false;
 
+                        // Extract cell values directly by data-label for 100% precision
+                        const rookieCell = row.querySelector('td[data-label="Rookie"]');
+                        const isRookie = rookieCell ? (rookieCell.textContent.trim().toLowerCase() === 'yes') : false;
+
+                        const autoCell = row.querySelector('td[data-label="Autograph"]');
+                        const isAuto = autoCell ? (autoCell.textContent.trim().toLowerCase() === 'yes') : false;
+
+                        const patchCell = row.querySelector('td[data-label="Patch"], td[data-label="Game Used"]');
+                        const isPatch = patchCell ? (patchCell.textContent.trim().toLowerCase() === 'yes') : false;
+
+                        const prCell = row.querySelector('td[data-label="Print Run"]');
+                        const serialCell = row.querySelector('td[data-label="Serial #"], td[data-label="Serial"]');
+                        const gradeCell = row.querySelector('td[data-label="Grade"]');
+
+                        let cardPrintRun = NaN;
+                        const extractPR = (cell) => {
+                            if (!cell) return NaN;
+                            const text = cell.textContent.trim();
+                            if (!text || text === '-' || text === '—' || text === '') return NaN;
+                            if (text.includes('/')) {
+                                const parts = text.split('/');
+                                return parseInt(parts[1].replace(/\D/g, ''), 10);
+                            }
+                            return parseInt(text.replace(/\D/g, ''), 10);
+                        };
+
+                        if (prCell) cardPrintRun = extractPR(prCell);
+                        if (isNaN(cardPrintRun) && serialCell) cardPrintRun = extractPR(serialCell);
+
+                        const is1of1 = (cardPrintRun === 1);
+
+                        const gradeText = gradeCell ? gradeCell.textContent.trim().toLowerCase() : '';
+                        const isGraded = gradeText !== '' && gradeText !== 'no' && gradeText !== '—' && gradeText !== '-';
+                        const isGemMint = isGraded && (gradeText.includes('10') || gradeText.includes('9.5') || gradeText.includes('gem'));
+
+                        const rowText = row.textContent.toLowerCase();
+
                         if (prMatch) {
-                            let cardPrintRun = NaN;
-
-                            const extractPR = (cellText) => {
-                                if (!cellText || cellText.trim() === '-' || cellText.trim() === '—' || cellText.trim() === '') return NaN;
-                                if (cellText.includes('/')) {
-                                    const parts = cellText.split('/');
-                                    return parseInt(parts[1].replace(/\D/g, ''), 10);
-                                }
-                                return parseInt(cellText.replace(/\D/g, ''), 10);
-                            };
-
-                            let prVal1 = (serialIdx >= 0 && row.children[serialIdx]) ? extractPR(row.children[serialIdx].textContent) : NaN;
-                            let prVal2 = (prIdx >= 0 && row.children[prIdx]) ? extractPR(row.children[prIdx].textContent) : NaN;
-
-                            if (!isNaN(prVal1)) cardPrintRun = prVal1;
-                            if (!isNaN(prVal2) && (isNaN(cardPrintRun) || prVal2 > cardPrintRun)) cardPrintRun = prVal2;
-
                             if (!isNaN(cardPrintRun) && cardPrintRun > 0) {
                                 if (prOperator === '<' && cardPrintRun < prTarget) isMatch = true;
                                 else if (prOperator === '<=' && cardPrintRun <= prTarget) isMatch = true;
@@ -262,22 +270,27 @@ ${topNavHtml?no_esc}
                                 else if ((prOperator === '=' || prOperator === '==') && cardPrintRun === prTarget) isMatch = true;
                             }
                         } else {
-                            const text = row.textContent.toLowerCase();
                             if (searchVal === '') {
                                 isMatch = true;
                             } else {
                                 const terms = searchVal.split(/\s+/).filter(t => t.length > 0);
                                 isMatch = terms.every(term => {
-                                    if (term === '1/1' || term === 'masterpiece') {
-                                        return text.includes('1/1') || text.includes('1 / 1') || text.includes('masterpiece');
+                                    if (term === '1/1' || term === '=1' || term === 'masterpiece' || term === 'masterpieces') {
+                                        return is1of1;
                                     } else if (term === 'pmg') {
-                                        return text.includes('pmg') || text.includes('precious metal gems');
-                                    } else if (term === 'auto' || term === 'autograph') {
-                                        return text.includes('auto') || text.includes('sign');
-                                    } else if (term === 'patch' || term === 'jersey') {
-                                        return text.includes('patch') || text.includes('jersey') || text.includes('game used');
+                                        return rowText.includes('pmg') || rowText.includes('precious metal gems');
+                                    } else if (term === 'auto' || term === 'autograph' || term === 'autographs') {
+                                        return isAuto;
+                                    } else if (term === 'patch' || term === 'jersey' || term === 'mem' || term === 'game used' || term === 'game-used') {
+                                        return isPatch;
+                                    } else if (term === 'rc' || term === 'rookie' || term === 'rookies') {
+                                        return isRookie;
+                                    } else if (term === 'gem' || term === 'gem mint' || term === 'gemmint') {
+                                        return isGemMint;
+                                    } else if (term === 'graded' || term === 'grading' || term === 'slab') {
+                                        return isGraded;
                                     }
-                                    return text.includes(term);
+                                    return rowText.includes(term);
                                 });
                             }
                         }
@@ -330,6 +343,20 @@ ${topNavHtml?no_esc}
                 if (s) s.value = 'all';
                 if (t) t.value = '';
                 applyFilters();
+            };
+
+            window.filterByMetric = function(query) {
+                const textSearch = document.getElementById('textSearch');
+                const seasonFilter = document.getElementById('seasonFilter');
+                if (seasonFilter) seasonFilter.value = 'all';
+                if (textSearch) {
+                    textSearch.value = query;
+                    applyFilters();
+                    const filterSection = document.querySelector('.collection-controls');
+                    if (filterSection) {
+                        filterSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
             };
 
             document.addEventListener('DOMContentLoaded', () => {

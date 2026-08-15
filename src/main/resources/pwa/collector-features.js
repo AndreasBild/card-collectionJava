@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
 let filterDebounceTimer = null;
 
 function initTableFilter() {
-    const searchInputs = document.querySelectorAll('.table-search-input, #cardSearchInput, #textSearch');
+    const searchInputs = document.querySelectorAll('.table-search-input, #cardSearchInput');
     if (!searchInputs || searchInputs.length === 0) return;
 
     searchInputs.forEach(input => {

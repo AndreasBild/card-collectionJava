@@ -580,11 +580,7 @@ tr:hover {
 }
 
 .season-table-wrapper th {
-    position: sticky;
-    top: 55px;
-    z-index: 10;
     background-color: var(--bg-card);
-    backdrop-filter: blur(8px);
     cursor: pointer;
     user-select: none;
     transition: var(--transition-fast);
@@ -2074,6 +2070,24 @@ figcaption {
 
 .meter-group {
     margin-bottom: 10px;
+}
+
+.meter-group.clickable-metric {
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    padding: 3px 6px;
+    margin-left: -6px;
+    margin-right: -6px;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+    user-select: none;
+}
+
+.meter-group.clickable-metric:hover {
+    background: rgba(212, 175, 55, 0.1);
+}
+
+.meter-group.clickable-metric:active {
+    transform: scale(0.98);
 }
 
 .meter-label {
