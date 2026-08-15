@@ -149,6 +149,26 @@
                     <mainClass>de.maulmann.SiteBuilderPipeline</mainClass>
                     <cleanupDaemonThreads>false</cleanupDaemonThreads>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>local</id>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>de.maulmann.LocalDevPipeline</mainClass>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>prod</id>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>de.maulmann.SiteBuilderPipeline</mainClass>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

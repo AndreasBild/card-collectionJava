@@ -66,46 +66,7 @@ public class SiteBuilderPipeline {
             FileTracker tracker = new FileTracker(OUTPUT_DIR + "/sync-hashes.properties");
             TimestampTracker timeTracker = new TimestampTracker(OUTPUT_DIR + "/generation-timestamps.properties");
 
-            // Ensure stable CSS version for hash stability if content didn't change
-            String cssHash = tracker.getHash(Paths.get("src/main/resources/css/main.css"));
-            if (cssHash != null && cssHash.length() >= 8) {
-                SharedTemplates.setBuildId(cssHash.substring(0, 8));
-            } else {
-                SharedTemplates.setBuildId("stable");
-            }
-
-            // Prefetch latest Firestore ratings into cache before generation starts
-            FirestoreRatingInjector.prefetchRatings();
-
-            // --- PARALLEL PHASES: HTML Generation & Image WebP Conversion ---
-            log.info("\n[PHASE 1 & 2] Launching HTML Generation and Image WebP Conversion in parallel...");
-
-            try (ExecutorService phaseExecutor = Executors.newVirtualThreadPerTaskExecutor()) {
-                CompletableFuture<Void> htmlTask = CompletableFuture.runAsync(() -> {
-                    log.info("  -> [PHASE 1] Generating HTML files and Sitemap...");
-                    FileGenerator.setTimestampTracker(timeTracker);
-                    CardPageGenerator.setTimestampTracker(timeTracker);
-                    SitemapGenerator.setTimestampTracker(timeTracker);
-
-                    FileGenerator.copyResources();
-                    IndexNowService.ensureValidationFile();
-                    FileGenerator.buildCollectionOverview();
-                    FileGenerator.buildOtherCollections();
-                    FileGenerator.buildStaticPages();
-                    List<CardPageGenerator.CardData> cards = CardPageGenerator.run();
-
-                    SitemapGenerator.generate(cards); // Sitemap & robots.txt now ready for Phase 3
-                    timeTracker.save();
-                }, phaseExecutor);
-
-                CompletableFuture<Void> imageTask = CompletableFuture.runAsync(() -> {
-                    log.info("  -> [PHASE 2] Converting images to AVIF ...");
-                    ImageConverter.main(new String[0]);
-                }, phaseExecutor);
-
-                // Wait for both tasks to complete concurrently
-                CompletableFuture.allOf(htmlTask, imageTask).join();
-            }
+            List<CardPageGenerator.CardData> cards = buildLocalArtifacts(timeTracker, tracker);
 
             boolean hasAwsCredentials = false;
             try {
@@ -475,6 +436,56 @@ public class SiteBuilderPipeline {
         if (fileName.endsWith(".svg")) return "image/svg+xml";
         if (fileName.endsWith(".ico")) return "image/x-icon";
         return null;
+    }
+
+    /**
+     * Builds all local HTML files, sitemaps, and images.
+     * Shared identically between SiteBuilderPipeline (Production) and LocalDevPipeline (Local Preview).
+     */
+    @SuppressWarnings("unchecked")
+    public static List<CardPageGenerator.CardData> buildLocalArtifacts(TimestampTracker timeTracker, FileTracker tracker) {
+        // Ensure stable CSS version for hash stability if content didn't change
+        String cssHash = tracker.getHash(Paths.get("src/main/resources/css/main.css"));
+        if (cssHash != null && cssHash.length() >= 8) {
+            SharedTemplates.setBuildId(cssHash.substring(0, 8));
+        } else {
+            SharedTemplates.setBuildId("stable");
+        }
+
+        // Prefetch latest Firestore ratings into cache before generation starts
+        FirestoreRatingInjector.prefetchRatings();
+
+        // --- PARALLEL PHASES: HTML Generation & Image WebP Conversion ---
+        log.info("\n[PHASE 1 & 2] Launching HTML Generation and Image WebP Conversion in parallel...");
+
+        final List<CardPageGenerator.CardData>[] generatedCards = (List<CardPageGenerator.CardData>[]) new List<?>[1];
+        try (ExecutorService phaseExecutor = Executors.newVirtualThreadPerTaskExecutor()) {
+            CompletableFuture<Void> htmlTask = CompletableFuture.runAsync(() -> {
+                log.info("  -> [PHASE 1] Generating HTML files and Sitemap...");
+                FileGenerator.setTimestampTracker(timeTracker);
+                CardPageGenerator.setTimestampTracker(timeTracker);
+                SitemapGenerator.setTimestampTracker(timeTracker);
+
+                FileGenerator.copyResources();
+                IndexNowService.ensureValidationFile();
+                FileGenerator.buildCollectionOverview();
+                FileGenerator.buildOtherCollections();
+                FileGenerator.buildStaticPages();
+                generatedCards[0] = CardPageGenerator.run();
+
+                SitemapGenerator.generate(generatedCards[0]); // Sitemap & robots.txt now ready
+                timeTracker.save();
+            }, phaseExecutor);
+
+            CompletableFuture<Void> imageTask = CompletableFuture.runAsync(() -> {
+                log.info("  -> [PHASE 2] Converting images to AVIF ...");
+                ImageConverter.main(new String[0]);
+            }, phaseExecutor);
+
+            // Wait for both tasks to complete concurrently
+            CompletableFuture.allOf(htmlTask, imageTask).join();
+        }
+        return generatedCards[0];
     }
 
 }
