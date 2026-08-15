@@ -98,7 +98,7 @@ class FileGeneratorTest {
         assertNotNull(stats, "Stats map should not be null");
         assertEquals(1385, stats.get("rawTotalCards"));
         assertEquals("1,385", stats.get("totalCards"));
-        assertEquals(59, stats.get("count1of1"));
+        assertEquals(57, stats.get("count1of1"));
         assertEquals(159, stats.get("countUltraSp"));
         assertEquals(472, stats.get("countSerialized"));
         assertEquals(205, stats.get("countAutographs"));

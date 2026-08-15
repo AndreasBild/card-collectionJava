@@ -982,7 +982,7 @@ public class FileGenerator {
 
             boolean isOneOfOne = (pr != null && pr == 1) ||
                     "1/1".equalsIgnoreCase(sn) || "1/1".equalsIgnoreCase(v) || "1/1".equalsIgnoreCase(t) ||
-                    v.toLowerCase().contains("masterpiece") || t.toLowerCase().contains("masterpiece");
+                    "1 of 1".equalsIgnoreCase(sn) || "1 of 1".equalsIgnoreCase(v) || "1 of 1".equalsIgnoreCase(t);
             if (isOneOfOne) count1of1++;
 
             if (pr != null && pr > 0 && pr <= 10) countUltraSp++;

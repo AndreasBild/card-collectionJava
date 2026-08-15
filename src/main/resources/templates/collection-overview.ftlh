@@ -257,7 +257,8 @@ ${topNavHtml?no_esc}
 
                         const gradeText = gradeCell ? gradeCell.textContent.trim().toLowerCase() : '';
                         const isGraded = gradeText !== '' && gradeText !== 'no' && gradeText !== '—' && gradeText !== '-';
-                        const isGemMint = isGraded && (gradeText.includes('10') || gradeText.includes('9.5') || gradeText.includes('gem'));
+                        const gradeNum = parseFloat(gradeText);
+                        const isGemMint = isGraded && (!isNaN(gradeNum) ? (gradeNum >= 9.5) : (gradeText.includes('10') || gradeText.includes('9.5') || gradeText.includes('gem')));
 
                         const rowText = row.textContent.toLowerCase();
 
@@ -272,6 +273,10 @@ ${topNavHtml?no_esc}
                         } else {
                             if (searchVal === '') {
                                 isMatch = true;
+                            } else if (searchVal === 'gem mint' || searchVal === 'gem-mint' || searchVal === 'gem' || searchVal === 'mint') {
+                                isMatch = isGemMint;
+                            } else if (searchVal === 'game used' || searchVal === 'game-used') {
+                                isMatch = isPatch;
                             } else {
                                 const terms = searchVal.split(/\s+/).filter(t => t.length > 0);
                                 isMatch = terms.every(term => {
@@ -281,11 +286,11 @@ ${topNavHtml?no_esc}
                                         return rowText.includes('pmg') || rowText.includes('precious metal gems');
                                     } else if (term === 'auto' || term === 'autograph' || term === 'autographs') {
                                         return isAuto;
-                                    } else if (term === 'patch' || term === 'jersey' || term === 'mem' || term === 'game used' || term === 'game-used') {
+                                    } else if (term === 'patch' || term === 'jersey' || term === 'mem' || term === 'game' || term === 'used' || term === 'game-used') {
                                         return isPatch;
                                     } else if (term === 'rc' || term === 'rookie' || term === 'rookies') {
                                         return isRookie;
-                                    } else if (term === 'gem' || term === 'gem mint' || term === 'gemmint') {
+                                    } else if (term === 'gem' || term === 'mint' || term === 'gemmint') {
                                         return isGemMint;
                                     } else if (term === 'graded' || term === 'grading' || term === 'slab') {
                                         return isGraded;
