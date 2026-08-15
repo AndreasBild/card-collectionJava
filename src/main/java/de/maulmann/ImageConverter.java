@@ -27,7 +27,7 @@ public class ImageConverter {
     private static final int MAX_HEIGHT = 1680;
 
     // Definition der Responsive-Breiten für das srcset
-    private static final int[] RESPONSIVE_WIDTHS = {400, 600, 900};
+    private static final int[] RESPONSIVE_WIDTHS = {200, 400, 600, 900};
 
 
     // Zähler für die Zusammenfassung
@@ -81,10 +81,11 @@ public class ImageConverter {
                     Path relativeParent = relativePath.getParent();
                     Path currentWebpOutDir = relativeParent != null ? webpOutDir.resolve(relativeParent) : webpOutDir;
                     File mainAvifFile = currentWebpOutDir.resolve(baseName + ".avif").toFile();
+                    File f200 = currentWebpOutDir.resolve(baseName + "-200w.avif").toFile();
                     File f400 = currentWebpOutDir.resolve(baseName + "-400w.avif").toFile();
                     File f600 = currentWebpOutDir.resolve(baseName + "-600w.avif").toFile();
                     File f900 = currentWebpOutDir.resolve(baseName + "-900w.avif").toFile();
-                    boolean avifMissing = (AVIFENC_PATH != null && (!mainAvifFile.exists() || !f400.exists() || !f600.exists() || !f900.exists()));
+                    boolean avifMissing = (AVIFENC_PATH != null && (!mainAvifFile.exists() || !f200.exists() || !f400.exists() || !f600.exists() || !f900.exists()));
 
                     if (!avifMissing && !tracker.hasChanged(file)) {
                         skippedCount.incrementAndGet();
@@ -125,10 +126,11 @@ public class ImageConverter {
         Files.createDirectories(currentWebpOutDir);
 
         File mainAvifFile = currentWebpOutDir.resolve(baseName + ".avif").toFile();
+        File f200 = currentWebpOutDir.resolve(baseName + "-200w.avif").toFile();
         File f400 = currentWebpOutDir.resolve(baseName + "-400w.avif").toFile();
         File f600 = currentWebpOutDir.resolve(baseName + "-600w.avif").toFile();
         File f900 = currentWebpOutDir.resolve(baseName + "-900w.avif").toFile();
-        boolean avifMissing = (AVIFENC_PATH != null && (!mainAvifFile.exists() || !f400.exists() || !f600.exists() || !f900.exists()));
+        boolean avifMissing = (AVIFENC_PATH != null && (!mainAvifFile.exists() || !f200.exists() || !f400.exists() || !f600.exists() || !f900.exists()));
 
         // 1. PRE-CHECK: Müssen wir dieses Bild-Set neu generieren?
         if (!avifMissing && !tracker.hasChanged(sourceFile)) {
@@ -155,13 +157,13 @@ public class ImageConverter {
             writeAvifViaCLI(orig, mainAvifFile, mainW, mainH, 48);
         }
 
-        // B) Responsive Varianten (z.B. jordan-400w.avif, jordan-600w.avif, jordan-900w.avif)
+        // B) Responsive Varianten (z.B. jordan-200w.avif, jordan-400w.avif, jordan-600w.avif, jordan-900w.avif)
         for (int targetW : RESPONSIVE_WIDTHS) {
             int w = Math.min(targetW, mainW);
             int h = (w == mainW) ? mainH : (int) (mainH * ((double) w / mainW));
             
             File respAvifFile = currentWebpOutDir.resolve(baseName + "-" + targetW + "w.avif").toFile();
-            int avifQuality = (targetW <= 400) ? 38 : (targetW <= 600 ? 40 : 44);
+            int avifQuality = (targetW <= 200) ? 36 : (targetW <= 400 ? 38 : (targetW <= 600 ? 40 : 44));
             if (w == mainW && mainAvifFile.exists()) {
                 Files.copy(mainAvifFile.toPath(), respAvifFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
             } else if (AVIFENC_PATH != null) {

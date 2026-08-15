@@ -44,8 +44,18 @@ ${topNavHtml?no_esc}
                                     <a href="${card.url}?from=rainbows" title="View details for ${card.title} (${card.variant})" class="rainbow-card-link">
                                         <figure class="rainbow-card-figure">
                                             <picture class="rainbow-card-media">
-                                                <source type="image/avif" srcset="${card.imgPath}">
-                                                <img src="${card.imgPath}" alt="${card.title} - ${card.variant}" width="${(card.isLandscape!false)?then('560', '400')}" height="${(card.isLandscape!false)?then('400', '560')}" loading="lazy" decoding="async" class="rainbow-card-img">
+                                                <source type="image/avif"
+                                                        srcset="${card.imgBase!card.imgPath}-200w.avif 200w,
+                                                                ${card.imgBase!card.imgPath}-400w.avif 400w,
+                                                                ${card.imgBase!card.imgPath}-600w.avif 600w"
+                                                        sizes="(max-width: 480px) 140px, (max-width: 900px) 160px, 195px">
+                                                <img src="${(card.imgBase)???then(card.imgBase + '-200w.avif', card.imgPath)}"
+                                                     srcset="${(card.imgBase)???then(card.imgBase + '-200w.avif 200w, ' + card.imgBase + '-400w.avif 400w', card.imgPath)}"
+                                                     sizes="(max-width: 480px) 140px, (max-width: 900px) 160px, 195px"
+                                                     alt="${card.title} - ${card.variant}"
+                                                     width="${(card.isLandscape!false)?then('195', '138')}"
+                                                     height="${(card.isLandscape!false)?then('138', '195')}"
+                                                     loading="lazy" decoding="async" class="rainbow-card-img">
                                             </picture>
                                             <figcaption>${card.title} - ${card.variant}</figcaption>
                                         </figure>

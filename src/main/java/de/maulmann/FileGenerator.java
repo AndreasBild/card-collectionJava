@@ -789,7 +789,9 @@ public class FileGenerator {
 
                             String rawImageBase = cd.filenameBase.contains("-") ? cd.filenameBase.substring(0, cd.filenameBase.lastIndexOf("-")) : cd.filenameBase;
                             String imageBaseName = CardPageGenerator.resolveDiskImageBase(cd.seasonFolder, rawImageBase, cd);
-                            String frontImg = "images/" + cd.seasonFolder + "/" + imageBaseName + "-front-400w.avif";
+                            String imgBase = "images/" + cd.seasonFolder + "/" + imageBaseName + "-front";
+                            itemMap.put("imgBase", imgBase);
+                            String frontImg = imgBase + "-200w.avif";
                             itemMap.put("imgPath", frontImg);
                             boolean isLandscape = CardPageGenerator.isImageLandscape(cd.seasonFolder, imageBaseName);
                             itemMap.put("isLandscape", isLandscape);
