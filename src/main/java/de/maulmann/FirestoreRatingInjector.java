@@ -181,7 +181,7 @@ public class FirestoreRatingInjector {
             double ratingSum = parseDouble(data.get("ratingSum"));
 
             if (ratingCount > 0 && ratingSum >= 0) {
-                String cacheKey = cardId != null ? cardId : fileName;
+                String cacheKey = cardId;
                 String cacheValue = ratingCount + ":" + ratingSum;
                 String storedValue = ratingCache.getProperty(cacheKey);
 

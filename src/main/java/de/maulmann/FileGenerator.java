@@ -906,9 +906,7 @@ public class FileGenerator {
         if (isDiamondGroup(cv, sv, "single", "single diamond", "diamond")) return true;
         if (isDiamondGroup(cv, sv, "double", "double diamond")) return true;
         if (isDiamondGroup(cv, sv, "triple", "triple diamond")) return true;
-        if (isDiamondGroup(cv, sv, "quadruple", "quadruple diamond")) return true;
-
-        return false;
+        return isDiamondGroup(cv, sv, "quadruple", "quadruple diamond");
     }
 
     private static boolean isBaseVariant(String v) {
