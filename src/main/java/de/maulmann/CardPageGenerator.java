@@ -785,25 +785,26 @@ public class CardPageGenerator {
             sb.append(" Card number #").append(number).append(".");
         }
 
-        if (isValid(variant) && !variant.equalsIgnoreCase("Base")) {
+        boolean hasVariant = isValid(variant) && !variant.equalsIgnoreCase("Base");
+        if (hasVariant) {
             sb.append(" This is the coveted ").append(variant).append(" parallel variation");
         }
 
         if (isValid(printRun)) {
             if ("1".equals(printRun)) {
-                if (isValid(variant) && !variant.equalsIgnoreCase("Base")) {
+                if (hasVariant) {
                     sb.append(" with a printrun of 1. Masterpiece.");
                 } else {
                     sb.append(" Masterpiece with a printrun of 1.");
                 }
             } else {
-                if (isValid(variant) && !variant.equalsIgnoreCase("Base")) {
+                if (hasVariant) {
                     sb.append(" with a printrun of ").append(isValid(serial) ? serial + "/" + printRun : printRun).append(".");
                 } else {
                     sb.append(" This card has a printrun of ").append(isValid(serial) ? serial + "/" + printRun : printRun).append(".");
                 }
             }
-        } else if (isValid(variant) && !variant.equalsIgnoreCase("Base")) {
+        } else if (hasVariant) {
             sb.append(".");
         }
 

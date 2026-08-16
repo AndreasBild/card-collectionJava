@@ -897,27 +897,32 @@ public class FileGenerator {
         String sv = specVariant.trim().toLowerCase();
         if (cv.equals(sv)) return true;
 
-        // Base aliases
-        if ((cv.equals("base") || cv.equals("base set")) && (sv.equals("base") || sv.equals("base set") || sv.startsWith("base "))) {
+        // Base aliases (symmetrical & clean)
+        if (isBaseVariant(cv) && isBaseVariant(sv)) {
             return true;
         }
-        if ((sv.equals("base") || sv.equals("base set")) && (cv.equals("base") || cv.equals("base set") || cv.startsWith("base "))) {
-            return true;
-        }
-        // Black Diamond aliases
-        if (cv.equals("diamond") && (sv.equals("single") || sv.equals("diamond") || sv.equals("single diamond"))) {
-            return true;
-        }
-        if (cv.equals("double diamond") && (sv.equals("double") || sv.equals("double diamond"))) {
-            return true;
-        }
-        if (cv.equals("triple diamond") && (sv.equals("triple") || sv.equals("triple diamond"))) {
-            return true;
-        }
-        if (cv.equals("quadruple diamond") && (sv.equals("quadruple") || sv.equals("quadruple diamond"))) {
-            return true;
-        }
+
+        // Black Diamond aliases (symmetrical & clean)
+        if (isDiamondGroup(cv, sv, "single", "single diamond", "diamond")) return true;
+        if (isDiamondGroup(cv, sv, "double", "double diamond")) return true;
+        if (isDiamondGroup(cv, sv, "triple", "triple diamond")) return true;
+        if (isDiamondGroup(cv, sv, "quadruple", "quadruple diamond")) return true;
+
         return false;
+    }
+
+    private static boolean isBaseVariant(String v) {
+        return v.equals("base") || v.equals("base set") || v.startsWith("base ");
+    }
+
+    private static boolean isDiamondGroup(String cv, String sv, String... aliases) {
+        boolean cvMatch = false;
+        boolean svMatch = false;
+        for (String alias : aliases) {
+            if (cv.equals(alias)) cvMatch = true;
+            if (sv.equals(alias)) svMatch = true;
+        }
+        return cvMatch && svMatch;
     }
 
     private static Map<String, Object> createBaseData(String title, String subTitle, String filename, String navTargetUrl, String root) {
