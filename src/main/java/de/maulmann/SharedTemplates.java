@@ -1,5 +1,8 @@
 package de.maulmann;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,6 +16,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class SharedTemplates {
+
+    private static final Logger log = LoggerFactory.getLogger(SharedTemplates.class);
 
     // 1. Thread-safe in-memory cache for all templates
     private static final Map<String, String> TEMPLATE_CACHE = new ConcurrentHashMap<>();
@@ -58,14 +63,14 @@ public class SharedTemplates {
         }
 
         if (is == null) {
-            System.err.println("Could not find resource: " + path);
+            log.warn("Could not find resource: {}", path);
             return "";
         }
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
             return reader.lines().collect(Collectors.joining("\n"));
         } catch (IOException e) {
-            System.err.println("Error loading resource " + path + ": " + e.getMessage());
+            log.error("Error loading resource {}: {}", path, e.getMessage());
             return "";
         }
     }

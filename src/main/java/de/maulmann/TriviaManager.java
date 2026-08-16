@@ -2,13 +2,21 @@ package de.maulmann;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class TriviaManager {
+    private static final Logger log = LoggerFactory.getLogger(TriviaManager.class);
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     private static final SimpleLazyConstant<TriviaManager> INSTANCE =
@@ -27,10 +35,10 @@ public class TriviaManager {
             if (is != null) {
                 return MAPPER.readTree(is);
             } else {
-                System.err.println("trivia_config.json wurde im Pfad /config/ nicht gefunden!");
+                log.warn("trivia_config.json not found at /config/trivia_config.json");
             }
-        } catch (Exception _) {
-            System.err.println("Fehler beim Laden der trivia_config.json");
+        } catch (Exception e) {
+            log.error("Error loading trivia_config.json: {}", e.getMessage());
         }
         return MAPPER.createObjectNode();
     });
@@ -40,12 +48,12 @@ public class TriviaManager {
 
     public record FaqItem(String question, String answer) {}
 
-    public java.util.List<FaqItem> getFaqs(String type, Map<String, String> cardData) {
+    public List<FaqItem> getFaqs(String type, Map<String, String> cardData) {
         JsonNode configNode = config.get();
-        if (configNode == null || !configNode.has(type)) return java.util.Collections.emptyList();
+        if (configNode == null || !configNode.has(type)) return Collections.emptyList();
 
-        java.util.List<FaqItem> list = new java.util.ArrayList<>();
-        Set<String> seenQuestions = new java.util.HashSet<>();
+        List<FaqItem> list = new ArrayList<>();
+        Set<String> seenQuestions = new HashSet<>();
         for (JsonNode rule : configNode.get(type)) {
             if (matches(rule.get("condition"), cardData)) {
                 String q = rule.has("question") ? rule.get("question").asText() : "";
@@ -72,6 +80,7 @@ public class TriviaManager {
     }
 
     private boolean matches(JsonNode condition, Map<String, String> cardData) {
+        if (condition == null || !condition.isObject() || cardData == null) return true;
         Iterator<Map.Entry<String, JsonNode>> fields = condition.properties().iterator();
         while (fields.hasNext()) {
             Map.Entry<String, JsonNode> entry = fields.next();

@@ -4066,9 +4066,9 @@
   "isRookie" : false
 }, {
   "id" : "1996-97-sp-spx-force-f2",
-  "player" : "Juwan Howard, Shawn Kemp, Charles Barkley, Dennis Rodmann",
+  "player" : "Juwan Howard, Charles Barkley, Dennis Rodmann, Shawn Kemp",
   "season" : "1996-97",
-  "team" : "Washington Bullets, Seatlle Supesonics, Phoenix Suns, Chicago Bulls",
+  "team" : "Washington Bullets, Phoenix Suns, Chicago Bulls, Seatlle Supesonics",
   "company" : "Upper Deck",
   "brand" : "SP",
   "theme" : "SPX Force",
@@ -4078,16 +4078,16 @@
   "printRun" : null,
   "gradingCompany" : null,
   "grade" : null,
-  "collection" : "Juwan Howard, Shawn Kemp, Charles Barkley, Dennis Rodmann",
+  "collection" : "Juwan Howard, Charles Barkley, Dennis Rodmann, Shawn Kemp",
   "notes" : null,
   "isAutograph" : false,
   "isPatch" : false,
   "isRookie" : false
 }, {
   "id" : "1996-97-sp-spx-force-f2-card2630",
-  "player" : "Juwan Howard, Charles Barkley, Shawn Kemp, Dennis Rodmann",
+  "player" : "Juwan Howard, Dennis Rodmann, Charles Barkley, Shawn Kemp",
   "season" : "1996-97",
-  "team" : "Washington Bullets, Phoenix Suns, Seatlle Supesonics, Chicago Bulls",
+  "team" : "Washington Bullets, Chicago Bulls, Phoenix Suns, Seatlle Supesonics",
   "company" : "Upper Deck",
   "brand" : "SP",
   "theme" : "SPX Force",
@@ -4097,7 +4097,7 @@
   "printRun" : null,
   "gradingCompany" : "PSA",
   "grade" : "7",
-  "collection" : "Juwan Howard, Charles Barkley, Shawn Kemp, Dennis Rodmann",
+  "collection" : "Juwan Howard, Dennis Rodmann, Charles Barkley, Shawn Kemp",
   "notes" : null,
   "isAutograph" : false,
   "isPatch" : false,
@@ -24643,7 +24643,7 @@
   "isRookie" : false
 }, {
   "id" : "2022-23-panini-immaculate-collection-triple-autographs-ta-jmr-sn3",
-  "player" : "Juwan Howard, Rod Strickland, Mitch Richmond",
+  "player" : "Juwan Howard, Mitch Richmond, Rod Strickland",
   "season" : "2022-23",
   "team" : "Washington Wizards",
   "company" : "Panini",
@@ -24655,7 +24655,7 @@
   "printRun" : 25,
   "gradingCompany" : null,
   "grade" : null,
-  "collection" : "Juwan Howard, Rod Strickland, Mitch Richmond",
+  "collection" : "Juwan Howard, Mitch Richmond, Rod Strickland",
   "notes" : null,
   "isAutograph" : true,
   "isPatch" : false,

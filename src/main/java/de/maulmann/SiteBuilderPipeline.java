@@ -2,28 +2,28 @@ package de.maulmann;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import software.amazon.awssdk.http.nio.netty.NettyNioAsyncHttpClient;
-import java.time.Duration;
 import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.core.async.AsyncRequestBody;
+import software.amazon.awssdk.http.nio.netty.NettyNioAsyncHttpClient;
 import software.amazon.awssdk.regions.Region;
-import software.amazon.awssdk.services.s3.S3AsyncClient;
-import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.cloudfront.CloudFrontClient;
 import software.amazon.awssdk.services.cloudfront.model.CreateInvalidationRequest;
 import software.amazon.awssdk.services.cloudfront.model.InvalidationBatch;
-
+import software.amazon.awssdk.services.s3.S3AsyncClient;
+import software.amazon.awssdk.services.s3.model.Delete;
+import software.amazon.awssdk.services.s3.model.DeleteObjectsRequest;
 import software.amazon.awssdk.services.s3.model.ListObjectsV2Request;
 import software.amazon.awssdk.services.s3.model.ListObjectsV2Response;
-import software.amazon.awssdk.services.s3.model.S3Object;
-import software.amazon.awssdk.services.s3.model.DeleteObjectsRequest;
-import software.amazon.awssdk.services.s3.model.Delete;
 import software.amazon.awssdk.services.s3.model.ObjectIdentifier;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+import software.amazon.awssdk.services.s3.model.S3Object;
 import software.amazon.awssdk.services.s3.model.StorageClass;
+
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +32,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Stream;
 
 public class SiteBuilderPipeline {
@@ -564,7 +565,6 @@ public class SiteBuilderPipeline {
      * Builds all local HTML files, sitemaps, and images.
      * Shared identically between SiteBuilderPipeline (Production) and LocalDevPipeline (Local Preview).
      */
-    @SuppressWarnings("unchecked")
     public static List<CardPageGenerator.CardData> buildLocalArtifacts(TimestampTracker timeTracker, FileTracker tracker) {
         // Ensure stable CSS version for hash stability if content didn't change
         String cssHash = tracker.getHash(Paths.get("src/main/resources/css/main.css"));
@@ -580,7 +580,7 @@ public class SiteBuilderPipeline {
         // --- PARALLEL PHASES: HTML Generation & Image WebP Conversion ---
         log.info("\n[PHASE 1 & 2] Launching HTML Generation and Image WebP Conversion in parallel...");
 
-        final List<CardPageGenerator.CardData>[] generatedCards = (List<CardPageGenerator.CardData>[]) new List<?>[1];
+        AtomicReference<List<CardPageGenerator.CardData>> generatedCards = new AtomicReference<>();
         try (ExecutorService phaseExecutor = Executors.newVirtualThreadPerTaskExecutor()) {
             CompletableFuture<Void> htmlTask = CompletableFuture.runAsync(() -> {
                 log.info("  -> [PHASE 1] Generating HTML files and Sitemap...");
@@ -593,9 +593,10 @@ public class SiteBuilderPipeline {
                 FileGenerator.buildCollectionOverview();
                 FileGenerator.buildOtherCollections();
                 FileGenerator.buildStaticPages();
-                generatedCards[0] = CardPageGenerator.run();
+                List<CardPageGenerator.CardData> cards = CardPageGenerator.run();
+                generatedCards.set(cards);
 
-                SitemapGenerator.generate(generatedCards[0]); // Sitemap & robots.txt now ready
+                SitemapGenerator.generate(cards); // Sitemap & robots.txt now ready
                 timeTracker.save();
             }, phaseExecutor);
 
@@ -607,7 +608,7 @@ public class SiteBuilderPipeline {
             // Wait for both tasks to complete concurrently
             CompletableFuture.allOf(htmlTask, imageTask).join();
         }
-        return generatedCards[0];
+        return generatedCards.get();
     }
 
 }

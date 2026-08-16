@@ -1,7 +1,15 @@
 package de.maulmann;
 
-import java.io.*;
-import java.nio.file.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.util.Properties;
 
@@ -9,6 +17,7 @@ import java.util.Properties;
  * Unified utility for tracking file changes using MD5 hashes stored in a properties file.
  */
 public class FileTracker {
+    private static final Logger log = LoggerFactory.getLogger(FileTracker.class);
     private final File storeFile;
     private final Properties hashes = new Properties();
 
@@ -17,8 +26,8 @@ public class FileTracker {
         if (storeFile.exists()) {
             try (InputStream in = Files.newInputStream(storeFile.toPath())) {
                 hashes.load(in);
-            } catch (Exception e) {
-                System.err.println("Could not load hash file: " + e.getMessage());
+            } catch (IOException e) {
+                log.warn("Could not load hash file: {}", e.getMessage());
             }
         }
     }
@@ -94,8 +103,8 @@ public class FileTracker {
             try (OutputStream out = Files.newOutputStream(storeFile.toPath())) {
                 hashes.store(out, "Automated File Build Hash Cache");
             }
-        } catch (Exception e) {
-            System.err.println("Could not save hash file: " + e.getMessage());
+        } catch (IOException e) {
+            log.warn("Could not save hash file: {}", e.getMessage());
         }
     }
 

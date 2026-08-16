@@ -1,6 +1,12 @@
 package de.maulmann;
 
-import java.io.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,6 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * If the content (excluding the timestamp) hasn't changed, the old timestamp is returned.
  */
 public class TimestampTracker {
+    private static final Logger log = LoggerFactory.getLogger(TimestampTracker.class);
     private final File storeFile;
     private final Properties storedData = new Properties();
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
@@ -30,8 +37,8 @@ public class TimestampTracker {
         if (storeFile.exists()) {
             try (InputStream in = Files.newInputStream(storeFile.toPath())) {
                 storedData.load(in);
-            } catch (Exception e) {
-                System.err.println("Could not load timestamp hash file: " + e.getMessage());
+            } catch (IOException e) {
+                log.warn("Could not load timestamp hash file: {}", e.getMessage());
             }
         }
     }
@@ -136,8 +143,8 @@ public class TimestampTracker {
             try (OutputStream out = Files.newOutputStream(storeFile.toPath())) {
                 storedData.store(out, "Automated Generation Timestamp Cache");
             }
-        } catch (Exception e) {
-            System.err.println("Could not save timestamp hash file: " + e.getMessage());
+        } catch (IOException e) {
+            log.warn("Could not save timestamp hash file: {}", e.getMessage());
         }
     }
 

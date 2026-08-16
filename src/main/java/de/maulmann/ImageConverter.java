@@ -4,13 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-import javax.imageio.stream.ImageInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -207,6 +207,9 @@ public class ImageConverter {
             if (exitCode != 0) {
                 log.warn("avifenc exited with code {} for {}", exitCode, outputFile.getName());
             }
+        } catch (InterruptedException ie) {
+            Thread.currentThread().interrupt();
+            log.error("AVIF conversion interrupted for {}: {}", outputFile.getName(), ie.getMessage());
         } catch (Exception e) {
             log.error("AVIF conversion error for {}: {}", outputFile.getName(), e.getMessage());
         }
@@ -224,6 +227,9 @@ public class ImageConverter {
             try {
                 Process p = new ProcessBuilder(path, "--version").start();
                 if (p.waitFor() == 0) return path;
+            } catch (InterruptedException ie) {
+                Thread.currentThread().interrupt();
+                break;
             } catch (Exception ignored) {}
         }
         return null;
