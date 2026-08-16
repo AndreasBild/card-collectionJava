@@ -141,7 +141,7 @@ ${topNavHtml?no_esc}
     </div>
     
     <section class="share-snippets-section context-card full-width">
-        <h3>&#x1F4AC; Community & Forum Sharing</h3>
+        <h2>&#x1F4AC; Community & Forum Sharing</h2>
         <p class="share-subtitle">Instantly copy formatted BBCode or Markdown snippets to share this card scan on Blowout Cards, Reddit (r/sportscards), or Discord.</p>
         <div class="snippet-grid">
             <div class="snippet-group">

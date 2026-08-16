@@ -20,7 +20,7 @@ ${topNavHtml?no_esc}
         </div>
         <div class="metrics-grid">
             <div class="metric-card">
-                <h4>&#x1F48E; Rarity Tier Breakdown</h4>
+                <h3>&#x1F48E; Rarity Tier Breakdown</h3>
                 <div class="meter-group clickable-metric" onclick="filterByMetric('=1')" title="Click to filter 1/1 Masterpieces">
                     <div class="meter-label"><span>1/1 Masterpieces</span> <strong>${(stats.count1of1)!0}</strong></div>
                     <div class="meter-bar-track"><div class="meter-bar" style="width: ${(stats.pct1of1)!0}%;"></div></div>
@@ -36,7 +36,7 @@ ${topNavHtml?no_esc}
             </div>
 
             <div class="metric-card">
-                <h4>&#x270D;&#xFE0F; Attributes & Special Types</h4>
+                <h3>&#x270D;&#xFE0F; Attributes & Special Types</h3>
                 <div class="meter-group clickable-metric" onclick="filterByMetric('auto')" title="Click to filter Autographs">
                     <div class="meter-label"><span>Autographs</span> <strong>${(stats.countAutographs)!0}</strong></div>
                     <div class="meter-bar-track"><div class="meter-bar green" style="width: ${(stats.pctAutographs)!0}%;"></div></div>
@@ -52,7 +52,7 @@ ${topNavHtml?no_esc}
             </div>
 
             <div class="metric-card">
-                <h4>&#x1F3C5; Grading Census</h4>
+                <h3>&#x1F3C5; Grading Census</h3>
                 <div class="meter-group clickable-metric" onclick="filterByMetric('gem mint')" title="Click to filter Gem Mint cards">
                     <div class="meter-label"><span>Gem Mint (PSA 10 / BGS 9.5)</span> <strong>${(stats.countGemMint)!0}</strong></div>
                     <div class="meter-bar-track"><div class="meter-bar emerald" style="width: ${(stats.pctGemMint)!0}%;"></div></div>
@@ -86,15 +86,16 @@ ${topNavHtml?no_esc}
         </div>
 
         <div class="collection-controls filter-container">
-            <strong class="filter-label">Filter Collection:</strong>
-            <select id="seasonFilter" class="filter-select">
+            <label for="seasonFilter" class="filter-label">Filter Collection:</label>
+            <select id="seasonFilter" name="seasonFilter" class="filter-select" aria-label="Filter cards by season">
                 <option value="all">All Seasons</option>
                 <#list seasons as season>
                     <option value="${season.id}">${season.name}</option>
                 </#list>
             </select>
-            <input type="text" id="textSearch" class="filter-input" list="hobby-terms"
-                   placeholder="Search PMG, Auto or Print Run <25, =1...">
+            <input type="text" id="textSearch" name="textSearch" class="filter-input" list="hobby-terms"
+                   placeholder="Search PMG, Auto or Print Run <25, =1..."
+                   aria-label="Search cards by keyword, serial number, or print run">
             <datalist id="hobby-terms">
                 <option value="= 1">
                 <option value="<= 10">

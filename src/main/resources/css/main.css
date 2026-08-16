@@ -2159,6 +2159,7 @@ figcaption {
     padding: 1.2rem;
 }
 
+.metric-card h3,
 .metric-card h4 {
     margin: 0 0 1rem 0;
     font-size: 1rem;
