@@ -45,9 +45,7 @@ ${topNavHtml?no_esc}
                                         <figure class="rainbow-card-figure">
                                             <picture class="rainbow-card-media">
                                                 <source type="image/avif"
-                                                        srcset="${card.imgBase!card.imgPath}-200w.avif 200w,
-                                                                ${card.imgBase!card.imgPath}-400w.avif 400w,
-                                                                ${card.imgBase!card.imgPath}-600w.avif 600w"
+                                                        srcset="${(card.imgBase)???then(card.imgBase + '-200w.avif 200w, ' + card.imgBase + '-400w.avif 400w, ' + card.imgBase + '-600w.avif 600w', card.imgPath)}"
                                                         sizes="(max-width: 480px) 140px, (max-width: 900px) 160px, 195px">
                                                 <img src="${(card.imgBase)???then(card.imgBase + '-200w.avif', card.imgPath)}"
                                                      srcset="${(card.imgBase)???then(card.imgBase + '-200w.avif 200w, ' + card.imgBase + '-400w.avif 400w', card.imgPath)}"

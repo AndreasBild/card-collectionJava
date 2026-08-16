@@ -662,12 +662,12 @@ public class FileGenerator {
                             )
                     ),
                     Map.of(
-                            "title", "1998-99 Upper Deck Black Diamond Base Set #97 Rainbow",
-                            "season", "1998-99", "company", "Upper Deck", "brand", "Upper Deck Black Diamond", "theme", "Base Set", "number", "97",
+                            "title", "1998-99 Upper Deck Black Diamond Base Set #89 Rainbow",
+                            "season", "1998-99", "company", "Upper Deck", "brand", "UD Black Diamond", "theme", "Base Set", "number", "89",
                             "variants", List.of(
                                     Map.of("variant", "Single", "serial", "Base"),
-                                    Map.of("variant", "Double", "serial", "Parallel"),
-                                    Map.of("variant", "Triple", "serial", "Parallel"),
+                                    Map.of("variant", "Double", "serial", "/3000"),
+                                    Map.of("variant", "Triple", "serial", "/1000"),
                                     Map.of("variant", "Quadruple", "serial", "/150")
                             )
                     ),
@@ -715,6 +715,7 @@ public class FileGenerator {
                 List<Map<String, Object>> cardItems = new ArrayList<>();
                 int acquiredCount = 0;
                 List<CardJson> candidates = cardsBySeasonAndNumber.getOrDefault((season + "|" + number).toLowerCase(), Collections.emptyList());
+                Set<String> matchedCardIds = new HashSet<>();
 
                 for (Map<String, String> spec : expectedVariants) {
                     String reqVariant = spec.get("variant");
@@ -722,8 +723,14 @@ public class FileGenerator {
 
                     CardJson matched = null;
                     for (CardJson c : candidates) {
-                        if (c.variant != null && (c.variant.equalsIgnoreCase(reqVariant) || c.variant.toLowerCase().contains(reqVariant.toLowerCase()))) {
+                        if (c.id != null && matchedCardIds.contains(c.id)) {
+                            continue; // Card already matched to another variant slot
+                        }
+                        if (isVariantMatch(c.variant, reqVariant)) {
                             matched = c;
+                            if (c.id != null) {
+                                matchedCardIds.add(c.id);
+                            }
                             break;
                         }
                     }
@@ -734,13 +741,15 @@ public class FileGenerator {
                         itemMap.put("variant", reqVariant);
                         itemMap.put("serial", formatSerialAndPrintRun(matched.serialNumber, matched.printRun, reqSerial));
                         itemMap.put("acquired", true);
-                        CardPageGenerator.CardData cd = new CardPageGenerator.CardData(matched, null);
+                        CardPageGenerator.CardData cd = CardPageGenerator.computeCardData(matched);
                         itemMap.put("url", cd.fullRelativePath.replace("../../", ""));
                         itemMap.put("title", matched.player + " " + matched.season + " " + matched.brand + " " + matched.variant + " #" + matched.cardNumber);
 
                         String rawImageBase = cd.filenameBase.contains("-") ? cd.filenameBase.substring(0, cd.filenameBase.lastIndexOf("-")) : cd.filenameBase;
                         String imageBaseName = CardPageGenerator.resolveDiskImageBase(cd.seasonFolder, rawImageBase, cd);
-                        String frontImg = "images/" + cd.seasonFolder + "/" + imageBaseName + "-front-400w.avif";
+                        String imgBase = "images/" + cd.seasonFolder + "/" + imageBaseName + "-front";
+                        itemMap.put("imgBase", imgBase);
+                        String frontImg = imgBase + "-200w.avif";
                         itemMap.put("imgPath", frontImg);
                         boolean isLandscape = CardPageGenerator.isImageLandscape(cd.seasonFolder, imageBaseName);
                         itemMap.put("isLandscape", isLandscape);
@@ -752,10 +761,12 @@ public class FileGenerator {
 
                 if (acquiredCount <= 1) continue; // Do not display sets with only 1 card
 
+                int totalCount = expectedVariants.size();
+                int percentage = (int) Math.round(((double) acquiredCount / totalCount) * 100);
                 setMap.put("cards", cardItems);
                 setMap.put("acquiredCount", acquiredCount);
-                setMap.put("totalCount", acquiredCount);
-                setMap.put("percentage", 100);
+                setMap.put("totalCount", totalCount);
+                setMap.put("percentage", percentage);
 
                 rainbowSets.add(setMap);
             }
@@ -870,6 +881,35 @@ public class FileGenerator {
             return fallback;
         }
         return "Parallel";
+    }
+
+    private static boolean isVariantMatch(String cardVariant, String specVariant) {
+        if (cardVariant == null || specVariant == null) return false;
+        String cv = cardVariant.trim().toLowerCase();
+        String sv = specVariant.trim().toLowerCase();
+        if (cv.equals(sv)) return true;
+
+        // Base aliases
+        if ((cv.equals("base") || cv.equals("base set")) && (sv.equals("base") || sv.equals("base set") || sv.startsWith("base "))) {
+            return true;
+        }
+        if ((sv.equals("base") || sv.equals("base set")) && (cv.equals("base") || cv.equals("base set") || cv.startsWith("base "))) {
+            return true;
+        }
+        // Black Diamond aliases
+        if (cv.equals("diamond") && (sv.equals("single") || sv.equals("diamond") || sv.equals("single diamond"))) {
+            return true;
+        }
+        if (cv.equals("double diamond") && (sv.equals("double") || sv.equals("double diamond"))) {
+            return true;
+        }
+        if (cv.equals("triple diamond") && (sv.equals("triple") || sv.equals("triple diamond"))) {
+            return true;
+        }
+        if (cv.equals("quadruple diamond") && (sv.equals("quadruple") || sv.equals("quadruple diamond"))) {
+            return true;
+        }
+        return false;
     }
 
     private static Map<String, Object> createBaseData(String title, String subTitle, String filename, String navTargetUrl, String root) throws Exception {
