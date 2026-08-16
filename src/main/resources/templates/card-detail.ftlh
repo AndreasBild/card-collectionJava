@@ -495,9 +495,17 @@ ${topNavHtml?no_esc}
         }
     }
 
+    function getCardIdentifiers() {
+        const pathParts = window.location.pathname.split('/');
+        const filename = pathParts[pathParts.length - 1];
+        const filenameBase = filename.replace('.html', '');
+        return [cardStableId, filenameBase];
+    }
+
     function updateDetailFavUI() {
         const favs = getFavorites();
-        const isFav = favs.includes(cardStableId);
+        const ids = getCardIdentifiers();
+        const isFav = ids.some(id => favs.includes(id));
         const favBtn = document.getElementById('favBtn');
         const favIcon = document.getElementById('favStarIcon');
         if (!favBtn) return;
@@ -514,12 +522,15 @@ ${topNavHtml?no_esc}
 
     window.toggleDetailFav = function() {
         let favs = getFavorites();
-        const idx = favs.indexOf(cardStableId);
-        if (idx !== -1) {
-            favs.splice(idx, 1);
+        const ids = getCardIdentifiers();
+        const isFav = ids.some(id => favs.includes(id));
+        if (isFav) {
+            favs = favs.filter(id => !ids.includes(id));
             showToast("Removed from favorites");
         } else {
-            favs.push(cardStableId);
+            ids.forEach(id => {
+                if (id && !favs.includes(id)) favs.push(id);
+            });
             showToast("⭐ Added to favorites!");
         }
         try {

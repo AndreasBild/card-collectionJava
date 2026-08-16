@@ -167,7 +167,7 @@ public class FileGenerator {
                         String variantText = escapeHtml(c.variant != null ? c.variant : "Base");
                         String variantTitle = "View details for " + escapeHtml(cleanPlayer) + " " + escapeHtml(c.season) + " " + escapeHtml(c.brand) + " " + variantText + " parallel";
 
-                        htmlBuilder.append("<tr>")
+                        htmlBuilder.append("<tr id=\"").append(cardData.filenameBase).append("\" data-card-id=\"").append(cardData.stableId).append("\">")
                                 .append("<td data-label=\"Card\"><a href=\"").append(detailPath).append("\" class=\"table-button\" title=\"").append(playerTitle).append("\" itemprop=\"url\"><span itemprop=\"name\">").append(escapeHtml(cleanPlayer)).append("</span></a></td>")
                                 .append("<td data-label=\"Team\">").append(escapeHtml(c.team)).append("</td>")
                                 .append("<td data-label=\"Sport\">Basketball</td>")

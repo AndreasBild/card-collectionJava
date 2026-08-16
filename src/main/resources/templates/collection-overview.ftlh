@@ -274,12 +274,13 @@ ${topNavHtml?no_esc}
                         const isGemMint = isGraded && (!isNaN(gradeNum) ? (gradeNum >= 9.5) : (gradeText.includes('10') || gradeText.includes('9.5') || gradeText.includes('gem')));
 
                         const rowText = row.textContent.toLowerCase();
-                        const cardId = row.id || '';
+                        const filenameBase = row.id || (row.querySelector('a.table-button') ? row.querySelector('a.table-button').getAttribute('href').split('/').pop().replace('.html', '') : '');
+                        const stableId = row.getAttribute('data-card-id') || (filenameBase.includes('-') ? filenameBase.substring(filenameBase.lastIndexOf('-') + 1) : filenameBase);
                         const isFavoritesFilter = (searchVal === 'favorites' || searchVal === 'favorite' || searchVal === 'fav');
 
                         if (isFavoritesFilter) {
                             const favs = getFavorites();
-                            isMatch = favs.includes(cardId);
+                            isMatch = favs.includes(filenameBase) || favs.includes(stableId);
                         } else if (prMatch) {
                             if (!isNaN(cardPrintRun) && cardPrintRun > 0) {
                                 if (prOperator === '<' && cardPrintRun < prTarget) isMatch = true;
@@ -405,11 +406,16 @@ ${topNavHtml?no_esc}
                     event.preventDefault();
                 }
                 let favs = getFavorites();
-                const idx = favs.indexOf(cardId);
-                if (idx !== -1) {
-                    favs.splice(idx, 1);
+                const stableId = cardId.includes('-') ? cardId.substring(cardId.lastIndexOf('-') + 1) : cardId;
+                const isAlreadyFav = favs.includes(cardId) || favs.includes(stableId);
+
+                if (isAlreadyFav) {
+                    favs = favs.filter(id => id !== cardId && id !== stableId);
                 } else {
                     favs.push(cardId);
+                    if (stableId && stableId !== cardId && !favs.includes(stableId)) {
+                        favs.push(stableId);
+                    }
                 }
                 saveFavorites(favs);
                 const searchVal = (document.getElementById('textSearch') ? document.getElementById('textSearch').value.trim().toLowerCase() : '');
@@ -421,21 +427,31 @@ ${topNavHtml?no_esc}
             window.updateFavoritesUI = function() {
                 const favs = getFavorites();
                 const favSet = new Set(favs);
-                const countEl = document.getElementById('favCount');
-                if (countEl) countEl.textContent = favs.length;
+                let matchedFavs = 0;
 
-                document.querySelectorAll('.card-fav-btn').forEach(btn => {
-                    const cardId = btn.getAttribute('data-card-id');
-                    if (favSet.has(cardId)) {
-                        btn.classList.add('is-fav');
-                        btn.textContent = '★';
-                        btn.title = 'Remove from Favorites';
-                    } else {
-                        btn.classList.remove('is-fav');
-                        btn.textContent = '☆';
-                        btn.title = 'Add to Favorites';
+                document.querySelectorAll('.season-table-wrapper table tbody tr').forEach(row => {
+                    if (row.querySelector('th')) return;
+                    const filenameBase = row.id || (row.querySelector('a.table-button') ? row.querySelector('a.table-button').getAttribute('href').split('/').pop().replace('.html', '') : '');
+                    const stableId = row.getAttribute('data-card-id') || (filenameBase.includes('-') ? filenameBase.substring(filenameBase.lastIndexOf('-') + 1) : filenameBase);
+                    const isFav = favSet.has(filenameBase) || favSet.has(stableId);
+                    if (isFav) matchedFavs++;
+
+                    const btn = row.querySelector('.card-fav-btn');
+                    if (btn) {
+                        if (isFav) {
+                            btn.classList.add('is-fav');
+                            btn.textContent = '★';
+                            btn.title = 'Remove from Favorites';
+                        } else {
+                            btn.classList.remove('is-fav');
+                            btn.textContent = '☆';
+                            btn.title = 'Add to Favorites';
+                        }
                     }
                 });
+
+                const countEl = document.getElementById('favCount');
+                if (countEl) countEl.textContent = matchedFavs > 0 ? matchedFavs : (favs.length > 0 ? favs.length : 0);
             };
 
             // --- 1-CLICK CSV EXPORT (UTF-8 EXCEL READY) ---
