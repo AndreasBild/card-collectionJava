@@ -70,10 +70,12 @@ ${topNavHtml?no_esc}
             <span class="view-label">&#x1F441;&#xFE0F; Layout View:</span>
             <button id="viewGridBtn" class="view-btn active" onclick="setCollectionLayout('grid')">&#x2638; Table / Grid</button>
             <button id="viewBinderBtn" class="view-btn" onclick="setCollectionLayout('binder')">&#x1F4D2; 9-Pocket Binder</button>
+            <button id="exportCsvBtn" class="export-csv-btn" onclick="exportCollectionCSV()" title="Export visible cards to CSV for Excel / Sheets">📥 Export CSV</button>
         </div>
 
         <div class="quick-filter-chips" aria-label="Quick Filter Highlights">
             <span class="quick-filter-title">⚡ Highlights:</span>
+            <button type="button" class="filter-chip" onclick="toggleQuickFilter('favorites')" data-filter="favorites" id="favFilterChip">⭐ My Favorites (<span id="favCount">0</span>)</button>
             <button type="button" class="filter-chip" onclick="toggleQuickFilter('masterpiece')" data-filter="masterpiece">🔥 1/1 Masterpieces</button>
             <button type="button" class="filter-chip" onclick="toggleQuickFilter('pmg')" data-filter="pmg">💎 PMG</button>
             <button type="button" class="filter-chip" onclick="toggleQuickFilter('rookie')" data-filter="rookie">⭐ Rookies</button>
@@ -272,8 +274,13 @@ ${topNavHtml?no_esc}
                         const isGemMint = isGraded && (!isNaN(gradeNum) ? (gradeNum >= 9.5) : (gradeText.includes('10') || gradeText.includes('9.5') || gradeText.includes('gem')));
 
                         const rowText = row.textContent.toLowerCase();
+                        const cardId = row.id || '';
+                        const isFavoritesFilter = (searchVal === 'favorites' || searchVal === 'favorite' || searchVal === 'fav');
 
-                        if (prMatch) {
+                        if (isFavoritesFilter) {
+                            const favs = getFavorites();
+                            isMatch = favs.includes(cardId);
+                        } else if (prMatch) {
                             if (!isNaN(cardPrintRun) && cardPrintRun > 0) {
                                 if (prOperator === '<' && cardPrintRun < prTarget) isMatch = true;
                                 else if (prOperator === '<=' && cardPrintRun <= prTarget) isMatch = true;
@@ -348,7 +355,8 @@ ${topNavHtml?no_esc}
                 document.querySelectorAll('.filter-chip').forEach(chip => {
                     const f = chip.getAttribute('data-filter');
                     let q = '';
-                    if (f === 'masterpiece') q = '= 1';
+                    if (f === 'favorites') q = 'favorites';
+                    else if (f === 'masterpiece') q = '= 1';
                     else if (f === 'pmg') q = 'pmg';
                     else if (f === 'rookie') q = 'rookie';
                     else if (f === 'auto') q = 'auto';
@@ -372,13 +380,140 @@ ${topNavHtml?no_esc}
                 }
             }
 
+            // --- FAVORITES (WATCHLIST) ENGINE ---
+            const FAVORITES_KEY = 'maulmann_card_favorites';
+
+            window.getFavorites = function() {
+                try {
+                    const data = localStorage.getItem(FAVORITES_KEY);
+                    return data ? JSON.parse(data) : [];
+                } catch (e) {
+                    return [];
+                }
+            };
+
+            window.saveFavorites = function(favs) {
+                try {
+                    localStorage.setItem(FAVORITES_KEY, JSON.stringify(favs));
+                } catch (e) {}
+                updateFavoritesUI();
+            };
+
+            window.toggleCardFav = function(cardId, btnEl, event) {
+                if (event) {
+                    event.stopPropagation();
+                    event.preventDefault();
+                }
+                let favs = getFavorites();
+                const idx = favs.indexOf(cardId);
+                if (idx !== -1) {
+                    favs.splice(idx, 1);
+                } else {
+                    favs.push(cardId);
+                }
+                saveFavorites(favs);
+                const searchVal = (document.getElementById('textSearch') ? document.getElementById('textSearch').value.trim().toLowerCase() : '');
+                if (searchVal === 'favorites') {
+                    applyFilters();
+                }
+            };
+
+            window.updateFavoritesUI = function() {
+                const favs = getFavorites();
+                const favSet = new Set(favs);
+                const countEl = document.getElementById('favCount');
+                if (countEl) countEl.textContent = favs.length;
+
+                document.querySelectorAll('.card-fav-btn').forEach(btn => {
+                    const cardId = btn.getAttribute('data-card-id');
+                    if (favSet.has(cardId)) {
+                        btn.classList.add('is-fav');
+                        btn.textContent = '★';
+                        btn.title = 'Remove from Favorites';
+                    } else {
+                        btn.classList.remove('is-fav');
+                        btn.textContent = '☆';
+                        btn.title = 'Add to Favorites';
+                    }
+                });
+            };
+
+            // --- 1-CLICK CSV EXPORT (UTF-8 EXCEL READY) ---
+            window.exportCollectionCSV = function() {
+                const visibleRows = [];
+                const headers = [
+                    "Player", "Team", "Season", "Company", "Brand",
+                    "Set / Theme", "Variant", "Card #", "Serial #",
+                    "Print Run", "Rookie", "Game Used", "Autograph", "Grade", "URL"
+                ];
+
+                document.querySelectorAll('.season-table-wrapper table tbody tr').forEach(row => {
+                    if (row.style.display !== 'none') {
+                        const cells = row.querySelectorAll('td');
+                        if (cells.length >= 14) {
+                            const link = cells[0].querySelector('a');
+                            const fullUrl = link ? link.href : '';
+                            const cleanText = (el) => {
+                                if (!el) return '';
+                                let clone = el.cloneNode(true);
+                                let favBtn = clone.querySelector('.card-fav-btn');
+                                if (favBtn) favBtn.remove();
+                                return clone.textContent.trim().replace(/"/g, '""');
+                            };
+
+                            const rowData = [
+                                cleanText(cells[0]),
+                                cleanText(cells[1]),
+                                cleanText(cells[3]),
+                                cleanText(cells[4]),
+                                cleanText(cells[5]),
+                                cleanText(cells[6]),
+                                cleanText(cells[7]),
+                                cleanText(cells[8]),
+                                cleanText(cells[9]),
+                                cleanText(cells[10]),
+                                cleanText(cells[11]),
+                                cleanText(cells[12]),
+                                cleanText(cells[13]),
+                                cleanText(cells[14] || cells[13]),
+                                fullUrl
+                            ];
+                            visibleRows.push(rowData);
+                        }
+                    }
+                });
+
+                if (visibleRows.length === 0) {
+                    alert("No visible cards found to export.");
+                    return;
+                }
+
+                let csvContent = "\uFEFF"; // UTF-8 BOM
+                csvContent += headers.map(function(h) { return '"' + h + '"'; }).join(",") + "\r\n";
+                visibleRows.forEach(function(row) {
+                    csvContent += row.map(function(val) { return '"' + val + '"'; }).join(",") + "\r\n";
+                });
+
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.setAttribute("href", url);
+                const timestamp = new Date().toISOString().slice(0, 10);
+                link.setAttribute("download", "Juwan-Howard-Collection-" + timestamp + ".csv");
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            };
+
             window.toggleQuickFilter = function(filterType) {
                 const textSearch = document.getElementById('textSearch');
                 const seasonFilter = document.getElementById('seasonFilter');
                 if (!textSearch) return;
 
                 let targetQuery = '';
-                if (filterType === 'masterpiece') targetQuery = '= 1';
+                if (filterType === 'favorites') targetQuery = 'favorites';
+                else if (filterType === 'masterpiece') targetQuery = '= 1';
                 else if (filterType === 'pmg') targetQuery = 'PMG';
                 else if (filterType === 'rookie') targetQuery = 'Rookie';
                 else if (filterType === 'auto') targetQuery = 'Auto';
@@ -422,6 +557,34 @@ ${topNavHtml?no_esc}
             };
 
             document.addEventListener('DOMContentLoaded', () => {
+                // Prepend favorite star button to every table row
+                document.querySelectorAll('.season-table-wrapper table tbody tr').forEach(row => {
+                    const firstTd = row.querySelector('td');
+                    if (firstTd && row.id) {
+                        const favBtn = document.createElement('button');
+                        favBtn.type = 'button';
+                        favBtn.className = 'card-fav-btn';
+                        favBtn.setAttribute('data-card-id', row.id);
+                        favBtn.textContent = '☆';
+                        favBtn.title = 'Add to Favorites';
+                        favBtn.addEventListener('click', (e) => toggleCardFav(row.id, favBtn, e));
+                        firstTd.insertBefore(favBtn, firstTd.firstChild);
+                    }
+                });
+
+                updateFavoritesUI();
+
+                // OpenSearch query parameter support (?q=...)
+                const urlParams = new URLSearchParams(window.location.search);
+                const queryParam = urlParams.get('q');
+                if (queryParam) {
+                    const textSearch = document.getElementById('textSearch');
+                    if (textSearch) {
+                        textSearch.value = queryParam;
+                        applyFilters();
+                    }
+                }
+
                 // Attach click handlers to season jump pills
                 document.querySelectorAll('.season-jump-pill').forEach(pill => {
                     pill.addEventListener('click', (e) => {
@@ -442,7 +605,7 @@ ${topNavHtml?no_esc}
                     }
                 });
 
-                // --- Scroll Restoration Logic or Fragment Jump ---
+                // Scroll Restoration Logic or Fragment Jump
                 const savedCardId = sessionStorage.getItem('lastClickedCard');
                 if (savedCardId) {
                     const targetRow = document.getElementById(savedCardId);

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+    <ShortName>Juwan Howard Cards</ShortName>
+    <Description>Search 1,000+ Juwan Howard sports cards in the Maulmann Private Collection</Description>
+    <Tags>juwan howard basketball cards collection pmg parallels autographs</Tags>
+    <Contact>contact@maulmann.de</Contact>
+    <Url type="text/html" template="https://www.maulmann.de/Juwan-Howard-Collection.html?q={searchTerms}"/>
+    <Image height="16" width="16" type="image/x-icon">https://www.maulmann.de/favicon/favicon.ico</Image>
+    <InputEncoding>UTF-8</InputEncoding>
+    <OutputEncoding>UTF-8</OutputEncoding>
+</OpenSearchDescription>

@@ -450,6 +450,12 @@ public class FileGenerator {
                     });
                 }
             }
+
+            // 6. Copy OpenSearch definition
+            Path opensearchSource = Paths.get("src/main/resources/opensearch.xml");
+            if (Files.exists(opensearchSource)) {
+                Files.copy(opensearchSource, Paths.get(pathOutput, "opensearch.xml"), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+            }
         } catch (IOException e) {
             log.error("Error copying resources: {}", e.getMessage());
         }

@@ -26,6 +26,7 @@ ${topNavHtml?no_esc}
                    class="modern-button no-text-decoration">Next &raquo;</a>
             </#if>
             <button id="shareBtn" title="Share or copy card link" class="modern-button">🔗 Share</button>
+            <button id="favBtn" title="Add to favorites" class="modern-button detail-fav-btn" onclick="toggleDetailFav()"><span id="favStarIcon">☆</span> Favorite</button>
             <button id="compareBtn" title="Compare this card with others" class="modern-button compare-toggle-btn" data-card-id="${cardStableId}" data-card-title="${h1Title}" data-card-img="${frontImgPath}" data-card-url="${fullCardUrl}" data-card-player="${player}" data-card-serial="${serialDisplay}">+ Compare</button>
         </div>
     </nav>
@@ -481,7 +482,55 @@ ${topNavHtml?no_esc}
         });
     }
 
+    // --- FAVORITES (WATCHLIST) SYNC ---
+    const FAVORITES_KEY = 'maulmann_card_favorites';
+    const cardStableId = "${cardStableId}";
+
+    function getFavorites() {
+        try {
+            const data = localStorage.getItem(FAVORITES_KEY);
+            return data ? JSON.parse(data) : [];
+        } catch (e) {
+            return [];
+        }
+    }
+
+    function updateDetailFavUI() {
+        const favs = getFavorites();
+        const isFav = favs.includes(cardStableId);
+        const favBtn = document.getElementById('favBtn');
+        const favIcon = document.getElementById('favStarIcon');
+        if (!favBtn) return;
+        if (isFav) {
+            favBtn.classList.add('is-fav');
+            if (favIcon) favIcon.textContent = '★';
+            favBtn.title = 'Remove from favorites';
+        } else {
+            favBtn.classList.remove('is-fav');
+            if (favIcon) favIcon.textContent = '☆';
+            favBtn.title = 'Add to favorites';
+        }
+    }
+
+    window.toggleDetailFav = function() {
+        let favs = getFavorites();
+        const idx = favs.indexOf(cardStableId);
+        if (idx !== -1) {
+            favs.splice(idx, 1);
+            showToast("Removed from favorites");
+        } else {
+            favs.push(cardStableId);
+            showToast("⭐ Added to favorites!");
+        }
+        try {
+            localStorage.setItem(FAVORITES_KEY, JSON.stringify(favs));
+        } catch (e) {}
+        updateDetailFavUI();
+    };
+
     document.addEventListener('DOMContentLoaded', () => {
+        updateDetailFavUI();
+
         const pathParts = window.location.pathname.split('/');
         const filename = pathParts[pathParts.length - 1];
         if (filename && filename.endsWith('.html')) {

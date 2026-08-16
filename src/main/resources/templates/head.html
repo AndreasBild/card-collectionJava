@@ -14,7 +14,23 @@
 {{OPENGRAPH}}
 {{EXTRA_HEAD}}
 <link rel="manifest" href="{{ROOT}}manifest.json">
+<link rel="search" type="application/opensearchdescription+xml" title="Juwan Howard Cards" href="{{ROOT}}opensearch.xml">
 <link rel="alternate" type="application/rss+xml" title="Maulmann Card Collection Feed" href="{{ROOT}}rss.xml">
+<script type="speculationrules">
+{
+  "prerender": [
+    {
+      "source": "list",
+      "urls": [
+        "{{ROOT}}Juwan-Howard-Collection.html",
+        "{{ROOT}}rainbows.html",
+        "{{ROOT}}Wantlist.html"
+      ],
+      "eagerness": "moderate"
+    }
+  ]
+}
+</script>
 <script src="{{ROOT}}collector-features.js?v={{BUILD_ID}}" defer></script>
 <script>
     if ('serviceWorker' in navigator) {

@@ -2217,12 +2217,18 @@ figcaption {
 .meter-bar.emerald { background: #059669; }
 .meter-bar.cyan { background: #06b6d4; }
 
-/* --- VIEW MODE SWITCHER --- */
+/* --- VIEW TRANSITIONS API --- */
+@view-transition {
+    navigation: auto;
+}
+
+/* --- VIEW MODE SWITCHER & COLLECTOR TOOLS --- */
 .view-mode-bar {
     display: flex;
     align-items: center;
     gap: 10px;
     margin-bottom: 1rem;
+    flex-wrap: wrap;
 }
 
 .view-label {
@@ -2248,6 +2254,61 @@ figcaption {
     font-weight: 700;
 }
 
+.export-csv-btn {
+    margin-left: auto;
+    background: rgba(31, 41, 61, 0.8);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 6px 14px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.export-csv-btn:hover {
+    background: var(--bg-card-hover);
+    color: var(--accent-gold);
+    border-color: var(--accent-gold);
+}
+
+.card-fav-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    transition: transform 0.15s ease, color 0.15s ease;
+    padding: 2px 6px;
+    line-height: 1;
+}
+
+.card-fav-btn:hover {
+    transform: scale(1.25);
+    color: #fbbf24;
+}
+
+.card-fav-btn.is-fav {
+    color: #fbbf24;
+    filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.6));
+}
+
+.detail-fav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.detail-fav-btn.is-fav {
+    border-color: #fbbf24 !important;
+    color: #fbbf24 !important;
+    background: rgba(251, 191, 36, 0.15) !important;
+}
+
 /* --- QUICK FILTER CHIPS --- */
 .quick-filter-chips {
     display: flex;
@@ -2271,59 +2332,120 @@ figcaption {
     border: 1px solid var(--border-color);
     color: var(--text-secondary);
     padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 600;
+    border-radius: var(--radius-full);
     cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    user-select: none;
 }
 
 .filter-chip:hover {
-    background: var(--bg-card-hover);
     border-color: var(--accent-gold);
-    color: var(--text-primary);
+    color: #fff;
     transform: translateY(-1px);
 }
 
 .filter-chip.active {
-    background: rgba(212, 175, 55, 0.2);
-    border-color: var(--accent-gold);
-    color: var(--accent-gold-light);
-    box-shadow: 0 0 12px rgba(212, 175, 55, 0.35);
+    background: linear-gradient(135deg, var(--accent-gold-dark), var(--accent-gold));
+    color: #0b0f19;
+    border-color: var(--accent-gold-light);
     font-weight: 700;
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
 }
 
-/* --- TOAST NOTIFICATION --- */
+/* --- TOAST NOTIFICATIONS --- */
 .toast-notification {
     position: fixed;
     bottom: 24px;
-    right: 24px;
-    background: #0f172a;
-    color: #f8fafc;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: rgba(17, 24, 39, 0.95);
+    color: var(--text-primary);
     border: 1.5px solid var(--accent-gold);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(212, 175, 55, 0.3);
-    padding: 12px 20px;
-    border-radius: var(--radius-md);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 15px rgba(212, 175, 55, 0.3);
+    padding: 12px 24px;
+    border-radius: var(--radius-full);
     font-size: 0.95rem;
     font-weight: 600;
-    z-index: 100000;
-    transform: translateY(100px);
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     display: flex;
     align-items: center;
     gap: 10px;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+    backdrop-filter: blur(8px);
 }
 
 .toast-notification.toast-show {
-    transform: translateY(0);
+    transform: translateX(-50%) translateY(0);
     opacity: 1;
     pointer-events: auto;
+}
+
+/* --- HIGH-CONTRAST PRINT STYLESHEET --- */
+@media print {
+    @page {
+        margin: 1.2cm;
+    }
+
+    body {
+        background: #fff !important;
+        color: #000 !important;
+        font-size: 10pt;
+    }
+
+    header.topnav, footer.detail-footer, .detail-footer, .topnav, #topnav,
+    .collection-controls, .view-mode-bar, .back-to-top-btn,
+    .compare-sticky-bar, .consent-banner, #consent-banner,
+    .cookie-banner, .carousel-nav, .search-container,
+    .share-btn, .vote-container, .star-rating-widget,
+    .filter-result-bar, .season-jump-bar, .quick-filter-chips,
+    .export-csv-btn, .card-fav-btn, .toast-notification,
+    .card-action-bar, .modal, #cardModal {
+        display: none !important;
+    }
+
+    main.detail-main, .container, .page-container {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    table {
+        border-collapse: collapse !important;
+        width: 100% !important;
+        color: #000 !important;
+    }
+
+    th, td {
+        border: 1px solid #ccc !important;
+        color: #000 !important;
+        background: #fff !important;
+        padding: 5px 8px !important;
+        font-size: 9pt !important;
+    }
+
+    th {
+        background-color: #f3f4f6 !important;
+        font-weight: bold !important;
+    }
+
+    a {
+        color: #000 !important;
+        text-decoration: none !important;
+    }
+
+    .rainbow-set-card, .wantlist-card-item, .metric-card {
+        border: 1px solid #ddd !important;
+        background: #fff !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        page-break-inside: avoid;
+    }
 }
 
 /* --- 9-POCKET BINDER VIEW STYLES --- */
