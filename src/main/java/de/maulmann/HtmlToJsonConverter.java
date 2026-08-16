@@ -80,10 +80,8 @@ public class HtmlToJsonConverter {
             for (int j = 0; j < cells.size(); j++) {
                 headers[j] = cells.get(j).text().trim();
             }
-            if (headers.length > 0) {
-                headerRowIndex = i;
-                break;
-            }
+            headerRowIndex = i;
+            break;
         }
 
         if (headerRowIndex == -1) return cardList;

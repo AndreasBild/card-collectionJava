@@ -43,7 +43,7 @@ public class SharedTemplates {
             for (byte b : digest) {
                 sb.append(String.format("%02x", b));
             }
-            return sb.toString().substring(0, 8);
+            return sb.substring(0, 8);
         } catch (Exception e) {
             return "1.0";
         }

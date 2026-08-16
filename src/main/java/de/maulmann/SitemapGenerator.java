@@ -215,8 +215,7 @@ public class SitemapGenerator {
                     linkMap.put("variant", variant);
                     linkMap.put("number", c.get("Number"));
 
-                    StringBuilder anchorText = new StringBuilder(h1Title);
-                    linkMap.put("text", anchorText.toString());
+                    linkMap.put("text", h1Title);
 
                     seasonGroups.computeIfAbsent(c.seasonFolder, k -> new ArrayList<>()).add(linkMap);
 

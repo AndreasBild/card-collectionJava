@@ -13,14 +13,12 @@ import java.util.List;
 
 /**
  * Fast Local Development & Preview Pipeline.
- *
  * Builds all HTML, CSS, JS, images, sitemaps, and metadata locally in output/
  * while completely bypassing AWS S3 uploads, compression passes, CloudFront
  * invalidations, and live IndexNow API calls.
- *
  * Usage:
  *   mvn exec:java@local
- *   mvn exec:java@local -Dexec.args="--serve" (starts local web server on http://localhost:8080)
+ *   mvn exec:java@local -Dexec.args="--serve" (starts local web server on <a href="http://localhost:8080">...</a>)
  */
 public class LocalDevPipeline {
 
