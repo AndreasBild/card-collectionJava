@@ -12,7 +12,6 @@ import freemarker.template.Template;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
@@ -578,9 +577,9 @@ public class SitemapGenerator {
         sb.append("## Full Database Index\n");
         sb.append("- [llms-full.txt](").append(BASE_URL).append("/llms-full.txt): Complete detailed text index of all 1,300+ card pages with metadata.\n");
 
-        File llmsFile = new File(OUTPUT_DIR + "/llms.txt");
-        try (FileWriter writer = new FileWriter(llmsFile, StandardCharsets.UTF_8)) {
-            writer.write(sb.toString());
+        Path llmsPath = Paths.get(OUTPUT_DIR, "llms.txt");
+        try {
+            Files.writeString(llmsPath, sb.toString(), StandardCharsets.UTF_8);
             log.info("llms.txt successfully generated!");
         } catch (IOException e) {
             log.error("Failed to write llms.txt: {}", e.getMessage());
@@ -725,9 +724,9 @@ public class SitemapGenerator {
             }
         }
 
-        File llmsFullFile = new File(OUTPUT_DIR + "/llms-full.txt");
-        try (FileWriter writer = new FileWriter(llmsFullFile, StandardCharsets.UTF_8)) {
-            writer.write(sb.toString());
+        Path llmsFullPath = Paths.get(OUTPUT_DIR, "llms-full.txt");
+        try {
+            Files.writeString(llmsFullPath, sb.toString(), StandardCharsets.UTF_8);
             log.info("llms-full.txt successfully generated!");
         } catch (IOException e) {
             log.error("Failed to write llms-full.txt: {}", e.getMessage());
@@ -861,9 +860,9 @@ public class SitemapGenerator {
         rss.append("  </channel>\n");
         rss.append("</rss>");
 
-        File rssFile = new File(OUTPUT_DIR + "/rss.xml");
-        try (FileWriter writer = new FileWriter(rssFile, StandardCharsets.UTF_8)) {
-            writer.write(rss.toString());
+        Path rssPath = Paths.get(OUTPUT_DIR, "rss.xml");
+        try {
+            Files.writeString(rssPath, rss.toString(), StandardCharsets.UTF_8);
             log.info("rss.xml successfully generated! ({} items)", addedCount);
         } catch (IOException e) {
             log.error("Failed to write rss.xml: {}", e.getMessage());
@@ -972,10 +971,8 @@ public class SitemapGenerator {
         robots.append("Sitemap: ").append(BASE_URL).append("/llms.txt\n");
         robots.append("Sitemap: ").append(BASE_URL).append("/llms-full.txt\n");
 
-        File robotsFile = new File(OUTPUT_DIR + "/robots.txt");
-        try (FileWriter writer = new FileWriter(robotsFile, StandardCharsets.UTF_8)) {
-            writer.write(robots.toString());
-        }
+        Path robotsPath = Paths.get(OUTPUT_DIR, "robots.txt");
+        Files.writeString(robotsPath, robots.toString(), StandardCharsets.UTF_8);
     }
 
     private static String resolveImageLoc(String pageRelativePath, String imgSrc) {

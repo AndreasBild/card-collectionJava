@@ -123,9 +123,9 @@ public class FirestoreRatingInjector {
     }
 
     private static void loadCache() {
-        File file = new File(CACHE_FILE);
-        if (file.exists()) {
-            try (InputStream in = Files.newInputStream(file.toPath())) {
+        Path cachePath = Paths.get(CACHE_FILE);
+        if (Files.exists(cachePath)) {
+            try (InputStream in = Files.newInputStream(cachePath)) {
                 ratingCache.load(in);
             } catch (IOException e) {
                 log.warn("Could not load rating cache: {}", e.getMessage());
@@ -134,12 +134,16 @@ public class FirestoreRatingInjector {
     }
 
     private static void saveCache() {
-        File file = new File(CACHE_FILE);
-        File parent = file.getParentFile();
-        if (parent != null && !parent.exists()) {
-            parent.mkdirs();
+        Path cachePath = Paths.get(CACHE_FILE);
+        Path parent = cachePath.getParent();
+        if (parent != null) {
+            try {
+                Files.createDirectories(parent);
+            } catch (IOException e) {
+                log.warn("Could not create directories for rating cache: {}", e.getMessage());
+            }
         }
-        try (OutputStream out = Files.newOutputStream(file.toPath())) {
+        try (OutputStream out = Files.newOutputStream(cachePath)) {
             ratingCache.store(out, "Firestore Rating Injection Cache");
         } catch (IOException e) {
             log.warn("Could not save rating cache: {}", e.getMessage());

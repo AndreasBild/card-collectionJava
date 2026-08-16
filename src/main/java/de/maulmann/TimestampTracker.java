@@ -125,9 +125,9 @@ public class TimestampTracker {
 
     public void save() {
         try {
-            File parent = storeFile.getParentFile();
+            Path parent = storeFile.toPath().getParent();
             if (parent != null) {
-                parent.mkdirs();
+                Files.createDirectories(parent);
             }
 
             // Merge current session data into stored data
@@ -136,7 +136,7 @@ public class TimestampTracker {
             // Cleanup: Remove entries for files that no longer exist
             storedData.entrySet().removeIf(entry -> {
                 String identifier = (String) entry.getKey();
-                Path filePath = parent != null ? parent.toPath().resolve(identifier) : Paths.get(identifier);
+                Path filePath = parent != null ? parent.resolve(identifier) : Paths.get(identifier);
                 return !Files.exists(filePath);
             });
 

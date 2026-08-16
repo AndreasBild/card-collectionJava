@@ -10,11 +10,12 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -99,9 +100,9 @@ public class FirebaseConfigManager {
             optionsBuilder.setCredentials(GoogleCredentials.fromStream(
                     new ByteArrayInputStream(serviceAccountJson.getBytes(StandardCharsets.UTF_8))));
         } else {
-            File serviceAccountFile = new File(DEFAULT_SERVICE_ACCOUNT_PATH);
-            if (serviceAccountFile.exists()) {
-                try (InputStream is = new FileInputStream(serviceAccountFile)) {
+            Path serviceAccountPath = Paths.get(DEFAULT_SERVICE_ACCOUNT_PATH);
+            if (Files.exists(serviceAccountPath)) {
+                try (InputStream is = Files.newInputStream(serviceAccountPath)) {
                     optionsBuilder.setCredentials(GoogleCredentials.fromStream(is));
                 }
             } else {

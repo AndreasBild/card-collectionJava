@@ -951,8 +951,10 @@ public class FileGenerator {
     }
 
     private static void processTemplate(String templateName, Map<String, Object> data, String outputPath) throws Exception {
-        File out = new File(outputPath);
-        if (out.getParentFile() != null) out.getParentFile().mkdirs();
+        Path outPath = Paths.get(outputPath);
+        if (outPath.getParent() != null) {
+            Files.createDirectories(outPath.getParent());
+        }
 
         Template template = FM_CONFIG.get().getTemplate(templateName);
 
@@ -961,7 +963,7 @@ public class FileGenerator {
         String finalHtml = stringWriter.toString();
 
         if (timestampTracker != null && finalHtml.contains("[[STABLE_TIME]]")) {
-            String relativeOutputPath = new File(pathOutput).toURI().relativize(out.toURI()).getPath();
+            String relativeOutputPath = Paths.get(pathOutput).toUri().relativize(outPath.toUri()).getPath();
             String stableTime = timestampTracker.getStableTimestamp(relativeOutputPath, finalHtml);
             finalHtml = finalHtml.replace("[[STABLE_TIME]]", stableTime);
         }
@@ -971,7 +973,7 @@ public class FileGenerator {
             finalHtml = finalHtml.replace("{{CONSENT_BANNER}}", SharedTemplates.getConsentBanner(root));
         }
 
-        Files.writeString(out.toPath(), finalHtml, StandardCharsets.UTF_8);
+        Files.writeString(outPath, finalHtml, StandardCharsets.UTF_8);
     }
 
     public static List<CardJson> loadCardsFromJson() {

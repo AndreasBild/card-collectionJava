@@ -89,9 +89,9 @@ public class FileTracker {
      */
     public void save() {
         try {
-            File parent = storeFile.getParentFile();
+            Path parent = storeFile.toPath().getParent();
             if (parent != null) {
-                parent.mkdirs();
+                Files.createDirectories(parent);
             }
 
             // Cleanup: Remove entries for files that no longer exist

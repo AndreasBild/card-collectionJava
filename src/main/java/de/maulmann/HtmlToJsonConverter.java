@@ -28,8 +28,13 @@ public class HtmlToJsonConverter {
 
     public static void convertOtherBucketsToJson() {
         String[] files = { "Baseball", "Flawless", "Panini", "Wantlist" };
-        File jsonDir = new File("content/json");
-        if (!jsonDir.exists()) jsonDir.mkdirs();
+        Path jsonDir = Paths.get("content/json");
+        try {
+            Files.createDirectories(jsonDir);
+        } catch (IOException e) {
+            log.error("Could not create directory {}: {}", jsonDir, e.getMessage());
+            return;
+        }
 
         for (String name : files) {
             Path htmlPath = Paths.get("content/other", name + ".html");
