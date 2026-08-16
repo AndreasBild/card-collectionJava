@@ -5,9 +5,14 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * Isolated service for generating JSON-LD Schema.org metadata and FAQ sections for card detail pages.
@@ -16,20 +21,20 @@ public class CardSchemaGenerator {
 
     private static final String BASE_URL = CardUtils.BASE_URL;
     private static final TriviaManager TRIVIA_MANAGER = TriviaManager.getInstance();
-    private static final java.util.Properties RATING_CACHE = new java.util.Properties();
+    private static final Properties RATING_CACHE = new Properties();
     private static boolean ratingCacheLoaded = false;
 
     public static synchronized void loadRatingCache() {
-        java.io.File cacheFile = new java.io.File("output/rating-cache.properties");
-        if (cacheFile.exists()) {
-            try (java.io.InputStream in = java.nio.file.Files.newInputStream(cacheFile.toPath())) {
+        Path cachePath = Paths.get("output", "rating-cache.properties");
+        if (Files.exists(cachePath)) {
+            try (InputStream in = Files.newInputStream(cachePath)) {
                 RATING_CACHE.clear();
                 RATING_CACHE.load(in);
-                ratingCacheLoaded = true;
             } catch (Exception _) {
                 // Ignore
             }
         }
+        ratingCacheLoaded = true;
     }
 
     public static synchronized void setRatingProperty(String key, String value) {
@@ -80,7 +85,12 @@ public class CardSchemaGenerator {
         if (isValid(combined)) {
             items.add(new FaqItem("How rare is this specific card?", "This card is serially numbered " + combined + ", making it a strictly limited edition collectible."));
         } else if (c.has("Serial")) {
-            items.add(new FaqItem("How rare is this specific card?", "This card is serially numbered " + c.get("Serial") + " out of a total print run of " + c.get("Print Run") + "."));
+            String serialVal = c.get("Serial");
+            String printRunVal = c.get("Print Run");
+            String text = isValid(printRunVal) ?
+                    "This card is serially numbered " + serialVal + " out of a total print run of " + printRunVal + "." :
+                    "This card is serially numbered " + serialVal + ", making it a strictly limited edition collectible.";
+            items.add(new FaqItem("How rare is this specific card?", text));
         }
 
         if (c.has("Rookie")) {

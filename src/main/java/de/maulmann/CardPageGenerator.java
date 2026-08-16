@@ -333,8 +333,11 @@ public class CardPageGenerator {
         }
 
         try {
-            File dupFile = new File("output/Duplicates.txt");
-            Files.write(dupFile.toPath(), duplicateLog, StandardCharsets.UTF_8);
+            Path dupPath = Paths.get("output", "Duplicates.txt");
+            if (dupPath.getParent() != null) {
+                Files.createDirectories(dupPath.getParent());
+            }
+            Files.write(dupPath, duplicateLog, StandardCharsets.UTF_8);
             log.info("Saved Duplicates.txt with {} entries.", duplicateLog.size() - 4);
         } catch (IOException e) {
             log.error("Failed to write Duplicates.txt", e);
@@ -1072,11 +1075,14 @@ public class CardPageGenerator {
                                 var readers = javax.imageio.ImageIO.getImageReaders(iis);
                                 if (readers.hasNext()) {
                                     var reader = readers.next();
-                                    reader.setInput(iis);
-                                    int w = reader.getWidth(0);
-                                    int h = reader.getHeight(0);
-                                    reader.dispose();
-                                    return w > h;
+                                    try {
+                                        reader.setInput(iis);
+                                        int w = reader.getWidth(0);
+                                        int h = reader.getHeight(0);
+                                        return w > h;
+                                    } finally {
+                                        reader.dispose();
+                                    }
                                 }
                             }
                         }
@@ -1281,6 +1287,9 @@ public class CardPageGenerator {
 
         try {
             Path outPath = Paths.get("output", "MissingImages.txt");
+            if (outPath.getParent() != null) {
+                Files.createDirectories(outPath.getParent());
+            }
             Path rootPath = Paths.get("MissingImages.txt");
             Files.write(outPath, reportLines, StandardCharsets.UTF_8);
             Files.write(rootPath, reportLines, StandardCharsets.UTF_8);
