@@ -482,7 +482,15 @@ public class CardPageGenerator {
         List<CardSchemaGenerator.FaqItem> faqItems = CardSchemaGenerator.computeFaqItems(c);
         String faqHtml = CardSchemaGenerator.generateFaqHtml(faqItems);
         String frontImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + resolvedImageBase + "-front.avif";
-        data.put("headHtml", SharedTemplates.getHead(browserTitle, metaDesc, ROOT, c.fullRelativePath, frontImgUrl));
+        String cardPreload = "<link rel=\"preload\" as=\"image\" type=\"image/avif\" " +
+                "href=\"" + frontImgPath.replace(".avif", "-400w.avif") + "\" " +
+                "imagesrcset=\"" + frontImgPath.replace(".avif", "-400w.avif") + " 400w, " +
+                frontImgPath.replace(".avif", "-600w.avif") + " 600w, " +
+                frontImgPath.replace(".avif", "-900w.avif") + " 900w, " +
+                frontImgPath + " 1200w\" " +
+                "imagesizes=\"(max-width: 600px) 380px, (max-width: 1024px) 50vw, 580px\" " +
+                "fetchpriority=\"high\">";
+        data.put("headHtml", SharedTemplates.getHead(browserTitle, metaDesc, ROOT, c.fullRelativePath, frontImgUrl, cardPreload));
         data.put("jsonLd", CardSchemaGenerator.generateJsonLd(c, metaDesc, h1Title, overviewPage, resolvedImageBase, faqItems));
         String collectionName = "Collection";
         String activeNav = "collection";

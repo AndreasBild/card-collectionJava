@@ -334,6 +334,38 @@ public class CardSchemaGenerator {
             sb.append(",\n  \"category\": \"Sports Trading Cards\"");
         }
 
+        List<String> additionalProperties = new ArrayList<>();
+        if (isValid(c.get("Serial/Print Run"))) {
+            additionalProperties.add("{\"@type\": \"PropertyValue\", \"name\": \"Serial / Print Run\", \"value\": \"" + escapeJson(c.get("Serial/Print Run")) + "\"}");
+        } else if (c.has("Serial")) {
+            additionalProperties.add("{\"@type\": \"PropertyValue\", \"name\": \"Serial Number\", \"value\": \"" + escapeJson(c.get("Serial")) + "\"}");
+        }
+        if (c.has("Grade")) {
+            additionalProperties.add("{\"@type\": \"PropertyValue\", \"name\": \"Grade\", \"value\": \"" + escapeJson(c.get("Grade")) + "\"}");
+        }
+        if (c.has("Grading Co.")) {
+            additionalProperties.add("{\"@type\": \"PropertyValue\", \"name\": \"Grading Company\", \"value\": \"" + escapeJson(c.get("Grading Co.")) + "\"}");
+        }
+        if (c.has("Rookie") && c.get("Rookie").equalsIgnoreCase("Yes")) {
+            additionalProperties.add("{\"@type\": \"PropertyValue\", \"name\": \"Rookie Card\", \"value\": \"Yes\"}");
+        }
+        if (c.has("Autograph") && c.get("Autograph").equalsIgnoreCase("Yes")) {
+            additionalProperties.add("{\"@type\": \"PropertyValue\", \"name\": \"Autograph\", \"value\": \"Certified Authentic\"}");
+        }
+        if (c.has("Memorabilia") && c.get("Memorabilia").equalsIgnoreCase("Yes")) {
+            additionalProperties.add("{\"@type\": \"PropertyValue\", \"name\": \"Memorabilia\", \"value\": \"Game-Used / Patch\"}");
+        }
+
+        if (!additionalProperties.isEmpty()) {
+            sb.append(",\n  \"additionalProperty\": [\n");
+            for (int i = 0; i < additionalProperties.size(); i++) {
+                sb.append("    ").append(additionalProperties.get(i));
+                if (i < additionalProperties.size() - 1) sb.append(",");
+                sb.append("\n");
+            }
+            sb.append("  ]");
+        }
+
         if (hasCachedRating) {
             double rawAverage = ratingSum / ratingCount;
             double averageRating = Math.clamp(rawAverage, 1.0, 5.0);

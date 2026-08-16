@@ -100,6 +100,10 @@ public class SharedTemplates {
     }
 
     public static String getHead(String title, String description, String root, String page, String image) {
+        return getHead(title, description, root, page, image, "");
+    }
+
+    public static String getHead(String title, String description, String root, String page, String image, String extraHead) {
         String template = loadResource("/templates/head.html");
         if (template.isEmpty()) {
             return "<title>" + escapeHtml(title) + "</title><meta name=\"description\" content=\"" + escapeHtml(description) + "\">";
@@ -110,6 +114,7 @@ public class SharedTemplates {
                 .replace("{{ANALYTICS}}", getAnalytics())
                 .replace("{{SEO}}", getSeo(page, description))
                 .replace("{{OPENGRAPH}}", getOpenGraph(page, title, description, image))
+                .replace("{{EXTRA_HEAD}}", extraHead != null ? extraHead : "")
                 .replace("{{FAVICON}}", getFavicon(root))
                 .replace("{{BUILD_ID}}", BUILD_ID); // <--- NEW CACHE BUSTER
     }

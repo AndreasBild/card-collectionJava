@@ -466,6 +466,20 @@ public class FileGenerator {
                     "Welcome to the ultimate Juwan Howard Private Collection. A Super Collector showcase featuring 1,000+ unique cards, including 1/1 Masterpieces, PMGs, Rubies, and rare 90s basketball inserts.",
                     "index.html", "index", "");
 
+            String indexHeroPreload = "<link rel=\"preload\" as=\"image\" type=\"image/avif\" " +
+                    "href=\"images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-PMG-sn47-front-200w.avif\" " +
+                    "imagesrcset=\"images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-PMG-sn47-front-200w.avif 200w, " +
+                    "images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-PMG-sn47-front-400w.avif 400w, " +
+                    "images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-PMG-sn47-front-600w.avif 600w, " +
+                    "images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-PMG-sn47-front-900w.avif 900w, " +
+                    "images/1997-98/Juwan-Howard-Washington-Bullets-1997-98-Fleer-Fleer-Metal-Universe-Base-Set-Precious-Metal-Gems-Red-33-PMG-sn47-front.avif 1200w\" " +
+                    "imagesizes=\"(max-width: 768px) 190px, 260px\" fetchpriority=\"high\">";
+
+            indexData.put("headHtml", SharedTemplates.getHead(
+                    "Juwan Howard Super Collector | Private Collection",
+                    "Welcome to the ultimate Juwan Howard Private Collection. A Super Collector showcase featuring 1,000+ unique cards, including 1/1 Masterpieces, PMGs, Rubies, and rare 90s basketball inserts.",
+                    "", "index.html", DEFAULT_IMAGE, indexHeroPreload));
+
             List<Map<String, String>> indexBreadcrumbItems = new ArrayList<>();
             indexBreadcrumbItems.add(Map.of("name", "Home", "link", ""));
             indexData.put("breadcrumbHtml", SharedTemplates.getBreadcrumb(indexBreadcrumbItems));

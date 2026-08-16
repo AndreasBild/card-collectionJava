@@ -72,6 +72,17 @@ ${topNavHtml?no_esc}
             <button id="viewBinderBtn" class="view-btn" onclick="setCollectionLayout('binder')">&#x1F4D2; 9-Pocket Binder</button>
         </div>
 
+        <div class="quick-filter-chips" aria-label="Quick Filter Highlights">
+            <span class="quick-filter-title">⚡ Highlights:</span>
+            <button type="button" class="filter-chip" onclick="toggleQuickFilter('masterpiece')" data-filter="masterpiece">🔥 1/1 Masterpieces</button>
+            <button type="button" class="filter-chip" onclick="toggleQuickFilter('pmg')" data-filter="pmg">💎 PMG</button>
+            <button type="button" class="filter-chip" onclick="toggleQuickFilter('rookie')" data-filter="rookie">⭐ Rookies</button>
+            <button type="button" class="filter-chip" onclick="toggleQuickFilter('auto')" data-filter="auto">✍️ Autographs</button>
+            <button type="button" class="filter-chip" onclick="toggleQuickFilter('gameused')" data-filter="gameused">🛡️ Game-Used</button>
+            <button type="button" class="filter-chip" onclick="toggleQuickFilter('gemmint')" data-filter="gemmint">🏅 Gem Mint (9.5+)</button>
+            <button type="button" class="filter-chip" onclick="toggleQuickFilter('ruby')" data-filter="ruby">🔴 Star Rubies</button>
+        </div>
+
         <div class="collection-controls filter-container">
             <strong class="filter-label">Filter Collection:</strong>
             <select id="seasonFilter" class="filter-select">
@@ -333,6 +344,25 @@ ${topNavHtml?no_esc}
                     if (filterResultBar) filterResultBar.style.display = 'none';
                 }
 
+                // Sync active states on quick filter chips
+                document.querySelectorAll('.filter-chip').forEach(chip => {
+                    const f = chip.getAttribute('data-filter');
+                    let q = '';
+                    if (f === 'masterpiece') q = '= 1';
+                    else if (f === 'pmg') q = 'pmg';
+                    else if (f === 'rookie') q = 'rookie';
+                    else if (f === 'auto') q = 'auto';
+                    else if (f === 'gameused') q = 'game-used';
+                    else if (f === 'gemmint') q = 'gem mint';
+                    else if (f === 'ruby') q = 'ruby';
+
+                    if (searchVal !== '' && (searchVal === q || (q === '= 1' && (searchVal === '=1' || searchVal === '1/1' || searchVal === 'masterpiece')) || (q === 'game-used' && (searchVal === 'game used' || searchVal === 'patch' || searchVal === 'jersey')))) {
+                        chip.classList.add('active');
+                    } else {
+                        chip.classList.remove('active');
+                    }
+                });
+
                 if (totalVisible === 0) {
                     if (searchEmptyState) searchEmptyState.style.display = 'block';
                     if (jumpBar) jumpBar.style.display = 'none';
@@ -341,6 +371,33 @@ ${topNavHtml?no_esc}
                     if (jumpBar) jumpBar.style.display = '';
                 }
             }
+
+            window.toggleQuickFilter = function(filterType) {
+                const textSearch = document.getElementById('textSearch');
+                const seasonFilter = document.getElementById('seasonFilter');
+                if (!textSearch) return;
+
+                let targetQuery = '';
+                if (filterType === 'masterpiece') targetQuery = '= 1';
+                else if (filterType === 'pmg') targetQuery = 'PMG';
+                else if (filterType === 'rookie') targetQuery = 'Rookie';
+                else if (filterType === 'auto') targetQuery = 'Auto';
+                else if (filterType === 'gameused') targetQuery = 'Game-Used';
+                else if (filterType === 'gemmint') targetQuery = 'Gem Mint';
+                else if (filterType === 'ruby') targetQuery = 'Ruby';
+
+                const currentVal = textSearch.value.trim().toLowerCase();
+                const isAlreadyActive = (currentVal === targetQuery.toLowerCase()) || 
+                    (filterType === 'masterpiece' && (currentVal === '=1' || currentVal === '1/1' || currentVal === 'masterpiece'));
+
+                if (isAlreadyActive) {
+                    textSearch.value = '';
+                } else {
+                    if (seasonFilter) seasonFilter.value = 'all';
+                    textSearch.value = targetQuery;
+                }
+                applyFilters();
+            };
 
             window.clearFilters = function() {
                 const s = document.getElementById('seasonFilter');

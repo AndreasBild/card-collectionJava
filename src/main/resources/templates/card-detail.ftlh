@@ -25,7 +25,7 @@ ${topNavHtml?no_esc}
                 <a id="nextCardLink" title="Next Card Details" href="${nextLink}"
                    class="modern-button no-text-decoration">Next &raquo;</a>
             </#if>
-            <button id="shareBtn" title="Share this card" class="modern-button" style="display: none;">Share</button>
+            <button id="shareBtn" title="Share or copy card link" class="modern-button">🔗 Share</button>
             <button id="compareBtn" title="Compare this card with others" class="modern-button compare-toggle-btn" data-card-id="${cardStableId}" data-card-title="${h1Title}" data-card-img="${frontImgPath}" data-card-url="${fullCardUrl}" data-card-player="${player}" data-card-serial="${serialDisplay}">+ Compare</button>
         </div>
     </nav>
@@ -38,7 +38,7 @@ ${topNavHtml?no_esc}
     </div>
     <div class="card-images-container">
         <div class="card-image-wrapper">
-            <div class="flip-container">
+            <div class="flip-container" onclick="toggleCardFlip()">
                 <div class="flip-card-inner">
                     <div class="flip-face-front">
                         <figure>
@@ -70,6 +70,9 @@ ${topNavHtml?no_esc}
                     </div>
                 </div>
                 <div class="flip-icon-overlay"></div>
+            </div>
+            <div class="card-action-bar">
+                <button type="button" class="modern-button card-action-btn" id="zoomCardBtn" onclick="openCardLightbox()"><span class="icon">🔍</span> High-Res Zoom</button>
             </div>
             <p class="img-caption">&#x1F50D; Tap Card to Flip</p>
         </div>
@@ -360,45 +363,125 @@ ${topNavHtml?no_esc}
     </#if>
     ${footerHtml?no_esc}
 </main>
-<div id="cardModal" class="modal" aria-hidden="true">
+<div id="cardModal" class="modal" aria-hidden="true" onclick="if(event.target===this)closeModal()">
     <button class="close-modal-btn" aria-label="Close zoomed image" onclick="closeModal()">&times;</button>
-    <button class="flip-modal-btn" aria-label="Flip card to other side" onclick="flipCard()">
-        &#8644; Flip Card
-    </button>
-    <img class="modal-content" id="img01" alt="Zoomed card view" title="Zoomed card view">
+    <div class="modal-controls">
+        <button class="flip-modal-btn" aria-label="Flip card to other side" onclick="flipModalCard()">
+            &#8644; Flip Side
+        </button>
+        <button class="zoom-toggle-btn" id="zoomToggleBtn" aria-label="Toggle zoom level" onclick="toggleModalZoom()">
+            <span id="zoomLevelText">🔍 2x</span>
+        </button>
+    </div>
+    <img class="modal-content" id="img01" alt="Zoomed card view" title="Click to zoom in/out" onclick="toggleModalZoom()">
+</div>
+<div id="toastNotification" class="toast-notification" aria-live="polite">
+    <span class="toast-icon">✨</span>
+    <span id="toastMessage" class="toast-text">Link copied to clipboard!</span>
 </div>
 <script>
-    var modal = document.getElementById("cardModal");
-    var modalImg = document.getElementById("img01");
-    var currentModalSrc = "";
-    var alternateModalSrc = "";
+    const modal = document.getElementById("cardModal");
+    const modalImg = document.getElementById("img01");
+    const zoomLevelText = document.getElementById("zoomLevelText");
+    const flipInner = document.querySelector(".flip-card-inner");
 
-    function openModal(src, altSrc) {
+    const highResFront = "${frontImgPath}";
+    const highResBack = "${backImgPath}";
+    let currentModalSrc = highResFront;
+    let alternateModalSrc = highResBack;
+    let currentZoomLevel = 1;
+
+    function toggleCardFlip() {
+        if (flipInner) {
+            flipInner.classList.toggle("flipped");
+        }
+    }
+
+    function openCardLightbox() {
+        if (!modal || !modalImg) return;
+        const isFlipped = flipInner && flipInner.classList.contains("flipped");
+        currentModalSrc = isFlipped ? highResBack : highResFront;
+        alternateModalSrc = isFlipped ? highResFront : highResBack;
+
+        modalImg.src = currentModalSrc;
+        currentZoomLevel = 1;
+        modalImg.className = "modal-content";
+        if (zoomLevelText) zoomLevelText.textContent = "🔍 2x";
+
         modal.style.display = "flex";
         modal.setAttribute("aria-hidden", "false");
-        modalImg.src = src;
-        currentModalSrc = src;
-        alternateModalSrc = altSrc;
     }
 
     function closeModal() {
+        if (!modal) return;
         modal.style.display = "none";
         modal.setAttribute("aria-hidden", "true");
+        currentZoomLevel = 1;
+        if (modalImg) modalImg.className = "modal-content";
     }
 
-    function flipCard() {
-        var temp = currentModalSrc;
+    function flipModalCard() {
+        const temp = currentModalSrc;
         currentModalSrc = alternateModalSrc;
         alternateModalSrc = temp;
-        modalImg.src = currentModalSrc;
+        if (modalImg) modalImg.src = currentModalSrc;
     }
 
-    window.onclick = function (event) {
-        if (event.target == modal) closeModal();
+    function toggleModalZoom() {
+        if (!modalImg) return;
+        if (currentZoomLevel === 1) {
+            currentZoomLevel = 2;
+            modalImg.className = "modal-content is-zoomed-2x";
+            if (zoomLevelText) zoomLevelText.textContent = "🔍 3x";
+        } else if (currentZoomLevel === 2) {
+            currentZoomLevel = 3;
+            modalImg.className = "modal-content is-zoomed-3x";
+            if (zoomLevelText) zoomLevelText.textContent = "🔍 1x";
+        } else {
+            currentZoomLevel = 1;
+            modalImg.className = "modal-content";
+            if (zoomLevelText) zoomLevelText.textContent = "🔍 2x";
+        }
+    }
+
+    function showToast(message) {
+        const toast = document.getElementById("toastNotification");
+        const toastMsg = document.getElementById("toastMessage");
+        if (!toast) return;
+        if (toastMsg) toastMsg.textContent = message;
+        toast.classList.add("toast-show");
+        setTimeout(() => {
+            toast.classList.remove("toast-show");
+        }, 2500);
+    }
+
+    const shareBtn = document.getElementById('shareBtn');
+    if (shareBtn) {
+        shareBtn.addEventListener('click', async () => {
+            const h1 = document.querySelector('h1');
+            const shareTitle = document.title;
+            const shareText = 'Check out this rare Juwan Howard card: ' + (h1 ? h1.textContent : document.title);
+            const shareUrl = window.location.href;
+
+            if (navigator.share) {
+                try {
+                    await navigator.share({ title: shareTitle, text: shareText, url: shareUrl });
+                    return;
+                } catch (e) {
+                    if (e.name === 'AbortError') return;
+                }
+            }
+
+            try {
+                await navigator.clipboard.writeText(shareUrl);
+                showToast("🔗 Link copied to clipboard!");
+            } catch (err) {
+                showToast("Card URL: " + shareUrl);
+            }
+        });
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-        // Extract card ID from filename
         const pathParts = window.location.pathname.split('/');
         const filename = pathParts[pathParts.length - 1];
         if (filename && filename.endsWith('.html')) {
@@ -408,16 +491,50 @@ ${topNavHtml?no_esc}
                 backLink.href += '#' + cardId;
             }
         }
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const swipeContainer = document.querySelector('.card-images-container');
+        if (swipeContainer) {
+            swipeContainer.addEventListener('touchstart', (e) => {
+                if (e.touches.length > 0) touchStartX = e.touches[0].clientX;
+            }, { passive: true });
+            
+            swipeContainer.addEventListener('touchend', (e) => {
+                if (e.changedTouches.length > 0) {
+                    touchEndX = e.changedTouches[0].clientX;
+                    const diffX = touchEndX - touchStartX;
+                    if (Math.abs(diffX) > 60) {
+                        if (diffX > 0) {
+                            const prevLink = document.getElementById('prevCardLink');
+                            if (prevLink) window.location.href = prevLink.href;
+                        } else {
+                            const nextLink = document.getElementById('nextCardLink');
+                            if (nextLink) window.location.href = nextLink.href;
+                        }
+                    }
+                }
+            }, { passive: true });
+        }
     });
+
     document.addEventListener('keydown', function (event) {
+        if (event.target && ['INPUT', 'TEXTAREA', 'SELECT'].includes(event.target.tagName)) return;
         if (event.key === "Escape") closeModal();
         if (event.key === "ArrowLeft") {
-            var prevLink = document.getElementById('prevCardLink');
+            const prevLink = document.getElementById('prevCardLink');
             if (prevLink) window.location.href = prevLink.href;
         }
         if (event.key === "ArrowRight") {
-            var nextLink = document.getElementById('nextCardLink');
+            const nextLink = document.getElementById('nextCardLink');
             if (nextLink) window.location.href = nextLink.href;
+        }
+        if (event.key === "f" || event.key === "F") {
+            if (modal && modal.style.display === "flex") {
+                flipModalCard();
+            } else {
+                toggleCardFlip();
+            }
         }
     });
 </script>
@@ -484,22 +601,6 @@ ${topNavHtml?no_esc}
     const localStorageRatingKey = `voted_rating_${cardId}`;
 
     let pendingRating = null;
-
-    // Web Share API implementation
-    const shareBtn = document.getElementById('shareBtn');
-    if (shareBtn && navigator.share) {
-        shareBtn.style.display = 'inline-flex';
-        shareBtn.addEventListener('click', async () => {
-            try {
-                const h1 = document.querySelector('h1');
-                await navigator.share({
-                    title: document.title,
-                    text: 'Check out this rare Juwan Howard card: ' + (h1 ? h1.textContent : document.title),
-                    url: window.location.href
-                });
-            } catch (error) {}
-        });
-    }
 
     if (likeBtn && dislikeBtn && getStorage(localStorageKey)) {
         likeBtn.disabled = true;

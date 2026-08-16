@@ -1413,16 +1413,73 @@ tr:hover {
     background-color: var(--accent-red) !important;
     border-color: var(--accent-red) !important;
     padding: 10px 22px !important;
+    z-index: 2010;
 }
 
-.flip-modal-btn {
+.modal-controls {
     position: absolute;
     top: 24px;
     left: 24px;
+    display: flex;
+    gap: 10px;
+    z-index: 2010;
+}
+
+.flip-modal-btn {
+    position: static !important;
     background-color: var(--accent-gold) !important;
     border-color: var(--accent-gold) !important;
     color: #0b0f19 !important;
     padding: 10px 22px !important;
+}
+
+.zoom-toggle-btn {
+    background-color: rgba(30, 41, 59, 0.85) !important;
+    border: 1.5px solid var(--accent-gold) !important;
+    color: var(--accent-gold) !important;
+    padding: 10px 18px !important;
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: var(--transition-fast);
+}
+
+.zoom-toggle-btn:hover {
+    background-color: var(--accent-gold) !important;
+    color: #0b0f19 !important;
+}
+
+.modal-content {
+    cursor: zoom-in;
+    transition: transform 0.25s ease;
+}
+
+.modal-content.is-zoomed-2x {
+    transform: scale(1.7);
+    cursor: zoom-out;
+}
+
+.modal-content.is-zoomed-3x {
+    transform: scale(2.4);
+    cursor: zoom-out;
+}
+
+/* --- CARD DETAIL ACTION BAR --- */
+.card-action-bar {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+}
+
+.card-action-btn {
+    width: auto !important;
+    min-width: 140px;
+    padding: 8px 18px !important;
+    font-size: 0.9rem !important;
+    border-radius: var(--radius-full);
 }
 
 .no-border-bg { border: none !important; background: transparent !important; }
@@ -2191,6 +2248,84 @@ figcaption {
     font-weight: 700;
 }
 
+/* --- QUICK FILTER CHIPS --- */
+.quick-filter-chips {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 10px 0 16px 0;
+}
+
+.quick-filter-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--accent-gold);
+    margin-right: 4px;
+}
+
+.filter-chip {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    user-select: none;
+}
+
+.filter-chip:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-gold);
+    color: var(--text-primary);
+    transform: translateY(-1px);
+}
+
+.filter-chip.active {
+    background: rgba(212, 175, 55, 0.2);
+    border-color: var(--accent-gold);
+    color: var(--accent-gold-light);
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.35);
+    font-weight: 700;
+}
+
+/* --- TOAST NOTIFICATION --- */
+.toast-notification {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #0f172a;
+    color: #f8fafc;
+    border: 1.5px solid var(--accent-gold);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(212, 175, 55, 0.3);
+    padding: 12px 20px;
+    border-radius: var(--radius-md);
+    font-size: 0.95rem;
+    font-weight: 600;
+    z-index: 100000;
+    transform: translateY(100px);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.toast-notification.toast-show {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
 /* --- 9-POCKET BINDER VIEW STYLES --- */
 .binder-view-active .table-responsive table {
     display: grid !important;
@@ -2383,6 +2518,8 @@ figcaption {
     border-bottom: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.1));
     padding: 28px 20px;
     margin-top: 36px;
+    content-visibility: auto;
+    contain-intrinsic-size: auto 300px;
 }
 
 .seo-showcase-container {
