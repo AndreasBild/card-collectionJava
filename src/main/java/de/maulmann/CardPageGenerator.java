@@ -589,7 +589,7 @@ public class CardPageGenerator {
         data.put("sameCompanyCards", sameCompanyCards);
         data.put("sameCompanyTitle", sameCompanyTitle);
 
-        data.put("relatedCards", findRelatedCards(c, cardIndex, 4, rareCardIds));
+        data.put("relatedCards", findRelatedCards(c, cardIndex, 6, rareCardIds));
         data.put("externalLinks", generateExternalLinks(c));
 
         data.put("faqHtml", faqHtml);

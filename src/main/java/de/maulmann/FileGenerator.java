@@ -625,7 +625,7 @@ public class FileGenerator {
         try {
             log.info("Baue rainbows.html (Strict Single-Card Parallel Rainbow Tracker)...");
             Map<String, Object> data = createBaseData(
-                    "Parallel Rainbow Tracker & Set Checklists | Maulmann Private Vault",
+                    "Parallel Rainbow Tracker & Set Checklists | Juwan Howard Private Vault",
                     "Track completion progress of Juwan Howard single-card parallel rainbows (cards with identical season, manufacturer, brand, theme, and card number).",
                     "rainbows.html", "rainbows", "");
 
@@ -906,7 +906,7 @@ public class FileGenerator {
         try {
             log.info("Baue binder.html (3D Collector's 9-Pocket Binder View)...");
             Map<String, Object> data = createBaseData(
-                    "3D Collector's 9-Pocket Binder | Maulmann Private Vault",
+                    "3D Collector's 9-Pocket Binder | Juwan Howard Private Vault",
                     "Flip through the complete Juwan Howard card collection in an interactive 3D 9-Pocket Ultra-PRO style digital binder.",
                     "binder.html", "binder", "");
 

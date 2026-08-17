@@ -79,14 +79,14 @@ ${topNavHtml?no_esc}
             <button type="button" class="filter-chip active" onclick="filterChip(this, 'all')">All Sets (${totalRainbowSets!0})</button>
             <button type="button" class="filter-chip" onclick="filterChip(this, '1/1')">👑 With 1/1</button>
             <button type="button" class="filter-chip" onclick="filterChip(this, '90s')">🏀 90s Era</button>
-            <button type="button" class="filter-chip" onclick="filterChip(this, 'modern')">✨ Modern Panini</button>
+            <button type="button" class="filter-chip" onclick="filterChip(this, 'panini')">✨ Panini</button>
         </div>
     </div>
 
     <section class="rainbow-sets-container" id="rainbowSetsContainer">
         <#if rainbowSets?? && (rainbowSets?size > 0)>
             <#list rainbowSets as set>
-                <div class="rainbow-set-card" data-season="${set.season!''}" data-brand="${set.brand!''}" data-theme="${set.theme!''}" data-name="${set.name!''}">
+                <div class="rainbow-set-card" data-season="${set.season!''}" data-company="${set.company!''}" data-brand="${set.brand!''}" data-theme="${set.theme!''}" data-name="${set.name!''}">
                     <div class="rainbow-set-header">
                         <div>
                             <h3 class="rainbow-set-title">${set.name}</h3>
@@ -181,21 +181,22 @@ ${footerHtml?no_esc}
         const cards = document.querySelectorAll('.rainbow-set-card');
 
         cards.forEach(card => {
-            const season = (card.dataset.season || '').toLowerCase();
+            const company = (card.dataset.company || '').toLowerCase();
             const brand = (card.dataset.brand || '').toLowerCase();
+            const season = (card.dataset.season || '').toLowerCase();
             const name = (card.dataset.name || '').toLowerCase();
             const theme = (card.dataset.theme || '').toLowerCase();
             const textContent = card.textContent.toLowerCase();
 
-            const matchesText = !query || name.includes(query) || season.includes(query) || brand.includes(query) || theme.includes(query) || textContent.includes(query);
+            const matchesText = !query || name.includes(query) || season.includes(query) || company.includes(query) || brand.includes(query) || theme.includes(query) || textContent.includes(query);
 
             let matchesChip = true;
             if (activeFilter === '1/1') {
                 matchesChip = textContent.includes('1/1') || textContent.includes('1 of 1') || textContent.includes('masterpiece');
             } else if (activeFilter === '90s') {
                 matchesChip = season.startsWith('199') || season.includes('1994') || season.includes('1995') || season.includes('1996') || season.includes('1997') || season.includes('1998') || season.includes('1999');
-            } else if (activeFilter === 'modern') {
-                matchesChip = season.startsWith('20') || brand.includes('flawless') || brand.includes('panini') || brand.includes('select') || brand.includes('prizm') || brand.includes('immaculate');
+            } else if (activeFilter === 'panini') {
+                matchesChip = company.includes('panini') || brand.includes('panini') || brand.includes('flawless') || brand.includes('prizm') || brand.includes('select') || brand.includes('immaculate') || brand.includes('national treasures') || brand.includes('court kings') || brand.includes('spectra') || brand.includes('noir');
             }
 
             card.style.display = (matchesText && matchesChip) ? 'block' : 'none';
