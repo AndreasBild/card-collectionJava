@@ -942,9 +942,12 @@ public class FileGenerator {
                 item.put("backImg", backBase + "-400w.avif");
                 item.put("backImgFallback", backBase + "-400w.webp");
 
-                boolean isLandscape = CardPageGenerator.isImageLandscape(cd.seasonFolder, imageBaseName);
-                item.put("isLandscape", isLandscape);
-                item.put("orientationClass", isLandscape ? "is-landscape" : "is-portrait");
+                boolean isFrontLandscape = CardPageGenerator.isImageLandscape(cd.seasonFolder, imageBaseName, "front");
+                boolean isBackLandscape = CardPageGenerator.isImageLandscape(cd.seasonFolder, imageBaseName, "back");
+                item.put("isFrontLandscape", isFrontLandscape);
+                item.put("isBackLandscape", isBackLandscape);
+                item.put("frontOrientationClass", isFrontLandscape ? "is-landscape" : "is-portrait");
+                item.put("backOrientationClass", isBackLandscape ? "is-landscape" : "is-portrait");
                 
                 // Attributes
                 boolean is1of1 = (c.printRun != null && c.printRun == 1) || (c.serialNumber != null && c.serialNumber.trim().equals("1/1"));
@@ -977,6 +980,28 @@ public class FileGenerator {
             data.put("binderPages", binderPages);
             data.put("totalCards", binderCardItems.size());
             data.put("totalPages", binderPages.size());
+
+            List<Map<String, String>> schemaBcItems = new ArrayList<>();
+            schemaBcItems.add(Map.of("name", "Home", "link", BASE_URL + "/index.html"));
+            schemaBcItems.add(Map.of("name", "3D Binder", "link", BASE_URL + "/binder.html"));
+
+            String binderJsonLd = "<script type=\"application/ld+json\">\n" +
+                    "{\n" +
+                    "  \"@context\": \"https://schema.org\",\n" +
+                    "  \"@graph\": [\n" +
+                    "    " + SharedTemplates.getBreadcrumbJsonLd(schemaBcItems, BASE_URL + "/binder.html#breadcrumb") + ",\n" +
+                    "    {\n" +
+                    "      \"@type\": \"CollectionPage\",\n" +
+                    "      \"@id\": \"" + BASE_URL + "/binder.html\",\n" +
+                    "      \"name\": \"Juwan Howard 3D 9-Pocket Binder View\",\n" +
+                    "      \"description\": \"Flip through the complete Juwan Howard card collection in an interactive 3D 9-Pocket Ultra-PRO style digital binder.\",\n" +
+                    "      \"publisher\": { \"@type\": \"Person\", \"name\": \"Mauli Maulmann\" },\n" +
+                    "      \"isPartOf\": { \"@type\": \"WebSite\", \"name\": \"Maulmann Trading Cards\", \"url\": \"" + BASE_URL + "\" }\n" +
+                    "    }\n" +
+                    "  ]\n" +
+                    "}\n" +
+                    "</script>";
+            data.put("jsonLd", binderJsonLd);
 
             processTemplate("binder.ftlh", data, pathOutput + "binder.html");
         } catch (Exception e) {

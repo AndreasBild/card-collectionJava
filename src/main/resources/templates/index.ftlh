@@ -838,15 +838,19 @@ ${footerHtml?no_esc}
         let carouselWidthCache = 0;
 
         function updateCarouselWidth() {
+            if (!carousel) return;
             const gap = parseFloat(window.getComputedStyle(carousel).gap) || 0;
-            carouselWidthCache = (carousel.scrollWidth / 2) + (gap / 2);
+            if (carousel.scrollWidth > 100) {
+                carouselWidthCache = (carousel.scrollWidth / 2) + (gap / 2);
+            }
         }
 
         function getCarouselWidth() {
-            return carouselWidthCache;
+            return carouselWidthCache > 0 ? carouselWidthCache : 2000;
         }
 
         updateCarouselWidth();
+        window.addEventListener('load', updateCarouselWidth, { passive: true });
         window.addEventListener('resize', updateCarouselWidth, { passive: true });
 
         function scroll(currentTime) {

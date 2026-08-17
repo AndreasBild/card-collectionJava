@@ -1058,14 +1058,19 @@ public class CardPageGenerator {
     private static final Map<String, Boolean> ORIENTATION_CACHE = new ConcurrentHashMap<>();
 
     public static boolean isImageLandscape(String seasonFolder, String imageBaseName) {
+        return isImageLandscape(seasonFolder, imageBaseName, "front");
+    }
+
+    public static boolean isImageLandscape(String seasonFolder, String imageBaseName, String side) {
         if (seasonFolder == null || imageBaseName == null) return false;
-        String cacheKey = seasonFolder + ":" + imageBaseName;
+        String s = (side == null || side.isBlank()) ? "front" : side.toLowerCase();
+        String cacheKey = seasonFolder + ":" + imageBaseName + ":" + s;
         return ORIENTATION_CACHE.computeIfAbsent(cacheKey, k -> {
             Path[] candidates = {
-                    Paths.get("images", seasonFolder, imageBaseName + "-front.jpg"),
-                    Paths.get("images", seasonFolder, imageBaseName + "-front.png"),
-                    Paths.get("images", seasonFolder, imageBaseName + "-front.avif"),
-                    Paths.get("output", "images", seasonFolder, imageBaseName + "-front-400w.avif")
+                    Paths.get("images", seasonFolder, imageBaseName + "-" + s + ".jpg"),
+                    Paths.get("images", seasonFolder, imageBaseName + "-" + s + ".png"),
+                    Paths.get("images", seasonFolder, imageBaseName + "-" + s + ".avif"),
+                    Paths.get("output", "images", seasonFolder, imageBaseName + "-" + s + "-400w.avif")
             };
             for (Path p : candidates) {
                 if (Files.exists(p)) {

@@ -1,21 +1,53 @@
-<div class="topnav" id="myTopnav">
-    <a href="{{ROOT}}index.html" {{ACTIVE_INDEX}} title="Home">Home</a>
-    <a href="{{ROOT}}Juwan-Howard-Collection.html" {{ACTIVE_COLLECTION}} title="Juwan Howard Private Collection">Juwan Howard PC</a>
-    <a href="{{ROOT}}Baseball.html" {{ACTIVE_BASEBALL}} title="Baseball Cards">Baseball</a>
-    <a href="{{ROOT}}Flawless.html" {{ACTIVE_FLAWLESS}} title="Flawless Basketball Collection">Flawless</a>
-    <a href="{{ROOT}}Wantlist.html" {{ACTIVE_WANTLIST}} title="My Juwan Howard Wantlist">Wantlist</a>
-    <a href="{{ROOT}}rainbows.html" {{ACTIVE_RAINBOWS}} title="Parallel Rainbow Tracker & Set Checklist">Rainbow Tracker</a>
-    <a href="{{ROOT}}binder.html" {{ACTIVE_BINDER}} title="3D 9-Pocket Collector Binder">3D Binder</a>
-    <a href="{{ROOT}}Panini.html" {{ACTIVE_PANINI}} title="Panini Flawless Basketball Collection">Panini</a>
-    <button class="icon burger-icon-button" onclick="myFunction()" aria-label="Toggle navigation menu">&#9776;</button>
-</div>
+<nav class="topnav" id="myTopnav" aria-label="Main Navigation">
+    <div class="nav-container">
+        <a href="{{ROOT}}index.html" {{ACTIVE_INDEX}} title="Home">Home</a>
+
+        <!-- JUWAN HOWARD PC DROPDOWN GROUP -->
+        <div class="nav-dropdown {{ACTIVE_JH_GROUP}}">
+            <button type="button" class="nav-dropdown-btn {{ACTIVE_JH_BTN}}" aria-haspopup="true" aria-expanded="false" onclick="toggleNavDropdown(this)">
+                Juwan Howard PC <span class="dropdown-arrow">▾</span>
+            </button>
+            <div class="nav-dropdown-menu">
+                <a href="{{ROOT}}Juwan-Howard-Collection.html" {{ACTIVE_COLLECTION}} title="Juwan Howard Collection Overview">Collection Overview</a>
+                <a href="{{ROOT}}binder.html" {{ACTIVE_BINDER}} title="3D 9-Pocket Collector's Binder">3D 9-Pocket Binder</a>
+                <a href="{{ROOT}}rainbows.html" {{ACTIVE_RAINBOWS}} title="Parallel Rainbow Tracker">Rainbow Tracker</a>
+                <a href="{{ROOT}}Wantlist.html" {{ACTIVE_WANTLIST}} title="Juwan Howard Wantlist">Wantlist</a>
+            </div>
+        </div>
+
+        <!-- BASKETBALL DROPDOWN GROUP -->
+        <div class="nav-dropdown {{ACTIVE_BBALL_GROUP}}">
+            <button type="button" class="nav-dropdown-btn {{ACTIVE_BBALL_BTN}}" aria-haspopup="true" aria-expanded="false" onclick="toggleNavDropdown(this)">
+                Basketball <span class="dropdown-arrow">▾</span>
+            </button>
+            <div class="nav-dropdown-menu">
+                <a href="{{ROOT}}Panini.html" {{ACTIVE_PANINI}} title="Panini Basketball Cards">Panini Collection</a>
+                <a href="{{ROOT}}Flawless.html" {{ACTIVE_FLAWLESS}} title="Flawless Basketball Collection">Flawless Basketball</a>
+            </div>
+        </div>
+
+        <!-- BASEBALL -->
+        <a href="{{ROOT}}Baseball.html" {{ACTIVE_BASEBALL}} title="Baseball Cards">Baseball</a>
+
+        <button type="button" class="icon burger-icon-button" onclick="toggleMobileNav()" aria-label="Toggle navigation menu">&#9776;</button>
+    </div>
+</nav>
+
 <script>
-    function myFunction() {
-        var x = document.getElementById("myTopnav");
-        if (x.className === "topnav") {
-            x.className += " responsive";
-        } else {
-            x.className = "topnav";
+    function toggleMobileNav() {
+        const x = document.getElementById("myTopnav");
+        if (x) {
+            x.classList.toggle("responsive");
+        }
+    }
+
+    function toggleNavDropdown(btn) {
+        // Only toggle manually on touch/mobile screens if needed
+        if (window.innerWidth <= 780) {
+            const dropdown = btn.closest('.nav-dropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('open');
+            }
         }
     }
 </script>

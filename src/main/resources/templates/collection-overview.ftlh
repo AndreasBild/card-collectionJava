@@ -79,9 +79,9 @@ ${topNavHtml?no_esc}
 
     <#if seasons?has_content>
         <div class="view-mode-bar">
-            <span class="view-label">&#x1F441;&#xFE0F; Layout View:</span>
-            <button id="viewGridBtn" class="view-btn active" onclick="setCollectionLayout('grid')">&#x2638; Table / Grid</button>
-            <button id="viewBinderBtn" class="view-btn" onclick="window.location.href='binder.html'">&#x1F4D2; 3D 9-Pocket Binder</button>
+            <span class="view-label">&#x1F441;&#xFE0F; Views & Tools:</span>
+            <button id="viewBinderBtn" class="view-btn" onclick="window.location.href='binder.html'">&#x1F4D2; 3D 9-Pocket Binder View</button>
+            <button id="viewRainbowBtn" class="view-btn" onclick="window.location.href='rainbows.html'">&#x1F308; Parallel Rainbow Tracker</button>
             <button id="exportCsvBtn" class="export-csv-btn" onclick="exportCollectionCSV()" title="Export visible cards to CSV for Excel / Sheets">📥 Export CSV</button>
         </div>
 
@@ -394,78 +394,6 @@ ${topNavHtml?no_esc}
                 }
             }
 
-            // --- FAVORITES (WATCHLIST) ENGINE ---
-            const FAVORITES_KEY = 'maulmann_card_favorites';
-
-            window.getFavorites = function() {
-                try {
-                    const data = localStorage.getItem(FAVORITES_KEY);
-                    return data ? JSON.parse(data) : [];
-                } catch (e) {
-                    return [];
-                }
-            };
-
-            window.saveFavorites = function(favs) {
-                try {
-                    localStorage.setItem(FAVORITES_KEY, JSON.stringify(favs));
-                } catch (e) {}
-                updateFavoritesUI();
-            };
-
-            window.toggleCardFav = function(cardId, btnEl, event) {
-                if (event) {
-                    event.stopPropagation();
-                    event.preventDefault();
-                }
-                let favs = getFavorites();
-                const stableId = cardId.includes('-') ? cardId.substring(cardId.lastIndexOf('-') + 1) : cardId;
-                const isAlreadyFav = favs.includes(cardId) || favs.includes(stableId);
-
-                if (isAlreadyFav) {
-                    favs = favs.filter(id => id !== cardId && id !== stableId);
-                } else {
-                    favs.push(cardId);
-                    if (stableId && stableId !== cardId && !favs.includes(stableId)) {
-                        favs.push(stableId);
-                    }
-                }
-                saveFavorites(favs);
-                const searchVal = (document.getElementById('textSearch') ? document.getElementById('textSearch').value.trim().toLowerCase() : '');
-                if (searchVal === 'favorites') {
-                    applyFilters();
-                }
-            };
-
-            window.updateFavoritesUI = function() {
-                const favs = getFavorites();
-                const favSet = new Set(favs);
-                let matchedFavs = 0;
-
-                document.querySelectorAll('.season-table-wrapper table tbody tr').forEach(row => {
-                    if (row.querySelector('th')) return;
-                    const filenameBase = row.id || (row.querySelector('a.table-button') ? row.querySelector('a.table-button').getAttribute('href').split('/').pop().replace('.html', '') : '');
-                    const stableId = row.getAttribute('data-card-id') || (filenameBase.includes('-') ? filenameBase.substring(filenameBase.lastIndexOf('-') + 1) : filenameBase);
-                    const isFav = favSet.has(filenameBase) || favSet.has(stableId);
-                    if (isFav) matchedFavs++;
-
-                    const btn = row.querySelector('.card-fav-btn');
-                    if (btn) {
-                        if (isFav) {
-                            btn.classList.add('is-fav');
-                            btn.textContent = '★';
-                            btn.title = 'Remove from Favorites';
-                        } else {
-                            btn.classList.remove('is-fav');
-                            btn.textContent = '☆';
-                            btn.title = 'Add to Favorites';
-                        }
-                    }
-                });
-
-                const countEl = document.getElementById('favCount');
-                if (countEl) countEl.textContent = matchedFavs > 0 ? matchedFavs : (favs.length > 0 ? favs.length : 0);
-            };
 
             // --- 1-CLICK CSV EXPORT (UTF-8 EXCEL READY) ---
             window.exportCollectionCSV = function() {
@@ -585,23 +513,24 @@ ${topNavHtml?no_esc}
                 }
             };
 
-            document.addEventListener('DOMContentLoaded', () => {
-                // Prepend favorite star button to every table row
-                document.querySelectorAll('.season-table-wrapper table tbody tr').forEach(row => {
-                    const firstTd = row.querySelector('td');
-                    if (firstTd && row.id) {
-                        const favBtn = document.createElement('button');
-                        favBtn.type = 'button';
-                        favBtn.className = 'card-fav-btn';
-                        favBtn.setAttribute('data-card-id', row.id);
-                        favBtn.textContent = '☆';
-                        favBtn.title = 'Add to Favorites';
-                        favBtn.addEventListener('click', (e) => toggleCardFav(row.id, favBtn, e));
-                        firstTd.insertBefore(favBtn, firstTd.firstChild);
-                    }
-                });
+            const FAVORITES_KEY = 'maulmann_card_favorites';
+            function getFavorites() {
+                try {
+                    const data = localStorage.getItem(FAVORITES_KEY);
+                    return data ? JSON.parse(data) : [];
+                } catch (e) {
+                    return [];
+                }
+            }
 
-                updateFavoritesUI();
+            function updateFavoritesCount() {
+                const favs = getFavorites();
+                const countEl = document.getElementById('favCount');
+                if (countEl) countEl.textContent = favs.length;
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                updateFavoritesCount();
 
                 // OpenSearch query parameter support (?q=...)
                 const urlParams = new URLSearchParams(window.location.search);

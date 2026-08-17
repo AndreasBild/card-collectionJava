@@ -20,33 +20,11 @@ function copySnippet(inputId, btn) {
     });
 }
 
-// --- 2. 9-POCKET BINDER VIEW TOGGLE ---
-function setCollectionLayout(layout) {
-    const main = document.querySelector('.detail-main');
-    const gridBtn = document.getElementById('viewGridBtn');
-    const binderBtn = document.getElementById('viewBinderBtn');
-
-    if (!main) return;
-
-    if (layout === 'binder') {
-        main.classList.add('binder-view-active');
-        if (gridBtn) gridBtn.classList.remove('active');
-        if (binderBtn) binderBtn.classList.add('active');
-        localStorage.setItem('collectorLayout', 'binder');
-    } else {
-        main.classList.remove('binder-view-active');
-        if (gridBtn) gridBtn.classList.add('active');
-        if (binderBtn) binderBtn.classList.remove('active');
-        localStorage.setItem('collectorLayout', 'grid');
-    }
-}
-
-// Restore layout preference on page load
+// Initialize interactive features on page load
 document.addEventListener('DOMContentLoaded', () => {
-    const savedLayout = localStorage.getItem('collectorLayout');
-    if (savedLayout === 'binder') {
-        setCollectionLayout('binder');
-    }
+    try {
+        localStorage.removeItem('collectorLayout');
+    } catch (e) {}
 
     initCompareButtons();
     updateCompareBar();
@@ -279,22 +257,32 @@ function init3DCardTilt() {
     });
 }
 
-// --- 6. DYNAMIC ORIENTATION DETECTION FOR RAINBOW & GRID CARDS ---
+// --- 6. DYNAMIC ORIENTATION DETECTION FOR RAINBOW & BINDER SLOTS ---
 function initRainbowOrientation() {
-    const rainbowImgs = document.querySelectorAll('.rainbow-card-img');
-    if (!rainbowImgs || rainbowImgs.length === 0) return;
+    const images = document.querySelectorAll('.rainbow-card-img, .pocket-card-img');
+    if (!images || images.length === 0) return;
 
-    rainbowImgs.forEach(img => {
+    images.forEach(img => {
         const updateOri = () => {
             if (img.naturalWidth && img.naturalHeight) {
-                const item = img.closest('.rainbow-item');
-                if (item) {
+                const rainbowItem = img.closest('.rainbow-item');
+                if (rainbowItem) {
                     if (img.naturalWidth > img.naturalHeight) {
-                        item.classList.add('is-landscape');
-                        item.classList.remove('is-portrait');
+                        rainbowItem.classList.add('is-landscape');
+                        rainbowItem.classList.remove('is-portrait');
                     } else {
-                        item.classList.add('is-portrait');
-                        item.classList.remove('is-landscape');
+                        rainbowItem.classList.add('is-portrait');
+                        rainbowItem.classList.remove('is-landscape');
+                    }
+                }
+                const pocketFace = img.closest('.pocket-card-front, .pocket-card-back');
+                if (pocketFace) {
+                    if (img.naturalWidth > img.naturalHeight) {
+                        pocketFace.classList.add('is-landscape');
+                        pocketFace.classList.remove('is-portrait');
+                    } else {
+                        pocketFace.classList.add('is-portrait');
+                        pocketFace.classList.remove('is-landscape');
                     }
                 }
             }

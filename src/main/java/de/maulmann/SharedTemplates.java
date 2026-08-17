@@ -187,15 +187,23 @@ public class SharedTemplates {
         if (template.isEmpty()) {
             return "<nav><a href=\"" + root + "index.html\" title=\"Home\">Home</a></nav>";
         }
+        boolean isJhActive = activePage.equals("collection") || activePage.equals("juwan-howard-collection")
+                || activePage.equals("binder") || activePage.equals("rainbows") || activePage.equals("wantlist");
+        boolean isBballActive = activePage.equals("panini") || activePage.equals("flawless");
+
         return template.replace("{{ROOT}}", root)
                 .replace("{{ACTIVE_INDEX}}", activePage.equals("index") ? "class=\"active\"" : "")
+                .replace("{{ACTIVE_JH_GROUP}}", isJhActive ? "is-active-group" : "")
+                .replace("{{ACTIVE_JH_BTN}}", isJhActive ? "active" : "")
                 .replace("{{ACTIVE_COLLECTION}}", (activePage.equals("collection") || activePage.equals("juwan-howard-collection")) ? "class=\"active\"" : "")
-                .replace("{{ACTIVE_BASEBALL}}", activePage.equals("baseball") ? "class=\"active\"" : "")
-                .replace("{{ACTIVE_FLAWLESS}}", activePage.equals("flawless") ? "class=\"active\"" : "")
-                .replace("{{ACTIVE_WANTLIST}}", activePage.equals("wantlist") ? "class=\"active\"" : "")
-                .replace("{{ACTIVE_RAINBOWS}}", activePage.equals("rainbows") ? "class=\"active\"" : "")
                 .replace("{{ACTIVE_BINDER}}", activePage.equals("binder") ? "class=\"active\"" : "")
+                .replace("{{ACTIVE_RAINBOWS}}", activePage.equals("rainbows") ? "class=\"active\"" : "")
+                .replace("{{ACTIVE_WANTLIST}}", activePage.equals("wantlist") ? "class=\"active\"" : "")
+                .replace("{{ACTIVE_BBALL_GROUP}}", isBballActive ? "is-active-group" : "")
+                .replace("{{ACTIVE_BBALL_BTN}}", isBballActive ? "active" : "")
                 .replace("{{ACTIVE_PANINI}}", activePage.equals("panini") ? "class=\"active\"" : "")
+                .replace("{{ACTIVE_FLAWLESS}}", activePage.equals("flawless") ? "class=\"active\"" : "")
+                .replace("{{ACTIVE_BASEBALL}}", activePage.equals("baseball") ? "class=\"active\"" : "")
                 .replace("{{ACTIVE_SITEMAP}}", activePage.equals("sitemap") ? "class=\"active\"" : "");
     }
 

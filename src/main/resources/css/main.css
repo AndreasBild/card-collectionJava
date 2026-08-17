@@ -212,8 +212,8 @@ a.modern-button *, button.modern-button *, button.flip-modal-btn *, button.close
 }
 
 /* --- NAVIGATION BARS --- */
+/* --- NAVIGATION BARS & ACCESSIBLE DROPDOWNS --- */
 .topnav {
-    overflow: hidden;
     background-color: var(--bg-glass);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border-color);
@@ -223,31 +223,132 @@ a.modern-button *, button.modern-button *, button.flip-modal-btn *, button.close
     width: 100%;
 }
 
-.topnav a, .topnav button.icon {
-    float: left;
+.nav-container {
+    max-width: 1280px;
+    margin: 0 auto;
     display: flex;
     align-items: center;
+    position: relative;
+    padding: 0 16px;
+}
+
+.topnav a,
+.nav-dropdown-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
     color: var(--text-secondary) !important;
     padding: 0 18px;
     height: 56px;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     border: none;
-    background: none;
+    background: transparent;
     cursor: pointer;
     transition: var(--transition-fast);
+    font-family: inherit;
+    white-space: nowrap;
+    -webkit-appearance: none;
+    appearance: none;
 }
 
-.topnav a:hover, .topnav button.icon:hover {
+.topnav a:hover,
+.nav-dropdown:hover .nav-dropdown-btn,
+.nav-dropdown-btn:hover {
     background-color: var(--bg-card) !important;
     color: var(--accent-gold) !important;
 }
 
-.topnav a.active {
+.topnav a.active,
+.nav-dropdown-btn.active,
+.nav-dropdown.is-active-group > .nav-dropdown-btn {
     background-color: var(--accent-gold) !important;
     color: #0b0f19 !important;
     font-weight: 700;
+}
+
+/* Hide burger button on desktop */
+.topnav .burger-icon-button {
+    display: none !important;
+    border: none;
+    background: none;
+    color: var(--text-secondary);
+    font-size: 22px;
+    cursor: pointer;
+    padding: 0 18px;
+    height: 56px;
+}
+
+/* Nav Dropdown Container (Desktop) */
+.nav-dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-arrow {
+    font-size: 0.72rem;
+    transition: transform var(--transition-fast);
+    opacity: 0.8;
+}
+
+.nav-dropdown:hover .dropdown-arrow,
+.nav-dropdown.open .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+/* Dropdown Menu Popup (Desktop) */
+.nav-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 230px;
+    background: rgba(15, 23, 42, 0.98);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--border-gold-subtle);
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.75), var(--shadow-gold-subtle);
+    padding: 6px 0;
+    z-index: 1010;
+}
+
+.nav-dropdown:hover .nav-dropdown-menu,
+.nav-dropdown:focus-within .nav-dropdown-menu,
+.nav-dropdown.open .nav-dropdown-menu {
+    display: block;
+    animation: fadeInNavMenu 0.2s ease-out;
+}
+
+@keyframes fadeInNavMenu {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.nav-dropdown-menu a {
+    display: flex;
+    align-items: center;
+    padding: 10px 18px;
+    height: auto;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-main) !important;
+    border-radius: 0;
+    text-align: left;
+    white-space: nowrap;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.nav-dropdown-menu a:hover {
+    background-color: rgba(212, 175, 55, 0.15) !important;
+    color: var(--accent-gold) !important;
+}
+
+.nav-dropdown-menu a.active {
+    background-color: var(--accent-gold) !important;
+    color: #0b0f19 !important;
 }
 
 .detail-nav {
@@ -698,7 +799,6 @@ tr:hover {
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-lg);
     min-height: 440px;
-    contain: layout paint;
 }
 
 .carousel-nav {
@@ -1825,12 +1925,63 @@ tr:hover {
     }
 }
 
-@media screen and (max-width: 680px) {
-    .topnav a:not(:first-child) { display: none; }
-    .topnav .icon { float: right; display: block; }
-    .topnav.responsive { position: relative; }
-    .topnav.responsive .icon { position: absolute; right: 0; top: 0; }
-    .topnav.responsive a { float: none; display: block; text-align: left; }
+@media screen and (max-width: 780px) {
+    .nav-container {
+        display: block;
+        position: relative;
+        padding: 0;
+    }
+
+    .topnav a:not(:first-child),
+    .nav-dropdown {
+        display: none !important;
+    }
+
+    .topnav .burger-icon-button {
+        display: flex !important;
+        position: absolute;
+        right: 4px;
+        top: 0;
+        z-index: 1020;
+    }
+
+    .topnav.responsive .nav-container {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        padding-bottom: 12px;
+    }
+
+    .topnav.responsive a,
+    .topnav.responsive .nav-dropdown {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        align-items: stretch !important;
+    }
+
+    .topnav.responsive .nav-dropdown-btn {
+        width: 100% !important;
+        justify-content: space-between !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .topnav.responsive .nav-dropdown-menu {
+        position: static !important;
+        display: block !important;
+        background: rgba(11, 15, 25, 0.95) !important;
+        border: none !important;
+        border-left: 3px solid var(--accent-gold) !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        padding: 4px 0 8px 12px !important;
+    }
+
+    .topnav.responsive .nav-dropdown-menu a {
+        padding: 8px 14px !important;
+        font-size: 0.85rem !important;
+    }
+}
 
     .detail-nav {
         display: flex;
@@ -1927,52 +2078,10 @@ tr:hover {
         gap: 12px;
     }
 
-    /* Mobile Table Card Layout */
-    .season-table-wrapper table, 
-    .season-table-wrapper tbody, 
-    .season-table-wrapper tr, 
-    .season-table-wrapper td {
-        display: block;
-        width: 100%;
-    }
-    
-    .season-table-wrapper thead {
-        display: none;
-    }
-
-    .season-table-wrapper tr {
-        background: var(--bg-card);
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius-md);
-        margin-bottom: 14px;
-        padding: 12px;
-        box-shadow: var(--shadow-sm);
-    }
-
-    .season-table-wrapper td {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 8px 0;
-        border: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        font-size: 0.9rem;
-    }
-
-    .season-table-wrapper td:last-child {
-        border-bottom: none;
-        padding-top: 10px;
-        justify-content: center;
-    }
-
-    .season-table-wrapper td[data-label]::before {
-        content: attr(data-label);
-        font-weight: 700;
-        font-size: 0.8rem;
-        color: var(--accent-gold);
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        padding-right: 12px;
+    /* Maintain natural table row layout across all viewport sizes */
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 }
 
@@ -2631,48 +2740,7 @@ figcaption {
     }
 }
 
-/* --- 9-POCKET BINDER VIEW STYLES --- */
-.binder-view-active .table-responsive table {
-    display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 1.5rem !important;
-    background: transparent !important;
-}
 
-.binder-view-active .table-responsive thead {
-    display: none !important;
-}
-
-.binder-view-active .table-responsive tbody {
-    display: contents !important;
-}
-
-.binder-view-active .table-responsive tr {
-    display: flex !important;
-    flex-direction: column !important;
-    background: var(--bg-card) !important;
-    border: 2px solid var(--accent-gold-dark) !important;
-    border-radius: var(--radius-md) !important;
-    padding: 1rem !important;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
-    transition: transform 0.2s ease !important;
-}
-
-.binder-view-active .table-responsive tr:hover {
-    transform: scale(1.03) !important;
-    border-color: var(--accent-gold) !important;
-}
-
-.binder-view-active .table-responsive td {
-    border: none !important;
-    padding: 4px 0 !important;
-}
-
-@media (max-width: 768px) {
-    .binder-view-active .table-responsive table {
-        grid-template-columns: repeat(2, 1fr) !important;
-    }
-}
 
 /* --- WANTLIST ENHANCEMENTS --- */
 .wantlist-trade-trigger-box {
@@ -3587,8 +3655,26 @@ img[loading="lazy"]:not([src=""]) {
     cursor: pointer;
 }
 
-.pocket-slot.is-landscape .pocket-card-flip {
-    aspect-ratio: 3.5 / 2.5;
+/* Landscape card faces are physically placed sideways in standard portrait Ultra-PRO sleeves (rotated 90deg) */
+.pocket-card-front.is-landscape .pocket-picture,
+.pocket-card-back.is-landscape .pocket-picture {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: calc(100% * 3.5 / 2.5);
+    height: calc(100% * 2.5 / 3.5);
+    transform: translate(-50%, -50%) rotate(90deg);
+    transform-origin: center center;
+}
+
+.pocket-card-front.is-portrait .pocket-picture,
+.pocket-card-back.is-portrait .pocket-picture {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    height: 100%;
+    transform: none;
 }
 
 .pocket-card-inner {
