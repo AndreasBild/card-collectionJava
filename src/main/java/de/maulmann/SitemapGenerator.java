@@ -568,6 +568,7 @@ public class SitemapGenerator {
         sb.append("> Maulmann Private Collection: High-end sports card database featuring Juwan Howard, rare 1/1 Masterpieces, and low-numbered serial cards.\n\n");
         sb.append("## Core Pages\n");
         sb.append("- [Collection Overview](").append(BASE_URL).append("/Juwan-Howard-Collection.html): Main private collection index with 1,300+ cards.\n");
+        sb.append("- [3D Collector Binder](").append(BASE_URL).append("/binder.html): Virtual 9-Pocket Ultra-PRO binder view with 3D page flip.\n");
         sb.append("- [Rainbow Tracker](").append(BASE_URL).append("/rainbows.html): Interactive tracker for full parallel rainbow sets.\n");
         sb.append("- [Flawless Collection](").append(BASE_URL).append("/Flawless.html): Ultra-high-end Panini Flawless autographs and patches.\n");
         sb.append("- [Panini Showcase](").append(BASE_URL).append("/Panini.html): Panini basketball card release highlights.\n");
@@ -601,6 +602,7 @@ public class SitemapGenerator {
         sb.append("## Core Overview & Feature Pages\n");
         sb.append("- Home & Hub: ").append(BASE_URL).append("/\n");
         sb.append("- Juwan Howard Master Collection: ").append(BASE_URL).append("/Juwan-Howard-Collection.html\n");
+        sb.append("- 3D 9-Pocket Collector's Binder: ").append(BASE_URL).append("/binder.html\n");
         sb.append("- Parallel Rainbow Tracker: ").append(BASE_URL).append("/rainbows.html\n");
         sb.append("- Flawless Collection: ").append(BASE_URL).append("/Flawless.html\n");
         sb.append("- Panini Rarities: ").append(BASE_URL).append("/Panini.html\n");

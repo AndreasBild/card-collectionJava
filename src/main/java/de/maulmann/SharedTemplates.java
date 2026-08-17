@@ -194,6 +194,7 @@ public class SharedTemplates {
                 .replace("{{ACTIVE_FLAWLESS}}", activePage.equals("flawless") ? "class=\"active\"" : "")
                 .replace("{{ACTIVE_WANTLIST}}", activePage.equals("wantlist") ? "class=\"active\"" : "")
                 .replace("{{ACTIVE_RAINBOWS}}", activePage.equals("rainbows") ? "class=\"active\"" : "")
+                .replace("{{ACTIVE_BINDER}}", activePage.equals("binder") ? "class=\"active\"" : "")
                 .replace("{{ACTIVE_PANINI}}", activePage.equals("panini") ? "class=\"active\"" : "")
                 .replace("{{ACTIVE_SITEMAP}}", activePage.equals("sitemap") ? "class=\"active\"" : "");
     }

@@ -62,6 +62,18 @@ ${topNavHtml?no_esc}
                     <div class="meter-bar-track"><div class="meter-bar cyan" style="width: ${(stats.pctGradedTotal)!0}%;"></div></div>
                 </div>
             </div>
+
+            <div class="metric-card rainbow-metric-card">
+                <h3>&#x1F308; Set & Rainbow Tracker</h3>
+                <div class="meter-group clickable-metric" onclick="window.location.href='rainbows.html'" title="Open Parallel Rainbow Tracker">
+                    <div class="meter-label"><span>Tracked Parallel Rainbows</span> <strong>Explore &rarr;</strong></div>
+                    <div class="meter-bar-track"><div class="meter-bar gold" style="width: 100%;"></div></div>
+                </div>
+                <div class="meter-group clickable-metric" onclick="window.location.href='binder.html'" title="Open 3D 9-Pocket Binder">
+                    <div class="meter-label"><span>3D 9-Pocket Binder View</span> <strong>Open &rarr;</strong></div>
+                    <div class="meter-bar-track"><div class="meter-bar cyan" style="width: 100%;"></div></div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -69,7 +81,7 @@ ${topNavHtml?no_esc}
         <div class="view-mode-bar">
             <span class="view-label">&#x1F441;&#xFE0F; Layout View:</span>
             <button id="viewGridBtn" class="view-btn active" onclick="setCollectionLayout('grid')">&#x2638; Table / Grid</button>
-            <button id="viewBinderBtn" class="view-btn" onclick="setCollectionLayout('binder')">&#x1F4D2; 9-Pocket Binder</button>
+            <button id="viewBinderBtn" class="view-btn" onclick="window.location.href='binder.html'">&#x1F4D2; 3D 9-Pocket Binder</button>
             <button id="exportCsvBtn" class="export-csv-btn" onclick="exportCollectionCSV()" title="Export visible cards to CSV for Excel / Sheets">📥 Export CSV</button>
         </div>
 
