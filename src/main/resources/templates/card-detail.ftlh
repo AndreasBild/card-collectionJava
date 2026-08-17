@@ -676,9 +676,42 @@ ${topNavHtml?no_esc}
         }
     }
 
+    let motionPermissionRequested = false;
+
+    function handleDeviceOrientation(e) {
+        if (isLoupeActive || e.gamma === null || e.beta === null) return;
+        const clampGamma = Math.max(-30, Math.min(30, e.gamma));
+        const clampBeta = Math.max(15, Math.min(75, e.beta)) - 45;
+        const percentX = ((clampGamma + 30) / 60) * 100;
+        const percentY = ((clampBeta + 30) / 60) * 100;
+        const rotY = (clampGamma / 30) * 8;
+        const rotX = -(clampBeta / 30) * 8;
+        updateFoilAndTilt(percentX, percentY, rotX, rotY);
+    }
+
+    function initGyroscope() {
+        if (typeof DeviceOrientationEvent !== 'undefined') {
+            if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+                if (!motionPermissionRequested) {
+                    motionPermissionRequested = true;
+                    DeviceOrientationEvent.requestPermission()
+                        .then(permissionState => {
+                            if (permissionState === 'granted') {
+                                window.addEventListener('deviceorientation', handleDeviceOrientation, { passive: true });
+                            }
+                        })
+                        .catch(() => {});
+                }
+            } else {
+                window.addEventListener('deviceorientation', handleDeviceOrientation, { passive: true });
+            }
+        }
+    }
+
     if (flipContainer) {
         flipContainer.addEventListener('pointermove', (e) => {
             if (isLoupeActive) return;
+            initGyroscope();
             const rect = flipContainer.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
@@ -690,21 +723,20 @@ ${topNavHtml?no_esc}
         });
 
         flipContainer.addEventListener('pointerleave', () => {
-            resetFoilAndTilt();
+            if (!motionPermissionRequested) {
+                resetFoilAndTilt();
+            }
         });
+
+        // Enable gyroscope on first user interaction with the card
+        flipContainer.addEventListener('click', () => {
+            initGyroscope();
+        }, { passive: true });
     }
 
-    if (window.DeviceOrientationEvent && typeof window.DeviceOrientationEvent.requestPermission !== 'function') {
-        window.addEventListener('deviceorientation', (e) => {
-            if (isLoupeActive || e.gamma === null || e.beta === null) return;
-            const clampGamma = Math.max(-30, Math.min(30, e.gamma));
-            const clampBeta = Math.max(15, Math.min(75, e.beta)) - 45;
-            const percentX = ((clampGamma + 30) / 60) * 100;
-            const percentY = ((clampBeta + 30) / 60) * 100;
-            const rotY = (clampGamma / 30) * 8;
-            const rotX = -(clampBeta / 30) * 8;
-            updateFoilAndTilt(percentX, percentY, rotX, rotY);
-        }, { passive: true });
+    // Attempt auto-init for Android and non-permission browsers
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission !== 'function') {
+        window.addEventListener('deviceorientation', handleDeviceOrientation, { passive: true });
     }
 
     // --- 2K GRADING LOUPE ---
