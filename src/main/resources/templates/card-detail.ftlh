@@ -86,6 +86,7 @@ ${topNavHtml?no_esc}
             </div>
             <div class="card-action-bar">
                 <button type="button" class="modern-button card-action-btn" id="loupeBtn" onclick="toggleLoupeMode()"><span class="icon">🔬</span> 2K Loupe</button>
+                <button type="button" class="modern-button card-action-btn" id="popoutBtn" onclick="toggle3DPopout()"><span class="icon">⚡</span> 3D Pop-Out</button>
             </div>
             <p class="img-caption">&#x1F504; Tap Card to Flip</p>
         </div>
@@ -504,6 +505,27 @@ ${topNavHtml?no_esc}
     // --- HOLOGRAPHIC FOIL & 3D TILT WITH GYROSCOPE ---
     const flipContainer = document.querySelector('.flip-container');
     let isLoupeActive = false;
+    let isPopoutActive = false;
+
+    function toggle3DPopout() {
+        isPopoutActive = !isPopoutActive;
+        const popoutBtn = document.getElementById('popoutBtn');
+        if (!flipContainer || !popoutBtn) return;
+
+        if (isPopoutActive) {
+            flipContainer.classList.add('is-3d-popout');
+            popoutBtn.classList.add('active-tool');
+            popoutBtn.innerHTML = '<span class="icon">⚡</span> 3D Pop-Out: On';
+            showToast("⚡ 3D Pop-Out active: Card floats with 3D shadowbox depth");
+            triggerHaptic(20);
+        } else {
+            flipContainer.classList.remove('is-3d-popout');
+            popoutBtn.classList.remove('active-tool');
+            popoutBtn.innerHTML = '<span class="icon">⚡</span> 3D Pop-Out';
+            showToast("3D Pop-Out disabled");
+            triggerHaptic(12);
+        }
+    }
 
     function updateFoilAndTilt(percentX, percentY, rotX, rotY) {
         if (isLoupeActive) return;
@@ -513,7 +535,8 @@ ${topNavHtml?no_esc}
             foil.style.setProperty('--foil-opacity', '0.35');
         });
         if (flipContainer && flipInner && !flipInner.classList.contains('flipped')) {
-            flipContainer.style.transform = "perspective(1000px) rotateX(" + rotX + "deg) rotateY(" + rotY + "deg) scale3d(1.025, 1.025, 1.025)";
+            const scale = isPopoutActive ? 1.045 : 1.025;
+            flipContainer.style.transform = "perspective(1000px) rotateX(" + rotX + "deg) rotateY(" + rotY + "deg) scale3d(" + scale + ", " + scale + ", " + scale + ")";
         }
     }
 
