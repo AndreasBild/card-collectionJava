@@ -60,6 +60,7 @@ ${topNavHtml?no_esc}
                             </picture>
                             <figcaption>${frontAlt}</figcaption>
                         </figure>
+                        <div class="foil-glare-effect" aria-hidden="true"></div>
                     </div>
                     <div class="flip-face-back">
                         <figure>
@@ -74,14 +75,21 @@ ${topNavHtml?no_esc}
                             </picture>
                             <figcaption>${backAlt}</figcaption>
                         </figure>
+                        <div class="foil-glare-effect" aria-hidden="true"></div>
                     </div>
                 </div>
                 <div class="flip-icon-overlay"></div>
             </div>
+            <div id="cardLoupe" class="card-grading-loupe" aria-hidden="true">
+                <span class="loupe-badge">2X LOUPE</span>
+                <div class="loupe-crosshair"></div>
+            </div>
             <div class="card-action-bar">
                 <button type="button" class="modern-button card-action-btn" id="zoomCardBtn" onclick="openCardLightbox()"><span class="icon">🔍</span> High-Res Zoom</button>
+                <button type="button" class="modern-button card-action-btn" id="loupeBtn" onclick="toggleLoupeMode()"><span class="icon">🔬</span> 2K Loupe</button>
+                <button type="button" class="modern-button card-action-btn" id="soundToggleBtn" onclick="toggleAudioEffects()" title="Toggle Sound FX"><span id="soundIcon">🔊</span> Sound FX</button>
             </div>
-            <p class="img-caption">&#x1F504; Tap Card to Flip &bull; &#x21C4; Swipe to Browse</p>
+            <p class="img-caption">&#x1F504; Tap Card to Flip</p>
         </div>
     </div>
     <div class="card-data">
@@ -398,6 +406,85 @@ ${topNavHtml?no_esc}
     let alternateModalSrc = highResBack;
     let currentZoomLevel = 1;
 
+    // --- WEB AUDIO API SYNTHESIZER (0 KB Zero-Asset Audio) ---
+    let audioCtx = null;
+    let soundEnabled = localStorage.getItem('maulmann_sound_fx') === 'true';
+
+    function initAudio() {
+        if (!audioCtx) {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (AudioContext) audioCtx = new AudioContext();
+        }
+        if (audioCtx && audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+    }
+
+    function toggleAudioEffects() {
+        initAudio();
+        soundEnabled = !soundEnabled;
+        localStorage.setItem('maulmann_sound_fx', soundEnabled);
+        updateSoundUI();
+        if (soundEnabled) {
+            playChimeSound();
+            showToast("🔊 Sound Effects: Enabled");
+        } else {
+            showToast("🔇 Sound Effects: Muted");
+        }
+    }
+
+    function updateSoundUI() {
+        const icon = document.getElementById('soundIcon');
+        const btn = document.getElementById('soundToggleBtn');
+        if (!btn || !icon) return;
+        if (soundEnabled) {
+            icon.textContent = '🔊';
+            btn.classList.add('active-tool');
+        } else {
+            icon.textContent = '🔇';
+            btn.classList.remove('active-tool');
+        }
+    }
+
+    function playCardFlipSound() {
+        if (!soundEnabled) return;
+        initAudio();
+        if (!audioCtx) return;
+        try {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(160, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(30, audioCtx.currentTime + 0.14);
+            gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.14);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.14);
+        } catch(e) {}
+    }
+
+    function playChimeSound() {
+        if (!soundEnabled) return;
+        initAudio();
+        if (!audioCtx) return;
+        try {
+            [587.33, 880].forEach((freq, i) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime + (i * 0.06));
+                gain.gain.setValueAtTime(0.12, audioCtx.currentTime + (i * 0.06));
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + (i * 0.06) + 0.3);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(audioCtx.currentTime + (i * 0.06));
+                osc.stop(audioCtx.currentTime + (i * 0.06) + 0.3);
+            });
+        } catch(e) {}
+    }
+
     function triggerHaptic(ms = 15) {
         if (typeof navigator !== 'undefined' && navigator.vibrate) {
             try { navigator.vibrate(ms); } catch (e) {}
@@ -406,6 +493,7 @@ ${topNavHtml?no_esc}
 
     function toggleCardFlip() {
         triggerHaptic(12);
+        playCardFlipSound();
         if (flipInner) {
             flipInner.classList.toggle("flipped");
         }
@@ -436,6 +524,7 @@ ${topNavHtml?no_esc}
 
     function flipModalCard() {
         triggerHaptic(12);
+        playCardFlipSound();
         const temp = currentModalSrc;
         currentModalSrc = alternateModalSrc;
         alternateModalSrc = temp;
@@ -537,6 +626,7 @@ ${topNavHtml?no_esc}
 
     window.toggleDetailFav = function() {
         triggerHaptic(20);
+        playChimeSound();
         let favs = getFavorites();
         const ids = getCardIdentifiers();
         const isFav = ids.some(id => favs.includes(id));
@@ -553,10 +643,144 @@ ${topNavHtml?no_esc}
             localStorage.setItem(FAVORITES_KEY, JSON.stringify(favs));
         } catch (e) {}
         updateDetailFavUI();
+        if (typeof navigator !== 'undefined' && navigator.setAppBadge) {
+            try {
+                if (favs.length > 0) navigator.setAppBadge(favs.length);
+                else if (navigator.clearAppBadge) navigator.clearAppBadge();
+            } catch (e) {}
+        }
     };
+
+    // --- HOLOGRAPHIC FOIL & 3D TILT WITH GYROSCOPE ---
+    const flipContainer = document.querySelector('.flip-container');
+    let isLoupeActive = false;
+
+    function updateFoilAndTilt(percentX, percentY, rotX, rotY) {
+        if (isLoupeActive) return;
+        document.querySelectorAll('.foil-glare-effect').forEach(foil => {
+            foil.style.setProperty('--foil-x', percentX + '%');
+            foil.style.setProperty('--foil-y', percentY + '%');
+            foil.style.setProperty('--foil-opacity', '0.45');
+        });
+        if (flipContainer && flipInner && !flipInner.classList.contains('flipped')) {
+            flipContainer.style.transform = "perspective(1000px) rotateX(" + (rotX * 0.6) + "deg) rotateY(" + (rotY * 0.6) + "deg) scale3d(1.01, 1.01, 1.01)";
+        }
+    }
+
+    function resetFoilAndTilt() {
+        document.querySelectorAll('.foil-glare-effect').forEach(foil => {
+            foil.style.setProperty('--foil-opacity', '0');
+        });
+        if (flipContainer) {
+            flipContainer.style.transform = '';
+        }
+    }
+
+    if (flipContainer) {
+        flipContainer.addEventListener('pointermove', (e) => {
+            if (isLoupeActive) return;
+            const rect = flipContainer.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const percentX = (x / rect.width) * 100;
+            const percentY = (y / rect.height) * 100;
+            const rotX = -((y - rect.height / 2) / (rect.height / 2)) * 10;
+            const rotY = ((x - rect.width / 2) / (rect.width / 2)) * 10;
+            updateFoilAndTilt(percentX, percentY, rotX, rotY);
+        });
+
+        flipContainer.addEventListener('pointerleave', () => {
+            resetFoilAndTilt();
+        });
+    }
+
+    if (window.DeviceOrientationEvent && typeof window.DeviceOrientationEvent.requestPermission !== 'function') {
+        window.addEventListener('deviceorientation', (e) => {
+            if (isLoupeActive || e.gamma === null || e.beta === null) return;
+            const clampGamma = Math.max(-30, Math.min(30, e.gamma));
+            const clampBeta = Math.max(15, Math.min(75, e.beta)) - 45;
+            const percentX = ((clampGamma + 30) / 60) * 100;
+            const percentY = ((clampBeta + 30) / 60) * 100;
+            const rotY = (clampGamma / 30) * 8;
+            const rotX = -(clampBeta / 30) * 8;
+            updateFoilAndTilt(percentX, percentY, rotX, rotY);
+        }, { passive: true });
+    }
+
+    // --- 2K GRADING LOUPE ---
+    function toggleLoupeMode() {
+        isLoupeActive = !isLoupeActive;
+        const loupe = document.getElementById('cardLoupe');
+        const loupeBtn = document.getElementById('loupeBtn');
+        if (!loupe || !loupeBtn) return;
+
+        if (isLoupeActive) {
+            resetFoilAndTilt();
+            loupeBtn.classList.add('active-tool');
+            loupeBtn.innerHTML = '<span class="icon">✕</span> Exit Loupe';
+            showToast("🔬 2K Loupe: Drag over card to inspect details");
+        } else {
+            loupe.style.display = 'none';
+            loupeBtn.classList.remove('active-tool');
+            loupeBtn.innerHTML = '<span class="icon">🔬</span> 2K Loupe';
+        }
+    }
+
+    function handleLoupeMove(e) {
+        if (!isLoupeActive) return;
+        const loupe = document.getElementById('cardLoupe');
+        const wrapper = document.querySelector('.card-image-wrapper');
+        const isFlipped = flipInner && flipInner.classList.contains("flipped");
+        const activeImgEl = isFlipped 
+            ? document.querySelector('.flip-face-back img') 
+            : document.querySelector('.flip-face-front img');
+
+        if (!loupe || !wrapper || !activeImgEl) return;
+
+        const imgRect = activeImgEl.getBoundingClientRect();
+        const wrapperRect = wrapper.getBoundingClientRect();
+
+        const clientX = e.touches && e.touches.length > 0 ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches && e.touches.length > 0 ? e.touches[0].clientY : e.clientY;
+
+        // Allow inspecting right up to the border and slight surrounding padding
+        const margin = 40;
+        if (clientX < imgRect.left - margin || clientX > imgRect.right + margin ||
+            clientY < imgRect.top - margin || clientY > imgRect.bottom + margin) {
+            loupe.style.display = 'none';
+            return;
+        }
+
+        loupe.style.display = 'block';
+        const x = clientX - imgRect.left;
+        const y = clientY - imgRect.top;
+
+        const activeImg = isFlipped ? highResBack : highResFront;
+        const zoom = 2.0;
+        const loupeRadius = 75; // half of 150px lens diameter
+
+        loupe.style.left = (clientX - wrapperRect.left) + 'px';
+        loupe.style.top = (clientY - wrapperRect.top) + 'px';
+        loupe.style.backgroundImage = "url('" + activeImg + "')";
+        loupe.style.backgroundSize = (imgRect.width * zoom) + 'px ' + (imgRect.height * zoom) + 'px';
+        loupe.style.backgroundPosition = (-(x * zoom - loupeRadius)) + 'px ' + (-(y * zoom - loupeRadius)) + 'px';
+    }
+
+    const cardWrapper = document.querySelector('.card-image-wrapper');
+    if (cardWrapper) {
+        cardWrapper.addEventListener('mousemove', handleLoupeMove);
+        cardWrapper.addEventListener('touchmove', handleLoupeMove, { passive: true });
+        cardWrapper.addEventListener('mouseleave', () => {
+            if (isLoupeActive) {
+                const loupe = document.getElementById('cardLoupe');
+                if (loupe) loupe.style.display = 'none';
+            }
+        });
+    }
 
     document.addEventListener('DOMContentLoaded', () => {
         updateDetailFavUI();
+        updateSoundUI();
 
         const pathParts = window.location.pathname.split('/');
         const filename = pathParts[pathParts.length - 1];
@@ -570,28 +794,39 @@ ${topNavHtml?no_esc}
 
         let touchStartX = 0;
         let touchEndX = 0;
-        const swipeContainer = document.querySelector('.card-images-container');
-        if (swipeContainer) {
-            swipeContainer.addEventListener('touchstart', (e) => {
-                if (e.touches.length > 0) touchStartX = e.touches[0].clientX;
-            }, { passive: true });
-            
-            swipeContainer.addEventListener('touchend', (e) => {
-                if (e.changedTouches.length > 0) {
-                    touchEndX = e.changedTouches[0].clientX;
-                    const diffX = touchEndX - touchStartX;
-                    if (Math.abs(diffX) > 60) {
-                        if (diffX > 0) {
-                            const prevLink = document.getElementById('prevCardLink');
-                            if (prevLink) window.location.href = prevLink.href;
-                        } else {
-                            const nextLink = document.getElementById('nextCardLink');
-                            if (nextLink) window.location.href = nextLink.href;
-                        }
+        let touchStartY = 0;
+        let touchEndY = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            if (isLoupeActive) return;
+            // Do NOT trigger swipe when touching inside the card image wrapper, loupe, or interactive buttons
+            if (e.target.closest('.card-images-container') || e.target.closest('button') || e.target.closest('a') || e.target.closest('#cardLoupe')) return;
+            if (e.touches.length > 0) {
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+            }
+        }, { passive: true });
+
+        document.addEventListener('touchend', (e) => {
+            if (isLoupeActive) return;
+            if (e.target.closest('.card-images-container') || e.target.closest('button') || e.target.closest('a') || e.target.closest('#cardLoupe')) return;
+            if (e.changedTouches.length > 0) {
+                touchEndX = e.changedTouches[0].clientX;
+                touchEndY = e.changedTouches[0].clientY;
+                const diffX = touchEndX - touchStartX;
+                const diffY = touchEndY - touchStartY;
+                // Only trigger if horizontal swipe is intentional and greater than vertical scroll
+                if (Math.abs(diffX) > 70 && Math.abs(diffX) > Math.abs(diffY) * 1.5) {
+                    if (diffX > 0) {
+                        const prevLink = document.getElementById('prevCardLink');
+                        if (prevLink) window.location.href = prevLink.href;
+                    } else {
+                        const nextLink = document.getElementById('nextCardLink');
+                        if (nextLink) window.location.href = nextLink.href;
                     }
                 }
-            }, { passive: true });
-        }
+            }
+        }, { passive: true });
     });
 
     document.addEventListener('keydown', function (event) {

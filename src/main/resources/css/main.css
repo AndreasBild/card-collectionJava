@@ -59,6 +59,15 @@ html {
     text-size-adjust: 100%;
 }
 
+@view-transition {
+    navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: 0.25s;
+}
+
 body {
     font-family: var(--font-family), sans-serif;
     line-height: 1.6;
@@ -907,6 +916,24 @@ tr:hover {
     overflow: hidden;
 }
 
+.foil-glare-effect {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+    opacity: var(--foil-opacity, 0);
+    mix-blend-mode: soft-light;
+    background: radial-gradient(
+        circle 340px at var(--foil-x, 50%) var(--foil-y, 50%),
+        rgba(255, 255, 255, 0.5) 0%,
+        rgba(254, 240, 138, 0.25) 30%,
+        rgba(212, 175, 55, 0.12) 60%,
+        transparent 85%
+    );
+    transition: opacity 0.35s ease;
+    border-radius: var(--radius-lg);
+}
+
 .flip-face-front figure,
 .flip-face-back figure {
     width: 100%;
@@ -1483,6 +1510,61 @@ tr:hover {
     padding: 8px 18px !important;
     font-size: 0.9rem !important;
     border-radius: var(--radius-full);
+}
+
+.card-image-wrapper {
+    position: relative;
+}
+
+/* --- 4K GRADING LOUPE LENS --- */
+.card-grading-loupe {
+    display: none;
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border: 3px solid var(--accent-gold);
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.6), 0 12px 32px rgba(0, 0, 0, 0.85), var(--shadow-gold);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 200;
+    background-repeat: no-repeat;
+    background-color: var(--bg-main);
+    overflow: hidden;
+}
+
+.card-grading-loupe .loupe-badge {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(11, 15, 25, 0.88);
+    border: 1px solid var(--accent-gold);
+    color: var(--accent-gold);
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+    text-transform: uppercase;
+}
+
+.card-grading-loupe .loupe-crosshair {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(to right, transparent calc(50% - 0.5px), rgba(212, 175, 55, 0.4) calc(50% - 0.5px), rgba(212, 175, 55, 0.4) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+        linear-gradient(to bottom, transparent calc(50% - 0.5px), rgba(212, 175, 55, 0.4) calc(50% - 0.5px), rgba(212, 175, 55, 0.4) calc(50% + 0.5px), transparent calc(50% + 0.5px));
+}
+
+.active-tool {
+    background-color: var(--accent-gold) !important;
+    color: #0b0f19 !important;
+    border-color: var(--accent-gold) !important;
+    font-weight: 800 !important;
+    box-shadow: var(--shadow-gold) !important;
 }
 
 .no-border-bg { border: none !important; background: transparent !important; }
