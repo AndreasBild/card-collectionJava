@@ -85,9 +85,7 @@ ${topNavHtml?no_esc}
                 <div class="loupe-crosshair"></div>
             </div>
             <div class="card-action-bar">
-                <button type="button" class="modern-button card-action-btn" id="zoomCardBtn" onclick="openCardLightbox()"><span class="icon">🔍</span> High-Res Zoom</button>
                 <button type="button" class="modern-button card-action-btn" id="loupeBtn" onclick="toggleLoupeMode()"><span class="icon">🔬</span> 2K Loupe</button>
-                <button type="button" class="modern-button card-action-btn" id="soundToggleBtn" onclick="toggleAudioEffects()" title="Toggle Sound FX"><span id="soundIcon">🔊</span> Sound FX</button>
             </div>
             <p class="img-caption">&#x1F504; Tap Card to Flip</p>
         </div>
@@ -378,112 +376,15 @@ ${topNavHtml?no_esc}
     </#if>
     ${footerHtml?no_esc}
 </main>
-<div id="cardModal" class="modal" aria-hidden="true" onclick="if(event.target===this)closeModal()">
-    <button class="close-modal-btn" aria-label="Close zoomed image" onclick="closeModal()">&times;</button>
-    <div class="modal-controls">
-        <button class="flip-modal-btn" aria-label="Flip card to other side" onclick="flipModalCard()">
-            &#8644; Flip Side
-        </button>
-        <button class="zoom-toggle-btn" id="zoomToggleBtn" aria-label="Toggle zoom level" onclick="toggleModalZoom()">
-            <span id="zoomLevelText">🔍 2x</span>
-        </button>
-    </div>
-    <img class="modal-content" id="img01" alt="Zoomed card view" title="Click to zoom in/out" onclick="toggleModalZoom()">
-</div>
 <div id="toastNotification" class="toast-notification" aria-live="polite">
     <span class="toast-icon">✨</span>
     <span id="toastMessage" class="toast-text">Link copied to clipboard!</span>
 </div>
 <script>
-    const modal = document.getElementById("cardModal");
-    const modalImg = document.getElementById("img01");
-    const zoomLevelText = document.getElementById("zoomLevelText");
     const flipInner = document.querySelector(".flip-card-inner");
 
     const highResFront = "${frontImgPath}";
     const highResBack = "${backImgPath}";
-    let currentModalSrc = highResFront;
-    let alternateModalSrc = highResBack;
-    let currentZoomLevel = 1;
-
-    // --- WEB AUDIO API SYNTHESIZER (0 KB Zero-Asset Audio) ---
-    let audioCtx = null;
-    let soundEnabled = localStorage.getItem('maulmann_sound_fx') === 'true';
-
-    function initAudio() {
-        if (!audioCtx) {
-            const AudioContext = window.AudioContext || window.webkitAudioContext;
-            if (AudioContext) audioCtx = new AudioContext();
-        }
-        if (audioCtx && audioCtx.state === 'suspended') {
-            audioCtx.resume();
-        }
-    }
-
-    function toggleAudioEffects() {
-        initAudio();
-        soundEnabled = !soundEnabled;
-        localStorage.setItem('maulmann_sound_fx', soundEnabled);
-        updateSoundUI();
-        if (soundEnabled) {
-            playChimeSound();
-            showToast("🔊 Sound Effects: Enabled");
-        } else {
-            showToast("🔇 Sound Effects: Muted");
-        }
-    }
-
-    function updateSoundUI() {
-        const icon = document.getElementById('soundIcon');
-        const btn = document.getElementById('soundToggleBtn');
-        if (!btn || !icon) return;
-        if (soundEnabled) {
-            icon.textContent = '🔊';
-            btn.classList.add('active-tool');
-        } else {
-            icon.textContent = '🔇';
-            btn.classList.remove('active-tool');
-        }
-    }
-
-    function playCardFlipSound() {
-        if (!soundEnabled) return;
-        initAudio();
-        if (!audioCtx) return;
-        try {
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(160, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(30, audioCtx.currentTime + 0.14);
-            gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.14);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.14);
-        } catch(e) {}
-    }
-
-    function playChimeSound() {
-        if (!soundEnabled) return;
-        initAudio();
-        if (!audioCtx) return;
-        try {
-            [587.33, 880].forEach((freq, i) => {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(freq, audioCtx.currentTime + (i * 0.06));
-                gain.gain.setValueAtTime(0.12, audioCtx.currentTime + (i * 0.06));
-                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + (i * 0.06) + 0.3);
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start(audioCtx.currentTime + (i * 0.06));
-                osc.stop(audioCtx.currentTime + (i * 0.06) + 0.3);
-            });
-        } catch(e) {}
-    }
 
     function triggerHaptic(ms = 15) {
         if (typeof navigator !== 'undefined' && navigator.vibrate) {
@@ -493,58 +394,8 @@ ${topNavHtml?no_esc}
 
     function toggleCardFlip() {
         triggerHaptic(12);
-        playCardFlipSound();
         if (flipInner) {
             flipInner.classList.toggle("flipped");
-        }
-    }
-
-    function openCardLightbox() {
-        if (!modal || !modalImg) return;
-        const isFlipped = flipInner && flipInner.classList.contains("flipped");
-        currentModalSrc = isFlipped ? highResBack : highResFront;
-        alternateModalSrc = isFlipped ? highResFront : highResBack;
-
-        modalImg.src = currentModalSrc;
-        currentZoomLevel = 1;
-        modalImg.className = "modal-content";
-        if (zoomLevelText) zoomLevelText.textContent = "🔍 2x";
-
-        modal.style.display = "flex";
-        modal.setAttribute("aria-hidden", "false");
-    }
-
-    function closeModal() {
-        if (!modal) return;
-        modal.style.display = "none";
-        modal.setAttribute("aria-hidden", "true");
-        currentZoomLevel = 1;
-        if (modalImg) modalImg.className = "modal-content";
-    }
-
-    function flipModalCard() {
-        triggerHaptic(12);
-        playCardFlipSound();
-        const temp = currentModalSrc;
-        currentModalSrc = alternateModalSrc;
-        alternateModalSrc = temp;
-        if (modalImg) modalImg.src = currentModalSrc;
-    }
-
-    function toggleModalZoom() {
-        if (!modalImg) return;
-        if (currentZoomLevel === 1) {
-            currentZoomLevel = 2;
-            modalImg.className = "modal-content is-zoomed-2x";
-            if (zoomLevelText) zoomLevelText.textContent = "🔍 3x";
-        } else if (currentZoomLevel === 2) {
-            currentZoomLevel = 3;
-            modalImg.className = "modal-content is-zoomed-3x";
-            if (zoomLevelText) zoomLevelText.textContent = "🔍 1x";
-        } else {
-            currentZoomLevel = 1;
-            modalImg.className = "modal-content";
-            if (zoomLevelText) zoomLevelText.textContent = "🔍 2x";
         }
     }
 
@@ -626,7 +477,6 @@ ${topNavHtml?no_esc}
 
     window.toggleDetailFav = function() {
         triggerHaptic(20);
-        playChimeSound();
         let favs = getFavorites();
         const ids = getCardIdentifiers();
         const isFav = ids.some(id => favs.includes(id));
@@ -660,10 +510,10 @@ ${topNavHtml?no_esc}
         document.querySelectorAll('.foil-glare-effect').forEach(foil => {
             foil.style.setProperty('--foil-x', percentX + '%');
             foil.style.setProperty('--foil-y', percentY + '%');
-            foil.style.setProperty('--foil-opacity', '0.45');
+            foil.style.setProperty('--foil-opacity', '0.35');
         });
         if (flipContainer && flipInner && !flipInner.classList.contains('flipped')) {
-            flipContainer.style.transform = "perspective(1000px) rotateX(" + (rotX * 0.6) + "deg) rotateY(" + (rotY * 0.6) + "deg) scale3d(1.01, 1.01, 1.01)";
+            flipContainer.style.transform = "perspective(1000px) rotateX(" + rotX + "deg) rotateY(" + rotY + "deg) scale3d(1.025, 1.025, 1.025)";
         }
     }
 
@@ -677,34 +527,23 @@ ${topNavHtml?no_esc}
     }
 
     let motionPermissionRequested = false;
+    let gyroActive = false;
 
     function handleDeviceOrientation(e) {
         if (isLoupeActive || e.gamma === null || e.beta === null) return;
-        const clampGamma = Math.max(-30, Math.min(30, e.gamma));
-        const clampBeta = Math.max(15, Math.min(75, e.beta)) - 45;
-        const percentX = ((clampGamma + 30) / 60) * 100;
-        const percentY = ((clampBeta + 30) / 60) * 100;
-        const rotY = (clampGamma / 30) * 8;
-        const rotX = -(clampBeta / 30) * 8;
+        // Range mapping: gamma [-35, 35] & beta [10, 80] relative to 45 deg resting angle
+        const clampGamma = Math.max(-35, Math.min(35, e.gamma));
+        const clampBeta = Math.max(10, Math.min(80, e.beta)) - 45;
+        const percentX = ((clampGamma + 35) / 70) * 100;
+        const percentY = ((clampBeta + 35) / 70) * 100;
+        const rotY = (clampGamma / 35) * 14;
+        const rotX = -(clampBeta / 35) * 14;
         updateFoilAndTilt(percentX, percentY, rotX, rotY);
     }
 
     function initGyroscope() {
-        if (typeof DeviceOrientationEvent !== 'undefined') {
-            if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-                if (!motionPermissionRequested) {
-                    motionPermissionRequested = true;
-                    DeviceOrientationEvent.requestPermission()
-                        .then(permissionState => {
-                            if (permissionState === 'granted') {
-                                window.addEventListener('deviceorientation', handleDeviceOrientation, { passive: true });
-                            }
-                        })
-                        .catch(() => {});
-                }
-            } else {
-                window.addEventListener('deviceorientation', handleDeviceOrientation, { passive: true });
-            }
+        if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission !== 'function') {
+            window.addEventListener('deviceorientation', handleDeviceOrientation, { passive: true });
         }
     }
 
@@ -717,24 +556,38 @@ ${topNavHtml?no_esc}
             const y = e.clientY - rect.top;
             const percentX = (x / rect.width) * 100;
             const percentY = (y / rect.height) * 100;
-            const rotX = -((y - rect.height / 2) / (rect.height / 2)) * 10;
-            const rotY = ((x - rect.width / 2) / (rect.width / 2)) * 10;
+            const rotX = -((y - rect.height / 2) / (rect.height / 2)) * 12;
+            const rotY = ((x - rect.width / 2) / (rect.width / 2)) * 12;
             updateFoilAndTilt(percentX, percentY, rotX, rotY);
         });
 
+        flipContainer.addEventListener('touchmove', (e) => {
+            if (isLoupeActive) return;
+            initGyroscope();
+            const rect = flipContainer.getBoundingClientRect();
+            if (e.touches && e.touches.length > 0) {
+                const x = e.touches[0].clientX - rect.left;
+                const y = e.touches[0].clientY - rect.top;
+                const percentX = Math.max(0, Math.min(100, (x / rect.width) * 100));
+                const percentY = Math.max(0, Math.min(100, (y / rect.height) * 100));
+                const rotX = -((y - rect.height / 2) / (rect.height / 2)) * 12;
+                const rotY = ((x - rect.width / 2) / (rect.width / 2)) * 12;
+                updateFoilAndTilt(percentX, percentY, rotX, rotY);
+            }
+        }, { passive: true });
+
         flipContainer.addEventListener('pointerleave', () => {
-            if (!motionPermissionRequested) {
+            if (!gyroActive && !motionPermissionRequested) {
                 resetFoilAndTilt();
             }
         });
 
-        // Enable gyroscope on first user interaction with the card
         flipContainer.addEventListener('click', () => {
             initGyroscope();
         }, { passive: true });
     }
 
-    // Attempt auto-init for Android and non-permission browsers
+    // Auto-init for Android and non-permission browsers
     if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission !== 'function') {
         window.addEventListener('deviceorientation', handleDeviceOrientation, { passive: true });
     }
@@ -750,16 +603,22 @@ ${topNavHtml?no_esc}
             resetFoilAndTilt();
             loupeBtn.classList.add('active-tool');
             loupeBtn.innerHTML = '<span class="icon">✕</span> Exit Loupe';
-            showToast("🔬 2K Loupe: Drag over card to inspect details");
+            if (flipContainer) flipContainer.classList.add('loupe-mode-active');
+            showToast("🔬 2K Loupe: Drag on card to inspect • Tap Exit Loupe to close");
         } else {
             loupe.style.display = 'none';
             loupeBtn.classList.remove('active-tool');
             loupeBtn.innerHTML = '<span class="icon">🔬</span> 2K Loupe';
+            if (flipContainer) flipContainer.classList.remove('loupe-mode-active');
+            showToast("Loupe closed");
         }
     }
 
     function handleLoupeMove(e) {
         if (!isLoupeActive) return;
+        if (e.cancelable) {
+            e.preventDefault();
+        }
         const loupe = document.getElementById('cardLoupe');
         const wrapper = document.querySelector('.card-image-wrapper');
         const isFlipped = flipInner && flipInner.classList.contains("flipped");
@@ -775,8 +634,8 @@ ${topNavHtml?no_esc}
         const clientX = e.touches && e.touches.length > 0 ? e.touches[0].clientX : e.clientX;
         const clientY = e.touches && e.touches.length > 0 ? e.touches[0].clientY : e.clientY;
 
-        // Allow inspecting right up to the border and slight surrounding padding
-        const margin = 40;
+        // Hide loupe if finger/cursor is outside card
+        const margin = 30;
         if (clientX < imgRect.left - margin || clientX > imgRect.right + margin ||
             clientY < imgRect.top - margin || clientY > imgRect.bottom + margin) {
             loupe.style.display = 'none';
@@ -798,11 +657,29 @@ ${topNavHtml?no_esc}
         loupe.style.backgroundPosition = (-(x * zoom - loupeRadius)) + 'px ' + (-(y * zoom - loupeRadius)) + 'px';
     }
 
-    const cardWrapper = document.querySelector('.card-image-wrapper');
-    if (cardWrapper) {
-        cardWrapper.addEventListener('mousemove', handleLoupeMove);
-        cardWrapper.addEventListener('touchmove', handleLoupeMove, { passive: true });
-        cardWrapper.addEventListener('mouseleave', () => {
+    if (flipContainer) {
+        flipContainer.addEventListener('mousemove', (e) => {
+            if (isLoupeActive) handleLoupeMove(e);
+        });
+        flipContainer.addEventListener('touchstart', (e) => {
+            if (isLoupeActive) {
+                if (e.cancelable) e.preventDefault();
+                handleLoupeMove(e);
+            }
+        }, { passive: false });
+        flipContainer.addEventListener('touchmove', (e) => {
+            if (isLoupeActive) {
+                if (e.cancelable) e.preventDefault();
+                handleLoupeMove(e);
+            }
+        }, { passive: false });
+        flipContainer.addEventListener('mouseleave', () => {
+            if (isLoupeActive) {
+                const loupe = document.getElementById('cardLoupe');
+                if (loupe) loupe.style.display = 'none';
+            }
+        });
+        flipContainer.addEventListener('touchend', () => {
             if (isLoupeActive) {
                 const loupe = document.getElementById('cardLoupe');
                 if (loupe) loupe.style.display = 'none';
@@ -812,7 +689,6 @@ ${topNavHtml?no_esc}
 
     document.addEventListener('DOMContentLoaded', () => {
         updateDetailFavUI();
-        updateSoundUI();
 
         const pathParts = window.location.pathname.split('/');
         const filename = pathParts[pathParts.length - 1];
@@ -863,7 +739,9 @@ ${topNavHtml?no_esc}
 
     document.addEventListener('keydown', function (event) {
         if (event.target && ['INPUT', 'TEXTAREA', 'SELECT'].includes(event.target.tagName)) return;
-        if (event.key === "Escape") closeModal();
+        if (event.key === "Escape") {
+            if (isLoupeActive) toggleLoupeMode();
+        }
         if (event.key === "ArrowLeft") {
             const prevLink = document.getElementById('prevCardLink');
             if (prevLink) window.location.href = prevLink.href;
@@ -873,11 +751,7 @@ ${topNavHtml?no_esc}
             if (nextLink) window.location.href = nextLink.href;
         }
         if (event.key === "f" || event.key === "F") {
-            if (modal && modal.style.display === "flex") {
-                flipModalCard();
-            } else {
-                toggleCardFlip();
-            }
+            toggleCardFlip();
         }
     });
 </script>

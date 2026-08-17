@@ -922,15 +922,15 @@ tr:hover {
     pointer-events: none;
     z-index: 5;
     opacity: var(--foil-opacity, 0);
-    mix-blend-mode: soft-light;
+    mix-blend-mode: overlay;
     background: radial-gradient(
-        circle 340px at var(--foil-x, 50%) var(--foil-y, 50%),
-        rgba(255, 255, 255, 0.5) 0%,
-        rgba(254, 240, 138, 0.25) 30%,
-        rgba(212, 175, 55, 0.12) 60%,
-        transparent 85%
+        circle 320px at var(--foil-x, 50%) var(--foil-y, 50%),
+        rgba(255, 255, 255, 0.45) 0%,
+        rgba(254, 240, 138, 0.22) 30%,
+        rgba(212, 175, 55, 0.1) 60%,
+        transparent 80%
     );
-    transition: opacity 0.35s ease;
+    transition: opacity 0.3s ease;
     border-radius: var(--radius-lg);
 }
 
@@ -1516,7 +1516,13 @@ tr:hover {
     position: relative;
 }
 
-/* --- 4K GRADING LOUPE LENS --- */
+.flip-container.loupe-mode-active {
+    touch-action: none !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+}
+
+/* --- 2K GRADING LOUPE LENS --- */
 .card-grading-loupe {
     display: none;
     position: absolute;
@@ -1565,6 +1571,13 @@ tr:hover {
     border-color: var(--accent-gold) !important;
     font-weight: 800 !important;
     box-shadow: var(--shadow-gold) !important;
+}
+
+#loupeBtn.active-tool {
+    background-color: var(--accent-red) !important;
+    border-color: var(--accent-red) !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.45) !important;
 }
 
 .no-border-bg { border: none !important; background: transparent !important; }
