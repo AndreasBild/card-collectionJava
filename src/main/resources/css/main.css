@@ -273,7 +273,7 @@ a.modern-button *, button.modern-button *, button.flip-modal-btn *, button.close
     display: none !important;
     border: none;
     background: none;
-    color: var(--text-secondary);
+    color: #000000 !important;
     font-size: 22px;
     cursor: pointer;
     padding: 0 18px;
@@ -523,7 +523,7 @@ footer.detail-footer,
     border: none;
     padding: 0;
     cursor: pointer;
-    color: inherit;
+    color: #000000 !important;
     font-size: inherit;
 }
 
@@ -1953,10 +1953,30 @@ tr:hover {
 
     .topnav .burger-icon-button {
         display: flex !important;
+        align-items: center;
+        justify-content: center;
         position: absolute;
-        right: 4px;
-        top: 0;
+        right: 8px;
+        top: 8px;
+        height: 40px;
+        width: 44px;
+        padding: 0;
+        background-color: var(--accent-gold);
+        color: #000000 !important;
+        font-size: 22px;
+        font-weight: bold;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--accent-gold);
         z-index: 1020;
+        cursor: pointer;
+        transition: var(--transition-fast);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .topnav .burger-icon-button:hover,
+    .topnav .burger-icon-button:focus {
+        background-color: var(--accent-gold-hover);
+        color: #000000 !important;
     }
 
     .topnav.responsive .nav-container {
@@ -3473,9 +3493,13 @@ img[loading="lazy"]:not([src=""]) {
     gap: 14px;
 }
 
-.binder-nav-btn {
+.binder-nav-btn,
+.binder-tool-btn {
     padding: 8px 16px !important;
     font-size: 0.85rem !important;
+    width: auto !important;
+    min-height: 38px;
+    margin: 0 !important;
 }
 
 .binder-nav-btn:disabled {
@@ -3511,12 +3535,6 @@ img[loading="lazy"]:not([src=""]) {
     font-size: 0.85rem;
     outline: none;
     cursor: pointer;
-}
-
-.binder-tool-btn {
-    padding: 7px 14px !important;
-    font-size: 0.82rem !important;
-    background: rgba(255, 255, 255, 0.05) !important;
 }
 
 /* Binder 3D Book & Stage */
