@@ -67,6 +67,9 @@ body {
     background-color: var(--bg-main);
     overflow-x: hidden;
     min-height: 100vh;
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
 }
 
 body, td, th {
@@ -1484,7 +1487,19 @@ tr:hover {
 
 .no-border-bg { border: none !important; background: transparent !important; }
 .no-text-decoration { text-decoration: none !important; }
-.nav-button-group { display: flex; gap: 10px; }
+.nav-button-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-tier-browse,
+.nav-tier-tools {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
 
 .ai-summary {
     background: var(--bg-surface);
@@ -1693,7 +1708,50 @@ tr:hover {
     .topnav.responsive .icon { position: absolute; right: 0; top: 0; }
     .topnav.responsive a { float: none; display: block; text-align: left; }
 
-    .detail-nav { padding: 8px 0; gap: 8px; }
+    .detail-nav {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 8px 0;
+        gap: 8px;
+        box-sizing: border-box;
+    }
+
+    .detail-nav #backToOverview {
+        width: 100% !important;
+        margin: 0 !important;
+        box-sizing: border-box;
+    }
+
+    .nav-button-group {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 6px;
+        box-sizing: border-box;
+    }
+
+    .nav-tier-browse,
+    .nav-tier-tools {
+        display: flex;
+        width: 100%;
+        gap: 6px;
+        box-sizing: border-box;
+    }
+
+    .nav-tier-browse .modern-button,
+    .nav-tier-tools .modern-button {
+        flex: 1 1 0;
+        min-width: 0 !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 10px 4px !important;
+        font-size: 0.82rem !important;
+        box-sizing: border-box;
+        text-align: center;
+        justify-content: center;
+        white-space: nowrap;
+    }
 
     .modern-button:not(.modern-button-footer):not(.footer-button-fixed) {
         width: auto !important;
@@ -2555,8 +2613,8 @@ figcaption {
 /* --- STICKY COMPARISON BAR & MODAL --- */
 .compare-sticky-bar {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    bottom: max(20px, calc(10px + env(safe-area-inset-bottom)));
+    right: max(20px, calc(10px + env(safe-area-inset-right)));
     z-index: 999;
     background: var(--bg-card);
     border: 2px solid var(--accent-gold);

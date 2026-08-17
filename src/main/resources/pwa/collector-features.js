@@ -144,6 +144,9 @@ function initCompareButtons() {
 }
 
 function toggleCompareCard(card) {
+    if (typeof navigator !== 'undefined' && navigator.vibrate) {
+        try { navigator.vibrate(15); } catch(e) {}
+    }
     let list = getCompareList();
     const index = list.findIndex(item => item.id === card.id);
 

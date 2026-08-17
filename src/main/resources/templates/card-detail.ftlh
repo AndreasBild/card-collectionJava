@@ -8,6 +8,8 @@
           fetchpriority="high">
     ${headHtml?no_esc}
     ${jsonLd?no_esc}
+    <#if prevLink??><link rel="prefetch" href="${prevLink}"></#if>
+    <#if nextLink??><link rel="prefetch" href="${nextLink}"></#if>
 </head>
 <body>
 {{CONSENT_BANNER}}
@@ -17,17 +19,21 @@ ${topNavHtml?no_esc}
         <a id="backToOverview" title="Back To Collection Overview" href="../../${overviewPage}"
            class="modern-button no-text-decoration">&larr; Overview</a>
         <div class="nav-button-group">
-            <#if prevLink??>
-                <a id="prevCardLink" title="Previous Card Details" href="${prevLink}"
-                   class="modern-button no-text-decoration">&laquo; Prev</a>
-            </#if>
-            <#if nextLink??>
-                <a id="nextCardLink" title="Next Card Details" href="${nextLink}"
-                   class="modern-button no-text-decoration">Next &raquo;</a>
-            </#if>
-            <button id="shareBtn" title="Share or copy card link" class="modern-button">🔗 Share</button>
-            <button id="favBtn" title="Add to favorites" class="modern-button detail-fav-btn" onclick="toggleDetailFav()"><span id="favStarIcon">☆</span> Favorite</button>
-            <button id="compareBtn" title="Compare this card with others" class="modern-button compare-toggle-btn" data-card-id="${cardStableId}" data-card-title="${h1Title}" data-card-img="${frontImgPath}" data-card-url="${fullCardUrl}" data-card-player="${player}" data-card-serial="${serialDisplay}">+ Compare</button>
+            <div class="nav-tier-browse">
+                <#if prevLink??>
+                    <a id="prevCardLink" title="Previous Card Details" href="${prevLink}"
+                       class="modern-button no-text-decoration">&laquo; Prev</a>
+                </#if>
+                <#if nextLink??>
+                    <a id="nextCardLink" title="Next Card Details" href="${nextLink}"
+                       class="modern-button no-text-decoration">Next &raquo;</a>
+                </#if>
+            </div>
+            <div class="nav-tier-tools">
+                <button id="shareBtn" title="Share or copy card link" class="modern-button">🔗 Share</button>
+                <button id="favBtn" title="Add to favorites" class="modern-button detail-fav-btn" onclick="toggleDetailFav()"><span id="favStarIcon">☆</span> Favorite</button>
+                <button id="compareBtn" title="Compare this card with others" class="modern-button compare-toggle-btn" data-card-id="${cardStableId}" data-card-title="${h1Title}" data-card-img="${frontImgPath}" data-card-url="${fullCardUrl}" data-card-player="${player}" data-card-serial="${serialDisplay}">+ Compare</button>
+            </div>
         </div>
     </nav>
     <#if breadcrumbHtml??>${breadcrumbHtml?no_esc}</#if>
@@ -75,7 +81,7 @@ ${topNavHtml?no_esc}
             <div class="card-action-bar">
                 <button type="button" class="modern-button card-action-btn" id="zoomCardBtn" onclick="openCardLightbox()"><span class="icon">🔍</span> High-Res Zoom</button>
             </div>
-            <p class="img-caption">&#x1F50D; Tap Card to Flip</p>
+            <p class="img-caption">&#x1F504; Tap Card to Flip &bull; &#x21C4; Swipe to Browse</p>
         </div>
     </div>
     <div class="card-data">
@@ -392,7 +398,14 @@ ${topNavHtml?no_esc}
     let alternateModalSrc = highResBack;
     let currentZoomLevel = 1;
 
+    function triggerHaptic(ms = 15) {
+        if (typeof navigator !== 'undefined' && navigator.vibrate) {
+            try { navigator.vibrate(ms); } catch (e) {}
+        }
+    }
+
     function toggleCardFlip() {
+        triggerHaptic(12);
         if (flipInner) {
             flipInner.classList.toggle("flipped");
         }
@@ -422,6 +435,7 @@ ${topNavHtml?no_esc}
     }
 
     function flipModalCard() {
+        triggerHaptic(12);
         const temp = currentModalSrc;
         currentModalSrc = alternateModalSrc;
         alternateModalSrc = temp;
@@ -459,6 +473,7 @@ ${topNavHtml?no_esc}
     const shareBtn = document.getElementById('shareBtn');
     if (shareBtn) {
         shareBtn.addEventListener('click', async () => {
+            triggerHaptic(15);
             const h1 = document.querySelector('h1');
             const shareTitle = document.title;
             const shareText = 'Check out this rare Juwan Howard card: ' + (h1 ? h1.textContent : document.title);
@@ -521,6 +536,7 @@ ${topNavHtml?no_esc}
     }
 
     window.toggleDetailFav = function() {
+        triggerHaptic(20);
         let favs = getFavorites();
         const ids = getCardIdentifiers();
         const isFav = ids.some(id => favs.includes(id));
