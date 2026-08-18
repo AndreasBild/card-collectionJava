@@ -83,43 +83,72 @@ const COMPARE_KEY = 'maulmann_compare_list';
 
 function getCompareList() {
     try {
-        return JSON.parse(sessionStorage.getItem(COMPARE_KEY)) || [];
+        const stored = localStorage.getItem(COMPARE_KEY) || sessionStorage.getItem(COMPARE_KEY);
+        return stored ? JSON.parse(stored) : [];
     } catch (e) {
         return [];
     }
 }
 
 function saveCompareList(list) {
-    sessionStorage.setItem(COMPARE_KEY, JSON.stringify(list));
+    const serialized = JSON.stringify(list);
+    try {
+        localStorage.setItem(COMPARE_KEY, serialized);
+    } catch (e) {
+        try { sessionStorage.setItem(COMPARE_KEY, serialized); } catch (err) {}
+    }
     updateCompareBar();
+    updateCompareButtonUI();
 }
 
-function initCompareButtons() {
+function updateCompareButtonUI() {
     const btn = document.getElementById('compareBtn');
     if (!btn) return;
 
     const id = btn.getAttribute('data-card-id');
     const list = getCompareList();
     const isSelected = list.some(item => item.id === id);
+    const textSpan = btn.querySelector('span');
 
     if (isSelected) {
-        btn.innerText = '✓ Compared';
         btn.classList.add('active-compare');
+        if (textSpan) textSpan.innerText = 'Compared';
+        btn.setAttribute('title', 'Card is in comparison list (click to remove)');
     } else {
-        btn.innerText = '+ Compare';
         btn.classList.remove('active-compare');
+        if (textSpan) textSpan.innerText = 'Compare';
+        btn.setAttribute('title', 'Compare this card with others');
     }
-
-    btn.addEventListener('click', () => {
-        const title = btn.getAttribute('data-card-title');
-        const img = btn.getAttribute('data-card-img');
-        const url = btn.getAttribute('data-card-url');
-        const player = btn.getAttribute('data-card-player');
-        const serial = btn.getAttribute('data-card-serial');
-
-        toggleCompareCard({ id, title, img, url, player, serial });
-    });
 }
+
+function initCompareButtons() {
+    const btn = document.getElementById('compareBtn');
+    if (!btn) return;
+
+    updateCompareButtonUI();
+
+    if (!btn.dataset.listenerAttached) {
+        btn.dataset.listenerAttached = 'true';
+        btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-card-id');
+            const title = btn.getAttribute('data-card-title');
+            const img = btn.getAttribute('data-card-img');
+            const url = btn.getAttribute('data-card-url');
+            const player = btn.getAttribute('data-card-player');
+            const serial = btn.getAttribute('data-card-serial');
+
+            toggleCompareCard({ id, title, img, url, player, serial });
+        });
+    }
+}
+
+// Sync comparison across tabs
+window.addEventListener('storage', (e) => {
+    if (e.key === COMPARE_KEY) {
+        updateCompareBar();
+        updateCompareButtonUI();
+    }
+});
 
 function toggleCompareCard(card) {
     if (typeof navigator !== 'undefined' && navigator.vibrate) {
@@ -139,12 +168,14 @@ function toggleCompareCard(card) {
     }
 
     saveCompareList(list);
-    initCompareButtons();
 }
 
 function clearCompareList() {
-    sessionStorage.removeItem(COMPARE_KEY);
-    initCompareButtons();
+    try {
+        localStorage.removeItem(COMPARE_KEY);
+        sessionStorage.removeItem(COMPARE_KEY);
+    } catch (e) {}
+    updateCompareButtonUI();
     updateCompareBar();
     closeCompareModal();
 }
@@ -161,8 +192,8 @@ function updateCompareBar() {
             <div class="compare-bar-content">
                 <span>&#x2696;&#xFE0F; <strong>Card Comparison</strong> (<span id="compareCount">0</span>/3)</span>
                 <div class="compare-bar-actions">
-                    <button class="modern-button compare-now-btn" onclick="openCompareModal()">View Comparison</button>
-                    <button class="modern-button secondary" onclick="clearCompareList()">Clear</button>
+                    <button type="button" class="modern-button compare-now-btn" onclick="openCompareModal()">View Comparison</button>
+                    <button type="button" class="modern-button secondary" onclick="clearCompareList()">Clear</button>
                 </div>
             </div>
         `;
@@ -196,7 +227,7 @@ function openCompareModal() {
             <div class="compare-modal-box">
                 <div class="compare-modal-header">
                     <h3>&#x2696;&#xFE0F; Side-by-Side Card Comparison</h3>
-                    <button class="modal-close-btn" aria-label="Close Comparison" onclick="closeCompareModal()">&times;</button>
+                    <button type="button" class="modal-close-btn" aria-label="Close Comparison" onclick="closeCompareModal()">&times;</button>
                 </div>
                 <div id="compareModalGrid" class="compare-modal-grid"></div>
             </div>
@@ -207,7 +238,7 @@ function openCompareModal() {
     const grid = document.getElementById('compareModalGrid');
     grid.innerHTML = list.map(item => `
         <div class="compare-card-col">
-            <button class="remove-col-btn" onclick="toggleCompareCard({id: '${item.id}'})">&times;</button>
+            <button type="button" class="remove-col-btn" title="Remove from comparison" onclick="toggleCompareCard({id: '${item.id}'})">&times;</button>
             <img src="${item.img}" alt="${item.title}">
             <h4>${item.title}</h4>
             <p><strong>Player:</strong> ${item.player || '-'}</p>

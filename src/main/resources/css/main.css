@@ -2952,14 +2952,34 @@ figcaption {
 /* --- STICKY COMPARISON BAR & MODAL --- */
 .compare-sticky-bar {
     position: fixed;
-    bottom: max(20px, calc(10px + env(safe-area-inset-bottom)));
-    right: max(20px, calc(10px + env(safe-area-inset-right)));
-    z-index: 999;
+    bottom: max(20px, calc(12px + env(safe-area-inset-bottom)));
+    right: max(80px, calc(76px + env(safe-area-inset-right)));
+    z-index: 10050;
     background: var(--bg-card);
+    color: var(--text-primary);
     border: 2px solid var(--accent-gold);
     border-radius: var(--radius-lg);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 15px rgba(212, 175, 55, 0.3);
     padding: 12px 20px;
+    animation: fadeInCompareBar 0.3s ease-out;
+}
+
+@keyframes fadeInCompareBar {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+    .compare-sticky-bar {
+        left: 16px;
+        right: 16px;
+        bottom: max(16px, calc(10px + env(safe-area-inset-bottom)));
+        padding: 10px 14px;
+    }
+    .compare-bar-content {
+        justify-content: space-between;
+        width: 100%;
+    }
 }
 
 .compare-bar-content {
@@ -2973,7 +2993,8 @@ figcaption {
     top: 0; left: 0; right: 0; bottom: 0;
     background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(6px);
-    z-index: 10000;
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 100000;
     display: flex;
     align-items: center;
     justify-content: center;
