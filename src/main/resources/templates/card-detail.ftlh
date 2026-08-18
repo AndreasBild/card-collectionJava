@@ -15,25 +15,43 @@
 {{CONSENT_BANNER}}
 ${topNavHtml?no_esc}
 <main class="detail-main">
-    <nav class="detail-nav no-border-bg">
-        <a id="backToOverview" title="Back To Collection Overview" href="../../${overviewPage}"
-           class="modern-button no-text-decoration">&larr; Overview</a>
-        <div class="nav-button-group">
-            <div class="nav-tier-browse">
+    <nav class="detail-nav" aria-label="Card navigation and actions">
+        <div class="detail-nav-group detail-nav-navigation">
+            <a id="backToOverview" title="Back To Collection Overview" href="../../${overviewPage}"
+               class="detail-nav-btn detail-nav-back">
+                <svg class="detail-nav-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                <span>Overview</span>
+            </a>
+            <div class="detail-nav-segmented">
                 <#if prevLink??>
                     <a id="prevCardLink" title="Previous Card Details" href="${prevLink}"
-                       class="modern-button no-text-decoration">&laquo; Prev</a>
+                       class="detail-nav-btn segmented-btn segmented-prev">
+                        <svg class="detail-nav-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        <span>Prev</span>
+                    </a>
                 </#if>
                 <#if nextLink??>
                     <a id="nextCardLink" title="Next Card Details" href="${nextLink}"
-                       class="modern-button no-text-decoration">Next &raquo;</a>
+                       class="detail-nav-btn segmented-btn segmented-next">
+                        <span>Next</span>
+                        <svg class="detail-nav-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
                 </#if>
             </div>
-            <div class="nav-tier-tools">
-                <button id="shareBtn" title="Share or copy card link" class="modern-button">🔗 Share</button>
-                <button id="favBtn" title="Add to favorites" class="modern-button detail-fav-btn" onclick="toggleDetailFav()"><span id="favStarIcon">☆</span> Favorite</button>
-                <button id="compareBtn" title="Compare this card with others" class="modern-button compare-toggle-btn" data-card-id="${cardStableId}" data-card-title="${h1Title}" data-card-img="${frontImgPath}" data-card-url="${fullCardUrl}" data-card-player="${player}" data-card-serial="${serialDisplay}">+ Compare</button>
-            </div>
+        </div>
+        <div class="detail-nav-group detail-nav-actions">
+            <button id="favBtn" type="button" title="Add to favorites" class="detail-nav-btn detail-fav-btn" onclick="toggleDetailFav()">
+                <span id="favStarIcon" class="fav-icon" aria-hidden="true">☆</span>
+                <span>Favorite</span>
+            </button>
+            <button id="shareBtn" type="button" title="Share or copy card link" class="detail-nav-btn detail-share-btn">
+                <svg class="detail-nav-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                <span>Share</span>
+            </button>
+            <button id="compareBtn" type="button" title="Compare this card with others" class="detail-nav-btn compare-toggle-btn" data-card-id="${cardStableId}" data-card-title="${h1Title}" data-card-img="${frontImgPath}" data-card-url="${fullCardUrl}" data-card-player="${player}" data-card-serial="${serialDisplay}">
+                <svg class="detail-nav-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                <span>Compare</span>
+            </button>
         </div>
     </nav>
     <#if breadcrumbHtml??>${breadcrumbHtml?no_esc}</#if>
