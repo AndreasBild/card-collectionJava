@@ -48,9 +48,13 @@ ${topNavHtml?no_esc}
                 <svg class="detail-nav-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
                 <span>Share</span>
             </button>
-            <button id="compareBtn" type="button" title="Compare this card with others" class="detail-nav-btn compare-toggle-btn" data-card-id="${cardStableId}" data-card-title="${h1Title}" data-card-img="${frontImgPath}" data-card-url="${fullCardUrl}" data-card-player="${player!""}" data-card-serial="${serialDisplay!""}">
+            <button id="compareBtn" type="button" title="Compare this card with others" class="detail-nav-btn compare-toggle-btn" onclick="toggleCompareCurrentCard(this)" data-card-id="${cardStableId}" data-card-title="${h1Title}" data-card-img="${frontImgPath}" data-card-url="${fullCardUrl}" data-card-player="${player!""}" data-card-serial="${serialDisplay!""}">
                 <svg class="detail-nav-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 <span>Compare</span>
+            </button>
+            <button id="viewCompareBtn" type="button" title="View card comparison side-by-side" class="detail-nav-btn view-compare-nav-btn" onclick="openCompareModal()" style="display: none;">
+                <span class="compare-icon-badge" aria-hidden="true">⚖️</span>
+                <span>View Comparison (<span id="navCompareCount">0</span>)</span>
             </button>
         </div>
     </nav>
@@ -413,8 +417,30 @@ ${topNavHtml?no_esc}
 
     function toggleCardFlip() {
         triggerHaptic(12);
-        if (flipInner) {
-            flipInner.classList.toggle("flipped");
+        const flipContainer = document.querySelector('.flip-container');
+        if (!flipContainer) return;
+        const frontImg = flipContainer.querySelector('.flip-face-front img');
+        const backImg = flipContainer.querySelector('.flip-face-back img');
+        const getOri = (img) => (img && img.naturalWidth && img.naturalHeight && img.naturalWidth > img.naturalHeight) ? 'landscape' : 'portrait';
+
+        const isFlipped = flipContainer.classList.toggle('is-flipped');
+        const frontOri = getOri(frontImg);
+        const backOri = getOri(backImg);
+
+        if (isFlipped && backImg && !backImg.naturalWidth) {
+            backImg.loading = 'eager';
+        }
+
+        const targetOri = isFlipped ? backOri : frontOri;
+
+        if (frontOri !== backOri) {
+            setTimeout(() => {
+                flipContainer.classList.remove('is-portrait', 'is-landscape');
+                flipContainer.classList.add('is-' + targetOri);
+            }, 220);
+        } else {
+            flipContainer.classList.remove('is-portrait', 'is-landscape');
+            flipContainer.classList.add('is-' + targetOri);
         }
     }
 
@@ -1081,27 +1107,6 @@ ${topNavHtml?no_esc}
             else backImg.addEventListener('load', updateBackOrientation);
         }
 
-        flipContainer.addEventListener('click', () => {
-            const isFlipped = flipContainer.classList.toggle('is-flipped');
-            const frontOri = getOri(frontImg);
-            const backOri = getOri(backImg);
-
-            if (isFlipped && backImg && !backImg.naturalWidth) {
-                backImg.loading = 'eager';
-            }
-
-            const targetOri = isFlipped ? backOri : frontOri;
-
-            if (frontOri !== backOri) {
-                setTimeout(() => {
-                    flipContainer.classList.remove('is-portrait', 'is-landscape');
-                    flipContainer.classList.add('is-' + targetOri);
-                }, 220);
-            } else {
-                flipContainer.classList.remove('is-portrait', 'is-landscape');
-                flipContainer.classList.add('is-' + targetOri);
-            }
-        });
     });
 </script>
 </body>

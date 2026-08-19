@@ -138,47 +138,72 @@ function saveCompareList(list) {
 }
 
 function updateCompareButtonUI() {
-    const btn = document.getElementById('compareBtn');
-    if (!btn) return;
-
-    const id = btn.getAttribute('data-card-id');
     const list = getCompareList();
-    const isSelected = list.some(item => item.id === id);
-    const textSpan = btn.querySelector('span');
 
-    if (isSelected) {
-        btn.classList.add('active-compare');
-        btn.setAttribute('aria-pressed', 'true');
-        if (textSpan) textSpan.innerText = 'Compared';
-        btn.setAttribute('title', 'Card is in comparison list (click to remove)');
-    } else {
-        btn.classList.remove('active-compare');
-        btn.setAttribute('aria-pressed', 'false');
-        if (textSpan) textSpan.innerText = 'Compare';
-        btn.setAttribute('title', 'Compare this card with others');
+    const btn = document.getElementById('compareBtn');
+    if (btn) {
+        const id = btn.getAttribute('data-card-id');
+        const isSelected = list.some(item => item.id === id);
+        const textSpan = btn.querySelector('span');
+
+        if (isSelected) {
+            btn.classList.add('active-compare');
+            btn.setAttribute('aria-pressed', 'true');
+            if (textSpan) textSpan.innerText = 'Compared';
+            btn.setAttribute('title', 'Card is in comparison list (click to remove)');
+        } else {
+            btn.classList.remove('active-compare');
+            btn.setAttribute('aria-pressed', 'false');
+            if (textSpan) textSpan.innerText = 'Compare';
+            btn.setAttribute('title', 'Compare this card with others');
+        }
+    }
+
+    const viewBtn = document.getElementById('viewCompareBtn');
+    const navCount = document.getElementById('navCompareCount');
+    if (viewBtn) {
+        if (list.length > 0) {
+            viewBtn.style.display = 'inline-flex';
+            if (navCount) navCount.innerText = list.length;
+        } else {
+            viewBtn.style.display = 'none';
+        }
     }
 }
 
-function initCompareButtons() {
-    const btn = document.getElementById('compareBtn');
-    if (!btn) return;
-
-    updateCompareButtonUI();
-
-    if (!btn.dataset.listenerAttached) {
-        btn.dataset.listenerAttached = 'true';
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            const id = btn.getAttribute('data-card-id');
-            const title = btn.getAttribute('data-card-title');
-            const img = btn.getAttribute('data-card-img');
-            const url = btn.getAttribute('data-card-url');
-            const player = btn.getAttribute('data-card-player');
-            const serial = btn.getAttribute('data-card-serial');
-
-            toggleCompareCard({ id, title, img, url, player, serial });
-        });
+function showCompareToast(messageHtml) {
+    let toast = document.getElementById('toastNotification');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'toastNotification';
+        toast.className = 'toast-notification';
+        toast.innerHTML = `<span class="toast-icon">✨</span><span id="toastMessage" class="toast-text"></span>`;
+        document.body.appendChild(toast);
     }
+    const msgEl = document.getElementById('toastMessage') || toast;
+    msgEl.innerHTML = messageHtml;
+    toast.classList.add('toast-show');
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => {
+        toast.classList.remove('toast-show');
+    }, 3500);
+}
+
+function toggleCompareCurrentCard(btn) {
+    if (!btn) btn = document.getElementById('compareBtn');
+    if (!btn) return;
+    const id = btn.getAttribute('data-card-id');
+    const title = btn.getAttribute('data-card-title');
+    const img = btn.getAttribute('data-card-img');
+    const url = btn.getAttribute('data-card-url');
+    const player = btn.getAttribute('data-card-player');
+    const serial = btn.getAttribute('data-card-serial');
+
+    toggleCompareCard({ id, title, img, url, player, serial });
+}
+
+function initCompareButtons() {
+    updateCompareButtonUI();
 }
 
 // Sync comparison across tabs
@@ -200,9 +225,10 @@ function toggleCompareCard(card) {
 
     if (index >= 0) {
         list.splice(index, 1);
+        showCompareToast("⚖️ Removed from comparison");
     } else {
         if (list.length >= 3) {
-            alert('You can compare up to 3 cards side-by-side.');
+            showCompareToast('⚠️ Max 3 cards in comparison. <button type="button" onclick="openCompareModal()" class="toast-compare-action">View &rarr;</button>');
             return;
         }
         list.push({
@@ -213,6 +239,7 @@ function toggleCompareCard(card) {
             player: card.player || '',
             serial: card.serial || ''
         });
+        showCompareToast(`⚖️ Added to comparison (${list.length}/3) &bull; <button type="button" onclick="openCompareModal()" class="toast-compare-action">View &rarr;</button>`);
     }
 
     saveCompareList(list);
@@ -244,10 +271,10 @@ function updateCompareBar() {
         bar.className = 'compare-sticky-bar';
         bar.innerHTML = `
             <div class="compare-bar-content">
-                <span>&#x2696;&#xFE0F; <strong>Card Comparison</strong> (<span id="compareCount">0</span>/3)</span>
+                <span class="compare-bar-label">&#x2696;&#xFE0F; <strong>Comparison</strong> (<span id="compareCount">0</span>/3)</span>
                 <div class="compare-bar-actions">
-                    <button type="button" class="modern-button compare-now-btn" onclick="openCompareModal()">View Comparison</button>
-                    <button type="button" class="modern-button secondary" onclick="clearCompareList()">Clear</button>
+                    <button type="button" class="modern-button compare-now-btn" onclick="openCompareModal()">&#x2696;&#xFE0F; View Comparison</button>
+                    <button type="button" class="modern-button secondary compare-clear-btn" onclick="clearCompareList()" title="Clear all cards">Clear</button>
                 </div>
             </div>
         `;
@@ -258,7 +285,7 @@ function updateCompareBar() {
     if (countSpan) countSpan.innerText = list.length;
 
     if (list.length > 0) {
-        bar.style.display = 'block';
+        bar.style.display = 'flex';
     } else {
         bar.style.display = 'none';
     }
@@ -343,6 +370,7 @@ window.closeCompareModal = closeCompareModal;
 window.clearCompareList = clearCompareList;
 window.removeCompareCard = removeCompareCard;
 window.toggleCompareCard = toggleCompareCard;
+window.toggleCompareCurrentCard = toggleCompareCurrentCard;
 
 // --- 5. REALISTIC 3D HOLOGRAPHIC CARD TILT EFFECT ---
 function init3DCardTilt() {
