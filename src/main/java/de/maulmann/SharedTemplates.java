@@ -35,10 +35,22 @@ public class SharedTemplates {
 
     private static String calculateBuildId() {
         try {
-            String cssContent = loadResource("/css/main.css");
-            if (cssContent == null || cssContent.isEmpty()) cssContent = loadResource("/templates/head.html");
             java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
-            byte[] digest = md.digest(cssContent.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+            String[] resourcePaths = {
+                    "/css/main.css",
+                    "/pwa/collector-features.js",
+                    "/pwa/serviceWorker.js",
+                    "/templates/head.html",
+                    "/templates/card-detail.ftlh",
+                    "/templates/collection-overview.ftlh"
+            };
+            for (String path : resourcePaths) {
+                String content = loadResource(path);
+                if (content != null && !content.isEmpty()) {
+                    md.update(content.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+                }
+            }
+            byte[] digest = md.digest();
             StringBuilder sb = new StringBuilder();
             for (byte b : digest) {
                 sb.append(String.format("%02x", b));

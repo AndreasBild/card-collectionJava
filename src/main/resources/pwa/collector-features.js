@@ -21,7 +21,7 @@ function copySnippet(inputId, btn) {
 }
 
 // Initialize interactive features on page load
-document.addEventListener('DOMContentLoaded', () => {
+function initAllFeatures() {
     try {
         localStorage.removeItem('collectorLayout');
     } catch (e) {}
@@ -35,6 +35,17 @@ document.addEventListener('DOMContentLoaded', () => {
     initGlobalKeyboardShortcuts();
     initTouchSwipeNavigation();
     initLazyImageFade();
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAllFeatures);
+} else {
+    initAllFeatures();
+}
+
+window.addEventListener('pageshow', () => {
+    initCompareButtons();
+    updateCompareBar();
 });
 
 // --- 2.5 REAL-TIME INSTANT TABLE SEARCH FILTER (DEBOUNCED) ---
@@ -81,10 +92,34 @@ document.addEventListener('keydown', (e) => {
 // --- 3. SIDE-BY-SIDE CARD COMPARISON TOOL ---
 const COMPARE_KEY = 'maulmann_compare_list';
 
+function escapeCompareHtml(str) {
+    if (!str) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+}
+
+function normalizeCardImage(img) {
+    if (!img) return '';
+    // Normalize relative paths so images render properly from any URL depth
+    if (img.startsWith('../../images/')) {
+        return '/images/' + img.substring(13);
+    } else if (img.startsWith('../images/')) {
+        return '/images/' + img.substring(10);
+    } else if (img.startsWith('images/')) {
+        return '/' + img;
+    }
+    return img;
+}
+
 function getCompareList() {
     try {
         const stored = localStorage.getItem(COMPARE_KEY) || sessionStorage.getItem(COMPARE_KEY);
-        return stored ? JSON.parse(stored) : [];
+        const parsed = stored ? JSON.parse(stored) : [];
+        return Array.isArray(parsed) ? parsed : [];
     } catch (e) {
         return [];
     }
@@ -99,6 +134,7 @@ function saveCompareList(list) {
     }
     updateCompareBar();
     updateCompareButtonUI();
+    renderCompareModalIfOpen();
 }
 
 function updateCompareButtonUI() {
@@ -112,10 +148,12 @@ function updateCompareButtonUI() {
 
     if (isSelected) {
         btn.classList.add('active-compare');
+        btn.setAttribute('aria-pressed', 'true');
         if (textSpan) textSpan.innerText = 'Compared';
         btn.setAttribute('title', 'Card is in comparison list (click to remove)');
     } else {
         btn.classList.remove('active-compare');
+        btn.setAttribute('aria-pressed', 'false');
         if (textSpan) textSpan.innerText = 'Compare';
         btn.setAttribute('title', 'Compare this card with others');
     }
@@ -129,7 +167,8 @@ function initCompareButtons() {
 
     if (!btn.dataset.listenerAttached) {
         btn.dataset.listenerAttached = 'true';
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
             const id = btn.getAttribute('data-card-id');
             const title = btn.getAttribute('data-card-title');
             const img = btn.getAttribute('data-card-img');
@@ -147,10 +186,12 @@ window.addEventListener('storage', (e) => {
     if (e.key === COMPARE_KEY) {
         updateCompareBar();
         updateCompareButtonUI();
+        renderCompareModalIfOpen();
     }
 });
 
 function toggleCompareCard(card) {
+    if (!card || !card.id) return;
     if (typeof navigator !== 'undefined' && navigator.vibrate) {
         try { navigator.vibrate(15); } catch(e) {}
     }
@@ -164,9 +205,22 @@ function toggleCompareCard(card) {
             alert('You can compare up to 3 cards side-by-side.');
             return;
         }
-        list.push(card);
+        list.push({
+            id: String(card.id),
+            title: card.title || 'Card',
+            img: normalizeCardImage(card.img),
+            url: card.url || '',
+            player: card.player || '',
+            serial: card.serial || ''
+        });
     }
 
+    saveCompareList(list);
+}
+
+function removeCompareCard(id) {
+    let list = getCompareList();
+    list = list.filter(item => item.id !== id);
     saveCompareList(list);
 }
 
@@ -210,6 +264,43 @@ function updateCompareBar() {
     }
 }
 
+function renderCompareModalGrid(list) {
+    const grid = document.getElementById('compareModalGrid');
+    if (!grid) return;
+
+    if (!list || list.length === 0) {
+        grid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 24px;">No cards currently selected for comparison.</p>';
+        return;
+    }
+
+    grid.innerHTML = list.map(item => `
+        <div class="compare-card-col" data-card-id="${escapeCompareHtml(item.id)}">
+            <button type="button" class="remove-col-btn" title="Remove from comparison" aria-label="Remove card" onclick="removeCompareCard('${escapeCompareHtml(item.id)}')">&times;</button>
+            <div class="compare-card-img-wrap">
+                <img src="${escapeCompareHtml(normalizeCardImage(item.img))}" alt="${escapeCompareHtml(item.title)}" loading="lazy" decoding="async">
+            </div>
+            <h4>${escapeCompareHtml(item.title)}</h4>
+            <div class="compare-card-meta">
+                <p><strong>Player:</strong> ${escapeCompareHtml(item.player || '-')}</p>
+                <p><strong>Serial:</strong> ${escapeCompareHtml(item.serial || '-')}</p>
+            </div>
+            <a href="${escapeCompareHtml(item.url || '#')}" class="modern-button view-detail-link">View Full Specs &rarr;</a>
+        </div>
+    `).join('');
+}
+
+function renderCompareModalIfOpen() {
+    const modal = document.getElementById('compareModal');
+    if (modal && modal.style.display !== 'none') {
+        const list = getCompareList();
+        if (list.length === 0) {
+            closeCompareModal();
+        } else {
+            renderCompareModalGrid(list);
+        }
+    }
+}
+
 function openCompareModal() {
     const list = getCompareList();
     if (list.length === 0) return;
@@ -222,7 +313,9 @@ function openCompareModal() {
         modal.setAttribute('role', 'dialog');
         modal.setAttribute('aria-modal', 'true');
         modal.setAttribute('aria-label', 'Side-by-Side Card Comparison');
-        modal.onclick = (e) => { if (e.target === modal) closeCompareModal(); };
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeCompareModal();
+        });
         modal.innerHTML = `
             <div class="compare-modal-box">
                 <div class="compare-modal-header">
@@ -235,18 +328,7 @@ function openCompareModal() {
         document.body.appendChild(modal);
     }
 
-    const grid = document.getElementById('compareModalGrid');
-    grid.innerHTML = list.map(item => `
-        <div class="compare-card-col">
-            <button type="button" class="remove-col-btn" title="Remove from comparison" onclick="toggleCompareCard({id: '${item.id}'})">&times;</button>
-            <img src="${item.img}" alt="${item.title}">
-            <h4>${item.title}</h4>
-            <p><strong>Player:</strong> ${item.player || '-'}</p>
-            <p><strong>Serial:</strong> ${item.serial || '-'}</p>
-            <a href="${item.url}" class="modern-button view-detail-link">View Full Specs &rarr;</a>
-        </div>
-    `).join('');
-
+    renderCompareModalGrid(list);
     modal.style.display = 'flex';
 }
 
@@ -254,6 +336,13 @@ function closeCompareModal() {
     const modal = document.getElementById('compareModal');
     if (modal) modal.style.display = 'none';
 }
+
+// Attach globally for inline handlers and modules
+window.openCompareModal = openCompareModal;
+window.closeCompareModal = closeCompareModal;
+window.clearCompareList = clearCompareList;
+window.removeCompareCard = removeCompareCard;
+window.toggleCompareCard = toggleCompareCard;
 
 // --- 5. REALISTIC 3D HOLOGRAPHIC CARD TILT EFFECT ---
 function init3DCardTilt() {
