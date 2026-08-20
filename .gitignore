@@ -6,3 +6,9 @@ cp.txt
 server.log
 /.idea/
 src/main/resources/config/firebase_config.json
+
+# OS and Editor metadata
+.DS_Store
+**/.DS_Store
+.vscode/
+.mvn/timing.properties
