@@ -126,6 +126,9 @@ flowchart TD
 
 ```text
 .
+├── .editorconfig                 # Standardized formatting for IDE & Agents
+├── .jules/
+│   └── setup.sh                  # Environment initialization script for Jules Cloud Agent
 ├── AGENTS.md                     # Core developer persona & coding standards
 ├── ARCHITECTURE.md               # System topology, workflow rules, and invariants
 ├── llms.txt                      # AI crawler manifest & site summary
