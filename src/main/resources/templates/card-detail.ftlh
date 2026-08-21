@@ -578,7 +578,7 @@ ${topNavHtml?no_esc}
             foil.style.setProperty('--foil-y', percentY + '%');
             foil.style.setProperty('--foil-opacity', '0.35');
         });
-        if (flipContainer && flipInner && !flipInner.classList.contains('flipped')) {
+        if (flipContainer && !flipContainer.classList.contains('is-flipped')) {
             const scale = isPopoutActive ? 1.045 : 1.025;
             flipContainer.style.transform = "perspective(1000px) rotateX(" + rotX + "deg) rotateY(" + rotY + "deg) scale3d(" + scale + ", " + scale + ", " + scale + ")";
         }
@@ -688,7 +688,7 @@ ${topNavHtml?no_esc}
         }
         const loupe = document.getElementById('cardLoupe');
         const wrapper = document.querySelector('.card-image-wrapper');
-        const isFlipped = flipInner && flipInner.classList.contains("flipped");
+        const isFlipped = flipContainer && flipContainer.classList.contains("is-flipped");
         const activeImgEl = isFlipped 
             ? document.querySelector('.flip-face-back img') 
             : document.querySelector('.flip-face-front img');
