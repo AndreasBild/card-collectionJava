@@ -9,6 +9,7 @@
 - **Pre-computed Asset Pipeline:** In-place HTML/CSS minification, WebP conversion, and companion pre-compression (`.gz`, `.br`).
 - **Incremental & Cache-Aware Builds:** Deterministic file modification tracking to eliminate redundant generation cycles.
 - **Automated Cloud Sync & Discovery:** Seamless integration with AWS S3/CloudFront, Google Firebase Firestore, and IndexNow.
+- **Upstream Data Ingestion:** Card datasets are maintained in the upstream `cardCollection` project (MySQL / Spring Boot) and exported directly into `content/json/cards.json` before triggering pipeline builds.
 
 ---
 
@@ -126,15 +127,23 @@ flowchart TD
 
 ```text
 .
+├── .agents/
+│   ├── rules/                    # Antigravity micro-rules (compression, freemarker)
+│   └── skills/                   # Antigravity skills (build-pipeline, verify-schema)
 ├── .editorconfig                 # Standardized formatting for IDE & Agents
+├── .github/
+│   ├── workflows/ci.yml          # Automated CI test verification
+│   └── pull_request_template.md  # Jules review checklist
 ├── .jules/
 │   └── setup.sh                  # Environment initialization script for Jules Cloud Agent
 ├── AGENTS.md                     # Core developer persona & coding standards
 ├── ARCHITECTURE.md               # System topology, workflow rules, and invariants
+├── README.md                     # Project overview & badges
 ├── llms.txt                      # AI crawler manifest & site summary
 ├── output/                       # Generated site artifacts (.html, .br, .gz, .webp, sitemaps)
 │   └── generation-timestamps.properties # Build-cache tracking file
 ├── content/                      # Raw source HTML and card data collections
+│   └── json/                     # JSON datasets (cards.json exported from cardCollection)
 ├── images/                       # Source image assets
 ├── src/
 │   ├── main/
