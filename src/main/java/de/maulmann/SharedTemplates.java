@@ -229,6 +229,23 @@ public class SharedTemplates {
         return LocalDateTime.now().format(TIMESTAMP_FORMATTER.get());
     }
 
+    public static Map<String, Object> createBaseData(String title, String subTitle, String filename, String navTargetUrl, String root) {
+        Map<String, Object> data = new java.util.HashMap<>();
+
+        String headHtml = getHead(title, subTitle, root, filename, root + FileGenerator.DEFAULT_IMAGE);
+        String topnav = getTopNav(root, navTargetUrl.replace(".html", "").toLowerCase());
+        String footerHtml = getFooter(root);
+
+        data.put("headHtml", headHtml);
+        data.put("topNavHtml", topnav);
+        data.put("footerHtml", footerHtml);
+        data.put("pageTitle", title);
+        data.put("subTitle", subTitle);
+        data.put("root", root);
+
+        return data;
+    }
+
     private static String escapeHtml(String text) {
         return CardUtils.escapeHtml(text);
     }

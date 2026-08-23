@@ -41,7 +41,7 @@ public class LocalDevPipeline {
 
         SiteBuilderPipeline.DeploymentMetrics metrics = new SiteBuilderPipeline.DeploymentMetrics();
         long p1_2Start = System.currentTimeMillis();
-        List<CardPageGenerator.CardData> cards = SiteBuilderPipeline.buildLocalArtifacts(timeTracker, tracker);
+        List<CardData> cards = SiteBuilderPipeline.buildLocalArtifacts(timeTracker, tracker);
         metrics.phase1_2Ms = System.currentTimeMillis() - p1_2Start;
         if (cards != null) {
             metrics.totalCards.set(cards.size());

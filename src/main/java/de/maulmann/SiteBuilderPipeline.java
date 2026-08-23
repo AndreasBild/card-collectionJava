@@ -103,7 +103,7 @@ public class SiteBuilderPipeline {
             TimestampTracker timeTracker = new TimestampTracker(OUTPUT_DIR + "/generation-timestamps.properties");
 
             long p1_2Start = System.currentTimeMillis();
-            List<CardPageGenerator.CardData> cards = buildLocalArtifacts(timeTracker, tracker);
+            List<CardData> cards = buildLocalArtifacts(timeTracker, tracker);
             metrics.phase1_2Ms = System.currentTimeMillis() - p1_2Start;
             if (cards != null) {
                 metrics.totalCards.set(cards.size());
@@ -565,7 +565,7 @@ public class SiteBuilderPipeline {
      * Builds all local HTML files, sitemaps, and images.
      * Shared identically between SiteBuilderPipeline (Production) and LocalDevPipeline (Local Preview).
      */
-    public static List<CardPageGenerator.CardData> buildLocalArtifacts(TimestampTracker timeTracker, FileTracker tracker) {
+    public static List<CardData> buildLocalArtifacts(TimestampTracker timeTracker, FileTracker tracker) {
         // Ensure stable CSS version for hash stability if content didn't change
         String cssHash = tracker.getHash(Paths.get("src/main/resources/css/main.css"));
         if (cssHash != null && cssHash.length() >= 8) {
@@ -580,7 +580,7 @@ public class SiteBuilderPipeline {
         // --- PARALLEL PHASES: HTML Generation & Image WebP Conversion ---
         log.info("\n[PHASE 1 & 2] Launching HTML Generation and Image WebP Conversion in parallel...");
 
-        AtomicReference<List<CardPageGenerator.CardData>> generatedCards = new AtomicReference<>();
+        AtomicReference<List<CardData>> generatedCards = new AtomicReference<>();
         try (ExecutorService phaseExecutor = Executors.newVirtualThreadPerTaskExecutor()) {
             CompletableFuture<Void> htmlTask = CompletableFuture.runAsync(() -> {
                 log.info("  -> [PHASE 1] Generating HTML files and Sitemap...");
@@ -593,7 +593,7 @@ public class SiteBuilderPipeline {
                 FileGenerator.buildCollectionOverview();
                 FileGenerator.buildOtherCollections();
                 FileGenerator.buildStaticPages();
-                List<CardPageGenerator.CardData> cards = CardPageGenerator.run();
+                List<CardData> cards = CardPageGenerator.run();
                 generatedCards.set(cards);
 
                 SitemapGenerator.generate(cards); // Sitemap & robots.txt now ready

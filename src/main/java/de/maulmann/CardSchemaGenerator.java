@@ -49,7 +49,7 @@ public class CardSchemaGenerator {
 
     public record FaqItem(String question, String answer) {}
 
-    public static List<FaqItem> computeFaqItems(CardPageGenerator.CardData c) {
+    public static List<FaqItem> computeFaqItems(CardData c) {
         List<FaqItem> items = new ArrayList<>();
 
         String player = c.get("Player");
@@ -116,7 +116,7 @@ public class CardSchemaGenerator {
         return items;
     }
 
-    public static String generateFaqHtml(CardPageGenerator.CardData c) {
+    public static String generateFaqHtml(CardData c) {
         return generateFaqHtml(computeFaqItems(c));
     }
 
@@ -133,7 +133,7 @@ public class CardSchemaGenerator {
         return "<details class=\"faq-details\"><summary class=\"faq-summary\">" + escapeHtml(question) + "</summary><p class=\"faq-answer\">" + escapeHtml(answer) + "</p></details>";
     }
 
-    public static String generateJsonLd(CardPageGenerator.CardData c, String desc, String h1Title, String overviewPage, String imageBaseName, String faqHtml) {
+    public static String generateJsonLd(CardData c, String desc, String h1Title, String overviewPage, String imageBaseName, String faqHtml) {
         List<FaqItem> faqItems = null;
         if (faqHtml != null && !faqHtml.isEmpty()) {
             faqItems = new ArrayList<>();
@@ -150,7 +150,7 @@ public class CardSchemaGenerator {
         return generateJsonLd(c, desc, h1Title, overviewPage, imageBaseName, faqItems);
     }
 
-    public static String generateJsonLd(CardPageGenerator.CardData c, String desc, String h1Title, String overviewPage, String imageBaseName, List<FaqItem> faqItems) {
+    public static String generateJsonLd(CardData c, String desc, String h1Title, String overviewPage, String imageBaseName, List<FaqItem> faqItems) {
         String frontImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + imageBaseName + "-front.avif";
         String backImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + imageBaseName + "-back.avif";
         String cardUrl = BASE_URL + "/cards/" + c.seasonFolder + "/" + c.filename;
@@ -572,7 +572,7 @@ public class CardSchemaGenerator {
         return null;
     }
 
-    private static boolean isHolyGrail(CardPageGenerator.CardData c) {
+    private static boolean isHolyGrail(CardData c) {
         String theme = c.get("Theme").toLowerCase();
         String variant = c.get("Variant").toLowerCase();
         return theme.contains("precious metal gems") || theme.contains("ruby") || theme.contains("flawless") ||
