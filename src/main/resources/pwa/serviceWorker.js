@@ -9,6 +9,7 @@ const URLS = [
     './',
     './index.html',
     './Juwan-Howard-Collection.html',
+    './binder.html',
     './Baseball.html',
     './Flawless.html',
     './Panini.html',
@@ -41,14 +42,17 @@ self.addEventListener('install', function (e) {
 // Delete outdated caches
 self.addEventListener('activate', function (e) {
     e.waitUntil(
-        caches.keys().then(function (keyList) {
-            return Promise.all(keyList.map(function (key) {
-                if (key.startsWith(APP_PREFIX) && key !== CACHE_NAME && key !== IMAGE_CACHE) {
-                    console.log('Deleting old cache : ' + key);
-                    return caches.delete(key);
-                }
-            }));
-        })
+        Promise.all([
+            caches.keys().then(function (keyList) {
+                return Promise.all(keyList.map(function (key) {
+                    if (key.startsWith(APP_PREFIX) && key !== CACHE_NAME && key !== IMAGE_CACHE) {
+                        console.log('Deleting old cache : ' + key);
+                        return caches.delete(key);
+                    }
+                }));
+            }),
+            self.registration.navigationPreload ? self.registration.navigationPreload.enable().catch(() => {}) : Promise.resolve()
+        ])
     );
     // Claim clients immediately
     self.clients.claim();
@@ -58,7 +62,7 @@ self.addEventListener('activate', function (e) {
 });
 
 // Maximum number of card scans to store offline in LRU image cache
-const MAX_IMAGE_CACHE_ENTRIES = 80;
+const MAX_IMAGE_CACHE_ENTRIES = 250;
 
 async function trimCache(cacheName, maxItems) {
     try {
