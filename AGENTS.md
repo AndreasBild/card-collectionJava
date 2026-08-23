@@ -69,5 +69,5 @@ flowchart LR
 - **Targeted Diff Edits:** Use surgical multi-replace / diff tools rather than rewriting entire large files unmodified.
 - **No Laziness / No Stubbing:** Never use placeholders such as `// TODO: implement logic here` or `/* rest of code unchanged */`. All generated code must be complete, compilable, and production-ready.
 - **Documentation:** Provide concise Javadoc for public API methods and complex pipeline logic. Explain *why* non-obvious architecture choices were made.
-- **Workspace Skills & Customizations:** Use the project-level skills in `.agents/skills/build-pipeline` (to build, verify, and debug pipeline executions) and `.agents/skills/verify-schema` (to validate Schema.org JSON-LD structured data).
+- **Workspace Skills & Customizations:** Use the project-level skills in `.agents/skills/build-pipeline` (to build and diagnose executions), `.agents/skills/verify-schema` (to validate Schema.org JSON-LD structured data), `.agents/skills/validate-snapshots` (to verify HTML golden masters and links), and `.agents/skills/audit-performance` (to audit Core Web Vitals and compression ratios).
 - **Secret Protection:** Never write AWS credentials, API keys, or Firebase Service Account secrets into code or properties files. Rely strictly on environment variables or external secret managers.
