@@ -577,8 +577,8 @@ public class SiteBuilderPipeline {
         // Prefetch latest Firestore ratings into cache before generation starts
         FirestoreRatingInjector.prefetchRatings();
 
-        // --- PARALLEL PHASES: HTML Generation & Image WebP Conversion ---
-        log.info("\n[PHASE 1 & 2] Launching HTML Generation and Image WebP Conversion in parallel...");
+        // --- PARALLEL PHASES: HTML Generation & Image AVIF Conversion ---
+        log.info("\n[PHASE 1 & 2] Launching HTML Generation and Image AVIF Conversion in parallel...");
 
         AtomicReference<List<CardData>> generatedCards = new AtomicReference<>();
         try (ExecutorService phaseExecutor = Executors.newVirtualThreadPerTaskExecutor()) {
