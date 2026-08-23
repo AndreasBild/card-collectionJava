@@ -189,17 +189,34 @@ function showCompareToast(messageHtml) {
     }, 3500);
 }
 
+let compareShowBack = false;
+let compareHighlightDiffs = false;
+
 function toggleCompareCurrentCard(btn) {
     if (!btn) btn = document.getElementById('compareBtn');
     if (!btn) return;
     const id = btn.getAttribute('data-card-id');
     const title = btn.getAttribute('data-card-title');
     const img = btn.getAttribute('data-card-img');
+    const backImg = btn.getAttribute('data-card-back-img');
     const url = btn.getAttribute('data-card-url');
     const player = btn.getAttribute('data-card-player');
+    const season = btn.getAttribute('data-card-season');
+    const team = btn.getAttribute('data-card-team');
+    const company = btn.getAttribute('data-card-company');
+    const brand = btn.getAttribute('data-card-brand');
+    const theme = btn.getAttribute('data-card-theme');
+    const variant = btn.getAttribute('data-card-variant');
+    const number = btn.getAttribute('data-card-number');
     const serial = btn.getAttribute('data-card-serial');
+    const rookie = btn.getAttribute('data-card-rookie');
+    const patch = btn.getAttribute('data-card-patch');
+    const auto = btn.getAttribute('data-card-auto');
+    const grade = btn.getAttribute('data-card-grade');
 
-    toggleCompareCard({ id, title, img, url, player, serial });
+    toggleCompareCard({
+        id, title, img, backImg, url, player, season, team, company, brand, theme, variant, number, serial, rookie, patch, auto, grade
+    });
 }
 
 function initCompareButtons() {
@@ -235,9 +252,21 @@ function toggleCompareCard(card) {
             id: String(card.id),
             title: card.title || 'Card',
             img: normalizeCardImage(card.img),
+            backImg: normalizeCardImage(card.backImg),
             url: card.url || '',
             player: card.player || '',
-            serial: card.serial || ''
+            season: card.season || '',
+            team: card.team || '',
+            company: card.company || '',
+            brand: card.brand || '',
+            theme: card.theme || '',
+            variant: card.variant || '',
+            number: card.number || '',
+            serial: card.serial || '',
+            rookie: card.rookie || '',
+            patch: card.patch || '',
+            auto: card.auto || '',
+            grade: card.grade || ''
         });
         showCompareToast(`⚖️ Added to comparison (${list.length}/3) &bull; <button type="button" onclick="openCompareModal()" class="toast-compare-action">View &rarr;</button>`);
     }
@@ -291,29 +320,150 @@ function updateCompareBar() {
     }
 }
 
+function toggleCompareScansSide() {
+    compareShowBack = !compareShowBack;
+    const btn = document.getElementById('flipScansBtn');
+    if (btn) {
+        btn.innerHTML = compareShowBack ? '🔄 Show Front Scans' : '🔄 Show Back Scans';
+    }
+    const list = getCompareList();
+    renderCompareModalGrid(list);
+}
+
+function toggleHighlightDifferences() {
+    compareHighlightDiffs = !compareHighlightDiffs;
+    const btn = document.getElementById('highlightDiffsBtn');
+    if (btn) {
+        btn.classList.toggle('active', compareHighlightDiffs);
+        btn.setAttribute('aria-pressed', compareHighlightDiffs ? 'true' : 'false');
+    }
+    const table = document.getElementById('compareMatrixTable');
+    if (table) {
+        table.classList.toggle('highlight-diffs-active', compareHighlightDiffs);
+    }
+}
+
+function copyCompareShareLink() {
+    const list = getCompareList();
+    if (!list || list.length === 0) return;
+    const ids = list.map(c => encodeURIComponent(c.id)).join(',');
+    const shareUrl = window.location.origin + window.location.pathname + '#compare=' + ids;
+    
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(shareUrl).then(() => {
+            showCompareToast("📋 Comparison link copied to clipboard!");
+        }).catch(() => {
+            showCompareToast("🔗 " + shareUrl);
+        });
+    } else {
+        showCompareToast("🔗 " + shareUrl);
+    }
+}
+
 function renderCompareModalGrid(list) {
-    const grid = document.getElementById('compareModalGrid');
-    if (!grid) return;
+    const container = document.getElementById('compareModalGrid');
+    if (!container) return;
 
     if (!list || list.length === 0) {
-        grid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 24px;">No cards currently selected for comparison.</p>';
+        container.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 32px 16px;">No cards currently selected for comparison. Add cards using the <strong>Compare</strong> button on any card page.</p>';
         return;
     }
 
-    grid.innerHTML = list.map(item => `
-        <div class="compare-card-col" data-card-id="${escapeCompareHtml(item.id)}">
-            <button type="button" class="remove-col-btn" title="Remove from comparison" aria-label="Remove card" onclick="removeCompareCard('${escapeCompareHtml(item.id)}')">&times;</button>
-            <div class="compare-card-img-wrap">
-                <img src="${escapeCompareHtml(normalizeCardImage(item.img))}" alt="${escapeCompareHtml(item.title)}" loading="lazy" decoding="async">
+    // Check attribute differences across compared cards
+    const getValues = (key) => list.map(c => (c[key] || '').toString().trim());
+    const isDiff = (key) => {
+        if (list.length < 2) return false;
+        const vals = getValues(key);
+        return vals.some(v => v !== vals[0]);
+    };
+
+    const attributes = [
+        { label: 'Player', key: 'player', icon: '🏀' },
+        { label: 'Season', key: 'season', icon: '📅' },
+        { label: 'Team', key: 'team', icon: '🏛️' },
+        { label: 'Manufacturer', key: 'company', icon: '🏭' },
+        { label: 'Brand', key: 'brand', icon: '🏷️' },
+        { label: 'Theme / Set', key: 'theme', icon: '✨' },
+        { label: 'Variant', key: 'variant', icon: '🌈' },
+        { label: 'Card #', key: 'number', icon: '🔢' },
+        { label: 'Serial / Print Run', key: 'serial', icon: '💎', isSerial: true },
+        { label: 'Rookie Card (RC)', key: 'rookie', icon: '⭐' },
+        { label: 'Memorabilia / Patch', key: 'patch', icon: '🛡️' },
+        { label: 'Autograph', key: 'auto', icon: '✍️' },
+        { label: 'Grading', key: 'grade', icon: '🏅' }
+    ];
+
+    let html = `
+        <div class="compare-toolbar">
+            <div class="compare-toolbar-left">
+                <button type="button" id="flipScansBtn" class="modern-button secondary compare-tool-btn" onclick="toggleCompareScansSide()">
+                    ${compareShowBack ? '🔄 Show Front Scans' : '🔄 Show Back Scans'}
+                </button>
+                <button type="button" id="highlightDiffsBtn" class="modern-button secondary compare-tool-btn ${compareHighlightDiffs ? 'active' : ''}" onclick="toggleHighlightDifferences()" aria-pressed="${compareHighlightDiffs}">
+                    🔍 Highlight Differences
+                </button>
             </div>
-            <h4>${escapeCompareHtml(item.title)}</h4>
-            <div class="compare-card-meta">
-                <p><strong>Player:</strong> ${escapeCompareHtml(item.player || '-')}</p>
-                <p><strong>Serial:</strong> ${escapeCompareHtml(item.serial || '-')}</p>
+            <div class="compare-toolbar-right">
+                <button type="button" class="modern-button secondary compare-tool-btn" onclick="copyCompareShareLink()" title="Copy shareable link to this comparison">
+                    🔗 Share
+                </button>
+                <button type="button" class="modern-button secondary compare-tool-btn" onclick="clearCompareList()" title="Clear comparison list">
+                    🗑️ Clear All
+                </button>
             </div>
-            <a href="${escapeCompareHtml(item.url || '#')}" class="modern-button view-detail-link">View Full Specs &rarr;</a>
         </div>
-    `).join('');
+
+        <div class="compare-matrix-scroll">
+            <table id="compareMatrixTable" class="compare-matrix-table ${compareHighlightDiffs ? 'highlight-diffs-active' : ''}">
+                <thead>
+                    <tr class="compare-matrix-header-row">
+                        <th class="matrix-attr-label-th">Attribute</th>
+                        ${list.map(item => {
+                            const imgSrc = compareShowBack && item.backImg ? item.backImg : (item.img || item.backImg);
+                            return `
+                                <th class="matrix-card-col-th" data-card-id="${escapeCompareHtml(item.id)}">
+                                    <div class="matrix-card-header-box">
+                                        <button type="button" class="remove-col-btn" title="Remove from comparison" aria-label="Remove card" onclick="removeCompareCard('${escapeCompareHtml(item.id)}')">&times;</button>
+                                        <div class="compare-card-img-wrap">
+                                            <img src="${escapeCompareHtml(normalizeCardImage(imgSrc))}" alt="${escapeCompareHtml(item.title)}" loading="lazy" decoding="async">
+                                        </div>
+                                        <h4 class="matrix-card-title">${escapeCompareHtml(item.title)}</h4>
+                                        <a href="${escapeCompareHtml(item.url || '#')}" class="modern-button matrix-view-btn">View Specs &rarr;</a>
+                                    </div>
+                                </th>
+                            `;
+                        }).join('')}
+                    </tr>
+                </thead>
+                <tbody>
+                    ${attributes.map(attr => {
+                        const diffClass = isDiff(attr.key) ? 'matrix-row-diff' : '';
+                        return `
+                            <tr class="matrix-attr-row ${diffClass}" data-attr="${attr.key}">
+                                <td class="matrix-attr-cell-label">
+                                    <span class="matrix-attr-icon">${attr.icon}</span>
+                                    <strong>${attr.label}</strong>
+                                    ${isDiff(attr.key) ? '<span class="matrix-diff-badge" title="Different values across compared cards">Diff</span>' : ''}
+                                </td>
+                                ${list.map(item => {
+                                    const val = item[attr.key] || '-';
+                                    let badgeHtml = escapeCompareHtml(val);
+                                    if (attr.isSerial && val && (val.includes('1/1') || val.includes('/10') || val.includes('/25'))) {
+                                        badgeHtml = `<span class="matrix-rare-badge">${escapeCompareHtml(val)}</span>`;
+                                    } else if (attr.key === 'grade' && val && val !== '-') {
+                                        badgeHtml = `<span class="matrix-grade-badge">${escapeCompareHtml(val)}</span>`;
+                                    }
+                                    return `<td class="matrix-attr-cell-val" data-card-id="${escapeCompareHtml(item.id)}">${badgeHtml}</td>`;
+                                }).join('')}
+                            </tr>
+                        `;
+                    }).join('')}
+                </tbody>
+            </table>
+        </div>
+    `;
+
+    container.innerHTML = html;
 }
 
 function renderCompareModalIfOpen() {
@@ -339,7 +489,7 @@ function openCompareModal() {
         modal.className = 'compare-modal-overlay';
         modal.setAttribute('role', 'dialog');
         modal.setAttribute('aria-modal', 'true');
-        modal.setAttribute('aria-label', 'Side-by-Side Card Comparison');
+        modal.setAttribute('aria-label', 'Side-by-Side Card Comparison Matrix');
         modal.addEventListener('click', (e) => {
             if (e.target === modal) closeCompareModal();
         });
@@ -371,6 +521,9 @@ window.clearCompareList = clearCompareList;
 window.removeCompareCard = removeCompareCard;
 window.toggleCompareCard = toggleCompareCard;
 window.toggleCompareCurrentCard = toggleCompareCurrentCard;
+window.toggleCompareScansSide = toggleCompareScansSide;
+window.toggleHighlightDifferences = toggleHighlightDifferences;
+window.copyCompareShareLink = copyCompareShareLink;
 
 // --- 5. REALISTIC 3D HOLOGRAPHIC CARD TILT EFFECT ---
 function init3DCardTilt() {

@@ -48,7 +48,25 @@ ${topNavHtml?no_esc}
                 <svg class="detail-nav-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
                 <span>Share</span>
             </button>
-            <button id="compareBtn" type="button" title="Compare this card with others" class="detail-nav-btn compare-toggle-btn" onclick="toggleCompareCurrentCard(this)" data-card-id="${cardStableId}" data-card-title="${h1Title}" data-card-img="${frontImgPath}" data-card-url="${fullCardUrl}" data-card-player="${player!""}" data-card-serial="${serialDisplay!""}">
+            <button id="compareBtn" type="button" title="Compare this card with others" class="detail-nav-btn compare-toggle-btn" onclick="toggleCompareCurrentCard(this)" 
+                    data-card-id="${cardStableId}" 
+                    data-card-title="${h1Title}" 
+                    data-card-img="${frontImgPath}" 
+                    data-card-back-img="${backImgPath}" 
+                    data-card-url="${fullCardUrl}" 
+                    data-card-player="${player!""}" 
+                    data-card-season="${season!""}"
+                    data-card-team="${team!""}"
+                    data-card-company="${company!""}"
+                    data-card-brand="${brand!""}"
+                    data-card-theme="${theme!""}"
+                    data-card-variant="${variant!""}"
+                    data-card-number="${number!""}"
+                    data-card-serial="${serialDisplay!""}"
+                    data-card-rookie="${rookie!""}"
+                    data-card-patch="${memorabilia!""}"
+                    data-card-auto="${autograph!""}"
+                    data-card-grade="${grading!""}">
                 <svg class="detail-nav-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 <span>Compare</span>
             </button>
