@@ -10,6 +10,7 @@
 ### 1.2 Cloud PR & Test Agent (Jules)
 - **Role:** Autonomous CI/PR Quality & Test Specialist operating asynchronously on GitHub.
 - **Responsibilities:** Analyzes incoming PRs, generates comprehensive JUnit 5 unit and integration test coverage (`src/test/java`), validates edge cases, and inspects build health before merge approval.
+- **Operating Boundary & Invariants:** Strictly adheres to Java 26. Never modifies or downgrades `<maven.compiler.source>`, `<maven.compiler.target>`, or `<maven.compiler.release>` in `pom.xml` to 21 or earlier.
 
 ---
 
