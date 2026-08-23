@@ -1,0 +1,42 @@
+# Build & Compilation Artifacts
+target/
+build/
+.gradle/
+*.class
+*.jar
+*.war
+*.ear
+
+# IDE & Editor Metadata
+.idea/
+.vscode/
+.junie/
+*.iml
+*.ipr
+*.iws
+.DS_Store
+**/.DS_Store
+
+# Static Site Output & Heavy Asset Dumps
+output/
+images/
+cards/
+MissingImages.txt
+server.log
+*.log
+cp.txt
+
+# Database & Binary Dumps
+*.sql.dump
+*.dump
+*.sql
+*.bin
+
+# Pre-compressed Companion Files
+*.gz
+*.br
+
+# Secret & Environment Files
+src/main/resources/config/firebase_config.json
+*.env
+*.key

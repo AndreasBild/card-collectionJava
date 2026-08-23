@@ -1,16 +1,28 @@
 target/
+build/
+.gradle/
 output/
 cards/
 images/
 MissingImages.txt
 cp.txt
 *.class
+*.jar
+*.war
+*.ear
 server.log
+*.log
 src/main/resources/config/firebase_config.json
+
+# Database Dumps
+*.sql.dump
+*.dump
+*.sql
 
 # OS and Editor metadata
 .DS_Store
 **/.DS_Store
 .vscode/
+.junie/
 .mvn/timing.properties
 
