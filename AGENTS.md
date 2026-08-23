@@ -44,17 +44,22 @@ flowchart LR
 - **Modern Language Features:** Leverage Java 26 preview features, Virtual Threads, Pattern Matching, Switch Expressions, Records, and Sealed Classes where beneficial.
 - **Zero Allocations & Stream Efficiency:** Optimize memory footprint; avoid unnecessary temporary object creation in tight batch-processing loops.
 - **SOLID & DRY:** Write clean, modular, maintainable code with clear naming and minimal technical debt.
+- **Spotless Formatting:** Adhere to Google Java Style via Spotless (`mvn spotless:check` / `mvn spotless:apply`).
 
 ### 3.2 Frontend & Static Output Standards
 - **Zero/Micro-JS Performance:** Output must achieve near-perfect Core Web Vitals (LCP < 1.2s, CLS = 0, INP = 0). Do not inject external JavaScript frameworks.
 - **LLMO & SEO (Semantic HTML5 + JSON-LD):**
   - Use clean semantic HTML5 (`<main>`, `<article>`, `<header>`, `<nav>`, `<aside>`, `<footer>`).
-  - Always preserve and generate rich Schema.org JSON-LD blocks for every card entity via `CardSchemaGenerator`.
-  - Ensure comprehensive Open Graph, Twitter Card, and canonical `<meta>` tags.
+  - Always preserve and generate rich Schema.org JSON-LD blocks for every card entity via [`CardSchemaGenerator`](file:///src/main/java/de/maulmann/CardSchemaGenerator.java).
+  - Ensure comprehensive Open Graph, Twitter Card, canonical `<meta>` tags, and `llms.txt` crawler manifest.
+- **PWA Offline & Security Hardened:**
+  - Maintain offline AVIF caching (LRU cache) and navigation preloading in `serviceWorker.js`.
+  - Maintain strict Content Security Policy (CSP), permissions policies, and strict referrer headers in `head.html`.
 
 ### 3.3 Asset Pipeline & Compression Invariants
+- **Pure AVIF Image Standard:** All card scans and responsive renditions (`200w`, `400w`, `600w`, `900w`) use pure AVIF. No legacy formats.
 - **Companion File Synchronicity:** Every modification to HTML or CSS generator logic must synchronously generate/update the `.gz` (GZIP) and `.br` (Brotli) companion files.
-- **Incremental Cache Awareness:** Respect `output/generation-timestamps.properties` and `TimestampTracker`. Do not trigger full rebuilds when incremental processing is valid.
+- **Incremental Cache Awareness:** Respect `output/generation-timestamps.properties` and [TimestampTracker](file:///src/main/java/de/maulmann/TimestampTracker.java). Do not trigger full rebuilds when incremental processing is valid.
 
 ---
 
