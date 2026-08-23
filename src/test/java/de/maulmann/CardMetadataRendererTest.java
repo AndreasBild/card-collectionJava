@@ -113,4 +113,20 @@ class CardMetadataRendererTest {
         assertEquals(2, related.size());
         assertEquals("../1997-98/" + d1.filename, related.get(0).get("url"), "Same player, season, brand, rare parallel must rank first");
     }
+
+    @Test
+    @DisplayName("getOpenGraph and getHead should emit complete, absolute, orientation-aware social preview tags")
+    void testOpenGraphSocialSharePreviews() {
+        String ogHtml = SharedTemplates.getOpenGraph("cards/1997-98/juwan-howard-pmg.html", "Juwan Howard PMG #33", "A rare 90s basketball card.", "images/1997-98/juwan-howard-pmg-front.avif", 1200, 1680, "Juwan Howard Front Scan");
+
+        assertTrue(ogHtml.contains("property=\"og:url\" content=\"https://www.maulmann.de/cards/1997-98/juwan-howard-pmg.html\""), "og:url must be absolute HTTPS URL");
+        assertTrue(ogHtml.contains("property=\"og:image\" content=\"https://www.maulmann.de/images/1997-98/juwan-howard-pmg-front.avif\""), "og:image must be absolute HTTPS URL");
+        assertTrue(ogHtml.contains("property=\"og:image:secure_url\" content=\"https://www.maulmann.de/images/1997-98/juwan-howard-pmg-front.avif\""), "og:image:secure_url must be HTTPS");
+        assertTrue(ogHtml.contains("property=\"og:image:width\" content=\"1200\""), "og:image:width must be set");
+        assertTrue(ogHtml.contains("property=\"og:image:height\" content=\"1680\""), "og:image:height must be set");
+        assertTrue(ogHtml.contains("property=\"og:image:type\" content=\"image/avif\""), "og:image:type must match extension");
+        assertTrue(ogHtml.contains("property=\"og:image:alt\" content=\"Juwan Howard Front Scan\""), "og:image:alt must match image alt");
+        assertTrue(ogHtml.contains("name=\"twitter:card\" content=\"summary_large_image\""), "twitter:card must be summary_large_image");
+        assertTrue(ogHtml.contains("name=\"twitter:image\" content=\"https://www.maulmann.de/images/1997-98/juwan-howard-pmg-front.avif\""), "twitter:image must be absolute URL");
+    }
 }

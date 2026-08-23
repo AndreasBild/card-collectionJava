@@ -102,12 +102,55 @@ public class SharedTemplates {
     }
 
     public static String getOpenGraph(String page, String title, String description, String imageURL) {
+        return getOpenGraph(page, title, description, imageURL, 1200, 1680, title);
+    }
+
+    public static String getOpenGraph(String page, String title, String description, String imageURL, int width, int height, String imageAlt) {
         String template = loadResource("/templates/opengraph.html");
 
-        return template.replace("{{PAGE}}", page)
+        String pageUrl;
+        if (page.startsWith("http://") || page.startsWith("https://")) {
+            pageUrl = page;
+        } else {
+            String cleanPage = page.startsWith("/") ? page.substring(1) : page;
+            pageUrl = CardUtils.BASE_URL + "/" + cleanPage;
+        }
+
+        String absImageUrl;
+        if (imageURL == null || imageURL.isBlank()) {
+            absImageUrl = CardUtils.BASE_URL + "/" + FileGenerator.DEFAULT_IMAGE;
+        } else if (imageURL.startsWith("http://") || imageURL.startsWith("https://")) {
+            absImageUrl = imageURL;
+        } else {
+            String cleanImg = imageURL.replace("../", "").replace("./", "");
+            cleanImg = cleanImg.startsWith("/") ? cleanImg.substring(1) : cleanImg;
+            absImageUrl = CardUtils.BASE_URL + "/" + cleanImg;
+        }
+
+        String mimeType = "image/avif";
+        String lowerImg = absImageUrl.toLowerCase();
+        if (lowerImg.endsWith(".jpg") || lowerImg.endsWith(".jpeg")) {
+            mimeType = "image/jpeg";
+        } else if (lowerImg.endsWith(".png")) {
+            mimeType = "image/png";
+        } else if (lowerImg.endsWith(".webp")) {
+            mimeType = "image/webp";
+        } else if (lowerImg.endsWith(".avif")) {
+            mimeType = "image/avif";
+        }
+
+        String secureImageUrl = absImageUrl.startsWith("http://") ? absImageUrl.replace("http://", "https://") : absImageUrl;
+
+        return template.replace("{{PAGE_URL}}", pageUrl)
+                .replace("{{PAGE}}", page)
                 .replace("{{TITLE}}", escapeHtml(title))
-                .replace("{{IMAGE}}", imageURL)
-                .replace("{{DESCRIPTION}}", escapeHtml(description));
+                .replace("{{DESCRIPTION}}", escapeHtml(description))
+                .replace("{{IMAGE}}", absImageUrl)
+                .replace("{{SECURE_IMAGE}}", secureImageUrl)
+                .replace("{{IMAGE_WIDTH}}", String.valueOf(width))
+                .replace("{{IMAGE_HEIGHT}}", String.valueOf(height))
+                .replace("{{IMAGE_TYPE}}", mimeType)
+                .replace("{{IMAGE_ALT}}", escapeHtml(imageAlt != null ? imageAlt : title));
     }
 
     public static String getSeo(String page, String description) {
@@ -121,6 +164,10 @@ public class SharedTemplates {
     }
 
     public static String getHead(String title, String description, String root, String page, String image, String extraHead) {
+        return getHead(title, description, root, page, image, extraHead, 1200, 1680, title);
+    }
+
+    public static String getHead(String title, String description, String root, String page, String image, String extraHead, int imageWidth, int imageHeight, String imageAlt) {
         String template = loadResource("/templates/head.html");
         if (template.isEmpty()) {
             return "<title>" + escapeHtml(title) + "</title><meta name=\"description\" content=\"" + escapeHtml(description) + "\">";
@@ -130,10 +177,10 @@ public class SharedTemplates {
                 .replace("{{ROOT}}", root)
                 .replace("{{ANALYTICS}}", getAnalytics())
                 .replace("{{SEO}}", getSeo(page, description))
-                .replace("{{OPENGRAPH}}", getOpenGraph(page, title, description, image))
+                .replace("{{OPENGRAPH}}", getOpenGraph(page, title, description, image, imageWidth, imageHeight, imageAlt))
                 .replace("{{EXTRA_HEAD}}", extraHead != null ? extraHead : "")
                 .replace("{{FAVICON}}", getFavicon(root))
-                .replace("{{BUILD_ID}}", BUILD_ID); // <--- NEW CACHE BUSTER
+                .replace("{{BUILD_ID}}", BUILD_ID);
     }
     public static String getBreadcrumb(List<Map<String, String>> items) {
         String template = loadResource("/templates/breadcrumb.html");
@@ -232,7 +279,8 @@ public class SharedTemplates {
     public static Map<String, Object> createBaseData(String title, String subTitle, String filename, String navTargetUrl, String root) {
         Map<String, Object> data = new java.util.HashMap<>();
 
-        String headHtml = getHead(title, subTitle, root, filename, root + FileGenerator.DEFAULT_IMAGE);
+        String absImageUrl = CardUtils.BASE_URL + "/" + FileGenerator.DEFAULT_IMAGE;
+        String headHtml = getHead(title, subTitle, root, filename, absImageUrl, "", 1200, 1680, title);
         String topnav = getTopNav(root, navTargetUrl.replace(".html", "").toLowerCase());
         String footerHtml = getFooter(root);
 
