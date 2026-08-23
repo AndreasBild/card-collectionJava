@@ -45,7 +45,7 @@ class FileGeneratorTest {
     void tearDown() throws Exception {
         FileGenerator.pathSource = originalSourcePath;
         FileGenerator.pathOutput = originalOutputPath;
-        
+
         // Reset the static cache to prevent state leakage between tests
         java.lang.reflect.Field cacheField = FileGenerator.class.getDeclaredField("cachedFilteredCards");
         cacheField.setAccessible(true);
@@ -228,8 +228,3 @@ class FileGeneratorTest {
                 .build();
     }
 }
-
-
-
-
-

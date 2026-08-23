@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -28,7 +27,7 @@ class SitemapGeneratorTest {
     void testSitemapGenerationHierarchyAndContent() throws Exception {
         // Create mock static page
         Path indexPage = outputDir.resolve("index.html");
-        Files.writeString(indexPage, "<html><head><title>Home Page</title></head><body><h1>Welcome</h1></body></html>");
+        Files.writeString(indexPage, "<!doctype html><html><head><title>Home Page</title><meta name=\"description\" content=\"Home\"><meta property=\"og:image\" content=\"https://www.maulmann.de/default.avif\"><meta name=\"twitter:card\" content=\"summary_large_image\"></head><body><header><h1>Welcome</h1></header><main></main><nav></nav><footer></footer></body></html>");
 
         // Create mock highlight card page (1/1) with responsive image
         Path cardDir = outputDir.resolve("cards/1994-95");
