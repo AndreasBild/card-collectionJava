@@ -79,7 +79,7 @@ public class SitemapGenerator {
         generate(null);
     }
 
-    public static void generate(List<CardPageGenerator.CardData> inMemoryCards) {
+    public static void generate(List<CardData> inMemoryCards) {
         AtomicInteger imagesAdded = new AtomicInteger(0);
         AtomicInteger imagesMissing = new AtomicInteger(0);
 
@@ -178,7 +178,7 @@ public class SitemapGenerator {
             // 2. Process Cards (In-Memory if available, fallback to Disk walk)
             if (inMemoryCards != null && !inMemoryCards.isEmpty()) {
                 log.info("Processing {} card pages in memory for sitemaps...", inMemoryCards.size());
-                for (CardPageGenerator.CardData c : inMemoryCards) {
+                for (CardData c : inMemoryCards) {
                     String relativePath = c.fullRelativePath;
                     String loc = BASE_URL + "/" + relativePath;
 
@@ -416,7 +416,7 @@ public class SitemapGenerator {
         }
     }
 
-    public static boolean isHighlightCard(CardPageGenerator.CardData c) {
+    public static boolean isHighlightCard(CardData c) {
         if (c == null) return false;
         String pathLower = c.fullRelativePath.toLowerCase();
         if (pathLower.contains("flawless")) return true;
@@ -586,7 +586,7 @@ public class SitemapGenerator {
         }
     }
 
-    private static void generateLlmsFullTxt(List<CardPageGenerator.CardData> inMemoryCards) {
+    private static void generateLlmsFullTxt(List<CardData> inMemoryCards) {
         log.info("Generating llms-full.txt for AI/LLM RAG Indexing...");
         StringBuilder sb = new StringBuilder();
         sb.append("# maulmann.de - Full Private Collection Knowledge Base for LLMs\n\n");
@@ -612,7 +612,7 @@ public class SitemapGenerator {
         sb.append("## Complete Card Index & Direct URLs\n\n");
 
         if (inMemoryCards != null && !inMemoryCards.isEmpty()) {
-            for (CardPageGenerator.CardData c : inMemoryCards) {
+            for (CardData c : inMemoryCards) {
                 String loc = BASE_URL + "/" + c.fullRelativePath;
                 String title = CardPageGenerator.generateH1(c);
                 String desc = CardPageGenerator.generateMetaDescription(c);
@@ -734,7 +734,7 @@ public class SitemapGenerator {
         }
     }
 
-    private static void generateRssFeed(List<CardPageGenerator.CardData> inMemoryCards, TimestampTracker timestampTracker) {
+    private static void generateRssFeed(List<CardData> inMemoryCards, TimestampTracker timestampTracker) {
         log.info("Generating RSS feed (rss.xml)...");
         StringBuilder rss = new StringBuilder();
         rss.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
@@ -769,7 +769,7 @@ public class SitemapGenerator {
         int addedCount = 0;
 
         if (inMemoryCards != null && !inMemoryCards.isEmpty()) {
-            for (CardPageGenerator.CardData c : inMemoryCards) {
+            for (CardData c : inMemoryCards) {
                 String relativePath = c.fullRelativePath;
                 String loc = BASE_URL + "/" + relativePath;
                 String title = CardPageGenerator.generateH1(c);

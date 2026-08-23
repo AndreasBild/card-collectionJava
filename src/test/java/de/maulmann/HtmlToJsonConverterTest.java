@@ -66,24 +66,24 @@ class HtmlToJsonConverterTest {
         assertEquals(2, cards.size());
 
         CardJson card1 = cards.get(0);
-        assertEquals("Juwan Howard", card1.player);
-        assertEquals("1997-98", card1.season);
-        assertEquals("Washington Bullets", card1.team);
-        assertEquals("Metal Universe", card1.brand);
-        assertEquals("PMG Red", card1.variant);
-        assertEquals("#33", card1.cardNumber);
-        assertEquals("47", card1.serialNumber);
-        assertEquals(100, card1.printRun);
-        assertFalse(card1.isRookie);
-        assertFalse(card1.isAutograph);
+        assertEquals("Juwan Howard", card1.player());
+        assertEquals("1997-98", card1.season());
+        assertEquals("Washington Bullets", card1.team());
+        assertEquals("Metal Universe", card1.brand());
+        assertEquals("PMG Red", card1.variant());
+        assertEquals("#33", card1.cardNumber());
+        assertEquals("47", card1.serialNumber());
+        assertEquals(100, card1.printRun());
+        assertFalse(card1.isRookie());
+        assertFalse(card1.isAutograph());
 
         CardJson card2 = cards.get(1);
-        assertEquals("1994-95", card2.season);
-        assertEquals("Finest", card2.brand);
-        assertEquals("Refractor", card2.variant);
-        assertEquals("220", card2.cardNumber);
-        assertEquals("", card2.serialNumber, "Em-dash serial number must normalize to empty string");
-        assertTrue(card2.isRookie);
+        assertEquals("1994-95", card2.season());
+        assertEquals("Finest", card2.brand());
+        assertEquals("Refractor", card2.variant());
+        assertEquals("220", card2.cardNumber());
+        assertEquals("", card2.serialNumber(), "Em-dash serial number must normalize to empty string");
+        assertTrue(card2.isRookie());
     }
 
     @Test

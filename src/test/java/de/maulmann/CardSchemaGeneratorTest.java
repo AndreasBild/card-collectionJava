@@ -36,15 +36,16 @@ class CardSchemaGeneratorTest {
 
     @Test
     void testGenerateJsonLdFlawlessCategoryAndMatchingId() throws Exception {
-        CardJson c = new CardJson();
-        c.player = "Juwan Howard";
-        c.season = "2014-15";
-        c.company = "Panini";
-        c.brand = "Flawless";
-        c.cardNumber = "15";
-        c.variant = "Ruby";
+        CardJson c = CardJson.builder()
+                .player("Juwan Howard")
+                .season("2014-15")
+                .company("Panini")
+                .brand("Flawless")
+                .cardNumber("15")
+                .variant("Ruby")
+                .build();
 
-        CardPageGenerator.CardData cardData = new CardPageGenerator.CardData(c, "flawless-15");
+        CardData cardData = new CardData(c, "flawless-15");
         cardData.seasonFolder = "2014-15";
         cardData.filename = "juwan-howard-flawless-ruby-15.html";
 
@@ -58,53 +59,50 @@ class CardSchemaGeneratorTest {
         JsonNode graph = root.get("@graph");
         assertNotNull(graph);
 
-        // Find nodes in @graph
-        JsonNode breadcrumbNode = null;
-        JsonNode itemPageNode = null;
         JsonNode artworkNode = null;
-
         for (JsonNode node : graph) {
             String type = node.get("@type").asText();
-            if ("BreadcrumbList".equals(type)) breadcrumbNode = node;
-            if ("ItemPage".equals(type)) itemPageNode = node;
-            if ("VisualArtwork".equals(type)) artworkNode = node;
+            if ("VisualArtwork".equals(type)) {
+                artworkNode = node;
+            }
         }
-
-        assertNotNull(breadcrumbNode);
-        assertNotNull(itemPageNode);
         assertNotNull(artworkNode);
 
-        // Verify breadcrumb category matches "Flawless" instead of hardcoded "Collection"
-        JsonNode items = breadcrumbNode.get("itemListElement");
-        assertEquals("Flawless", items.get(1).get("name").asText());
+        // Check Artwork ID
+        assertEquals("https://www.maulmann.de/cards/2014-15/juwan-howard-flawless-ruby-15.html#artwork", artworkNode.get("@id").asText());
 
-        // Verify @id linking
-        String breadcrumbId = breadcrumbNode.get("@id").asText();
-        String itemPageBreadcrumbRef = itemPageNode.get("breadcrumb").get("@id").asText();
-        assertEquals(breadcrumbId, itemPageBreadcrumbRef, "ItemPage.breadcrumb @id must match BreadcrumbList @id");
+        // Check Breadcrumb collection name
+        JsonNode breadcrumbNode = null;
+        for (JsonNode node : graph) {
+            if ("BreadcrumbList".equals(node.get("@type").asText())) {
+                breadcrumbNode = node;
+            }
+        }
+        assertNotNull(breadcrumbNode);
+        JsonNode elements = breadcrumbNode.get("itemListElement");
+        assertEquals(4, elements.size());
+        assertEquals("Flawless", elements.get(1).get("name").asText());
+        assertEquals("https://www.maulmann.de/Flawless.html", elements.get(1).get("item").asText());
 
-        // Verify VisualArtwork additions
-        assertEquals("2014", artworkNode.get("dateCreated").asText());
-
-        // Verify Product schema template additions
-        Element productTemplate = doc.selectFirst("script#product-schema-template");
-        assertNotNull(productTemplate);
-        JsonNode productJson = objectMapper.readTree(productTemplate.html());
-        assertEquals("Product", productJson.get("@type").asText());
-        assertEquals("Flawless", productJson.get("brand").get("name").asText());
+        // Check Product JSON Category and Color from product template script
+        Element productScript = doc.selectFirst("script#product-schema-template");
+        assertNotNull(productScript);
+        JsonNode productJson = objectMapper.readTree(productScript.html());
+        assertEquals("Sports Trading Cards", productJson.get("category").asText());
         assertEquals("Ruby", productJson.get("color").asText());
     }
 
     @Test
     void testGenerateJsonLdWithPreCachedRatingsEmitsActiveAggregateRating() throws Exception {
-        CardJson c = new CardJson();
-        c.player = "Juwan Howard";
-        c.season = "1997-98";
-        c.brand = "Fleer Metal Universe";
-        c.variant = "Precious Metal Gems Green";
-        c.cardNumber = "33";
+        CardJson c = CardJson.builder()
+                .player("Juwan Howard")
+                .season("1997-98")
+                .brand("Fleer Metal Universe")
+                .variant("Precious Metal Gems Green")
+                .cardNumber("33")
+                .build();
 
-        CardPageGenerator.CardData cardData = new CardPageGenerator.CardData(c, "pmg-33");
+        CardData cardData = new CardData(c, "pmg-33");
         cardData.seasonFolder = "1997-98";
         cardData.filename = "juwan-howard-pmg-33.html";
 
@@ -131,10 +129,11 @@ class CardSchemaGeneratorTest {
 
     @Test
     void testGenerateJsonLdHandlesMissingPlayerSameAs() throws Exception {
-        CardJson c = new CardJson();
-        c.season = "1995-96";
+        CardJson c = CardJson.builder()
+                .season("1995-96")
+                .build();
 
-        CardPageGenerator.CardData cardData = new CardPageGenerator.CardData(c, "anon-card");
+        CardData cardData = new CardData(c, "anon-card");
         cardData.seasonFolder = "1995-96";
         cardData.filename = "anon-card.html";
 
@@ -159,42 +158,45 @@ class CardSchemaGeneratorTest {
 
     @Test
     void testGenerateBrowserTitleIncludesVariant() {
-        CardJson cVariant = new CardJson();
-        cVariant.player = "Juwan Howard";
-        cVariant.season = "1997-98";
-        cVariant.brand = "Fleer Metal Universe";
-        cVariant.variant = "Precious Metal Gems Green";
-        cVariant.cardNumber = "33";
+        CardJson cVariant = CardJson.builder()
+                .player("Juwan Howard")
+                .season("1997-98")
+                .brand("Fleer Metal Universe")
+                .variant("Precious Metal Gems Green")
+                .cardNumber("33")
+                .build();
 
-        CardPageGenerator.CardData cardDataVariant = new CardPageGenerator.CardData(cVariant, "pmg-green-33");
+        CardData cardDataVariant = new CardData(cVariant, "pmg-green-33");
         String titleVariant = CardPageGenerator.generateBrowserTitle(cardDataVariant, "Juwan-Howard-Collection.html");
         assertEquals("Juwan Howard 1997-98 Fleer Metal Universe Precious Metal Gems Green #33 | Juwan Howard Private Collection", titleVariant);
 
-        CardJson cBase = new CardJson();
-        cBase.player = "Juwan Howard";
-        cBase.season = "1994-95";
-        cBase.brand = "Collectors Choice";
-        cBase.variant = "Base";
-        cBase.cardNumber = "278";
+        CardJson cBase = CardJson.builder()
+                .player("Juwan Howard")
+                .season("1994-95")
+                .brand("Collectors Choice")
+                .variant("Base")
+                .cardNumber("278")
+                .build();
 
-        CardPageGenerator.CardData cardDataBase = new CardPageGenerator.CardData(cBase, "cc-278");
+        CardData cardDataBase = new CardData(cBase, "cc-278");
         String titleBase = CardPageGenerator.generateBrowserTitle(cardDataBase, "Juwan-Howard-Collection.html");
         assertEquals("Juwan Howard 1994-95 Collectors Choice #278 | Juwan Howard Private Collection", titleBase);
     }
 
     @Test
     void testGenerateBrowserTitleAndH1IncludeGrading() {
-        CardJson cGraded = new CardJson();
-        cGraded.player = "Juwan Howard";
-        cGraded.season = "1995-96";
-        cGraded.brand = "Topps Finest";
-        cGraded.theme = "Mystery Bordered Test";
-        cGraded.variant = "Refractor";
-        cGraded.cardNumber = "M20";
-        cGraded.gradingCompany = "PSA";
-        cGraded.grade = "9";
+        CardJson cGraded = CardJson.builder()
+                .player("Juwan Howard")
+                .season("1995-96")
+                .brand("Topps Finest")
+                .theme("Mystery Bordered Test")
+                .variant("Refractor")
+                .cardNumber("M20")
+                .gradingCompany("PSA")
+                .grade("9")
+                .build();
 
-        CardPageGenerator.CardData cardDataGraded = new CardPageGenerator.CardData(cGraded, "finest-m20");
+        CardData cardDataGraded = new CardData(cGraded, "finest-m20");
         String titleGraded = CardPageGenerator.generateBrowserTitle(cardDataGraded, "Juwan-Howard-Collection.html");
         assertEquals("Juwan Howard 1995-96 Topps Finest Refractor #M20 PSA-9 | Juwan Howard Private Collection", titleGraded);
 

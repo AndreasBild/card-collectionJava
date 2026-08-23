@@ -46,18 +46,18 @@ class CardDataLoaderTest {
         assertEquals(1, cards.size());
 
         CardJson card = cards.getFirst();
-        assertEquals("Juwan Howard", card.player);
-        assertEquals("1997-98", card.season);
-        assertEquals("Washington Bullets", card.team);
-        assertEquals("Fleer", card.company);
-        assertEquals("Metal Universe", card.brand);
-        assertEquals("Precious Metal Gems Red", card.variant);
-        assertEquals("33", card.cardNumber);
-        assertEquals("47", card.serialNumber);
-        assertEquals(100, card.printRun);
-        assertFalse(card.isRookie);
-        assertFalse(card.isAutograph);
-        assertFalse(card.isPatch);
+        assertEquals("Juwan Howard", card.player());
+        assertEquals("1997-98", card.season());
+        assertEquals("Washington Bullets", card.team());
+        assertEquals("Fleer", card.company());
+        assertEquals("Metal Universe", card.brand());
+        assertEquals("Precious Metal Gems Red", card.variant());
+        assertEquals("33", card.cardNumber());
+        assertEquals("47", card.serialNumber());
+        assertEquals(100, card.printRun());
+        assertFalse(card.isRookie());
+        assertFalse(card.isAutograph());
+        assertFalse(card.isPatch());
     }
 
     @Test

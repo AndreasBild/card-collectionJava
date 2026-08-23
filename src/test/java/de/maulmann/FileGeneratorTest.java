@@ -35,6 +35,10 @@ class FileGeneratorTest {
 
         FileGenerator.pathSource = contentDir.toString() + "/";
         FileGenerator.pathOutput = outputDir.toString() + "/";
+
+        java.lang.reflect.Field cacheField = FileGenerator.class.getDeclaredField("cachedFilteredCards");
+        cacheField.setAccessible(true);
+        cacheField.set(null, null);
     }
 
     @AfterEach
@@ -193,11 +197,11 @@ class FileGeneratorTest {
         CardJson c2 = createTestCardJson("Juwan Howard", "1997-98", "Wizards", "Fleer", "Fleer Metal Universe", "Base Set", "Precious Metal Gems", "1", "1/100", 100);
         CardJson c3 = createTestCardJson("Juwan Howard", "1997-98", "Wizards", "Fleer", "Fleer Ultra", "Base Set", "Gold Medallion", "5", null, null);
 
-        CardPageGenerator.CardData card1 = new CardPageGenerator.CardData(c1, "id1");
-        CardPageGenerator.CardData card2 = new CardPageGenerator.CardData(c2, "id2");
-        CardPageGenerator.CardData card3 = new CardPageGenerator.CardData(c3, "id3");
+        CardData card1 = new CardData(c1, "id1");
+        CardData card2 = new CardData(c2, "id2");
+        CardData card3 = new CardData(c3, "id3");
 
-        List<CardPageGenerator.CardData> allCards = List.of(card1, card2, card3);
+        List<CardData> allCards = List.of(card1, card2, card3);
 
         List<Map<String, String>> brandCards = CardPageGenerator.findSameBrandCards(card1, allCards, 6);
         assertEquals(1, brandCards.size());
@@ -210,18 +214,18 @@ class FileGeneratorTest {
     }
 
     private CardJson createTestCardJson(String player, String season, String team, String company, String brand, String theme, String variant, String number, String serialNumber, Integer printRun) {
-        CardJson c = new CardJson();
-        c.player = player;
-        c.season = season;
-        c.team = team;
-        c.company = company;
-        c.brand = brand;
-        c.theme = theme;
-        c.variant = variant;
-        c.cardNumber = number;
-        c.serialNumber = serialNumber;
-        c.printRun = printRun;
-        return c;
+        return CardJson.builder()
+                .player(player)
+                .season(season)
+                .team(team)
+                .company(company)
+                .brand(brand)
+                .theme(theme)
+                .variant(variant)
+                .cardNumber(number)
+                .serialNumber(serialNumber)
+                .printRun(printRun)
+                .build();
     }
 }
 

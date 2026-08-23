@@ -1,9 +1,9 @@
 ================================================================================
 MISSING IMAGES SUMMARY REPORT
-Total Missing Entries: 1281 (Front: 641, Back: 640)
+Total Missing Entries: 1301 (Front: 651, Back: 650)
 ================================================================================
 
---- SEASON: 1995-96 (20 missing) ---
+--- SEASON: 1995-96 (26 missing) ---
 [MISSING FRONT] Juwan Howard - 1995-96 Collectors Choice Players Club Platinum #349 (Expected: Juwan-Howard-Washington-Bullets-1995-96-Upper-Deck-Collectors-Choice-Scouting-Report-Players-Club-Platinum-349-front)
 [MISSING BACK]  Juwan Howard - 1995-96 Collectors Choice Players Club Platinum #349 (Expected: Juwan-Howard-Washington-Bullets-1995-96-Upper-Deck-Collectors-Choice-Scouting-Report-Players-Club-Platinum-349-back)
 [MISSING FRONT] Juwan Howard - 1995-96 Collectors Choice Silver #C3 (Expected: Juwan-Howard-Washington-Bullets-1995-96-Upper-Deck-Collectors-Choice-Crash-The-Game-Assists-Rebounds-Silver-C3-front)
@@ -24,6 +24,12 @@ Total Missing Entries: 1281 (Front: 641, Back: 640)
 [MISSING BACK]  Juwan Howard - 1995-96 Topps Finest Refractor #M20 (Expected: Juwan-Howard-Washington-Bullets-1995-96-Topps-Topps-Finest-Mystery-Bordered-Test-Refractor-M20-PSA-10-back)
 [MISSING FRONT] Juwan Howard - 1995-96 Topps Finest Refractor #M20 (Expected: Juwan-Howard-Washington-Bullets-1995-96-Topps-Topps-Finest-Mystery-Borderless-Refractor-M20-PSA-10-front)
 [MISSING BACK]  Juwan Howard - 1995-96 Topps Finest Refractor #M20 (Expected: Juwan-Howard-Washington-Bullets-1995-96-Topps-Topps-Finest-Mystery-Borderless-Refractor-M20-PSA-10-back)
+[MISSING FRONT] Juwan Howard - 1995-96 Upper Deck #348 (Expected: Juwan-Howard-Washington-Bullets-1995-96-Upper-Deck-Upper-Deck-Slams-and-Jams-Base-348-front)
+[MISSING BACK]  Juwan Howard - 1995-96 Upper Deck #348 (Expected: Juwan-Howard-Washington-Bullets-1995-96-Upper-Deck-Upper-Deck-Slams-and-Jams-Base-348-back)
+[MISSING FRONT] Juwan Howard - 1995-96 Upper Deck Electric Court #348 (Expected: Juwan-Howard-Washington-Bullets-1995-96-Upper-Deck-Upper-Deck-Slams-and-Jams-Electric-Court-348-front)
+[MISSING BACK]  Juwan Howard - 1995-96 Upper Deck Electric Court #348 (Expected: Juwan-Howard-Washington-Bullets-1995-96-Upper-Deck-Upper-Deck-Slams-and-Jams-Electric-Court-348-back)
+[MISSING FRONT] Juwan Howard - 1995-96 Upper Deck Electric Court Gold #348 (Expected: Juwan-Howard-Washington-Bullets-1995-96-Upper-Deck-Upper-Deck-Slams-and-Jams-Electric-Court-Gold-348-front)
+[MISSING BACK]  Juwan Howard - 1995-96 Upper Deck Electric Court Gold #348 (Expected: Juwan-Howard-Washington-Bullets-1995-96-Upper-Deck-Upper-Deck-Slams-and-Jams-Electric-Court-Gold-348-back)
 
 --- SEASON: 1996-97 (160 missing) ---
 [MISSING FRONT] Juwan Howard - 1996-97 Collectors Choice Silver #C29 (Expected: Juwan-Howard-Washington-Bullets-1996-97-Upper-Deck-Collectors-Choice-You-Crash-The-Game-Scoring-2-17-23-Feb-Silver-C29-front)
@@ -568,10 +574,10 @@ Total Missing Entries: 1281 (Front: 641, Back: 640)
 [MISSING BACK]  Juwan Howard - 1998-99 Ultra Platinum Medallion #27P (sn10) (Expected: Juwan-Howard-Washington-Wizards-1998-99-Fleer-Ultra-Base-Set-Platinum-Medallion-27P-sn10-back)
 [MISSING FRONT] Juwan Howard - 1998-99 Upper Deck #160 (Expected: Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-Upper-Deck-Base-Set-Base-160-front)
 [MISSING BACK]  Juwan Howard - 1998-99 Upper Deck #160 (Expected: Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-Upper-Deck-Base-Set-Base-160-back)
-[MISSING FRONT] Juwan Howard - 1998-99 Upper Deck #163 (Expected: Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-Upper-Deck-Heart-Soul-Base-163-front)
-[MISSING BACK]  Juwan Howard - 1998-99 Upper Deck #163 (Expected: Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-Upper-Deck-Heart-Soul-Base-163-back)
-[MISSING FRONT] Juwan Howard - 1998-99 Upper Deck Bronze #163 (sn22) (Expected: Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-Upper-Deck-Heart-Soul-Bronze-163-sn22-front)
-[MISSING BACK]  Juwan Howard - 1998-99 Upper Deck Bronze #163 (sn22) (Expected: Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-Upper-Deck-Heart-Soul-Bronze-163-sn22-back)
+[MISSING FRONT] Juwan Howard - 1998-99 Upper Deck #163 (Expected: Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-Upper-Deck-Heart-and-Soul-Base-163-front)
+[MISSING BACK]  Juwan Howard - 1998-99 Upper Deck #163 (Expected: Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-Upper-Deck-Heart-and-Soul-Base-163-back)
+[MISSING FRONT] Juwan Howard - 1998-99 Upper Deck Bronze #163 (sn22) (Expected: Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-Upper-Deck-Heart-and-Soul-Bronze-163-sn22-front)
+[MISSING BACK]  Juwan Howard - 1998-99 Upper Deck Bronze #163 (sn22) (Expected: Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-Upper-Deck-Heart-and-Soul-Bronze-163-sn22-back)
 [MISSING FRONT] Juwan Howard - 1998-99 Upper Deck #297 (Expected: Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-Upper-Deck-Highway-99-Base-297-front)
 [MISSING BACK]  Juwan Howard - 1998-99 Upper Deck #297 (Expected: Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-Upper-Deck-Highway-99-Base-297-back)
 [MISSING FRONT] Juwan Howard - 1998-99 Upper Deck Bronze #297 (sn37) (Expected: Juwan-Howard-Washington-Wizards-1998-99-Upper-Deck-Upper-Deck-Highway-99-Bronze-297-sn37-front)
@@ -827,9 +833,15 @@ Total Missing Entries: 1281 (Front: 641, Back: 640)
 [MISSING FRONT] Juwan Howard - 1999-00 E-X Essential Credentials Now #68 (Expected: Juwan-Howard-Washington-Bullets-1999-00-SkyBox-E-X-Base-Essential-Credentials-Now-68-front)
 [MISSING BACK]  Juwan Howard - 1999-00 E-X Essential Credentials Now #68 (Expected: Juwan-Howard-Washington-Bullets-1999-00-SkyBox-E-X-Base-Essential-Credentials-Now-68-back)
 
---- SEASON: 2000-01 (2 missing) ---
+--- SEASON: 2000-01 (4 missing) ---
 [MISSING FRONT] Juwan Howard - 2000-01 Fleer Authority Prominence #85 (sn40) (Expected: Juwan-Howard-Washington-Wizards-2000-01-Fleer-Fleer-Authority-Base-Set-Prominence-85-sn40-BGS-8-5-front)
 [MISSING BACK]  Juwan Howard - 2000-01 Fleer Authority Prominence #85 (sn40) (Expected: Juwan-Howard-Washington-Wizards-2000-01-Fleer-Fleer-Authority-Base-Set-Prominence-85-sn40-BGS-8-5-back)
+[MISSING FRONT] Juwan Howard - 2000-01 UD Pros & Prospects #90 (Expected: Juwan-Howard-Washington-Wizards-2000-01-Upper-Deck-UD-Pros-and-Prospects-Base-Set-Base-90-front)
+[MISSING BACK]  Juwan Howard - 2000-01 UD Pros & Prospects #90 (Expected: Juwan-Howard-Washington-Wizards-2000-01-Upper-Deck-UD-Pros-and-Prospects-Base-Set-Base-90-back)
+
+--- SEASON: 2001-02 (2 missing) ---
+[MISSING FRONT] Juwan Howard - 2001-02 Topps Pristine #DM-JH (Expected: Juwan-Howard-Dallas-Mavericks-2001-02-Topps-Topps-Pristine-Sweat-and-Tears-Base-DM-JH-front)
+[MISSING BACK]  Juwan Howard - 2001-02 Topps Pristine #DM-JH (Expected: Juwan-Howard-Dallas-Mavericks-2001-02-Topps-Topps-Pristine-Sweat-and-Tears-Base-DM-JH-back)
 
 --- SEASON: 2003-04 (123 missing) ---
 [MISSING FRONT] Juwan Howard - 2003-04 Fleer Authentix #46 (Expected: Juwan-Howard-Orlando-Magic-2003-04-Fleer-Fleer-Authentix-Base-Set-Base-46-front)
@@ -1085,6 +1097,18 @@ Total Missing Entries: 1281 (Front: 641, Back: 640)
 [MISSING BACK]  Juwan Howard - 2004-05 UD Trilogy Gold #34 (sn52) (Expected: Juwan-Howard-Houston-Rockets-2004-05-Upper-Deck-UD-Trilogy-Base-Set-Gold-34-sn52-back)
 [MISSING FRONT] Juwan Howard - 2004-05 UD Trilogy Rainbow #34 (sn9) (Expected: Juwan-Howard-Houston-Rockets-2004-05-Upper-Deck-UD-Trilogy-Base-Set-Rainbow-34-sn9-front)
 [MISSING BACK]  Juwan Howard - 2004-05 UD Trilogy Rainbow #34 (sn9) (Expected: Juwan-Howard-Houston-Rockets-2004-05-Upper-Deck-UD-Trilogy-Base-Set-Rainbow-34-sn9-back)
+
+--- SEASON: 2005 (10 missing) ---
+[MISSING FRONT] Eric "Game Over" Gagne - 2005 Ultimate Signature Edition #IN-EG (sn59) (Expected: Eric-Gagne-Los-Angeles-Dodgers-2005-Upper-Deck-Ultimate-Signature-Edition-Immortal-Inscriptions-Base-IN-EG-sn59-front)
+[MISSING BACK]  Eric "Game Over" Gagne - 2005 Ultimate Signature Edition #IN-EG (sn59) (Expected: Eric-Gagne-Los-Angeles-Dodgers-2005-Upper-Deck-Ultimate-Signature-Edition-Immortal-Inscriptions-Base-IN-EG-sn59-back)
+[MISSING FRONT] Jim "HOF 96" Bunning - 2005 Ultimate Signature Edition #IN-JB (sn76) (Expected: Jim-Bunning-Philadelphia-Phillies-2005-Upper-Deck-Ultimate-Signature-Edition-Immortal-Inscriptions-Base-IN-JB-sn76-front)
+[MISSING BACK]  Jim "HOF 96" Bunning - 2005 Ultimate Signature Edition #IN-JB (sn76) (Expected: Jim-Bunning-Philadelphia-Phillies-2005-Upper-Deck-Ultimate-Signature-Edition-Immortal-Inscriptions-Base-IN-JB-sn76-back)
+[MISSING FRONT] Ozzie "The Wiz" Smith - 2005 Ultimate Signature Edition #IN-OS (sn53) (Expected: Ozzie-Smith-St-Louis-Cardinals-2005-Upper-Deck-Ultimate-Signature-Edition-Immortal-Inscriptions-Base-IN-OS-sn53-front)
+[MISSING BACK]  Ozzie "The Wiz" Smith - 2005 Ultimate Signature Edition #IN-OS (sn53) (Expected: Ozzie-Smith-St-Louis-Cardinals-2005-Upper-Deck-Ultimate-Signature-Edition-Immortal-Inscriptions-Base-IN-OS-sn53-back)
+[MISSING FRONT] Steve "Lefty" Carlton - 2005 Ultimate Signature Edition #IN-SC (sn42) (Expected: Steve-Carlton-Philadelphia-Phillies-2005-Upper-Deck-Ultimate-Signature-Edition-Immortal-Inscriptions-Base-IN-SC-sn42-front)
+[MISSING BACK]  Steve "Lefty" Carlton - 2005 Ultimate Signature Edition #IN-SC (sn42) (Expected: Steve-Carlton-Philadelphia-Phillies-2005-Upper-Deck-Ultimate-Signature-Edition-Immortal-Inscriptions-Base-IN-SC-sn42-back)
+[MISSING FRONT] Will "The Thrill" Clark - 2005 Ultimate Signature Edition #IN-WC (sn57) (Expected: Will-Clark-San-Francisco-Giants-2005-Upper-Deck-Ultimate-Signature-Edition-Immortal-Inscriptions-Base-IN-WC-sn57-front)
+[MISSING BACK]  Will "The Thrill" Clark - 2005 Ultimate Signature Edition #IN-WC (sn57) (Expected: Will-Clark-San-Francisco-Giants-2005-Upper-Deck-Ultimate-Signature-Edition-Immortal-Inscriptions-Base-IN-WC-sn57-back)
 
 --- SEASON: 2005-06 (82 missing) ---
 [MISSING FRONT] Juwan Howard - 2005-06 Topps Bazooka #133 (Expected: Juwan-Howard-Houston-Rockets-2005-06-Topps-Topps-Bazooka-Base-Set-Base-133-front)

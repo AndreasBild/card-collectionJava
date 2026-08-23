@@ -91,7 +91,7 @@ public class HtmlToJsonConverter {
             Elements cols = row.children();
             if (cols.isEmpty()) continue;
 
-            CardJson card = new CardJson();
+            CardJson.Builder cardBuilder = CardJson.builder();
             for (int j = 0; j < cols.size() && j < headers.length; j++) {
                 String header = headers[j].toLowerCase();
                 String val = cols.get(j).text().trim();
@@ -99,86 +99,89 @@ public class HtmlToJsonConverter {
 
                 switch (header) {
                     case "player":
-                        card.player = val;
+                        cardBuilder.player(val);
                         break;
                     case "season":
-                        card.season = val;
+                        cardBuilder.season(val);
                         break;
                     case "team":
-                        card.team = val;
+                        cardBuilder.team(val);
                         break;
                     case "company":
                     case "manufacturer":
-                        card.company = val;
+                        cardBuilder.company(val);
                         break;
                     case "brand":
-                        card.brand = val;
+                        cardBuilder.brand(val);
                         break;
                     case "theme":
-                        card.theme = val;
+                        cardBuilder.theme(val);
                         break;
                     case "variant":
-                        card.variant = val;
+                        cardBuilder.variant(val);
                         break;
                     case "number":
                     case "card number":
                     case "cardnumber":
-                        card.cardNumber = val;
+                        cardBuilder.cardNumber(val);
                         break;
                     case "serial":
                     case "serialnumber":
                     case "serial/print run":
                         if (val.contains("/")) {
                             String[] parts = val.split("/");
-                            card.serialNumber = parts[0].replace("#", "").trim();
-                            if ("—".equals(card.serialNumber) || "-".equals(card.serialNumber)) {
-                                card.serialNumber = "";
+                            String sn = parts[0].replace("#", "").trim();
+                            if ("—".equals(sn) || "-".equals(sn)) {
+                                sn = "";
                             }
+                            cardBuilder.serialNumber(sn);
                             try {
-                                card.printRun = Integer.parseInt(parts[1].trim());
+                                cardBuilder.printRun(Integer.parseInt(parts[1].trim()));
                             } catch (Exception ignored) {}
                         } else {
-                            card.serialNumber = val.replace("#", "").trim();
-                            if ("—".equals(card.serialNumber) || "-".equals(card.serialNumber)) {
-                                card.serialNumber = "";
+                            String sn = val.replace("#", "").trim();
+                            if ("—".equals(sn) || "-".equals(sn)) {
+                                sn = "";
                             }
+                            cardBuilder.serialNumber(sn);
                         }
                         break;
                     case "print run":
                     case "printrun":
                         try {
-                            card.printRun = Integer.parseInt(val.trim());
+                            cardBuilder.printRun(Integer.parseInt(val.trim()));
                         } catch (Exception ignored) {}
                         break;
                     case "grading company":
                     case "grading co.":
                     case "gradingcompany":
-                        card.gradingCompany = val;
+                        cardBuilder.gradingCompany(val);
                         break;
                     case "grade":
-                        card.grade = val;
+                        cardBuilder.grade(val);
                         break;
                     case "notes":
-                        card.notes = val;
+                        cardBuilder.notes(val);
                         break;
                     case "collection":
-                        card.collection = val;
+                        cardBuilder.collection(val);
                         break;
                     case "rookie":
-                        card.isRookie = val.equalsIgnoreCase("Yes") || val.equalsIgnoreCase("True");
+                        cardBuilder.isRookie(val.equalsIgnoreCase("Yes") || val.equalsIgnoreCase("True"));
                         break;
                     case "autograph":
                     case "auto":
-                        card.isAutograph = val.equalsIgnoreCase("Yes") || val.equalsIgnoreCase("True");
+                        cardBuilder.isAutograph(val.equalsIgnoreCase("Yes") || val.equalsIgnoreCase("True"));
                         break;
                     case "game used":
                     case "memorabilia":
                     case "patch":
-                        card.isPatch = val.equalsIgnoreCase("Yes") || val.equalsIgnoreCase("True");
+                        cardBuilder.isPatch(val.equalsIgnoreCase("Yes") || val.equalsIgnoreCase("True"));
                         break;
                 }
             }
-            if (card.player != null || card.brand != null) {
+            CardJson card = cardBuilder.build();
+            if (card.player() != null || card.brand() != null) {
                 cardList.add(card);
             }
         }
