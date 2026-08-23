@@ -406,7 +406,7 @@ public class SitemapGenerator {
             log.info("   > Images added: {}", imagesAdded.get());
 
             generateHtmlSitemap(coreLinks, seasonGroups, timestampTracker);
-            generateLlmsTxt();
+            generateLlmsTxt(inMemoryCards);
             generateLlmsFullTxt(inMemoryCards);
             generateRssFeed(inMemoryCards, timestampTracker);
 
@@ -561,21 +561,103 @@ public class SitemapGenerator {
         }
     }
 
-    private static void generateLlmsTxt() {
+    public static void generateLlmsTxt() {
+        generateLlmsTxt(null);
+    }
+
+    public static void generateLlmsTxt(List<CardData> inMemoryCards) {
         log.info("Generating llms.txt standard index for AI/LLMs...");
         StringBuilder sb = new StringBuilder();
-        sb.append("# maulmann.de\n\n");
-        sb.append("> Maulmann Private Collection: High-end sports card database featuring Juwan Howard, rare 1/1 Masterpieces, and low-numbered serial cards.\n\n");
-        sb.append("## Core Pages\n");
-        sb.append("- [Collection Overview](").append(BASE_URL).append("/Juwan-Howard-Collection.html): Main private collection index with 1,300+ cards.\n");
-        sb.append("- [3D Collector Binder](").append(BASE_URL).append("/binder.html): Virtual 9-Pocket Ultra-PRO binder view with 3D page flip.\n");
-        sb.append("- [Rainbow Tracker](").append(BASE_URL).append("/rainbows.html): Interactive tracker for full parallel rainbow sets.\n");
-        sb.append("- [Flawless Collection](").append(BASE_URL).append("/Flawless.html): Ultra-high-end Panini Flawless autographs and patches.\n");
-        sb.append("- [Panini Showcase](").append(BASE_URL).append("/Panini.html): Panini basketball card release highlights.\n");
-        sb.append("- [Baseball Collection](").append(BASE_URL).append("/Baseball.html): Certified MLB autograph and game-used memorabilia cards.\n");
-        sb.append("- [Wantlist](").append(BASE_URL).append("/Wantlist.html): Cards actively sought after for the collection.\n\n");
-        sb.append("## Full Database Index\n");
-        sb.append("- [llms-full.txt](").append(BASE_URL).append("/llms-full.txt): Complete detailed text index of all 1,300+ card pages with metadata.\n");
+        sb.append("# maulmann.de - Private Sports Card Collection\n\n");
+        sb.append("> Authority database and high-resolution visual archive of the Andreas Maulmann Private Collection, specializing in Juwan Howard (1994–present), 90s basketball insert grails, 1/1 Masterpieces, and certified memorabilia.\n\n");
+
+        if (inMemoryCards != null && !inMemoryCards.isEmpty()) {
+            int total = inMemoryCards.size();
+            long count1of1 = 0;
+            long countUltraSp = 0;
+            long countSerialized = 0;
+            long countAutos = 0;
+            long countMem = 0;
+            long countRookies = 0;
+            long countGemMint = 0;
+            Set<String> seasons = new HashSet<>();
+
+            for (CardData c : inMemoryCards) {
+                String season = c.get("Season");
+                if (CardUtils.isValidForDisplay(season)) seasons.add(season);
+
+                String printRunStr = c.get("Print Run");
+                String serialStr = c.get("Serial");
+                String variant = c.get("Variant").toLowerCase();
+                String theme = c.get("Theme").toLowerCase();
+
+                int pr = 0;
+                if (CardUtils.isValidForDisplay(printRunStr)) {
+                    try { pr = Integer.parseInt(printRunStr); } catch (Exception ignored) {}
+                }
+
+                boolean is1of1 = pr == 1 || "1/1".equalsIgnoreCase(serialStr) || variant.contains("1/1") || variant.contains("masterpiece");
+                boolean isPlateOrProof = variant.contains("plate") || variant.contains("proof") || theme.contains("plate") || theme.contains("proof");
+                if (is1of1 && !isPlateOrProof) {
+                    count1of1++;
+                }
+
+                if (pr > 0 && pr <= 10) {
+                    countUltraSp++;
+                }
+                if ((pr > 0 && pr <= 100) || (CardUtils.isValidForDisplay(serialStr) && !serialStr.equals("0"))) {
+                    countSerialized++;
+                }
+
+                if ("Yes".equalsIgnoreCase(c.get("Autograph")) || variant.contains("auto")) {
+                    countAutos++;
+                }
+                if ("Yes".equalsIgnoreCase(c.get("Memorabilia")) || variant.contains("jersey") || variant.contains("patch")) {
+                    countMem++;
+                }
+                if ("Yes".equalsIgnoreCase(c.get("Rookie"))) {
+                    countRookies++;
+                }
+
+                String grade = c.get("Grade");
+                String gradingCo = c.get("Grading Co.");
+                if (("PSA".equalsIgnoreCase(gradingCo) && "10".equals(grade)) ||
+                    ("BGS".equalsIgnoreCase(gradingCo) && ("9.5".equals(grade) || "10".equals(grade))) ||
+                    ("SGC".equalsIgnoreCase(gradingCo) && "10".equals(grade))) {
+                    countGemMint++;
+                }
+            }
+
+            sb.append("## Collection Statistics & Highlights\n");
+            sb.append("- Total Unique Cards: ").append(String.format("%,d", total)).append(" indexed cards\n");
+            sb.append("- Spanning Seasons: ").append(seasons.size()).append(" seasons (1994-95 to present)\n");
+            sb.append("- 1/1 Masterpieces & Grails: ").append(count1of1).append(" true 1/1 cards\n");
+            sb.append("- Ultra Short Prints (≤ 10): ").append(countUltraSp).append(" cards\n");
+            sb.append("- Low-Numbered Serialized (≤ 100): ").append(countSerialized).append(" cards\n");
+            sb.append("- Certified Autographs: ").append(countAutos).append(" cards\n");
+            sb.append("- Game-Used Patches & Memorabilia: ").append(countMem).append(" cards\n");
+            sb.append("- Official Rookie Cards (RC): ").append(countRookies).append(" cards\n");
+            sb.append("- Gem Mint Graded (PSA 10 / BGS 9.5): ").append(countGemMint).append(" cards\n\n");
+        } else {
+            sb.append("## Collection Statistics\n");
+            sb.append("- Total Unique Cards: 1,440+ cards\n");
+            sb.append("- Subject: Juwan Howard (Michigan Fab Five, Washington Bullets/Wizards, Miami Heat)\n\n");
+        }
+
+        sb.append("## Core Vault Pages & Interactive Tools\n");
+        sb.append("- [Juwan Howard Master Collection](").append(BASE_URL).append("/Juwan-Howard-Collection.html): Complete searchable vault of Juwan Howard trading cards with filters for PMGs, Rubies, Autographs, and Rookies.\n");
+        sb.append("- [3D 9-Pocket Collector Binder](").append(BASE_URL).append("/binder.html): Interactive virtual 9-pocket trading card binder with 3D page flips and card inspection.\n");
+        sb.append("- [Parallel Rainbow Tracker](").append(BASE_URL).append("/rainbows.html): Visual tracking system for completing parallel rainbows (Base, Refractor, Atomic, PMG, 1/1 Masterpiece).\n");
+        sb.append("- [Flawless Collection](").append(BASE_URL).append("/Flawless.html): Ultra-high-end Panini Flawless diamond gems, ruby parallels, and game-worn patch cards.\n");
+        sb.append("- [Panini Rarities](").append(BASE_URL).append("/Panini.html): Showcase of modern Panini National Treasures, Immaculate, Prizm, and Select cards.\n");
+        sb.append("- [Baseball Grails](").append(BASE_URL).append("/Baseball.html): Certified MLB on-card autographs and game-used relics.\n");
+        sb.append("- [Wantlist](").append(BASE_URL).append("/Wantlist.html): Actively sought-after holy grails and missing rainbow pieces.\n\n");
+
+        sb.append("## Machine-Readable Endpoints & AI Feeds\n");
+        sb.append("- [llms-full.txt](").append(BASE_URL).append("/llms-full.txt): Complete detailed text database of all cards, image URLs, and entity metadata for LLM ingestion.\n");
+        sb.append("- [sitemap.xml](").append(BASE_URL).append("/sitemap.xml): Comprehensive XML sitemap index referencing all 35+ sub-sitemaps and 5,900+ high-res card scans.\n");
+        sb.append("- [rss.xml](").append(BASE_URL).append("/rss.xml): RSS 2.0 discovery feed highlighting recent card additions and holy grail acquisitions.\n");
+        sb.append("- [latest.json](").append(BASE_URL).append("/latest.json): Machine-readable JSON summary for offline PWA sync.\n");
 
         Path llmsPath = Paths.get(OUTPUT_DIR, "llms.txt");
         try {

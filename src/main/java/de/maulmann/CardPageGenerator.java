@@ -319,7 +319,12 @@ public class CardPageGenerator {
                 frontImgPath + " 1200w\" " +
                 "imagesizes=\"(max-width: 600px) 380px, (max-width: 1024px) 50vw, 580px\" " +
                 "fetchpriority=\"high\">";
-        data.put("headHtml", SharedTemplates.getHead(browserTitle, metaDesc, ROOT, c.fullRelativePath, frontImgUrl, cardPreload));
+        boolean isLandscape = isImageLandscape(c.seasonFolder, resolvedImageBase, "front");
+        int ogWidth = isLandscape ? 1680 : 1200;
+        int ogHeight = isLandscape ? 1200 : 1680;
+        String frontAlt = generateAltText(c, "front");
+
+        data.put("headHtml", SharedTemplates.getHead(browserTitle, metaDesc, ROOT, c.fullRelativePath, frontImgUrl, cardPreload, ogWidth, ogHeight, frontAlt));
         data.put("jsonLd", CardSchemaGenerator.generateJsonLd(c, metaDesc, h1Title, overviewPage, resolvedImageBase, faqItems));
         String collectionName = "Collection";
         String activeNav = "collection";

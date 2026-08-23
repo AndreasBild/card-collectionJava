@@ -34,6 +34,7 @@ flowchart LR
 4. **Manual Refining & DB Checks:** Verify syntax, fix compiler warnings, and test database/Firestore interactions using IntelliJ tooling.
 5. **IDE Commit & Push:** Staged and pushed to GitHub via IntelliJ.
 6. **PR & Jules Automation:** Pushing the branch automatically opens a Pull Request via GitHub Actions (`.github/workflows/auto-pr.yml`). Jules triggers automatically on GitHub to write missing test suites and run CI checks.
+7. **Mandatory PR Creation at End of Work:** At the conclusion of every feature, fix, or optimization task, Antigravity must **ALWAYS** automatically stage changes, commit with a concise semantic message, and push the branch to remote so the Pull Request is created immediately without requiring the user to prompt for it separately.
 
 ---
 

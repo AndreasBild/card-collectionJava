@@ -113,4 +113,56 @@ class SitemapGeneratorTest {
         String resultOriginal = SitemapGenerator.extractHighestResCandidate(srcsetWithOriginal);
         assertEquals("img.avif", resultOriginal, "Must select candidate without thumbnail suffix when unweighted");
     }
+
+    @Test
+    void testGenerateLlmsTxtWithDynamicMetrics() throws Exception {
+        CardJson c1 = CardJson.builder()
+                .player("Juwan Howard")
+                .season("1997-98")
+                .brand("Fleer Metal Universe")
+                .variant("Precious Metal Gems Green")
+                .cardNumber("33")
+                .serialNumber("1/1")
+                .printRun(1)
+                .isAutograph(true)
+                .isPatch(true)
+                .isRookie(false)
+                .gradingCompany("PSA")
+                .grade("10")
+                .build();
+
+        CardJson c2 = CardJson.builder()
+                .player("Juwan Howard")
+                .season("1994-95")
+                .brand("Topps Finest")
+                .variant("Refractor")
+                .cardNumber("220")
+                .serialNumber("5/10")
+                .printRun(10)
+                .isAutograph(false)
+                .isPatch(false)
+                .isRookie(true)
+                .gradingCompany("BGS")
+                .grade("9.5")
+                .build();
+
+        CardData card1 = new CardData(c1, "pmg-1");
+        CardData card2 = new CardData(c2, "ref-2");
+
+        SitemapGenerator.generateLlmsTxt(java.util.List.of(card1, card2));
+
+        Path llmsPath = outputDir.resolve("llms.txt");
+        assertTrue(Files.exists(llmsPath), "llms.txt must exist");
+        String content = Files.readString(llmsPath);
+
+        assertTrue(content.contains("Total Unique Cards: 2 indexed cards"), "Must include total card count");
+        assertTrue(content.contains("1/1 Masterpieces & Grails: 1 true 1/1 cards"), "Must count 1/1 cards");
+        assertTrue(content.contains("Ultra Short Prints (≤ 10): 2 cards"), "Must count ultra short prints");
+        assertTrue(content.contains("Certified Autographs: 1 cards"), "Must count autographs");
+        assertTrue(content.contains("Game-Used Patches & Memorabilia: 1 cards"), "Must count patches");
+        assertTrue(content.contains("Official Rookie Cards (RC): 1 cards"), "Must count rookies");
+        assertTrue(content.contains("Gem Mint Graded (PSA 10 / BGS 9.5): 2 cards"), "Must count gem mint graded cards");
+        assertTrue(content.contains("https://www.maulmann.de/binder.html"), "Must contain binder link");
+        assertTrue(content.contains("https://www.maulmann.de/rainbows.html"), "Must contain rainbows link");
+    }
 }
