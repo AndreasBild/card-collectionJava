@@ -4,7 +4,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,9 +20,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class HtmlSnapshotTest {
 
     private static final Path OUTPUT_DIR = Paths.get("output");
-    @BeforeEach
-    void ensureOutputGenerated() {
+    @BeforeAll
+    static void ensureOutputGenerated() {
         FileGenerator.generate();
+        List<CardData> cards = CardPageGenerator.run();
+        SitemapGenerator.generate(cards);
     }
 
     @Test

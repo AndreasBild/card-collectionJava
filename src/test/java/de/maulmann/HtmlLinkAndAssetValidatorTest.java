@@ -23,9 +23,9 @@ class HtmlLinkAndAssetValidatorTest {
 
     @BeforeAll
     static void ensureOutputGenerated() {
-        if (!Files.exists(OUTPUT_DIR.resolve("index.html")) || !Files.exists(OUTPUT_DIR.resolve("Juwan-Howard-Collection.html"))) {
-            FileGenerator.generate();
-        }
+        FileGenerator.generate();
+        List<CardData> cards = CardPageGenerator.run();
+        SitemapGenerator.generate(cards);
     }
 
     @Test
