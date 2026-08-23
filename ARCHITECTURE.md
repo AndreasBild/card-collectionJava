@@ -130,8 +130,8 @@ flowchart TD
 ```text
 .
 ├── .agents/
-│   ├── rules/                    # Antigravity micro-rules (compression, freemarker)
-│   └── skills/                   # Antigravity skills (build-pipeline, verify-schema)
+│   ├── rules/                    # Antigravity micro-rules (java26, pure-avif, compression, pwa, freemarker, git)
+│   └── skills/                   # Antigravity skills (build-pipeline, verify-schema, validate-snapshots, audit-performance)
 ├── .editorconfig                 # Standardized formatting for IDE & Agents
 ├── .github/
 │   ├── workflows/
