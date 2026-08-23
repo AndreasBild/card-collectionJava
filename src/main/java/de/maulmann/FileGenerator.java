@@ -265,9 +265,14 @@ public class FileGenerator {
         template.process(data, stringWriter);
         String finalHtml = stringWriter.toString();
 
-        if (timestampTracker != null && finalHtml.contains("[[STABLE_TIME]]")) {
-            String relativeOutputPath = Paths.get(pathOutput).toUri().relativize(outPath.toUri()).getPath();
-            String stableTime = timestampTracker.getStableTimestamp(relativeOutputPath, finalHtml);
+        if (finalHtml.contains("[[STABLE_TIME]]")) {
+            String stableTime;
+            if (timestampTracker != null) {
+                String relativeOutputPath = Paths.get(pathOutput).toUri().relativize(outPath.toUri()).getPath();
+                stableTime = timestampTracker.getStableTimestamp(relativeOutputPath, finalHtml);
+            } else {
+                stableTime = SharedTemplates.getTimestamp();
+            }
             finalHtml = finalHtml.replace("[[STABLE_TIME]]", stableTime);
         }
 
@@ -279,13 +284,17 @@ public class FileGenerator {
         Files.writeString(outPath, finalHtml, StandardCharsets.UTF_8);
     }
 
-    public static void main(String[] args) {
-        log.info("Starting FileGenerator build...");
+    public static void generate() {
         generateLatestMetadata(getCachedCards().size());
         copyResources();
         buildCollectionOverview();
         buildOtherCollections();
         buildStaticPages();
+    }
+
+    public static void main(String[] args) {
+        log.info("Starting FileGenerator build...");
+        generate();
         log.info("FileGenerator finished successfully!");
     }
 }

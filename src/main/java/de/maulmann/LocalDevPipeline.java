@@ -128,7 +128,7 @@ public class LocalDevPipeline {
         }
     }
 
-    private static String getMimeType(String filename) {
+    static String getMimeType(String filename) {
         String lower = filename.toLowerCase();
         if (lower.endsWith(".avif")) return "image/avif";
         if (lower.endsWith(".webp")) return "image/webp";

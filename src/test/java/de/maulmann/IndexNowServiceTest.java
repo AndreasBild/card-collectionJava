@@ -31,7 +31,7 @@ class IndexNowServiceTest {
         Path validationFile = IndexNowService.ensureValidationFile(tempDir);
         assertTrue(Files.exists(validationFile), "Validation file should exist in target directory");
         assertEquals("527d7f6c267a449b8c4812117f05b108.txt", validationFile.getFileName().toString());
-        
+
         String content = Files.readString(validationFile);
         assertEquals("527d7f6c267a449b8c4812117f05b108", content.trim());
     }

@@ -161,7 +161,7 @@ public class ImageConverter {
         for (int targetW : RESPONSIVE_WIDTHS) {
             int w = Math.min(targetW, mainW);
             int h = (w == mainW) ? mainH : (int) (mainH * ((double) w / mainW));
-            
+
             File respAvifFile = currentWebpOutDir.resolve(baseName + "-" + targetW + "w.avif").toFile();
             int avifQuality = (targetW <= 200) ? 36 : (targetW <= 400 ? 38 : (targetW <= 600 ? 40 : 44));
             if (w == mainW && mainAvifFile.exists()) {
@@ -235,7 +235,7 @@ public class ImageConverter {
         return null;
     }
 
-    private static String getBaseName(String fileName) {
+    static String getBaseName(String fileName) {
         int dotIndex = fileName.lastIndexOf('.');
         return (dotIndex == -1) ? fileName : fileName.substring(0, dotIndex);
     }
