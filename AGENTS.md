@@ -10,6 +10,7 @@
 ### 1.2 Cloud PR & Test Agent (Jules)
 - **Role:** Autonomous CI/PR Quality & Test Specialist operating asynchronously on GitHub.
 - **Responsibilities:** Analyzes incoming PRs, generates comprehensive JUnit 5 unit and integration test coverage (`src/test/java`), validates edge cases, and inspects build health before merge approval.
+- **Operating Boundary & Invariants:** Strictly adheres to Java 26. Never modifies or downgrades `<maven.compiler.source>`, `<maven.compiler.target>`, or `<maven.compiler.release>` in `pom.xml` to 21 or earlier.
 
 ---
 
@@ -32,7 +33,7 @@ flowchart LR
 3. **IDE Compilation & Static Checks:** After Antigravity outputs code, compile and run inspections in IntelliJ IDEA.
 4. **Manual Refining & DB Checks:** Verify syntax, fix compiler warnings, and test database/Firestore interactions using IntelliJ tooling.
 5. **IDE Commit & Push:** Staged and pushed to GitHub via IntelliJ.
-6. **PR & Jules Automation:** Create a PR. Jules triggers automatically on GitHub to write missing test suites and run CI checks.
+6. **PR & Jules Automation:** Pushing the branch automatically opens a Pull Request via GitHub Actions (`.github/workflows/auto-pr.yml`). Jules triggers automatically on GitHub to write missing test suites and run CI checks.
 
 ---
 
