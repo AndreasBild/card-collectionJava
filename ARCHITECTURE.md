@@ -86,8 +86,10 @@ flowchart TD
         Loader[CardDataLoader & HtmlToJsonConverter]
         Tracker[TimestampTracker & FileTracker]
         Gen[CardPageGenerator & SharedTemplates]
+        Binder[BinderPageGenerator & RainbowPageGenerator]
+        Static[StaticPageGenerator]
         Schema[CardSchemaGenerator (JSON-LD)]
-        ImgConv[ImageConverter (AVIF/Responsive)]
+        ImgConv[ImageConverter (Pure AVIF/Responsive)]
         Rating[FirestoreRatingInjector]
     end
 
@@ -106,16 +108,16 @@ flowchart TD
 
     HTML --> Loader
     IMG --> ImgConv
-    Loader --> Gen
-    FTL --> Gen
+    Loader --> Gen & Binder & Static
+    FTL --> Gen & Binder & Static
     FS <--> Rating
     Rating --> Gen
-    Gen --> Schema
+    Gen & Binder & Static --> Schema
     Schema --> Min
     ImgConv --> Dist
     Min --> CompGZ & CompBR
     CompGZ & CompBR --> Dist
-    Gen --> Sitemap --> Dist
+    Gen & Binder & Static --> Sitemap --> Dist
     Tracker -.-> Loader
     Dist --> AWS
     Sitemap --> INow
@@ -132,7 +134,9 @@ flowchart TD
 │   └── skills/                   # Antigravity skills (build-pipeline, verify-schema)
 ├── .editorconfig                 # Standardized formatting for IDE & Agents
 ├── .github/
-│   ├── workflows/ci.yml          # Automated CI test verification
+│   ├── workflows/
+│   │   ├── ci.yml                # Automated CI test verification (JUnit 5 + Spotless)
+│   │   └── auto-pr.yml           # Automated Pull Request creator
 │   └── pull_request_template.md  # Jules review checklist
 ├── .jules/
 │   └── setup.sh                  # Environment initialization script for Jules Cloud Agent
@@ -140,7 +144,7 @@ flowchart TD
 ├── ARCHITECTURE.md               # System topology, workflow rules, and invariants
 ├── README.md                     # Project overview & badges
 ├── llms.txt                      # AI crawler manifest & site summary
-├── output/                       # Generated site artifacts (.html, .br, .gz, .webp, sitemaps)
+├── output/                       # Generated site artifacts (.html, .br, .gz, .avif, sitemaps)
 │   └── generation-timestamps.properties # Build-cache tracking file
 ├── content/                      # Raw source HTML and card data collections
 │   └── json/                     # JSON datasets (cards.json exported from cardCollection)
@@ -149,23 +153,30 @@ flowchart TD
 │   ├── main/
 │   │   ├── java/de/maulmann/
 │   │   │   ├── SiteBuilderPipeline.java      # Main production pipeline orchestrator
-│   │   │   ├── LocalDevPipeline.java         # Fast local build pipeline (skips external APIs)
+│   │   │   ├── LocalDevPipeline.java         # Fast local build pipeline & preview web server
 │   │   │   ├── CardDataLoader.java           # Card dataset loader & parser
 │   │   │   ├── HtmlToJsonConverter.java      # Content HTML to structured CardJson parser
 │   │   │   ├── CardPageGenerator.java        # Core Freemarker page generation logic
+│   │   │   ├── BinderPageGenerator.java      # 3D 9-pocket collector's binder generator
+│   │   │   ├── RainbowPageGenerator.java     # Strict parallel rainbow tracker generator
+│   │   │   ├── StaticPageGenerator.java      # Hub, error, wantlist & team page generator
 │   │   │   ├── CardSchemaGenerator.java      # Schema.org JSON-LD generator for card entities
+│   │   │   ├── CardMetadataRenderer.java     # Freemarker helper & metadata formatter
+│   │   │   ├── CardStatsService.java         # Collection analytics & statistics service
 │   │   │   ├── FirestoreRatingInjector.java  # Injects real-time community ratings into static pages
 │   │   │   ├── FirestoreRatingSeeder.java    # Seeds initial rating data to Firebase
-│   │   │   ├── ImageConverter.java           # Automated image conversion (WebP, resizing)
+│   │   │   ├── ImageConverter.java           # Automated pure AVIF conversion & responsive srcset
 │   │   │   ├── HTMLMinifier.java             # In-house whitespace/comment stripping
-│   │   │   ├── CSSMinifier.java              # YUI-based CSS compression
+│   │   │   ├── CSSMinifier.java              # CSS compression
 │   │   │   ├── GZIPCompressor.java           # Pre-generates .gz companions
 │   │   │   ├── BrotliCompressor.java         # Pre-generates .br companions via brotli4j
-│   │   │   ├── SitemapGenerator.java         # XML/HTML sitemap builder
+│   │   │   ├── SitemapGenerator.java         # XML/HTML sitemap builder, RSS & llms.txt
 │   │   │   ├── IndexNowService.java          # Submits updated URLs to search engines via IndexNow
 │   │   │   ├── TimestampTracker.java         # State persistence for incremental generation
 │   │   │   └── FileTracker.java              # File hash and modification check utilities
 │   │   └── resources/
+│   │       ├── css/                          # CSS styling & visual tokens
+│   │       ├── pwa/                          # PWA serviceWorker, manifest & collector features
 │   │       └── templates/                    # Freemarker (.ftlh) UI templates
 │   └── test/
 │       └── java/de/maulmann/                 # Jules test generation target (JUnit 5)
@@ -178,18 +189,27 @@ flowchart TD
 ### 6.1 Local Development Build
 Runs an incremental build without invoking external APIs (skips AWS, Firebase remote seeding, IndexNow):
 ```bash
-mvn clean compile exec:java -Dexec.mainClass="de.maulmann.LocalDevPipeline"
+mvn exec:java@local
+# Or with embedded preview web server:
+mvn exec:java@local -Dexec.args="--serve"
 ```
 
 ### 6.2 Full Production Pipeline Build
 Executes the full pipeline (image conversion, minification, compression, Firestore sync, sitemaps, deployment triggers):
 ```bash
+mvn exec:java@prod
+# Or:
 mvn clean compile exec:java -Dexec.mainClass="de.maulmann.SiteBuilderPipeline"
 ```
 
-### 6.3 Test Suite Execution (Local & CI)
+### 6.3 Code Quality & Test Suite Execution (Local & CI)
 ```bash
+# Run all unit and integration tests
 mvn test
+
+# Check and apply Spotless code formatting
+mvn spotless:check
+mvn spotless:apply
 ```
 
 ---
@@ -199,12 +219,14 @@ mvn test
 When proposing changes, creating PRs, or refactoring code:
 
 1. **Companion Pre-Compression Sync:**
-   - Any modification to static HTML/CSS output must ensure companion files (`.html.gz`, `.html.br`, `.css.gz`, `.css.br`) are updated synchronously via [GZIPCompressor](file:///Users/andreasbild/IdeaProjects/card-collectionJava/src/main/java/de/maulmann/GZIPCompressor.java) and [BrotliCompressor](file:///Users/andreasbild/IdeaProjects/card-collectionJava/src/main/java/de/maulmann/BrotliCompressor.java).
+   - Any modification to static HTML/CSS output must ensure companion files (`.html.gz`, `.html.br`, `.css.gz`, `.css.br`) are updated synchronously via [GZIPCompressor](file:///src/main/java/de/maulmann/GZIPCompressor.java) and [BrotliCompressor](file:///src/main/java/de/maulmann/BrotliCompressor.java).
 2. **Incremental Cache Integrity:**
-   - Never arbitrarily wipe `output/generation-timestamps.properties`. Respect [TimestampTracker](file:///Users/andreasbild/IdeaProjects/card-collectionJava/src/main/java/de/maulmann/TimestampTracker.java) logic to prevent unnecessary full regenerations.
+   - Never arbitrarily wipe `output/generation-timestamps.properties`. Respect [TimestampTracker](file:///src/main/java/de/maulmann/TimestampTracker.java) logic to prevent unnecessary full regenerations.
 3. **Structured Data Completeness (LLMO):**
-   - Every generated card page must maintain a valid, complete JSON-LD Schema.org block generated by [CardSchemaGenerator](file:///Users/andreasbild/IdeaProjects/card-collectionJava/src/main/java/de/maulmann/CardSchemaGenerator.java).
-4. **Zero Heavy Client-Side Frameworks:**
+   - Every generated card page must maintain a valid, complete JSON-LD Schema.org block generated by [CardSchemaGenerator](file:///src/main/java/de/maulmann/CardSchemaGenerator.java).
+4. **Pure AVIF Standard:**
+   - All images and responsive renditions must adhere to pure AVIF format with proper width descriptors (`200w`, `400w`, `600w`, `900w`).
+5. **Zero Heavy Client-Side Frameworks:**
    - Keep client-side footprint zero-JS or minimal vanilla JS. Do not introduce heavy frontend frameworks into the static templates.
-5. **Secrets & External Credentials:**
-   - AWS credentials and Firebase Service Account keys must never be committed to git. Use environment variables and [FirebaseConfigManager](file:///Users/andreasbild/IdeaProjects/card-collectionJava/src/main/java/de/maulmann/FirebaseConfigManager.java).
+6. **Secrets & External Credentials:**
+   - AWS credentials and Firebase Service Account keys must never be committed to git. Use environment variables and [FirebaseConfigManager](file:///src/main/java/de/maulmann/FirebaseConfigManager.java).
