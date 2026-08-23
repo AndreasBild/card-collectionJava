@@ -1,0 +1,46 @@
+name: Auto Create Pull Request
+
+on:
+  push:
+    branches:
+      - 'feature/**'
+      - 'feature/*'
+      - 'fix/**'
+      - 'fix/*'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  create-pr:
+    name: Open Pull Request to main
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create PR if not exists
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH_NAME="${GITHUB_REF#refs/heads/}"
+          echo "Processing branch: $BRANCH_NAME"
+          
+          # Check if an open PR already exists
+          PR_URL=$(gh pr list --head "$BRANCH_NAME" --base main --state open --json url --jq '.[0].url' || true)
+          
+          if [ -n "$PR_URL" ] && [ "$PR_URL" != "null" ]; then
+            echo "Pull request already exists: $PR_URL"
+          else
+            echo "Creating Pull Request for $BRANCH_NAME against main..."
+            COMMIT_MSG=$(git log -1 --pretty=%s)
+            gh pr create \
+              --base main \
+              --head "$BRANCH_NAME" \
+              --title "$COMMIT_MSG" \
+              --body "Automated Pull Request for \`$BRANCH_NAME\`." \
+              || echo "PR creation handled."
+          fi
