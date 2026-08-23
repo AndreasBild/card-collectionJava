@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run LocalDevPipeline" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="de.maulmann.LocalDevPipeline" />
+    <module name="CardCollection" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

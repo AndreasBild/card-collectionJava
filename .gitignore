@@ -1,10 +1,11 @@
 target/
 output/
 cards/
+images/
+MissingImages.txt
 cp.txt
 *.class
 server.log
-/.idea/
 src/main/resources/config/firebase_config.json
 
 # OS and Editor metadata
@@ -12,3 +13,4 @@ src/main/resources/config/firebase_config.json
 **/.DS_Store
 .vscode/
 .mvn/timing.properties
+
