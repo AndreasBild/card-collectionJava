@@ -58,6 +58,20 @@
       "icons": [{ "src": "favicon/android-chrome-192x192.png", "sizes": "192x192" }]
     },
     {
+      "name": "3D 9-Pocket Binder",
+      "short_name": "3D Binder",
+      "description": "Browse the collection in a 3D 9-Pocket sleeve binder",
+      "url": "./binder.html?source=pwa",
+      "icons": [{ "src": "favicon/android-chrome-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Parallel Rainbow Tracker",
+      "short_name": "Rainbows",
+      "description": "Track complete parallel rainbow sets and 1/1s",
+      "url": "./rainbows.html?source=pwa",
+      "icons": [{ "src": "favicon/android-chrome-192x192.png", "sizes": "192x192" }]
+    },
+    {
       "name": "Wantlist",
       "short_name": "Wantlist",
       "description": "Cards we are looking for",
