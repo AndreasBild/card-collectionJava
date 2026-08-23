@@ -33,6 +33,10 @@ class TimestampTrackerTest {
         String identifier = "cards/1994-95/test-card.html";
         String content1 = "<html><body>Test Content [[STABLE_TIME]]</body></html>";
 
+        Path mockHtmlFile = tempDir.resolve(identifier);
+        Files.createDirectories(mockHtmlFile.getParent());
+        Files.writeString(mockHtmlFile, content1);
+
         String time1 = tracker.getStableTimestamp(identifier, content1);
         assertNotNull(time1);
 

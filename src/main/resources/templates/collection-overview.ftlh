@@ -97,6 +97,15 @@ ${topNavHtml?no_esc}
             <button type="button" class="filter-chip" onclick="toggleQuickFilter('ruby')" data-filter="ruby">🔴 Star Rubies</button>
         </div>
 
+        <div class="career-era-chips" aria-label="Career Era Filter Navigation">
+            <span class="era-chip-title">🏀 Career Eras:</span>
+            <button type="button" class="era-chip" onclick="filterByEra('bullets')" data-era="bullets">🏛️ Bullets Era (1994–97)</button>
+            <button type="button" class="era-chip" onclick="filterByEra('wizards')" data-era="wizards">🧙 Wizards Era (1997–01)</button>
+            <button type="button" class="era-chip" onclick="filterByEra('mavs_rockets')" data-era="mavs_rockets">🚀 Mavs &amp; Rockets (2001–07)</button>
+            <button type="button" class="era-chip" onclick="filterByEra('heat')" data-era="heat">🏆 Heat Champions (2010–13)</button>
+            <button type="button" class="era-chip" onclick="filterByEra('panini')" data-era="panini">✨ Modern Panini (2014+)</button>
+        </div>
+
         <div class="collection-controls filter-container">
             <label for="seasonFilter" class="filter-label">Filter Collection:</label>
             <select id="seasonFilter" name="seasonFilter" class="filter-select" aria-label="Filter cards by season">
@@ -105,9 +114,12 @@ ${topNavHtml?no_esc}
                     <option value="${season.id}">${season.name}</option>
                 </#list>
             </select>
-            <input type="text" id="textSearch" name="textSearch" class="filter-input" list="hobby-terms"
-                   placeholder="Search PMG, Auto or Print Run <25, =1..."
-                   aria-label="Search cards by keyword, serial number, or print run">
+            <div class="search-input-wrapper">
+                <input type="text" id="textSearch" name="textSearch" class="filter-input" list="hobby-terms"
+                       placeholder="Search PMG, Auto or Print Run <25, =1... (Press / to focus)"
+                       aria-label="Search cards by keyword, serial number, or print run">
+                <span class="search-hotkey-badge" title="Press / or Cmd+K to search"><kbd>/</kbd></span>
+            </div>
             <datalist id="hobby-terms">
                 <option value="= 1">
                 <option value="<= 10">
@@ -359,7 +371,8 @@ ${topNavHtml?no_esc}
                 if (isFiltered) {
                     if (filterResultBar) filterResultBar.style.display = 'flex';
                     if (filterCountBadge) {
-                        filterCountBadge.textContent = 'Showing ' + totalVisible.toLocaleString() + ' of ' + totalCards.toLocaleString() + ' cards';
+                        const pct = totalCards > 0 ? ((totalVisible / totalCards) * 100).toFixed(1) : '0';
+                        filterCountBadge.textContent = 'Showing ' + totalVisible.toLocaleString() + ' of ' + totalCards.toLocaleString() + ' cards (' + pct + '%)';
                     }
                 } else {
                     if (filterResultBar) filterResultBar.style.display = 'none';
@@ -393,6 +406,99 @@ ${topNavHtml?no_esc}
                     if (jumpBar) jumpBar.style.display = '';
                 }
             }
+
+            // --- CAREER ERA QUICK FILTER ---
+            function filterByEra(eraKey) {
+                const eraButtons = document.querySelectorAll('.era-chip');
+                const clickedBtn = document.querySelector('.era-chip[data-era="' + eraKey + '"]');
+                const isAlreadyActive = clickedBtn && clickedBtn.classList.contains('active');
+
+                eraButtons.forEach(b => b.classList.remove('active'));
+
+                if (isAlreadyActive) {
+                    clearFilters();
+                    return;
+                }
+
+                if (clickedBtn) clickedBtn.classList.add('active');
+
+                const eraSeasonMap = {
+                    'bullets': ['1994-95', '1995-96', '1996-97'],
+                    'wizards': ['1997-98', '1998-99', '1999-00', '2000-01'],
+                    'mavs_rockets': ['2001-02', '2002-03', '2003-04', '2004-05', '2005-06', '2006-07', '2007-08', '2008-09'],
+                    'heat': ['2010-11', '2011-12', '2012-13'],
+                    'panini': ['2012-13', '2013-14', '2014-15', '2015-16', '2016-17', '2017-18', '2018-19', '2019-20', '2020-21', '2021-22', '2022-23', '2023-24', '2024-25']
+                };
+
+                const targetSeasons = eraSeasonMap[eraKey] || [];
+                let totalVisible = 0;
+                let totalCards = 0;
+
+                document.querySelectorAll('.season-table-wrapper').forEach(wrapper => {
+                    const s = wrapper.getAttribute('data-season');
+                    const rows = wrapper.querySelectorAll('tr');
+                    const isSeasonInEra = targetSeasons.includes(s);
+                    let visibleCount = 0;
+
+                    for (let i = 0; i < rows.length; i++) {
+                        const row = rows[i];
+                        if (row.querySelector('th')) continue;
+                        totalCards++;
+
+                        if (isSeasonInEra) {
+                            row.style.display = '';
+                            visibleCount++;
+                            totalVisible++;
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    }
+
+                    wrapper.style.display = isSeasonInEra ? '' : 'none';
+                    const counter = wrapper.querySelector('.visible-counter');
+                    if (counter) {
+                        counter.textContent = visibleCount;
+                        counter.style.color = '#d4af37';
+                    }
+                });
+
+                const filterResultBar = document.getElementById('filterResultBar');
+                const filterCountBadge = document.getElementById('filterCountBadge');
+                if (filterResultBar) filterResultBar.style.display = 'flex';
+                if (filterCountBadge) {
+                    const pct = totalCards > 0 ? ((totalVisible / totalCards) * 100).toFixed(1) : '0';
+                    filterCountBadge.textContent = 'Showing ' + totalVisible.toLocaleString() + ' of ' + totalCards.toLocaleString() + ' cards (' + pct + '%)';
+                }
+
+                // Scroll to first visible season
+                const firstVisible = document.querySelector('.season-table-wrapper[style*="display: none"]');
+                const allWrappers = Array.from(document.querySelectorAll('.season-table-wrapper'));
+                const firstMatched = allWrappers.find(w => w.style.display !== 'none');
+                if (firstMatched) {
+                    firstMatched.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+
+            // Keyboard navigation shortcuts for Search and Reset
+            document.addEventListener('keydown', (e) => {
+                if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) {
+                    if (e.key === 'Escape') {
+                        e.target.blur();
+                        clearFilters();
+                    }
+                    return;
+                }
+                if (e.key === '/' || ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k')) {
+                    e.preventDefault();
+                    const searchBox = document.getElementById('textSearch');
+                    if (searchBox) {
+                        searchBox.focus();
+                        searchBox.select();
+                    }
+                } else if (e.key === 'Escape') {
+                    clearFilters();
+                }
+            });
 
 
             // --- 1-CLICK CSV EXPORT (UTF-8 EXCEL READY) ---

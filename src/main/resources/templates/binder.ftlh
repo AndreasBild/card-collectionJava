@@ -39,6 +39,12 @@ ${topNavHtml?no_esc}
             </select>
             <button type="button" class="modern-button binder-tool-btn" onclick="flipAllVisibleCards()" title="Flip all cards on this page to back/front side">&#x1F504; Flip All Cards</button>
         </div>
+
+        <div class="binder-shortcuts-hint" aria-label="Keyboard Navigation Shortcuts">
+            <span class="shortcut-pill"><kbd>&larr;</kbd> / <kbd>&rarr;</kbd> Flip Page</span>
+            <span class="shortcut-pill"><kbd>F</kbd> Flip Cards</span>
+            <span class="shortcut-pill"><kbd>Home</kbd> / <kbd>End</kbd> First/Last</span>
+        </div>
     </div>
 
     <!-- 3D BINDER CONTAINER -->
@@ -206,6 +212,12 @@ ${footerHtml?no_esc}
             changeBinderPage(1);
         } else if (e.key === 'f' || e.key === 'F') {
             flipAllVisibleCards();
+        } else if (e.key === 'Home') {
+            currentBinderPage = 1;
+            updateBinderUI();
+        } else if (e.key === 'End') {
+            currentBinderPage = totalBinderPages;
+            updateBinderUI();
         }
     });
 
