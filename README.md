@@ -12,6 +12,7 @@
 ## 🚀 Key Features & Highlights
 
 - **⚡ Zero / Micro-JS Architecture:** Blazing-fast static delivery with zero layout shifts ($\text{CLS} = 0$, $\text{LCP} < 1.2\text{s}$).
+- **🖼️ Pure AVIF Next-Gen Image Engine:** Multi-threaded responsive AVIF generation (`.avif`, `200w`, `400w`, `600w`, `900w`) via Virtual Threads and `avifenc`, with automated orphan image sweeping.
 - **🤖 LLM & Search Engine Optimization (LLMO/SEO):** Comprehensive **Schema.org JSON-LD** structured data for every card entity via `CardSchemaGenerator`.
 - **🗜️ Pre-Compressed Asset Pipeline:** Automated in-place minification and synchronous companion compression (**GZIP** `.gz` and **Brotli** `.br`).
 - **🔄 Incremental & Cache-Aware Builds:** Deterministic timestamp caching (`generation-timestamps.properties`) preventing redundant rendering.

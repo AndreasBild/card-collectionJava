@@ -37,12 +37,12 @@ public class ImageConverter {
 
     public static void main(String[] args) {
         Path sourceDir = Paths.get("images");
-        Path webpOutDir = Paths.get("output/images");
+        Path avifOutDir = Paths.get("output/images");
 
         long startTime = System.currentTimeMillis();
 
         try {
-            processImages(sourceDir, webpOutDir);
+            processImages(sourceDir, avifOutDir);
             long endTime = System.currentTimeMillis();
 
             log.info("\n--- Image Processing Summary ---");
@@ -57,7 +57,7 @@ public class ImageConverter {
         }
     }
 
-    public static void processImages(Path sourceDir, Path webpOutDir) throws IOException {
+    public static void processImages(Path sourceDir, Path avifOutDir) throws IOException {
         log.info("Starting image processing with virtual threads on: {}", sourceDir.toAbsolutePath());
         log.info("AVIFENC_PATH: {}", AVIFENC_PATH);
 
@@ -79,12 +79,12 @@ public class ImageConverter {
                     Path relativePath = sourceDir.relativize(file);
                     String baseName = getBaseName(relativePath.getFileName().toString());
                     Path relativeParent = relativePath.getParent();
-                    Path currentWebpOutDir = relativeParent != null ? webpOutDir.resolve(relativeParent) : webpOutDir;
-                    File mainAvifFile = currentWebpOutDir.resolve(baseName + ".avif").toFile();
-                    File f200 = currentWebpOutDir.resolve(baseName + "-200w.avif").toFile();
-                    File f400 = currentWebpOutDir.resolve(baseName + "-400w.avif").toFile();
-                    File f600 = currentWebpOutDir.resolve(baseName + "-600w.avif").toFile();
-                    File f900 = currentWebpOutDir.resolve(baseName + "-900w.avif").toFile();
+                    Path currentAvifOutDir = relativeParent != null ? avifOutDir.resolve(relativeParent) : avifOutDir;
+                    File mainAvifFile = currentAvifOutDir.resolve(baseName + ".avif").toFile();
+                    File f200 = currentAvifOutDir.resolve(baseName + "-200w.avif").toFile();
+                    File f400 = currentAvifOutDir.resolve(baseName + "-400w.avif").toFile();
+                    File f600 = currentAvifOutDir.resolve(baseName + "-600w.avif").toFile();
+                    File f900 = currentAvifOutDir.resolve(baseName + "-900w.avif").toFile();
                     boolean avifMissing = (AVIFENC_PATH != null && (!mainAvifFile.exists() || !f200.exists() || !f400.exists() || !f600.exists() || !f900.exists()));
 
                     if (!avifMissing && !tracker.hasChanged(file)) {
@@ -94,7 +94,7 @@ public class ImageConverter {
 
                     futures.add(CompletableFuture.runAsync(() -> {
                         try {
-                            boolean wasConverted = convertAndSaveImageSet(file, sourceDir, webpOutDir, tracker);
+                            boolean wasConverted = convertAndSaveImageSet(file, sourceDir, avifOutDir, tracker);
                             if (wasConverted) {
                                 successCount.incrementAndGet();
                             } else {
@@ -112,24 +112,80 @@ public class ImageConverter {
             log.error("Critical error during parallel image processing: {}", e.getMessage());
         }
 
+        // Bereinigung verwaister AVIF-Bilder in output/images
+        cleanOrphanedAvifImages(sourceDir, avifOutDir);
+
         // Speichern der aktualisierten Hashes
         tracker.save();
     }
 
-    private static boolean convertAndSaveImageSet(Path sourceFile, Path sourceDir, Path webpOutDir, FileTracker tracker) throws Exception {
+    /**
+     * Scans the AVIF output directory and removes orphaned AVIF files whose original source scans no longer exist.
+     * @param sourceDir Root source images directory
+     * @param avifOutDir Root AVIF output directory
+     * @return Count of orphaned files removed
+     */
+    public static int cleanOrphanedAvifImages(Path sourceDir, Path avifOutDir) {
+        if (!Files.exists(avifOutDir) || !Files.exists(sourceDir)) {
+            return 0;
+        }
+        int removedCount = 0;
+        try (Stream<Path> stream = Files.walk(avifOutDir)) {
+            List<Path> avifFiles = stream.filter(Files::isRegularFile)
+                    .filter(p -> p.getFileName().toString().toLowerCase().endsWith(".avif"))
+                    .toList();
+
+            for (Path avifFile : avifFiles) {
+                Path relative = avifOutDir.relativize(avifFile);
+                String fileName = relative.getFileName().toString();
+                String baseName = fileName.replaceFirst("-(200|400|600|900)w\\.avif$", "").replaceFirst("\\.avif$", "");
+                Path parent = relative.getParent();
+
+                boolean sourceExists = false;
+                String[] possibleExts = {".jpg", ".jpeg", ".png", ".gif", ".bmp", ".JPG", ".JPEG", ".PNG"};
+                for (String ext : possibleExts) {
+                    Path candidate = parent != null
+                            ? sourceDir.resolve(parent).resolve(baseName + ext)
+                            : sourceDir.resolve(baseName + ext);
+                    if (Files.exists(candidate)) {
+                        sourceExists = true;
+                        break;
+                    }
+                }
+
+                if (!sourceExists) {
+                    try {
+                        Files.deleteIfExists(avifFile);
+                        removedCount++;
+                        log.debug("Removed orphaned AVIF file: {}", avifFile);
+                    } catch (IOException e) {
+                        log.warn("Could not remove orphaned AVIF file {}: {}", avifFile, e.getMessage());
+                    }
+                }
+            }
+        } catch (IOException e) {
+            log.error("Error during orphaned AVIF cleanup: {}", e.getMessage());
+        }
+        if (removedCount > 0) {
+            log.info("Cleaned {} orphaned AVIF image(s) from output.", removedCount);
+        }
+        return removedCount;
+    }
+
+    private static boolean convertAndSaveImageSet(Path sourceFile, Path sourceDir, Path avifOutDir, FileTracker tracker) throws Exception {
 
         Path relativePath = sourceDir.relativize(sourceFile);
         String baseName = getBaseName(relativePath.getFileName().toString());
         Path relativeParent = relativePath.getParent();
 
-        Path currentWebpOutDir = relativeParent != null ? webpOutDir.resolve(relativeParent) : webpOutDir;
-        Files.createDirectories(currentWebpOutDir);
+        Path currentAvifOutDir = relativeParent != null ? avifOutDir.resolve(relativeParent) : avifOutDir;
+        Files.createDirectories(currentAvifOutDir);
 
-        File mainAvifFile = currentWebpOutDir.resolve(baseName + ".avif").toFile();
-        File f200 = currentWebpOutDir.resolve(baseName + "-200w.avif").toFile();
-        File f400 = currentWebpOutDir.resolve(baseName + "-400w.avif").toFile();
-        File f600 = currentWebpOutDir.resolve(baseName + "-600w.avif").toFile();
-        File f900 = currentWebpOutDir.resolve(baseName + "-900w.avif").toFile();
+        File mainAvifFile = currentAvifOutDir.resolve(baseName + ".avif").toFile();
+        File f200 = currentAvifOutDir.resolve(baseName + "-200w.avif").toFile();
+        File f400 = currentAvifOutDir.resolve(baseName + "-400w.avif").toFile();
+        File f600 = currentAvifOutDir.resolve(baseName + "-600w.avif").toFile();
+        File f900 = currentAvifOutDir.resolve(baseName + "-900w.avif").toFile();
         boolean avifMissing = (AVIFENC_PATH != null && (!mainAvifFile.exists() || !f200.exists() || !f400.exists() || !f600.exists() || !f900.exists()));
 
         // 1. PRE-CHECK: Müssen wir dieses Bild-Set neu generieren?
@@ -162,7 +218,7 @@ public class ImageConverter {
             int w = Math.min(targetW, mainW);
             int h = (w == mainW) ? mainH : (int) (mainH * ((double) w / mainW));
 
-            File respAvifFile = currentWebpOutDir.resolve(baseName + "-" + targetW + "w.avif").toFile();
+            File respAvifFile = currentAvifOutDir.resolve(baseName + "-" + targetW + "w.avif").toFile();
             int avifQuality = (targetW <= 200) ? 36 : (targetW <= 400 ? 38 : (targetW <= 600 ? 40 : 44));
             if (w == mainW && mainAvifFile.exists()) {
                 Files.copy(mainAvifFile.toPath(), respAvifFile.toPath(), StandardCopyOption.REPLACE_EXISTING);

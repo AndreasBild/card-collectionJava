@@ -6,7 +6,7 @@
 ### Core Architectural Principles:
 - **Zero-JS / Micro-JS Delivery:** Maximum performance, near-perfect Core Web Vitals (LCP, INP, CLS).
 - **LLM & Search Engine Optimization (LLMO/SEO):** Schema.org JSON-LD structured entity data injected on every card page.
-- **Pre-computed Asset Pipeline:** In-place HTML/CSS minification, WebP conversion, and companion pre-compression (`.gz`, `.br`).
+- **Pre-computed Asset Pipeline:** In-place HTML/CSS minification, Next-Gen AVIF conversion, and companion pre-compression (`.gz`, `.br`).
 - **Incremental & Cache-Aware Builds:** Deterministic file modification tracking to eliminate redundant generation cycles.
 - **Automated Cloud Sync & Discovery:** Seamless integration with AWS S3/CloudFront, Google Firebase Firestore, and IndexNow.
 - **Upstream Data Ingestion:** Card datasets are maintained in the upstream `cardCollection` project (MySQL / Spring Boot) and exported directly into `content/json/cards.json` before triggering pipeline builds.
@@ -87,7 +87,7 @@ flowchart TD
         Tracker[TimestampTracker & FileTracker]
         Gen[CardPageGenerator & SharedTemplates]
         Schema[CardSchemaGenerator (JSON-LD)]
-        ImgConv[ImageConverter (WebP/Optimized)]
+        ImgConv[ImageConverter (AVIF/Responsive)]
         Rating[FirestoreRatingInjector]
     end
 

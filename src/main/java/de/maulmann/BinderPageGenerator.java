@@ -50,9 +50,9 @@ public class BinderPageGenerator {
                 String backBase = "images/" + cd.seasonFolder + "/" + imageBaseName + "-back";
 
                 item.put("frontImg", frontBase + "-400w.avif");
-                item.put("frontImgFallback", frontBase + "-400w.webp");
+                item.put("frontImgFallback", frontBase + "-400w.avif");
                 item.put("backImg", backBase + "-400w.avif");
-                item.put("backImgFallback", backBase + "-400w.webp");
+                item.put("backImgFallback", backBase + "-400w.avif");
 
                 boolean isFrontLandscape = CardPageGenerator.isImageLandscape(cd.seasonFolder, imageBaseName, "front");
                 boolean isBackLandscape = CardPageGenerator.isImageLandscape(cd.seasonFolder, imageBaseName, "back");
