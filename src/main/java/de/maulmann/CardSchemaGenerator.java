@@ -244,6 +244,10 @@ public class CardSchemaGenerator {
         }
         sb.append("      },\n");
         sb.append("      \"artMedium\": \"Trading Card\",\n");
+        String surface = detectArtworkSurface(c);
+        if (surface != null) {
+            sb.append("      \"artworkSurface\": \"").append(escapeJson(surface)).append("\",\n");
+        }
         sb.append("      \"artform\": \"Sports Memorabilia\"\n");
         sb.append("    }");
 
@@ -343,6 +347,22 @@ public class CardSchemaGenerator {
         } else {
             sb.append(",\n  \"category\": \"Sports Trading Cards\"");
         }
+
+        boolean isGemMint = false;
+        if (c.has("Grade")) {
+            String grade = c.get("Grade");
+            isGemMint = grade.contains("10") || grade.contains("9.5") || grade.equalsIgnoreCase("Gem Mint") || grade.equalsIgnoreCase("Pristine");
+        }
+        String conditionUri = isGemMint ? "https://schema.org/NewCondition" : "https://schema.org/UsedCondition";
+
+        sb.append(",\n  \"offers\": {\n" +
+                  "    \"@type\": \"Offer\",\n" +
+                  "    \"price\": \"0\",\n" +
+                  "    \"priceCurrency\": \"EUR\",\n" +
+                  "    \"availability\": \"https://schema.org/InStock\",\n" +
+                  "    \"itemCondition\": \"" + conditionUri + "\",\n" +
+                  "    \"seller\": { \"@type\": \"Person\", \"name\": \"Andreas Bild\" }\n" +
+                  "  }");
 
         List<String> additionalProperties = new ArrayList<>();
         if (isValid(c.get("Serial/Print Run"))) {
@@ -570,6 +590,30 @@ public class CardSchemaGenerator {
         if (lower.contains("yellow")) return "Yellow";
         if (lower.contains("teal")) return "Teal";
         return null;
+    }
+
+    private static String detectArtworkSurface(CardData c) {
+        String variant = c.get("Variant").toLowerCase();
+        String company = c.get("Company").toLowerCase();
+        String brand = c.get("Brand").toLowerCase();
+        String theme = c.get("Theme").toLowerCase();
+
+        if (variant.contains("refractor") || theme.contains("refractor") || brand.contains("chrome") || company.contains("topps chrome")) {
+            return "Chromium / Refractor Foil";
+        }
+        if (variant.contains("pmg") || variant.contains("precious metal") || theme.contains("precious metal")) {
+            return "Precious Metal Foil";
+        }
+        if (variant.contains("holo") || theme.contains("holo") || variant.contains("hologram") || theme.contains("hologram")) {
+            return "Holographic Foil";
+        }
+        if (variant.contains("gold") || variant.contains("platinum") || variant.contains("silver") || variant.contains("ruby") || variant.contains("emerald") || variant.contains("diamond") || variant.contains("flawless")) {
+            return "Foil Stamp / Metallic Alloy Finish";
+        }
+        if (brand.contains("finest") || brand.contains("spectra") || brand.contains("prizm") || brand.contains("select") || brand.contains("optic")) {
+            return "Chromium Stock";
+        }
+        return "Premium Trading Card Stock";
     }
 
     private static boolean isHolyGrail(CardData c) {

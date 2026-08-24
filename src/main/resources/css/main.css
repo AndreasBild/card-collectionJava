@@ -4435,3 +4435,53 @@ img[loading="lazy"]:not([src=""]) {
     margin-top: 16px;
 }
 
+/* ==========================================================================
+   VIEW TRANSITIONS & CONTAINER QUERIES (MODERN CSS ENHANCEMENTS)
+   ========================================================================== */
+
+@view-transition {
+    navigation: auto;
+}
+
+::view-transition-old(root) {
+    animation: 0.2s cubic-bezier(0.4, 0, 0.2, 1) both vt-fade-out;
+}
+
+::view-transition-new(root) {
+    animation: 0.25s cubic-bezier(0.165, 0.84, 0.44, 1) both vt-fade-in;
+}
+
+@keyframes vt-fade-out {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0; transform: scale(0.98); }
+}
+
+@keyframes vt-fade-in {
+    from { opacity: 0; transform: scale(0.98); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Container Queries for responsive card grids */
+.collection-grid,
+.card-grid,
+.rainbow-grid,
+.binder-grid {
+    container-type: inline-size;
+}
+
+@container (max-width: 280px) {
+    .card-item .card-title,
+    .pocket-card .caption-title {
+        font-size: 0.8rem;
+    }
+    .card-badge {
+        padding: 2px 6px;
+        font-size: 0.65rem;
+    }
+    .spec-pill {
+        padding: 2px 6px;
+        font-size: 0.7rem;
+    }
+}
+
+

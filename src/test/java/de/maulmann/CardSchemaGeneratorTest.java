@@ -206,4 +206,51 @@ class CardSchemaGeneratorTest {
         String h1HtmlGraded = CardPageGenerator.generateH1Html(cardDataGraded);
         assertTrue(h1HtmlGraded.contains("<br><span class=\"sub-title grading-subtitle\">PSA-9</span>"));
     }
+
+    @Test
+    void testArtworkSurfaceAndOffersSchema() throws Exception {
+        CardJson cRefractor = CardJson.builder()
+                .player("Juwan Howard")
+                .season("1996-97")
+                .company("Topps")
+                .brand("Topps Chrome")
+                .variant("Refractor")
+                .cardNumber("55")
+                .gradingCompany("BGS")
+                .grade("9.5")
+                .build();
+
+        CardData cardData = new CardData(cRefractor, "chrome-refractor-55");
+        cardData.seasonFolder = "1996-97";
+        cardData.filename = "juwan-howard-topps-chrome-refractor-55.html";
+
+        String jsonLdHtml = CardSchemaGenerator.generateJsonLd(cardData, "Chromium Refractor card", "1996-97 Topps Chrome Refractor #55", "Juwan-Howard-Collection.html", "1996-97-chrome-55", "");
+
+        Document doc = Jsoup.parseBodyFragment(jsonLdHtml);
+        Element ldJsonScript = doc.selectFirst("script[type=application/ld+json]");
+        assertNotNull(ldJsonScript);
+
+        JsonNode root = objectMapper.readTree(ldJsonScript.html());
+        JsonNode graph = root.get("@graph");
+        assertNotNull(graph);
+
+        JsonNode artworkNode = null;
+        for (JsonNode node : graph) {
+            if ("VisualArtwork".equals(node.get("@type").asText())) {
+                artworkNode = node;
+            }
+        }
+        assertNotNull(artworkNode);
+        assertEquals("Chromium / Refractor Foil", artworkNode.get("artworkSurface").asText());
+        assertEquals("Trading Card", artworkNode.get("artMedium").asText());
+
+        // Check Product Offer
+        Element productScript = doc.selectFirst("script#product-schema-template");
+        assertNotNull(productScript);
+        JsonNode productJson = objectMapper.readTree(productScript.html());
+        JsonNode offerNode = productJson.get("offers");
+        assertNotNull(offerNode);
+        assertEquals("https://schema.org/InStock", offerNode.get("availability").asText());
+        assertEquals("https://schema.org/NewCondition", offerNode.get("itemCondition").asText());
+    }
 }
