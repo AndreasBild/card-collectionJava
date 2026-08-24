@@ -253,4 +253,50 @@ class CardSchemaGeneratorTest {
         assertEquals("https://schema.org/InStock", offerNode.get("availability").asText());
         assertEquals("https://schema.org/NewCondition", offerNode.get("itemCondition").asText());
     }
+
+    @Test
+    void testJuwanHowardEntityLinkingInSchema() throws Exception {
+        CardJson c = CardJson.builder()
+                .player("Juwan Howard")
+                .season("1994-95")
+                .brand("Finest")
+                .cardNumber("240")
+                .build();
+
+        CardData cardData = new CardData(c, "finest-240");
+        cardData.seasonFolder = "1994-95";
+        cardData.filename = "juwan-howard-finest-240.html";
+
+        String jsonLdHtml = CardSchemaGenerator.generateJsonLd(cardData, "Rookie Card", "1994-95 Finest #240", "Juwan-Howard-Collection.html", "1994-95-finest-240", "");
+
+        Document doc = Jsoup.parseBodyFragment(jsonLdHtml);
+        Element ldJsonScript = doc.selectFirst("script[type=application/ld+json]");
+        assertNotNull(ldJsonScript);
+
+        JsonNode root = objectMapper.readTree(ldJsonScript.html());
+        JsonNode graph = root.get("@graph");
+        assertNotNull(graph);
+
+        JsonNode artworkNode = null;
+        for (JsonNode node : graph) {
+            if ("VisualArtwork".equals(node.get("@type").asText())) {
+                artworkNode = node;
+            }
+        }
+        assertNotNull(artworkNode);
+        JsonNode aboutNode = artworkNode.get("about");
+        assertNotNull(aboutNode);
+        assertEquals("Person", aboutNode.get("@type").asText());
+        assertEquals("Juwan Howard", aboutNode.get("name").asText());
+        assertTrue(aboutNode.has("sameAs"));
+        JsonNode sameAsArray = aboutNode.get("sameAs");
+        assertTrue(sameAsArray.isArray());
+        List<String> links = new ArrayList<>();
+        sameAsArray.forEach(elem -> links.add(elem.asText()));
+        assertTrue(links.contains("https://www.wikidata.org/wiki/Q358748"));
+        assertTrue(links.contains("https://en.wikipedia.org/wiki/Juwan_Howard"));
+        assertTrue(links.contains("https://www.basketball-reference.com/players/h/howarju01.html"));
+        assertTrue(links.contains("https://www.nba.com/stats/player/434"));
+        assertEquals("Professional Basketball Player & Coach", aboutNode.get("jobTitle").asText());
+    }
 }

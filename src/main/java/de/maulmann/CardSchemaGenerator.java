@@ -264,7 +264,19 @@ public class CardSchemaGenerator {
         sb.append("      \"about\": {\n");
         sb.append("        \"@type\": \"Person\",\n");
         sb.append("        \"name\": \"").append(escapeJson(formatMulti(c.get("Player")))).append("\"");
-        if (isValid(playerPrimary)) {
+        if (isValid(playerPrimary) && playerPrimary.equalsIgnoreCase("Juwan Howard")) {
+            sb.append(",\n        \"sameAs\": [\n");
+            sb.append("          \"https://www.wikidata.org/wiki/Q358748\",\n");
+            sb.append("          \"https://en.wikipedia.org/wiki/Juwan_Howard\",\n");
+            sb.append("          \"https://www.basketball-reference.com/players/h/howarju01.html\",\n");
+            sb.append("          \"https://www.nba.com/stats/player/434\"\n");
+            sb.append("        ],\n");
+            sb.append("        \"jobTitle\": \"Professional Basketball Player & Coach\",\n");
+            sb.append("        \"memberOf\": {\n");
+            sb.append("          \"@type\": \"SportsOrganization\",\n");
+            sb.append("          \"name\": \"National Basketball Association\"\n");
+            sb.append("        }\n");
+        } else if (isValid(playerPrimary)) {
             String cleanPrimary = CardPageGenerator.cleanPlayerName(playerPrimary);
             sb.append(",\n        \"sameAs\": \"https://en.wikipedia.org/wiki/").append(escapeJson(cleanPrimary.replace(" ", "_"))).append("\"\n");
         } else {
