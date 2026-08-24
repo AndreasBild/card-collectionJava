@@ -48,6 +48,57 @@ window.addEventListener('pageshow', () => {
     updateCompareBar();
 });
 
+// --- 2. UNIVERSAL DOM HIT HIGHLIGHTING ENGINE ---
+function highlightElementMatches(el, terms) {
+    if (!el) return;
+    if (!terms || terms.length === 0) {
+        clearElementHighlights(el);
+        return;
+    }
+
+    const validTerms = terms.filter(t => t && t.trim().length > 0);
+    if (validTerms.length === 0) {
+        clearElementHighlights(el);
+        return;
+    }
+
+    const cells = el.querySelectorAll('td, .card-title, .pocket-card-title, .rainbow-title');
+    const targetNodes = (cells && cells.length > 0) ? Array.from(cells) : [el];
+
+    const escapedTerms = validTerms.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+    const regex = new RegExp('(' + escapedTerms.join('|') + ')', 'gi');
+
+    targetNodes.forEach(node => {
+        if (['INPUT', 'BUTTON', 'SELECT'].includes(node.tagName)) return;
+
+        if (!node.getAttribute('data-orig-html')) {
+            node.setAttribute('data-orig-html', node.innerHTML);
+        }
+
+        const orig = node.getAttribute('data-orig-html');
+        node.innerHTML = orig.replace(/(<[^>]+>)|([^<]+)/g, (match, tag, text) => {
+            if (tag) return tag;
+            return text.replace(regex, '<mark class="search-highlight">$1</mark>');
+        });
+    });
+}
+
+function clearElementHighlights(el) {
+    if (!el) return;
+    const highlighted = el.querySelectorAll('[data-orig-html]');
+    highlighted.forEach(node => {
+        node.innerHTML = node.getAttribute('data-orig-html');
+        node.removeAttribute('data-orig-html');
+    });
+    if (el.getAttribute && el.getAttribute('data-orig-html')) {
+        el.innerHTML = el.getAttribute('data-orig-html');
+        el.removeAttribute('data-orig-html');
+    }
+}
+
+window.highlightElementMatches = highlightElementMatches;
+window.clearElementHighlights = clearElementHighlights;
+
 // --- 2.5 REAL-TIME INSTANT TABLE SEARCH FILTER (DEBOUNCED) ---
 let filterDebounceTimer = null;
 
@@ -70,15 +121,25 @@ function filterTables(query) {
     const rows = document.querySelectorAll('table tbody tr, table tr');
     if (!rows || rows.length === 0) return;
 
+    const terms = query ? query.split(/\s+/).filter(t => t.length > 0) : [];
+
     rows.forEach(row => {
         // Skip table headers
         if (row.querySelector('th')) return;
         if (!query) {
             row.style.display = '';
+            clearElementHighlights(row);
             return;
         }
         const text = row.textContent.toLowerCase();
-        row.style.display = text.includes(query) ? '' : 'none';
+        const matches = terms.every(term => text.includes(term));
+        if (matches) {
+            row.style.display = '';
+            highlightElementMatches(row, terms);
+        } else {
+            row.style.display = 'none';
+            clearElementHighlights(row);
+        }
     });
 }
 
@@ -643,6 +704,16 @@ function initGlobalKeyboardShortcuts() {
             if (typeof window.closeModal === 'function') window.closeModal();
             const compareModal = document.getElementById('compareModal');
             if (compareModal && compareModal.style.display !== 'none') compareModal.style.display = 'none';
+        } else if ((e.key === '/' || ((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K'))) && !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) {
+            e.preventDefault();
+            const searchInput = document.getElementById('textSearch') || 
+                                document.getElementById('cardSearchInput') || 
+                                document.querySelector('.table-search-input, .rainbow-search-input, #binderSearchInput, input[type="search"], input[name="textSearch"]');
+            if (searchInput) {
+                searchInput.focus();
+                searchInput.select();
+                searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
         } else if (e.key === 'ArrowLeft') {
             const prevLink = document.querySelector('.nav-button-group a:first-child, a[title*="Prev"], a.prev-card-link');
             if (prevLink && prevLink.href) prevLink.click();
