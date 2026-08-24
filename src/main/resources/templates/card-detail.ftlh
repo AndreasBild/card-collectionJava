@@ -85,7 +85,7 @@ ${topNavHtml?no_esc}
     </div>
     <div class="card-images-container">
         <div class="card-image-wrapper">
-            <div class="flip-container" onclick="toggleCardFlip()">
+            <div class="flip-container" onclick="toggleCardFlip(event)">
                 <div class="flip-card-inner">
                     <div class="flip-face-front">
                         <figure>
@@ -125,10 +125,11 @@ ${topNavHtml?no_esc}
                 <div class="loupe-crosshair"></div>
             </div>
             <div class="card-action-bar">
+                <button type="button" class="modern-button card-action-btn" id="flipActionBtn" onclick="doCardFlip()"><span class="icon">🔄</span> Flip Card</button>
                 <button type="button" class="modern-button card-action-btn" id="loupeBtn" onclick="toggleLoupeMode()"><span class="icon">🔬</span> 2K Loupe</button>
                 <button type="button" class="modern-button card-action-btn" id="popoutBtn" onclick="toggle3DPopout()"><span class="icon">⚡</span> 3D Pop-Out</button>
             </div>
-            <p class="img-caption">&#x1F504; Tap Card to Flip</p>
+            <p class="img-caption" onclick="doCardFlip()" style="cursor: pointer;">&#x1F504; Tap Card to Flip</p>
         </div>
     </div>
     <div class="card-data">
@@ -433,7 +434,12 @@ ${topNavHtml?no_esc}
         }
     }
 
-    function toggleCardFlip() {
+    function toggleCardFlip(e) {
+        if (isLoupeActive) return; // Prevent flipping card while using loupe
+        doCardFlip();
+    }
+
+    function doCardFlip() {
         triggerHaptic(12);
         const flipContainer = document.querySelector('.flip-container');
         if (!flipContainer) return;
@@ -459,6 +465,23 @@ ${topNavHtml?no_esc}
         } else {
             flipContainer.classList.remove('is-portrait', 'is-landscape');
             flipContainer.classList.add('is-' + targetOri);
+        }
+
+        const flipBtn = document.getElementById('flipActionBtn');
+        if (flipBtn) {
+            flipBtn.innerHTML = isFlipped ? '<span class="icon">🔄</span> View Front' : '<span class="icon">🔄</span> View Back';
+        }
+
+        if (isLoupeActive) {
+            const loupe = document.getElementById('cardLoupe');
+            if (loupe) {
+                const activeImg = isFlipped ? highResBack : highResFront;
+                loupe.style.backgroundImage = "url('" + activeImg + "')";
+                const badge = loupe.querySelector('.loupe-badge');
+                if (badge) {
+                    badge.textContent = isFlipped ? '2X BACK LOUPE' : '2X FRONT LOUPE';
+                }
+            }
         }
     }
 
@@ -682,19 +705,22 @@ ${topNavHtml?no_esc}
         isLoupeActive = !isLoupeActive;
         const loupe = document.getElementById('cardLoupe');
         const loupeBtn = document.getElementById('loupeBtn');
+        const container = document.querySelector('.flip-container');
         if (!loupe || !loupeBtn) return;
 
         if (isLoupeActive) {
             resetFoilAndTilt();
             loupeBtn.classList.add('active-tool');
             loupeBtn.innerHTML = '<span class="icon">✕</span> Exit Loupe';
-            if (flipContainer) flipContainer.classList.add('loupe-mode-active');
-            showToast("🔬 2K Loupe: Drag on card to inspect • Tap Exit Loupe to close");
+            if (container) container.classList.add('loupe-mode-active');
+            const isFlipped = container && container.classList.contains("is-flipped");
+            const sideName = isFlipped ? "back" : "front";
+            showToast("🔬 2K Loupe: Drag on " + sideName + " scan • Tap Exit Loupe to close");
         } else {
             loupe.style.display = 'none';
             loupeBtn.classList.remove('active-tool');
             loupeBtn.innerHTML = '<span class="icon">🔬</span> 2K Loupe';
-            if (flipContainer) flipContainer.classList.remove('loupe-mode-active');
+            if (container) container.classList.remove('loupe-mode-active');
             showToast("Loupe closed");
         }
     }
@@ -706,12 +732,15 @@ ${topNavHtml?no_esc}
         }
         const loupe = document.getElementById('cardLoupe');
         const wrapper = document.querySelector('.card-image-wrapper');
-        const isFlipped = flipContainer && flipContainer.classList.contains("is-flipped");
-        const activeImgEl = isFlipped 
-            ? document.querySelector('.flip-face-back img') 
-            : document.querySelector('.flip-face-front img');
+        const container = document.querySelector('.flip-container');
+        if (!loupe || !wrapper || !container) return;
 
-        if (!loupe || !wrapper || !activeImgEl) return;
+        const isFlipped = container.classList.contains("is-flipped");
+        const activeImgEl = isFlipped 
+            ? container.querySelector('.flip-face-back img') 
+            : container.querySelector('.flip-face-front img');
+
+        if (!activeImgEl) return;
 
         const imgRect = activeImgEl.getBoundingClientRect();
         const wrapperRect = wrapper.getBoundingClientRect();
@@ -720,7 +749,7 @@ ${topNavHtml?no_esc}
         const clientY = e.touches && e.touches.length > 0 ? e.touches[0].clientY : e.clientY;
 
         // Hide loupe if finger/cursor is outside card
-        const margin = 30;
+        const margin = 25;
         if (clientX < imgRect.left - margin || clientX > imgRect.right + margin ||
             clientY < imgRect.top - margin || clientY > imgRect.bottom + margin) {
             loupe.style.display = 'none';
@@ -728,12 +757,17 @@ ${topNavHtml?no_esc}
         }
 
         loupe.style.display = 'block';
-        const x = clientX - imgRect.left;
-        const y = clientY - imgRect.top;
+        const x = Math.max(0, Math.min(imgRect.width, clientX - imgRect.left));
+        const y = Math.max(0, Math.min(imgRect.height, clientY - imgRect.top));
 
         const activeImg = isFlipped ? highResBack : highResFront;
         const zoom = 2.0;
         const loupeRadius = 75; // half of 150px lens diameter
+
+        const badge = loupe.querySelector('.loupe-badge');
+        if (badge) {
+            badge.textContent = isFlipped ? '2X BACK LOUPE' : '2X FRONT LOUPE';
+        }
 
         loupe.style.left = (clientX - wrapperRect.left) + 'px';
         loupe.style.top = (clientY - wrapperRect.top) + 'px';

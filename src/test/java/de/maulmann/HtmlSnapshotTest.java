@@ -113,5 +113,24 @@ class HtmlSnapshotTest {
         assertNotNull(ogWidth, "Card detail page must have og:image:width");
         Element ogHeight = doc.selectFirst("meta[property=og:image:height]");
         assertNotNull(ogHeight, "Card detail page must have og:image:height");
+
+        // Verify Loupe & Flip Interactive Elements
+        Element loupeEl = doc.selectFirst("#cardLoupe");
+        assertNotNull(loupeEl, "Card detail page must contain #cardLoupe element");
+        assertTrue(loupeEl.hasClass("card-grading-loupe"), "#cardLoupe must have class card-grading-loupe");
+
+        Element flipBtn = doc.selectFirst("#flipActionBtn");
+        assertNotNull(flipBtn, "Card detail page must contain #flipActionBtn");
+
+        Element loupeBtn = doc.selectFirst("#loupeBtn");
+        assertNotNull(loupeBtn, "Card detail page must contain #loupeBtn");
+
+        Element popoutBtn = doc.selectFirst("#popoutBtn");
+        assertNotNull(popoutBtn, "Card detail page must contain #popoutBtn");
+
+        Element flipContainer = doc.selectFirst(".flip-container");
+        assertNotNull(flipContainer, "Card detail page must contain .flip-container");
+        assertNotNull(flipContainer.selectFirst(".flip-face-front"), "Flip container must have front face");
+        assertNotNull(flipContainer.selectFirst(".flip-face-back"), "Flip container must have back face");
     }
 }
