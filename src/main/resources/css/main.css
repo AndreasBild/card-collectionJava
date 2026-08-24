@@ -2727,8 +2727,9 @@ figcaption {
     font-weight: 700;
 }
 
-.export-csv-btn {
-    margin-left: auto;
+.export-csv-btn,
+.export-json-btn,
+.print-wantlist-btn {
     background: rgba(31, 41, 61, 0.8);
     border: 1px solid var(--border-color);
     color: var(--text-secondary);
@@ -2743,10 +2744,36 @@ figcaption {
     transition: all 0.2s ease;
 }
 
-.export-csv-btn:hover {
+.export-csv-btn {
+    margin-left: auto;
+}
+
+.export-csv-btn:hover,
+.export-json-btn:hover,
+.print-wantlist-btn:hover {
     background: var(--bg-card-hover);
     color: var(--accent-gold);
     border-color: var(--accent-gold);
+}
+
+.wantlist-checkbox-wrap {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 8px;
+}
+
+.wantlist-checkbox {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: var(--accent-gold);
+}
+
+.wantlist-row-acquired {
+    opacity: 0.45;
+    text-decoration: line-through;
+    filter: grayscale(80%);
+    transition: opacity 0.2s ease, filter 0.2s ease;
 }
 
 .card-fav-btn {

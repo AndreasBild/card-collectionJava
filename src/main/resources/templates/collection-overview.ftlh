@@ -88,6 +88,10 @@ ${topNavHtml?no_esc}
             <button id="viewBinderBtn" class="view-btn" onclick="window.location.href='binder.html'">&#x1F4D2; 3D 9-Pocket Binder View</button>
             <button id="viewRainbowBtn" class="view-btn" onclick="window.location.href='rainbows.html'">&#x1F308; Parallel Rainbow Tracker</button>
             <button id="exportCsvBtn" class="export-csv-btn" onclick="exportCollectionCSV()" title="Export visible cards to CSV for Excel / Sheets">📥 Export CSV</button>
+            <button id="exportJsonBtn" class="export-json-btn" onclick="exportCollectionJSON()" title="Export visible cards to JSON format">📄 Export JSON</button>
+            <#if (pageTitle!"")?contains("Wantlist")>
+                <button id="printWantlistBtn" class="view-btn print-wantlist-btn" onclick="printWantlist()" title="Print checklist for card shows">🖨️ Print Checklist</button>
+            </#if>
         </div>
 
         <div class="quick-filter-chips" aria-label="Quick Filter Highlights">
