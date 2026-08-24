@@ -92,6 +92,39 @@ public record CardJson(
         };
     }
 
+    public CardJson enrichWith(MarketDataEntry entry) {
+        if (entry == null) return this;
+        Builder b = builder()
+                .id(this.id)
+                .player(this.player)
+                .season(this.season)
+                .team(this.team)
+                .company(this.company)
+                .brand(this.brand)
+                .theme(this.theme)
+                .variant(this.variant)
+                .cardNumber(this.cardNumber)
+                .serialNumber(this.serialNumber)
+                .printRun(this.printRun)
+                .gradingCompany(this.gradingCompany != null ? this.gradingCompany : (entry.popReport() != null ? entry.popReport().gradingCompany() : null))
+                .grade(this.grade != null ? this.grade : (entry.popReport() != null ? entry.popReport().grade() : null))
+                .certNumber(this.certNumber != null ? this.certNumber : entry.certNumber())
+                .collection(this.collection)
+                .notes(this.notes)
+                .isAutograph(this.isAutograph)
+                .isPatch(this.isPatch)
+                .isRookie(this.isRookie)
+                .estimatedValue(this.estimatedValue != null ? this.estimatedValue : entry.estimatedValue())
+                .lastSoldPrice(this.lastSoldPrice != null ? this.lastSoldPrice : entry.lastSoldPrice())
+                .lastSoldDate(this.lastSoldDate != null ? this.lastSoldDate : entry.lastSoldDate())
+                .purchasePrice(this.purchasePrice != null ? this.purchasePrice : entry.purchasePrice())
+                .priceHistory(this.priceHistory != null && !this.priceHistory.isEmpty() ? this.priceHistory : entry.priceHistory())
+                .popReport(this.popReport != null ? this.popReport : entry.popReport())
+                .popTotal(this.popTotal != null ? this.popTotal : (entry.popReport() != null ? entry.popReport().totalGraded() : null))
+                .popHigher(this.popHigher != null ? this.popHigher : (entry.popReport() != null ? entry.popReport().popHigher() : null));
+        return b.build();
+    }
+
     public static Builder builder() {
         return new Builder();
     }

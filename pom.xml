@@ -168,6 +168,15 @@
                             <mainClass>de.maulmann.SiteBuilderPipeline</mainClass>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>enrich-market-data</id>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>de.maulmann.CardMarketEnricher</mainClass>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>

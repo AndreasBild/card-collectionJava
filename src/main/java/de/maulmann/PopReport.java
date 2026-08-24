@@ -8,11 +8,21 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record PopReport(
+        @JsonProperty("gradingCompany") String gradingCompany,
+        @JsonProperty("grade") String grade,
         @JsonProperty("totalGraded") Integer totalGraded,
         @JsonProperty("popHigher") Integer popHigher,
         @JsonProperty("gradePop") Integer gradePop,
-        @JsonProperty("certNumber") String certNumber
+        @JsonProperty("certNumber") String certNumber,
+        @JsonProperty("registryUrl") String registryUrl
 ) {
+    public PopReport(Integer totalGraded, Integer popHigher, Integer gradePop, String certNumber) {
+        this(null, null, totalGraded, popHigher, gradePop, certNumber, null);
+    }
+
+    public PopReport(String gradingCompany, String grade, Integer totalGraded, Integer popHigher, String certNumber, String registryUrl) {
+        this(gradingCompany, grade, totalGraded, popHigher, null, certNumber, registryUrl);
+    }
 
     /**
      * Resolves the official third-party grader verification URL.

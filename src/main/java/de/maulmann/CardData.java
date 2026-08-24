@@ -30,6 +30,7 @@ public class CardData {
     public final Double purchasePrice;
     public final Integer popTotal;
     public final Integer popHigher;
+    public final String id;
     public final String certNumber;
     public String stableId;
     public String filenameBase;
@@ -37,8 +38,13 @@ public class CardData {
     public String seasonFolder;
     public String fullRelativePath;
 
+    public CardData(CardJson c) {
+        this(c, null);
+    }
+
     public CardData(CardJson c, String uniqueId) {
         this.sourceJson = c;
+        this.id = c.id();
         this.attributes = new HashMap<>();
         if (c.player() != null) {
             this.attributes.put("Player", c.player());
