@@ -16,7 +16,12 @@ ${topNavHtml?no_esc}
     <section class="analytics-dashboard context-card full-width">
         <div class="dashboard-header">
             <h2>&#x1F4C8; Vault Analytics & Collection Metrics</h2>
-            <span class="vault-count-badge">Total Cards: <strong>${(stats.totalCards)!"1,000+"}</strong></span>
+            <div class="dashboard-header-badges">
+                <#if (stats.formattedEstimatedValue)?? && (stats.totalEstimatedValue > 0)>
+                    <span class="vault-valuation-badge" title="Estimated Total Collection Market Valuation">&#x1F4B0; Est. Portfolio: <strong>${stats.formattedEstimatedValue}</strong></span>
+                </#if>
+                <span class="vault-count-badge">Total Cards: <strong>${(stats.totalCards)!"1,000+"}</strong></span>
+            </div>
         </div>
         <div class="metrics-grid">
             <div class="metric-card">

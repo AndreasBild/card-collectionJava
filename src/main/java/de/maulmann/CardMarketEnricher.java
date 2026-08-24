@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Offline CLI Tool to query and enrich trading cards with external market and PSA pop data.
+ * Offline CLI Tool to query and enrich all trading cards with market pricing and PSA pop data.
  * Executes once per card and updates content/json/market-data-cache.json.
  */
 public class CardMarketEnricher {
@@ -34,24 +34,27 @@ public class CardMarketEnricher {
 
     public static void main(String[] args) {
         logger.info("==================================================");
-        logger.info("🛠️ STARTING CARD MARKET & CENSUS ENRICHER");
+        logger.info("🛠️ STARTING UNIVERSAL CARD MARKET & CENSUS ENRICHER");
         logger.info("==================================================");
 
         Path cardsPath = Paths.get("content/json/cards.json");
         List<CardData> cards = CardDataLoader.loadCards(cardsPath);
         logger.info("Loaded {} cards from {}", cards.size(), cardsPath);
 
+        boolean forceRefresh = args != null && args.length > 0 && "--force".equalsIgnoreCase(args[0]);
+
         CardMarketEnricher enricher = new CardMarketEnricher();
-        EnrichmentReport report = enricher.enrichCards(cards, false);
+        EnrichmentReport report = enricher.enrichCards(cards, forceRefresh);
 
         logger.info("==================================================");
-        logger.info("📊 ENRICHMENT REPORT");
+        logger.info("📊 UNIVERSAL ENRICHMENT REPORT");
         logger.info("   • Total Cards Inspected: {}", report.totalInspected());
         logger.info("   • Graded Certs Found:    {}", report.certsFound());
         logger.info("   • Already Cached (Skip): {}", report.skippedCached());
-        logger.info("   • Successfully Queried:  {}", report.queriedSuccess());
-        logger.info("   • Failed / Not Found:    {}", report.queriedFailed());
-        logger.info("   • Final Cache Size:      {}", enricher.cache.size());
+        logger.info("   • PSA Queried Success:   {}", report.queriedSuccess());
+        logger.info("   • PSA Fallback/Failed:   {}", report.queriedFailed());
+        logger.info("   • Raw Cards Valued:      {}", report.rawEstimated());
+        logger.info("   • Final Total Cache Size:{}", enricher.cache.size());
         logger.info("==================================================");
     }
 
@@ -61,33 +64,53 @@ public class CardMarketEnricher {
         int skippedCached = 0;
         int queriedSuccess = 0;
         int queriedFailed = 0;
+        int rawEstimated = 0;
 
         for (CardData c : cards) {
             totalInspected++;
             String certNum = c.certNumber;
-            String cardId = c.id;
+            String cardId = c.id != null ? c.id : (c.sourceJson != null ? c.sourceJson.id() : null);
+            if (cardId == null || cardId.isBlank()) continue;
+
+            if (!forceRefresh && cache.contains(cardId)) {
+                skippedCached++;
+                continue;
+            }
 
             if (certNum != null && !certNum.isBlank()) {
                 certsFound++;
                 String grader = c.get("Grading Co.");
 
                 if (grader != null && grader.toUpperCase().contains("PSA")) {
-                    if (!forceRefresh && cache.containsCert(certNum)) {
-                        skippedCached++;
-                        continue;
-                    }
-
                     logger.info("Querying PSA cert #{} for card: {} (ID: {})", certNum, c.filenameBase, cardId);
                     Optional<MarketDataEntry> entryOpt = psaScraper.fetchPsaData(certNum);
+                    MarketDataEntry estimated = MarketPriceFetcher.estimateMarketData(c);
 
                     if (entryOpt.isPresent()) {
                         MarketDataEntry entry = entryOpt.get();
-                        cache.put(cardId != null ? cardId : certNum, entry);
+
+                        // Merge PSA census with estimated pricing
+                        MarketDataEntry combined = MarketDataEntry.builder()
+                                .certNumber(certNum)
+                                .lastQueried(entry.lastQueried())
+                                .popReport(entry.popReport())
+                                .estimatedValue(estimated.estimatedValue())
+                                .lastSoldPrice(estimated.lastSoldPrice())
+                                .lastSoldDate(estimated.lastSoldDate())
+                                .purchasePrice(estimated.purchasePrice())
+                                .priceHistory(estimated.priceHistory())
+                                .metadata(entry.metadata())
+                                .build();
+
+                        cache.put(cardId, combined);
                         queriedSuccess++;
-                        logger.info("   -> Success: Pop Total={}, Pop Higher={}",
+                        logger.info("   -> Success: Pop Total={}, Pop Higher={}, FMV=${}",
                                 entry.popReport() != null ? entry.popReport().totalGraded() : "N/A",
-                                entry.popReport() != null ? entry.popReport().popHigher() : "N/A");
+                                entry.popReport() != null ? entry.popReport().popHigher() : "N/A",
+                                estimated.estimatedValue());
                     } else {
+                        // Fallback to estimation if PSA cert lookup is unreachable
+                        cache.put(cardId, estimated);
                         queriedFailed++;
                     }
 
@@ -100,7 +123,15 @@ public class CardMarketEnricher {
                             break;
                         }
                     }
+                    continue;
                 }
+            }
+
+            // Universal estimation for raw, un-certified or other cards
+            MarketDataEntry estimated = MarketPriceFetcher.estimateMarketData(c);
+            if (estimated != null) {
+                cache.put(cardId, estimated);
+                rawEstimated++;
             }
         }
 
@@ -110,7 +141,7 @@ public class CardMarketEnricher {
             logger.error("Failed to save market data cache: {}", e.getMessage(), e);
         }
 
-        return new EnrichmentReport(totalInspected, certsFound, skippedCached, queriedSuccess, queriedFailed);
+        return new EnrichmentReport(totalInspected, certsFound, skippedCached, queriedSuccess, queriedFailed, rawEstimated);
     }
 
     public record EnrichmentReport(
@@ -118,6 +149,7 @@ public class CardMarketEnricher {
             int certsFound,
             int skippedCached,
             int queriedSuccess,
-            int queriedFailed
+            int queriedFailed,
+            int rawEstimated
     ) {}
 }
