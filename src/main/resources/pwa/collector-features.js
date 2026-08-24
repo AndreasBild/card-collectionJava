@@ -587,13 +587,16 @@ window.toggleCompareScansSide = toggleCompareScansSide;
 window.toggleHighlightDifferences = toggleHighlightDifferences;
 window.copyCompareShareLink = copyCompareShareLink;
 
-// --- 5. REALISTIC 3D HOLOGRAPHIC CARD TILT EFFECT ---
+// --- 5. REALISTIC 3D HOLOGRAPHIC CARD TILT & REFRACTOR SHINE EFFECT ---
 function init3DCardTilt() {
     const cardContainers = document.querySelectorAll('.card-image-wrapper, .flip-container');
     if (!cardContainers || cardContainers.length === 0) return;
 
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
     cardContainers.forEach(container => {
-        const targetCard = container.querySelector('.card-3d-interactive') || container.querySelector('.card-image');
+        const targetCard = container.querySelector('.card-3d-interactive') || container.querySelector('.card-image') || container.querySelector('.flip-card-inner');
         if (!targetCard) return;
 
         let tiltFrame = null;
@@ -606,16 +609,32 @@ function init3DCardTilt() {
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
 
-                const rotateX = ((y - centerY) / centerY) * -8;
-                const rotateY = ((x - centerX) / centerX) * 8;
+                const percentX = Math.max(0, Math.min(100, (x / rect.width) * 100));
+                const percentY = Math.max(0, Math.min(100, (y / rect.height) * 100));
 
-                targetCard.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.02, 1.02, 1.02)`;
+                const deltaX = (x - centerX) / centerX;
+                const deltaY = (y - centerY) / centerY;
+                const rotateX = deltaY * -10;
+                const rotateY = deltaX * 10;
+                const distFromCenter = Math.min(1, Math.hypot(deltaX, deltaY));
+                const angleDeg = (Math.atan2(deltaY, deltaX) * (180 / Math.PI) + 360) % 360;
+
+                container.style.setProperty('--pointer-x', `${percentX.toFixed(1)}%`);
+                container.style.setProperty('--pointer-y', `${percentY.toFixed(1)}%`);
+                container.style.setProperty('--pointer-from-center', `${distFromCenter.toFixed(2)}`);
+                container.style.setProperty('--shine-angle', `${angleDeg.toFixed(1)}deg`);
+
+                targetCard.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.025, 1.025, 1.025)`;
             });
         });
 
         container.addEventListener('mouseleave', () => {
             if (tiltFrame) cancelAnimationFrame(tiltFrame);
             targetCard.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+            container.style.setProperty('--pointer-x', '50%');
+            container.style.setProperty('--pointer-y', '50%');
+            container.style.setProperty('--pointer-from-center', '0');
+            container.style.setProperty('--shine-angle', '135deg');
         });
     });
 }

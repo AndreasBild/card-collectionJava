@@ -5185,23 +5185,33 @@ img[loading="lazy"]:not([src=""]) {
 /* --- REFRACTOR HOLOGRAPHIC SHIMMER FX --- */
 .refractor-shimmer-active .flip-face-front .foil-glare-effect,
 .refractor-shimmer-active .flip-face-back .foil-glare-effect {
-    opacity: 0.4;
-    background: linear-gradient(
-        125deg,
-        rgba(255, 0, 128, 0.15) 0%,
-        rgba(255, 235, 59, 0.18) 25%,
-        rgba(0, 229, 255, 0.22) 50%,
-        rgba(118, 255, 3, 0.18) 75%,
-        rgba(255, 0, 128, 0.15) 100%
+    opacity: 0.35;
+    background: radial-gradient(
+        circle at var(--pointer-x, 50%) var(--pointer-y, 50%),
+        rgba(255, 255, 255, 0.45) 0%,
+        rgba(255, 0, 128, 0.28) 22%,
+        rgba(0, 229, 255, 0.32) 45%,
+        rgba(255, 235, 59, 0.28) 65%,
+        rgba(118, 255, 3, 0.22) 85%,
+        transparent 100%
+    ),
+    linear-gradient(
+        var(--shine-angle, 125deg),
+        rgba(255, 0, 128, 0.12) 0%,
+        rgba(255, 235, 59, 0.15) 25%,
+        rgba(0, 229, 255, 0.18) 50%,
+        rgba(118, 255, 3, 0.15) 75%,
+        rgba(255, 0, 128, 0.12) 100%
     );
     mix-blend-mode: color-dodge;
-    transition: opacity 0.35s ease;
+    pointer-events: none;
+    transition: opacity 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .refractor-shimmer-active:hover .flip-face-front .foil-glare-effect,
 .refractor-shimmer-active:hover .flip-face-back .foil-glare-effect {
-    opacity: 0.85;
-    filter: saturate(1.4) brightness(1.1);
+    opacity: 0.92;
+    filter: saturate(1.65) brightness(1.25);
 }
 
 /* --- DASHBOARD HEADER & VALUATION BADGES --- */
