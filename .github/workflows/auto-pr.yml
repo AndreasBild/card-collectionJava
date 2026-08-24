@@ -7,6 +7,8 @@ on:
       - 'feature/*'
       - 'fix/**'
       - 'fix/*'
+      - 'chore/**'
+      - 'chore/*'
 
 permissions:
   contents: read
@@ -41,6 +43,11 @@ jobs:
               --base main \
               --head "$BRANCH_NAME" \
               --title "$COMMIT_MSG" \
-              --body "Automated Pull Request for \`$BRANCH_NAME\`." \
+              --template .github/pull_request_template.md \
+              || gh pr create \
+                  --base main \
+                  --head "$BRANCH_NAME" \
+                  --title "$COMMIT_MSG" \
+                  --body "Automated Pull Request for \`$BRANCH_NAME\`." \
               || echo "PR creation handled."
           fi
