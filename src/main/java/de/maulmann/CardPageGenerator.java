@@ -458,6 +458,9 @@ public class CardPageGenerator {
         }
         data.put("hasPricing", c.estimatedValue != null || c.lastSoldPrice != null || !c.priceHistory.isEmpty());
 
+        data.put("point130Url", MarketPriceFetcher.build130PointUrl(c));
+        data.put("ebaySoldUrl", MarketPriceFetcher.buildEbaySoldUrl(c));
+
         data.put("certNumber", c.certNumber != null ? c.certNumber : "");
         data.put("verificationUrl", c.getVerificationUrl() != null ? c.getVerificationUrl() : "");
         data.put("popTotal", c.popTotal != null ? String.valueOf(c.popTotal) : "");

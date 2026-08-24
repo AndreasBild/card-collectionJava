@@ -41,7 +41,8 @@ public class CardMarketEnricher {
         List<CardData> cards = CardDataLoader.loadCards(cardsPath);
         logger.info("Loaded {} cards from {}", cards.size(), cardsPath);
 
-        boolean forceRefresh = args != null && args.length > 0 && "--force".equalsIgnoreCase(args[0]);
+        boolean forceRefresh = args != null && args.length > 0 &&
+                ("--force".equalsIgnoreCase(args[0]) || "--refresh".equalsIgnoreCase(args[0]));
 
         CardMarketEnricher enricher = new CardMarketEnricher();
         EnrichmentReport report = enricher.enrichCards(cards, forceRefresh);
@@ -72,7 +73,17 @@ public class CardMarketEnricher {
             String cardId = c.id != null ? c.id : (c.sourceJson != null ? c.sourceJson.id() : null);
             if (cardId == null || cardId.isBlank()) continue;
 
-            if (!forceRefresh && cache.contains(cardId)) {
+            Optional<MarketDataEntry> existingOpt = cache.get(cardId);
+            if (existingOpt.isPresent()) {
+                MarketDataEntry existing = existingOpt.get();
+                if (existing.metadata() != null && "true".equalsIgnoreCase(existing.metadata().get("manual"))) {
+                    // Manual price override protected
+                    skippedCached++;
+                    continue;
+                }
+            }
+
+            if (!forceRefresh && existingOpt.isPresent()) {
                 skippedCached++;
                 continue;
             }

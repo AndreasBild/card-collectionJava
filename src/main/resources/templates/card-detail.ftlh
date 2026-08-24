@@ -303,6 +303,18 @@ ${topNavHtml?no_esc}
                             </table>
                         </div>
                     </#if>
+                    <div class="live-comps-actions">
+                        <#if point130Url?? && point130Url != "">
+                            <a href="${point130Url}" target="_blank" rel="noopener noreferrer" class="comp-lookup-btn point130-btn" title="Search cleared eBay Best Offer sales on 130point.com">
+                                🔍 130point Comps &nearr;
+                            </a>
+                        </#if>
+                        <#if ebaySoldUrl?? && ebaySoldUrl != "">
+                            <a href="${ebaySoldUrl}" target="_blank" rel="noopener noreferrer" class="comp-lookup-btn ebay-sold-btn" title="Search completed & sold auctions on eBay">
+                                🛒 eBay Sold Items &nearr;
+                            </a>
+                        </#if>
+                    </div>
                 </div>
             </#if>
 
