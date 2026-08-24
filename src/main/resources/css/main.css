@@ -4495,4 +4495,384 @@ img[loading="lazy"]:not([src=""]) {
     }
 }
 
+/* ==========================================================================
+   COLLECTOR SUITE: HIGHLIGHTS, MARKET VALUE & POPULATION CENSUS
+   ========================================================================== */
+
+/* Collector Highlight Badges */
+.collector-badges-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 12px 0 6px;
+    align-items: center;
+}
+
+.collector-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 4px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.02em;
+    backdrop-filter: blur(8px);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.collector-pill:hover {
+    transform: translateY(-1px);
+}
+
+.pill-jersey {
+    background: linear-gradient(135deg, rgba(234, 179, 8, 0.2), rgba(212, 175, 55, 0.08));
+    border: 1px solid rgba(234, 179, 8, 0.5);
+    color: #fde047;
+    box-shadow: 0 0 10px rgba(234, 179, 8, 0.2);
+}
+
+.pill-one-of-one {
+    background: linear-gradient(135deg, rgba(217, 70, 239, 0.2), rgba(168, 85, 247, 0.1));
+    border: 1px solid rgba(217, 70, 239, 0.5);
+    color: #f5d0fe;
+    box-shadow: 0 0 12px rgba(217, 70, 239, 0.3);
+}
+
+.pill-bookend {
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(14, 165, 233, 0.08));
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    color: #7dd3fc;
+}
+
+.pill-refractor {
+    background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(99, 102, 241, 0.15), rgba(16, 185, 129, 0.15));
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: #ffffff;
+    box-shadow: 0 0 14px rgba(99, 102, 241, 0.25);
+}
+
+.pill-grading {
+    background: rgba(34, 197, 94, 0.15);
+    border: 1px solid rgba(34, 197, 94, 0.4);
+    color: #86efac;
+}
+
+.specs-cert-link {
+    color: var(--accent-gold);
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.specs-cert-link:hover {
+    text-decoration: underline;
+}
+
+.specs-value-highlight {
+    color: #34d399;
+    font-size: 1.05rem;
+}
+
+/* Collector Insights Grid Layout */
+.collector-insights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    margin: 32px 0 24px;
+}
+
+/* Market Value Card */
+.market-value-card {
+    background: linear-gradient(145deg, rgba(22, 27, 34, 0.95), rgba(13, 17, 23, 0.95));
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.market-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.market-title,
+.pop-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.market-subtitle,
+.pop-subtitle {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin: 4px 0 0;
+}
+
+.growth-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+}
+
+.growth-positive {
+    background: rgba(16, 185, 129, 0.2);
+    border: 1px solid rgba(16, 185, 129, 0.45);
+    color: #34d399;
+}
+
+.growth-negative {
+    background: rgba(239, 68, 68, 0.2);
+    border: 1px solid rgba(239, 68, 68, 0.45);
+    color: #f87171;
+}
+
+.market-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.market-metric {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.metric-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.metric-value {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.metric-primary {
+    color: #34d399;
+    font-size: 1.3rem;
+}
+
+.metric-sub {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--text-muted);
+}
+
+/* SVG Sparkline Container */
+.sparkline-wrapper {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
+    padding: 12px 14px 8px;
+    margin-bottom: 18px;
+}
+
+.sparkline-container {
+    width: 100%;
+    height: 70px;
+}
+
+.price-sparkline-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.sparkline-axis {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 6px;
+    font-family: var(--font-mono), monospace;
+}
+
+/* Recent Comps Table */
+.recent-comps-table-wrapper {
+    overflow-x: auto;
+}
+
+.recent-comps-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+}
+
+.recent-comps-table th {
+    text-align: left;
+    padding: 8px 10px;
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.recent-comps-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    color: var(--text-primary);
+}
+
+.comp-grade-pill {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.comp-price {
+    font-weight: 800;
+    color: #34d399;
+}
+
+.comp-source {
+    color: var(--text-muted);
+}
+
+/* Pop Report Census Card */
+.pop-report-card {
+    background: linear-gradient(145deg, rgba(22, 27, 34, 0.95), rgba(15, 23, 42, 0.95));
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.pop-grade-badge {
+    background: rgba(59, 130, 246, 0.18);
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    color: #93c5fd;
+    font-weight: 800;
+    font-size: 0.85rem;
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+}
+
+.pop-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 12px;
+    margin: 16px 0 20px;
+}
+
+.pop-metric {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.pop-metric-num {
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: var(--text-primary);
+}
+
+.pop-top-grade {
+    color: #fbbf24;
+    text-shadow: 0 0 8px rgba(251, 191, 36, 0.4);
+}
+
+.cert-num {
+    font-family: var(--font-mono), monospace;
+    font-size: 1.15rem;
+    color: var(--accent-gold);
+}
+
+.pop-metric-label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-weight: 600;
+}
+
+.pop-verify-action {
+    margin-top: auto;
+}
+
+.verify-btn {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(37, 99, 235, 0.35)) !important;
+    border: 1px solid rgba(96, 165, 250, 0.5) !important;
+    color: #bfdbfe !important;
+    font-weight: 700 !important;
+    padding: 10px 16px !important;
+    border-radius: var(--radius-md) !important;
+    text-decoration: none;
+    transition: all 0.25s ease !important;
+}
+
+.verify-btn:hover {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(37, 99, 235, 0.55)) !important;
+    border-color: #60a5fa !important;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.35);
+}
+
+/* --- REFRACTOR HOLOGRAPHIC SHIMMER FX --- */
+.refractor-shimmer-active .flip-face-front .foil-glare-effect,
+.refractor-shimmer-active .flip-face-back .foil-glare-effect {
+    opacity: 0.4;
+    background: linear-gradient(
+        125deg,
+        rgba(255, 0, 128, 0.15) 0%,
+        rgba(255, 235, 59, 0.18) 25%,
+        rgba(0, 229, 255, 0.22) 50%,
+        rgba(118, 255, 3, 0.18) 75%,
+        rgba(255, 0, 128, 0.15) 100%
+    );
+    mix-blend-mode: color-dodge;
+    transition: opacity 0.35s ease;
+}
+
+.refractor-shimmer-active:hover .flip-face-front .foil-glare-effect,
+.refractor-shimmer-active:hover .flip-face-back .foil-glare-effect {
+    opacity: 0.85;
+    filter: saturate(1.4) brightness(1.1);
+}
+
+
 

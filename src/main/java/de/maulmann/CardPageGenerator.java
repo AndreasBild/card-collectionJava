@@ -75,14 +75,16 @@ public class CardPageGenerator {
      * Returns a cached CardData for the given CardJson, avoiding redundant attribute mapping and MD5 hashing.
      */
     public static de.maulmann.CardData computeCardData(CardJson c) {
-        String fingerprint = (c.player() != null ? c.player() : "") + "|" +
+        String fingerprint = (c.id() != null ? c.id() : "") + "|" +
+                (c.player() != null ? c.player() : "") + "|" +
                 (c.season() != null ? c.season() : "") + "|" +
                 (c.brand() != null ? c.brand() : "") + "|" +
                 (c.variant() != null ? c.variant() : "") + "|" +
                 (c.cardNumber() != null ? c.cardNumber() : "") + "|" +
                 (c.serialNumber() != null ? c.serialNumber() : "") + "|" +
                 (c.gradingCompany() != null ? c.gradingCompany() : "") + "|" +
-                (c.grade() != null ? c.grade() : "");
+                (c.grade() != null ? c.grade() : "") + "|" +
+                (c.certNumber() != null ? c.certNumber() : "");
         return CARD_DATA_CACHE.computeIfAbsent(fingerprint, k -> new CardData(c, null));
     }
 
@@ -429,6 +431,37 @@ public class CardPageGenerator {
         data.put("bbCode", bbCode);
         data.put("markdownCode", markdownCode);
         data.put("cardStableId", c.stableId);
+
+        // Collector & Pricing Suite data
+        String sparklineSvg = SvgSparklineGenerator.generateSparkline(c.priceHistory, c.stableId);
+        data.put("sparklineSvg", sparklineSvg);
+        data.put("hasPriceHistory", !c.priceHistory.isEmpty());
+        data.put("priceHistory", c.priceHistory);
+        data.put("estimatedValueFormatted", CardPricingService.formatUsd(c.estimatedValue));
+        data.put("lastSoldPriceFormatted", CardPricingService.formatUsd(c.lastSoldPrice));
+        data.put("purchasePriceFormatted", CardPricingService.formatUsd(c.purchasePrice));
+        data.put("lastSoldDate", c.lastSoldDate != null ? c.lastSoldDate : "");
+
+        Double growthPct = CardPricingService.calculateGrowthPct(c);
+        if (growthPct != null) {
+            data.put("growthPctFormatted", String.format(java.util.Locale.US, "%s%.1f%%", growthPct >= 0 ? "+" : "", growthPct));
+            data.put("isGrowthPositive", growthPct >= 0);
+        } else {
+            data.put("growthPctFormatted", "");
+            data.put("isGrowthPositive", true);
+        }
+        data.put("hasPricing", c.estimatedValue != null || c.lastSoldPrice != null || !c.priceHistory.isEmpty());
+
+        data.put("certNumber", c.certNumber != null ? c.certNumber : "");
+        data.put("verificationUrl", c.getVerificationUrl() != null ? c.getVerificationUrl() : "");
+        data.put("popTotal", c.popTotal != null ? String.valueOf(c.popTotal) : "");
+        data.put("popHigher", c.popHigher != null ? String.valueOf(c.popHigher) : "");
+        data.put("hasPopReport", c.popTotal != null || c.popHigher != null || (c.certNumber != null && !c.certNumber.isBlank()));
+
+        data.put("isJerseyNumber", c.isJerseyNumberMatch());
+        data.put("isOneOfOne", c.isOneOfOne());
+        data.put("isBookendSerial", c.isBookendSerial());
+        data.put("isRefractorOrFoil", c.isRefractorOrFoil());
 
         try {
             Template template = fmConfig.getTemplate("card-detail.ftlh");

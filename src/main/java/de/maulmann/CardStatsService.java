@@ -95,6 +95,9 @@ public class CardStatsService {
         int countRookies = 0;
         int countGradedTotal = 0;
         int countGemMint = 0;
+        int countJerseyNumbers = 0;
+        double totalEstimatedVal = 0.0;
+        int countPriced = 0;
 
         for (CardJson c : jsonCards) {
             Integer pr = c.printRun();
@@ -116,6 +119,19 @@ public class CardStatsService {
             if (c.isAutograph()) countAutographs++;
             if (c.isPatch()) countPatches++;
             if (c.isRookie()) countRookies++;
+
+            if (!sn.isEmpty()) {
+                String clean = sn.replace("#", "").replaceAll("^0+", "");
+                if (clean.equals("5")) countJerseyNumbers++;
+            }
+
+            if (c.estimatedValue() != null && c.estimatedValue() > 0.0) {
+                totalEstimatedVal += c.estimatedValue();
+                countPriced++;
+            } else if (c.lastSoldPrice() != null && c.lastSoldPrice() > 0.0) {
+                totalEstimatedVal += c.lastSoldPrice();
+                countPriced++;
+            }
 
             String gCo = c.gradingCompany();
             String g = c.grade();
@@ -156,6 +172,11 @@ public class CardStatsService {
 
         stats.put("countGemMint", countGemMint);
         stats.put("pctGemMint", countGradedTotal > 0 ? Math.max(5, (int) Math.round((countGemMint * 100.0) / countGradedTotal)) : 0);
+
+        stats.put("countJerseyNumbers", countJerseyNumbers);
+        stats.put("countPriced", countPriced);
+        stats.put("totalEstimatedValue", totalEstimatedVal);
+        stats.put("formattedEstimatedValue", String.format(Locale.US, "$%,.0f", totalEstimatedVal));
 
         return stats;
     }

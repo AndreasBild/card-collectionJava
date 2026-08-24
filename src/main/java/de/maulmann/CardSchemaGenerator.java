@@ -354,11 +354,20 @@ public class CardSchemaGenerator {
             isGemMint = grade.contains("10") || grade.contains("9.5") || grade.equalsIgnoreCase("Gem Mint") || grade.equalsIgnoreCase("Pristine");
         }
         String conditionUri = isGemMint ? "https://schema.org/NewCondition" : "https://schema.org/UsedCondition";
+        String offerPrice = "0";
+        String currency = "EUR";
+        if (c.estimatedValue != null && c.estimatedValue > 0.0) {
+            offerPrice = String.format(java.util.Locale.US, "%.2f", c.estimatedValue);
+            currency = "USD";
+        } else if (c.lastSoldPrice != null && c.lastSoldPrice > 0.0) {
+            offerPrice = String.format(java.util.Locale.US, "%.2f", c.lastSoldPrice);
+            currency = "USD";
+        }
 
         sb.append(",\n  \"offers\": {\n" +
                   "    \"@type\": \"Offer\",\n" +
-                  "    \"price\": \"0\",\n" +
-                  "    \"priceCurrency\": \"EUR\",\n" +
+                  "    \"price\": \"" + offerPrice + "\",\n" +
+                  "    \"priceCurrency\": \"" + currency + "\",\n" +
                   "    \"availability\": \"https://schema.org/InStock\",\n" +
                   "    \"itemCondition\": \"" + conditionUri + "\",\n" +
                   "    \"seller\": { \"@type\": \"Person\", \"name\": \"Andreas Bild\" }\n" +
@@ -375,6 +384,9 @@ public class CardSchemaGenerator {
         }
         if (c.has("Grading Co.")) {
             additionalProperties.add("{\"@type\": \"PropertyValue\", \"name\": \"Grading Company\", \"value\": \"" + escapeJson(c.get("Grading Co.")) + "\"}");
+        }
+        if (c.certNumber != null && !c.certNumber.isBlank()) {
+            additionalProperties.add("{\"@type\": \"PropertyValue\", \"name\": \"Certification Number\", \"value\": \"" + escapeJson(c.certNumber) + "\"}");
         }
         if (c.has("Rookie") && c.get("Rookie").equalsIgnoreCase("Yes")) {
             additionalProperties.add("{\"@type\": \"PropertyValue\", \"name\": \"Rookie Card\", \"value\": \"Yes\"}");
