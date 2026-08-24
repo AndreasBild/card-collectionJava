@@ -1,5 +1,6 @@
 package de.maulmann;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
@@ -17,12 +18,12 @@ public record CardJson(
         String brand,
         String theme,
         String variant,
-        @JsonProperty("cardNumber") String cardNumber,
-        @JsonProperty("serialNumber") String serialNumber,
-        @JsonProperty("printRun") Integer printRun,
-        @JsonProperty("gradingCompany") String gradingCompany,
-        String grade,
-        @JsonProperty("certNumber") String certNumber,
+        @JsonProperty("cardNumber") @JsonAlias({"card_number", "cardNo", "number"}) String cardNumber,
+        @JsonProperty("serialNumber") @JsonAlias({"serial_number", "serialNo", "serial"}) String serialNumber,
+        @JsonProperty("printRun") @JsonAlias({"print_run", "printrun"}) Integer printRun,
+        @JsonProperty("gradingCompany") @JsonAlias({"grading_company", "gradingCo", "grader", "grading_company_name"}) String gradingCompany,
+        @JsonProperty("grade") @JsonAlias({"cardGrade", "gradingGrade", "card_grade"}) String grade,
+        @JsonProperty("certNumber") @JsonAlias({"gradingCertNumber", "grading_cert_number", "gradingCert", "cert_number", "psaNumber", "psaCertNumber", "certificateNumber", "cert", "gradingCertificate"}) String certNumber,
         String collection,
         String notes,
         @JsonProperty("isAutograph") boolean isAutograph,

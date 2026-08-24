@@ -456,7 +456,8 @@ public class CardPageGenerator {
         data.put("verificationUrl", c.getVerificationUrl() != null ? c.getVerificationUrl() : "");
         data.put("popTotal", c.popTotal != null ? String.valueOf(c.popTotal) : "");
         data.put("popHigher", c.popHigher != null ? String.valueOf(c.popHigher) : "");
-        data.put("hasPopReport", c.popTotal != null || c.popHigher != null || (c.certNumber != null && !c.certNumber.isBlank()));
+        data.put("hasPopReport", c.popTotal != null || c.popHigher != null || (c.certNumber != null && !c.certNumber.isBlank()) || c.isGraded());
+
 
         data.put("isJerseyNumber", c.isJerseyNumberMatch());
         data.put("isOneOfOne", c.isOneOfOne());

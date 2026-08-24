@@ -319,7 +319,7 @@ ${topNavHtml?no_esc}
                         <#if popTotal != "">
                         <div class="pop-metric">
                             <span class="pop-metric-num">${popTotal}</span>
-                            <span class="pop-metric-label">Total Graded by Grader</span>
+                            <span class="pop-metric-label">Total Population</span>
                         </div>
                         </#if>
                         <#if popHigher != "">
@@ -334,6 +334,13 @@ ${topNavHtml?no_esc}
                             <span class="pop-metric-label">Cert Number</span>
                         </div>
                         </#if>
+                        <#if popTotal == "" && popHigher == "" && (grading != "")>
+                        <div class="pop-metric">
+                            <span class="pop-metric-num">${grading}</span>
+                            <span class="pop-metric-label">Certified Grade</span>
+                        </div>
+                        </#if>
+
                     </div>
                     <#if verificationUrl != "">
                     <div class="pop-verify-action">
