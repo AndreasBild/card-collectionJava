@@ -1,0 +1,89 @@
+{
+  "1995-96-topps-finest-mystery-bordered-test-refractor-m20-card830": {
+    "certNumber": "26215655",
+    "lastQueried": "2026-08-24T11:20:00Z",
+    "popReport": {
+      "gradingCompany": "PSA",
+      "grade": "10",
+      "totalGraded": 14,
+      "popHigher": 0,
+      "certNumber": "26215655",
+      "registryUrl": "https://www.psacard.com/cert/26215655"
+    },
+    "estimatedValue": 185.00,
+    "lastSoldPrice": 175.00,
+    "lastSoldDate": "2025-11",
+    "purchasePrice": 120.00,
+    "priceHistory": [
+      { "date": "2023-04", "price": 110.00, "grade": "PSA 10", "source": "eBay Sold" },
+      { "date": "2023-11", "price": 135.00, "grade": "PSA 10", "source": "Goldin" },
+      { "date": "2024-06", "price": 150.00, "grade": "PSA 10", "source": "eBay Sold" },
+      { "date": "2025-02", "price": 165.00, "grade": "PSA 10", "source": "PWCC" },
+      { "date": "2025-11", "price": 175.00, "grade": "PSA 10", "source": "eBay Sold" }
+    ],
+    "metadata": {
+      "psaItemDescription": "1995 TOPPS FINEST MYSTERY JUWAN HOWARD REFRACTOR-BORDERED TEST"
+    }
+  },
+  "1995-96-topps-finest-mystery-bordered-test-refractor-m20-card820": {
+    "certNumber": "26880752",
+    "lastQueried": "2026-08-24T11:20:00Z",
+    "popReport": {
+      "gradingCompany": "PSA",
+      "grade": "9",
+      "totalGraded": 14,
+      "popHigher": 3,
+      "certNumber": "26880752",
+      "registryUrl": "https://www.psacard.com/cert/26880752"
+    },
+    "estimatedValue": 65.00,
+    "lastSoldPrice": 60.00,
+    "lastSoldDate": "2025-08",
+    "purchasePrice": 45.00,
+    "priceHistory": [
+      { "date": "2023-05", "price": 40.00, "grade": "PSA 9", "source": "eBay Sold" },
+      { "date": "2024-03", "price": 50.00, "grade": "PSA 9", "source": "eBay Sold" },
+      { "date": "2025-08", "price": 60.00, "grade": "PSA 9", "source": "eBay Sold" }
+    ]
+  },
+  "1995-96-topps-finest-mystery-bordered-test-refractor-m20-card810": {
+    "certNumber": "40534062",
+    "lastQueried": "2026-08-24T11:20:00Z",
+    "popReport": {
+      "gradingCompany": "PSA",
+      "grade": "8",
+      "totalGraded": 14,
+      "popHigher": 8,
+      "certNumber": "40534062",
+      "registryUrl": "https://www.psacard.com/cert/40534062"
+    },
+    "estimatedValue": 35.00,
+    "lastSoldPrice": 32.00,
+    "lastSoldDate": "2024-10",
+    "purchasePrice": 25.00,
+    "priceHistory": [
+      { "date": "2023-01", "price": 25.00, "grade": "PSA 8", "source": "eBay Sold" },
+      { "date": "2024-10", "price": 32.00, "grade": "PSA 8", "source": "eBay Sold" }
+    ]
+  },
+  "2023-24-topps-chrome-base-set-superfractor-101-sn1-card660": {
+    "certNumber": "105013673",
+    "lastQueried": "2026-08-24T11:20:00Z",
+    "popReport": {
+      "gradingCompany": "PSA",
+      "grade": "10",
+      "totalGraded": 1,
+      "popHigher": 0,
+      "certNumber": "105013673",
+      "registryUrl": "https://www.psacard.com/cert/105013673"
+    },
+    "estimatedValue": 450.00,
+    "lastSoldPrice": 425.00,
+    "lastSoldDate": "2025-09",
+    "purchasePrice": 300.00,
+    "priceHistory": [
+      { "date": "2024-08", "price": 350.00, "grade": "PSA 10", "source": "Goldin" },
+      { "date": "2025-09", "price": 425.00, "grade": "PSA 10", "source": "PWCC" }
+    ]
+  }
+}
