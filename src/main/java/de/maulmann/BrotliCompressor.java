@@ -17,7 +17,8 @@ public class BrotliCompressor {
         Brotli4jLoader.ensureAvailability();
     }
 
-    // Default compression level for Brotli (usually 4 is a good balance, but let's use 11 for "best" as requested by context of 9 in GZIP)
+    // Compression levels for Brotli
+    public static final int FAST_QUALITY = 2;
     public static final int DEFAULT_QUALITY = 4;
     public static final int BEST_QUALITY = 11;
 

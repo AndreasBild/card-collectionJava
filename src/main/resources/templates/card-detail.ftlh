@@ -10,6 +10,19 @@
     ${jsonLd?no_esc}
     <#if prevLink??><link rel="prefetch" href="${prevLink}"></#if>
     <#if nextLink??><link rel="prefetch" href="${nextLink}"></#if>
+    <#if prevLink?? || nextLink??>
+    <script type="speculationrules">
+    {
+      "prerender": [
+        {
+          "source": "list",
+          "urls": [<#if prevLink??>"${prevLink}"<#if nextLink??>, </#if></#if><#if nextLink??>"${nextLink}"</#if>],
+          "eagerness": "moderate"
+        }
+      ]
+    }
+    </script>
+    </#if>
 </head>
 <body>
 {{CONSENT_BANNER}}

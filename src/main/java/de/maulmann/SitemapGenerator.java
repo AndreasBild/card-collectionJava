@@ -681,6 +681,12 @@ public class SitemapGenerator {
         sb.append("- Accolades: NBA All-Star (1996), All-NBA Third Team (1996), NBA All-Rookie First Team (1995), 2x NBA Champion (Miami Heat 2012, 2013).\n");
         sb.append("- Collection Scope: 1,440+ unique Juwan Howard trading cards spanning 1994 to present, including 1/1 Masterpieces, Superfractors, Precious Metal Gems (PMGs), Rubies, Platinum Medallions, and multi-piece game-worn patches.\n\n");
 
+        sb.append("## Hobby Taxonomy & Parallel Tiers\n");
+        sb.append("- Tier 1 (Ultra-Rare Grails): 1-of-1 Masterpieces, Superfractors, PMG Precious Metal Gems, Emeralds, Rubies (#/50 or less).\n");
+        sb.append("- Tier 2 (High-End Numbered): Refractors, Atomic Refractors, Die-Cut Parallels, Credentials, Legacy Collection (#/100 or less).\n");
+        sb.append("- Tier 3 (Certified Memorabilia & Autographs): On-Card Signatures, Game-Used Jersey Patches, Prime Tag Relics.\n");
+        sb.append("- Tier 4 (Graded Condition Standards): PSA 10 Gem Mint, BGS 9.5 True Gem, SGC 10 Pristine specimens.\n\n");
+
         sb.append("## Core Overview & Feature Pages\n");
         sb.append("- Home & Hub: ").append(BASE_URL).append("/\n");
         sb.append("- Juwan Howard Master Collection: ").append(BASE_URL).append("/Juwan-Howard-Collection.html\n");
