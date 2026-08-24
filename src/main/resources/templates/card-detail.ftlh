@@ -340,6 +340,7 @@ ${topNavHtml?no_esc}
                             <span class="pop-metric-label">Certified Grade</span>
                         </div>
                         </#if>
+
                     </div>
                     <#if verificationUrl != "">
                     <div class="pop-verify-action">

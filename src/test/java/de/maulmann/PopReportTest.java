@@ -50,7 +50,7 @@ class PopReportTest {
         assertEquals("https://www.psacard.com/cert/48921054", cd.getVerificationUrl());
     }
 
-    @Test
+  @Test
     @DisplayName("Should deserialize different cert number JSON property aliases from exporter")
     void testJsonAliasesForCertNumber() throws Exception {
         String json1 = """
@@ -107,4 +107,3 @@ class PopReportTest {
         assertEquals(cdBase.filename, cdCert.filename, "Filename must remain 100% identical");
         assertEquals(cdBase.fullRelativePath, cdCert.fullRelativePath, "URL relative path must remain 100% identical");
     }
-}
