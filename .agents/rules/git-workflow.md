@@ -1,21 +1,52 @@
-# Git Workflow & Automated Pull Request Invariant
+# Git Workflow & 6-Stage Automated Lifecycle Rule
 
-## Rule: Always Create PR at the End of Work
+## Rule: Strict Branch Isolation & Automatic PR Lifecycle
 
-Whenever a feature, bugfix, refactoring, or optimization task is completed:
+All development on `card-collectionJava` must adhere to the 6-stage lifecycle protocol:
 
-1. **Verify Code Health First:**
-   - Ensure all unit and integration tests pass cleanly (`mvn clean test`).
-   - Verify local artifact generation (`mvn exec:java@local`).
+```mermaid
+flowchart LR
+    S1[1. Analysis] --> S2[2. Architecture]
+    S2 --> S3[3. Branch Isolation]
+    S3 --> S4[4. TDD Code Gen]
+    S4 --> S5[5. Quality Gate]
+    S5 --> S6[6. Auto PR & Jules Review]
+```
 
-2. **Stage & Commit Changes:**
-   - Stage all modified and newly created source/test/resource files.
-   - Craft a clean, semantic commit message (e.g. `feat(seo): add dynamic OpenGraph social share previews and enriched llms.txt`).
+### 1. Branch Isolation (`main` Protection)
+- **Invariant:** Antigravity must **NEVER** edit files or commit directly to `main`.
+- Always initialize or check out a dedicated feature, fix, or chore branch (`feature/*`, `fix/*`, `chore/*`).
 
-3. **Push & Trigger Auto-PR:**
-   - Push the isolated feature branch (`feature/*` or `fix/*`) to `origin`.
-   - The push automatically triggers `.github/workflows/auto-pr.yml` on GitHub to create the Pull Request and trigger Jules CI validation.
-   - Always provide the PR link to the user in the final response.
+### 2. Local Quality Gate Verification (Pre-Commit)
+Before staging or committing any code, execute the local quality gate:
+```bash
+# 1. Spotless formatting
+mvn spotless:check
 
-4. **Never Leave Completed Work Uncommitted:**
-   - Do NOT stop and ask the user if they want a PR created; execute the commit, push, and PR creation workflow automatically as the final step of each task.
+# 2. JUnit 5 test suite with Java 26 preview features
+mvn clean test
+
+# 3. Local pipeline dry-run
+mvn exec:java@local
+```
+
+### 3. Stage & Semantic Commit
+- Stage modified source, test, resource, and agent configuration files.
+- Commit using semantic commit messages adhering to Conventional Commits:
+  - `feat(...)`: New pipeline features, generators, or template enhancements.
+  - `fix(...)`: Bug fixes in generators, schema, image conversion, or compression.
+  - `perf(...)`: Core Web Vitals, compression, or execution speed optimizations.
+  - `chore(...)`: Agent governance, CI workflows, dependency upgrades.
+  - `test(...)`: Unit, snapshot, or contract test additions.
+
+### 4. Push & Autonomous PR Creation
+- Push the branch to `origin`:
+  ```bash
+  git push -u origin <branch-name>
+  ```
+- Automatically open a Pull Request against `main` via `gh pr create` with the `.github/pull_request_template.md` checklist:
+  ```bash
+  gh pr create --base main --head $(git branch --show-current) --fill
+  ```
+- Pushing also triggers `.github/workflows/auto-pr.yml` on GitHub for automated Jules CI review.
+- **Never stop before opening the PR:** The workflow must complete with the PR opened and reported to the user.

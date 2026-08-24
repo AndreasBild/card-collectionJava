@@ -1,73 +1,125 @@
 # Agent Instructions & Operational Guidelines (`AGENTS.md`)
 
-## 1. System Role & Agent Personas
+## 1. System Role & Project Architecture
 
-### 1.1 Local Engineering Agent (Antigravity)
-- **Role:** Lead System Engineer operating locally within the IntelliJ IDEA workspace.
-- **Responsibilities:** Core pipeline features, Freemarker templates, image & compression engines, AWS/Firebase integrations, refactoring, and local performance optimization.
-- **Operating Boundary:** Modifies local workspace files strictly within isolated feature branches. Never commits directly or touches `main`.
+### 1.1 Principal Systems Engineer (Antigravity)
+- **Role:** Principal Systems & Performance Engineer operating locally within IntelliJ IDEA for `card-collectionJava`.
+- **Domain:** High-Performance Static Site Generator & Showcase Platform for Sports Card Collections (`maulmann.de`).
+- **Core Technology Stack:**
+  - **Runtime & Language:** Java 26 Preview Features (`--enable-preview`), Virtual Threads (`Executors.newVirtualThreadPerTaskExecutor()`), Pattern Matching, Switch Expressions, Records, Sealed Classes.
+  - **Build & Code Quality:** Apache Maven 3.15+, Spotless 2.44+ (Google Java Style), Exec Maven Plugin, Maven Surefire Plugin (parallelized JUnit Jupiter 6.1.3).
+  - **Template & Markup:** Apache Freemarker 2.3.34, Jsoup 1.23.1, Semantic HTML5 (`<main>`, `<article>`, `<header>`, `<figure>`, `<footer>`), Zero/Micro-JS architecture.
+  - **Media & Compression Engine:** Pure AVIF image engine (responsive `200w`, `400w`, `600w`, `900w`), Brotli4j 1.23 (`.br`), GZIP (`.gz`), YUI Compressor (`CSSMinifier`, `HTMLMinifier`).
+  - **Database & Cloud Storage:** Google Cloud Firestore (`com.google.firebase:firebase-admin`), AWS SDK v2 (`software.amazon.awssdk:s3`, `cloudfront`), Netty NIO client, Apache HttpClient5.
+  - **Structured Data & SEO/LLMO:** Schema.org JSON-LD (`CardSchemaGenerator`), OpenGraph, Twitter Cards, `llms.txt`, `llms-full.txt`, Dynamic Sitemaps (`SitemapGenerator`), IndexNow API integration (`IndexNowService`).
+  - **PWA & Security:** Service Worker offline AVIF LRU cache (`serviceWorker.js`), strict Content Security Policy (CSP), Permissions-Policy, HSTS headers.
 
 ### 1.2 Cloud PR & Test Agent (Jules)
 - **Role:** Autonomous CI/PR Quality & Test Specialist operating asynchronously on GitHub.
 - **Responsibilities:** Analyzes incoming PRs, generates comprehensive JUnit 5 unit and integration test coverage (`src/test/java`), validates edge cases, and inspects build health before merge approval.
-- **Operating Boundary & Invariants:** Strictly adheres to Java 26. Never modifies or downgrades `<maven.compiler.source>`, `<maven.compiler.target>`, or `<maven.compiler.release>` in `pom.xml` to 21 or earlier.
+- **Operating Invariant:** Strictly adheres to Java 26 preview features. Never downgrades `<maven.compiler.source>`, `<maven.compiler.target>`, or `<maven.compiler.release>` in `pom.xml`.
 
 ---
 
-## 2. Mandatory Version Control & Workflow Protocol
+## 2. The 6-Stage Development Lifecycle
 
-To guarantee code safety and maintain a clean production history, all agents and developers must strictly follow the **Six-Stage Cycle**:
+Every feature, bugfix, refactoring, or optimization must strictly follow the **Six-Stage Cycle**:
 
 ```mermaid
-flowchart LR
-    A[1. IntelliJ: Feature Branch] --> B[2. Antigravity: Local Code Gen]
-    B --> C[3. IntelliJ: Compile & Type Check]
-    C --> D[4. IntelliJ: Refine & DB Check]
-    D --> E[5. IntelliJ: Commit & Push]
-    E --> F[6. GitHub: PR + Jules Tests & CI]
+flowchart TD
+    S1[1. Analysis & Discovery] --> S2[2. Architecture & Design]
+    S2 --> S3[3. Branch Isolation]
+    S3 --> S4[4. TDD & Modular Implementation]
+    S4 --> S5[5. Quality Gate Verification]
+    S5 --> S6[6. Automated PR & Review]
 ```
 
-### Strict Branching Governance:
-1. **Branch Isolation (`main` Protection):** Antigravity must **NEVER** edit files on `main`. Work is only done on dedicated branches (`feature/*` or `fix/*`).
-2. **Branch Creation in IntelliJ:** Initialize branches via the IntelliJ Git tool window.
-3. **IDE Compilation & Static Checks:** After Antigravity outputs code, compile and run inspections in IntelliJ IDEA.
-4. **Manual Refining & DB Checks:** Verify syntax, fix compiler warnings, and test database/Firestore interactions using IntelliJ tooling.
-5. **IDE Commit & Push:** Staged and pushed to GitHub via IntelliJ.
-6. **PR & Jules Automation:** Pushing the branch automatically opens a Pull Request via GitHub Actions (`.github/workflows/auto-pr.yml`). Jules triggers automatically on GitHub to write missing test suites and run CI checks.
-7. **Mandatory PR Creation at End of Work:** At the conclusion of every feature, fix, or optimization task, Antigravity must **ALWAYS** automatically stage changes, commit with a concise semantic message, and push the branch to remote so the Pull Request is created immediately without requiring the user to prompt for it separately.
+### Stage 1: Analysis & Discovery
+- Review Knowledge Items (KIs) and architectural documentation ([`ARCHITECTURE.md`](file:///ARCHITECTURE.md)).
+- Inspect existing data models ([`CardData.java`](file:///src/main/java/de/maulmann/CardData.java), [`CardJson.java`](file:///src/main/java/de/maulmann/CardJson.java), [`cards.json`](file:///content/json/cards.json)).
+- Identify dependency impacts, performance constraints, and compatibility requirements.
+
+### Stage 2: Architecture & Design
+- Define component boundaries, data transfer records, and API contracts.
+- Ensure strict adherence to Core Web Vitals budgets ($\text{LCP} < 1.2\text{s}$, $\text{CLS} = 0$, $\text{INP} = 0$).
+- Plan Schema.org JSON-LD structured data and companion compression updates synchronously.
+
+### Stage 3: Branch Isolation (`main` Protection)
+- **Strict Branch Governance:** Antigravity must **NEVER** edit files or commit directly on `main`.
+- Work strictly on isolated feature/fix/chore branches (e.g. `feature/card-filters`, `fix/schema-breadcrumbs`, `chore/setup-agent-governance`).
+
+### Stage 4: TDD & Modular Implementation
+- Employ test-driven development: write or update JUnit 5 test suites covering happy paths and edge cases.
+- Write production-grade, idiomatic Java 26 code utilizing modern language constructs.
+- **Zero Laziness / Zero Stubbing:** Never use placeholders such as `// TODO: implement logic here`. All code must be complete and compilable.
+
+### Stage 5: Quality Gate Verification
+Execute full local verification before committing:
+1. **Compilation & Inspections:** `mvn clean test-compile` (verifies Java 26 preview features and compiler warnings with `-Xlint:all`).
+2. **Code Formatting:** `mvn spotless:check` (or `mvn spotless:apply` to automatically apply Google Java Style).
+3. **Unit & Integration Tests:** `mvn test` (all tests in `src/test/java/de/maulmann/` pass cleanly).
+4. **Site Generation Verification:** `mvn exec:java@local` (validates pipeline generation, Freemarker template output, and timestamp tracking).
+5. **Compression Synchronicity:** Verify `.html.gz` and `.html.br` companions are generated alongside all static files.
+6. **Schema & Snapshot Verification:** Validate JSON-LD blocks and HTML golden snapshots.
+
+### Stage 6: Automated PR & Review
+- Stage all changes with concise, semantic commit messages (e.g. `feat(seo): enrich card schema json-ld metadata`).
+- Push the branch to remote `origin`.
+- Automatically create/update the Pull Request using GitHub CLI (`gh pr create`) or `.github/workflows/auto-pr.yml` with the structured checklist in [`.github/pull_request_template.md`](file:///.github/pull_request_template.md).
+- Hand off to Jules for automated cloud test generation and CI checks.
 
 ---
 
 ## 3. Engineering & Technical Standards
 
-### 3.1 Modern Java Standards (Java 26 / High-Performance Backend)
-- **Modern Language Features:** Leverage Java 26 preview features, Virtual Threads, Pattern Matching, Switch Expressions, Records, and Sealed Classes where beneficial.
-- **Zero Allocations & Stream Efficiency:** Optimize memory footprint; avoid unnecessary temporary object creation in tight batch-processing loops.
-- **SOLID & DRY:** Write clean, modular, maintainable code with clear naming and minimal technical debt.
-- **Spotless Formatting:** Adhere to Google Java Style via Spotless (`mvn spotless:check` / `mvn spotless:apply`).
+### 3.1 Modern Java 26 Standards
+- **Preview Features:** Compile and execute strictly on Java 26 with `--enable-preview`.
+- **Virtual Threads:** Use `Executors.newVirtualThreadPerTaskExecutor()` for concurrent I/O, image conversions, and Firestore remote fetching.
+- **Data Modeling:** Use Java `record` classes for immutable data transfer objects (DTOs) and metadata records.
+- **Pattern Matching:** Leverage pattern matching for `switch` and `instanceof` to eliminate verbose type casting.
+- **Zero Allocations in Hot Paths:** Avoid temporary object creation inside tight batch-rendering loops.
+- **Spotless Google Java Style:** Strict enforcement via `spotless-maven-plugin`.
 
 ### 3.2 Frontend & Static Output Standards
-- **Zero/Micro-JS Performance:** Output must achieve near-perfect Core Web Vitals (LCP < 1.2s, CLS = 0, INP = 0). Do not inject external JavaScript frameworks.
-- **LLMO & SEO (Semantic HTML5 + JSON-LD):**
-  - Use clean semantic HTML5 (`<main>`, `<article>`, `<header>`, `<nav>`, `<aside>`, `<footer>`).
-  - Always preserve and generate rich Schema.org JSON-LD blocks for every card entity via [`CardSchemaGenerator`](file:///src/main/java/de/maulmann/CardSchemaGenerator.java).
-  - Ensure comprehensive Open Graph, Twitter Card, canonical `<meta>` tags, and `llms.txt` crawler manifest.
-- **PWA Offline & Security Hardened:**
-  - Maintain offline AVIF caching (LRU cache) and navigation preloading in `serviceWorker.js`.
-  - Maintain strict Content Security Policy (CSP), permissions policies, and strict referrer headers in `head.html`.
+- **Zero/Micro-JS Architecture:** Core features render completely without JavaScript. Client scripts are strictly limited to progressive enhancements (offline ServiceWorker, 3D card tilt effect).
+- **Core Web Vitals Guarantees:**
+  - $\text{LCP} < 1.2\text{s}$: Preload hero card images with `fetchpriority="high"`.
+  - $\text{CLS} = 0$: Explicit `width` and `height` attributes on all `<img>` and `<picture>` elements.
+  - $\text{INP} = 0$: No blocking main-thread JavaScript execution.
+- **Semantic HTML5:** Clean semantic tags (`<main>`, `<article>`, `<header>`, `<figure>`, `<figcaption>`, `<footer>`).
+- **Freemarker Safety:** Always use null-safe operators (e.g. `${card.title!''}`, `<#if card.attributes??>`).
 
-### 3.3 Asset Pipeline & Compression Invariants
-- **Pure AVIF Image Standard:** All card scans and responsive renditions (`200w`, `400w`, `600w`, `900w`) use pure AVIF. No legacy formats.
-- **Companion File Synchronicity:** Every modification to HTML or CSS generator logic must synchronously generate/update the `.gz` (GZIP) and `.br` (Brotli) companion files.
-- **Incremental Cache Awareness:** Respect `output/generation-timestamps.properties` and [TimestampTracker](file:///src/main/java/de/maulmann/TimestampTracker.java). Do not trigger full rebuilds when incremental processing is valid.
+### 3.3 Domain Integrity & Structured Data (SEO / LLMO)
+- **Schema.org JSON-LD:** Every card showcase page must embed a valid `<script type="application/ld+json">` generated via [`CardSchemaGenerator.java`](file:///src/main/java/de/maulmann/CardSchemaGenerator.java).
+- **Social & Discovery Meta:** Full OpenGraph (`og:title`, `og:image`, `og:description`), Twitter Card, and canonical `<link>` tags.
+- **LLM Manifests:** Maintain up-to-date [`llms.txt`](file:///llms.txt) and `llms-full.txt` sitemaps for AI crawlers.
+
+### 3.4 Media & Compression Invariants
+- **Pure AVIF Image Standard:** All card scans and responsive renditions (`200w`, `400w`, `600w`, `900w`) use pure AVIF (`image/avif`). No legacy WebP/JPEG fallbacks.
+- **Synchronous Companion Files:** Every `.html` and `.css` generation must synchronously produce matching `.gz` (GZIP) and `.br` (Brotli) companion files via [`GZIPCompressor`](file:///src/main/java/de/maulmann/GZIPCompressor.java) and [`BrotliCompressor`](file:///src/main/java/de/maulmann/BrotliCompressor.java).
+- **Incremental Cache Awareness:** Respect `output/generation-timestamps.properties` and [`TimestampTracker.java`](file:///src/main/java/de/maulmann/TimestampTracker.java).
+
+### 3.5 Database & Query Performance Guidelines (Firestore)
+- **Batching:** Firestore writes must be batched (maximum 500 operations per batch).
+- **Rate Limiting & Retries:** Implement exponential backoff for Firestore and AWS API calls.
+- **Offline Fallbacks:** Build pipeline must run cleanly in local offline mode (`LocalDevPipeline`) without throwing exceptions when Firestore or AWS credentials are not configured.
+
+### 3.6 Security Requirements
+- **Content Security Policy (CSP):** Maintained in [`head.html`](file:///src/main/resources/templates/head.html). Restrict object-src (`'none'`), frame-ancestors (`'none'`), and external script injections.
+- **Secret Protection:** NEVER commit AWS credentials, Firebase Service Account keys, IndexNow API keys, or `.env` files into source control.
+- **Permissions Policy:** Restrict browser features (`camera=(), microphone=(), geolocation=()`).
 
 ---
 
 ## 4. Agent Execution, Token Economics & Tool Usage
 
-- **High-Signal Output:** Eliminate conversational fluff, redundant explanations, and pleasantries. Keep reasoning concise and action-oriented.
+- **High-Signal Output:** Eliminate conversational fluff. Provide concise, actionable summaries with direct file links.
 - **Targeted Diff Edits:** Use surgical multi-replace / diff tools rather than rewriting entire large files unmodified.
-- **No Laziness / No Stubbing:** Never use placeholders such as `// TODO: implement logic here` or `/* rest of code unchanged */`. All generated code must be complete, compilable, and production-ready.
-- **Documentation:** Provide concise Javadoc for public API methods and complex pipeline logic. Explain *why* non-obvious architecture choices were made.
-- **Workspace Skills & Customizations:** Use the project-level skills in `.agents/skills/build-pipeline` (to build and diagnose executions), `.agents/skills/verify-schema` (to validate Schema.org JSON-LD structured data), `.agents/skills/validate-snapshots` (to verify HTML golden masters and links), and `.agents/skills/audit-performance` (to audit Core Web Vitals and compression ratios).
-- **Secret Protection:** Never write AWS credentials, API keys, or Firebase Service Account secrets into code or properties files. Rely strictly on environment variables or external secret managers.
+- **Workspace Skills & Customizations:** Use dedicated project skills located in `.agents/skills/`:
+  - `test-suite`: Run JUnit 5 test suite with Java 26 preview features.
+  - `static-analysis`: Run Spotless formatting checks and compiler linter.
+  - `verify-schema`: Validate Schema.org JSON-LD structured data and semantic metadata.
+  - `build-pipeline`: Execute local development or full production static site generation pipeline.
+  - `audit-performance`: Audit Core Web Vitals, HTML/CSS minification payloads, and Brotli/Gzip ratios.
+  - `validate-snapshots`: Run HTML golden master snapshot tests and dead-link asset validators.
+- **Mandatory Automated PR Creation:** At the conclusion of every completed task, Antigravity must automatically stage changes, commit with a semantic message, push to remote, and open/update the PR without requiring additional user prompting.
