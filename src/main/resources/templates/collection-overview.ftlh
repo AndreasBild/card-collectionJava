@@ -13,16 +13,20 @@ ${topNavHtml?no_esc}
         <p class="sub-title">${subTitle}</p>
     </header>
 
-    <section class="analytics-dashboard context-card full-width">
-        <div class="dashboard-header">
-            <h2>&#x1F4C8; Vault Analytics & Collection Metrics</h2>
-            <div class="dashboard-header-badges">
-                <#if (stats.formattedEstimatedValue)?? && (stats.totalEstimatedValue > 0)>
-                    <span class="vault-valuation-badge" title="Estimated Total Collection Market Valuation">&#x1F4B0; Est. Portfolio: <strong>${stats.formattedEstimatedValue}</strong></span>
-                </#if>
-                <span class="vault-count-badge">Total Cards: <strong>${(stats.totalCards)!"1,000+"}</strong></span>
+    <details class="analytics-accordion context-card full-width" id="analyticsAccordion" open>
+        <summary class="analytics-summary-bar">
+            <div class="summary-left">
+                <span class="summary-title">&#x1F4C8; Vault Analytics</span>
             </div>
-        </div>
+            <div class="summary-badges">
+                <#if (stats.formattedEstimatedValue)?? && (stats.totalEstimatedValue > 0)>
+                    <span class="vault-valuation-badge" title="Estimated Total Collection Market Valuation">&#x1F4B0; <strong>${stats.formattedEstimatedValue}</strong></span>
+                </#if>
+                <span class="vault-count-badge"><strong>${(stats.totalCards)!"1,000+"}</strong> Cards</span>
+                <span class="vault-count-badge gold"><strong>${(stats.count1of1)!0}</strong> 1/1s</span>
+            </div>
+            <span class="summary-toggle-icon" aria-hidden="true">&#x25BE;</span>
+        </summary>
         <div class="metrics-grid">
             <div class="metric-card">
                 <h3>&#x1F48E; Rarity Tier Breakdown</h3>
@@ -80,18 +84,27 @@ ${topNavHtml?no_esc}
                 </div>
             </div>
         </div>
-    </section>
+    </details>
 
     <#if seasons?has_content>
         <div class="view-mode-bar">
-            <span class="view-label">&#x1F441;&#xFE0F; Views & Tools:</span>
-            <button id="viewBinderBtn" class="view-btn" onclick="window.location.href='binder.html'">&#x1F4D2; 3D 9-Pocket Binder View</button>
-            <button id="viewRainbowBtn" class="view-btn" onclick="window.location.href='rainbows.html'">&#x1F308; Parallel Rainbow Tracker</button>
-            <button id="exportCsvBtn" class="export-csv-btn" onclick="exportCollectionCSV()" title="Export visible cards to CSV for Excel / Sheets">📥 Export CSV</button>
-            <button id="exportJsonBtn" class="export-json-btn" onclick="exportCollectionJSON()" title="Export visible cards to JSON format">📄 Export JSON</button>
-            <#if (pageTitle!"")?contains("Wantlist")>
-                <button id="printWantlistBtn" class="view-btn print-wantlist-btn" onclick="printWantlist()" title="Print checklist for card shows">🖨️ Print Checklist</button>
-            </#if>
+            <div class="view-mode-primary">
+                <span class="view-label">&#x1F441;&#xFE0F; Views &amp; Tools:</span>
+                <button id="viewBinderBtn" class="view-btn" onclick="window.location.href='binder.html'">&#x1F4D2; 3D Binder</button>
+                <button id="viewRainbowBtn" class="view-btn" onclick="window.location.href='rainbows.html'">&#x1F308; Rainbows</button>
+            </div>
+            <div class="view-mode-actions">
+                <div class="export-dropdown-wrap">
+                    <button id="exportDropdownBtn" type="button" class="export-dropdown-btn" onclick="toggleExportMenu(event)" aria-expanded="false">📥 Export / Tools &#x25BE;</button>
+                    <div id="exportMenuDropdown" class="export-dropdown-menu" style="display: none;">
+                        <button type="button" class="export-menu-item" onclick="exportCollectionCSV()">📥 Export CSV (Excel)</button>
+                        <button type="button" class="export-menu-item" onclick="exportCollectionJSON()">📄 Export JSON</button>
+                        <#if (pageTitle!"")?contains("Wantlist")>
+                            <button type="button" class="export-menu-item" onclick="printWantlist()">🖨️ Print Checklist</button>
+                        </#if>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="quick-filter-chips" aria-label="Quick Filter Highlights">
