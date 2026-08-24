@@ -534,11 +534,11 @@ ${topNavHtml?no_esc}
             <div class="aggregate-rating">
                 <div class="aggregate-stars-container">
                     <div class="stars-outer">
-                        <div class="stars-inner" id="stars-inner-width"></div>
+                        <div class="stars-inner" id="stars-inner-width" style="width: ${(initialRatingPercentage)!0}%;"></div>
                     </div>
-                    <span class="rating-number"><span id="average-rating">0.0</span> / 5.0</span>
+                    <span class="rating-number"><span id="average-rating">${(initialRatingAverage)!"0.0"}</span> / 5.0</span>
                 </div>
-                <p class="rating-count-text">(<span id="rating-count">0</span> Collector Ratings)</p>
+                <p class="rating-count-text">(<span id="rating-count">${(initialRatingCount)!0}</span> Collector Ratings)</p>
             </div>
         </div>
     </section>
