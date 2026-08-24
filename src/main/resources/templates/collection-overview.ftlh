@@ -118,7 +118,7 @@ ${topNavHtml?no_esc}
                 <input type="text" id="textSearch" name="textSearch" class="filter-input" list="hobby-terms"
                        placeholder="Search PMG, Auto or Print Run <25, =1... (Press / to focus)"
                        aria-label="Search cards by keyword, serial number, or print run">
-                <span class="search-hotkey-badge" title="Press / or Cmd+K to search"><kbd>/</kbd></span>
+                <span class="search-hotkey-badge" title="Press / or Cmd+K to search"><kbd>Cmd+K</kbd> <kbd>/</kbd></span>
             </div>
             <datalist id="hobby-terms">
                 <option value="= 1">
@@ -232,18 +232,25 @@ ${topNavHtml?no_esc}
                 const searchValRaw = document.getElementById('textSearch').value.trim();
                 const searchVal = searchValRaw.toLowerCase();
 
-                const prRegex = /^(?:printrun\s*)?([<>=]+)\s*(\d+)$/;
+                // Support print run queries: <=25, <25, =1, 1/1, #/25, #25, /25, printrun <=25
+                const prRegex = /^(?:printrun\s*|#\/?\s*)?([<>=]+|\/)?\s*(\d+)$/;
                 const prMatch = searchVal.match(prRegex);
 
                 let prOperator = null;
                 let prTarget = null;
                 if (prMatch) {
-                    prOperator = prMatch[1];
+                    prOperator = prMatch[1] || '<=';
+                    if (prOperator === '/') prOperator = '<=';
                     prTarget = parseInt(prMatch[2], 10);
                 }
 
                 let totalVisible = 0;
                 let totalCards = 0;
+
+                // Extract query terms for highlighting and token filtering
+                const terms = (searchVal !== '' && !prMatch && !['favorites', 'favorite', 'fav'].includes(searchVal)) 
+                              ? searchVal.split(/\s+/).filter(t => t.length > 0) 
+                              : [];
 
                 document.querySelectorAll('.season-table-wrapper').forEach(wrapper => {
                     const wrapperSeason = wrapper.getAttribute('data-season');
@@ -257,6 +264,7 @@ ${topNavHtml?no_esc}
 
                         if (seasonVal !== 'all' && wrapperSeason !== seasonVal) {
                             row.style.display = 'none';
+                            clearElementHighlights(row);
                             continue;
                         }
 
@@ -322,7 +330,6 @@ ${topNavHtml?no_esc}
                             } else if (searchVal === 'game used' || searchVal === 'game-used') {
                                 isMatch = isPatch;
                             } else {
-                                const terms = searchVal.split(/\s+/).filter(t => t.length > 0);
                                 isMatch = terms.every(term => {
                                     if (term === '1/1' || term === '=1' || term === 'masterpiece' || term === 'masterpieces') {
                                         return is1of1;
@@ -348,8 +355,14 @@ ${topNavHtml?no_esc}
                             row.style.display = '';
                             visibleRowsInSeason++;
                             totalVisible++;
+                            if (terms.length > 0) {
+                                highlightElementMatches(row, terms);
+                            } else {
+                                clearElementHighlights(row);
+                            }
                         } else {
                             row.style.display = 'none';
+                            clearElementHighlights(row);
                         }
                     }
 

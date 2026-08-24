@@ -2905,6 +2905,17 @@ figcaption {
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
+/* --- INSTANT SEARCH HIT HIGHLIGHTING --- */
+mark.search-highlight {
+    background: rgba(212, 175, 55, 0.35);
+    color: #fff;
+    padding: 1px 3px;
+    border-radius: 3px;
+    border-bottom: 2px solid var(--accent-gold);
+    font-weight: 700;
+    text-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
+}
+
 /* --- TOAST NOTIFICATIONS --- */
 .toast-notification {
     position: fixed;

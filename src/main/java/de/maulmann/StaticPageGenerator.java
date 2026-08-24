@@ -302,6 +302,12 @@ public class StaticPageGenerator {
         }
 
         StringBuilder htmlBuilder = new StringBuilder();
+        htmlBuilder.append("<div class=\"collection-controls filter-container\">")
+                .append("<div class=\"search-input-wrapper\">")
+                .append("<input type=\"text\" class=\"filter-input table-search-input\" placeholder=\"Search collection... (Press / or Cmd+K to focus)\" aria-label=\"Search collection\">")
+                .append("<span class=\"search-hotkey-badge\" title=\"Press / or Cmd+K to search\"><kbd>Cmd+K</kbd> <kbd>/</kbd></span>")
+                .append("</div></div>");
+
         htmlBuilder.append("<div class=\"table-responsive card-container-box\"><table><thead><tr>")
                 .append("<th>Player</th><th>Team</th><th>Sport</th><th>Season</th>")
                 .append("<th>Company</th><th>Brand</th><th>Theme</th><th>Variant</th>")
