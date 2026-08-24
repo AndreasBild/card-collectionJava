@@ -1,6 +1,6 @@
 ================================================================================
 MISSING IMAGES SUMMARY REPORT
-Total Missing Entries: 1301 (Front: 651, Back: 650)
+Total Missing Entries: 1291 (Front: 646, Back: 645)
 ================================================================================
 
 --- SEASON: 1995-96 (26 missing) ---
@@ -1097,18 +1097,6 @@ Total Missing Entries: 1301 (Front: 651, Back: 650)
 [MISSING BACK]  Juwan Howard - 2004-05 UD Trilogy Gold #34 (sn52) (Expected: Juwan-Howard-Houston-Rockets-2004-05-Upper-Deck-UD-Trilogy-Base-Set-Gold-34-sn52-back)
 [MISSING FRONT] Juwan Howard - 2004-05 UD Trilogy Rainbow #34 (sn9) (Expected: Juwan-Howard-Houston-Rockets-2004-05-Upper-Deck-UD-Trilogy-Base-Set-Rainbow-34-sn9-front)
 [MISSING BACK]  Juwan Howard - 2004-05 UD Trilogy Rainbow #34 (sn9) (Expected: Juwan-Howard-Houston-Rockets-2004-05-Upper-Deck-UD-Trilogy-Base-Set-Rainbow-34-sn9-back)
-
---- SEASON: 2005 (10 missing) ---
-[MISSING FRONT] Eric "Game Over" Gagne - 2005 Ultimate Signature Edition #IN-EG (sn59) (Expected: Eric-Gagne-Los-Angeles-Dodgers-2005-Upper-Deck-Ultimate-Signature-Edition-Immortal-Inscriptions-Base-IN-EG-sn59-front)
-[MISSING BACK]  Eric "Game Over" Gagne - 2005 Ultimate Signature Edition #IN-EG (sn59) (Expected: Eric-Gagne-Los-Angeles-Dodgers-2005-Upper-Deck-Ultimate-Signature-Edition-Immortal-Inscriptions-Base-IN-EG-sn59-back)
-[MISSING FRONT] Jim "HOF 96" Bunning - 2005 Ultimate Signature Edition #IN-JB (sn76) (Expected: Jim-Bunning-Philadelphia-Phillies-2005-Upper-Deck-Ultimate-Signature-Edition-Immortal-Inscriptions-Base-IN-JB-sn76-front)
-[MISSING BACK]  Jim "HOF 96" Bunning - 2005 Ultimate Signature Edition #IN-JB (sn76) (Expected: Jim-Bunning-Philadelphia-Phillies-2005-Upper-Deck-Ultimate-Signature-Edition-Immortal-Inscriptions-Base-IN-JB-sn76-back)
-[MISSING FRONT] Ozzie "The Wiz" Smith - 2005 Ultimate Signature Edition #IN-OS (sn53) (Expected: Ozzie-Smith-St-Louis-Cardinals-2005-Upper-Deck-Ultimate-Signature-Edition-Immortal-Inscriptions-Base-IN-OS-sn53-front)
-[MISSING BACK]  Ozzie "The Wiz" Smith - 2005 Ultimate Signature Edition #IN-OS (sn53) (Expected: Ozzie-Smith-St-Louis-Cardinals-2005-Upper-Deck-Ultimate-Signature-Edition-Immortal-Inscriptions-Base-IN-OS-sn53-back)
-[MISSING FRONT] Steve "Lefty" Carlton - 2005 Ultimate Signature Edition #IN-SC (sn42) (Expected: Steve-Carlton-Philadelphia-Phillies-2005-Upper-Deck-Ultimate-Signature-Edition-Immortal-Inscriptions-Base-IN-SC-sn42-front)
-[MISSING BACK]  Steve "Lefty" Carlton - 2005 Ultimate Signature Edition #IN-SC (sn42) (Expected: Steve-Carlton-Philadelphia-Phillies-2005-Upper-Deck-Ultimate-Signature-Edition-Immortal-Inscriptions-Base-IN-SC-sn42-back)
-[MISSING FRONT] Will "The Thrill" Clark - 2005 Ultimate Signature Edition #IN-WC (sn57) (Expected: Will-Clark-San-Francisco-Giants-2005-Upper-Deck-Ultimate-Signature-Edition-Immortal-Inscriptions-Base-IN-WC-sn57-front)
-[MISSING BACK]  Will "The Thrill" Clark - 2005 Ultimate Signature Edition #IN-WC (sn57) (Expected: Will-Clark-San-Francisco-Giants-2005-Upper-Deck-Ultimate-Signature-Edition-Immortal-Inscriptions-Base-IN-WC-sn57-back)
 
 --- SEASON: 2005-06 (82 missing) ---
 [MISSING FRONT] Juwan Howard - 2005-06 Topps Bazooka #133 (Expected: Juwan-Howard-Houston-Rockets-2005-06-Topps-Topps-Bazooka-Base-Set-Base-133-front)

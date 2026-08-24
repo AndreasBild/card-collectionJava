@@ -95,4 +95,24 @@ class HtmlLinkAndAssetValidatorTest {
             assertTrue(Files.exists(cssPath), "Referenced stylesheet must exist: " + href);
         }
     }
+
+    @Test
+    @DisplayName("Verify that all baseball card images exist on disk")
+    void testBaseballCardImagesExist() throws Exception {
+        List<CardData> cards = CardDataLoader.loadCards(Paths.get("content/json/baseball.json"));
+        assertFalse(cards.isEmpty(), "Baseball dataset should not be empty");
+
+        for (CardData card : cards) {
+            String rawImageBase = card.filenameBase.substring(0, card.filenameBase.lastIndexOf("-"));
+            String resolved = CardPageGenerator.resolveDiskImageBase(card.seasonFolder, rawImageBase, card);
+            Path frontAvif = OUTPUT_DIR.resolve("images").resolve(card.seasonFolder).resolve(resolved + "-front.avif");
+            Path backAvif = OUTPUT_DIR.resolve("images").resolve(card.seasonFolder).resolve(resolved + "-back.avif");
+            Path frontSrc = Paths.get("images", card.seasonFolder, resolved + "-front.jpg");
+
+            assertTrue(Files.exists(frontAvif) || Files.exists(frontSrc),
+                    "Baseball front image must exist for card: " + card.get("Player") + " (" + resolved + "-front)");
+            assertTrue(Files.exists(backAvif) || Files.exists(Paths.get("images", card.seasonFolder, resolved + "-back.jpg")),
+                    "Baseball back image must exist for card: " + card.get("Player") + " (" + resolved + "-back)");
+        }
+    }
 }
