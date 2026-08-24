@@ -92,6 +92,15 @@ ${topNavHtml?no_esc}
     <#if breadcrumbHtml??>${breadcrumbHtml?no_esc}</#if>
     <header class="detail-header">
         <h1>${h1Html?no_esc}</h1>
+        <#if isJerseyNumber || isOneOfOne || isBookendSerial || isRefractorOrFoil || (grading != "")>
+            <div class="collector-badges-row">
+                <#if isJerseyNumber><span class="collector-pill pill-jersey" title="Serial number matches Juwan Howard's primary Jersey #5">&#x1F3C0; Jersey #5 Match</span></#if>
+                <#if isOneOfOne><span class="collector-pill pill-one-of-one" title="Unique 1-of-1 Collectible">&#x1F451; 1-of-1 Masterpiece</span></#if>
+                <#if isBookendSerial><span class="collector-pill pill-bookend" title="First (#1) or Last Serial Number in Print Run">&#x1F4D6; Bookend Serial</span></#if>
+                <#if isRefractorOrFoil><span class="collector-pill pill-refractor" title="Chromium / Refractor Light Diffraction Tech">&#x2728; Chromium / Refractor</span></#if>
+                <#if grading != ""><span class="collector-pill pill-grading" title="Graded by third-party census">&#x1F3C6; ${grading}</span></#if>
+            </div>
+        </#if>
     </header>
     <div class="ai-summary">
         <p><strong>Card Snapshot:</strong> ${aiSnapshotText?no_esc}</p>
@@ -99,7 +108,7 @@ ${topNavHtml?no_esc}
     <div class="card-images-container">
         <div class="card-image-wrapper">
             <div class="flip-container" onclick="toggleCardFlip(event)">
-                <div class="flip-card-inner">
+                <div class="flip-card-inner <#if isRefractorOrFoil>refractor-shimmer-active</#if>">
                     <div class="flip-face-front">
                         <figure>
                             <picture>
@@ -204,8 +213,141 @@ ${topNavHtml?no_esc}
                     <td class="specs-td">${grading}</td>
                 </tr>
             </#if>
+            <#if certNumber != "">
+                <tr>
+                    <th class="specs-th">Cert #</th>
+                    <td class="specs-td">
+                        <#if verificationUrl != "">
+                            <a href="${verificationUrl}" target="_blank" rel="noopener noreferrer" class="specs-cert-link" title="Verify on official grader registry">#${certNumber} &#x2197;</a>
+                        <#else>
+                            #${certNumber}
+                        </#if>
+                    </td>
+                </tr>
+            </#if>
+            <#if estimatedValueFormatted != "—">
+                <tr>
+                    <th class="specs-th">Est. Value</th>
+                    <td class="specs-td"><strong class="specs-value-highlight">${estimatedValueFormatted}</strong></td>
+                </tr>
+            </#if>
         </table>
     </div>
+
+    <#if hasPricing || hasPopReport>
+        <section class="collector-insights-grid full-width">
+            <#if hasPricing>
+                <div class="market-value-card context-card">
+                    <div class="market-header">
+                        <div class="market-title-group">
+                            <h2 class="market-title">&#x1F4C8; Market Value &amp; Price History</h2>
+                            <p class="market-subtitle">Verified auction comps &amp; historical trajectory</p>
+                        </div>
+                        <#if growthPctFormatted != "">
+                            <span class="growth-badge <#if isGrowthPositive>growth-positive<#else>growth-negative</#if>">
+                                <#if isGrowthPositive>&#x25B2;<#else>&#x25BC;</#if> ${growthPctFormatted}
+                            </span>
+                        </#if>
+                    </div>
+                    <div class="market-metrics-grid">
+                        <#if estimatedValueFormatted != "—">
+                        <div class="market-metric">
+                            <span class="metric-label">Estimated Value (FMV)</span>
+                            <span class="metric-value metric-primary">${estimatedValueFormatted}</span>
+                        </div>
+                        </#if>
+                        <#if lastSoldPriceFormatted != "—">
+                        <div class="market-metric">
+                            <span class="metric-label">Last Verified Comp</span>
+                            <span class="metric-value">${lastSoldPriceFormatted} <#if lastSoldDate != ""><span class="metric-sub">(${lastSoldDate})</span></#if></span>
+                        </div>
+                        </#if>
+                        <#if purchasePriceFormatted != "—">
+                        <div class="market-metric">
+                            <span class="metric-label">Acquisition Cost</span>
+                            <span class="metric-value">${purchasePriceFormatted}</span>
+                        </div>
+                        </#if>
+                    </div>
+                    <#if hasPriceHistory>
+                        <div class="sparkline-wrapper">
+                            <div class="sparkline-container">
+                                ${sparklineSvg?no_esc}
+                            </div>
+                            <div class="sparkline-axis">
+                                <span>${priceHistory[0].date()}</span>
+                                <span>Trend</span>
+                                <span>${priceHistory[priceHistory?size - 1].date()}</span>
+                            </div>
+                        </div>
+                        <div class="recent-comps-table-wrapper">
+                            <table class="recent-comps-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Grade</th>
+                                        <th>Price</th>
+                                        <th>Source</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <#list priceHistory as p>
+                                    <tr>
+                                        <td>${p.date()}</td>
+                                        <td><span class="comp-grade-pill">${p.grade()!"Raw"}</span></td>
+                                        <td class="comp-price">${p.formattedPrice()}</td>
+                                        <td class="comp-source">${p.source()!"Comp"}</td>
+                                    </tr>
+                                    </#list>
+                                </tbody>
+                            </table>
+                        </div>
+                    </#if>
+                </div>
+            </#if>
+
+            <#if hasPopReport>
+                <div class="pop-report-card context-card">
+                    <div class="pop-report-header">
+                        <div class="pop-title-group">
+                            <h2 class="pop-title">&#x1F3DB;&#xFE0F; Graded Population Census</h2>
+                            <p class="pop-subtitle">Third-party population report &amp; registry verification</p>
+                        </div>
+                        <#if grading != ""><span class="pop-grade-badge">${grading}</span></#if>
+                    </div>
+                    <div class="pop-metrics-grid">
+                        <#if popTotal != "">
+                        <div class="pop-metric">
+                            <span class="pop-metric-num">${popTotal}</span>
+                            <span class="pop-metric-label">Total Graded by Grader</span>
+                        </div>
+                        </#if>
+                        <#if popHigher != "">
+                        <div class="pop-metric">
+                            <span class="pop-metric-num <#if popHigher == "0">pop-top-grade</#if>"><#if popHigher == "0">None (Pop 1 / Top)<#else>${popHigher}</#if></span>
+                            <span class="pop-metric-label">Graded Higher</span>
+                        </div>
+                        </#if>
+                        <#if certNumber != "">
+                        <div class="pop-metric cert-metric">
+                            <span class="pop-metric-num cert-num">#${certNumber}</span>
+                            <span class="pop-metric-label">Cert Number</span>
+                        </div>
+                        </#if>
+                    </div>
+                    <#if verificationUrl != "">
+                    <div class="pop-verify-action">
+                        <a href="${verificationUrl}" target="_blank" rel="noopener noreferrer" class="modern-button verify-btn">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                            <span>Verify Official Registry Certificate</span>
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                        </a>
+                    </div>
+                    </#if>
+                </div>
+            </#if>
+        </section>
+    </#if>
     
     <section class="share-snippets-section context-card full-width">
         <h2>&#x1F4AC; Community & Forum Sharing</h2>

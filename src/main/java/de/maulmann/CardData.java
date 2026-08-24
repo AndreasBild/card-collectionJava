@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,15 @@ public class CardData {
     private static final Pattern PATTERN_SPACES = Pattern.compile("\\s+");
 
     public final Map<String, String> attributes;
+    public final CardJson sourceJson;
+    public final List<PricePoint> priceHistory;
+    public final Double estimatedValue;
+    public final Double lastSoldPrice;
+    public final String lastSoldDate;
+    public final Double purchasePrice;
+    public final Integer popTotal;
+    public final Integer popHigher;
+    public final String certNumber;
     public String stableId;
     public String filenameBase;
     public String filename;
@@ -28,6 +38,7 @@ public class CardData {
     public String fullRelativePath;
 
     public CardData(CardJson c, String uniqueId) {
+        this.sourceJson = c;
         this.attributes = new HashMap<>();
         if (c.player() != null) {
             this.attributes.put("Player", c.player());
@@ -46,6 +57,27 @@ public class CardData {
         if (c.gradingCompany() != null) this.attributes.put("Grading Co.", c.gradingCompany());
         if (c.grade() != null) this.attributes.put("Grade", c.grade());
         if (c.notes() != null) this.attributes.put("Notes", c.notes());
+
+        String cert = c.certNumber() != null ? c.certNumber() : (c.popReport() != null ? c.popReport().certNumber() : null);
+        this.certNumber = cert;
+        if (cert != null && !cert.isBlank()) {
+            this.attributes.put("Cert Number", cert);
+            this.attributes.put("Cert #", cert);
+        }
+
+        this.estimatedValue = c.estimatedValue();
+        this.lastSoldPrice = c.lastSoldPrice();
+        this.lastSoldDate = c.lastSoldDate();
+        this.purchasePrice = c.purchasePrice();
+        this.priceHistory = c.priceHistory() != null ? Collections.unmodifiableList(c.priceHistory()) : Collections.emptyList();
+
+        if (c.popReport() != null) {
+            this.popTotal = c.popReport().totalGraded() != null ? c.popReport().totalGraded() : c.popTotal();
+            this.popHigher = c.popReport().popHigher() != null ? c.popReport().popHigher() : c.popHigher();
+        } else {
+            this.popTotal = c.popTotal();
+            this.popHigher = c.popHigher();
+        }
 
         String autoVal = c.isAutograph() ? "Yes" : "No";
         this.attributes.put("Autograph", autoVal);
@@ -123,6 +155,68 @@ public class CardData {
     public boolean has(String key) {
         String val = attributes.get(key);
         return isValid(val);
+    }
+
+    public boolean isGraded() {
+        return isValid(get("Grading Co.")) && isValid(get("Grade"));
+    }
+
+    public String getVerificationUrl() {
+        if (certNumber != null && !certNumber.isBlank()) {
+            return PopReport.getVerificationUrl(get("Grading Co."), certNumber);
+        }
+        return null;
+    }
+
+    /**
+     * Checks if this card is serial-numbered matching Juwan Howard's primary jersey #5.
+     */
+    public boolean isJerseyNumberMatch() {
+        String serial = get("Serial");
+        if (!isValid(serial)) return false;
+        String clean = serial.trim().replace("#", "").replaceAll("^0+", "");
+        return clean.equals("5");
+    }
+
+    /**
+     * Checks if this card is a 1-of-1 masterpiece or strictly limited to 1 copy.
+     */
+    public boolean isOneOfOne() {
+        String printRun = get("Print Run");
+        if ("1".equals(printRun)) return true;
+        String serial = get("Serial");
+        if (serial != null && (serial.equals("1/1") || serial.equals("1 of 1"))) return true;
+        String variant = get("Variant").toLowerCase();
+        return variant.contains("1/1") || variant.contains("masterpiece") || variant.contains("superfractor");
+    }
+
+    /**
+     * Checks if serial number is the first printed (#01/xx) or last printed bookend.
+     */
+    public boolean isBookendSerial() {
+        String serial = get("Serial");
+        String printRun = get("Print Run");
+        if (!isValid(serial) || !isValid(printRun)) return false;
+        try {
+            int s = Integer.parseInt(serial.replace("#", "").trim());
+            int p = Integer.parseInt(printRun.trim());
+            return s == 1 || s == p;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Checks if card utilizes refractor, holofoil, chromium, or metallic diffraction technology.
+     */
+    public boolean isRefractorOrFoil() {
+        String variant = get("Variant").toLowerCase();
+        String brand = get("Brand").toLowerCase();
+        String theme = get("Theme").toLowerCase();
+        return variant.contains("refractor") || variant.contains("atomic") || variant.contains("superfractor")
+                || variant.contains("prizm") || variant.contains("holo") || variant.contains("foil")
+                || variant.contains("chrome") || variant.contains("spectra") || variant.contains("optic")
+                || brand.contains("finest") || brand.contains("chrome") || theme.contains("refractor");
     }
 
     public static boolean isValid(String val) {

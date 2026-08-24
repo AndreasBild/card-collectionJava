@@ -69,11 +69,34 @@
   "printRun" : 750,
   "gradingCompany" : null,
   "grade" : null,
+  "certNumber" : null,
   "collection" : "Juwan Howard",
   "notes" : null,
   "isRookie" : true,
   "isAutograph" : true,
-  "isPatch" : false
+  "isPatch" : false,
+  "estimatedValue" : 95.00,
+  "lastSoldPrice" : 90.00,
+  "lastSoldDate" : "2025-09",
+  "purchasePrice" : 60.00,
+  "popTotal" : null,
+  "popHigher" : null,
+  "priceHistory" : [ {
+    "date" : "2023-01",
+    "price" : 55.0,
+    "source" : "eBay Sold",
+    "grade" : "Raw"
+  }, {
+    "date" : "2024-03",
+    "price" : 70.0,
+    "source" : "eBay Sold",
+    "grade" : "Raw"
+  }, {
+    "date" : "2025-09",
+    "price" : 90.0,
+    "source" : "eBay Sold",
+    "grade" : "Raw"
+  } ]
 }, {
   "id" : "1994-95-collectors-choice-you-crash-the-game-rookie-scoring-redemption-s4",
   "player" : "Juwan Howard",
@@ -1570,11 +1593,44 @@
   "printRun" : null,
   "gradingCompany" : "PSA",
   "grade" : "10",
+  "certNumber" : "48921054",
   "collection" : "Juwan Howard",
   "notes" : null,
   "isRookie" : false,
   "isAutograph" : false,
-  "isPatch" : false
+  "isPatch" : false,
+  "estimatedValue" : 185.00,
+  "lastSoldPrice" : 175.00,
+  "lastSoldDate" : "2025-11",
+  "purchasePrice" : 120.00,
+  "popTotal" : 14,
+  "popHigher" : 0,
+  "priceHistory" : [ {
+    "date" : "2023-04",
+    "price" : 110.0,
+    "source" : "eBay Sold",
+    "grade" : "PSA 10"
+  }, {
+    "date" : "2023-11",
+    "price" : 135.0,
+    "source" : "Goldin",
+    "grade" : "PSA 10"
+  }, {
+    "date" : "2024-06",
+    "price" : 150.0,
+    "source" : "eBay Sold",
+    "grade" : "PSA 10"
+  }, {
+    "date" : "2025-02",
+    "price" : 165.0,
+    "source" : "PWCC",
+    "grade" : "PSA 10"
+  }, {
+    "date" : "2025-11",
+    "price" : 175.0,
+    "source" : "eBay Sold",
+    "grade" : "PSA 10"
+  } ]
 }, {
   "id" : "1995-96-topps-finest-mystery-borderless-m20",
   "player" : "Juwan Howard",

@@ -2,6 +2,7 @@ package de.maulmann;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
 
 /**
  * Immutable Java 26 Record representation of a Trading Card dataset entry.
@@ -21,12 +22,49 @@ public record CardJson(
         @JsonProperty("printRun") Integer printRun,
         @JsonProperty("gradingCompany") String gradingCompany,
         String grade,
+        @JsonProperty("certNumber") String certNumber,
         String collection,
         String notes,
         @JsonProperty("isAutograph") boolean isAutograph,
         @JsonProperty("isPatch") boolean isPatch,
-        @JsonProperty("isRookie") boolean isRookie
+        @JsonProperty("isRookie") boolean isRookie,
+        @JsonProperty("estimatedValue") Double estimatedValue,
+        @JsonProperty("lastSoldPrice") Double lastSoldPrice,
+        @JsonProperty("lastSoldDate") String lastSoldDate,
+        @JsonProperty("purchasePrice") Double purchasePrice,
+        @JsonProperty("priceHistory") List<PricePoint> priceHistory,
+        @JsonProperty("popReport") PopReport popReport,
+        @JsonProperty("popTotal") Integer popTotal,
+        @JsonProperty("popHigher") Integer popHigher
 ) {
+
+    public CardJson(
+            String id,
+            String player,
+            String season,
+            String team,
+            String company,
+            String brand,
+            String theme,
+            String variant,
+            String cardNumber,
+            String serialNumber,
+            Integer printRun,
+            String gradingCompany,
+            String grade,
+            String collection,
+            String notes,
+            boolean isAutograph,
+            boolean isPatch,
+            boolean isRookie
+    ) {
+        this(
+                id, player, season, team, company, brand, theme, variant,
+                cardNumber, serialNumber, printRun, gradingCompany, grade, null,
+                collection, notes, isAutograph, isPatch, isRookie,
+                null, null, null, null, null, null, null, null
+        );
+    }
 
     public String get(String key) {
         if (key == null) return null;
@@ -42,6 +80,7 @@ public record CardJson(
             case "serial", "serialnumber" -> serialNumber;
             case "grading co.", "gradingcompany" -> gradingCompany;
             case "grade" -> grade;
+            case "cert number", "certnumber", "psa number" -> certNumber != null ? certNumber : (popReport != null ? popReport.certNumber() : null);
             case "print run", "printrun" -> printRun != null ? String.valueOf(printRun) : null;
             case "notes" -> notes;
             case "collection" -> collection;
@@ -70,11 +109,20 @@ public record CardJson(
         private Integer printRun;
         private String gradingCompany;
         private String grade;
+        private String certNumber;
         private String collection;
         private String notes;
         private boolean isAutograph;
         private boolean isPatch;
         private boolean isRookie;
+        private Double estimatedValue;
+        private Double lastSoldPrice;
+        private String lastSoldDate;
+        private Double purchasePrice;
+        private List<PricePoint> priceHistory;
+        private PopReport popReport;
+        private Integer popTotal;
+        private Integer popHigher;
 
         public Builder id(String id) { this.id = id; return this; }
         public Builder player(String player) { this.player = player; return this; }
@@ -89,17 +137,28 @@ public record CardJson(
         public Builder printRun(Integer printRun) { this.printRun = printRun; return this; }
         public Builder gradingCompany(String gradingCompany) { this.gradingCompany = gradingCompany; return this; }
         public Builder grade(String grade) { this.grade = grade; return this; }
+        public Builder certNumber(String certNumber) { this.certNumber = certNumber; return this; }
         public Builder collection(String collection) { this.collection = collection; return this; }
         public Builder notes(String notes) { this.notes = notes; return this; }
         public Builder isAutograph(boolean isAutograph) { this.isAutograph = isAutograph; return this; }
         public Builder isPatch(boolean isPatch) { this.isPatch = isPatch; return this; }
         public Builder isRookie(boolean isRookie) { this.isRookie = isRookie; return this; }
+        public Builder estimatedValue(Double estimatedValue) { this.estimatedValue = estimatedValue; return this; }
+        public Builder lastSoldPrice(Double lastSoldPrice) { this.lastSoldPrice = lastSoldPrice; return this; }
+        public Builder lastSoldDate(String lastSoldDate) { this.lastSoldDate = lastSoldDate; return this; }
+        public Builder purchasePrice(Double purchasePrice) { this.purchasePrice = purchasePrice; return this; }
+        public Builder priceHistory(List<PricePoint> priceHistory) { this.priceHistory = priceHistory; return this; }
+        public Builder popReport(PopReport popReport) { this.popReport = popReport; return this; }
+        public Builder popTotal(Integer popTotal) { this.popTotal = popTotal; return this; }
+        public Builder popHigher(Integer popHigher) { this.popHigher = popHigher; return this; }
 
         public CardJson build() {
             return new CardJson(
                     id, player, season, team, company, brand, theme, variant,
-                    cardNumber, serialNumber, printRun, gradingCompany, grade,
-                    collection, notes, isAutograph, isPatch, isRookie
+                    cardNumber, serialNumber, printRun, gradingCompany, grade, certNumber,
+                    collection, notes, isAutograph, isPatch, isRookie,
+                    estimatedValue, lastSoldPrice, lastSoldDate, purchasePrice,
+                    priceHistory, popReport, popTotal, popHigher
             );
         }
     }
