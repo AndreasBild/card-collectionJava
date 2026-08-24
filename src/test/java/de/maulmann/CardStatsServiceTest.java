@@ -67,6 +67,11 @@ class CardStatsServiceTest {
         assertEquals(1, stats.get("countRookies"));
         assertEquals(2, stats.get("countGradedTotal"));
         assertEquals(2, stats.get("countGemMint")); // BGS 9.5 and PSA 10
+
+        assertNotNull(stats.get("eraDistribution"));
+        assertNotNull(stats.get("manufacturerDistribution"));
+        assertNotNull(stats.get("formattedEstimatedValue"));
+        assertNotNull(stats.get("marketCoveragePct"));
     }
 
     @Test

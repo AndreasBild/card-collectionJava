@@ -98,12 +98,27 @@ public class CardStatsService {
         int countJerseyNumbers = 0;
         double totalEstimatedVal = 0.0;
         int countPriced = 0;
+        double totalGradedVal = 0.0;
+        int countGradedPriced = 0;
+
+        // Era breakdown counters
+        int eraBullets = 0;
+        int eraWizards = 0;
+        int eraMavsRockets = 0;
+        int eraHeat = 0;
+        int eraPanini = 0;
+        int eraOther = 0;
+
+        // Manufacturer distribution counters
+        Map<String, Integer> mfgDist = new HashMap<>();
 
         for (CardJson c : jsonCards) {
             Integer pr = c.printRun();
             String sn = c.serialNumber() != null ? c.serialNumber().trim() : "";
             String v = c.variant() != null ? c.variant().trim() : "";
             String t = c.theme() != null ? c.theme().trim() : "";
+            String s = c.season() != null ? c.season().trim() : "";
+            String comp = c.company() != null ? c.company().trim() : "";
 
             boolean isOneOfOne = (pr != null && pr == 1) ||
                     "1/1".equalsIgnoreCase(sn) || "1/1".equalsIgnoreCase(v) || "1/1".equalsIgnoreCase(t) ||
@@ -125,11 +140,11 @@ public class CardStatsService {
                 if (clean.equals("5")) countJerseyNumbers++;
             }
 
-            if (c.estimatedValue() != null && c.estimatedValue() > 0.0) {
-                totalEstimatedVal += c.estimatedValue();
-                countPriced++;
-            } else if (c.lastSoldPrice() != null && c.lastSoldPrice() > 0.0) {
-                totalEstimatedVal += c.lastSoldPrice();
+            Double val = c.estimatedValue() != null && c.estimatedValue() > 0.0 ? c.estimatedValue() :
+                    (c.lastSoldPrice() != null && c.lastSoldPrice() > 0.0 ? c.lastSoldPrice() : null);
+
+            if (val != null) {
+                totalEstimatedVal += val;
                 countPriced++;
             }
 
@@ -142,7 +157,36 @@ public class CardStatsService {
                 if (g != null && (g.contains("10") || g.contains("9.5"))) {
                     countGemMint++;
                 }
+                if (val != null) {
+                    totalGradedVal += val;
+                    countGradedPriced++;
+                }
             }
+
+            // Era categorisation
+            if (s.contains("1994") || s.contains("1995") || s.contains("1996")) {
+                eraBullets++;
+            } else if (s.contains("1997") || s.contains("1998") || s.contains("1999") || s.contains("2000")) {
+                eraWizards++;
+            } else if (s.contains("2001") || s.contains("2002") || s.contains("2003") || s.contains("2004") || s.contains("2005") || s.contains("2006") || s.contains("2007")) {
+                eraMavsRockets++;
+            } else if (s.contains("2010") || s.contains("2011") || s.contains("2012") || s.contains("2013")) {
+                eraHeat++;
+            } else if (s.contains("2014") || s.contains("2015") || s.contains("2016") || s.contains("2017") || s.contains("2018") || s.contains("2019") || s.contains("202") || comp.equalsIgnoreCase("Panini")) {
+                eraPanini++;
+            } else {
+                eraOther++;
+            }
+
+            // Manufacturer categorization
+            String mfgKey = "Other";
+            String compLower = comp.toLowerCase();
+            if (compLower.contains("fleer") || compLower.contains("skybox")) mfgKey = "Fleer / SkyBox";
+            else if (compLower.contains("topps") || compLower.contains("bowman")) mfgKey = "Topps / Bowman";
+            else if (compLower.contains("panini") || compLower.contains("donruss")) mfgKey = "Panini / Donruss";
+            else if (compLower.contains("upper deck") || compLower.contains("ud")) mfgKey = "Upper Deck";
+            else if (compLower.contains("press pass") || compLower.contains("score board") || compLower.contains("classic")) mfgKey = "Draft / College";
+            mfgDist.put(mfgKey, mfgDist.getOrDefault(mfgKey, 0) + 1);
         }
 
         int totalCardCount = jsonCards.size();
@@ -177,6 +221,30 @@ public class CardStatsService {
         stats.put("countPriced", countPriced);
         stats.put("totalEstimatedValue", totalEstimatedVal);
         stats.put("formattedEstimatedValue", String.format(Locale.US, "$%,.0f", totalEstimatedVal));
+
+        double avgCardVal = countPriced > 0 ? totalEstimatedVal / countPriced : 0.0;
+        stats.put("avgCardValue", avgCardVal);
+        stats.put("formattedAvgCardValue", String.format(Locale.US, "$%.2f", avgCardVal));
+
+        double avgGradedVal = countGradedPriced > 0 ? totalGradedVal / countGradedPriced : 0.0;
+        stats.put("avgGradedValue", avgGradedVal);
+        stats.put("formattedAvgGradedValue", String.format(Locale.US, "$%.2f", avgGradedVal));
+        stats.put("totalGradedValue", totalGradedVal);
+        stats.put("formattedTotalGradedValue", String.format(Locale.US, "$%,.0f", totalGradedVal));
+
+        int marketCoveragePct = totalCardCount > 0 ? (int) Math.round((countPriced * 100.0) / totalCardCount) : 0;
+        stats.put("marketCoveragePct", marketCoveragePct);
+
+        // Era breakdown
+        Map<String, Integer> eraMap = new HashMap<>();
+        eraMap.put("bullets", eraBullets);
+        eraMap.put("wizards", eraWizards);
+        eraMap.put("mavsRockets", eraMavsRockets);
+        eraMap.put("heat", eraHeat);
+        eraMap.put("panini", eraPanini);
+        eraMap.put("other", eraOther);
+        stats.put("eraDistribution", eraMap);
+        stats.put("manufacturerDistribution", mfgDist);
 
         return stats;
     }

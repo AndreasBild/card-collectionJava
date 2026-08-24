@@ -93,15 +93,15 @@ public class CardMarketEnricher {
                 certsFound++;
                 String grader = c.get("Grading Co.");
 
-                if (grader != null && grader.toUpperCase().contains("PSA")) {
-                    logger.info("Querying PSA cert #{} for exact card: {} (ID: {})", certNum, c.filenameBase, cardId);
-                    Optional<MarketDataEntry> entryOpt = psaScraper.fetchPsaData(certNum);
+                if (grader != null && !grader.isBlank()) {
+                    logger.info("Querying {} cert #{} for exact card: {} (ID: {})", grader, certNum, c.filenameBase, cardId);
+                    Optional<MarketDataEntry> entryOpt = psaScraper.fetchCertData(grader, certNum);
                     MarketDataEntry estimated = MarketPriceFetcher.estimateMarketData(c);
 
                     if (entryOpt.isPresent()) {
                         MarketDataEntry entry = entryOpt.get();
 
-                        // Merge PSA census with exact pricing data
+                        // Merge census with exact pricing data
                         MarketDataEntry combined = MarketDataEntry.builder()
                                 .certNumber(certNum)
                                 .lastQueried(entry.lastQueried())
@@ -117,8 +117,9 @@ public class CardMarketEnricher {
                         cache.put(cardId, combined);
                         queriedSuccess++;
                         exactPriced++;
-                        logger.info("   -> Success for exact card #{}: Pop Total={}, Pop Higher={}, FMV=${}",
+                        logger.info("   -> Success for exact card #{}: Grader={}, Pop Total={}, Pop Higher={}, FMV=${}",
                                 certNum,
+                                grader,
                                 entry.popReport() != null ? entry.popReport().totalGraded() : "N/A",
                                 entry.popReport() != null ? entry.popReport().popHigher() : "N/A",
                                 combined.estimatedValue());

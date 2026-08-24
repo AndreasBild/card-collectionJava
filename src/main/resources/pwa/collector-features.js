@@ -35,6 +35,7 @@ function initAllFeatures() {
     initGlobalKeyboardShortcuts();
     initTouchSwipeNavigation();
     initLazyImageFade();
+    initWantlistChecklist();
 }
 
 if (document.readyState === 'loading') {
@@ -765,3 +766,220 @@ function initLazyImageFade() {
         }
     });
 }
+
+// --- 11. UNIVERSAL 1-CLICK COLLECTION EXPORT (CSV & JSON) ---
+function extractVisibleCardData() {
+    const headers = [
+        "Player", "Team", "Season", "Company", "Brand",
+        "Set / Theme", "Variant", "Card #", "Serial #",
+        "Print Run", "Rookie", "Game Used", "Autograph", "Grade", "URL"
+    ];
+    const rows = [];
+    const jsonList = [];
+
+    const rowElements = document.querySelectorAll('.season-table-wrapper table tbody tr, .collection-table tbody tr, table.wantlist-table tbody tr, table tbody tr');
+    
+    rowElements.forEach(row => {
+        if (row.querySelector('th')) return;
+        if (row.style.display === 'none') return;
+
+        const cells = row.querySelectorAll('td');
+        if (cells.length >= 7) {
+            const cleanText = (el) => {
+                if (!el) return '';
+                let clone = el.cloneNode(true);
+                let btn = clone.querySelector('.card-fav-btn, .wantlist-checkbox-wrap, button');
+                if (btn) btn.remove();
+                return clone.textContent.trim().replace(/"/g, '""');
+            };
+
+            const link = row.querySelector('a');
+            const fullUrl = link ? link.href : '';
+
+            // Handle tables with varying column lengths dynamically
+            const rowData = [
+                cleanText(cells[0]),
+                cleanText(cells[1]),
+                cleanText(cells[2] || cells[1]),
+                cleanText(cells[3] || ''),
+                cleanText(cells[4] || ''),
+                cleanText(cells[5] || ''),
+                cleanText(cells[6] || ''),
+                cleanText(cells[7] || ''),
+                cleanText(cells[8] || ''),
+                cleanText(cells[9] || ''),
+                cleanText(cells[10] || ''),
+                cleanText(cells[11] || ''),
+                cleanText(cells[12] || ''),
+                cleanText(cells[13] || cells[12] || ''),
+                fullUrl
+            ];
+            rows.push(rowData);
+
+            jsonList.push({
+                player: cleanText(cells[0]),
+                team: cleanText(cells[1]),
+                season: cleanText(cells[2] || cells[1]),
+                company: cleanText(cells[3] || ''),
+                brand: cleanText(cells[4] || ''),
+                theme: cleanText(cells[5] || ''),
+                variant: cleanText(cells[6] || ''),
+                cardNumber: cleanText(cells[7] || ''),
+                serialNumber: cleanText(cells[8] || ''),
+                printRun: cleanText(cells[9] || ''),
+                isRookie: cleanText(cells[10] || ''),
+                isPatch: cleanText(cells[11] || ''),
+                isAutograph: cleanText(cells[12] || ''),
+                grade: cleanText(cells[13] || ''),
+                url: fullUrl
+            });
+        }
+    });
+
+    return { headers, rows, jsonList };
+}
+
+function exportCollectionCSV(customFilename) {
+    const { headers, rows } = extractVisibleCardData();
+    if (!rows || rows.length === 0) {
+        alert("No cards found to export in the current view.");
+        return;
+    }
+
+    let csvContent = "\uFEFF"; // UTF-8 BOM for Excel compatibility
+    csvContent += headers.map(h => `"${h}"`).join(",") + "\r\n";
+    rows.forEach(row => {
+        csvContent += row.map(v => `"${v}"`).join(",") + "\r\n";
+    });
+
+    const timestamp = new Date().toISOString().slice(0, 10);
+    const filename = customFilename || `Maulmann-Collection-${timestamp}.csv`;
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    setTimeout(() => {
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    }, 100);
+}
+
+function exportCollectionJSON(customFilename) {
+    const { jsonList } = extractVisibleCardData();
+    if (!jsonList || jsonList.length === 0) {
+        alert("No cards found to export in the current view.");
+        return;
+    }
+
+    const timestamp = new Date().toISOString().slice(0, 10);
+    const filename = customFilename || `Maulmann-Collection-${timestamp}.json`;
+
+    const jsonStr = JSON.stringify(jsonList, null, 2);
+    const blob = new Blob([jsonStr], { type: 'application/json;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    setTimeout(() => {
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    }, 100);
+}
+
+// --- 12. INTERACTIVE WANTLIST & CARD SHOW BOUNTY CHECKLIST ---
+const WANTLIST_KEY = 'maulmann_wantlist_acquired';
+
+function getAcquiredWantlist() {
+    try {
+        const stored = localStorage.getItem(WANTLIST_KEY);
+        return stored ? JSON.parse(stored) : [];
+    } catch (e) {
+        return [];
+    }
+}
+
+function toggleWantlistCardAcquired(cardKey, checkbox) {
+    let list = getAcquiredWantlist();
+    const isChecked = checkbox ? checkbox.checked : !list.includes(cardKey);
+
+    if (isChecked) {
+        if (!list.includes(cardKey)) list.push(cardKey);
+    } else {
+        list = list.filter(k => k !== cardKey);
+    }
+
+    try {
+        localStorage.setItem(WANTLIST_KEY, JSON.stringify(list));
+    } catch (e) {}
+
+    updateWantlistRowStyles();
+}
+
+function updateWantlistRowStyles() {
+    const list = getAcquiredWantlist();
+    const rows = document.querySelectorAll('.wantlist-row, .season-table-wrapper table tbody tr');
+    let acquiredCount = 0;
+
+    rows.forEach(row => {
+        const key = row.getAttribute('data-wantlist-key');
+        if (key) {
+            const cb = row.querySelector('.wantlist-checkbox');
+            const isAcquired = list.includes(key);
+            if (cb) cb.checked = isAcquired;
+            row.classList.toggle('wantlist-row-acquired', isAcquired);
+            if (isAcquired) acquiredCount++;
+        }
+    });
+
+    const badge = document.getElementById('wantlistAcquiredCount');
+    if (badge) badge.innerText = `${acquiredCount}`;
+}
+
+function initWantlistChecklist() {
+    const isWantlistPage = window.location.pathname.toLowerCase().includes('wantlist');
+    if (!isWantlistPage) return;
+
+    const rows = document.querySelectorAll('.season-table-wrapper table tbody tr, table tbody tr');
+    if (!rows || rows.length === 0) return;
+
+    const list = getAcquiredWantlist();
+
+    rows.forEach((row, idx) => {
+        if (row.querySelector('th')) return;
+        const firstCell = row.querySelector('td:first-child');
+        if (!firstCell) return;
+
+        const cardText = row.textContent.trim().substring(0, 40).replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
+        const key = `want-${idx}-${cardText}`;
+        row.setAttribute('data-wantlist-key', key);
+
+        if (!firstCell.querySelector('.wantlist-checkbox-wrap')) {
+            const wrap = document.createElement('span');
+            wrap.className = 'wantlist-checkbox-wrap';
+            wrap.innerHTML = `<input type="checkbox" class="wantlist-checkbox" title="Mark as acquired/found" aria-label="Mark card as acquired">`;
+            const cb = wrap.querySelector('input');
+            cb.checked = list.includes(key);
+            cb.addEventListener('change', () => toggleWantlistCardAcquired(key, cb));
+            firstCell.prepend(wrap);
+        }
+    });
+
+    updateWantlistRowStyles();
+}
+
+function printWantlist() {
+    window.print();
+}
+
+// Attach exports to window
+window.exportCollectionCSV = exportCollectionCSV;
+window.exportCollectionJSON = exportCollectionJSON;
+window.printWantlist = printWantlist;
+window.initWantlistChecklist = initWantlistChecklist;
+
