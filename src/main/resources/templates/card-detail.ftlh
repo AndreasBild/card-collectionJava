@@ -303,6 +303,18 @@ ${topNavHtml?no_esc}
                             </table>
                         </div>
                     </#if>
+                    <div class="live-comps-actions">
+                        <#if point130Url?? && point130Url != "">
+                            <a href="${point130Url}" target="_blank" rel="noopener noreferrer" class="comp-lookup-btn point130-btn" title="Search cleared eBay Best Offer sales on 130point.com">
+                                🔍 130point Comps &nearr;
+                            </a>
+                        </#if>
+                        <#if ebaySoldUrl?? && ebaySoldUrl != "">
+                            <a href="${ebaySoldUrl}" target="_blank" rel="noopener noreferrer" class="comp-lookup-btn ebay-sold-btn" title="Search completed & sold auctions on eBay">
+                                🛒 eBay Sold Items &nearr;
+                            </a>
+                        </#if>
+                    </div>
                 </div>
             </#if>
 
@@ -534,11 +546,11 @@ ${topNavHtml?no_esc}
             <div class="aggregate-rating">
                 <div class="aggregate-stars-container">
                     <div class="stars-outer">
-                        <div class="stars-inner" id="stars-inner-width"></div>
+                        <div class="stars-inner" id="stars-inner-width" style="width: ${(initialRatingPercentage)!0}%;"></div>
                     </div>
-                    <span class="rating-number"><span id="average-rating">0.0</span> / 5.0</span>
+                    <span class="rating-number"><span id="average-rating">${(initialRatingAverage)!"0.0"}</span> / 5.0</span>
                 </div>
-                <p class="rating-count-text">(<span id="rating-count">0</span> Collector Ratings)</p>
+                <p class="rating-count-text">(<span id="rating-count">${(initialRatingCount)!0}</span> Collector Ratings)</p>
             </div>
         </div>
     </section>

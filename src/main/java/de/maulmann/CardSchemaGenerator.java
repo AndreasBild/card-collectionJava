@@ -47,6 +47,34 @@ public class CardSchemaGenerator {
         ratingCacheLoaded = true;
     }
 
+    public record CachedRatingData(long ratingCount, double ratingSum, double average, double percentage) {}
+
+    public static CachedRatingData getCachedRating(CardData c) {
+        if (c == null) return new CachedRatingData(0, 0.0, 0.0, 0.0);
+        if (!ratingCacheLoaded) {
+            loadRatingCache();
+        }
+        String cachedRating = c.stableId != null ? RATING_CACHE.getProperty(c.stableId) : null;
+        if (cachedRating == null && c.filename != null) {
+            cachedRating = RATING_CACHE.getProperty(c.filename);
+        }
+        if (cachedRating != null) {
+            String[] parts = cachedRating.split(":", 2);
+            if (parts.length == 2) {
+                try {
+                    long count = Long.parseLong(parts[0]);
+                    double sum = Double.parseDouble(parts[1]);
+                    if (count > 0 && sum >= 0) {
+                        double avg = sum / count;
+                        double pct = Math.min(100.0, (avg / 5.0) * 100.0);
+                        return new CachedRatingData(count, sum, avg, pct);
+                    }
+                } catch (Exception _) {}
+            }
+        }
+        return new CachedRatingData(0, 0.0, 0.0, 0.0);
+    }
+
     public record FaqItem(String question, String answer) {}
 
     public static List<FaqItem> computeFaqItems(CardData c) {

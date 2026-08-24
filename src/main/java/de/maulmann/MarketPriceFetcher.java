@@ -1,13 +1,16 @@
 package de.maulmann;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /**
- * Universal Market Pricing and Valuation Engine.
- * Constructs search queries and computes fair market valuations and realistic sales comps
- * based on scarcity tiers, print runs, autographs, patches, rookies, and grading status.
+ * Advanced Multi-Tier Market Pricing, Comps & Valuation Engine.
+ * Incorporates Set Prestige Tiers, 90s Vintage Insert Premiums, Serial Scarcity Curves,
+ * Autograph / Patch Multipliers, Certified Grading Multipliers, and 1-Click Live Sales Lookup Links.
  */
 public class MarketPriceFetcher {
 
@@ -28,8 +31,8 @@ public class MarketPriceFetcher {
             sb.append(cleanQueryToken(season)).append(" ");
         }
 
-        String company = card.get("Company");
         String brand = card.get("Brand");
+        String company = card.get("Company");
         if (brand != null && !brand.isBlank()) {
             sb.append(cleanQueryToken(brand)).append(" ");
         } else if (company != null && !company.isBlank()) {
@@ -37,7 +40,7 @@ public class MarketPriceFetcher {
         }
 
         String theme = card.get("Theme");
-        if (theme != null && !theme.isBlank() && !theme.equalsIgnoreCase("Base")) {
+        if (theme != null && !theme.isBlank() && !theme.equalsIgnoreCase("Base") && !theme.equalsIgnoreCase("Base Set")) {
             sb.append(cleanQueryToken(theme)).append(" ");
         }
 
@@ -51,69 +54,83 @@ public class MarketPriceFetcher {
             sb.append("#").append(number).append(" ");
         }
 
-        String grading = card.get("Grade");
+        String grade = card.get("Grade");
         String grader = card.get("Grading Co.");
-        if (grader != null && !grader.isBlank() && grading != null && !grading.isBlank()) {
-            sb.append(grader).append(" ").append(grading).append(" ");
+        if (grader != null && !grader.isBlank() && grade != null && !grade.isBlank() && !grade.equals("-") && !grader.equalsIgnoreCase("No")) {
+            sb.append(cleanQueryToken(grader)).append(" ").append(cleanQueryToken(grade)).append(" ");
         }
 
         return sb.toString().trim().replaceAll("\\s+", " ");
     }
 
     /**
-     * Estimates Fair Market Value (FMV) and generates realistic historical price trajectory points.
+     * Constructs a 1-click deep search URL for 130point.com (cleared eBay Best Offer sales).
+     */
+    public static String build130PointUrl(CardData card) {
+        String query = buildSearchQuery(card);
+        return "https://130point.com/sales/?q=" + URLEncoder.encode(query, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Constructs a 1-click deep search URL for eBay Sold & Completed listings.
+     */
+    public static String buildEbaySoldUrl(CardData card) {
+        String query = buildSearchQuery(card);
+        return "https://www.ebay.com/sch/i.html?_nkw=" + URLEncoder.encode(query, StandardCharsets.UTF_8) + "&LH_Sold=1&LH_Complete=1";
+    }
+
+    /**
+     * Estimates Fair Market Value (FMV) using multi-tier prestige classification and scarcity curves.
      */
     public static MarketDataEntry estimateMarketData(CardData card) {
         if (card == null) return null;
 
-        double baseValue = 3.50; // Standard base raw card
+        String brand = card.get("Brand") != null ? card.get("Brand").toLowerCase(Locale.ROOT) : "";
+        String theme = card.get("Theme") != null ? card.get("Theme").toLowerCase(Locale.ROOT) : "";
+        String variant = card.get("Variant") != null ? card.get("Variant").toLowerCase(Locale.ROOT) : "";
+        String season = card.get("Season") != null ? card.get("Season") : "";
 
-        // 1. Scarcity & Print Run Tier
+        // 1. Set Prestige Tier
+        double baseFmv = getSetPrestigeBaseValue(brand, theme, variant, season, card);
+
+        // 2. Scarcity & Serial Print Run Multiplier
         Integer printRun = parsePrintRun(card);
-        boolean is1of1 = card.isOneOfOne() || (printRun != null && printRun == 1);
+        boolean is1of1 = card.isOneOfOne() || (printRun != null && printRun == 1) || variant.contains("superfractor");
 
         if (is1of1) {
-            baseValue = 385.00;
-        } else if (printRun != null) {
-            if (printRun <= 5) baseValue = 220.00;
-            else if (printRun <= 10) baseValue = 150.00;
-            else if (printRun <= 25) baseValue = 95.00;
-            else if (printRun <= 50) baseValue = 65.00;
-            else if (printRun <= 100) baseValue = 45.00;
-            else if (printRun <= 250) baseValue = 32.00;
-            else if (printRun <= 500) baseValue = 22.00;
-            else if (printRun <= 1000) baseValue = 15.00;
-            else baseValue = 9.00;
-        } else {
-            // Un-numbered special variants
-            if (card.isRefractorOrFoil()) {
-                baseValue = 28.00;
-            } else {
-                String theme = card.get("Theme");
-                if (theme != null && !theme.isBlank() && !theme.equalsIgnoreCase("Base")) {
-                    baseValue = 8.50;
-                }
+            baseFmv = Math.max(baseFmv * 3.5, 385.00);
+            if (brand.contains("flawless") || brand.contains("national treasures") || variant.contains("superfractor")) {
+                baseFmv = Math.max(baseFmv, 650.00);
             }
+        } else if (printRun != null) {
+            if (printRun <= 5) baseFmv = Math.max(baseFmv * 2.8, 185.00);
+            else if (printRun <= 10) baseFmv = Math.max(baseFmv * 2.2, 120.00);
+            else if (printRun <= 25) baseFmv = Math.max(baseFmv * 1.7, 75.00);
+            else if (printRun <= 50) baseFmv = Math.max(baseFmv * 1.4, 45.00);
+            else if (printRun <= 100) baseFmv = Math.max(baseFmv * 1.2, 30.00);
+            else if (printRun <= 250) baseFmv = Math.max(baseFmv * 1.1, 20.00);
+            else if (printRun <= 500) baseFmv = Math.max(baseFmv, 14.00);
+            else if (printRun <= 1000) baseFmv = Math.max(baseFmv, 9.00);
         }
 
-        // 2. Feature Multipliers
+        // 3. Autograph & Memorabilia Multipliers
         boolean isAuto = "Yes".equalsIgnoreCase(card.get("Autograph"));
         boolean isPatch = "Yes".equalsIgnoreCase(card.get("Memorabilia"));
         boolean isRookie = "Yes".equalsIgnoreCase(card.get("Rookie"));
 
         if (isAuto && isPatch) {
-            baseValue = Math.max(baseValue * 2.2, 110.00);
+            baseFmv = Math.max(baseFmv * 2.4, 115.00);
         } else if (isAuto) {
-            baseValue = Math.max(baseValue * 1.9, 65.00);
+            baseFmv = Math.max(baseFmv * 2.0, 55.00);
         } else if (isPatch) {
-            baseValue = Math.max(baseValue * 1.5, 38.00);
+            baseFmv = Math.max(baseFmv * 1.4, 28.00);
         }
 
         if (isRookie) {
-            baseValue *= 1.45;
+            baseFmv *= 1.6;
         }
 
-        // 3. Certified Grading Multiplier
+        // 4. Certified Grading Multiplier
         String grade = card.get("Grade");
         String grader = card.get("Grading Co.");
         String gradeLabel = "Raw";
@@ -121,27 +138,27 @@ public class MarketPriceFetcher {
             gradeLabel = grader.trim() + " " + grade.trim();
             String g = grade.trim();
             if (g.equals("10") || g.contains("GEM")) {
-                baseValue *= 2.8;
+                baseFmv *= 2.75;
             } else if (g.equals("9.5") || g.equals("9")) {
-                baseValue *= 1.55;
+                baseFmv *= 1.5;
             } else if (g.equals("8.5") || g.equals("8")) {
-                baseValue *= 1.05;
+                baseFmv *= 1.05;
             } else {
-                baseValue *= 0.75;
+                baseFmv *= 0.70;
             }
         }
 
-        // Round to nearest clean dollar
-        double fmv = Math.round(baseValue * 100.0) / 100.0;
-        if (fmv > 20.0) {
+        // Format clean pricing
+        double fmv = Math.round(baseFmv * 100.0) / 100.0;
+        if (fmv > 15.0) {
             fmv = Math.round(fmv);
         }
 
-        // 4. Generate Historical Comps & Sparkline Trajectory
+        // 5. Generate Historical Sales Comps Trajectory
         List<PricePoint> comps = generateHistoricalComps(fmv, gradeLabel);
         double lastSold = comps.get(comps.size() - 1).price();
         String lastSoldDate = comps.get(comps.size() - 1).date();
-        double purchasePrice = Math.round((comps.get(0).price() * 0.90) * 100.0) / 100.0;
+        double purchasePrice = Math.round((comps.get(0).price() * 0.88) * 100.0) / 100.0;
 
         PopReport pop = null;
         if (card.popTotal != null || card.certNumber != null) {
@@ -167,12 +184,53 @@ public class MarketPriceFetcher {
                 .build();
     }
 
+    private static double getSetPrestigeBaseValue(String brand, String theme, String variant, String season, CardData card) {
+        // Tier 1: Ultra High-End Super Luxury
+        if (brand.contains("flawless") || brand.contains("national treasures") ||
+            brand.contains("exquisite") || brand.contains("immaculate") ||
+            variant.contains("precious metal gems") || variant.contains("pmg") ||
+            variant.contains("star rubies") || variant.contains("superfractor")) {
+            return 145.00;
+        }
+
+        // Tier 2: Chromium & Premium 90s Parallels
+        if (brand.contains("finest") || brand.contains("topps chrome") ||
+            brand.contains("prizm") || brand.contains("optic") ||
+            brand.contains("select") || brand.contains("bowman's best") ||
+            brand.contains("sp authentic") || brand.contains("spx") ||
+            brand.contains("flair showcase") || variant.contains("refractor") ||
+            variant.contains("atomic") || variant.contains("platinum medallion")) {
+
+            if (variant.contains("refractor") || variant.contains("gold") || variant.contains("blue")) {
+                return 38.00;
+            }
+            return 16.00;
+        }
+
+        // Tier 3: 90s Insert Boom & Mid-Tier Classic
+        if (theme.contains("mystery") || theme.contains("die-cut") ||
+            theme.contains("block party") || theme.contains("unstoppable") ||
+            theme.contains("matrix") || variant.contains("gold medallion") ||
+            variant.contains("electric court") || variant.contains("gold signature") ||
+            variant.contains("silver signature") || variant.contains("test")) {
+            return 9.50;
+        }
+
+        // Tier 4: Base Sets
+        if (season.startsWith("1994") || season.startsWith("1995")) {
+            // Vintage 90s rookie / Bullets era
+            return 2.50;
+        }
+
+        // Standard veteran base common
+        return 1.25;
+    }
+
     private static List<PricePoint> generateHistoricalComps(double targetFmv, String gradeLabel) {
         List<PricePoint> points = new ArrayList<>();
-        // Generate 3 to 5 sales points from 2023 to 2025 showing realistic historical movement
-        double p1 = Math.max(1.50, Math.round(targetFmv * 0.68 * 100.0) / 100.0);
-        double p2 = Math.max(2.00, Math.round(targetFmv * 0.82 * 100.0) / 100.0);
-        double p3 = Math.max(2.25, Math.round(targetFmv * 0.94 * 100.0) / 100.0);
+        double p1 = Math.max(1.00, Math.round(targetFmv * 0.72 * 100.0) / 100.0);
+        double p2 = Math.max(1.10, Math.round(targetFmv * 0.86 * 100.0) / 100.0);
+        double p3 = Math.max(1.20, Math.round(targetFmv * 0.96 * 100.0) / 100.0);
 
         points.add(new PricePoint("2023-06", p1, "eBay Sold", gradeLabel));
         points.add(new PricePoint("2024-04", p2, "eBay Sold", gradeLabel));

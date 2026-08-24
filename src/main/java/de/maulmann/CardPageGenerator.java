@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -310,6 +311,11 @@ public class CardPageGenerator {
         Map<String, Object> data = new HashMap<>();
         data.put("cardId", c.stableId);
 
+        CardSchemaGenerator.CachedRatingData cachedRating = CardSchemaGenerator.getCachedRating(c);
+        data.put("initialRatingCount", cachedRating.ratingCount());
+        data.put("initialRatingAverage", String.format(Locale.US, "%.1f", cachedRating.average()));
+        data.put("initialRatingPercentage", (int) Math.round(cachedRating.percentage()));
+
         List<CardSchemaGenerator.FaqItem> faqItems = CardSchemaGenerator.computeFaqItems(c);
         String faqHtml = CardSchemaGenerator.generateFaqHtml(faqItems);
         String frontImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + resolvedImageBase + "-front.avif";
@@ -451,6 +457,9 @@ public class CardPageGenerator {
             data.put("isGrowthPositive", true);
         }
         data.put("hasPricing", c.estimatedValue != null || c.lastSoldPrice != null || !c.priceHistory.isEmpty());
+
+        data.put("point130Url", MarketPriceFetcher.build130PointUrl(c));
+        data.put("ebaySoldUrl", MarketPriceFetcher.buildEbaySoldUrl(c));
 
         data.put("certNumber", c.certNumber != null ? c.certNumber : "");
         data.put("verificationUrl", c.getVerificationUrl() != null ? c.getVerificationUrl() : "");
