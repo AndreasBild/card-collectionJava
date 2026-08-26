@@ -96,38 +96,35 @@ public class CardMarketEnricher {
                 if (grader != null && !grader.isBlank()) {
                     logger.info("Querying {} cert #{} for exact card: {} (ID: {})", grader, certNum, c.filenameBase, cardId);
                     Optional<MarketDataEntry> entryOpt = psaScraper.fetchCertData(grader, certNum);
-                    MarketDataEntry estimated = MarketPriceFetcher.estimateMarketData(c);
 
                     if (entryOpt.isPresent()) {
                         MarketDataEntry entry = entryOpt.get();
+                        MarketDataEntry existing = existingOpt.orElse(null);
 
-                        // Merge census with exact pricing data
+                        // Retain existing confirmed sales / manual prices if present; do not generate synthetic estimates
                         MarketDataEntry combined = MarketDataEntry.builder()
                                 .certNumber(certNum)
                                 .lastQueried(entry.lastQueried())
                                 .popReport(entry.popReport())
-                                .estimatedValue(estimated != null ? estimated.estimatedValue() : null)
-                                .lastSoldPrice(estimated != null ? estimated.lastSoldPrice() : null)
-                                .lastSoldDate(estimated != null ? estimated.lastSoldDate() : null)
-                                .purchasePrice(estimated != null ? estimated.purchasePrice() : null)
-                                .priceHistory(estimated != null ? estimated.priceHistory() : List.of())
+                                .estimatedValue(existing != null ? existing.estimatedValue() : null)
+                                .lastSoldPrice(existing != null ? existing.lastSoldPrice() : null)
+                                .lastSoldDate(existing != null ? existing.lastSoldDate() : null)
+                                .purchasePrice(existing != null ? existing.purchasePrice() : null)
+                                .priceHistory(existing != null ? existing.priceHistory() : List.of())
                                 .metadata(entry.metadata())
                                 .build();
 
                         cache.put(cardId, combined);
                         queriedSuccess++;
-                        exactPriced++;
-                        logger.info("   -> Success for exact card #{}: Grader={}, Pop Total={}, Pop Higher={}, FMV=${}",
+                        if (combined.estimatedValue() != null || combined.lastSoldPrice() != null) {
+                            exactPriced++;
+                        }
+                        logger.info("   -> Success for exact card #{}: Grader={}, Pop Total={}, Pop Higher={}",
                                 certNum,
                                 grader,
                                 entry.popReport() != null ? entry.popReport().totalGraded() : "N/A",
-                                entry.popReport() != null ? entry.popReport().popHigher() : "N/A",
-                                combined.estimatedValue());
+                                entry.popReport() != null ? entry.popReport().popHigher() : "N/A");
                     } else {
-                        if (estimated != null) {
-                            cache.put(cardId, estimated);
-                            exactPriced++;
-                        }
                         queriedFailed++;
                     }
 

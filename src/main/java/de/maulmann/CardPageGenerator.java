@@ -456,10 +456,15 @@ public class CardPageGenerator {
             data.put("growthPctFormatted", "");
             data.put("isGrowthPositive", true);
         }
-        data.put("hasPricing", c.estimatedValue != null || c.lastSoldPrice != null || !c.priceHistory.isEmpty());
+        data.put("hasPricing", (c.estimatedValue != null && c.estimatedValue > 0)
+                || (c.lastSoldPrice != null && c.lastSoldPrice > 0)
+                || (c.purchasePrice != null && c.purchasePrice > 0)
+                || (c.priceHistory != null && !c.priceHistory.isEmpty()));
 
         data.put("point130Url", MarketPriceFetcher.build130PointUrl(c));
         data.put("ebaySoldUrl", MarketPriceFetcher.buildEbaySoldUrl(c));
+        data.put("psaAprUrl", MarketPriceFetcher.buildPsaAprUrl(c));
+        data.put("fanaticsUrl", MarketPriceFetcher.buildFanaticsCollectUrl(c));
 
         data.put("certNumber", c.certNumber != null ? c.certNumber : "");
         data.put("verificationUrl", c.getVerificationUrl() != null ? c.getVerificationUrl() : "");

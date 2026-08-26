@@ -240,7 +240,7 @@ ${topNavHtml?no_esc}
                     <div class="market-header">
                         <div class="market-title-group">
                             <h2 class="market-title">&#x1F4C8; Market Value &amp; Price History</h2>
-                            <p class="market-subtitle">Verified auction comps &amp; historical trajectory</p>
+                            <p class="market-subtitle">Confirmed sales (eBay / PSA / Fanatics / Self-Purchase)</p>
                         </div>
                         <#if growthPctFormatted != "">
                             <span class="growth-badge <#if isGrowthPositive>growth-positive<#else>growth-negative</#if>">
@@ -310,7 +310,17 @@ ${topNavHtml?no_esc}
                         </#if>
                         <#if ebaySoldUrl?? && ebaySoldUrl != "">
                             <a href="${ebaySoldUrl}" target="_blank" rel="noopener noreferrer" class="comp-lookup-btn ebay-sold-btn" title="Search completed & sold auctions on eBay">
-                                🛒 eBay Sold Items &nearr;
+                                🛒 eBay Sold &nearr;
+                            </a>
+                        </#if>
+                        <#if psaAprUrl?? && psaAprUrl != "">
+                            <a href="${psaAprUrl}" target="_blank" rel="noopener noreferrer" class="comp-lookup-btn psa-apr-btn" title="Search PSA Auction Prices Realized">
+                                🏛️ PSA APR &nearr;
+                            </a>
+                        </#if>
+                        <#if fanaticsUrl?? && fanaticsUrl != "">
+                            <a href="${fanaticsUrl}" target="_blank" rel="noopener noreferrer" class="comp-lookup-btn fanatics-btn" title="Search Fanatics Collect completed auctions">
+                                🎯 Fanatics Collect &nearr;
                             </a>
                         </#if>
                     </div>
