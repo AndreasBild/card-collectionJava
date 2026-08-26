@@ -1158,35 +1158,6 @@ tr:hover {
     flex-direction: column;
 }
 
-
-/* --- 3D POPOUT / SLAB DEPTH EFFECT --- */
-.flip-container.is-3d-popout {
-    transform-style: preserve-3d;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.85), 0 0 30px rgba(212, 175, 55, 0.3);
-    border: 2.5px solid var(--accent-gold);
-    border-radius: var(--radius-lg);
-    transition: transform 0.25s ease-out, box-shadow 0.3s ease;
-}
-
-.flip-container.is-3d-popout .flip-face-front picture,
-.flip-container.is-3d-popout .flip-face-back picture {
-    transform: translateZ(35px) scale(1.035);
-    filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 14px rgba(212, 175, 55, 0.25));
-    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease;
-    border-radius: calc(var(--radius-lg) - 4px);
-}
-
-.flip-container.is-3d-popout .flip-face-front figure,
-.flip-container.is-3d-popout .flip-face-back figure {
-    overflow: visible;
-}
-
-.flip-container.is-3d-popout .flip-face-front,
-.flip-container.is-3d-popout .flip-face-back {
-    overflow: visible;
-    background: radial-gradient(circle at 50% 50%, rgba(30, 41, 59, 0.95), rgba(11, 15, 25, 0.98));
-}
-
 .flip-face-front picture,
 .flip-face-back picture {
     display: flex;
