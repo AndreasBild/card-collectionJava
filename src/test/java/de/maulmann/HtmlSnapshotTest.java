@@ -126,7 +126,7 @@ class HtmlSnapshotTest {
         assertNotNull(loupeBtn, "Card detail page must contain #loupeBtn");
 
         Element popoutBtn = doc.selectFirst("#popoutBtn");
-        assertNotNull(popoutBtn, "Card detail page must contain #popoutBtn");
+        assertNull(popoutBtn, "Card detail page must not contain removed #popoutBtn");
 
         Element flipContainer = doc.selectFirst(".flip-container");
         assertNotNull(flipContainer, "Card detail page must contain .flip-container");
