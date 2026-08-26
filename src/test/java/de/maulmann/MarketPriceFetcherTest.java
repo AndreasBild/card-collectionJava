@@ -3,9 +3,11 @@ package de.maulmann;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("MarketPriceFetcher Query & Scarcity Valuation Tests")
+@DisplayName("MarketPriceFetcher Confirmed Sales & Exact Match Tests")
 class MarketPriceFetcherTest {
 
     @Test
@@ -35,68 +37,74 @@ class MarketPriceFetcherTest {
     }
 
     @Test
-    @DisplayName("Should assign higher valuations to 1-of-1 and low serial numbered cards")
-    void testValuationScarcityTiers() {
-        CardJson baseCard = CardJson.builder()
-                .player("Juwan Howard")
-                .season("1995-96")
-                .company("Topps")
-                .brand("Topps")
-                .cardNumber("100")
-                .build();
-        MarketDataEntry baseEntry = MarketPriceFetcher.estimateMarketData(new CardData(baseCard, null));
-
-        CardJson lowSerialCard = CardJson.builder()
-                .player("Juwan Howard")
-                .season("2023-24")
-                .brand("Topps Chrome")
-                .serialNumber("3/5")
-                .printRun(5)
-                .build();
-        MarketDataEntry lowSerialEntry = MarketPriceFetcher.estimateMarketData(new CardData(lowSerialCard, null));
-
-        CardJson oneOfOneCard = CardJson.builder()
+    @DisplayName("Should construct deep search lookup URLs for eBay, 130point, PSA APR, and Fanatics")
+    void testLookupUrls() {
+        CardJson c = CardJson.builder()
                 .player("Juwan Howard")
                 .season("2023-24")
                 .brand("Topps Chrome")
                 .variant("Superfractor")
-                .serialNumber("1/1")
-                .printRun(1)
-                .gradingCompany("PSA")
-                .grade("10")
                 .build();
-        MarketDataEntry oneOfOneEntry = MarketPriceFetcher.estimateMarketData(new CardData(oneOfOneCard, null));
+        CardData cd = new CardData(c, "superfractor-test");
 
-        assertNotNull(baseEntry);
-        assertNotNull(lowSerialEntry);
-        assertNotNull(oneOfOneEntry);
+        String url130 = MarketPriceFetcher.build130PointUrl(cd);
+        String ebayUrl = MarketPriceFetcher.buildEbaySoldUrl(cd);
+        String psaAprUrl = MarketPriceFetcher.buildPsaAprUrl(cd);
+        String fanaticsUrl = MarketPriceFetcher.buildFanaticsCollectUrl(cd);
 
-        assertTrue(lowSerialEntry.estimatedValue() > baseEntry.estimatedValue(),
-                "Low serial numbered card should have significantly higher FMV than base");
-        assertTrue(oneOfOneEntry.estimatedValue() > lowSerialEntry.estimatedValue(),
-                "PSA 10 1-of-1 Superfractor should have higher FMV than /5 serial");
-
-        // Verify comps trajectory
-        assertFalse(oneOfOneEntry.priceHistory().isEmpty());
-        assertEquals(3, oneOfOneEntry.priceHistory().size());
-        assertTrue(oneOfOneEntry.lastSoldPrice() > 0);
-        assertNotNull(oneOfOneEntry.lastSoldDate());
+        assertTrue(url130.startsWith("https://130point.com/sales/?q="));
+        assertTrue(ebayUrl.contains("ebay.com/sch/i.html"));
+        assertTrue(ebayUrl.contains("LH_Sold=1"));
+        assertTrue(psaAprUrl.contains("psacard.com/auctionprices"));
+        assertTrue(fanaticsUrl.contains("fanaticscollect.com/search"));
     }
 
     @Test
-    @DisplayName("Should apply autograph and patch memorabilia multipliers")
-    void testAutographAndPatchMultipliers() {
-        CardJson autoPatchCard = CardJson.builder()
-                .player("Juwan Howard")
-                .season("2012-13")
-                .brand("Panini National Treasures")
-                .isAutograph(true)
-                .isPatch(true)
-                .printRun(25)
-                .build();
+    @DisplayName("Should validate confirmed sales sources strictly (eBay, PSA, Fanatics, Self Purchase)")
+    void testConfirmedSalesSourceValidation() {
+        assertTrue(MarketPriceFetcher.isConfirmedSalesSource("eBay Sold"));
+        assertTrue(MarketPriceFetcher.isConfirmedSalesSource("eBay"));
+        assertTrue(MarketPriceFetcher.isConfirmedSalesSource("PSA APR"));
+        assertTrue(MarketPriceFetcher.isConfirmedSalesSource("PSA Auction Prices Realized"));
+        assertTrue(MarketPriceFetcher.isConfirmedSalesSource("Fanatics Collect"));
+        assertTrue(MarketPriceFetcher.isConfirmedSalesSource("Self Purchase"));
+        assertTrue(MarketPriceFetcher.isConfirmedSalesSource("Personal Purchase"));
 
-        MarketDataEntry entry = MarketPriceFetcher.estimateMarketData(new CardData(autoPatchCard, null));
-        assertNotNull(entry);
-        assertTrue(entry.estimatedValue() >= 100.0, "Autographed patch card should command premium FMV");
+        assertFalse(MarketPriceFetcher.isConfirmedSalesSource(null));
+        assertFalse(MarketPriceFetcher.isConfirmedSalesSource(""));
+        assertFalse(MarketPriceFetcher.isConfirmedSalesSource("Random Blog Forum"));
+        assertFalse(MarketPriceFetcher.isConfirmedSalesSource("Synthetic Estimate"));
+    }
+
+    @Test
+    @DisplayName("Should verify exact matches of player, brand, and card variant")
+    void testExactMatchValidation() {
+        CardJson c = CardJson.builder()
+                .player("Juwan Howard")
+                .brand("Topps Finest")
+                .variant("Gold Refractor")
+                .build();
+        CardData cd = new CardData(c, "finest-gold");
+
+        assertTrue(MarketPriceFetcher.isExactMatch(cd, "Juwan Howard", "Topps Finest", "Gold Refractor"));
+        assertFalse(MarketPriceFetcher.isExactMatch(cd, "Michael Jordan", "Topps Finest", "Gold Refractor"));
+        assertFalse(MarketPriceFetcher.isExactMatch(cd, "Juwan Howard", "Fleer Metal", "Gold Refractor"));
+        assertFalse(MarketPriceFetcher.isExactMatch(cd, "Juwan Howard", "Topps Finest", "Base"));
+    }
+
+    @Test
+    @DisplayName("Should filter price history points to only keep confirmed sales")
+    void testFilterConfirmedPricePoints() {
+        List<PricePoint> points = List.of(
+                new PricePoint("2024-01", 120.0, "eBay Sold", "PSA 10"),
+                new PricePoint("2024-03", 135.0, "Fanatics Collect", "PSA 10"),
+                new PricePoint("2024-05", -10.0, "eBay Sold", "PSA 10"),
+                new PricePoint("2024-06", 140.0, "Unverified Source", "PSA 10")
+        );
+
+        List<PricePoint> filtered = MarketPriceFetcher.filterConfirmedPricePoints(points);
+        assertEquals(2, filtered.size());
+        assertEquals("eBay Sold", filtered.get(0).source());
+        assertEquals("Fanatics Collect", filtered.get(1).source());
     }
 }

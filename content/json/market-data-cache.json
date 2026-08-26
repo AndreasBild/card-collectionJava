@@ -11,26 +11,11 @@
       "certNumber" : "26880752",
       "registryUrl" : "https://www.psacard.com/cert/26880752"
     },
-    "estimatedValue" : 57.0,
-    "lastSoldPrice" : 54.72,
-    "lastSoldDate" : "2025-10",
-    "purchasePrice" : 36.12,
-    "priceHistory" : [ {
-      "date" : "2023-06",
-      "price" : 41.04,
-      "source" : "eBay Sold",
-      "grade" : "PSA 9"
-    }, {
-      "date" : "2024-04",
-      "price" : 49.02,
-      "source" : "eBay Sold",
-      "grade" : "PSA 9"
-    }, {
-      "date" : "2025-10",
-      "price" : 54.72,
-      "source" : "eBay Sold",
-      "grade" : "PSA 9"
-    } ],
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : null,
+    "priceHistory" : [ ],
     "metadata" : {
       "psaItemDescription" : "FINEST MYSTERY",
       "psaGradeRaw" : "MINT 9"
@@ -48,26 +33,11 @@
       "certNumber" : "40534062",
       "registryUrl" : "https://www.psacard.com/cert/40534062"
     },
-    "estimatedValue" : 40.0,
-    "lastSoldPrice" : 38.4,
-    "lastSoldDate" : "2025-10",
-    "purchasePrice" : 25.34,
-    "priceHistory" : [ {
-      "date" : "2023-06",
-      "price" : 28.8,
-      "source" : "eBay Sold",
-      "grade" : "PSA 8"
-    }, {
-      "date" : "2024-04",
-      "price" : 34.4,
-      "source" : "eBay Sold",
-      "grade" : "PSA 8"
-    }, {
-      "date" : "2025-10",
-      "price" : 38.4,
-      "source" : "eBay Sold",
-      "grade" : "PSA 8"
-    } ],
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : null,
+    "priceHistory" : [ ],
     "metadata" : {
       "psaItemDescription" : "FINEST MYSTERY",
       "psaGradeRaw" : "NM-MT 8"
@@ -85,26 +55,11 @@
       "certNumber" : "93031361",
       "registryUrl" : "https://www.psacard.com/cert/93031361"
     },
-    "estimatedValue" : 225.0,
-    "lastSoldPrice" : 216.0,
-    "lastSoldDate" : "2025-10",
-    "purchasePrice" : 142.56,
-    "priceHistory" : [ {
-      "date" : "2023-06",
-      "price" : 162.0,
-      "source" : "eBay Sold",
-      "grade" : "PSA 9"
-    }, {
-      "date" : "2024-04",
-      "price" : 193.5,
-      "source" : "eBay Sold",
-      "grade" : "PSA 9"
-    }, {
-      "date" : "2025-10",
-      "price" : 216.0,
-      "source" : "eBay Sold",
-      "grade" : "PSA 9"
-    } ],
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : null,
+    "priceHistory" : [ ],
     "metadata" : {
       "psaItemDescription" : "PANINI DONRUSS ELITE IMPACT IMPRESSIONS AUTOGRAPHS",
       "psaGradeRaw" : "GEM MT 10"
@@ -122,26 +77,11 @@
       "certNumber" : "105013673",
       "registryUrl" : "https://www.psacard.com/cert/105013673"
     },
-    "estimatedValue" : 1788.0,
-    "lastSoldPrice" : 1716.48,
-    "lastSoldDate" : "2025-10",
-    "purchasePrice" : 1132.88,
-    "priceHistory" : [ {
-      "date" : "2023-06",
-      "price" : 1287.36,
-      "source" : "eBay Sold",
-      "grade" : "PSA 10"
-    }, {
-      "date" : "2024-04",
-      "price" : 1537.68,
-      "source" : "eBay Sold",
-      "grade" : "PSA 10"
-    }, {
-      "date" : "2025-10",
-      "price" : 1716.48,
-      "source" : "eBay Sold",
-      "grade" : "PSA 10"
-    } ],
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : null,
+    "priceHistory" : [ ],
     "metadata" : { }
   },
   "2023-24-topps-chrome-frozenfractor-101-sn-4" : {
@@ -156,26 +96,11 @@
       "certNumber" : "97840205",
       "registryUrl" : "https://www.psacard.com/cert/97840205"
     },
-    "estimatedValue" : 278.0,
-    "lastSoldPrice" : 266.88,
-    "lastSoldDate" : "2025-10",
-    "purchasePrice" : 176.14,
-    "priceHistory" : [ {
-      "date" : "2023-06",
-      "price" : 200.16,
-      "source" : "eBay Sold",
-      "grade" : "PSA 9"
-    }, {
-      "date" : "2024-04",
-      "price" : 239.08,
-      "source" : "eBay Sold",
-      "grade" : "PSA 9"
-    }, {
-      "date" : "2025-10",
-      "price" : 266.88,
-      "source" : "eBay Sold",
-      "grade" : "PSA 9"
-    } ],
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : null,
+    "priceHistory" : [ ],
     "metadata" : { }
   },
   "2023-24-topps-chrome-72-topps-autographs-purple-refractor-ta-jho-sn8" : {
@@ -190,26 +115,11 @@
       "certNumber" : "102697283",
       "registryUrl" : "https://www.psacard.com/cert/102697283"
     },
-    "estimatedValue" : 660.0,
-    "lastSoldPrice" : 633.6,
-    "lastSoldDate" : "2025-10",
-    "purchasePrice" : 418.18,
-    "priceHistory" : [ {
-      "date" : "2023-06",
-      "price" : 475.2,
-      "source" : "eBay Sold",
-      "grade" : "PSA 10"
-    }, {
-      "date" : "2024-04",
-      "price" : 567.6,
-      "source" : "eBay Sold",
-      "grade" : "PSA 10"
-    }, {
-      "date" : "2025-10",
-      "price" : 633.6,
-      "source" : "eBay Sold",
-      "grade" : "PSA 10"
-    } ],
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : null,
+    "priceHistory" : [ ],
     "metadata" : { }
   },
   "1995-96-topps-finest-mystery-borderless-refractor-m20-card870" : {
@@ -224,26 +134,11 @@
       "certNumber" : "26741999",
       "registryUrl" : "https://www.psacard.com/cert/26741999"
     },
-    "estimatedValue" : 105.0,
-    "lastSoldPrice" : 100.8,
-    "lastSoldDate" : "2025-10",
-    "purchasePrice" : 66.53,
-    "priceHistory" : [ {
-      "date" : "2023-06",
-      "price" : 75.6,
-      "source" : "eBay Sold",
-      "grade" : "PSA 10"
-    }, {
-      "date" : "2024-04",
-      "price" : 90.3,
-      "source" : "eBay Sold",
-      "grade" : "PSA 10"
-    }, {
-      "date" : "2025-10",
-      "price" : 100.8,
-      "source" : "eBay Sold",
-      "grade" : "PSA 10"
-    } ],
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : null,
+    "priceHistory" : [ ],
     "metadata" : {
       "psaItemDescription" : "FINEST MYSTERY",
       "psaGradeRaw" : "GEM MT 10"
@@ -261,26 +156,11 @@
       "certNumber" : "117538976",
       "registryUrl" : "https://www.psacard.com/cert/117538976"
     },
-    "estimatedValue" : 180.0,
-    "lastSoldPrice" : 172.8,
-    "lastSoldDate" : "2025-10",
-    "purchasePrice" : 114.05,
-    "priceHistory" : [ {
-      "date" : "2023-06",
-      "price" : 129.6,
-      "source" : "eBay Sold",
-      "grade" : "PSA 9"
-    }, {
-      "date" : "2024-04",
-      "price" : 154.8,
-      "source" : "eBay Sold",
-      "grade" : "PSA 9"
-    }, {
-      "date" : "2025-10",
-      "price" : 172.8,
-      "source" : "eBay Sold",
-      "grade" : "PSA 9"
-    } ],
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : null,
+    "priceHistory" : [ ],
     "metadata" : { }
   },
   "2021-22-topps-finest-red-refractor-fa-jhw-sn2" : {
@@ -295,26 +175,11 @@
       "certNumber" : "134182801",
       "registryUrl" : "https://www.psacard.com/cert/134182801"
     },
-    "estimatedValue" : 555.0,
-    "lastSoldPrice" : 532.8,
-    "lastSoldDate" : "2025-10",
-    "purchasePrice" : 351.65,
-    "priceHistory" : [ {
-      "date" : "2023-06",
-      "price" : 399.6,
-      "source" : "eBay Sold",
-      "grade" : "PSA 9"
-    }, {
-      "date" : "2024-04",
-      "price" : 477.3,
-      "source" : "eBay Sold",
-      "grade" : "PSA 9"
-    }, {
-      "date" : "2025-10",
-      "price" : 532.8,
-      "source" : "eBay Sold",
-      "grade" : "PSA 9"
-    } ],
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : null,
+    "priceHistory" : [ ],
     "metadata" : {
       "psaItemDescription" : "TOPPS FINEST FINEST AUTOGRAPHS",
       "psaGradeRaw" : "MINT 9"
@@ -332,26 +197,11 @@
       "certNumber" : "148977170",
       "registryUrl" : "https://www.psacard.com/cert/148977170"
     },
-    "estimatedValue" : 0.88,
-    "lastSoldPrice" : 1.2,
-    "lastSoldDate" : "2025-10",
-    "purchasePrice" : 0.88,
-    "priceHistory" : [ {
-      "date" : "2023-06",
-      "price" : 1.0,
-      "source" : "eBay Sold",
-      "grade" : "PSA 7"
-    }, {
-      "date" : "2024-04",
-      "price" : 1.1,
-      "source" : "eBay Sold",
-      "grade" : "PSA 7"
-    }, {
-      "date" : "2025-10",
-      "price" : 1.2,
-      "source" : "eBay Sold",
-      "grade" : "PSA 7"
-    } ],
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : null,
+    "priceHistory" : [ ],
     "metadata" : {
       "psaItemDescription" : "SPx FORCE",
       "psaGradeRaw" : "NM 7"
@@ -369,26 +219,11 @@
       "certNumber" : "26215655",
       "registryUrl" : "https://www.psacard.com/cert/26215655"
     },
-    "estimatedValue" : 105.0,
-    "lastSoldPrice" : 100.8,
-    "lastSoldDate" : "2025-10",
-    "purchasePrice" : 66.53,
-    "priceHistory" : [ {
-      "date" : "2023-06",
-      "price" : 75.6,
-      "source" : "eBay Sold",
-      "grade" : "PSA 10"
-    }, {
-      "date" : "2024-04",
-      "price" : 90.3,
-      "source" : "eBay Sold",
-      "grade" : "PSA 10"
-    }, {
-      "date" : "2025-10",
-      "price" : 100.8,
-      "source" : "eBay Sold",
-      "grade" : "PSA 10"
-    } ],
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : null,
+    "priceHistory" : [ ],
     "metadata" : {
       "psaItemDescription" : "FINEST MYSTERY",
       "psaGradeRaw" : "GEM MT 10"
