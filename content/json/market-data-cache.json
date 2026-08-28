@@ -1,4 +1,86 @@
 {
+  "2023-24-topps-chrome-superfractor-101-sn1" : {
+    "certNumber" : "105013673",
+    "lastQueried" : "2026-08-24T10:40:53.477630Z",
+    "popReport" : {
+      "gradingCompany" : "PSA",
+      "grade" : "10",
+      "totalGraded" : 1,
+      "popHigher" : 0,
+      "gradePop" : null,
+      "certNumber" : "105013673",
+      "registryUrl" : "https://www.psacard.com/cert/105013673"
+    },
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : null,
+    "priceHistory" : [ ],
+    "metadata" : { }
+  },
+  "2023-24-topps-chrome-frozenfractor-101-sn-4" : {
+    "certNumber" : "97840205",
+    "lastQueried" : "2026-08-24T10:40:53.105690Z",
+    "popReport" : {
+      "gradingCompany" : "PSA",
+      "grade" : "9",
+      "totalGraded" : 1,
+      "popHigher" : 0,
+      "gradePop" : null,
+      "certNumber" : "97840205",
+      "registryUrl" : "https://www.psacard.com/cert/97840205"
+    },
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : null,
+    "priceHistory" : [ ],
+    "metadata" : { }
+  },
+  "2021-22-topps-finest-red-refractor-fa-jhw-sn2" : {
+    "certNumber" : "134182801",
+    "lastQueried" : "2026-08-24T10:40:49.769016Z",
+    "popReport" : {
+      "gradingCompany" : "PSA",
+      "grade" : "9",
+      "totalGraded" : null,
+      "popHigher" : null,
+      "gradePop" : null,
+      "certNumber" : "134182801",
+      "registryUrl" : "https://www.psacard.com/cert/134182801"
+    },
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : null,
+    "priceHistory" : [ ],
+    "metadata" : {
+      "psaItemDescription" : "TOPPS FINEST FINEST AUTOGRAPHS",
+      "psaGradeRaw" : "MINT 9"
+    }
+  },
+  "1995-96-topps-finest-mystery-bordered-test-refractor-m20-card830" : {
+    "certNumber" : "26215655",
+    "lastQueried" : "2026-08-24T10:40:44.550033Z",
+    "popReport" : {
+      "gradingCompany" : "PSA",
+      "grade" : "10",
+      "totalGraded" : null,
+      "popHigher" : null,
+      "gradePop" : null,
+      "certNumber" : "26215655",
+      "registryUrl" : "https://www.psacard.com/cert/26215655"
+    },
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : null,
+    "priceHistory" : [ ],
+    "metadata" : {
+      "psaItemDescription" : "FINEST MYSTERY",
+      "psaGradeRaw" : "GEM MT 10"
+    }
+  },
   "1995-96-topps-finest-mystery-bordered-test-refractor-m20-card820" : {
     "certNumber" : "26880752",
     "lastQueried" : "2026-08-24T10:40:42.500287Z",
@@ -65,42 +147,46 @@
       "psaGradeRaw" : "GEM MT 10"
     }
   },
-  "2023-24-topps-chrome-superfractor-101-sn1" : {
-    "certNumber" : "105013673",
-    "lastQueried" : "2026-08-24T10:40:53.477630Z",
-    "popReport" : {
-      "gradingCompany" : "PSA",
-      "grade" : "10",
-      "totalGraded" : 1,
-      "popHigher" : 0,
-      "gradePop" : null,
-      "certNumber" : "105013673",
-      "registryUrl" : "https://www.psacard.com/cert/105013673"
-    },
-    "estimatedValue" : null,
-    "lastSoldPrice" : null,
-    "lastSoldDate" : null,
+  "1994-95-collectors-choice-autographs-278-sn689" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-08-28T10:11:03.841594Z",
+    "popReport" : null,
+    "estimatedValue" : 2.2249999999999996,
+    "lastSoldPrice" : 2.3,
+    "lastSoldDate" : "2026-06-14",
     "purchasePrice" : null,
-    "priceHistory" : [ ],
+    "priceHistory" : [ {
+      "date" : "2025-01-10",
+      "price" : 2.15,
+      "source" : "eBay (Fixed Price)",
+      "grade" : ""
+    }, {
+      "date" : "2026-06-14",
+      "price" : 2.3,
+      "source" : "eBay (Auction)",
+      "grade" : ""
+    } ],
     "metadata" : { }
   },
-  "2023-24-topps-chrome-frozenfractor-101-sn-4" : {
-    "certNumber" : "97840205",
-    "lastQueried" : "2026-08-24T10:40:53.105690Z",
-    "popReport" : {
-      "gradingCompany" : "PSA",
-      "grade" : "9",
-      "totalGraded" : 1,
-      "popHigher" : 0,
-      "gradePop" : null,
-      "certNumber" : "97840205",
-      "registryUrl" : "https://www.psacard.com/cert/97840205"
-    },
-    "estimatedValue" : null,
-    "lastSoldPrice" : null,
-    "lastSoldDate" : null,
+  "1994-95-collectors-choice-you-crash-the-game-rookie-scoring-gold-s4" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-08-28T10:11:27.521870Z",
+    "popReport" : null,
+    "estimatedValue" : 160.21,
+    "lastSoldPrice" : 317.2,
+    "lastSoldDate" : "2026-08-28",
     "purchasePrice" : null,
-    "priceHistory" : [ ],
+    "priceHistory" : [ {
+      "date" : "2026-08-27",
+      "price" : 3.22,
+      "source" : "eBay (Fixed Price)",
+      "grade" : ""
+    }, {
+      "date" : "2026-08-28",
+      "price" : 317.2,
+      "source" : "eBay (Auction)",
+      "grade" : ""
+    } ],
     "metadata" : { }
   },
   "2023-24-topps-chrome-72-topps-autographs-purple-refractor-ta-jho-sn8" : {
@@ -163,28 +249,6 @@
     "priceHistory" : [ ],
     "metadata" : { }
   },
-  "2021-22-topps-finest-red-refractor-fa-jhw-sn2" : {
-    "certNumber" : "134182801",
-    "lastQueried" : "2026-08-24T10:40:49.769016Z",
-    "popReport" : {
-      "gradingCompany" : "PSA",
-      "grade" : "9",
-      "totalGraded" : null,
-      "popHigher" : null,
-      "gradePop" : null,
-      "certNumber" : "134182801",
-      "registryUrl" : "https://www.psacard.com/cert/134182801"
-    },
-    "estimatedValue" : null,
-    "lastSoldPrice" : null,
-    "lastSoldDate" : null,
-    "purchasePrice" : null,
-    "priceHistory" : [ ],
-    "metadata" : {
-      "psaItemDescription" : "TOPPS FINEST FINEST AUTOGRAPHS",
-      "psaGradeRaw" : "MINT 9"
-    }
-  },
   "1996-97-sp-spx-force-f2-card2630" : {
     "certNumber" : "148977170",
     "lastQueried" : "2026-08-24T10:40:47.443497Z",
@@ -207,26 +271,25 @@
       "psaGradeRaw" : "NM 7"
     }
   },
-  "1995-96-topps-finest-mystery-bordered-test-refractor-m20-card830" : {
-    "certNumber" : "26215655",
-    "lastQueried" : "2026-08-24T10:40:44.550033Z",
-    "popReport" : {
-      "gradingCompany" : "PSA",
-      "grade" : "10",
-      "totalGraded" : null,
-      "popHigher" : null,
-      "gradePop" : null,
-      "certNumber" : "26215655",
-      "registryUrl" : "https://www.psacard.com/cert/26215655"
-    },
-    "estimatedValue" : null,
-    "lastSoldPrice" : null,
-    "lastSoldDate" : null,
+  "1994-95-collectors-choice-278" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-08-28T10:10:37.212898Z",
+    "popReport" : null,
+    "estimatedValue" : 2.2249999999999996,
+    "lastSoldPrice" : 2.3,
+    "lastSoldDate" : "2026-06-14",
     "purchasePrice" : null,
-    "priceHistory" : [ ],
-    "metadata" : {
-      "psaItemDescription" : "FINEST MYSTERY",
-      "psaGradeRaw" : "GEM MT 10"
-    }
+    "priceHistory" : [ {
+      "date" : "2025-01-10",
+      "price" : 2.15,
+      "source" : "eBay (Fixed Price)",
+      "grade" : ""
+    }, {
+      "date" : "2026-06-14",
+      "price" : 2.3,
+      "source" : "eBay (Auction)",
+      "grade" : ""
+    } ],
+    "metadata" : { }
   }
 }
