@@ -1,0 +1,317 @@
+package de.maulmann;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.URLEncoder;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * High-performance client and HTML parser for 130point.com sales comp search.
+ * Extracts confirmed completed transactions (auctions, fixed-price, and accepted Best Offers)
+ * across eBay, Goldin, and major sports card marketplaces.
+ */
+public class Point130Client {
+
+    private static final Logger logger = LoggerFactory.getLogger(Point130Client.class);
+    private static final String SEARCH_ENDPOINT = "https://back.130point.com/sales/";
+    private static final String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36";
+
+    private static final Pattern DATE_PATTERN = Pattern.compile("(\\d{1,2})\\s+([A-Za-z]{3})\\s+(\\d{4})");
+    private static final Pattern GRADE_PATTERN = Pattern.compile("\\b(PSA|BGS|SGC|CGC)\\s*(\\d+(?:\\.\\d+)?)\\b", Pattern.CASE_INSENSITIVE);
+
+    private static final DateTimeFormatter DATE_PARSER = new DateTimeFormatterBuilder()
+            .parseCaseInsensitive()
+            .appendPattern("d MMM yyyy")
+            .toFormatter(Locale.ENGLISH);
+
+    private final HttpClient httpClient;
+
+    public record CardCompResult(
+            List<PricePoint> comps,
+            Double estimatedValue,
+            Double lastSoldPrice,
+            String lastSoldDate
+    ) {}
+
+    public Point130Client() {
+        this(HttpClient.newBuilder()
+                .connectTimeout(Duration.ofSeconds(12))
+                .followRedirects(HttpClient.Redirect.NORMAL)
+                .build());
+    }
+
+    public Point130Client(HttpClient httpClient) {
+        this.httpClient = httpClient;
+    }
+
+    /**
+     * Builds an optimized search query for a card entity.
+     */
+    public static String buildSearchQuery(CardData card) {
+        if (card == null) return "";
+        StringBuilder sb = new StringBuilder();
+
+        String season = card.get("Season");
+        if (season != null && !season.isBlank()) {
+            // Use 4-digit start year if season is e.g. "1994-95" -> "1994"
+            String startYear = season.contains("-") ? season.split("-")[0].trim() : season.trim();
+            sb.append(startYear).append(" ");
+        }
+
+        String player = card.get("Player");
+        if (player != null && !player.isBlank()) {
+            sb.append(player.trim()).append(" ");
+        }
+
+        String brand = card.get("Brand");
+        if (brand != null && !brand.isBlank()) {
+            sb.append(brand.trim()).append(" ");
+        }
+
+        String cardNumber = card.get("Number");
+        if (cardNumber != null && !cardNumber.isBlank()) {
+            sb.append("#").append(cardNumber.trim()).append(" ");
+        }
+
+        String variant = card.get("Variant");
+        if (variant != null && !variant.isBlank() && !"Base".equalsIgnoreCase(variant.trim())) {
+            sb.append(variant.trim()).append(" ");
+        }
+
+        String grader = card.get("Grading Co.");
+        String grade = card.get("Grade");
+        if (grader != null && !grader.isBlank() && grade != null && !grade.isBlank()) {
+            sb.append(grader.trim()).append(" ").append(grade.trim()).append(" ");
+        }
+
+        return sb.toString().replaceAll("\\s+", " ").trim();
+    }
+
+    /**
+     * Queries 130point for market sales matching the card and calculates pricing analytics.
+     */
+    public Optional<CardCompResult> fetchComps(CardData card) {
+        String query = buildSearchQuery(card);
+        if (query.isBlank()) {
+            return Optional.empty();
+        }
+        return fetchCompsForQuery(query, card);
+    }
+
+    /**
+     * Executes HTTP POST query to 130point and parses returned transaction table.
+     */
+    public Optional<CardCompResult> fetchCompsForQuery(String query, CardData referenceCard) {
+        try {
+            String formBody = "query=" + URLEncoder.encode(query, StandardCharsets.UTF_8);
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(SEARCH_ENDPOINT))
+                    .header("User-Agent", USER_AGENT)
+                    .header("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
+                    .header("Accept", "text/html, */*; q=0.01")
+                    .header("X-Requested-With", "XMLHttpRequest")
+                    .timeout(Duration.ofSeconds(15))
+                    .POST(HttpRequest.BodyPublishers.ofString(formBody))
+                    .build();
+
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() != 200 || response.body() == null || response.body().isBlank()) {
+                logger.warn("130point query [{}] failed with HTTP status {}", query, response.statusCode());
+                return Optional.empty();
+            }
+
+            return Optional.of(parseSalesHtml(response.body(), referenceCard));
+        } catch (IOException e) {
+            logger.warn("I/O error querying 130point for [{}]: {}", query, e.getMessage());
+            return Optional.empty();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            logger.warn("130point request interrupted for [{}]", query);
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * Parses the raw HTML snippet returned by 130point into structured PricePoint records.
+     */
+    public CardCompResult parseSalesHtml(String html, CardData referenceCard) {
+        if (html == null || html.isBlank()) {
+            return new CardCompResult(List.of(), null, null, null);
+        }
+
+        Document doc = Jsoup.parse(html);
+        Elements rows = doc.select("tr[id=dRow], tr[data-price]");
+
+        List<PricePoint> comps = new ArrayList<>();
+
+        for (Element row : rows) {
+            String priceStr = row.attr("data-price");
+            if (priceStr.isBlank()) {
+                // Fallback to currencyData span
+                Element priceEl = row.selectFirst("span#0-1-price, span.currencyData");
+                if (priceEl != null) priceStr = priceEl.text().trim();
+            }
+
+            double price;
+            try {
+                price = Double.parseDouble(priceStr.replace(",", "").trim());
+            } catch (Exception e) {
+                continue;
+            }
+
+            if (price <= 0.0) continue;
+
+            Element titleEl = row.selectFirst("#titleText, td#dCol span#titleText a");
+            String title = (titleEl != null) ? titleEl.text().trim() : "";
+
+            // Check relevance against card details
+            if (!isRelevantMatch(title, referenceCard)) {
+                continue;
+            }
+
+            Element dateEl = row.selectFirst("#dateText, span#dateText");
+            String dateText = (dateEl != null) ? dateEl.text() : "";
+            String isoDate = parseDateToIso(dateText);
+
+            Element auctionLabel = row.selectFirst("#auctionLabel, span#auctionLabel");
+            String saleType = (auctionLabel != null) ? auctionLabel.text().trim() : "eBay Comp";
+
+            String detectedGrade = extractGrade(title);
+            if (detectedGrade == null && referenceCard != null) {
+                detectedGrade = referenceCard.get("Grade");
+            }
+
+            comps.add(new PricePoint(isoDate, price, "eBay (" + saleType + ")", detectedGrade));
+        }
+
+        // Sort chronologically ascending (oldest to newest)
+        comps.sort(Comparator.comparing(PricePoint::date));
+
+        if (comps.isEmpty()) {
+            return new CardCompResult(List.of(), null, null, null);
+        }
+
+        // Calculate analytics
+        PricePoint latest = comps.getLast();
+        Double lastSold = latest.price();
+        String lastDate = latest.date();
+
+        // Estimated Value (FMV) = median of up to the last 5 comps
+        Double estimatedValue = calculateMedianFmv(comps);
+
+        return new CardCompResult(Collections.unmodifiableList(comps), estimatedValue, lastSold, lastDate);
+    }
+
+    /**
+     * Validates that a listing title genuinely corresponds to the target card entity.
+     */
+    public boolean isRelevantMatch(String title, CardData referenceCard) {
+        if (title == null || title.isBlank()) return true;
+        if (referenceCard == null) return true;
+
+        String lowerTitle = title.toLowerCase(Locale.ROOT);
+
+        // Check player name if present
+        String player = referenceCard.get("Player");
+        if (player != null && !player.isBlank()) {
+            String[] parts = player.toLowerCase(Locale.ROOT).split("\\s+");
+            // Check last name at least
+            String lastName = parts[parts.length - 1];
+            if (!lowerTitle.contains(lastName)) {
+                return false;
+            }
+        }
+
+        // Check card number if present and non-empty
+        String number = referenceCard.get("Number");
+        if (number != null && !number.isBlank() && number.matches("\\d+")) {
+            // Must contain "#number" or "number" or "no. number"
+            Pattern numPattern = Pattern.compile("(?:#|no\\.?\\s*|\\b)" + Pattern.quote(number) + "\\b", Pattern.CASE_INSENSITIVE);
+            if (!numPattern.matcher(title).find()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Parses dates like "Sun 14 Jun 2026 17:05:33 GMT" into "2026-06-14".
+     */
+    public static String parseDateToIso(String rawDateText) {
+        if (rawDateText == null || rawDateText.isBlank()) {
+            return LocalDate.now().toString();
+        }
+
+        Matcher m = DATE_PATTERN.matcher(rawDateText);
+        if (m.find()) {
+            String day = m.group(1);
+            String month = m.group(2);
+            String year = m.group(3);
+            String dateStr = day + " " + month + " " + year;
+            try {
+                LocalDate parsed = LocalDate.parse(dateStr, DATE_PARSER);
+                return parsed.toString();
+            } catch (Exception ignored) {
+            }
+        }
+
+        return LocalDate.now().toString();
+    }
+
+    /**
+     * Detects grading company and grade in the listing title (e.g. "PSA 10", "BGS 9.5").
+     */
+    private static String extractGrade(String title) {
+        if (title == null) return null;
+        Matcher m = GRADE_PATTERN.matcher(title);
+        if (m.find()) {
+            return m.group(1).toUpperCase(Locale.ROOT) + " " + m.group(2);
+        }
+        return null;
+    }
+
+    /**
+     * Calculates Fair Market Value as the median of the latest 5 comps.
+     */
+    private static Double calculateMedianFmv(List<PricePoint> comps) {
+        if (comps == null || comps.isEmpty()) return null;
+
+        int count = Math.min(5, comps.size());
+        List<Double> recentPrices = new ArrayList<>();
+        for (int i = comps.size() - count; i < comps.size(); i++) {
+            recentPrices.add(comps.get(i).price());
+        }
+        recentPrices.sort(Double::compareTo);
+
+        if (recentPrices.size() % 2 == 1) {
+            return recentPrices.get(recentPrices.size() / 2);
+        } else {
+            int mid = recentPrices.size() / 2;
+            return (recentPrices.get(mid - 1) + recentPrices.get(mid)) / 2.0;
+        }
+    }
+}
