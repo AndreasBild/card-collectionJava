@@ -17,6 +17,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.jsoup.Jsoup;
@@ -89,14 +90,44 @@ public class Point130Client {
             sb.append(brand.trim()).append(" ");
         }
 
-        String cardNumber = card.get("Number");
-        if (cardNumber != null && !cardNumber.isBlank()) {
-            sb.append("#").append(cardNumber.trim()).append(" ");
+        String theme = card.get("Theme");
+        String variant = card.get("Variant");
+        boolean isLegacy = variant != null && variant.toLowerCase(Locale.ROOT).contains("legacy");
+
+        if (theme != null && !theme.isBlank() && !"Base Set".equalsIgnoreCase(theme.trim()) && !isLegacy) {
+            String themeTrimmed = theme.trim();
+            if (brand == null || !brand.toLowerCase(Locale.ROOT).contains(themeTrimmed.toLowerCase(Locale.ROOT))) {
+                sb.append(themeTrimmed).append(" ");
+            }
         }
 
-        String variant = card.get("Variant");
+        String cardNumber = card.get("Number");
+        if (cardNumber != null && !cardNumber.isBlank()) {
+            String num = cardNumber.trim();
+            if (num.toUpperCase(Locale.ROOT).startsWith("ROW")) {
+                Matcher rowMatcher = Pattern.compile("(?i)(row\\s*\\d+)").matcher(num);
+                if (rowMatcher.find()) {
+                    sb.append(rowMatcher.group(1)).append(" ");
+                } else {
+                    sb.append(num).append(" ");
+                }
+            } else if (num.startsWith("#")) {
+                sb.append(num).append(" ");
+            } else {
+                sb.append("#").append(num).append(" ");
+            }
+        }
+
         if (variant != null && !variant.isBlank() && !"Base".equalsIgnoreCase(variant.trim())) {
-            sb.append(variant.trim()).append(" ");
+            String varTrimmed = variant.trim();
+            if (theme == null || !theme.equalsIgnoreCase(varTrimmed)) {
+                sb.append(varTrimmed).append(" ");
+            }
+        }
+
+        String printRun = card.get("Print Run");
+        if (printRun != null && !printRun.isBlank() && !"null".equalsIgnoreCase(printRun.trim())) {
+            sb.append("/").append(printRun.trim()).append(" ");
         }
 
         String grader = card.get("Grading Co.");
@@ -123,35 +154,62 @@ public class Point130Client {
      * Executes HTTP POST query to 130point and parses returned transaction table.
      */
     public Optional<CardCompResult> fetchCompsForQuery(String query, CardData referenceCard) {
-        try {
-            String formBody = "query=" + URLEncoder.encode(query, StandardCharsets.UTF_8);
+        int maxAttempts = 3;
+        for (int attempt = 1; attempt <= maxAttempts; attempt++) {
+            try {
+                String formBody = "query=" + URLEncoder.encode(query, StandardCharsets.UTF_8);
 
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(SEARCH_ENDPOINT))
-                    .header("User-Agent", USER_AGENT)
-                    .header("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-                    .header("Accept", "text/html, */*; q=0.01")
-                    .header("X-Requested-With", "XMLHttpRequest")
-                    .timeout(Duration.ofSeconds(15))
-                    .POST(HttpRequest.BodyPublishers.ofString(formBody))
-                    .build();
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create(SEARCH_ENDPOINT))
+                        .header("User-Agent", USER_AGENT)
+                        .header("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
+                        .header("Accept", "text/html, */*; q=0.01")
+                        .header("X-Requested-With", "XMLHttpRequest")
+                        .timeout(Duration.ofSeconds(15))
+                        .POST(HttpRequest.BodyPublishers.ofString(formBody))
+                        .build();
 
-            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+                HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-            if (response.statusCode() != 200 || response.body() == null || response.body().isBlank()) {
-                logger.warn("130point query [{}] failed with HTTP status {}", query, response.statusCode());
+                if (response.statusCode() == 429) {
+                    logger.warn("130point rate limit (429) hit for [{}]. Backing off (attempt {}/{})...", query, attempt, maxAttempts);
+                    if (attempt < maxAttempts) {
+                        try {
+                            TimeUnit.MILLISECONDS.sleep(2500L * attempt);
+                        } catch (InterruptedException ie) {
+                            Thread.currentThread().interrupt();
+                            return Optional.empty();
+                        }
+                        continue;
+                    }
+                    return Optional.empty();
+                }
+
+                if (response.statusCode() != 200 || response.body() == null || response.body().isBlank()) {
+                    logger.warn("130point query [{}] failed with HTTP status {}", query, response.statusCode());
+                    return Optional.empty();
+                }
+
+                return Optional.of(parseSalesHtml(response.body(), referenceCard));
+            } catch (IOException e) {
+                logger.warn("I/O error querying 130point for [{}]: {}", query, e.getMessage());
+                if (attempt < maxAttempts) {
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(1500L * attempt);
+                    } catch (InterruptedException ie) {
+                        Thread.currentThread().interrupt();
+                        return Optional.empty();
+                    }
+                    continue;
+                }
+                return Optional.empty();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                logger.warn("130point request interrupted for [{}]", query);
                 return Optional.empty();
             }
-
-            return Optional.of(parseSalesHtml(response.body(), referenceCard));
-        } catch (IOException e) {
-            logger.warn("I/O error querying 130point for [{}]: {}", query, e.getMessage());
-            return Optional.empty();
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            logger.warn("130point request interrupted for [{}]", query);
-            return Optional.empty();
         }
+        return Optional.empty();
     }
 
     /**

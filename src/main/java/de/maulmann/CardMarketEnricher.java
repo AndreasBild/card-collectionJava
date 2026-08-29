@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 public class CardMarketEnricher {
 
     private static final Logger logger = LoggerFactory.getLogger(CardMarketEnricher.class);
-    private static final long DEFAULT_DELAY_MS = 600;
+    private static final long DEFAULT_DELAY_MS = 1500;
 
     private final MarketDataCache cache;
     private final PsaCertScraper psaScraper;
@@ -51,6 +51,7 @@ public class CardMarketEnricher {
         boolean forceRefresh = false;
         boolean enrichCerts = false;
         boolean enrichComps = false;
+        boolean serialOnly = false;
         int limit = Integer.MAX_VALUE;
         String targetCardId = null;
 
@@ -66,6 +67,8 @@ public class CardMarketEnricher {
                 } else if ("--all".equals(arg)) {
                     enrichCerts = true;
                     enrichComps = true;
+                } else if ("--serial".equals(arg) || "--serial-only".equals(arg) || "--numbered".equals(arg)) {
+                    serialOnly = true;
                 } else if ("--limit".equals(arg) && i + 1 < args.length) {
                     try {
                         limit = Integer.parseInt(args[++i]);
@@ -83,7 +86,7 @@ public class CardMarketEnricher {
         }
 
         CardMarketEnricher enricher = new CardMarketEnricher();
-        EnrichmentReport report = enricher.enrichCards(cards, enrichCerts, enrichComps, forceRefresh, limit, targetCardId);
+        EnrichmentReport report = enricher.enrichCards(cards, enrichCerts, enrichComps, forceRefresh, limit, targetCardId, serialOnly);
 
         logger.info("==================================================");
         logger.info("📊 EXACT ENRICHMENT REPORT");
@@ -98,7 +101,7 @@ public class CardMarketEnricher {
     }
 
     public EnrichmentReport enrichCards(List<CardData> cards, boolean forceRefresh) {
-        return enrichCards(cards, true, true, forceRefresh, Integer.MAX_VALUE, null);
+        return enrichCards(cards, true, true, forceRefresh, Integer.MAX_VALUE, null, false);
     }
 
     public EnrichmentReport enrichCards(
@@ -108,6 +111,18 @@ public class CardMarketEnricher {
             boolean forceRefresh,
             int limit,
             String targetCardId
+    ) {
+        return enrichCards(cards, enrichCerts, enrichComps, forceRefresh, limit, targetCardId, false);
+    }
+
+    public EnrichmentReport enrichCards(
+            List<CardData> cards,
+            boolean enrichCerts,
+            boolean enrichComps,
+            boolean forceRefresh,
+            int limit,
+            String targetCardId,
+            boolean serialOnly
     ) {
         int totalInspected = 0;
         int certsFound = 0;
@@ -124,6 +139,14 @@ public class CardMarketEnricher {
 
             if (targetCardId != null && !targetCardId.equalsIgnoreCase(cardId)) {
                 continue;
+            }
+
+            if (serialOnly) {
+                boolean isSerial = (c.sourceJson != null && (c.sourceJson.serialNumber() != null || c.sourceJson.printRun() != null))
+                        || (c.attributes != null && (c.attributes.get("Serial") != null || c.attributes.get("Print Run") != null));
+                if (!isSerial) {
+                    continue;
+                }
             }
 
             if (processedCount >= limit) {
