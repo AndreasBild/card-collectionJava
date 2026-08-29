@@ -22,9 +22,7 @@
       }
     ],
     "metadata": {
-      "purchaseDate": "2006-04-30",
-      "purchasedFrom": "eBay (You Won eBay Item: Flair Legacy Collection Juwan Howard Fab Five ed 50 (8800930605))",
-      "ebayTitle": "Flair Legacy Collection Juwan Howard Fab Five ed 50"
+      "purchaseDate": "2006-04-30"
     }
   },
   "2023-24-topps-chrome-frozenfractor-101-sn-4": {
@@ -53,16 +51,24 @@
     "estimatedValue": 44.44,
     "lastSoldPrice": 44.44,
     "lastSoldDate": "2025-07-17",
-    "purchasePrice": null,
+    "purchasePrice": 4.75,
     "priceHistory": [
       {
         "date": "2025-07-17",
         "price": 44.44,
         "source": "eBay (Best Offer Accepted)",
         "grade": ""
+      },
+      {
+        "date": "2006-02-06",
+        "price": 4.75,
+        "source": "eBay",
+        "grade": "Raw"
       }
     ],
-    "metadata": {}
+    "metadata": {
+      "purchaseDate": "2006-02-06"
+    }
   },
   "1997-98-flair-showcase-showcase-legacy-collection-row-0-seat-64-sn69": {
     "certNumber": null,
@@ -87,9 +93,7 @@
       }
     ],
     "metadata": {
-      "purchaseDate": "2007-07-12",
-      "purchasedFrom": "eBay (You Won eBay Item: 97-98 FLAIR SHOWCASE JUWAN HOWARD LEGACY COLLECTION!!!  (190129529677))",
-      "ebayTitle": "97-98 FLAIR SHOWCASE JUWAN HOWARD LEGACY COLLECTION!!!"
+      "purchaseDate": "2007-07-12"
     }
   },
   "1997-98-flair-showcase-grace-legacy-collection-row-1-seat-64-sn60": {
@@ -653,9 +657,7 @@
       }
     ],
     "metadata": {
-      "purchaseDate": "2010-02-17",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "94 SR Tetrad 2 Autographs + inserts Juwan Howard"
+      "purchaseDate": "2010-02-17"
     }
   },
   "1997-98-skybox-e-x2001-credentials-credentials-now-32-sn29": {
@@ -665,16 +667,24 @@
     "estimatedValue": 1290.0,
     "lastSoldPrice": 1290.0,
     "lastSoldDate": "2025-05-05",
-    "purchasePrice": null,
+    "purchasePrice": 15.49,
     "priceHistory": [
       {
         "date": "2025-05-05",
         "price": 1290.0,
         "source": "eBay (Auction)",
         "grade": "PSA 6"
+      },
+      {
+        "date": "2012-01-22",
+        "price": 15.49,
+        "source": "eBay",
+        "grade": "Raw"
       }
     ],
-    "metadata": {}
+    "metadata": {
+      "purchaseDate": "2012-01-22"
+    }
   },
   "1994-95-collectors-choice-you-crash-the-game-rookie-scoring-gold-s4": {
     "certNumber": null,
@@ -787,7 +797,7 @@
     "estimatedValue": 2.2249999999999996,
     "lastSoldPrice": 2.3,
     "lastSoldDate": "2026-06-14",
-    "purchasePrice": null,
+    "purchasePrice": 1.55,
     "priceHistory": [
       {
         "date": "2025-01-10",
@@ -800,9 +810,17 @@
         "price": 2.3,
         "source": "eBay (Auction)",
         "grade": ""
+      },
+      {
+        "date": "2007-04-09",
+        "price": 1.55,
+        "source": "eBay",
+        "grade": "Raw"
       }
     ],
-    "metadata": {}
+    "metadata": {
+      "purchaseDate": "2007-04-09"
+    }
   },
   "2002-03-topps-chrome-black-refractor-50-sn22": {
     "certNumber": null,
@@ -872,7 +890,6 @@
     "purchasePrice": 6.9,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "DallasCardboys",
       "purchaseDate": "6/6/2026",
       "purchaseItemId": "78449916"
     }
@@ -887,7 +904,6 @@
     "purchasePrice": 12.75,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "Zehttys",
       "purchaseDate": "3/2/2026",
       "purchaseItemId": "192019715"
     }
@@ -902,7 +918,6 @@
     "purchasePrice": 14.5,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "IndyCardExchange",
       "purchaseDate": "3/2/2026",
       "purchaseItemId": "248434496"
     }
@@ -917,7 +932,6 @@
     "purchasePrice": 2.5,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "TreeFiddy",
       "purchaseDate": "1/24/2026",
       "purchaseItemId": "175471502"
     }
@@ -932,7 +946,6 @@
     "purchasePrice": 0.89,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "coolz",
       "purchaseDate": "12/25/2013",
       "purchaseItemId": "8054242"
     }
@@ -947,7 +960,6 @@
     "purchasePrice": 0.7,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "RawCardReview",
       "purchaseDate": "11/19/2020",
       "purchaseItemId": "51166759"
     }
@@ -962,7 +974,6 @@
     "purchasePrice": 2.27,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "muchotix",
       "purchaseDate": "11/29/2025",
       "purchaseItemId": "274262382"
     }
@@ -977,7 +988,6 @@
     "purchasePrice": 4.45,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "dave416",
       "purchaseDate": "11/27/2025",
       "purchaseItemId": "107860772"
     }
@@ -992,7 +1002,6 @@
     "purchasePrice": 0.79,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "KrystalBall",
       "purchaseDate": "11/27/2025",
       "purchaseItemId": "12136466"
     }
@@ -1007,7 +1016,6 @@
     "purchasePrice": 4.21,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "chazp007",
       "purchaseDate": "11/27/2025",
       "purchaseItemId": "84344411"
     }
@@ -1022,7 +1030,6 @@
     "purchasePrice": 0.65,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "Tonyreh",
       "purchaseDate": "11/27/2025",
       "purchaseItemId": "112869928"
     }
@@ -1037,7 +1044,6 @@
     "purchasePrice": 7.99,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "Archer2194",
       "purchaseDate": "11/27/2025",
       "purchaseItemId": "157002816"
     }
@@ -1052,7 +1058,6 @@
     "purchasePrice": 0.65,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "Homerunsportscards",
       "purchaseDate": "11/27/2025",
       "purchaseItemId": "65478016"
     }
@@ -1067,7 +1072,6 @@
     "purchasePrice": 1.24,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "sheliachicago",
       "purchaseDate": "11/27/2025",
       "purchaseItemId": "52230953"
     }
@@ -1082,7 +1086,6 @@
     "purchasePrice": 0.63,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "sunrisesurprise",
       "purchaseDate": "11/26/2025",
       "purchaseItemId": "2161900"
     }
@@ -1097,7 +1100,6 @@
     "purchasePrice": 3.25,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "Goldenvisafund",
       "purchaseDate": "11/26/2025",
       "purchaseItemId": "164444533"
     }
@@ -1112,7 +1114,6 @@
     "purchasePrice": 0.67,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "CollectibleConnoisseur",
       "purchaseDate": "11/26/2025",
       "purchaseItemId": "142774545"
     }
@@ -1127,7 +1128,6 @@
     "purchasePrice": 1.0,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "unioner0815",
       "purchaseDate": "11/26/2025",
       "purchaseItemId": "129092758"
     }
@@ -1142,7 +1142,6 @@
     "purchasePrice": 7.0,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "ryanscardboard",
       "purchaseDate": "11/25/2025",
       "purchaseItemId": "209069373"
     }
@@ -1157,7 +1156,6 @@
     "purchasePrice": 3.13,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "DallasCardboys",
       "purchaseDate": "11/25/2025",
       "purchaseItemId": "216360476"
     }
@@ -1172,7 +1170,6 @@
     "purchasePrice": 1.85,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "DallasCardboys",
       "purchaseDate": "11/25/2025",
       "purchaseItemId": "59151139"
     }
@@ -1187,7 +1184,6 @@
     "purchasePrice": 3.0,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "brads_cards",
       "purchaseDate": "11/25/2025",
       "purchaseItemId": "270497359"
     }
@@ -1202,7 +1198,6 @@
     "purchasePrice": 2.35,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "dpu_amm",
       "purchaseDate": "11/25/2025",
       "purchaseItemId": "288433301"
     }
@@ -1217,7 +1212,6 @@
     "purchasePrice": 0.65,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "theoneilfactor",
       "purchaseDate": "11/25/2025",
       "purchaseItemId": "168259588"
     }
@@ -1232,7 +1226,6 @@
     "purchasePrice": 1.06,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "jimoz",
       "purchaseDate": "11/25/2025",
       "purchaseItemId": "25616195"
     }
@@ -1247,7 +1240,6 @@
     "purchasePrice": 1.45,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "ghost007",
       "purchaseDate": "11/25/2025",
       "purchaseItemId": "13006795"
     }
@@ -1262,7 +1254,6 @@
     "purchasePrice": 2.05,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "DallasCardboys",
       "purchaseDate": "11/25/2025",
       "purchaseItemId": "20514205"
     }
@@ -1277,7 +1268,6 @@
     "purchasePrice": 12.25,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "fobstar49",
       "purchaseDate": "11/25/2025",
       "purchaseItemId": "130672351"
     }
@@ -1292,7 +1282,6 @@
     "purchasePrice": 1.5,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "buymore",
       "purchaseDate": "11/25/2025",
       "purchaseItemId": "13036274"
     }
@@ -1307,7 +1296,6 @@
     "purchasePrice": 0.62,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "jjd1979",
       "purchaseDate": "11/24/2025",
       "purchaseItemId": "69761296"
     }
@@ -1322,7 +1310,6 @@
     "purchasePrice": 2.5,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "DallasCardboys",
       "purchaseDate": "11/24/2025",
       "purchaseItemId": "3520113"
     }
@@ -1337,7 +1324,6 @@
     "purchasePrice": 0.91,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "Flipper",
       "purchaseDate": "11/24/2025",
       "purchaseItemId": "2180498"
     }
@@ -1352,7 +1338,6 @@
     "purchasePrice": 1.45,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "riskadvisor",
       "purchaseDate": "11/24/2025",
       "purchaseItemId": "15290073"
     }
@@ -1367,7 +1352,6 @@
     "purchasePrice": 2.25,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "DallasCardboys",
       "purchaseDate": "11/24/2025",
       "purchaseItemId": "90045491"
     }
@@ -1382,7 +1366,6 @@
     "purchasePrice": 7.13,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "DallasCardboys",
       "purchaseDate": "11/24/2025",
       "purchaseItemId": "90060575"
     }
@@ -1397,7 +1380,6 @@
     "purchasePrice": 0.55,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "Jianshrje",
       "purchaseDate": "11/19/2020",
       "purchaseItemId": "63995809"
     }
@@ -1412,7 +1394,6 @@
     "purchasePrice": 0.9,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "DecagonCards",
       "purchaseDate": "11/24/2025",
       "purchaseItemId": "5710353"
     }
@@ -1427,7 +1408,6 @@
     "purchasePrice": 0.67,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "BLUECHIPBALLCARDS",
       "purchaseDate": "11/24/2025",
       "purchaseItemId": "58465989"
     }
@@ -1442,7 +1422,6 @@
     "purchasePrice": 1.69,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "KrystalBall",
       "purchaseDate": "11/24/2025",
       "purchaseItemId": "54824954"
     }
@@ -1457,7 +1436,6 @@
     "purchasePrice": 0.97,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "jjd1979",
       "purchaseDate": "11/24/2025",
       "purchaseItemId": "98611058"
     }
@@ -1472,7 +1450,6 @@
     "purchasePrice": 2.05,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "DallasCardboys",
       "purchaseDate": "11/24/2025",
       "purchaseItemId": "99511462"
     }
@@ -1487,7 +1464,6 @@
     "purchasePrice": 1.13,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "dgrochester55",
       "purchaseDate": "11/24/2025",
       "purchaseItemId": "139969295"
     }
@@ -1502,7 +1478,6 @@
     "purchasePrice": 0.73,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "partboypete",
       "purchaseDate": "11/24/2025",
       "purchaseItemId": "282125278"
     }
@@ -1517,7 +1492,6 @@
     "purchasePrice": 1.0,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "eshimmy",
       "purchaseDate": "11/24/2025",
       "purchaseItemId": "233050319"
     }
@@ -1532,7 +1506,6 @@
     "purchasePrice": 1.63,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "cvalence15",
       "purchaseDate": "11/24/2025",
       "purchaseItemId": "79291428"
     }
@@ -1547,7 +1520,6 @@
     "purchasePrice": 1.95,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "StevensSC",
       "purchaseDate": "11/24/2025",
       "purchaseItemId": "57685218"
     }
@@ -1562,7 +1534,6 @@
     "purchasePrice": 2.25,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "beastsports",
       "purchaseDate": "11/24/2025",
       "purchaseItemId": "215482342"
     }
@@ -1577,7 +1548,6 @@
     "purchasePrice": 1.23,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "sheliachicago",
       "purchaseDate": "11/24/2025",
       "purchaseItemId": "19728146"
     }
@@ -1592,7 +1562,6 @@
     "purchasePrice": 0.88,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "commons",
       "purchaseDate": "11/24/2025",
       "purchaseItemId": "16620053"
     }
@@ -1607,7 +1576,6 @@
     "purchasePrice": 1.0,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "cardboardinseattle",
       "purchaseDate": "11/23/2025",
       "purchaseItemId": "94791221"
     }
@@ -1622,7 +1590,6 @@
     "purchasePrice": 0.72,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "abettercard",
       "purchaseDate": "11/22/2025",
       "purchaseItemId": "24152748"
     }
@@ -1637,7 +1604,6 @@
     "purchasePrice": 12.25,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "DallasCardboys",
       "purchaseDate": "11/23/2025",
       "purchaseItemId": "241152677"
     }
@@ -1652,7 +1618,6 @@
     "purchasePrice": 1.85,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "DallasCardboys",
       "purchaseDate": "11/23/2025",
       "purchaseItemId": "78313516"
     }
@@ -1667,7 +1632,6 @@
     "purchasePrice": 2.13,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "cardsrus1",
       "purchaseDate": "11/23/2025",
       "purchaseItemId": "11929607"
     }
@@ -1682,7 +1646,6 @@
     "purchasePrice": 24.13,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "homerunfab",
       "purchaseDate": "3/4/2025",
       "purchaseItemId": "257320679"
     }
@@ -1697,7 +1660,6 @@
     "purchasePrice": 15.0,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "Philspulls",
       "purchaseDate": "4/12/2024",
       "purchaseItemId": "195835350"
     }
@@ -1712,7 +1674,6 @@
     "purchasePrice": 15.0,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "kelscards",
       "purchaseDate": "3/26/2024",
       "purchaseItemId": "194213077"
     }
@@ -1727,7 +1688,6 @@
     "purchasePrice": 0.71,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "jdrapal",
       "purchaseDate": "10/1/2023",
       "purchaseItemId": "139492857"
     }
@@ -1742,7 +1702,6 @@
     "purchasePrice": 2.01,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "BasketballSeller",
       "purchaseDate": "10/1/2023",
       "purchaseItemId": "146481857"
     }
@@ -1757,7 +1716,6 @@
     "purchasePrice": 2.25,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "DallasCardboys",
       "purchaseDate": "2/10/2023",
       "purchaseItemId": "63075033"
     }
@@ -1772,7 +1730,6 @@
     "purchasePrice": 3.5,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "maxmania8",
       "purchaseDate": "2/10/2023",
       "purchaseItemId": "122441723"
     }
@@ -1787,7 +1744,6 @@
     "purchasePrice": 2.5,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "samjams3",
       "purchaseDate": "10/12/2021",
       "purchaseItemId": "20696461"
     }
@@ -1802,7 +1758,6 @@
     "purchasePrice": 7.05,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "Berkman32",
       "purchaseDate": "11/20/2020",
       "purchaseItemId": "33475104"
     }
@@ -1817,7 +1772,6 @@
     "purchasePrice": 0.65,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "Bbader61gv",
       "purchaseDate": "11/19/2020",
       "purchaseItemId": "71252202"
     }
@@ -1832,7 +1786,6 @@
     "purchasePrice": 1.69,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "double_happiness",
       "purchaseDate": "11/19/2020",
       "purchaseItemId": "37216154"
     }
@@ -1847,7 +1800,6 @@
     "purchasePrice": 0.75,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "Jianshrje",
       "purchaseDate": "11/19/2020",
       "purchaseItemId": "64046573"
     }
@@ -1862,7 +1814,6 @@
     "purchasePrice": 0.59,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "ryanscardz",
       "purchaseDate": "11/19/2020",
       "purchaseItemId": "80342710"
     }
@@ -1877,7 +1828,6 @@
     "purchasePrice": 0.98,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "jjd1979",
       "purchaseDate": "11/19/2020",
       "purchaseItemId": "20124600"
     }
@@ -1892,7 +1842,6 @@
     "purchasePrice": 0.89,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "JoelsHitShow",
       "purchaseDate": "11/19/2020",
       "purchaseItemId": "81574016"
     }
@@ -1907,7 +1856,6 @@
     "purchasePrice": 16.45,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "Sportzcards",
       "purchaseDate": "10/12/2020",
       "purchaseItemId": "71301309"
     }
@@ -1922,7 +1870,6 @@
     "purchasePrice": 30.25,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "SteveSC",
       "purchaseDate": "10/29/2018",
       "purchaseItemId": "57460165"
     }
@@ -1937,7 +1884,6 @@
     "purchasePrice": 0.78,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "jimoz",
       "purchaseDate": "10/21/2018",
       "purchaseItemId": "3639959"
     }
@@ -1952,7 +1898,6 @@
     "purchasePrice": 1.85,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "DallasCardboys",
       "purchaseDate": "10/21/2018",
       "purchaseItemId": "20511510"
     }
@@ -1967,7 +1912,6 @@
     "purchasePrice": 0.66,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "bergmania",
       "purchaseDate": "10/21/2018",
       "purchaseItemId": "16657996"
     }
@@ -1982,7 +1926,6 @@
     "purchasePrice": 1.5,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "micdm1971",
       "purchaseDate": "10/20/2018",
       "purchaseItemId": "21443380"
     }
@@ -1997,7 +1940,6 @@
     "purchasePrice": 0.98,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "JoelsHitShow",
       "purchaseDate": "10/20/2018",
       "purchaseItemId": "30751227"
     }
@@ -2012,7 +1954,6 @@
     "purchasePrice": 1.0,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "jimoz",
       "purchaseDate": "10/18/2018",
       "purchaseItemId": "15325871"
     }
@@ -2027,7 +1968,6 @@
     "purchasePrice": 0.89,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "bergmania",
       "purchaseDate": "10/18/2018",
       "purchaseItemId": "12260675"
     }
@@ -2042,7 +1982,6 @@
     "purchasePrice": 22.0,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "anakinleo",
       "purchaseDate": "7/19/2018",
       "purchaseItemId": "54486367"
     }
@@ -2057,7 +1996,6 @@
     "purchasePrice": 11.97,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "terrysawchuk",
       "purchaseDate": "7/6/2018",
       "purchaseItemId": "53265493"
     }
@@ -2072,7 +2010,6 @@
     "purchasePrice": 7.25,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "Grandslamsports",
       "purchaseDate": "8/1/2017",
       "purchaseItemId": "37189747"
     }
@@ -2087,7 +2024,6 @@
     "purchasePrice": 25.0,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "DasCardHaus",
       "purchaseDate": "8/1/2017",
       "purchaseItemId": "28719181"
     }
@@ -2102,7 +2038,6 @@
     "purchasePrice": 10.0,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "cargs21",
       "purchaseDate": "8/1/2017",
       "purchaseItemId": "19636852"
     }
@@ -2117,7 +2052,6 @@
     "purchasePrice": 24.25,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "bioxi",
       "purchaseDate": "8/1/2017",
       "purchaseItemId": "38271831"
     }
@@ -2132,7 +2066,6 @@
     "purchasePrice": 1.25,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "Tonyreh",
       "purchaseDate": "8/18/2014",
       "purchaseItemId": "12470534"
     }
@@ -2147,7 +2080,6 @@
     "purchasePrice": 3.75,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "DsNuggets",
       "purchaseDate": "8/17/2014",
       "purchaseItemId": "13923667"
     }
@@ -2162,7 +2094,6 @@
     "purchasePrice": 0.81,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "EastridgeHobbies",
       "purchaseDate": "8/17/2014",
       "purchaseItemId": "13180756"
     }
@@ -2177,7 +2108,6 @@
     "purchasePrice": 1.6,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "jjd1979",
       "purchaseDate": "8/17/2014",
       "purchaseItemId": "14487168"
     }
@@ -2192,7 +2122,6 @@
     "purchasePrice": 12.12,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "amazingpacks",
       "purchaseDate": "8/17/2014",
       "purchaseItemId": "14510571"
     }
@@ -2207,7 +2136,6 @@
     "purchasePrice": 5.0,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "jimmertime7",
       "purchaseDate": "8/17/2014",
       "purchaseItemId": "13756864"
     }
@@ -2222,7 +2150,6 @@
     "purchasePrice": 9.0,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "CardSmart",
       "purchaseDate": "8/16/2014",
       "purchaseItemId": "6989461"
     }
@@ -2237,7 +2164,6 @@
     "purchasePrice": 0.75,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "TickTockMan",
       "purchaseDate": "8/16/2014",
       "purchaseItemId": "14711146"
     }
@@ -2252,7 +2178,6 @@
     "purchasePrice": 5.0,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "eaglescards",
       "purchaseDate": "8/16/2014",
       "purchaseItemId": "10207869"
     }
@@ -2267,7 +2192,6 @@
     "purchasePrice": 16.5,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "cardsrus1",
       "purchaseDate": "8/16/2014",
       "purchaseItemId": "15041511"
     }
@@ -2282,7 +2206,6 @@
     "purchasePrice": 4.0,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "blackstone46",
       "purchaseDate": "8/16/2014",
       "purchaseItemId": "14566657"
     }
@@ -2297,7 +2220,6 @@
     "purchasePrice": 2.0,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "immediex",
       "purchaseDate": "8/16/2014",
       "purchaseItemId": "13273920"
     }
@@ -2312,7 +2234,6 @@
     "purchasePrice": 1.0,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "KIKKEN",
       "purchaseDate": "8/16/2014",
       "purchaseItemId": "2101939"
     }
@@ -2327,7 +2248,6 @@
     "purchasePrice": 2.5,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "mikedsportscards",
       "purchaseDate": "8/16/2014",
       "purchaseItemId": "10079333"
     }
@@ -2342,7 +2262,6 @@
     "purchasePrice": 10.0,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "SouthBaySportsCards",
       "purchaseDate": "12/27/2013",
       "purchaseItemId": "11578591"
     }
@@ -2357,7 +2276,6 @@
     "purchasePrice": 2.25,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "mesawildcardz",
       "purchaseDate": "12/26/2013",
       "purchaseItemId": "12518097"
     }
@@ -2372,7 +2290,6 @@
     "purchasePrice": 11.0,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "micdm1971",
       "purchaseDate": "12/26/2013",
       "purchaseItemId": "12304363"
     }
@@ -2387,7 +2304,6 @@
     "purchasePrice": 0.9,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "pkchu",
       "purchaseDate": "12/26/2013",
       "purchaseItemId": "12378221"
     }
@@ -2402,7 +2318,6 @@
     "purchasePrice": 0.75,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "JoelsHitShow",
       "purchaseDate": "12/26/2013",
       "purchaseItemId": "12730162"
     }
@@ -2417,7 +2332,6 @@
     "purchasePrice": 2.25,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "JoelsHitShow",
       "purchaseDate": "12/26/2013",
       "purchaseItemId": "4236440"
     }
@@ -2432,7 +2346,6 @@
     "purchasePrice": 1.0,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "ilovecards",
       "purchaseDate": "12/26/2013",
       "purchaseItemId": "5125222"
     }
@@ -2447,7 +2360,6 @@
     "purchasePrice": 1.0,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "LowPriceCards",
       "purchaseDate": "12/26/2013",
       "purchaseItemId": "4327"
     }
@@ -2462,7 +2374,6 @@
     "purchasePrice": 1.0,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "HotCards",
       "purchaseDate": "12/26/2013",
       "purchaseItemId": "9386580"
     }
@@ -2477,7 +2388,6 @@
     "purchasePrice": 0.75,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "timgetsch",
       "purchaseDate": "12/26/2013",
       "purchaseItemId": "57591"
     }
@@ -2492,7 +2402,6 @@
     "purchasePrice": 2.0,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "checkoutmydeals",
       "purchaseDate": "12/25/2013",
       "purchaseItemId": "9882299"
     }
@@ -2507,7 +2416,6 @@
     "purchasePrice": 2.0,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "maxmania8",
       "purchaseDate": "8/16/2014",
       "purchaseItemId": "13291431"
     }
@@ -2522,7 +2430,6 @@
     "purchasePrice": 1.25,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "Jaybungard",
       "purchaseDate": "1/23/2026",
       "purchaseItemId": "308199940"
     }
@@ -2537,7 +2444,6 @@
     "purchasePrice": 3.0,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "tpeichel34",
       "purchaseDate": "11/24/2025",
       "purchaseItemId": "8513713"
     }
@@ -2552,7 +2458,6 @@
     "purchasePrice": 2.31,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "raelhe1980",
       "purchaseDate": "10/19/2018",
       "purchaseItemId": "34143585"
     }
@@ -2567,7 +2472,6 @@
     "purchasePrice": 1.0,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "cardboardinseattle",
       "purchaseDate": "11/23/2025",
       "purchaseItemId": "94791221"
     }
@@ -2582,7 +2486,6 @@
     "purchasePrice": 9.55,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "EdiSutiono",
       "purchaseDate": "10/11/2021",
       "purchaseItemId": "102598315"
     }
@@ -2597,7 +2500,6 @@
     "purchasePrice": 0.6,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "Cavalier",
       "purchaseDate": "11/19/2020",
       "purchaseItemId": "73687706"
     }
@@ -2612,7 +2514,6 @@
     "purchasePrice": 1.19,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "cardkings",
       "purchaseDate": "11/17/2020",
       "purchaseItemId": "55077473"
     }
@@ -2627,7 +2528,6 @@
     "purchasePrice": 2.25,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "DallasCardboys",
       "purchaseDate": "10/19/2018",
       "purchaseItemId": "14040174"
     }
@@ -2642,7 +2542,6 @@
     "purchasePrice": 27.6,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "StorageUnitFinds",
       "purchaseDate": "7/19/2018",
       "purchaseItemId": "47471730"
     }
@@ -2657,7 +2556,6 @@
     "purchasePrice": 16.05,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "joeback",
       "purchaseDate": "8/1/2017",
       "purchaseItemId": "18963561"
     }
@@ -2672,7 +2570,6 @@
     "purchasePrice": 15.06,
     "priceHistory": [],
     "metadata": {
-      "purchasedFrom": "cardsavers",
       "purchaseDate": "8/16/2014",
       "purchaseItemId": "11413919"
     }
@@ -2697,9 +2594,7 @@
     "metadata": {
       "psaItemDescription": "PANINI DONRUSS ELITE IMPACT IMPRESSIONS AUTOGRAPHS",
       "psaGradeRaw": "GEM MT 10",
-      "purchaseDate": "2026-08-26",
-      "purchasedFrom": "eBay (talbs1284)",
-      "ebayTitle": "2023-24 Panini Donruss Elite Juwan Howard Impact Impressions Red /49 #II-HOW"
+      "purchaseDate": "2026-08-26"
     }
   },
   "2023-24-topps-chrome-black-refractor-101-sn10": {
@@ -2712,9 +2607,7 @@
     "purchasePrice": 27.0,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2026-08-25",
-      "purchasedFrom": "eBay (cnp_hobbyshop)",
-      "ebayTitle": "2025-26 Topps - Topps Notch Signatures Juwan Howard Black Holofoil 10/10 BOOKEND"
+      "purchaseDate": "2026-08-25"
     }
   },
   "2016-17-panini-flawless-patch-emerald-p-jhw-sn4": {
@@ -2727,9 +2620,7 @@
     "purchasePrice": 51.0,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2026-08-23",
-      "purchasedFrom": "eBay (dadscave)",
-      "ebayTitle": "Juwan Howard Ser. # 4/5 3 Color Patch"
+      "purchaseDate": "2026-08-23"
     }
   },
   "2019-20-panini-impeccable-canvas-creations-silver-cc-jwh-sn96": {
@@ -2742,9 +2633,7 @@
     "purchasePrice": 29.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2026-08-17",
-      "purchasedFrom": "eBay (shackem)",
-      "ebayTitle": "2019-20 Panini Impeccable Canvas Creations Auto Holo Silver Juwan Howard /25"
+      "purchaseDate": "2026-08-17"
     }
   },
   "2021-22-panini-hoops-hot-signatures-hs-jhw": {
@@ -2757,9 +2646,7 @@
     "purchasePrice": 7.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2025-11-23",
-      "purchasedFrom": "eBay (thecard_den)",
-      "ebayTitle": "2021-22 Panini NBA Hoops Juwan Howard Hot Signatures Auto #HS-JHW WIZARDS"
+      "purchaseDate": "2025-11-23"
     }
   },
   "2023-24-topps-chrome-certified-autographs-orange-basketball-refractor-ca-jh-sn11": {
@@ -2772,9 +2659,7 @@
     "purchasePrice": 14.0,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2024-12-30",
-      "purchasedFrom": "eBay (threephonesfinds)",
-      "ebayTitle": "2024 Topps Chrome Juwan Howard Certified Autograph /25 - Serial #11/25"
+      "purchaseDate": "2024-12-30"
     }
   },
   "1996-97-skybox-premium-127": {
@@ -2787,9 +2672,7 @@
     "purchasePrice": 3.42,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2011-05-05",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "1996-97 SKYBOX PREMIUM STANDOUTS JUWAN HOWARD #SO2 BV12"
+      "purchaseDate": "2011-05-05"
     }
   },
   "2010-11-panini-absolute-memorabilia-82": {
@@ -2802,9 +2685,7 @@
     "purchasePrice": 7.5,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2011-04-25",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "2010/11 Absolute Spectrum JUWAN HOWARD #d19/25 HEAT"
+      "purchaseDate": "2011-04-25"
     }
   },
   "1999-00-topps-seasons-best-gliders-sb12": {
@@ -2817,9 +2698,7 @@
     "purchasePrice": 0.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2011-03-26",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "JUWAN HOWARD 1999-00 Topps Season's Best Glimers #SB12"
+      "purchaseDate": "2011-03-26"
     }
   },
   "2004-05-topps-bazooka-printing-plate-cyan-96-sn1": {
@@ -2832,9 +2711,7 @@
     "purchasePrice": 7.5,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2011-03-26",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "True 1/1, J. Howard 04-05 Topps Finest Printing Plate !"
+      "purchaseDate": "2011-03-26"
     }
   },
   "1996-97-topps-mystery-finest-bordered-refractor-m5": {
@@ -2847,9 +2724,7 @@
     "purchasePrice": 2.25,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2011-03-18",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "96 97 Topps Mystery Refractor Juwan Howard M5"
+      "purchaseDate": "2011-03-18"
     }
   },
   "1998-99-ud-black-diamond-diamond-89": {
@@ -2862,9 +2737,7 @@
     "purchasePrice": 3.25,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2010-11-18",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "JUWAN HOWARD 1998 UD SP PREMIER EDITION AUTO Y042"
+      "purchaseDate": "2010-11-18"
     }
   },
   "1998-99-spx-finite-radiance-76-sn2681": {
@@ -2877,9 +2750,7 @@
     "purchasePrice": 8.0,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2010-10-27",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "98-99 SPX FINITE RADIANCE JUWAN HOWARD SERIAL #'D!!!!"
+      "purchaseDate": "2010-10-27"
     }
   },
   "2006-07-sp-game-used-edition-authentic-fabrics-jersey-afd-mh-sn5": {
@@ -2892,9 +2763,7 @@
     "purchasePrice": 2.33,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2010-06-29",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "TRACY McGRADY/HOWARD 06-07 SPGU Dual Swatch 5/100"
+      "purchaseDate": "2010-06-29"
     }
   },
   "2004-05-fleer-authentix-mezzanine-87-sn25": {
@@ -2907,9 +2776,7 @@
     "purchasePrice": 0.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2010-06-17",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "Juwan Howard 04 Fleer Authentic 25/50"
+      "purchaseDate": "2010-06-17"
     }
   },
   "2004-05-topps-finest-far-east-fabrics-x-fractor-fef-jh-sn6": {
@@ -2922,9 +2789,7 @@
     "purchasePrice": 1.81,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2010-04-21",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "Juwan Howard 2004-05 Topps Finest X-Fractor G/U Jersey"
+      "purchaseDate": "2010-04-21"
     }
   },
   "2002-03-fleer-platinum-40": {
@@ -2937,9 +2802,7 @@
     "purchasePrice": 3.58,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2010-02-17",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "02-03 Flee Platinum Finish Juwan Howard #'d /100"
+      "purchaseDate": "2010-02-17"
     }
   },
   "1996-97-topps-bowman-s-best-honor-roll-atomic-refractor-hr9": {
@@ -2952,9 +2815,7 @@
     "purchasePrice": 40.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2010-02-15",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "96-97 BB Honor Roll Atomic Refractor G. Hill/J. Howard"
+      "purchaseDate": "2010-02-15"
     }
   },
   "1996-97-topps-bowman-s-best-best-cuts-atomic-refractor-bc3": {
@@ -2967,9 +2828,7 @@
     "purchasePrice": 6.38,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2010-02-15",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "96-97 Bowman's Best Cuts Atomic Ref+Ref+ Juwan Howard"
+      "purchaseDate": "2010-02-15"
     }
   },
   "1997-98-skybox-z-force-rave-180-sn18": {
@@ -2982,9 +2841,7 @@
     "purchasePrice": 9.5,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2010-02-14",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "97-98 Z-Force Rave Juwan Howard #180 & 5 #'d to 100"
+      "purchaseDate": "2010-02-14"
     }
   },
   "1997-98-topps-chrome-refractor-27": {
@@ -2997,9 +2854,7 @@
     "purchasePrice": 5.0,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2010-02-14",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "97-98 Topps Top 40 Refractor Chrome Base Juwan Howard"
+      "purchaseDate": "2010-02-14"
     }
   },
   "1998-99-upper-deck-forces-bronze-f29-sn403": {
@@ -3012,9 +2867,7 @@
     "purchasePrice": 6.05,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2010-02-13",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "98-99 UD Forces Bronze + base Juwan Howard #F29"
+      "purchaseDate": "2010-02-13"
     }
   },
   "1998-99-topps-chrome-refractor-155": {
@@ -3027,9 +2880,7 @@
     "purchasePrice": 2.13,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2010-02-13",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "98-99 Topps Chrome Refractor Juwan Howard #155"
+      "purchaseDate": "2010-02-13"
     }
   },
   "1998-99-topps-stadium-club-one-of-a-kind-183-sn98": {
@@ -3042,9 +2893,7 @@
     "purchasePrice": 6.05,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2010-02-13",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "98-99 Stadium Club 1 of a Kind & Refractor Juwan Howard"
+      "purchaseDate": "2010-02-13"
     }
   },
   "1998-99-fleer-brilliants-blue-97b": {
@@ -3057,9 +2906,7 @@
     "purchasePrice": 16.27,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2010-02-13",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "98-99 Fleer Brilliants Juwan Howard Gold Blue + Base #d"
+      "purchaseDate": "2010-02-13"
     }
   },
   "1998-99-topps-finest-no-protector-refractor-6": {
@@ -3072,9 +2919,7 @@
     "purchasePrice": 0.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2010-02-13",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "98-99 Finest Protector & No Prot Refractor Juwan Howard"
+      "purchaseDate": "2010-02-13"
     }
   },
   "1998-99-topps-bowman-s-best-mirror-image-atomic-refractor-mi13-sn16": {
@@ -3087,9 +2932,7 @@
     "purchasePrice": 52.0,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2010-02-13",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "98-99 Atomic Refractor Mirror Image Juwan Howard #16/25"
+      "purchaseDate": "2010-02-13"
     }
   },
   "1999-00-skybox-hoops-decade-genuine-coverage-jersey-jersey-5": {
@@ -3102,9 +2945,7 @@
     "purchasePrice": 15.5,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2010-02-12",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "99-00 Hoops X Genuine Coverage Juwan Howard PATCH"
+      "purchaseDate": "2010-02-12"
     }
   },
   "2004-05-fleer-authentix-tip-off-trios-heights-edition-tt-hr-sn10": {
@@ -3117,9 +2958,7 @@
     "purchasePrice": 31.0,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2010-02-11",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "04-05 Fleer Tip-Off Trio McGrady Ming Howard #'d 10/25!"
+      "purchaseDate": "2010-02-11"
     }
   },
   "2003-04-fleer-focus-anniversary-gold-105-sn25": {
@@ -3132,9 +2971,7 @@
     "purchasePrice": 11.37,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2010-02-11",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "2003-04 Fleer Focus Juwan Howard Lot #'d 25/25"
+      "purchaseDate": "2010-02-11"
     }
   },
   "2006-07-ultra-platinum-medallion-53-sn49": {
@@ -3147,9 +2984,7 @@
     "purchasePrice": 0.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2009-10-15",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "Juwan Howard 06-07 Ultra PLATINUM MEDALLION SP #/100"
+      "purchaseDate": "2009-10-15"
     }
   },
   "2009-10-sp-game-used-edition-tag-team-quads-tq-char-sn9": {
@@ -3162,9 +2997,7 @@
     "purchasePrice": 3.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2009-09-22",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "09/10 SP GAME USED EMEKA OKAFOR/HOWARD 4x JERSEY /125"
+      "purchaseDate": "2009-09-22"
     }
   },
   "2009-10-panini-court-kings-materials-jersey-13-sn149": {
@@ -3177,9 +3010,7 @@
     "purchasePrice": 2.24,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2009-09-13",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "09-10 SPGU Foursome Jersey BOBCATS - Okafor Howard #/35"
+      "purchaseDate": "2009-09-13"
     }
   },
   "2004-05-fleer-authentix-tip-off-trios-tt-hr-sn57": {
@@ -3192,9 +3023,7 @@
     "purchasePrice": 9.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2009-08-08",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "McGrady, Ming, Howard TRIPLE JERSEY Card 57/75 ROCKETS"
+      "purchaseDate": "2009-08-08"
     }
   },
   "2003-04-topps-pristine-63": {
@@ -3207,9 +3036,7 @@
     "purchasePrice": 2.54,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2009-08-08",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "2003-04 Topps Pristine Refractors #63 Juwan Howard"
+      "purchaseDate": "2009-08-08"
     }
   },
   "1999-00-topps-gold-label-class-1-black-label-27": {
@@ -3222,9 +3049,7 @@
     "purchasePrice": 4.16,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2009-08-08",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "99-00 Topps Gold Label Class 3 Black Label Juwan Howard"
+      "purchaseDate": "2009-08-08"
     }
   },
   "1997-98-topps-stadium-club-triumvirate-luminescent-t3a": {
@@ -3237,9 +3062,7 @@
     "purchasePrice": 13.5,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2009-02-13",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "1997 TRI HOWARD / WEBBER / STRICKLAND LUMINESCENT T3ABC"
+      "purchaseDate": "2009-02-13"
     }
   },
   "1995-96-fleer-metal-silver-spotlight-116": {
@@ -3252,9 +3075,7 @@
     "purchasePrice": 1.75,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2009-02-08",
-      "purchasedFrom": "eBay (You Won eBay Item:1995-96 Metal Silver Spotlight #116 Juwan Howard (360128169670))",
-      "ebayTitle": "1995-96 Metal Silver Spotlight #116 Juwan Howard"
+      "purchaseDate": "2009-02-08"
     }
   },
   "1997-98-ud3-season-ticket-autograph-jh": {
@@ -3267,9 +3088,7 @@
     "purchasePrice": 24.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2009-01-14",
-      "purchasedFrom": "eBay (You Won eBay Item:JUWAN HOWARD 1997/98 UPPER DECK UD3 SEASON TICKET AUTO (390023679934))",
-      "ebayTitle": "JUWAN HOWARD 1997/98 UPPER DECK UD3 SEASON TICKET AUTO"
+      "purchaseDate": "2009-01-14"
     }
   },
   "2001-02-e-x-essential-credentials-credentials-future-68-sn20": {
@@ -3282,9 +3101,7 @@
     "purchasePrice": 7.3,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2008-12-27",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "Juwan Howard 01-02 EX Essential Credentials Future /63"
+      "purchaseDate": "2008-12-27"
     }
   },
   "1996-97-flair-showcase-showtime-row-0-seat-5": {
@@ -3297,9 +3114,7 @@
     "purchasePrice": 2.0,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2008-12-25",
-      "purchasedFrom": "eBay (You Won eBay Item:1996-97 SHOWCASE JUWAN HOWARD ROW 0 RARE (370135494810))",
-      "ebayTitle": "1996-97 SHOWCASE JUWAN HOWARD ROW 0 RARE"
+      "purchaseDate": "2008-12-25"
     }
   },
   "2006-07-topps-triple-threats-relics-combos-emerald-ttrc-55-sn5": {
@@ -3312,9 +3127,7 @@
     "purchasePrice": 35.0,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2008-12-16",
-      "purchasedFrom": "eBay (You Won eBay Item:CHRIS WEBBER/J HOWARD/J ROSE THREADS FAB 5 JERSEY #5/18 (350138415551))",
-      "ebayTitle": "CHRIS WEBBER/J HOWARD/J ROSE THREADS FAB 5 JERSEY #5/18"
+      "purchaseDate": "2008-12-16"
     }
   },
   "1997-98-fleer-traditions-tiffany-125": {
@@ -3327,9 +3140,7 @@
     "purchasePrice": 3.8,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2008-11-08",
-      "purchasedFrom": "eBay (You Won eBay Item:1997-98 Fleer Tiffany Coll #125 Juwan Howard (120326686976))",
-      "ebayTitle": "1997-98 Fleer Tiffany Coll #125 Juwan Howard"
+      "purchaseDate": "2008-11-08"
     }
   },
   "2003-04-ud-ultimate-collection-79-sn98": {
@@ -3342,9 +3153,7 @@
     "purchasePrice": 3.43,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2008-09-14",
-      "purchasedFrom": "eBay (You Won eBay Item:2003-04 Ultimate Coll #79 Juwan Howard (310068107788))",
-      "ebayTitle": "2003-04 Ultimate Coll #79 Juwan Howard"
+      "purchaseDate": "2008-09-14"
     }
   },
   "2003-04-ud-finite-gold-137-sn7": {
@@ -3357,9 +3166,7 @@
     "purchasePrice": 3.42,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2008-09-14",
-      "purchasedFrom": "eBay (You Won eBay Item:2003-04 UD Finite Gold #137 Juwan Howard (150294630898))",
-      "ebayTitle": "2003-04 UD Finite Gold #137 Juwan Howard"
+      "purchaseDate": "2008-09-14"
     }
   },
   "2000-01-ud-black-diamond-gold-90-sn482": {
@@ -3372,9 +3179,7 @@
     "purchasePrice": 1.74,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2008-09-14",
-      "purchasedFrom": "eBay (You Won eBay Item:2000-01 Black Diamond Gold #90 Juwan Howard (140266095308))",
-      "ebayTitle": "2000-01 Black Diamond Gold #90 Juwan Howard"
+      "purchaseDate": "2008-09-14"
     }
   },
   "2007-08-spx-winning-materials-jersey-wmt-whr": {
@@ -3387,9 +3192,7 @@
     "purchasePrice": 2.95,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2008-09-08",
-      "purchasedFrom": "eBay (You Won eBay Item:2007-08 SPx CHRIS WEBBER/JUWAN HOWARD/JALEN ROSE JERSEY (260281384576))",
-      "ebayTitle": "2007-08 SPx CHRIS WEBBER/JUWAN HOWARD/JALEN ROSE JERSEY"
+      "purchaseDate": "2008-09-08"
     }
   },
   "2002-03-topps-jersey-edition-black-je-jh-sn99": {
@@ -3402,9 +3205,7 @@
     "purchasePrice": 0.3,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2008-09-08",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "2002-03 TOPPS JERSEY EDITION JUWAN HOWARD JERSEY 99/99"
+      "purchaseDate": "2008-09-08"
     }
   },
   "2004-05-sp-game-used-edition-authentic-fabrics-jersey-patch-af2p-hg-sn2": {
@@ -3417,9 +3218,7 @@
     "purchasePrice": 9.5,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2008-06-25",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "Juwan Howard Upper Deck Game Used 3 color Patch!"
+      "purchaseDate": "2008-06-25"
     }
   },
   "2004-05-sp-game-used-edition-gold-81-sn58": {
@@ -3432,9 +3231,7 @@
     "purchasePrice": 0.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2008-06-13",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "04-05 SP GAME USED GOLD JUWAN HOWARD 037/100"
+      "purchaseDate": "2008-06-13"
     }
   },
   "2002-03-flair-11": {
@@ -3447,9 +3244,7 @@
     "purchasePrice": 1.5,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2008-05-19",
-      "purchasedFrom": "eBay (You Won eBay Item:02/03 FLEER PREMIUM JUWAN HOWARD RUBIES 11/100 NUGGETS (270238950960))",
-      "ebayTitle": "02/03 FLEER PREMIUM JUWAN HOWARD RUBIES 11/100 NUGGETS"
+      "purchaseDate": "2008-05-19"
     }
   },
   "2004-05-ultra-platinum-medallion-111-sn66": {
@@ -3462,9 +3257,7 @@
     "purchasePrice": 0.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2008-04-24",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "05 ULTRA #111 JUWAN HOWARD PLATINUM MED 066/100"
+      "purchaseDate": "2008-04-24"
     }
   },
   "1996-97-collectors-choice-you-crash-the-game-scoring-2-redemption-silver-r29": {
@@ -3477,9 +3270,7 @@
     "purchasePrice": 0.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2008-03-30",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "96-97 UDCC Crash SILVER Redeemed Juwan Howard #R29"
+      "purchaseDate": "2008-03-30"
     }
   },
   "1995-96-collectors-choice-crash-the-game-assists-rebounds-silver-c3": {
@@ -3492,9 +3283,7 @@
     "purchasePrice": 0.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2008-03-30",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "95-96 UDCC Crash SILVER Redeemed Juwan Howard #C3"
+      "purchaseDate": "2008-03-30"
     }
   },
   "1995-96-collectors-choice-crash-the-game-assists-rebounds-gold-c3": {
@@ -3507,9 +3296,7 @@
     "purchasePrice": 0.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2008-03-30",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "95-96 UDCC Crash GOLD Redeemed Juwan Howard #C3"
+      "purchaseDate": "2008-03-30"
     }
   },
   "1995-96-collectors-choice-players-club-38": {
@@ -3522,9 +3309,7 @@
     "purchasePrice": 0.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2008-03-30",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "95-96 UDCC Player's Club Juwan Howard #38"
+      "purchaseDate": "2008-03-30"
     }
   },
   "1994-95-skybox-emotion-time-out-98": {
@@ -3537,9 +3322,7 @@
     "purchasePrice": 0.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2008-03-30",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "94-95 Skybox MASTER SERIES Juwan Howard #98"
+      "purchaseDate": "2008-03-30"
     }
   },
   "1998-99-ud-ionix-reciprocal-59-sn136": {
@@ -3552,9 +3335,7 @@
     "purchasePrice": 3.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2008-03-21",
-      "purchasedFrom": "eBay (You Won eBay Item:JUWAN HOWARD 1998-99 UD IONIX RECIPROCAL CARD 136/750 (260222644992))",
-      "ebayTitle": "JUWAN HOWARD 1998-99 UD IONIX RECIPROCAL CARD 136/750"
+      "purchaseDate": "2008-03-21"
     }
   },
   "1995-96-upper-deck-electric-court-gold-160": {
@@ -3567,9 +3348,7 @@
     "purchasePrice": 0.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2008-03-09",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "95-96 UD ELECTRIC COURT GOLD PARALLEL JUWAN HOWARD"
+      "purchaseDate": "2008-03-09"
     }
   },
   "2003-04-fleer-patchworks-ruby-60-sn3": {
@@ -3582,9 +3361,7 @@
     "purchasePrice": 1.25,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2008-03-02",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "03-04 FLEER PATCHWORKS JUWAN HOWARD RUBY 3/50"
+      "purchaseDate": "2008-03-02"
     }
   },
   "2003-04-topps-pristine-refractor-63-sn43": {
@@ -3597,9 +3374,7 @@
     "purchasePrice": 6.0,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2007-08-18",
-      "purchasedFrom": "eBay (You Won eBay Item: 2003-04 Juwan Howard Topps Pristine Uncir Refractor #63 (280143089391))",
-      "ebayTitle": "2003-04 Juwan Howard Topps Pristine Uncir Refractor #63"
+      "purchaseDate": "2007-08-18"
     }
   },
   "2003-04-ud-mvp-gold-131-sn15": {
@@ -3612,9 +3387,7 @@
     "purchasePrice": 1.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2007-06-10",
-      "purchasedFrom": "eBay (You Won eBay Item: Juwan Howard 2003-04 UD MVP Gold 15/100 (290127752552))",
-      "ebayTitle": "Juwan Howard 2003-04 UD MVP Gold 15/100"
+      "purchaseDate": "2007-06-10"
     }
   },
   "2007-08-sp-game-used-edition-by-the-letter-jersey-patch-bl-ju-sn5": {
@@ -3627,9 +3400,7 @@
     "purchasePrice": 50.0,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2007-05-19",
-      "purchasedFrom": "eBay (You Won eBay Item: 2007 TRIPLE THREADS WEBBER/ROSE/HOWARD FAB 5 3X JERSEY  (220112345387))",
-      "ebayTitle": "2007 TRIPLE THREADS WEBBER/ROSE/HOWARD FAB 5 3X JERSEY"
+      "purchaseDate": "2007-05-19"
     }
   },
   "2004-05-topps-pristine-gold-refractor-27-sn1": {
@@ -3642,9 +3413,7 @@
     "purchasePrice": 3.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2007-05-13",
-      "purchasedFrom": "eBay (You Won eBay Item: 2004-05 Topps Pristine Gold Refractor JUWAN HOWARD 1/27 (150122375099))",
-      "ebayTitle": "2004-05 Topps Pristine Gold Refractor JUWAN HOWARD 1/27"
+      "purchaseDate": "2007-05-13"
     }
   },
   "1999-00-ud-black-diamond-diamond-cut-final-cut-88-sn56": {
@@ -3657,9 +3426,7 @@
     "purchasePrice": 1.5,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2007-05-12",
-      "purchasedFrom": "eBay (You Won eBay Item: Juwan Howard 99-00 Bl. Diamond Final Cut /100 + Inserts (170109230262))",
-      "ebayTitle": "Juwan Howard 99-00 Bl. Diamond Final Cut /100 + Inserts"
+      "purchaseDate": "2007-05-12"
     }
   },
   "2004-05-upper-deck-majestic-materials-jersey-ma-jh": {
@@ -3672,9 +3439,7 @@
     "purchasePrice": 0.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2007-05-05",
-      "purchasedFrom": "eBay (You Won eBay Item: 04-05 UD Series 1 Juwan Howard Jersey Majestic Material (190108039480))",
-      "ebayTitle": "04-05 UD Series 1 Juwan Howard Jersey Majestic Material"
+      "purchaseDate": "2007-05-05"
     }
   },
   "2003-04-upper-deck-exclusives-204-sn13": {
@@ -3687,9 +3452,7 @@
     "purchasePrice": 7.76,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2007-04-30",
-      "purchasedFrom": "eBay (You Won eBay Item: JUWAN HOWARD 03-04 UD EXCLUSIVES RAINBOW #13/25 (120112577956))",
-      "ebayTitle": "JUWAN HOWARD 03-04 UD EXCLUSIVES RAINBOW #13/25"
+      "purchaseDate": "2007-04-30"
     }
   },
   "2005-06-ud-ultimate-collection-red-199-sn6": {
@@ -3702,9 +3465,7 @@
     "purchasePrice": 0.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2007-04-19",
-      "purchasedFrom": "eBay (You Won eBay Item: 2005 05-06 UD ULTIMATE RED JUWON HOWARD ROCKETS /50 (230116847211))",
-      "ebayTitle": "2005 05-06 UD ULTIMATE RED JUWON HOWARD ROCKETS /50"
+      "purchaseDate": "2007-04-19"
     }
   },
   "1998-99-topps-finest-arena-stars-as15": {
@@ -3717,9 +3478,7 @@
     "purchasePrice": 0.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2007-04-19",
-      "purchasedFrom": "eBay (You Won eBay Item: 98-99 FINEST ARENA STARS JUWAN HOWARD ROCKETS 1:48 (230114245760))",
-      "ebayTitle": "98-99 FINEST ARENA STARS JUWAN HOWARD ROCKETS 1:48"
+      "purchaseDate": "2007-04-19"
     }
   },
   "2004-05-ud-black-diamond-29": {
@@ -3732,9 +3491,7 @@
     "purchasePrice": 15.5,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2007-04-19",
-      "purchasedFrom": "eBay (You Won eBay Item: 04-05 UPPER DECK UD EXCLUSIVES JUWAN HOWARD /25 $40 (230116844450))",
-      "ebayTitle": "04-05 UPPER DECK UD EXCLUSIVES JUWAN HOWARD /25 $40"
+      "purchaseDate": "2007-04-19"
     }
   },
   "1999-00-fleer-focus-65": {
@@ -3747,9 +3504,7 @@
     "purchasePrice": 1.0,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2007-04-09",
-      "purchasedFrom": "eBay (You Won eBay Item: JUWAN HOWARD 99-00 FLEER FOCUS GREEN #/300 (230066491597))",
-      "ebayTitle": "JUWAN HOWARD 99-00 FLEER FOCUS GREEN #/300"
+      "purchaseDate": "2007-04-09"
     }
   },
   "2002-03-fleer-authentix-balcony-93-sn233": {
@@ -3762,9 +3517,7 @@
     "purchasePrice": 1.0,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2007-04-09",
-      "purchasedFrom": "eBay (You Won eBay Item: JUWAN HOWARD 02-03 FLEER AUTHENTIX BALCONY #/250 (230066491576))",
-      "ebayTitle": "JUWAN HOWARD 02-03 FLEER AUTHENTIX BALCONY #/250"
+      "purchaseDate": "2007-04-09"
     }
   },
   "2005-06-ud-ultimate-collection-199-sn532": {
@@ -3777,9 +3530,7 @@
     "purchasePrice": 1.0,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2007-04-09",
-      "purchasedFrom": "eBay (You Won eBay Item: JUWAN HOWARD 05-06 ULTIMATE COLLECTION #/750 (230029473193))",
-      "ebayTitle": "JUWAN HOWARD 05-06 ULTIMATE COLLECTION #/750"
+      "purchaseDate": "2007-04-09"
     }
   },
   "2004-05-ud-black-diamond-red-29-sn24": {
@@ -3792,9 +3543,7 @@
     "purchasePrice": 1.0,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2007-04-09",
-      "purchasedFrom": "eBay (You Won eBay Item: JUWAN HOWARD 04-05 UD BLACK DIAMOND RED #/100 (230008202779))",
-      "ebayTitle": "JUWAN HOWARD 04-05 UD BLACK DIAMOND RED #/100"
+      "purchaseDate": "2007-04-09"
     }
   },
   "2004-05-topps-luxury-box-tier-reserved-44-sn142": {
@@ -3807,9 +3556,7 @@
     "purchasePrice": 1.0,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2007-04-09",
-      "purchasedFrom": "eBay (You Won eBay Item: JUWAN HOWARD 04-05 TOPPS LUXURY BOX TIER RESERVED #/300 (8787734744))",
-      "ebayTitle": "JUWAN HOWARD 04-05 TOPPS LUXURY BOX TIER RESERVED #/300"
+      "purchaseDate": "2007-04-09"
     }
   },
   "1998-99-flair-showcase-power-legacy-collection-42-sn20": {
@@ -3822,9 +3569,7 @@
     "purchasePrice": 6.5,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2007-02-03",
-      "purchasedFrom": "eBay (You Won eBay Item: 98-99 Showcase Legacy Collection Row 1 42 Juwan Howard  (130074540802))",
-      "ebayTitle": "98-99 Showcase Legacy Collection Row 1 42 Juwan Howard"
+      "purchaseDate": "2007-02-03"
     }
   },
   "2003-04-sp-game-used-edition-gold-63-sn100": {
@@ -3837,9 +3582,7 @@
     "purchasePrice": 0.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-11-24",
-      "purchasedFrom": "eBay (You Won eBay Item: 03-04 UD SP GAME USED GOLD JUWAN HOWARD ROCKETS 100/100 (320050623266))",
-      "ebayTitle": "03-04 UD SP GAME USED GOLD JUWAN HOWARD ROCKETS 100/100"
+      "purchaseDate": "2006-11-24"
     }
   },
   "2006-07-sp-game-used-edition-authentic-fabrics-jersey-afd-mh-sn51": {
@@ -3852,9 +3595,7 @@
     "purchasePrice": 4.01,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-11-11",
-      "purchasedFrom": "eBay (You Won eBay Item: McGrady/ Howard 07 SP Game Used Dual Jersey /100 (260050922399))",
-      "ebayTitle": "McGrady/ Howard 07 SP Game Used Dual Jersey /100"
+      "purchaseDate": "2006-11-11"
     }
   },
   "2003-04-topps-collection-edition-59": {
@@ -3867,9 +3608,7 @@
     "purchasePrice": 0.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-11-03",
-      "purchasedFrom": "eBay (You Won eBay Item: JUWAN HOWARD 03/04 SHOWASE LEAGACY COLLECTION #D /125 (190044587284))",
-      "ebayTitle": "JUWAN HOWARD 03/04 SHOWASE LEAGACY COLLECTION #D /125"
+      "purchaseDate": "2006-11-03"
     }
   },
   "2006-07-ud-reflections-dual-fabric-blue-dr-hr-sn15": {
@@ -3882,9 +3621,7 @@
     "purchasePrice": 11.27,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-11-01",
-      "purchasedFrom": "eBay (You Won eBay Item: Jalen Rose Juwan Howard 07 Reflections Dual Patch 15/15 (260045704261))",
-      "ebayTitle": "Jalen Rose Juwan Howard 07 Reflections Dual Patch 15/15"
+      "purchaseDate": "2006-11-01"
     }
   },
   "1998-99-ud-choice-starquest-red-sq29": {
@@ -3897,9 +3634,7 @@
     "purchasePrice": 0.88,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-10-26",
-      "purchasedFrom": "eBay (You Won eBay Item: JUWAN HOWARD 1998-99 UD CHOICE STARQUEST RED #SQ29 (230043512429))",
-      "ebayTitle": "JUWAN HOWARD 1998-99 UD CHOICE STARQUEST RED #SQ29"
+      "purchaseDate": "2006-10-26"
     }
   },
   "2005-06-topps-total-printing-plate-black-199-sn1": {
@@ -3912,9 +3647,7 @@
     "purchasePrice": 10.5,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-10-02",
-      "purchasedFrom": "eBay (You Won eBay Item: JUWAN HOWARD 05-06 Topps Total Black Printing Plate 1/1 (160035462044))",
-      "ebayTitle": "JUWAN HOWARD 05-06 Topps Total Black Printing Plate 1/1"
+      "purchaseDate": "2006-10-02"
     }
   },
   "2006-07-ultra-printing-plate-cyan-53-sn1": {
@@ -3927,9 +3660,7 @@
     "purchasePrice": 10.5,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-09-26",
-      "purchasedFrom": "eBay (You Won eBay Item: 07 FLEER ULTRA #53 JUWAN HOWARD PRINTING PLATE(1/1)! (250031130607))",
-      "ebayTitle": "07 FLEER ULTRA #53 JUWAN HOWARD PRINTING PLATE(1/1)!"
+      "purchaseDate": "2006-09-26"
     }
   },
   "2003-04-fleer-mystique-rare-finds-jersey-jersey-rft-jr-cw-jh": {
@@ -3942,9 +3673,7 @@
     "purchasePrice": 26.02,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-09-18",
-      "purchasedFrom": "eBay (You Won eBay Item: 03/04 Fleer Mystique TRIPLE Patch ROSE/WEBBER/HOWARD (180027738935))",
-      "ebayTitle": "03/04 Fleer Mystique TRIPLE Patch ROSE/WEBBER/HOWARD"
+      "purchaseDate": "2006-09-18"
     }
   },
   "2002-03-topps-finest-refractor-53-sn118": {
@@ -3957,9 +3686,7 @@
     "purchasePrice": 0.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-09-05",
-      "purchasedFrom": "eBay (You Won eBay Item: JUWAN HOWARD #53 Refractor 02-03 Topps Finest Basketbal (220022522888))",
-      "ebayTitle": "JUWAN HOWARD #53 Refractor 02-03 Topps Finest Basketbal"
+      "purchaseDate": "2006-09-05"
     }
   },
   "2004-05-topps-chrome-refractor-139": {
@@ -3972,9 +3699,7 @@
     "purchasePrice": 1.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-08-11",
-      "purchasedFrom": "eBay (You Won eBay Item: 04/05 Topps Chrome JUWAN HOWARD Gold Refractor 7/99 (280015379497))",
-      "ebayTitle": "04/05 Topps Chrome JUWAN HOWARD Gold Refractor 7/99"
+      "purchaseDate": "2006-08-11"
     }
   },
   "1998-99-fleer-brilliants-gold-97g-sn24": {
@@ -3987,9 +3712,7 @@
     "purchasePrice": 15.5,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-08-07",
-      "purchasedFrom": "eBay (You Won eBay Item: 98/99 Juwan Howard Fleer Brillians 24kt Gold #d 14/24  (110016019524))",
-      "ebayTitle": "98/99 Juwan Howard Fleer Brillians 24kt Gold #d 14/24"
+      "purchaseDate": "2006-08-07"
     }
   },
   "1998-99-spx-finite-star-power-spectrum-92-sn223": {
@@ -4002,9 +3725,7 @@
     "purchasePrice": 0.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-07-08",
-      "purchasedFrom": "eBay (You Won eBay Item: 1998-99 SPX FINITE SPECTRUM SP JUWAN HOWARD #223/250 (120004046805))",
-      "ebayTitle": "1998-99 SPX FINITE SPECTRUM SP JUWAN HOWARD #223/250"
+      "purchaseDate": "2006-07-08"
     }
   },
   "1999-00-spx-radiance-88-sn33": {
@@ -4017,9 +3738,7 @@
     "purchasePrice": 0.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-06-03",
-      "purchasedFrom": "eBay (You Won eBay Item: JUWAN HOWARD 99-00 SPx RADIANCE #/100 RARE (8820184677))",
-      "ebayTitle": "JUWAN HOWARD 99-00 SPx RADIANCE #/100 RARE"
+      "purchaseDate": "2006-06-03"
     }
   },
   "2002-03-topps-chrome-white-refractor-50-sn152": {
@@ -4032,9 +3751,7 @@
     "purchasePrice": 1.0,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-05-25",
-      "purchasedFrom": "eBay (You Won eBay Item: 02 TOPPS CHROME WHITE REFRACTOR JUWAN HOWARD 152/249 (8757839653))",
-      "ebayTitle": "02 TOPPS CHROME WHITE REFRACTOR JUWAN HOWARD 152/249"
+      "purchaseDate": "2006-05-25"
     }
   },
   "2002-03-sp-game-used-edition-authentic-fabrics-jersey-jp-jh-j-sn86": {
@@ -4047,9 +3764,7 @@
     "purchasePrice": 7.0,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-05-25",
-      "purchasedFrom": "eBay (You Won eBay Item: 02-03 SP GAME USED DUAL FABRICS POSEY HOWARD 086/100 (5189399195))",
-      "ebayTitle": "02-03 SP GAME USED DUAL FABRICS POSEY HOWARD 086/100"
+      "purchaseDate": "2006-05-25"
     }
   },
   "2002-03-topps-pristine-gold-refractor-24-sn26": {
@@ -4062,9 +3777,7 @@
     "purchasePrice": 7.0,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-05-25",
-      "purchasedFrom": "eBay (You Won eBay Item: 02 TOPPS PRISTINE GOLD REFRACTOR JUWAN HOWARD 26/50 (5178628841))",
-      "ebayTitle": "02 TOPPS PRISTINE GOLD REFRACTOR JUWAN HOWARD 26/50"
+      "purchaseDate": "2006-05-25"
     }
   },
   "2004-05-ud-black-diamond-green-29-sn9": {
@@ -4077,9 +3790,7 @@
     "purchasePrice": 2.25,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-05-17",
-      "purchasedFrom": "eBay (You Won eBay Item: 2004-05 Black Diamond Green Juwan Howard  #09/25 (8810915392))",
-      "ebayTitle": "2004-05 Black Diamond Green Juwan Howard  #09/25"
+      "purchaseDate": "2006-05-17"
     }
   },
   "1998-99-topps-east-west-refractor-ew11": {
@@ -4092,9 +3803,7 @@
     "purchasePrice": 13.28,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-05-15",
-      "purchasedFrom": "eBay (You Won eBay Item: CHRIS WEBBER/JUWAN HOWARD 98 TOPPS EAST/WEST REFRACTOR (8810289283))",
-      "ebayTitle": "CHRIS WEBBER/JUWAN HOWARD 98 TOPPS EAST/WEST REFRACTOR"
+      "purchaseDate": "2006-05-15"
     }
   },
   "2002-03-topps-pristine-gold-refractor-die-cut-24-sn91": {
@@ -4107,9 +3816,7 @@
     "purchasePrice": 3.25,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-05-11",
-      "purchasedFrom": "eBay (You Won eBay Item: 02-03 Topps Pristine Juwan Howard Gold Refractor /99 (8806847914))",
-      "ebayTitle": "02-03 Topps Pristine Juwan Howard Gold Refractor /99"
+      "purchaseDate": "2006-05-11"
     }
   },
   "1996-97-collectors-choice-mini-cards-gold-m178": {
@@ -4122,9 +3829,7 @@
     "purchasePrice": 0.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-05-02",
-      "purchasedFrom": "eBay (You Won eBay Item: Juwan Howard 1996 Upper Deck Electric Court Gold (8802199220))",
-      "ebayTitle": "Juwan Howard 1996 Upper Deck Electric Court Gold"
+      "purchaseDate": "2006-05-02"
     }
   },
   "1994-classic-4-sports-autograph-5-sn710": {
@@ -4137,9 +3842,7 @@
     "purchasePrice": 3.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-04-30",
-      "purchasedFrom": "eBay (You Won eBay Item: SR RC 1994 Autograph Juwan Howard Michigan Fab Five (8800928629))",
-      "ebayTitle": "SR RC 1994 Autograph Juwan Howard Michigan Fab Five"
+      "purchaseDate": "2006-04-30"
     }
   },
   "2005-06-sp-game-used-edition-bronze-37-sn97": {
@@ -4152,9 +3855,7 @@
     "purchasePrice": 1.0,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-04-08",
-      "purchasedFrom": "eBay (You Won eBay Item: 05-06 JUWAN HOWARD SP GAME USED EDITION #'D 97/100 (8789831297))",
-      "ebayTitle": "05-06 JUWAN HOWARD SP GAME USED EDITION #'D 97/100"
+      "purchaseDate": "2006-04-08"
     }
   },
   "2003-04-sp-game-used-edition-authentic-fabrics-jersey-jh-mc-j-sn38": {
@@ -4167,9 +3868,7 @@
     "purchasePrice": 4.0,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-04-08",
-      "purchasedFrom": "eBay (You Won eBay Item: 03 JUWAN HOWARD MARCUS CAMBY SP GAME USED JERSEY 38/100 (8793244733))",
-      "ebayTitle": "03 JUWAN HOWARD MARCUS CAMBY SP GAME USED JERSEY 38/100"
+      "purchaseDate": "2006-04-08"
     }
   },
   "2002-03-topps-jersey-edition-je-jh": {
@@ -4182,9 +3881,7 @@
     "purchasePrice": 3.59,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-04-06",
-      "purchasedFrom": "eBay (You Won eBay Item: JUWAN HOWARD 03 Topps JERSEY EDITION BRONZE (2788623333))",
-      "ebayTitle": "JUWAN HOWARD 03 Topps JERSEY EDITION BRONZE"
+      "purchaseDate": "2006-04-06"
     }
   },
   "2001-02-ud-flight-team-gold-42-sn36": {
@@ -4197,9 +3894,7 @@
     "purchasePrice": 1.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-04-06",
-      "purchasedFrom": "eBay (You Won eBay Item: JUWAN HOWARD 2001-02 UD FLIGHT TEAM /50 GOLD #42 (8788923636))",
-      "ebayTitle": "JUWAN HOWARD 2001-02 UD FLIGHT TEAM /50 GOLD #42"
+      "purchaseDate": "2006-04-06"
     }
   },
   "2004-05-ud-trilogy-34": {
@@ -4212,9 +3907,7 @@
     "purchasePrice": 0.5,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-03-19",
-      "purchasedFrom": "eBay (You Won eBay Item: 04/05 UD TRILOGY COURT COLLECTION #34 JUWAN HOWARD /100 (8782508169))",
-      "ebayTitle": "04/05 UD TRILOGY COURT COLLECTION #34 JUWAN HOWARD /100"
+      "purchaseDate": "2006-03-19"
     }
   },
   "2005-06-ud-rookie-debut-gold-34-sn23": {
@@ -4227,9 +3920,7 @@
     "purchasePrice": 5.02,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-02-26",
-      "purchasedFrom": "eBay (You Won eBay Item: 2005-06 UD Rookie Debut JUWAN HOWARD SP GOLD 23/50 (8770015763))",
-      "ebayTitle": "2005-06 UD Rookie Debut JUWAN HOWARD SP GOLD 23/50"
+      "purchaseDate": "2006-02-26"
     }
   },
   "1994-95-topps-finest-refractor-288": {
@@ -4242,9 +3933,7 @@
     "purchasePrice": 7.5,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-02-24",
-      "purchasedFrom": "eBay (You Won eBay Item: 1994/95 FINEST RC #288 JUWAN HOWARD REFRACTOR (8768102345))",
-      "ebayTitle": "1994/95 FINEST RC #288 JUWAN HOWARD REFRACTOR"
+      "purchaseDate": "2006-02-24"
     }
   },
   "2003-04-flair-row-1-5-sn24": {
@@ -4257,9 +3946,7 @@
     "purchasePrice": 2.5,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-02-03",
-      "purchasedFrom": "eBay (You Won eBay Item: 2003-04 Juwan Howard 024/100 Flair Gold #5 (5177802477))",
-      "ebayTitle": "2003-04 Juwan Howard 024/100 Flair Gold #5"
+      "purchaseDate": "2006-02-03"
     }
   },
   "1998-99-sp-authentic-88": {
@@ -4272,9 +3959,7 @@
     "purchasePrice": 2.25,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-01-31",
-      "purchasedFrom": "eBay (You Won eBay Item: 1998 99 SP AUTHENTIC BUYBACK AUTO JUWAN HOWARD (8756566517))",
-      "ebayTitle": "1998 99 SP AUTHENTIC BUYBACK AUTO JUWAN HOWARD"
+      "purchaseDate": "2006-01-31"
     }
   },
   "1997-98-topps-finest-force-refractor-9-ff11": {
@@ -4287,9 +3972,7 @@
     "purchasePrice": 14.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-01-30",
-      "purchasedFrom": "eBay (You Won eBay Item: 97/98 Finest GOLD REFRACTOR Juwan Howard #/289 $40 (8758840986))",
-      "ebayTitle": "97/98 Finest GOLD REFRACTOR Juwan Howard #/289 $40"
+      "purchaseDate": "2006-01-30"
     }
   },
   "1997-98-spx-49": {
@@ -4302,9 +3985,7 @@
     "purchasePrice": 20.51,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-01-22",
-      "purchasedFrom": "eBay (You Won eBay Item: Juwan Howard 97/98 SPx Grand Finale 40/50  SCARCE ! (8751086970))",
-      "ebayTitle": "Juwan Howard 97/98 SPx Grand Finale 40/50  SCARCE !"
+      "purchaseDate": "2006-01-22"
     }
   },
   "2003-04-topps-finest-refractor-99-sn120": {
@@ -4317,9 +3998,7 @@
     "purchasePrice": 1.0,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2005-11-17",
-      "purchasedFrom": "eBay (You Won eBay Item: 2003-04 FINEST JUWAN HOWARD REFRACTOR (8720426582))",
-      "ebayTitle": "2003-04 FINEST JUWAN HOWARD REFRACTOR"
+      "purchaseDate": "2005-11-17"
     }
   },
   "2004-05-sp-game-used-edition-81": {
@@ -4332,9 +4011,7 @@
     "purchasePrice": 4.0,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2005-09-01",
-      "purchasedFrom": "eBay (You Won eBay Item: 04-05 SP Game Used Reece Gaines/Juwan Howard JRSY /100 (5178770035))",
-      "ebayTitle": "04-05 SP Game Used Reece Gaines/Juwan Howard JRSY /100"
+      "purchaseDate": "2005-09-01"
     }
   },
   "2020-21-panini-contenders-optic-perennial-contenders-gold-pco-juw-sn1": {
@@ -4347,9 +4024,7 @@
     "purchasePrice": 123.5,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2026-07-24",
-      "purchasedFrom": "eBay",
-      "ebayTitle": "2020-21 Panini Contenders Optic Contende..."
+      "purchaseDate": "2026-07-24"
     }
   },
   "2008-exquisite-flawless-tracy-mcgrady-flaw-tm-sn20": {
@@ -4362,9 +4037,7 @@
     "purchasePrice": 30.0,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2010-09-08",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "2008-09 Exquisite Flawless Tracy McGrady Auto 20/50"
+      "purchaseDate": "2010-09-08"
     }
   },
   "2016-17-panini-flawless-patch-gold-p-jhw-sn8": {
@@ -4377,9 +4050,7 @@
     "purchasePrice": 26.0,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2010-06-29",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "TRACY McGRADY 06-07 Exquisite Collection PATCH 8/10"
+      "purchaseDate": "2010-06-29"
     }
   },
   "2008-exquisite-flawless-bill-russell-flaw-br-sn23": {
@@ -4392,9 +4063,7 @@
     "purchasePrice": 81.88,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2009-10-19",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "2008-'09 EXQUISITE FLAWLESS AUTO BILL RUSSELL # 23/25"
+      "purchaseDate": "2009-10-19"
     }
   },
   "2008-exquisite-flawless-rodney-stuckey-flaw-rs-sn28": {
@@ -4407,9 +4076,7 @@
     "purchasePrice": 10.5,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2009-10-01",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "Rodney Stuckey 2008-09 Exquisite Flawless Auto /50"
+      "purchaseDate": "2009-10-01"
     }
   },
   "2008-exquisite-flawless-michael-jordan-flaw-mj-sn15": {
@@ -4422,9 +4089,7 @@
     "purchasePrice": 497.52,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2009-09-18",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "08-09 EXQUISITE- MICHAEL JORDAN AUTO FLAWLESS 15/23"
+      "purchaseDate": "2009-09-18"
     }
   },
   "2008-exquisite-flawless-kareem-abdul-jabbar-flaw-ka-sn22": {
@@ -4437,9 +4102,7 @@
     "purchasePrice": 86.0,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2009-09-10",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "KAREEM ABDUL-JABBAR 08-09 EXQUISITE LAKERS AUTO /25 SP"
+      "purchaseDate": "2009-09-10"
     }
   },
   "2008-exquisite-flawless-kevin-garnett-flaw-kg-sn37": {
@@ -4452,9 +4115,7 @@
     "purchasePrice": 61.95,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2009-09-05",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "2008-09 Exquisite Flawless Auto KEVIN GARNETT #37/50"
+      "purchaseDate": "2009-09-05"
     }
   },
   "2008-exquisite-flawless-paul-pierce-flaw-pp-sn43": {
@@ -4467,9 +4128,7 @@
     "purchasePrice": 41.0,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2009-08-26",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "08-09 NBA Ud Exquisite Flawless Auto PAUL PIERCE #43/50"
+      "purchaseDate": "2009-08-26"
     }
   },
   "2008-exquisite-flawless-derek-fisher-flaw-df-sn26": {
@@ -4482,9 +4141,7 @@
     "purchasePrice": 31.01,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2009-08-23",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "09 EXQUISITE DEREK FISHER LAKERS AUTO 26/50 FLAWLESS"
+      "purchaseDate": "2009-08-23"
     }
   },
   "2003-04-ud-victory-21": {
@@ -4497,9 +4154,7 @@
     "purchasePrice": 5.0,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2008-11-16",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "03-04 UPPER DECK VICTORY-ROOKIE CARD-MIKE SWEETNEY"
+      "purchaseDate": "2008-11-16"
     }
   },
   "2001-02-e-x-68": {
@@ -4512,9 +4167,7 @@
     "purchasePrice": 15.0,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2008-09-24",
-      "purchasedFrom": "eBay (You Won eBay Item:MCDYESS / HOWARD / POSEY 01-02 SPGU TRIPLE JERSEY #/25! (220284983950))",
-      "ebayTitle": "MCDYESS / HOWARD / POSEY 01-02 SPGU TRIPLE JERSEY #/25!"
+      "purchaseDate": "2008-09-24"
     }
   },
   "1995-96-topps-finest-dish-and-swish-ds29": {
@@ -4527,9 +4180,7 @@
     "purchasePrice": 19.5,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2008-04-12",
-      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
-      "ebayTitle": "Chris Webber/Jalen Rose/Juwan Howard 3X Relic #/36"
+      "purchaseDate": "2008-04-12"
     }
   },
   "2001-02-sp-authentic-21": {
@@ -4542,9 +4193,7 @@
     "purchasePrice": 21.95,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2007-05-18",
-      "purchasedFrom": "eBay (You Won eBay Item: 2006-07 SP Game Used Dual Patch Rockets Tracy McGrady (260119378878))",
-      "ebayTitle": "2001-02  Upper Deck Sweet Shot Signature Kenyon Martin"
+      "purchaseDate": "2007-05-18"
     }
   },
   "1998-99-ud-choice-starquest-blue-sq29": {
@@ -4557,9 +4206,7 @@
     "purchasePrice": 12.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2007-04-15",
-      "purchasedFrom": "eBay (You Won eBay Item: JUWAN HOWARD 98/99 UD CHOICE STARQUEST GOLD 64/100 $25 (180107487443))",
-      "ebayTitle": "JUWAN HOWARD 98/99 UD CHOICE STARQUEST GOLD 64/100 $25"
+      "purchaseDate": "2007-04-15"
     }
   },
   "2003-04-topps-bazooka-19": {
@@ -4572,9 +4219,7 @@
     "purchasePrice": 20.61,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-11-29",
-      "purchasedFrom": "eBay (You Won eBay Item: 03/04 FINITE ELEMENTS 3 JERSEYS WEBBER, ROSE, HOWARD (180056426183))",
-      "ebayTitle": "03/04 FINITE ELEMENTS 3 JERSEYS WEBBER, ROSE, HOWARD"
+      "purchaseDate": "2006-11-29"
     }
   },
   "1997-98-ud-hardcourt-50": {
@@ -4587,9 +4232,7 @@
     "purchasePrice": 12.48,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-09-18",
-      "purchasedFrom": "eBay (You Won eBay Item: UD JERSEY DEREK FISHER MICKAEL PIETRUS JUWAN HOWARD /50 (320027453474))",
-      "ebayTitle": "UD JERSEY DEREK FISHER MICKAEL PIETRUS JUWAN HOWARD /50"
+      "purchaseDate": "2006-09-18"
     }
   },
   "2005-ultimate-signature-edition-immortal-inscriptions-ozzie-the-wiz-smith-in-os-sn53": {
@@ -4602,9 +4245,7 @@
     "purchasePrice": 46.2,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-08-30",
-      "purchasedFrom": "eBay (You Won eBay Item: OZZIE SMITH 05 Ultimate Sig \"Immortal Inscriptions\"  (110026223728))",
-      "ebayTitle": "OZZIE SMITH 05 Ultimate Sig \"Immortal Inscriptions\""
+      "purchaseDate": "2006-08-30"
     }
   },
   "1995-images-95-5": {
@@ -4617,9 +4258,7 @@
     "purchasePrice": 0.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-07-15",
-      "purchasedFrom": "eBay (You Won eBay Item: 95 CLASSIC IMAGES CLASSIC PERFORMANCES JUWAN HOWARD   (190006631532))",
-      "ebayTitle": "95 CLASSIC IMAGES CLASSIC PERFORMANCES JUWAN HOWARD"
+      "purchaseDate": "2006-07-15"
     }
   },
   "1994-classic-4-sports-high-voltage-hv18-sn909": {
@@ -4632,9 +4271,7 @@
     "purchasePrice": 2.99,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-07-14",
-      "purchasedFrom": "eBay (You Won eBay Item: 94 4 SPORT HIGH VOLTAGE  JUWAN HOWARD  0909 of 2,995 (190006278977))",
-      "ebayTitle": "94 4 SPORT HIGH VOLTAGE  JUWAN HOWARD  0909 of 2,995"
+      "purchaseDate": "2006-07-14"
     }
   },
   "1998-99-topps-bowman-s-best-refractor-81": {
@@ -4647,9 +4284,7 @@
     "purchasePrice": 5.0,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-05-27",
-      "purchasedFrom": "eBay (You Won eBay Item: Juwan Howard 98/99 Bowmans Atomic Refractor 21/100 Rare (8816937183))",
-      "ebayTitle": "Juwan Howard 98/99 Bowmans Atomic Refractor 21/100 Rare"
+      "purchaseDate": "2006-05-27"
     }
   },
   "1996-97-topps-stadium-club-class-acts-refractor-ca4": {
@@ -4662,9 +4297,7 @@
     "purchasePrice": 13.28,
     "priceHistory": [],
     "metadata": {
-      "purchaseDate": "2006-05-15",
-      "purchasedFrom": "eBay (You Won eBay Item: CHRIS WEBBER/JUWAN HOWARD 98 TOPPS EAST/WEST REFRACTOR (8810289283))",
-      "ebayTitle": "CHRIS WEBBER/JUWAN HOWARD 98 TOPPS EAST/WEST REFRACTOR"
+      "purchaseDate": "2006-05-15"
     }
   },
   "1998-99-fleer-vintage-61-classic-5c-sn16": {
@@ -4679,16 +4312,11 @@
       {
         "date": "2012-01-20",
         "price": 15.49,
-        "source": "eBay (stefanowitch)",
+        "source": "eBay",
         "grade": "Raw"
       }
     ],
-    "metadata": {
-      "purchasedFrom": "eBay (stefanowitch)",
-      "ebayTitle": "98 FLEER TRADITION CLASSIC 61 JUWAN HOWARD ed#61 RUBIES CREDENTIALS",
-      "itemNumber": "270894396907",
-      "serialMatched": "16/61"
-    }
+    "metadata": {}
   },
   "1998-99-fleer-vintage-61-classic-5c-sn53": {
     "certNumber": null,
@@ -4702,16 +4330,1452 @@
       {
         "date": "2026-03-04",
         "price": 126.37,
-        "source": "eBay (Order #03-14331-83615)",
+        "source": "eBay",
         "grade": "Raw #53/61"
       }
     ],
     "metadata": {
-      "purchaseDate": "2026-03-04",
-      "orderNumber": "03-14331-83615",
-      "purchasedFrom": "eBay",
-      "serialMatched": "53/61",
-      "ebayTitle": "1998-99 Fleer Vintage '61 Classic Juwan Howard #5C (53/61)"
+      "purchaseDate": "2026-03-04"
+    }
+  },
+  "2019-20-panini-national-treasures-peerless-signatures-printing-plate-cyan-ps-jwh-sn1": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 41.0,
+    "priceHistory": [
+      {
+        "date": "2020-06-30",
+        "price": 41.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2020-06-30"
+    }
+  },
+  "2017-18-panini-absolute-memorabilia-determination-autographs-orange-d-jh-sn1": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.5,
+    "priceHistory": [
+      {
+        "date": "2020-06-27",
+        "price": 1.5,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2020-06-27"
+    }
+  },
+  "2019-20-panini-prizm-sensational-signatures-mojo-ss-jwh-sn23": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 41.05,
+    "priceHistory": [
+      {
+        "date": "2020-01-21",
+        "price": 41.05,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2020-01-21"
+    }
+  },
+  "2012-13-panini-totally-certified-private-signings-autograph-ps-jhw": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 12.99,
+    "priceHistory": [
+      {
+        "date": "2014-04-28",
+        "price": 12.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2014-04-28"
+    }
+  },
+  "2004-05-topps-bazooka-gold-96": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 5.5,
+    "priceHistory": [
+      {
+        "date": "2014-04-19",
+        "price": 5.5,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2014-04-19"
+    }
+  },
+  "1998-99-spx-finite-76-sn2819": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 240.0,
+    "priceHistory": [
+      {
+        "date": "2013-07-23",
+        "price": 240.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2013-07-23"
+    }
+  },
+  "2005-06-topps-bazooka-blue-133-sn1": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 28.0,
+    "priceHistory": [
+      {
+        "date": "2013-07-04",
+        "price": 28.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2013-07-04"
+    }
+  },
+  "2005-06-topps-total-printing-plate-magenta-199-sn1": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 14.99,
+    "priceHistory": [
+      {
+        "date": "2013-07-02",
+        "price": 14.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2013-07-02"
+    }
+  },
+  "2016-17-panini-flawless-patch-emerald-dpt-jh-sn3": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 30.0,
+    "priceHistory": [
+      {
+        "date": "2013-06-27",
+        "price": 30.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2013-06-27"
+    }
+  },
+  "2008-exquisite-flawless-chris-paul-flaw-cp-sn08": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 160.0,
+    "priceHistory": [
+      {
+        "date": "2013-05-29",
+        "price": 160.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2013-05-29"
+    }
+  },
+  "1996-97-fleer-metal-metal-shredders-precious-metal-240": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 32.0,
+    "priceHistory": [
+      {
+        "date": "2012-01-22",
+        "price": 32.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2012-01-22"
+    }
+  },
+  "1998-99-flair-showcase-power-42": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 22.5,
+    "priceHistory": [
+      {
+        "date": "2012-01-22",
+        "price": 22.5,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2012-01-22"
+    }
+  },
+  "1997-98-skybox-z-force-super-rave-180-sn7": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 64.0,
+    "priceHistory": [
+      {
+        "date": "2012-01-22",
+        "price": 64.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2012-01-22"
+    }
+  },
+  "2003-04-topps-finest-printing-plate-magenta-99-sn1": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 7.5,
+    "priceHistory": [
+      {
+        "date": "2011-03-26",
+        "price": 7.5,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2011-03-26"
+    }
+  },
+  "2005-ultimate-signature-edition-immortal-inscriptions-eric-game-over-gagne-in-eg-sn59": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 24.99,
+    "priceHistory": [
+      {
+        "date": "2010-08-19",
+        "price": 24.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2010-08-19"
+    }
+  },
+  "2012-13-flawless-greats-autographs-nate-archibald-33-sn10": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 29.0,
+    "priceHistory": [
+      {
+        "date": "2010-07-11",
+        "price": 29.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2010-07-11"
+    }
+  },
+  "2022-23-panini-national-treasures-game-gear-autographs-jersey-patch-gga-jwh-sn10": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 34.0,
+    "priceHistory": [
+      {
+        "date": "2010-06-29",
+        "price": 34.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2010-06-29"
+    }
+  },
+  "2008-exquisite-flawless-vince-carter-flaw-vc-sn46": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 32.88,
+    "priceHistory": [
+      {
+        "date": "2010-06-27",
+        "price": 32.88,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2010-06-27"
+    }
+  },
+  "2008-exquisite-flawless-jerry-west-flaw-jw-sn11": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 70.0,
+    "priceHistory": [
+      {
+        "date": "2010-04-18",
+        "price": 70.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2010-04-18"
+    }
+  },
+  "1998-99-ud-choice-reserve-153": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.8,
+    "priceHistory": [
+      {
+        "date": "2010-02-13",
+        "price": 2.8,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2010-02-13"
+    }
+  },
+  "1997-98-topps-stadium-club-one-of-a-kind-113-sn18": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 6.05,
+    "priceHistory": [
+      {
+        "date": "2010-02-13",
+        "price": 6.05,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2010-02-13"
+    }
+  },
+  "1998-99-skybox-molten-metal-heavy-metal-fusion-9f": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 8.27,
+    "priceHistory": [
+      {
+        "date": "2010-02-13",
+        "price": 8.27,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2010-02-13"
+    }
+  },
+  "2009-10-sp-game-used-edition-four-on-four-fabrics-silver-ffchamia-sn75": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 4.99,
+    "priceHistory": [
+      {
+        "date": "2010-01-29",
+        "price": 4.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2010-01-29"
+    }
+  },
+  "2008-exquisite-flawless-robert-parish-flaw-rp-sn29": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 20.0,
+    "priceHistory": [
+      {
+        "date": "2009-09-27",
+        "price": 20.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2009-09-27"
+    }
+  },
+  "2006-07-sp-game-used-edition-rainbow-33-sn1": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 12.56,
+    "priceHistory": [
+      {
+        "date": "2009-03-15",
+        "price": 12.56,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2009-03-15"
+    }
+  },
+  "1996-97-skybox-premium-thunder-and-lightning-10": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 19.99,
+    "priceHistory": [
+      {
+        "date": "2009-02-08",
+        "price": 19.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2009-02-08"
+    }
+  },
+  "1994-95-jam-session-rookie-standouts-3": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 5.0,
+    "priceHistory": [
+      {
+        "date": "2008-11-16",
+        "price": 5.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2008-11-16"
+    }
+  },
+  "2005-ultimate-signature-edition-immortal-inscriptions-will-the-thrill-clark-in-wc-sn57": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 55.0,
+    "priceHistory": [
+      {
+        "date": "2008-11-13",
+        "price": 55.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2008-11-13"
+    }
+  },
+  "2000-01-fleer-triple-crown-173": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 15.0,
+    "priceHistory": [
+      {
+        "date": "2008-09-24",
+        "price": 15.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2008-09-24"
+    }
+  },
+  "2001-sp-base-ken-griffey-jr-100": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 41.0,
+    "priceHistory": [
+      {
+        "date": "2008-04-20",
+        "price": 41.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2008-04-20"
+    }
+  },
+  "1996-97-collectors-choice-you-crash-the-game-scoring-2-redemption-gold-r29": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [
+      {
+        "date": "2008-03-30",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2008-03-30"
+    }
+  },
+  "1996-97-topps-chrome-137": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [
+      {
+        "date": "2008-03-25",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2008-03-25"
+    }
+  },
+  "2006-07-sp-game-used-edition-authentic-fabrics-jersey-patch-afd-mh-sn1": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 29.89,
+    "priceHistory": [
+      {
+        "date": "2008-03-09",
+        "price": 29.89,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2008-03-09"
+    }
+  },
+  "2000-01-topps-gold-label-premium-80-sn202": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [
+      {
+        "date": "2008-02-24",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2008-02-24"
+    }
+  },
+  "1998-99-flair-showcase-passion-legacy-collection-42-sn7": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 4.25,
+    "priceHistory": [
+      {
+        "date": "2008-01-23",
+        "price": 4.25,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2008-01-23"
+    }
+  },
+  "1999-00-topps-chrome-refractor-12": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [
+      {
+        "date": "2007-12-07",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2007-12-07"
+    }
+  },
+  "2000-01-topps-finest-gold-refractor-wrs-f-109-sn80": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 40.0,
+    "priceHistory": [
+      {
+        "date": "2007-08-30",
+        "price": 40.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2007-08-30"
+    }
+  },
+  "2003-04-ud-finite-elements-triple-warm-ups-jersey-fe38-sn27": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 50.0,
+    "priceHistory": [
+      {
+        "date": "2007-05-19",
+        "price": 50.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2007-05-19"
+    }
+  },
+  "2006-07-topps-triple-threats-relics-combos-sapphire-ttrc-55-sn2": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 70.0,
+    "priceHistory": [
+      {
+        "date": "2007-05-01",
+        "price": 70.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2007-05-01"
+    }
+  },
+  "1998-99-ud-kellogg-s-nba-40": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 15.5,
+    "priceHistory": [
+      {
+        "date": "2007-04-19",
+        "price": 15.5,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2007-04-19"
+    }
+  },
+  "1998-99-flair-showcase-showcase-legacy-collection-42-sn66": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.99,
+    "priceHistory": [
+      {
+        "date": "2007-01-18",
+        "price": 2.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2007-01-18"
+    }
+  },
+  "2005-06-topps-total-gold-199-sn3": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 12.0,
+    "priceHistory": [
+      {
+        "date": "2006-10-26",
+        "price": 12.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-10-26"
+    }
+  },
+  "2004-05-sp-authentic-limited-28-sn14": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.5,
+    "priceHistory": [
+      {
+        "date": "2006-10-05",
+        "price": 1.5,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-10-05"
+    }
+  },
+  "2006-07-ud-reflections-dual-fabric-copper-dr-hr-sn99": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 5.51,
+    "priceHistory": [
+      {
+        "date": "2006-10-03",
+        "price": 5.51,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-10-03"
+    }
+  },
+  "2006-07-ud-reflections-dual-fabric-gold-dr-hr-sn17": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 5.51,
+    "priceHistory": [
+      {
+        "date": "2006-10-01",
+        "price": 5.51,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-10-01"
+    }
+  },
+  "2002-03-fleer-tradition-school-ties-jersey-st8b": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 4.04,
+    "priceHistory": [
+      {
+        "date": "2006-09-28",
+        "price": 4.04,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-09-28"
+    }
+  },
+  "2002-03-topps-pristine-24": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.5,
+    "priceHistory": [
+      {
+        "date": "2006-09-28",
+        "price": 0.5,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-09-28"
+    }
+  },
+  "1997-98-topps-finest-catalyst-embossed-refractor-158-c8-sn45": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 8.5,
+    "priceHistory": [
+      {
+        "date": "2006-09-09",
+        "price": 8.5,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-09-09"
+    }
+  },
+  "1998-99-topps-stadium-club-chrome-refractor-scc13": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.99,
+    "priceHistory": [
+      {
+        "date": "2006-08-11",
+        "price": 1.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-08-11"
+    }
+  },
+  "1997-98-fleer-key-ingredients-gold-4": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 15.5,
+    "priceHistory": [
+      {
+        "date": "2006-08-07",
+        "price": 15.5,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-08-07"
+    }
+  },
+  "2003-04-fleer-focus-century-edition-105-sn97": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [
+      {
+        "date": "2006-07-22",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-07-22"
+    }
+  },
+  "1994-classic-dicky-vitale-prime-time-players-ptp5": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [
+      {
+        "date": "2006-07-16",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-07-16"
+    }
+  },
+  "1999-00-flair-showcase-fresh-ink-9": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 6.27,
+    "priceHistory": [
+      {
+        "date": "2006-07-10",
+        "price": 6.27,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-07-10"
+    }
+  },
+  "2005-06-topps-hardwood-classics-jersey-hcr-jh": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.99,
+    "priceHistory": [
+      {
+        "date": "2006-07-02",
+        "price": 1.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-07-02"
+    }
+  },
+  "1996-97-skybox-premium-autographics-blue-30": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 51.0,
+    "priceHistory": [
+      {
+        "date": "2006-06-10",
+        "price": 51.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-06-10"
+    }
+  },
+  "2005-06-ud-ultimate-collection-blue-199-sn105": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [
+      {
+        "date": "2006-05-30",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-05-30"
+    }
+  },
+  "1999-00-topps-bowman-s-best-atomic-refractor-71-sn98": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 5.0,
+    "priceHistory": [
+      {
+        "date": "2006-05-27",
+        "price": 5.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-05-27"
+    }
+  },
+  "2002-03-topps-finest-gold-refractor-53-sn11": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 4.02,
+    "priceHistory": [
+      {
+        "date": "2006-05-26",
+        "price": 4.02,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-05-26"
+    }
+  },
+  "1996-97-topps-bowman-s-best-best-cuts-bc3": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [
+      {
+        "date": "2006-05-25",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-05-25"
+    }
+  },
+  "1999-00-topps-finest-refractor-56": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [
+      {
+        "date": "2006-05-25",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-05-25"
+    }
+  },
+  "1996-97-skybox-premium-autographics-black-30": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 25.0,
+    "priceHistory": [
+      {
+        "date": "2006-05-18",
+        "price": 25.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-05-18"
+    }
+  },
+  "1996-97-ultra-court-masters-12": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [
+      {
+        "date": "2006-05-15",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-05-15"
+    }
+  },
+  "1997-98-fleer-metal-universe-precious-metal-gems-green-33-pmg-sn7": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 105.95,
+    "priceHistory": [
+      {
+        "date": "2006-05-10",
+        "price": 105.95,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-05-10"
+    }
+  },
+  "1999-00-topps-finest-double-feature-left-refractor-df13": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 6.07,
+    "priceHistory": [
+      {
+        "date": "2006-04-22",
+        "price": 6.07,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-04-22"
+    }
+  },
+  "2002-03-fleer-showcase-legacy-collection-6-row-3-sn11": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.5,
+    "priceHistory": [
+      {
+        "date": "2006-03-17",
+        "price": 0.5,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-03-17"
+    }
+  },
+  "1994-95-topps-stadium-club-first-day-issue-210": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [
+      {
+        "date": "2006-02-15",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-02-15"
+    }
+  },
+  "1997-98-fleer-metal-universe-gold-universe-6-gu": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [
+      {
+        "date": "2006-02-11",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-02-11"
+    }
+  },
+  "1996-97-skybox-premium-ruby-127": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [
+      {
+        "date": "2006-02-11",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-02-11"
+    }
+  },
+  "1997-98-collectors-choice-super-action-stickums-s29": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.3,
+    "priceHistory": [
+      {
+        "date": "2006-02-10",
+        "price": 0.3,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-02-10"
+    }
+  },
+  "1996-97-topps-finest-gladiators-refractor-85": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 14.99,
+    "priceHistory": [
+      {
+        "date": "2006-01-30",
+        "price": 14.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-01-30"
+    }
+  },
+  "1996-97-spx-50": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 20.51,
+    "priceHistory": [
+      {
+        "date": "2006-01-22",
+        "price": 20.51,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-01-22"
+    }
+  },
+  "2003-04-sp-game-used-edition-63": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:26:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 4.0,
+    "priceHistory": [
+      {
+        "date": "2005-09-01",
+        "price": 4.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2005-09-01"
     }
   }
 }
