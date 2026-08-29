@@ -141,7 +141,8 @@ public class CardStatsService {
             }
 
             Double val = c.estimatedValue() != null && c.estimatedValue() > 0.0 ? c.estimatedValue() :
-                    (c.lastSoldPrice() != null && c.lastSoldPrice() > 0.0 ? c.lastSoldPrice() : null);
+                    (c.lastSoldPrice() != null && c.lastSoldPrice() > 0.0 ? c.lastSoldPrice() :
+                    (c.purchasePrice() != null && c.purchasePrice() > 0.0 ? c.purchasePrice() : null));
 
             if (val != null) {
                 totalEstimatedVal += val;
