@@ -41,6 +41,23 @@ class Point130ClientTest {
 
         String gradedQuery = Point130Client.buildSearchQuery(gradedCard);
         assertTrue(gradedQuery.contains("PSA 10"));
+
+        CardJson serialCardJson = new CardJson.Builder()
+                .id("card-3")
+                .player("Juwan Howard")
+                .season("1996-97")
+                .brand("SkyBox E-2000")
+                .cardNumber("79")
+                .variant("Credentials")
+                .printRun(499)
+                .build();
+        CardData serialCard = new CardData(serialCardJson);
+        String serialQuery = Point130Client.buildSearchQuery(serialCard);
+        assertTrue(serialQuery.contains("1996"));
+        assertTrue(serialQuery.contains("SkyBox E-2000"));
+        assertTrue(serialQuery.contains("#79"));
+        assertTrue(serialQuery.contains("Credentials"));
+        assertTrue(serialQuery.contains("/499"));
     }
 
     @Test
