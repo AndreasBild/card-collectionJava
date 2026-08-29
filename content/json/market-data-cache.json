@@ -4666,5 +4666,52 @@
       "purchasedFrom": "eBay (You Won eBay Item: CHRIS WEBBER/JUWAN HOWARD 98 TOPPS EAST/WEST REFRACTOR (8810289283))",
       "ebayTitle": "CHRIS WEBBER/JUWAN HOWARD 98 TOPPS EAST/WEST REFRACTOR"
     }
+  },
+  "1998-99-fleer-vintage-61-classic-5c-sn16": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:52:00Z",
+    "popReport": null,
+    "estimatedValue": 35.0,
+    "lastSoldPrice": 35.0,
+    "lastSoldDate": null,
+    "purchasePrice": 15.49,
+    "priceHistory": [
+      {
+        "date": "2012-01-20",
+        "price": 15.49,
+        "source": "eBay (stefanowitch)",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchasedFrom": "eBay (stefanowitch)",
+      "ebayTitle": "98 FLEER TRADITION CLASSIC 61 JUWAN HOWARD ed#61 RUBIES CREDENTIALS",
+      "itemNumber": "270894396907",
+      "serialMatched": "16/61"
+    }
+  },
+  "1998-99-fleer-vintage-61-classic-5c-sn53": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:52:00Z",
+    "popReport": null,
+    "estimatedValue": 126.37,
+    "lastSoldPrice": 126.37,
+    "lastSoldDate": "2026-03-04",
+    "purchasePrice": 126.37,
+    "priceHistory": [
+      {
+        "date": "2026-03-04",
+        "price": 126.37,
+        "source": "eBay (Order #03-14331-83615)",
+        "grade": "Raw #53/61"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2026-03-04",
+      "orderNumber": "03-14331-83615",
+      "purchasedFrom": "eBay",
+      "serialMatched": "53/61",
+      "ebayTitle": "1998-99 Fleer Vintage '61 Classic Juwan Howard #5C (53/61)"
+    }
   }
 }
