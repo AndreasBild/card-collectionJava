@@ -978,5 +978,1640 @@
     "metadata": {
       "source": "SportsCardInvestor"
     }
+  },
+  "2000-01-fleer-mystique-gold-28": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 6.9,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "DallasCardboys",
+      "purchaseDate": "6/6/2026",
+      "purchaseItemId": "78449916"
+    }
+  },
+  "2005-06-sp-game-used-edition-spectrum-37-sn7": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 12.75,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "Zehttys",
+      "purchaseDate": "3/2/2026",
+      "purchaseItemId": "192019715"
+    }
+  },
+  "1997-98-topps-stadium-club-triumvirate-t3a": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 14.5,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "IndyCardExchange",
+      "purchaseDate": "3/2/2026",
+      "purchaseItemId": "248434496"
+    }
+  },
+  "1995-assets-gold-41": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.5,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "TreeFiddy",
+      "purchaseDate": "1/24/2026",
+      "purchaseItemId": "175471502"
+    }
+  },
+  "1995-superior-pics-5": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.89,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "coolz",
+      "purchaseDate": "12/25/2013",
+      "purchaseItemId": "8054242"
+    }
+  },
+  "1994-classic-gold-5": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.7,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "RawCardReview",
+      "purchaseDate": "11/19/2020",
+      "purchaseItemId": "51166759"
+    }
+  },
+  "2009-10-panini-court-kings-silver-13-sn74": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.27,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "muchotix",
+      "purchaseDate": "11/29/2025",
+      "purchaseItemId": "274262382"
+    }
+  },
+  "2006-07-topps-black-111-sn34": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 4.45,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "dave416",
+      "purchaseDate": "11/27/2025",
+      "purchaseItemId": "107860772"
+    }
+  },
+  "2006-07-sp-game-used-edition-33": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.79,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "KrystalBall",
+      "purchaseDate": "11/27/2025",
+      "purchaseItemId": "12136466"
+    }
+  },
+  "2005-06-ud-rookie-debut-silver-34-sn38": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 4.21,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "chazp007",
+      "purchaseDate": "11/27/2025",
+      "purchaseItemId": "84344411"
+    }
+  },
+  "2005-06-topps-total-silver-199": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.65,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "Tonyreh",
+      "purchaseDate": "11/27/2025",
+      "purchaseItemId": "112869928"
+    }
+  },
+  "2004-05-upper-deck-exclusives-64-sn55": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 7.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "Archer2194",
+      "purchaseDate": "11/27/2025",
+      "purchaseItemId": "157002816"
+    }
+  },
+  "2005-06-sp-game-used-edition-37": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.65,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "Homerunsportscards",
+      "purchaseDate": "11/27/2025",
+      "purchaseItemId": "65478016"
+    }
+  },
+  "2004-05-topps-total-8": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.24,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "sheliachicago",
+      "purchaseDate": "11/27/2025",
+      "purchaseItemId": "52230953"
+    }
+  },
+  "2004-05-topps-104": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.63,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "sunrisesurprise",
+      "purchaseDate": "11/26/2025",
+      "purchaseItemId": "2161900"
+    }
+  },
+  "2004-05-fleer-authentix-balcony-87-sn9": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 3.25,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "Goldenvisafund",
+      "purchaseDate": "11/26/2025",
+      "purchaseItemId": "164444533"
+    }
+  },
+  "2004-05-topps-bazooka-96": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.67,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "CollectibleConnoisseur",
+      "purchaseDate": "11/26/2025",
+      "purchaseItemId": "142774545"
+    }
+  },
+  "2004-05-topps-bazooka-mini-96": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "unioner0815",
+      "purchaseDate": "11/26/2025",
+      "purchaseItemId": "129092758"
+    }
+  },
+  "2003-04-topps-chrome-x-fractor-59-sn59": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 7.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "ryanscardboard",
+      "purchaseDate": "11/25/2025",
+      "purchaseItemId": "209069373"
+    }
+  },
+  "2003-04-topps-bazooka-4-on-1-stickers-13": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 3.13,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "DallasCardboys",
+      "purchaseDate": "11/25/2025",
+      "purchaseItemId": "216360476"
+    }
+  },
+  "2002-03-ud-championship-drive-21": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.85,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "DallasCardboys",
+      "purchaseDate": "11/25/2025",
+      "purchaseItemId": "59151139"
+    }
+  },
+  "2003-04-topps-jersey-edition-je-jh": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 3.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "brads_cards",
+      "purchaseDate": "11/25/2025",
+      "purchaseItemId": "270497359"
+    }
+  },
+  "2003-04-topps-chrome-refractor-59": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.35,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "dpu_amm",
+      "purchaseDate": "11/25/2025",
+      "purchaseItemId": "288433301"
+    }
+  },
+  "2003-04-topps-chrome-59": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.65,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "theoneilfactor",
+      "purchaseDate": "11/25/2025",
+      "purchaseItemId": "168259588"
+    }
+  },
+  "2003-04-fleer-authentix-46": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.06,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "jimoz",
+      "purchaseDate": "11/25/2025",
+      "purchaseItemId": "25616195"
+    }
+  },
+  "2003-04-fleer-authentix-balcony-46-sn133": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.45,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "ghost007",
+      "purchaseDate": "11/25/2025",
+      "purchaseItemId": "13006795"
+    }
+  },
+  "2003-04-flair-final-edition-2": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.05,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "DallasCardboys",
+      "purchaseDate": "11/25/2025",
+      "purchaseItemId": "20514205"
+    }
+  },
+  "2003-04-ud-black-diamond-bronze-93-sn93": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 12.25,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "fobstar49",
+      "purchaseDate": "11/25/2025",
+      "purchaseItemId": "130672351"
+    }
+  },
+  "2003-04-topps-bazooka-gold-19": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.5,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "buymore",
+      "purchaseDate": "11/25/2025",
+      "purchaseItemId": "13036274"
+    }
+  },
+  "2002-03-ud-inspirations-19": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.62,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "jjd1979",
+      "purchaseDate": "11/24/2025",
+      "purchaseItemId": "69761296"
+    }
+  },
+  "2002-03-ud-inspirations-dual-jerseys-jersey-127-sn782": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.5,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "DallasCardboys",
+      "purchaseDate": "11/24/2025",
+      "purchaseItemId": "3520113"
+    }
+  },
+  "2002-03-ud-hardcourt-18": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.91,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "Flipper",
+      "purchaseDate": "11/24/2025",
+      "purchaseItemId": "2180498"
+    }
+  },
+  "2002-03-sp-authentic-ud-promo-19": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.45,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "riskadvisor",
+      "purchaseDate": "11/24/2025",
+      "purchaseItemId": "15290073"
+    }
+  },
+  "1995-superior-pics-lottery-pic-5": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.25,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "DallasCardboys",
+      "purchaseDate": "11/24/2025",
+      "purchaseItemId": "90045491"
+    }
+  },
+  "1995-superior-pics-gold-5": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 7.13,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "DallasCardboys",
+      "purchaseDate": "11/24/2025",
+      "purchaseItemId": "90060575"
+    }
+  },
+  "1994-score-board-draft-day-dd12": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.55,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "Jianshrje",
+      "purchaseDate": "11/19/2020",
+      "purchaseItemId": "63995809"
+    }
+  },
+  "2002-03-topps-chrome-refractor-50": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.9,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "DecagonCards",
+      "purchaseDate": "11/24/2025",
+      "purchaseItemId": "5710353"
+    }
+  },
+  "2002-03-topps-stadium-club-36": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.67,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "BLUECHIPBALLCARDS",
+      "purchaseDate": "11/24/2025",
+      "purchaseItemId": "58465989"
+    }
+  },
+  "2002-03-ud-ultimate-collection-13-sn43": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.69,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "KrystalBall",
+      "purchaseDate": "11/24/2025",
+      "purchaseItemId": "54824954"
+    }
+  },
+  "2002-03-topps-stadium-club-10th-anniversary-36": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.97,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "jjd1979",
+      "purchaseDate": "11/24/2025",
+      "purchaseItemId": "98611058"
+    }
+  },
+  "2002-03-fleer-nba-hoops-stars-32": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.05,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "DallasCardboys",
+      "purchaseDate": "11/24/2025",
+      "purchaseItemId": "99511462"
+    }
+  },
+  "2002-03-fleer-tradition-179": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.13,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "dgrochester55",
+      "purchaseDate": "11/24/2025",
+      "purchaseItemId": "139969295"
+    }
+  },
+  "2002-03-fleer-showcase-6-row-3": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.73,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "partboypete",
+      "purchaseDate": "11/24/2025",
+      "purchaseItemId": "282125278"
+    }
+  },
+  "2001-02-fleer-platinum-102": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "eshimmy",
+      "purchaseDate": "11/24/2025",
+      "purchaseItemId": "233050319"
+    }
+  },
+  "2002-03-fleer-hot-shots-hot-hands-give-and-go-copper-106-sn194": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.63,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "cvalence15",
+      "purchaseDate": "11/24/2025",
+      "purchaseItemId": "79291428"
+    }
+  },
+  "2002-03-fleer-box-score-53": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.95,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "StevensSC",
+      "purchaseDate": "11/24/2025",
+      "purchaseItemId": "57685218"
+    }
+  },
+  "2001-02-topps-sprite-minyard-dm-jh": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.25,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "beastsports",
+      "purchaseDate": "11/24/2025",
+      "purchaseItemId": "215482342"
+    }
+  },
+  "2001-02-topps-191": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.23,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "sheliachicago",
+      "purchaseDate": "11/24/2025",
+      "purchaseItemId": "19728146"
+    }
+  },
+  "2001-02-fleer-premium-110": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.88,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "commons",
+      "purchaseDate": "11/24/2025",
+      "purchaseItemId": "16620053"
+    }
+  },
+  "1995-signature-rookies-kromax-2": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "cardboardinseattle",
+      "purchaseDate": "11/23/2025",
+      "purchaseItemId": "94791221"
+    }
+  },
+  "1999-00-upper-deck-129": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.72,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "abettercard",
+      "purchaseDate": "11/22/2025",
+      "purchaseItemId": "24152748"
+    }
+  },
+  "1994-pro-mags-rookie-showcase-3": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 12.25,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "DallasCardboys",
+      "purchaseDate": "11/23/2025",
+      "purchaseItemId": "241152677"
+    }
+  },
+  "1999-00-ud-victory-274": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.85,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "DallasCardboys",
+      "purchaseDate": "11/23/2025",
+      "purchaseItemId": "78313516"
+    }
+  },
+  "1999-00-topps-pre-production-pp6": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.13,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "cardsrus1",
+      "purchaseDate": "11/23/2025",
+      "purchaseItemId": "11929607"
+    }
+  },
+  "2023-24-panini-national-treasures-timeless-treasures-materials-international-red-tm-how-sn8": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 24.13,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "homerunfab",
+      "purchaseDate": "3/4/2025",
+      "purchaseItemId": "257320679"
+    }
+  },
+  "2021-22-panini-contenders-legendary-contenders-autographs-bronze-lc-jwh-sn10": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 15.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "Philspulls",
+      "purchaseDate": "4/12/2024",
+      "purchaseItemId": "195835350"
+    }
+  },
+  "2022-23-panini-donruss-optic-retro-series-signatures-black-gold-rss-jhw-sn4": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 15.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "kelscards",
+      "purchaseDate": "3/26/2024",
+      "purchaseItemId": "194213077"
+    }
+  },
+  "2001-02-upper-deck-34": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.71,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "jdrapal",
+      "purchaseDate": "10/1/2023",
+      "purchaseItemId": "139492857"
+    }
+  },
+  "2000-01-topps-stars-copper-26-sn17": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.01,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "BasketballSeller",
+      "purchaseDate": "10/1/2023",
+      "purchaseItemId": "146481857"
+    }
+  },
+  "1994-95-collectors-choice-you-crash-the-game-rookie-scoring-redemption-s4": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.25,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "DallasCardboys",
+      "purchaseDate": "2/10/2023",
+      "purchaseItemId": "63075033"
+    }
+  },
+  "1995-96-collectors-choice-crash-the-game-assists-rebounds-redemption-gold-c3": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 3.5,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "maxmania8",
+      "purchaseDate": "2/10/2023",
+      "purchaseItemId": "122441723"
+    }
+  },
+  "2007-08-upper-deck-championship-court-stamp-10": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.5,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "samjams3",
+      "purchaseDate": "10/12/2021",
+      "purchaseItemId": "20696461"
+    }
+  },
+  "1994-classic-comic-printers-proof-103-sn975": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 7.05,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "Berkman32",
+      "purchaseDate": "11/20/2020",
+      "purchaseItemId": "33475104"
+    }
+  },
+  "1994-signature-rookies-gold-standard-7": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.65,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "Bbader61gv",
+      "purchaseDate": "11/19/2020",
+      "purchaseItemId": "71252202"
+    }
+  },
+  "1994-score-board-national-sportscollector-convention-nc4": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.69,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "double_happiness",
+      "purchaseDate": "11/19/2020",
+      "purchaseItemId": "37216154"
+    }
+  },
+  "1994-score-board-draft-day-dd13": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.75,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "Jianshrje",
+      "purchaseDate": "11/19/2020",
+      "purchaseItemId": "64046573"
+    }
+  },
+  "1994-classic-classic-game-card-gc3": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.59,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "ryanscardz",
+      "purchaseDate": "11/19/2020",
+      "purchaseItemId": "80342710"
+    }
+  },
+  "1994-classic-4-sports-printers-proof-5": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.98,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "jjd1979",
+      "purchaseDate": "11/19/2020",
+      "purchaseItemId": "20124600"
+    }
+  },
+  "1994-classic-4-sports-bonus-cards-bc11": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.89,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "JoelsHitShow",
+      "purchaseDate": "11/19/2020",
+      "purchaseItemId": "81574016"
+    }
+  },
+  "2004-05-ud-r-class-spectrum-30-sn17": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 16.45,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "Sportzcards",
+      "purchaseDate": "10/12/2020",
+      "purchaseItemId": "71301309"
+    }
+  },
+  "2016-17-panini-impeccable-impeccable-seasons-sa-jh-sn10": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 30.25,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "SteveSC",
+      "purchaseDate": "10/29/2018",
+      "purchaseItemId": "57460165"
+    }
+  },
+  "2006-07-topps-turkey-red-black-121": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.78,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "jimoz",
+      "purchaseDate": "10/21/2018",
+      "purchaseItemId": "3639959"
+    }
+  },
+  "2002-03-ultra-34": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.85,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "DallasCardboys",
+      "purchaseDate": "10/21/2018",
+      "purchaseItemId": "20511510"
+    }
+  },
+  "2002-03-ultra-gold-medallion-34": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.66,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "bergmania",
+      "purchaseDate": "10/21/2018",
+      "purchaseItemId": "16657996"
+    }
+  },
+  "2013-14-panini-elite-back-to-the-future-jersey-11": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.5,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "micdm1971",
+      "purchaseDate": "10/20/2018",
+      "purchaseItemId": "21443380"
+    }
+  },
+  "1995-96-topps-stadium-club-beam-team-members-only-bt2": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.98,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "JoelsHitShow",
+      "purchaseDate": "10/20/2018",
+      "purchaseItemId": "30751227"
+    }
+  },
+  "2005-06-ud-reflections-purple-37": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "jimoz",
+      "purchaseDate": "10/18/2018",
+      "purchaseItemId": "15325871"
+    }
+  },
+  "1996-97-collectors-choice-you-crash-the-game-scoring-2-17-23-feb-gold-c29": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.89,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "bergmania",
+      "purchaseDate": "10/18/2018",
+      "purchaseItemId": "12260675"
+    }
+  },
+  "2017-18-panini-encased-scripted-signatures-gold-ss-jhw-sn1": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 22.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "anakinleo",
+      "purchaseDate": "7/19/2018",
+      "purchaseItemId": "54486367"
+    }
+  },
+  "2013-14-panini-immaculate-collection-team-logos-numbers-printing-plate-magenta-93-sn1": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 11.97,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "terrysawchuk",
+      "purchaseDate": "7/6/2018",
+      "purchaseItemId": "53265493"
+    }
+  },
+  "2013-14-panini-intrigue-autograph-jerseys-jersey-43-sn43": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 7.25,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "Grandslamsports",
+      "purchaseDate": "8/1/2017",
+      "purchaseItemId": "37189747"
+    }
+  },
+  "2013-14-panini-signatures-endorsement-red-10-sn7": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 25.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "DasCardHaus",
+      "purchaseDate": "8/1/2017",
+      "purchaseItemId": "28719181"
+    }
+  },
+  "2001-02-topps-chrome-black-refractor-104-sn6": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 10.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "cargs21",
+      "purchaseDate": "8/1/2017",
+      "purchaseItemId": "19636852"
+    }
+  },
+  "2013-14-panini-intrigue-autograph-jerseys-prime-43-sn9": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 24.25,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "bioxi",
+      "purchaseDate": "8/1/2017",
+      "purchaseItemId": "38271831"
+    }
+  },
+  "2006-07-ud-reserve-gold-65": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.25,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "Tonyreh",
+      "purchaseDate": "8/18/2014",
+      "purchaseItemId": "12470534"
+    }
+  },
+  "2004-05-ud-r-class-gold-30-sn150": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 3.75,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "DsNuggets",
+      "purchaseDate": "8/17/2014",
+      "purchaseItemId": "13923667"
+    }
+  },
+  "2006-07-ultra-gold-medallion-53": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.81,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "EastridgeHobbies",
+      "purchaseDate": "8/17/2014",
+      "purchaseItemId": "13180756"
+    }
+  },
+  "2006-07-topps-gold-111-sn476": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.6,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "jjd1979",
+      "purchaseDate": "8/17/2014",
+      "purchaseItemId": "14487168"
+    }
+  },
+  "2012-13-panini-momentum-monumental-marks-271-sn12": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 12.12,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "amazingpacks",
+      "purchaseDate": "8/17/2014",
+      "purchaseItemId": "14510571"
+    }
+  },
+  "2003-04-ud-glass-acetate-crystal-collection-42-sn18": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 5.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "jimmertime7",
+      "purchaseDate": "8/17/2014",
+      "purchaseItemId": "13756864"
+    }
+  },
+  "1996-97-topps-chrome-refractor-137r": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 9.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "CardSmart",
+      "purchaseDate": "8/16/2014",
+      "purchaseItemId": "6989461"
+    }
+  },
+  "2006-07-topps-turkey-red-white-121": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.75,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "TickTockMan",
+      "purchaseDate": "8/16/2014",
+      "purchaseItemId": "14711146"
+    }
+  },
+  "1998-99-spx-finite-top-flight-radiance-195-sn501": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 5.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "eaglescards",
+      "purchaseDate": "8/16/2014",
+      "purchaseItemId": "10207869"
+    }
+  },
+  "2002-03-spx-spectrum-19-sn11": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 16.5,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "cardsrus1",
+      "purchaseDate": "8/16/2014",
+      "purchaseItemId": "15041511"
+    }
+  },
+  "1994-signature-rookies-gold-standard-gold-gs9": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 4.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "blackstone46",
+      "purchaseDate": "8/16/2014",
+      "purchaseItemId": "14566657"
+    }
+  },
+  "1994-classic-rookie-of-the-year-sweepstakes-card-5": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "immediex",
+      "purchaseDate": "8/16/2014",
+      "purchaseItemId": "13273920"
+    }
+  },
+  "2002-03-sp-authentic-19": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "KIKKEN",
+      "purchaseDate": "8/16/2014",
+      "purchaseItemId": "2101939"
+    }
+  },
+  "1996-signature-rookies-prime-time-powers-pt7": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.5,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "mikedsportscards",
+      "purchaseDate": "8/16/2014",
+      "purchaseItemId": "10079333"
+    }
+  },
+  "2002-03-fleer-hot-shots-hot-hands-give-and-go-jersey-106-sn35": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 10.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "SouthBaySportsCards",
+      "purchaseDate": "12/27/2013",
+      "purchaseItemId": "11578591"
+    }
+  },
+  "2009-10-panini-season-update-gold-117-sn4": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.25,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "mesawildcardz",
+      "purchaseDate": "12/26/2013",
+      "purchaseItemId": "12518097"
+    }
+  },
+  "2000-01-fleer-authority-prominence-85-sn40": {
+    "certNumber": "0000911310",
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 11.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "micdm1971",
+      "purchaseDate": "12/26/2013",
+      "purchaseItemId": "12304363"
+    }
+  },
+  "2007-08-upper-deck-electric-court-10": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.9,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "pkchu",
+      "purchaseDate": "12/26/2013",
+      "purchaseItemId": "12378221"
+    }
+  },
+  "1999-00-fleer-tradition-roundball-collection-68rb": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.75,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "JoelsHitShow",
+      "purchaseDate": "12/26/2013",
+      "purchaseItemId": "12730162"
+    }
+  },
+  "2010-11-panini-donruss-press-proof-171-sn18": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.25,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "JoelsHitShow",
+      "purchaseDate": "12/26/2013",
+      "purchaseItemId": "4236440"
+    }
+  },
+  "1995-superior-pics-instant-impact-8": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "ilovecards",
+      "purchaseDate": "12/26/2013",
+      "purchaseItemId": "5125222"
+    }
+  },
+  "2002-03-ud-finite-21-sn483": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "LowPriceCards",
+      "purchaseDate": "12/26/2013",
+      "purchaseItemId": "4327"
+    }
+  },
+  "2006-07-topps-turkey-red-121": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "HotCards",
+      "purchaseDate": "12/26/2013",
+      "purchaseItemId": "9386580"
+    }
+  },
+  "1995-signature-rookies-tetrad-autobilia-club-set-78": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.75,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "timgetsch",
+      "purchaseDate": "12/26/2013",
+      "purchaseItemId": "57591"
+    }
+  },
+  "1995-classic-printers-proof-102": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:20:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "checkoutmydeals",
+      "purchaseDate": "12/25/2013",
+      "purchaseItemId": "9882299"
+    }
   }
 }
