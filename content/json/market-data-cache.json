@@ -6587,7 +6587,7 @@
     "estimatedValue": 1153.66,
     "lastSoldPrice": 1249.99,
     "lastSoldDate": "2026-03-04",
-    "purchasePrice": 965.0,
+    "purchasePrice": 33.0,
     "priceHistory": [],
     "metadata": {}
   },
@@ -6598,7 +6598,7 @@
     "estimatedValue": 1850.0,
     "lastSoldPrice": 1850.0,
     "lastSoldDate": "2025-11-20",
-    "purchasePrice": null,
+    "purchasePrice": 32.0,
     "priceHistory": [],
     "metadata": {}
   },
