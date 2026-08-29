@@ -108,7 +108,7 @@ ${topNavHtml?no_esc}
     <div class="card-images-container">
         <div class="card-image-wrapper">
             <div class="flip-container" onclick="toggleCardFlip(event)">
-                <div class="flip-card-inner <#if isRefractorOrFoil>refractor-shimmer-active</#if>">
+                <div class="flip-card-inner">
                     <div class="flip-face-front">
                         <figure>
                             <picture>
@@ -122,7 +122,6 @@ ${topNavHtml?no_esc}
                             </picture>
                             <figcaption>${frontAlt}</figcaption>
                         </figure>
-                        <div class="foil-glare-effect" aria-hidden="true"></div>
                     </div>
                     <div class="flip-face-back">
                         <figure>
@@ -137,7 +136,6 @@ ${topNavHtml?no_esc}
                             </picture>
                             <figcaption>${backAlt}</figcaption>
                         </figure>
-                        <div class="foil-glare-effect" aria-hidden="true"></div>
                     </div>
                 </div>
                 <div class="flip-icon-overlay"></div>
@@ -770,26 +768,18 @@ ${topNavHtml?no_esc}
         }
     };
 
-    // --- HOLOGRAPHIC FOIL & 3D TILT WITH GYROSCOPE ---
+    // --- 3D TILT WITH GYROSCOPE ---
     const flipContainer = document.querySelector('.flip-container');
     let isLoupeActive = false;
 
     function updateFoilAndTilt(percentX, percentY, rotX, rotY) {
         if (isLoupeActive) return;
-        document.querySelectorAll('.foil-glare-effect').forEach(foil => {
-            foil.style.setProperty('--foil-x', percentX + '%');
-            foil.style.setProperty('--foil-y', percentY + '%');
-            foil.style.setProperty('--foil-opacity', '0.35');
-        });
         if (flipContainer && !flipContainer.classList.contains('is-flipped')) {
             flipContainer.style.transform = "perspective(1000px) rotateX(" + rotX + "deg) rotateY(" + rotY + "deg) scale3d(1.025, 1.025, 1.025)";
         }
     }
 
     function resetFoilAndTilt() {
-        document.querySelectorAll('.foil-glare-effect').forEach(foil => {
-            foil.style.setProperty('--foil-opacity', '0');
-        });
         if (flipContainer) {
             flipContainer.style.transform = '';
         }

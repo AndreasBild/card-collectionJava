@@ -1131,24 +1131,6 @@ tr:hover {
     overflow: hidden;
 }
 
-.foil-glare-effect {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 5;
-    opacity: var(--foil-opacity, 0);
-    mix-blend-mode: overlay;
-    background: radial-gradient(
-        circle 320px at var(--foil-x, 50%) var(--foil-y, 50%),
-        rgba(255, 255, 255, 0.45) 0%,
-        rgba(254, 240, 138, 0.22) 30%,
-        rgba(212, 175, 55, 0.1) 60%,
-        transparent 80%
-    );
-    transition: opacity 0.3s ease;
-    border-radius: var(--radius-lg);
-}
-
 .flip-face-front figure,
 .flip-face-back figure {
     width: 100%;
@@ -5179,38 +5161,6 @@ img[loading="lazy"]:not([src=""]) {
     color: #ffffff !important;
     transform: translateY(-2px);
     box-shadow: 0 4px 16px rgba(59, 130, 246, 0.35);
-}
-
-/* --- REFRACTOR HOLOGRAPHIC SHIMMER FX --- */
-.refractor-shimmer-active .flip-face-front .foil-glare-effect,
-.refractor-shimmer-active .flip-face-back .foil-glare-effect {
-    opacity: 0.35;
-    background: radial-gradient(
-        circle at var(--pointer-x, 50%) var(--pointer-y, 50%),
-        rgba(255, 255, 255, 0.45) 0%,
-        rgba(255, 0, 128, 0.28) 22%,
-        rgba(0, 229, 255, 0.32) 45%,
-        rgba(255, 235, 59, 0.28) 65%,
-        rgba(118, 255, 3, 0.22) 85%,
-        transparent 100%
-    ),
-    linear-gradient(
-        var(--shine-angle, 125deg),
-        rgba(255, 0, 128, 0.12) 0%,
-        rgba(255, 235, 59, 0.15) 25%,
-        rgba(0, 229, 255, 0.18) 50%,
-        rgba(118, 255, 3, 0.15) 75%,
-        rgba(255, 0, 128, 0.12) 100%
-    );
-    mix-blend-mode: color-dodge;
-    pointer-events: none;
-    transition: opacity 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-.refractor-shimmer-active:hover .flip-face-front .foil-glare-effect,
-.refractor-shimmer-active:hover .flip-face-back .foil-glare-effect {
-    opacity: 0.92;
-    filter: saturate(1.65) brightness(1.25);
 }
 
 /* --- DASHBOARD HEADER & VALUATION BADGES --- */
