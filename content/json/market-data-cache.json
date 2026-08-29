@@ -6,7 +6,7 @@
     "estimatedValue": 159.095,
     "lastSoldPrice": 317.2,
     "lastSoldDate": "2026-08-28",
-    "purchasePrice": null,
+    "purchasePrice": 4.99,
     "priceHistory": [
       {
         "date": "2026-08-24",
@@ -21,7 +21,11 @@
         "grade": ""
       }
     ],
-    "metadata": {}
+    "metadata": {
+      "purchaseDate": "2006-04-30",
+      "purchasedFrom": "eBay (You Won eBay Item: Flair Legacy Collection Juwan Howard Fab Five ed 50 (8800930605))",
+      "ebayTitle": "Flair Legacy Collection Juwan Howard Fab Five ed 50"
+    }
   },
   "2023-24-topps-chrome-frozenfractor-101-sn-4": {
     "certNumber": "97840205",
@@ -633,7 +637,7 @@
     "estimatedValue": 2.2249999999999996,
     "lastSoldPrice": 2.3,
     "lastSoldDate": "2026-06-14",
-    "purchasePrice": null,
+    "purchasePrice": 6.56,
     "priceHistory": [
       {
         "date": "2025-01-10",
@@ -648,7 +652,11 @@
         "grade": ""
       }
     ],
-    "metadata": {}
+    "metadata": {
+      "purchaseDate": "2010-02-17",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "94 SR Tetrad 2 Autographs + inserts Juwan Howard"
+    }
   },
   "1997-98-skybox-e-x2001-credentials-credentials-now-32-sn29": {
     "certNumber": null,
@@ -4327,6 +4335,336 @@
       "purchaseDate": "2005-09-01",
       "purchasedFrom": "eBay (You Won eBay Item: 04-05 SP Game Used Reece Gaines/Juwan Howard JRSY /100 (5178770035))",
       "ebayTitle": "04-05 SP Game Used Reece Gaines/Juwan Howard JRSY /100"
+    }
+  },
+  "2020-21-panini-contenders-optic-perennial-contenders-gold-pco-juw-sn1": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:30:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 123.5,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2026-07-24",
+      "purchasedFrom": "eBay",
+      "ebayTitle": "2020-21 Panini Contenders Optic Contende..."
+    }
+  },
+  "2008-exquisite-flawless-tracy-mcgrady-flaw-tm-sn20": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:30:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 30.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2010-09-08",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "2008-09 Exquisite Flawless Tracy McGrady Auto 20/50"
+    }
+  },
+  "2016-17-panini-flawless-patch-gold-p-jhw-sn8": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:30:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 26.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2010-06-29",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "TRACY McGRADY 06-07 Exquisite Collection PATCH 8/10"
+    }
+  },
+  "2008-exquisite-flawless-bill-russell-flaw-br-sn23": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:30:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 81.88,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2009-10-19",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "2008-'09 EXQUISITE FLAWLESS AUTO BILL RUSSELL # 23/25"
+    }
+  },
+  "2008-exquisite-flawless-rodney-stuckey-flaw-rs-sn28": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:30:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 10.5,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2009-10-01",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "Rodney Stuckey 2008-09 Exquisite Flawless Auto /50"
+    }
+  },
+  "2008-exquisite-flawless-michael-jordan-flaw-mj-sn15": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:30:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 497.52,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2009-09-18",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "08-09 EXQUISITE- MICHAEL JORDAN AUTO FLAWLESS 15/23"
+    }
+  },
+  "2008-exquisite-flawless-kareem-abdul-jabbar-flaw-ka-sn22": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:30:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 86.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2009-09-10",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "KAREEM ABDUL-JABBAR 08-09 EXQUISITE LAKERS AUTO /25 SP"
+    }
+  },
+  "2008-exquisite-flawless-kevin-garnett-flaw-kg-sn37": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:30:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 61.95,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2009-09-05",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "2008-09 Exquisite Flawless Auto KEVIN GARNETT #37/50"
+    }
+  },
+  "2008-exquisite-flawless-paul-pierce-flaw-pp-sn43": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:30:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 41.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2009-08-26",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "08-09 NBA Ud Exquisite Flawless Auto PAUL PIERCE #43/50"
+    }
+  },
+  "2008-exquisite-flawless-derek-fisher-flaw-df-sn26": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:30:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 31.01,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2009-08-23",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "09 EXQUISITE DEREK FISHER LAKERS AUTO 26/50 FLAWLESS"
+    }
+  },
+  "2003-04-ud-victory-21": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:30:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 5.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2008-11-16",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "03-04 UPPER DECK VICTORY-ROOKIE CARD-MIKE SWEETNEY"
+    }
+  },
+  "2001-02-e-x-68": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:30:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 15.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2008-09-24",
+      "purchasedFrom": "eBay (You Won eBay Item:MCDYESS / HOWARD / POSEY 01-02 SPGU TRIPLE JERSEY #/25! (220284983950))",
+      "ebayTitle": "MCDYESS / HOWARD / POSEY 01-02 SPGU TRIPLE JERSEY #/25!"
+    }
+  },
+  "1995-96-topps-finest-dish-and-swish-ds29": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:30:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 19.5,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2008-04-12",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "Chris Webber/Jalen Rose/Juwan Howard 3X Relic #/36"
+    }
+  },
+  "2001-02-sp-authentic-21": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:30:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 21.95,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2007-05-18",
+      "purchasedFrom": "eBay (You Won eBay Item: 2006-07 SP Game Used Dual Patch Rockets Tracy McGrady (260119378878))",
+      "ebayTitle": "2001-02  Upper Deck Sweet Shot Signature Kenyon Martin"
+    }
+  },
+  "1998-99-ud-choice-starquest-blue-sq29": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:30:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 12.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2007-04-15",
+      "purchasedFrom": "eBay (You Won eBay Item: JUWAN HOWARD 98/99 UD CHOICE STARQUEST GOLD 64/100 $25 (180107487443))",
+      "ebayTitle": "JUWAN HOWARD 98/99 UD CHOICE STARQUEST GOLD 64/100 $25"
+    }
+  },
+  "2003-04-topps-bazooka-19": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:30:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 20.61,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-11-29",
+      "purchasedFrom": "eBay (You Won eBay Item: 03/04 FINITE ELEMENTS 3 JERSEYS WEBBER, ROSE, HOWARD (180056426183))",
+      "ebayTitle": "03/04 FINITE ELEMENTS 3 JERSEYS WEBBER, ROSE, HOWARD"
+    }
+  },
+  "1997-98-ud-hardcourt-50": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:30:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 12.48,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-09-18",
+      "purchasedFrom": "eBay (You Won eBay Item: UD JERSEY DEREK FISHER MICKAEL PIETRUS JUWAN HOWARD /50 (320027453474))",
+      "ebayTitle": "UD JERSEY DEREK FISHER MICKAEL PIETRUS JUWAN HOWARD /50"
+    }
+  },
+  "2005-ultimate-signature-edition-immortal-inscriptions-ozzie-the-wiz-smith-in-os-sn53": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:30:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 46.2,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-08-30",
+      "purchasedFrom": "eBay (You Won eBay Item: OZZIE SMITH 05 Ultimate Sig \"Immortal Inscriptions\"  (110026223728))",
+      "ebayTitle": "OZZIE SMITH 05 Ultimate Sig \"Immortal Inscriptions\""
+    }
+  },
+  "1995-images-95-5": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:30:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-07-15",
+      "purchasedFrom": "eBay (You Won eBay Item: 95 CLASSIC IMAGES CLASSIC PERFORMANCES JUWAN HOWARD   (190006631532))",
+      "ebayTitle": "95 CLASSIC IMAGES CLASSIC PERFORMANCES JUWAN HOWARD"
+    }
+  },
+  "1994-classic-4-sports-high-voltage-hv18-sn909": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:30:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-07-14",
+      "purchasedFrom": "eBay (You Won eBay Item: 94 4 SPORT HIGH VOLTAGE  JUWAN HOWARD  0909 of 2,995 (190006278977))",
+      "ebayTitle": "94 4 SPORT HIGH VOLTAGE  JUWAN HOWARD  0909 of 2,995"
+    }
+  },
+  "1998-99-topps-bowman-s-best-refractor-81": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:30:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 5.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-05-27",
+      "purchasedFrom": "eBay (You Won eBay Item: Juwan Howard 98/99 Bowmans Atomic Refractor 21/100 Rare (8816937183))",
+      "ebayTitle": "Juwan Howard 98/99 Bowmans Atomic Refractor 21/100 Rare"
+    }
+  },
+  "1996-97-topps-stadium-club-class-acts-refractor-ca4": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:30:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 13.28,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-05-15",
+      "purchasedFrom": "eBay (You Won eBay Item: CHRIS WEBBER/JUWAN HOWARD 98 TOPPS EAST/WEST REFRACTOR (8810289283))",
+      "ebayTitle": "CHRIS WEBBER/JUWAN HOWARD 98 TOPPS EAST/WEST REFRACTOR"
     }
   }
 }
