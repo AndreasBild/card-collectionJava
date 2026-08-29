@@ -34,38 +34,6 @@
       "gradePop": null,
       "certNumber": "97840205",
       "registryUrl": "https://www.psacard.com/cert/97840205"
-  "1996-97-flair-showcase-showtime-legacy-collection-row-0-seat-5-sn11" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-08-29T07:04:45.587702Z",
-    "popReport" : null,
-    "estimatedValue" : 159.095,
-    "lastSoldPrice" : 317.2,
-    "lastSoldDate" : "2026-08-28",
-    "purchasePrice" : null,
-    "priceHistory" : [ {
-      "date" : "2026-08-24",
-      "price" : 0.99,
-      "source" : "eBay (Fixed Price)",
-      "grade" : ""
-    }, {
-      "date" : "2026-08-28",
-      "price" : 317.2,
-      "source" : "eBay (Auction)",
-      "grade" : ""
-    } ],
-    "metadata" : { }
-  },
-  "2023-24-topps-chrome-frozenfractor-101-sn-4" : {
-    "certNumber" : "97840205",
-    "lastQueried" : "2026-08-24T10:40:53.105690Z",
-    "popReport" : {
-      "gradingCompany" : "PSA",
-      "grade" : "9",
-      "totalGraded" : 1,
-      "popHigher" : 0,
-      "gradePop" : null,
-      "certNumber" : "97840205",
-      "registryUrl" : "https://www.psacard.com/cert/97840205"
     },
     "estimatedValue": null,
     "lastSoldPrice": null,
@@ -157,48 +125,61 @@
       "gradePop": null,
       "certNumber": "26880752",
       "registryUrl": "https://www.psacard.com/cert/26880752"
-  "1996-97-skybox-e-2000-credentials-79-sn259" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-08-29T07:04:30.365935Z",
-    "popReport" : null,
-    "estimatedValue" : 173.0,
-    "lastSoldPrice" : 220.0,
-    "lastSoldDate" : "2026-07-30",
-    "purchasePrice" : null,
-    "priceHistory" : [ {
-      "date" : "2024-12-27",
-      "price" : 196.0,
-      "source" : "eBay (Best Offer Accepted)",
-      "grade" : "SGC 7"
-    }, {
-      "date" : "2025-07-09",
-      "price" : 150.0,
-      "source" : "eBay (Best Offer Accepted)",
-      "grade" : ""
-    }, {
-      "date" : "2025-12-26",
-      "price" : 100.0,
-      "source" : "eBay (Best Offer Accepted)",
-      "grade" : ""
-    }, {
-      "date" : "2026-07-30",
-      "price" : 220.0,
-      "source" : "eBay (Best Offer Accepted)",
-      "grade" : "BGS 8"
-    } ],
-    "metadata" : { }
+    },
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": null,
+    "priceHistory": [],
+    "metadata": {}
   },
-  "2021-22-topps-finest-red-refractor-fa-jhw-sn2" : {
-    "certNumber" : "134182801",
-    "lastQueried" : "2026-08-24T10:40:49.769016Z",
-    "popReport" : {
-      "gradingCompany" : "PSA",
-      "grade" : "9",
-      "totalGraded" : null,
-      "popHigher" : null,
-      "gradePop" : null,
-      "certNumber" : "134182801",
-      "registryUrl" : "https://www.psacard.com/cert/134182801"
+  "1996-97-skybox-e-2000-credentials-79-sn259": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:04:30.365935Z",
+    "popReport": null,
+    "estimatedValue": 173.0,
+    "lastSoldPrice": 220.0,
+    "lastSoldDate": "2026-07-30",
+    "purchasePrice": null,
+    "priceHistory": [
+      {
+        "date": "2024-12-27",
+        "price": 196.0,
+        "source": "eBay (Best Offer Accepted)",
+        "grade": "SGC 7"
+      },
+      {
+        "date": "2025-07-09",
+        "price": 150.0,
+        "source": "eBay (Best Offer Accepted)",
+        "grade": ""
+      },
+      {
+        "date": "2025-12-26",
+        "price": 100.0,
+        "source": "eBay (Best Offer Accepted)",
+        "grade": ""
+      },
+      {
+        "date": "2026-07-30",
+        "price": 220.0,
+        "source": "eBay (Best Offer Accepted)",
+        "grade": "BGS 8"
+      }
+    ],
+    "metadata": {}
+  },
+  "2021-22-topps-finest-red-refractor-fa-jhw-sn2": {
+    "certNumber": "134182801",
+    "lastQueried": "2026-08-24T10:40:49.769016Z",
+    "popReport": {
+      "gradingCompany": "PSA",
+      "grade": "9",
+      "totalGraded": null,
+      "popHigher": null,
+      "gradePop": null,
+      "certNumber": "134182801",
+      "registryUrl": "https://www.psacard.com/cert/134182801"
     },
     "estimatedValue": null,
     "lastSoldPrice": null,
@@ -206,7 +187,7 @@
     "purchasePrice": null,
     "priceHistory": [],
     "metadata": {
-      "psaItemDescription": "FINEST MYSTERY",
+      "psaItemDescription": "TOPPS FINEST FINEST AUTOGRAPHS",
       "psaGradeRaw": "MINT 9"
     }
   },
@@ -589,64 +570,6 @@
     "priceHistory": [],
     "metadata": {}
   },
-  "1996-97-skybox-e-2000-credentials-79-sn259": {
-    "certNumber": null,
-    "lastQueried": "2026-08-29T07:04:30.365935Z",
-    "popReport": null,
-    "estimatedValue": 173.0,
-    "lastSoldPrice": 220.0,
-    "lastSoldDate": "2026-07-30",
-    "purchasePrice": null,
-    "priceHistory": [
-      {
-        "date": "2024-12-27",
-        "price": 196.0,
-        "source": "eBay (Best Offer Accepted)",
-        "grade": "SGC 7"
-      },
-      {
-        "date": "2025-07-09",
-        "price": 150.0,
-        "source": "eBay (Best Offer Accepted)",
-        "grade": ""
-      },
-      {
-        "date": "2025-12-26",
-        "price": 100.0,
-        "source": "eBay (Best Offer Accepted)",
-        "grade": ""
-      },
-      {
-        "date": "2026-07-30",
-        "price": 220.0,
-        "source": "eBay (Best Offer Accepted)",
-        "grade": "BGS 8"
-      }
-    ],
-    "metadata": {}
-  },
-  "2021-22-topps-finest-red-refractor-fa-jhw-sn2": {
-    "certNumber": "134182801",
-    "lastQueried": "2026-08-24T10:40:49.769016Z",
-    "popReport": {
-      "gradingCompany": "PSA",
-      "grade": "9",
-      "totalGraded": null,
-      "popHigher": null,
-      "gradePop": null,
-      "certNumber": "134182801",
-      "registryUrl": "https://www.psacard.com/cert/134182801"
-    },
-    "estimatedValue": null,
-    "lastSoldPrice": null,
-    "lastSoldDate": null,
-    "purchasePrice": null,
-    "priceHistory": [],
-    "metadata": {
-      "psaItemDescription": "TOPPS FINEST FINEST AUTOGRAPHS",
-      "psaGradeRaw": "MINT 9"
-    }
-  },
   "1997-98-flair-showcase-flair-legacy-collection-row-3-seat-64-sn79": {
     "certNumber": null,
     "lastQueried": "2026-08-29T07:06:34.319406Z",
@@ -756,42 +679,6 @@
       }
     ],
     "metadata": {}
-  "1997-98-skybox-e-x2001-credentials-credentials-now-32-sn29" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-08-29T07:05:18.065882Z",
-    "popReport" : null,
-    "estimatedValue" : 1290.0,
-    "lastSoldPrice" : 1290.0,
-    "lastSoldDate" : "2025-05-05",
-    "purchasePrice" : null,
-    "priceHistory" : [ {
-      "date" : "2025-05-05",
-      "price" : 1290.0,
-      "source" : "eBay (Auction)",
-      "grade" : "PSA 6"
-    } ],
-    "metadata" : { }
-  },
-  "1994-95-collectors-choice-you-crash-the-game-rookie-scoring-gold-s4" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-08-28T10:11:27.521870Z",
-    "popReport" : null,
-    "estimatedValue" : 160.21,
-    "lastSoldPrice" : 317.2,
-    "lastSoldDate" : "2026-08-28",
-    "purchasePrice" : null,
-    "priceHistory" : [ {
-      "date" : "2026-08-27",
-      "price" : 3.22,
-      "source" : "eBay (Fixed Price)",
-      "grade" : ""
-    }, {
-      "date" : "2026-08-28",
-      "price" : 317.2,
-      "source" : "eBay (Auction)",
-      "grade" : ""
-    } ],
-    "metadata" : { }
   },
   "1994-95-collectors-choice-you-crash-the-game-rookie-scoring-gold-s4": {
     "certNumber": null,
@@ -2612,6 +2499,186 @@
       "purchasedFrom": "checkoutmydeals",
       "purchaseDate": "12/25/2013",
       "purchaseItemId": "9882299"
+    }
+  },
+  "1994-ted-williams-royal-court-c5": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:25:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "maxmania8",
+      "purchaseDate": "8/16/2014",
+      "purchaseItemId": "13291431"
+    }
+  },
+  "1995-signature-rookies-super-acrylium-5": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:25:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.25,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "Jaybungard",
+      "purchaseDate": "1/23/2026",
+      "purchaseItemId": "308199940"
+    }
+  },
+  "1996-97-ud-folz-38": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:25:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 3.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "tpeichel34",
+      "purchaseDate": "11/24/2025",
+      "purchaseItemId": "8513713"
+    }
+  },
+  "1996-97-topps-stadium-club-fusion-members-only-f18": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:25:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.31,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "raelhe1980",
+      "purchaseDate": "10/19/2018",
+      "purchaseItemId": "34143585"
+    }
+  },
+  "1996-signature-rookies-sports-heroes-25": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:25:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "cardboardinseattle",
+      "purchaseDate": "11/23/2025",
+      "purchaseItemId": "94791221"
+    }
+  },
+  "2018-19-panini-national-treasures-signatures-printing-plate-cyan-sg-jwh-sn1": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:25:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 9.55,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "EdiSutiono",
+      "purchaseDate": "10/11/2021",
+      "purchaseItemId": "102598315"
+    }
+  },
+  "1994-classic-classic-picks-5": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:25:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.6,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "Cavalier",
+      "purchaseDate": "11/19/2020",
+      "purchaseItemId": "73687706"
+    }
+  },
+  "1995-signature-rookies-first-rounders-jumbo-j1": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:25:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.19,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "cardkings",
+      "purchaseDate": "11/17/2020",
+      "purchaseItemId": "55077473"
+    }
+  },
+  "1996-97-topps-stadium-club-high-risers-members-only-hr15": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:25:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.25,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "DallasCardboys",
+      "purchaseDate": "10/19/2018",
+      "purchaseItemId": "14040174"
+    }
+  },
+  "1995-96-topps-finest-mystery-bordered-test-refractor-m20": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:25:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 27.6,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "StorageUnitFinds",
+      "purchaseDate": "7/19/2018",
+      "purchaseItemId": "47471730"
+    }
+  },
+  "1998-99-skybox-premium-autographics-black-57": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:25:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 16.05,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "joeback",
+      "purchaseDate": "8/1/2017",
+      "purchaseItemId": "18963561"
+    }
+  },
+  "1994-classic-national-party-autographs-1": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T07:25:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 15.06,
+    "priceHistory": [],
+    "metadata": {
+      "purchasedFrom": "cardsavers",
+      "purchaseDate": "8/16/2014",
+      "purchaseItemId": "11413919"
     }
   }
 }
