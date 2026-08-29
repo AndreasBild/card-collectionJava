@@ -34,6 +34,38 @@
       "gradePop": null,
       "certNumber": "97840205",
       "registryUrl": "https://www.psacard.com/cert/97840205"
+  "1996-97-flair-showcase-showtime-legacy-collection-row-0-seat-5-sn11" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-08-29T07:04:45.587702Z",
+    "popReport" : null,
+    "estimatedValue" : 159.095,
+    "lastSoldPrice" : 317.2,
+    "lastSoldDate" : "2026-08-28",
+    "purchasePrice" : null,
+    "priceHistory" : [ {
+      "date" : "2026-08-24",
+      "price" : 0.99,
+      "source" : "eBay (Fixed Price)",
+      "grade" : ""
+    }, {
+      "date" : "2026-08-28",
+      "price" : 317.2,
+      "source" : "eBay (Auction)",
+      "grade" : ""
+    } ],
+    "metadata" : { }
+  },
+  "2023-24-topps-chrome-frozenfractor-101-sn-4" : {
+    "certNumber" : "97840205",
+    "lastQueried" : "2026-08-24T10:40:53.105690Z",
+    "popReport" : {
+      "gradingCompany" : "PSA",
+      "grade" : "9",
+      "totalGraded" : 1,
+      "popHigher" : 0,
+      "gradePop" : null,
+      "certNumber" : "97840205",
+      "registryUrl" : "https://www.psacard.com/cert/97840205"
     },
     "estimatedValue": null,
     "lastSoldPrice": null,
@@ -125,6 +157,48 @@
       "gradePop": null,
       "certNumber": "26880752",
       "registryUrl": "https://www.psacard.com/cert/26880752"
+  "1996-97-skybox-e-2000-credentials-79-sn259" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-08-29T07:04:30.365935Z",
+    "popReport" : null,
+    "estimatedValue" : 173.0,
+    "lastSoldPrice" : 220.0,
+    "lastSoldDate" : "2026-07-30",
+    "purchasePrice" : null,
+    "priceHistory" : [ {
+      "date" : "2024-12-27",
+      "price" : 196.0,
+      "source" : "eBay (Best Offer Accepted)",
+      "grade" : "SGC 7"
+    }, {
+      "date" : "2025-07-09",
+      "price" : 150.0,
+      "source" : "eBay (Best Offer Accepted)",
+      "grade" : ""
+    }, {
+      "date" : "2025-12-26",
+      "price" : 100.0,
+      "source" : "eBay (Best Offer Accepted)",
+      "grade" : ""
+    }, {
+      "date" : "2026-07-30",
+      "price" : 220.0,
+      "source" : "eBay (Best Offer Accepted)",
+      "grade" : "BGS 8"
+    } ],
+    "metadata" : { }
+  },
+  "2021-22-topps-finest-red-refractor-fa-jhw-sn2" : {
+    "certNumber" : "134182801",
+    "lastQueried" : "2026-08-24T10:40:49.769016Z",
+    "popReport" : {
+      "gradingCompany" : "PSA",
+      "grade" : "9",
+      "totalGraded" : null,
+      "popHigher" : null,
+      "gradePop" : null,
+      "certNumber" : "134182801",
+      "registryUrl" : "https://www.psacard.com/cert/134182801"
     },
     "estimatedValue": null,
     "lastSoldPrice": null,
@@ -682,6 +756,42 @@
       }
     ],
     "metadata": {}
+  "1997-98-skybox-e-x2001-credentials-credentials-now-32-sn29" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-08-29T07:05:18.065882Z",
+    "popReport" : null,
+    "estimatedValue" : 1290.0,
+    "lastSoldPrice" : 1290.0,
+    "lastSoldDate" : "2025-05-05",
+    "purchasePrice" : null,
+    "priceHistory" : [ {
+      "date" : "2025-05-05",
+      "price" : 1290.0,
+      "source" : "eBay (Auction)",
+      "grade" : "PSA 6"
+    } ],
+    "metadata" : { }
+  },
+  "1994-95-collectors-choice-you-crash-the-game-rookie-scoring-gold-s4" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-08-28T10:11:27.521870Z",
+    "popReport" : null,
+    "estimatedValue" : 160.21,
+    "lastSoldPrice" : 317.2,
+    "lastSoldDate" : "2026-08-28",
+    "purchasePrice" : null,
+    "priceHistory" : [ {
+      "date" : "2026-08-27",
+      "price" : 3.22,
+      "source" : "eBay (Fixed Price)",
+      "grade" : ""
+    }, {
+      "date" : "2026-08-28",
+      "price" : 317.2,
+      "source" : "eBay (Auction)",
+      "grade" : ""
+    } ],
+    "metadata" : { }
   },
   "1994-95-collectors-choice-you-crash-the-game-rookie-scoring-gold-s4": {
     "certNumber": null,
