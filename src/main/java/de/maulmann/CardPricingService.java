@@ -89,6 +89,9 @@ public class CardPricingService {
         if (c.priceHistory != null && !c.priceHistory.isEmpty()) {
             return c.priceHistory.getLast().price();
         }
+        if (c.purchasePrice != null && c.purchasePrice > 0.0) {
+            return c.purchasePrice;
+        }
         return null;
     }
 

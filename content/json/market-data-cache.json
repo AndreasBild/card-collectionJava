@@ -5582,9 +5582,9 @@
     "certNumber": null,
     "lastQueried": "2026-08-29T12:26:00Z",
     "popReport": null,
-    "estimatedValue": null,
-    "lastSoldPrice": null,
-    "lastSoldDate": null,
+    "estimatedValue": 8500.0,
+    "lastSoldPrice": 8500.0,
+    "lastSoldDate": "2026-02-15",
     "purchasePrice": 105.95,
     "priceHistory": [
       {
@@ -5777,5 +5777,38 @@
     "metadata": {
       "purchaseDate": "2005-09-01"
     }
+  },
+  "1997-98-fleer-metal-universe-precious-metal-gems-red-33-pmg-sn47": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:30:00Z",
+    "popReport": null,
+    "estimatedValue": 1153.66,
+    "lastSoldPrice": 1249.99,
+    "lastSoldDate": "2026-03-04",
+    "purchasePrice": 965.0,
+    "priceHistory": [],
+    "metadata": {}
+  },
+  "1997-98-fleer-metal-universe-championship-precious-metal-gems-11-sn32": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:30:00Z",
+    "popReport": null,
+    "estimatedValue": 1850.0,
+    "lastSoldPrice": 1850.0,
+    "lastSoldDate": "2025-11-20",
+    "purchasePrice": null,
+    "priceHistory": [],
+    "metadata": {}
+  },
+  "1998-99-fleer-metal-universe-precious-metal-gems-5-sn33": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T12:30:00Z",
+    "popReport": null,
+    "estimatedValue": 1450.0,
+    "lastSoldPrice": 1450.0,
+    "lastSoldDate": "2025-10-12",
+    "purchasePrice": null,
+    "priceHistory": [],
+    "metadata": {}
   }
 }
