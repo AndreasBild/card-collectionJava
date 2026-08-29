@@ -67,7 +67,7 @@
     "estimatedValue": 499.5,
     "lastSoldPrice": 960.0,
     "lastSoldDate": "2025-11-17",
-    "purchasePrice": null,
+    "purchasePrice": 4.99,
     "priceHistory": [
       {
         "date": "2025-06-18",
@@ -82,7 +82,11 @@
         "grade": "PSA 10"
       }
     ],
-    "metadata": {}
+    "metadata": {
+      "purchaseDate": "2007-07-12",
+      "purchasedFrom": "eBay (You Won eBay Item: 97-98 FLAIR SHOWCASE JUWAN HOWARD LEGACY COLLECTION!!!  (190129529677))",
+      "ebayTitle": "97-98 FLAIR SHOWCASE JUWAN HOWARD LEGACY COLLECTION!!!"
+    }
   },
   "1997-98-flair-showcase-grace-legacy-collection-row-1-seat-64-sn60": {
     "certNumber": null,
@@ -2680,11 +2684,1649 @@
     "estimatedValue": null,
     "lastSoldPrice": null,
     "lastSoldDate": null,
-    "purchasePrice": null,
+    "purchasePrice": 3.0,
     "priceHistory": [],
     "metadata": {
       "psaItemDescription": "PANINI DONRUSS ELITE IMPACT IMPRESSIONS AUTOGRAPHS",
-      "psaGradeRaw": "GEM MT 10"
+      "psaGradeRaw": "GEM MT 10",
+      "purchaseDate": "2026-08-26",
+      "purchasedFrom": "eBay (talbs1284)",
+      "ebayTitle": "2023-24 Panini Donruss Elite Juwan Howard Impact Impressions Red /49 #II-HOW"
+    }
+  },
+  "2023-24-topps-chrome-black-refractor-101-sn10": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 27.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2026-08-25",
+      "purchasedFrom": "eBay (cnp_hobbyshop)",
+      "ebayTitle": "2025-26 Topps - Topps Notch Signatures Juwan Howard Black Holofoil 10/10 BOOKEND"
+    }
+  },
+  "2016-17-panini-flawless-patch-emerald-p-jhw-sn4": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 51.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2026-08-23",
+      "purchasedFrom": "eBay (dadscave)",
+      "ebayTitle": "Juwan Howard Ser. # 4/5 3 Color Patch"
+    }
+  },
+  "2019-20-panini-impeccable-canvas-creations-silver-cc-jwh-sn96": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 29.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2026-08-17",
+      "purchasedFrom": "eBay (shackem)",
+      "ebayTitle": "2019-20 Panini Impeccable Canvas Creations Auto Holo Silver Juwan Howard /25"
+    }
+  },
+  "2021-22-panini-hoops-hot-signatures-hs-jhw": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 7.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2025-11-23",
+      "purchasedFrom": "eBay (thecard_den)",
+      "ebayTitle": "2021-22 Panini NBA Hoops Juwan Howard Hot Signatures Auto #HS-JHW WIZARDS"
+    }
+  },
+  "2023-24-topps-chrome-certified-autographs-orange-basketball-refractor-ca-jh-sn11": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 14.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2024-12-30",
+      "purchasedFrom": "eBay (threephonesfinds)",
+      "ebayTitle": "2024 Topps Chrome Juwan Howard Certified Autograph /25 - Serial #11/25"
+    }
+  },
+  "1996-97-skybox-premium-127": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 3.42,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2011-05-05",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "1996-97 SKYBOX PREMIUM STANDOUTS JUWAN HOWARD #SO2 BV12"
+    }
+  },
+  "2010-11-panini-absolute-memorabilia-82": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 7.5,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2011-04-25",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "2010/11 Absolute Spectrum JUWAN HOWARD #d19/25 HEAT"
+    }
+  },
+  "1999-00-topps-seasons-best-gliders-sb12": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2011-03-26",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "JUWAN HOWARD 1999-00 Topps Season's Best Glimers #SB12"
+    }
+  },
+  "2004-05-topps-bazooka-printing-plate-cyan-96-sn1": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 7.5,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2011-03-26",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "True 1/1, J. Howard 04-05 Topps Finest Printing Plate !"
+    }
+  },
+  "1996-97-topps-mystery-finest-bordered-refractor-m5": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.25,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2011-03-18",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "96 97 Topps Mystery Refractor Juwan Howard M5"
+    }
+  },
+  "1998-99-ud-black-diamond-diamond-89": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 3.25,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2010-11-18",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "JUWAN HOWARD 1998 UD SP PREMIER EDITION AUTO Y042"
+    }
+  },
+  "1998-99-spx-finite-radiance-76-sn2681": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 8.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2010-10-27",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "98-99 SPX FINITE RADIANCE JUWAN HOWARD SERIAL #'D!!!!"
+    }
+  },
+  "2006-07-sp-game-used-edition-authentic-fabrics-jersey-afd-mh-sn5": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.33,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2010-06-29",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "TRACY McGRADY/HOWARD 06-07 SPGU Dual Swatch 5/100"
+    }
+  },
+  "2004-05-fleer-authentix-mezzanine-87-sn25": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2010-06-17",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "Juwan Howard 04 Fleer Authentic 25/50"
+    }
+  },
+  "2004-05-topps-finest-far-east-fabrics-x-fractor-fef-jh-sn6": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.81,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2010-04-21",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "Juwan Howard 2004-05 Topps Finest X-Fractor G/U Jersey"
+    }
+  },
+  "2002-03-fleer-platinum-40": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 3.58,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2010-02-17",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "02-03 Flee Platinum Finish Juwan Howard #'d /100"
+    }
+  },
+  "1996-97-topps-bowman-s-best-honor-roll-atomic-refractor-hr9": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 40.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2010-02-15",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "96-97 BB Honor Roll Atomic Refractor G. Hill/J. Howard"
+    }
+  },
+  "1996-97-topps-bowman-s-best-best-cuts-atomic-refractor-bc3": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 6.38,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2010-02-15",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "96-97 Bowman's Best Cuts Atomic Ref+Ref+ Juwan Howard"
+    }
+  },
+  "1997-98-skybox-z-force-rave-180-sn18": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 9.5,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2010-02-14",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "97-98 Z-Force Rave Juwan Howard #180 & 5 #'d to 100"
+    }
+  },
+  "1997-98-topps-chrome-refractor-27": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 5.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2010-02-14",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "97-98 Topps Top 40 Refractor Chrome Base Juwan Howard"
+    }
+  },
+  "1998-99-upper-deck-forces-bronze-f29-sn403": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 6.05,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2010-02-13",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "98-99 UD Forces Bronze + base Juwan Howard #F29"
+    }
+  },
+  "1998-99-topps-chrome-refractor-155": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.13,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2010-02-13",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "98-99 Topps Chrome Refractor Juwan Howard #155"
+    }
+  },
+  "1998-99-topps-stadium-club-one-of-a-kind-183-sn98": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 6.05,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2010-02-13",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "98-99 Stadium Club 1 of a Kind & Refractor Juwan Howard"
+    }
+  },
+  "1998-99-fleer-brilliants-blue-97b": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 16.27,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2010-02-13",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "98-99 Fleer Brilliants Juwan Howard Gold Blue + Base #d"
+    }
+  },
+  "1998-99-topps-finest-no-protector-refractor-6": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2010-02-13",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "98-99 Finest Protector & No Prot Refractor Juwan Howard"
+    }
+  },
+  "1998-99-topps-bowman-s-best-mirror-image-atomic-refractor-mi13-sn16": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 52.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2010-02-13",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "98-99 Atomic Refractor Mirror Image Juwan Howard #16/25"
+    }
+  },
+  "1999-00-skybox-hoops-decade-genuine-coverage-jersey-jersey-5": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 15.5,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2010-02-12",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "99-00 Hoops X Genuine Coverage Juwan Howard PATCH"
+    }
+  },
+  "2004-05-fleer-authentix-tip-off-trios-heights-edition-tt-hr-sn10": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 31.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2010-02-11",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "04-05 Fleer Tip-Off Trio McGrady Ming Howard #'d 10/25!"
+    }
+  },
+  "2003-04-fleer-focus-anniversary-gold-105-sn25": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 11.37,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2010-02-11",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "2003-04 Fleer Focus Juwan Howard Lot #'d 25/25"
+    }
+  },
+  "2006-07-ultra-platinum-medallion-53-sn49": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2009-10-15",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "Juwan Howard 06-07 Ultra PLATINUM MEDALLION SP #/100"
+    }
+  },
+  "2009-10-sp-game-used-edition-tag-team-quads-tq-char-sn9": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 3.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2009-09-22",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "09/10 SP GAME USED EMEKA OKAFOR/HOWARD 4x JERSEY /125"
+    }
+  },
+  "2009-10-panini-court-kings-materials-jersey-13-sn149": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.24,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2009-09-13",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "09-10 SPGU Foursome Jersey BOBCATS - Okafor Howard #/35"
+    }
+  },
+  "2004-05-fleer-authentix-tip-off-trios-tt-hr-sn57": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 9.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2009-08-08",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "McGrady, Ming, Howard TRIPLE JERSEY Card 57/75 ROCKETS"
+    }
+  },
+  "2003-04-topps-pristine-63": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.54,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2009-08-08",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "2003-04 Topps Pristine Refractors #63 Juwan Howard"
+    }
+  },
+  "1999-00-topps-gold-label-class-1-black-label-27": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 4.16,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2009-08-08",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "99-00 Topps Gold Label Class 3 Black Label Juwan Howard"
+    }
+  },
+  "1997-98-topps-stadium-club-triumvirate-luminescent-t3a": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 13.5,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2009-02-13",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "1997 TRI HOWARD / WEBBER / STRICKLAND LUMINESCENT T3ABC"
+    }
+  },
+  "1995-96-fleer-metal-silver-spotlight-116": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.75,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2009-02-08",
+      "purchasedFrom": "eBay (You Won eBay Item:1995-96 Metal Silver Spotlight #116 Juwan Howard (360128169670))",
+      "ebayTitle": "1995-96 Metal Silver Spotlight #116 Juwan Howard"
+    }
+  },
+  "1997-98-ud3-season-ticket-autograph-jh": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 24.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2009-01-14",
+      "purchasedFrom": "eBay (You Won eBay Item:JUWAN HOWARD 1997/98 UPPER DECK UD3 SEASON TICKET AUTO (390023679934))",
+      "ebayTitle": "JUWAN HOWARD 1997/98 UPPER DECK UD3 SEASON TICKET AUTO"
+    }
+  },
+  "2001-02-e-x-essential-credentials-credentials-future-68-sn20": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 7.3,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2008-12-27",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "Juwan Howard 01-02 EX Essential Credentials Future /63"
+    }
+  },
+  "1996-97-flair-showcase-showtime-row-0-seat-5": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2008-12-25",
+      "purchasedFrom": "eBay (You Won eBay Item:1996-97 SHOWCASE JUWAN HOWARD ROW 0 RARE (370135494810))",
+      "ebayTitle": "1996-97 SHOWCASE JUWAN HOWARD ROW 0 RARE"
+    }
+  },
+  "2006-07-topps-triple-threats-relics-combos-emerald-ttrc-55-sn5": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 35.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2008-12-16",
+      "purchasedFrom": "eBay (You Won eBay Item:CHRIS WEBBER/J HOWARD/J ROSE THREADS FAB 5 JERSEY #5/18 (350138415551))",
+      "ebayTitle": "CHRIS WEBBER/J HOWARD/J ROSE THREADS FAB 5 JERSEY #5/18"
+    }
+  },
+  "1997-98-fleer-traditions-tiffany-125": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 3.8,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2008-11-08",
+      "purchasedFrom": "eBay (You Won eBay Item:1997-98 Fleer Tiffany Coll #125 Juwan Howard (120326686976))",
+      "ebayTitle": "1997-98 Fleer Tiffany Coll #125 Juwan Howard"
+    }
+  },
+  "2003-04-ud-ultimate-collection-79-sn98": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 3.43,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2008-09-14",
+      "purchasedFrom": "eBay (You Won eBay Item:2003-04 Ultimate Coll #79 Juwan Howard (310068107788))",
+      "ebayTitle": "2003-04 Ultimate Coll #79 Juwan Howard"
+    }
+  },
+  "2003-04-ud-finite-gold-137-sn7": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 3.42,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2008-09-14",
+      "purchasedFrom": "eBay (You Won eBay Item:2003-04 UD Finite Gold #137 Juwan Howard (150294630898))",
+      "ebayTitle": "2003-04 UD Finite Gold #137 Juwan Howard"
+    }
+  },
+  "2000-01-ud-black-diamond-gold-90-sn482": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.74,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2008-09-14",
+      "purchasedFrom": "eBay (You Won eBay Item:2000-01 Black Diamond Gold #90 Juwan Howard (140266095308))",
+      "ebayTitle": "2000-01 Black Diamond Gold #90 Juwan Howard"
+    }
+  },
+  "2007-08-spx-winning-materials-jersey-wmt-whr": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.95,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2008-09-08",
+      "purchasedFrom": "eBay (You Won eBay Item:2007-08 SPx CHRIS WEBBER/JUWAN HOWARD/JALEN ROSE JERSEY (260281384576))",
+      "ebayTitle": "2007-08 SPx CHRIS WEBBER/JUWAN HOWARD/JALEN ROSE JERSEY"
+    }
+  },
+  "2002-03-topps-jersey-edition-black-je-jh-sn99": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.3,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2008-09-08",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "2002-03 TOPPS JERSEY EDITION JUWAN HOWARD JERSEY 99/99"
+    }
+  },
+  "2004-05-sp-game-used-edition-authentic-fabrics-jersey-patch-af2p-hg-sn2": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 9.5,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2008-06-25",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "Juwan Howard Upper Deck Game Used 3 color Patch!"
+    }
+  },
+  "2004-05-sp-game-used-edition-gold-81-sn58": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2008-06-13",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "04-05 SP GAME USED GOLD JUWAN HOWARD 037/100"
+    }
+  },
+  "2002-03-flair-11": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.5,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2008-05-19",
+      "purchasedFrom": "eBay (You Won eBay Item:02/03 FLEER PREMIUM JUWAN HOWARD RUBIES 11/100 NUGGETS (270238950960))",
+      "ebayTitle": "02/03 FLEER PREMIUM JUWAN HOWARD RUBIES 11/100 NUGGETS"
+    }
+  },
+  "2004-05-ultra-platinum-medallion-111-sn66": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2008-04-24",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "05 ULTRA #111 JUWAN HOWARD PLATINUM MED 066/100"
+    }
+  },
+  "1996-97-collectors-choice-you-crash-the-game-scoring-2-redemption-silver-r29": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2008-03-30",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "96-97 UDCC Crash SILVER Redeemed Juwan Howard #R29"
+    }
+  },
+  "1995-96-collectors-choice-crash-the-game-assists-rebounds-silver-c3": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2008-03-30",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "95-96 UDCC Crash SILVER Redeemed Juwan Howard #C3"
+    }
+  },
+  "1995-96-collectors-choice-crash-the-game-assists-rebounds-gold-c3": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2008-03-30",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "95-96 UDCC Crash GOLD Redeemed Juwan Howard #C3"
+    }
+  },
+  "1995-96-collectors-choice-players-club-38": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2008-03-30",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "95-96 UDCC Player's Club Juwan Howard #38"
+    }
+  },
+  "1994-95-skybox-emotion-time-out-98": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2008-03-30",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "94-95 Skybox MASTER SERIES Juwan Howard #98"
+    }
+  },
+  "1998-99-ud-ionix-reciprocal-59-sn136": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 3.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2008-03-21",
+      "purchasedFrom": "eBay (You Won eBay Item:JUWAN HOWARD 1998-99 UD IONIX RECIPROCAL CARD 136/750 (260222644992))",
+      "ebayTitle": "JUWAN HOWARD 1998-99 UD IONIX RECIPROCAL CARD 136/750"
+    }
+  },
+  "1995-96-upper-deck-electric-court-gold-160": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2008-03-09",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "95-96 UD ELECTRIC COURT GOLD PARALLEL JUWAN HOWARD"
+    }
+  },
+  "2003-04-fleer-patchworks-ruby-60-sn3": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.25,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2008-03-02",
+      "purchasedFrom": "eBay (eBay sent this message to Andreas Bild (hildegardt).)",
+      "ebayTitle": "03-04 FLEER PATCHWORKS JUWAN HOWARD RUBY 3/50"
+    }
+  },
+  "2003-04-topps-pristine-refractor-63-sn43": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 6.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2007-08-18",
+      "purchasedFrom": "eBay (You Won eBay Item: 2003-04 Juwan Howard Topps Pristine Uncir Refractor #63 (280143089391))",
+      "ebayTitle": "2003-04 Juwan Howard Topps Pristine Uncir Refractor #63"
+    }
+  },
+  "2003-04-ud-mvp-gold-131-sn15": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2007-06-10",
+      "purchasedFrom": "eBay (You Won eBay Item: Juwan Howard 2003-04 UD MVP Gold 15/100 (290127752552))",
+      "ebayTitle": "Juwan Howard 2003-04 UD MVP Gold 15/100"
+    }
+  },
+  "2007-08-sp-game-used-edition-by-the-letter-jersey-patch-bl-ju-sn5": {
+    "certNumber": "0005843820",
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 50.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2007-05-19",
+      "purchasedFrom": "eBay (You Won eBay Item: 2007 TRIPLE THREADS WEBBER/ROSE/HOWARD FAB 5 3X JERSEY  (220112345387))",
+      "ebayTitle": "2007 TRIPLE THREADS WEBBER/ROSE/HOWARD FAB 5 3X JERSEY"
+    }
+  },
+  "2004-05-topps-pristine-gold-refractor-27-sn1": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 3.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2007-05-13",
+      "purchasedFrom": "eBay (You Won eBay Item: 2004-05 Topps Pristine Gold Refractor JUWAN HOWARD 1/27 (150122375099))",
+      "ebayTitle": "2004-05 Topps Pristine Gold Refractor JUWAN HOWARD 1/27"
+    }
+  },
+  "1999-00-ud-black-diamond-diamond-cut-final-cut-88-sn56": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.5,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2007-05-12",
+      "purchasedFrom": "eBay (You Won eBay Item: Juwan Howard 99-00 Bl. Diamond Final Cut /100 + Inserts (170109230262))",
+      "ebayTitle": "Juwan Howard 99-00 Bl. Diamond Final Cut /100 + Inserts"
+    }
+  },
+  "2004-05-upper-deck-majestic-materials-jersey-ma-jh": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2007-05-05",
+      "purchasedFrom": "eBay (You Won eBay Item: 04-05 UD Series 1 Juwan Howard Jersey Majestic Material (190108039480))",
+      "ebayTitle": "04-05 UD Series 1 Juwan Howard Jersey Majestic Material"
+    }
+  },
+  "2003-04-upper-deck-exclusives-204-sn13": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 7.76,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2007-04-30",
+      "purchasedFrom": "eBay (You Won eBay Item: JUWAN HOWARD 03-04 UD EXCLUSIVES RAINBOW #13/25 (120112577956))",
+      "ebayTitle": "JUWAN HOWARD 03-04 UD EXCLUSIVES RAINBOW #13/25"
+    }
+  },
+  "2005-06-ud-ultimate-collection-red-199-sn6": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2007-04-19",
+      "purchasedFrom": "eBay (You Won eBay Item: 2005 05-06 UD ULTIMATE RED JUWON HOWARD ROCKETS /50 (230116847211))",
+      "ebayTitle": "2005 05-06 UD ULTIMATE RED JUWON HOWARD ROCKETS /50"
+    }
+  },
+  "1998-99-topps-finest-arena-stars-as15": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2007-04-19",
+      "purchasedFrom": "eBay (You Won eBay Item: 98-99 FINEST ARENA STARS JUWAN HOWARD ROCKETS 1:48 (230114245760))",
+      "ebayTitle": "98-99 FINEST ARENA STARS JUWAN HOWARD ROCKETS 1:48"
+    }
+  },
+  "2004-05-ud-black-diamond-29": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 15.5,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2007-04-19",
+      "purchasedFrom": "eBay (You Won eBay Item: 04-05 UPPER DECK UD EXCLUSIVES JUWAN HOWARD /25 $40 (230116844450))",
+      "ebayTitle": "04-05 UPPER DECK UD EXCLUSIVES JUWAN HOWARD /25 $40"
+    }
+  },
+  "1999-00-fleer-focus-65": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2007-04-09",
+      "purchasedFrom": "eBay (You Won eBay Item: JUWAN HOWARD 99-00 FLEER FOCUS GREEN #/300 (230066491597))",
+      "ebayTitle": "JUWAN HOWARD 99-00 FLEER FOCUS GREEN #/300"
+    }
+  },
+  "2002-03-fleer-authentix-balcony-93-sn233": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2007-04-09",
+      "purchasedFrom": "eBay (You Won eBay Item: JUWAN HOWARD 02-03 FLEER AUTHENTIX BALCONY #/250 (230066491576))",
+      "ebayTitle": "JUWAN HOWARD 02-03 FLEER AUTHENTIX BALCONY #/250"
+    }
+  },
+  "2005-06-ud-ultimate-collection-199-sn532": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2007-04-09",
+      "purchasedFrom": "eBay (You Won eBay Item: JUWAN HOWARD 05-06 ULTIMATE COLLECTION #/750 (230029473193))",
+      "ebayTitle": "JUWAN HOWARD 05-06 ULTIMATE COLLECTION #/750"
+    }
+  },
+  "2004-05-ud-black-diamond-red-29-sn24": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2007-04-09",
+      "purchasedFrom": "eBay (You Won eBay Item: JUWAN HOWARD 04-05 UD BLACK DIAMOND RED #/100 (230008202779))",
+      "ebayTitle": "JUWAN HOWARD 04-05 UD BLACK DIAMOND RED #/100"
+    }
+  },
+  "2004-05-topps-luxury-box-tier-reserved-44-sn142": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2007-04-09",
+      "purchasedFrom": "eBay (You Won eBay Item: JUWAN HOWARD 04-05 TOPPS LUXURY BOX TIER RESERVED #/300 (8787734744))",
+      "ebayTitle": "JUWAN HOWARD 04-05 TOPPS LUXURY BOX TIER RESERVED #/300"
+    }
+  },
+  "1998-99-flair-showcase-power-legacy-collection-42-sn20": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 6.5,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2007-02-03",
+      "purchasedFrom": "eBay (You Won eBay Item: 98-99 Showcase Legacy Collection Row 1 42 Juwan Howard  (130074540802))",
+      "ebayTitle": "98-99 Showcase Legacy Collection Row 1 42 Juwan Howard"
+    }
+  },
+  "2003-04-sp-game-used-edition-gold-63-sn100": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-11-24",
+      "purchasedFrom": "eBay (You Won eBay Item: 03-04 UD SP GAME USED GOLD JUWAN HOWARD ROCKETS 100/100 (320050623266))",
+      "ebayTitle": "03-04 UD SP GAME USED GOLD JUWAN HOWARD ROCKETS 100/100"
+    }
+  },
+  "2006-07-sp-game-used-edition-authentic-fabrics-jersey-afd-mh-sn51": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 4.01,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-11-11",
+      "purchasedFrom": "eBay (You Won eBay Item: McGrady/ Howard 07 SP Game Used Dual Jersey /100 (260050922399))",
+      "ebayTitle": "McGrady/ Howard 07 SP Game Used Dual Jersey /100"
+    }
+  },
+  "2003-04-topps-collection-edition-59": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-11-03",
+      "purchasedFrom": "eBay (You Won eBay Item: JUWAN HOWARD 03/04 SHOWASE LEAGACY COLLECTION #D /125 (190044587284))",
+      "ebayTitle": "JUWAN HOWARD 03/04 SHOWASE LEAGACY COLLECTION #D /125"
+    }
+  },
+  "2006-07-ud-reflections-dual-fabric-blue-dr-hr-sn15": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 11.27,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-11-01",
+      "purchasedFrom": "eBay (You Won eBay Item: Jalen Rose Juwan Howard 07 Reflections Dual Patch 15/15 (260045704261))",
+      "ebayTitle": "Jalen Rose Juwan Howard 07 Reflections Dual Patch 15/15"
+    }
+  },
+  "1998-99-ud-choice-starquest-red-sq29": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.88,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-10-26",
+      "purchasedFrom": "eBay (You Won eBay Item: JUWAN HOWARD 1998-99 UD CHOICE STARQUEST RED #SQ29 (230043512429))",
+      "ebayTitle": "JUWAN HOWARD 1998-99 UD CHOICE STARQUEST RED #SQ29"
+    }
+  },
+  "2005-06-topps-total-printing-plate-black-199-sn1": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 10.5,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-10-02",
+      "purchasedFrom": "eBay (You Won eBay Item: JUWAN HOWARD 05-06 Topps Total Black Printing Plate 1/1 (160035462044))",
+      "ebayTitle": "JUWAN HOWARD 05-06 Topps Total Black Printing Plate 1/1"
+    }
+  },
+  "2006-07-ultra-printing-plate-cyan-53-sn1": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 10.5,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-09-26",
+      "purchasedFrom": "eBay (You Won eBay Item: 07 FLEER ULTRA #53 JUWAN HOWARD PRINTING PLATE(1/1)! (250031130607))",
+      "ebayTitle": "07 FLEER ULTRA #53 JUWAN HOWARD PRINTING PLATE(1/1)!"
+    }
+  },
+  "2003-04-fleer-mystique-rare-finds-jersey-jersey-rft-jr-cw-jh": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 26.02,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-09-18",
+      "purchasedFrom": "eBay (You Won eBay Item: 03/04 Fleer Mystique TRIPLE Patch ROSE/WEBBER/HOWARD (180027738935))",
+      "ebayTitle": "03/04 Fleer Mystique TRIPLE Patch ROSE/WEBBER/HOWARD"
+    }
+  },
+  "2002-03-topps-finest-refractor-53-sn118": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-09-05",
+      "purchasedFrom": "eBay (You Won eBay Item: JUWAN HOWARD #53 Refractor 02-03 Topps Finest Basketbal (220022522888))",
+      "ebayTitle": "JUWAN HOWARD #53 Refractor 02-03 Topps Finest Basketbal"
+    }
+  },
+  "2004-05-topps-chrome-refractor-139": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-08-11",
+      "purchasedFrom": "eBay (You Won eBay Item: 04/05 Topps Chrome JUWAN HOWARD Gold Refractor 7/99 (280015379497))",
+      "ebayTitle": "04/05 Topps Chrome JUWAN HOWARD Gold Refractor 7/99"
+    }
+  },
+  "1998-99-fleer-brilliants-gold-97g-sn24": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 15.5,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-08-07",
+      "purchasedFrom": "eBay (You Won eBay Item: 98/99 Juwan Howard Fleer Brillians 24kt Gold #d 14/24  (110016019524))",
+      "ebayTitle": "98/99 Juwan Howard Fleer Brillians 24kt Gold #d 14/24"
+    }
+  },
+  "1998-99-spx-finite-star-power-spectrum-92-sn223": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-07-08",
+      "purchasedFrom": "eBay (You Won eBay Item: 1998-99 SPX FINITE SPECTRUM SP JUWAN HOWARD #223/250 (120004046805))",
+      "ebayTitle": "1998-99 SPX FINITE SPECTRUM SP JUWAN HOWARD #223/250"
+    }
+  },
+  "1999-00-spx-radiance-88-sn33": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-06-03",
+      "purchasedFrom": "eBay (You Won eBay Item: JUWAN HOWARD 99-00 SPx RADIANCE #/100 RARE (8820184677))",
+      "ebayTitle": "JUWAN HOWARD 99-00 SPx RADIANCE #/100 RARE"
+    }
+  },
+  "2002-03-topps-chrome-white-refractor-50-sn152": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-05-25",
+      "purchasedFrom": "eBay (You Won eBay Item: 02 TOPPS CHROME WHITE REFRACTOR JUWAN HOWARD 152/249 (8757839653))",
+      "ebayTitle": "02 TOPPS CHROME WHITE REFRACTOR JUWAN HOWARD 152/249"
+    }
+  },
+  "2002-03-sp-game-used-edition-authentic-fabrics-jersey-jp-jh-j-sn86": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 7.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-05-25",
+      "purchasedFrom": "eBay (You Won eBay Item: 02-03 SP GAME USED DUAL FABRICS POSEY HOWARD 086/100 (5189399195))",
+      "ebayTitle": "02-03 SP GAME USED DUAL FABRICS POSEY HOWARD 086/100"
+    }
+  },
+  "2002-03-topps-pristine-gold-refractor-24-sn26": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 7.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-05-25",
+      "purchasedFrom": "eBay (You Won eBay Item: 02 TOPPS PRISTINE GOLD REFRACTOR JUWAN HOWARD 26/50 (5178628841))",
+      "ebayTitle": "02 TOPPS PRISTINE GOLD REFRACTOR JUWAN HOWARD 26/50"
+    }
+  },
+  "2004-05-ud-black-diamond-green-29-sn9": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.25,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-05-17",
+      "purchasedFrom": "eBay (You Won eBay Item: 2004-05 Black Diamond Green Juwan Howard  #09/25 (8810915392))",
+      "ebayTitle": "2004-05 Black Diamond Green Juwan Howard  #09/25"
+    }
+  },
+  "1998-99-topps-east-west-refractor-ew11": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 13.28,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-05-15",
+      "purchasedFrom": "eBay (You Won eBay Item: CHRIS WEBBER/JUWAN HOWARD 98 TOPPS EAST/WEST REFRACTOR (8810289283))",
+      "ebayTitle": "CHRIS WEBBER/JUWAN HOWARD 98 TOPPS EAST/WEST REFRACTOR"
+    }
+  },
+  "2002-03-topps-pristine-gold-refractor-die-cut-24-sn91": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 3.25,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-05-11",
+      "purchasedFrom": "eBay (You Won eBay Item: 02-03 Topps Pristine Juwan Howard Gold Refractor /99 (8806847914))",
+      "ebayTitle": "02-03 Topps Pristine Juwan Howard Gold Refractor /99"
+    }
+  },
+  "1996-97-collectors-choice-mini-cards-gold-m178": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-05-02",
+      "purchasedFrom": "eBay (You Won eBay Item: Juwan Howard 1996 Upper Deck Electric Court Gold (8802199220))",
+      "ebayTitle": "Juwan Howard 1996 Upper Deck Electric Court Gold"
+    }
+  },
+  "1994-classic-4-sports-autograph-5-sn710": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 3.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-04-30",
+      "purchasedFrom": "eBay (You Won eBay Item: SR RC 1994 Autograph Juwan Howard Michigan Fab Five (8800928629))",
+      "ebayTitle": "SR RC 1994 Autograph Juwan Howard Michigan Fab Five"
+    }
+  },
+  "2005-06-sp-game-used-edition-bronze-37-sn97": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-04-08",
+      "purchasedFrom": "eBay (You Won eBay Item: 05-06 JUWAN HOWARD SP GAME USED EDITION #'D 97/100 (8789831297))",
+      "ebayTitle": "05-06 JUWAN HOWARD SP GAME USED EDITION #'D 97/100"
+    }
+  },
+  "2003-04-sp-game-used-edition-authentic-fabrics-jersey-jh-mc-j-sn38": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 4.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-04-08",
+      "purchasedFrom": "eBay (You Won eBay Item: 03 JUWAN HOWARD MARCUS CAMBY SP GAME USED JERSEY 38/100 (8793244733))",
+      "ebayTitle": "03 JUWAN HOWARD MARCUS CAMBY SP GAME USED JERSEY 38/100"
+    }
+  },
+  "2002-03-topps-jersey-edition-je-jh": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 3.59,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-04-06",
+      "purchasedFrom": "eBay (You Won eBay Item: JUWAN HOWARD 03 Topps JERSEY EDITION BRONZE (2788623333))",
+      "ebayTitle": "JUWAN HOWARD 03 Topps JERSEY EDITION BRONZE"
+    }
+  },
+  "2001-02-ud-flight-team-gold-42-sn36": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-04-06",
+      "purchasedFrom": "eBay (You Won eBay Item: JUWAN HOWARD 2001-02 UD FLIGHT TEAM /50 GOLD #42 (8788923636))",
+      "ebayTitle": "JUWAN HOWARD 2001-02 UD FLIGHT TEAM /50 GOLD #42"
+    }
+  },
+  "2004-05-ud-trilogy-34": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.5,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-03-19",
+      "purchasedFrom": "eBay (You Won eBay Item: 04/05 UD TRILOGY COURT COLLECTION #34 JUWAN HOWARD /100 (8782508169))",
+      "ebayTitle": "04/05 UD TRILOGY COURT COLLECTION #34 JUWAN HOWARD /100"
+    }
+  },
+  "2005-06-ud-rookie-debut-gold-34-sn23": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 5.02,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-02-26",
+      "purchasedFrom": "eBay (You Won eBay Item: 2005-06 UD Rookie Debut JUWAN HOWARD SP GOLD 23/50 (8770015763))",
+      "ebayTitle": "2005-06 UD Rookie Debut JUWAN HOWARD SP GOLD 23/50"
+    }
+  },
+  "1994-95-topps-finest-refractor-288": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 7.5,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-02-24",
+      "purchasedFrom": "eBay (You Won eBay Item: 1994/95 FINEST RC #288 JUWAN HOWARD REFRACTOR (8768102345))",
+      "ebayTitle": "1994/95 FINEST RC #288 JUWAN HOWARD REFRACTOR"
+    }
+  },
+  "2003-04-flair-row-1-5-sn24": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.5,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-02-03",
+      "purchasedFrom": "eBay (You Won eBay Item: 2003-04 Juwan Howard 024/100 Flair Gold #5 (5177802477))",
+      "ebayTitle": "2003-04 Juwan Howard 024/100 Flair Gold #5"
+    }
+  },
+  "1998-99-sp-authentic-88": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.25,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-01-31",
+      "purchasedFrom": "eBay (You Won eBay Item: 1998 99 SP AUTHENTIC BUYBACK AUTO JUWAN HOWARD (8756566517))",
+      "ebayTitle": "1998 99 SP AUTHENTIC BUYBACK AUTO JUWAN HOWARD"
+    }
+  },
+  "1997-98-topps-finest-force-refractor-9-ff11": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 14.99,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-01-30",
+      "purchasedFrom": "eBay (You Won eBay Item: 97/98 Finest GOLD REFRACTOR Juwan Howard #/289 $40 (8758840986))",
+      "ebayTitle": "97/98 Finest GOLD REFRACTOR Juwan Howard #/289 $40"
+    }
+  },
+  "1997-98-spx-49": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 20.51,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2006-01-22",
+      "purchasedFrom": "eBay (You Won eBay Item: Juwan Howard 97/98 SPx Grand Finale 40/50  SCARCE ! (8751086970))",
+      "ebayTitle": "Juwan Howard 97/98 SPx Grand Finale 40/50  SCARCE !"
+    }
+  },
+  "2003-04-topps-finest-refractor-99-sn120": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2005-11-17",
+      "purchasedFrom": "eBay (You Won eBay Item: 2003-04 FINEST JUWAN HOWARD REFRACTOR (8720426582))",
+      "ebayTitle": "2003-04 FINEST JUWAN HOWARD REFRACTOR"
+    }
+  },
+  "2004-05-sp-game-used-edition-81": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T10:28:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 4.0,
+    "priceHistory": [],
+    "metadata": {
+      "purchaseDate": "2005-09-01",
+      "purchasedFrom": "eBay (You Won eBay Item: 04-05 SP Game Used Reece Gaines/Juwan Howard JRSY /100 (5178770035))",
+      "ebayTitle": "04-05 SP Game Used Reece Gaines/Juwan Howard JRSY /100"
     }
   }
 }
