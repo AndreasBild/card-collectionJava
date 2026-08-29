@@ -4686,7 +4686,8 @@
     "metadata": {
       "purchasedFrom": "eBay (stefanowitch)",
       "ebayTitle": "98 FLEER TRADITION CLASSIC 61 JUWAN HOWARD ed#61 RUBIES CREDENTIALS",
-      "itemNumber": "270894396907"
+      "itemNumber": "270894396907",
+      "serialMatched": "16/61"
     }
   },
   "1998-99-fleer-vintage-61-classic-5c-sn53": {
@@ -4696,19 +4697,8 @@
     "estimatedValue": 35.0,
     "lastSoldPrice": 35.0,
     "lastSoldDate": null,
-    "purchasePrice": 15.49,
-    "priceHistory": [
-      {
-        "date": "2012-01-20",
-        "price": 15.49,
-        "source": "eBay (stefanowitch)",
-        "grade": "Raw"
-      }
-    ],
-    "metadata": {
-      "purchasedFrom": "eBay (stefanowitch)",
-      "ebayTitle": "98 FLEER TRADITION CLASSIC 61 JUWAN HOWARD ed#61 RUBIES CREDENTIALS",
-      "itemNumber": "270894396907"
-    }
+    "purchasePrice": null,
+    "priceHistory": [],
+    "metadata": {}
   }
 }
