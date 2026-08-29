@@ -4694,11 +4694,24 @@
     "certNumber": null,
     "lastQueried": "2026-08-29T10:52:00Z",
     "popReport": null,
-    "estimatedValue": 35.0,
-    "lastSoldPrice": 35.0,
-    "lastSoldDate": null,
-    "purchasePrice": null,
-    "priceHistory": [],
-    "metadata": {}
+    "estimatedValue": 126.37,
+    "lastSoldPrice": 126.37,
+    "lastSoldDate": "2026-03-04",
+    "purchasePrice": 126.37,
+    "priceHistory": [
+      {
+        "date": "2026-03-04",
+        "price": 126.37,
+        "source": "eBay (Order #03-14331-83615)",
+        "grade": "Raw #53/61"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2026-03-04",
+      "orderNumber": "03-14331-83615",
+      "purchasedFrom": "eBay",
+      "serialMatched": "53/61",
+      "ebayTitle": "1998-99 Fleer Vintage '61 Classic Juwan Howard #5C (53/61)"
+    }
   }
 }
