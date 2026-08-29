@@ -19,6 +19,18 @@
         "price": 317.2,
         "source": "eBay (Auction)",
         "grade": ""
+      },
+      {
+        "date": "2007-07-12",
+        "price": 4.99,
+        "source": "eBay",
+        "grade": "Raw"
+      },
+      {
+        "date": "2006-04-30",
+        "price": 4.99,
+        "source": "eBay",
+        "grade": "Raw"
       }
     ],
     "metadata": {
@@ -90,6 +102,24 @@
         "price": 960.0,
         "source": "eBay (Auction)",
         "grade": "PSA 10"
+      },
+      {
+        "date": "2007-02-03",
+        "price": 6.75,
+        "source": "eBay",
+        "grade": "Raw"
+      },
+      {
+        "date": "2007-02-03",
+        "price": 5.5,
+        "source": "eBay",
+        "grade": "Raw"
+      },
+      {
+        "date": "2007-02-03",
+        "price": 6.5,
+        "source": "eBay",
+        "grade": "Raw"
       }
     ],
     "metadata": {
@@ -654,6 +684,12 @@
         "price": 2.3,
         "source": "eBay (Auction)",
         "grade": ""
+      },
+      {
+        "date": "2010-02-17",
+        "price": 6.56,
+        "source": "eBay",
+        "grade": "Raw"
       }
     ],
     "metadata": {
@@ -1196,7 +1232,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 2.35,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2006-08-11",
+        "price": 0.75,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "11/25/2025",
       "purchaseItemId": "288433301"
@@ -1280,7 +1323,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 1.5,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2006-02-03",
+        "price": 2.5,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "11/25/2025",
       "purchaseItemId": "13036274"
@@ -1392,7 +1442,26 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 0.9,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2010-05-19",
+        "price": 1.77,
+        "source": "eBay",
+        "grade": "Raw"
+      },
+      {
+        "date": "2007-04-09",
+        "price": 1.0,
+        "source": "eBay",
+        "grade": "Raw"
+      },
+      {
+        "date": "2006-04-08",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "11/24/2025",
       "purchaseItemId": "5710353"
@@ -1462,7 +1531,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 1.13,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2007-04-09",
+        "price": 1.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "11/24/2025",
       "purchaseItemId": "139969295"
@@ -1518,7 +1594,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 1.95,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2006-07-18",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "11/24/2025",
       "purchaseItemId": "57685218"
@@ -1560,7 +1643,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 0.88,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2008-05-19",
+        "price": 1.5,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "11/24/2025",
       "purchaseItemId": "16620053"
@@ -2148,7 +2238,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 9.0,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2010-02-14",
+        "price": 5.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "8/16/2014",
       "purchaseItemId": "6989461"
@@ -2372,7 +2469,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 1.0,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2007-09-05",
+        "price": 32.55,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "12/26/2013",
       "purchaseItemId": "9386580"
@@ -2540,7 +2644,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 27.6,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2007-05-01",
+        "price": 30.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "7/19/2018",
       "purchaseItemId": "47471730"
@@ -2568,7 +2679,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 15.06,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2010-02-17",
+        "price": 4.01,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "8/16/2014",
       "purchaseItemId": "11413919"
@@ -2618,7 +2736,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 51.0,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2026-08-23",
+        "price": 51.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2026-08-23"
     }
@@ -2644,7 +2769,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 7.99,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2025-11-23",
+        "price": 7.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2025-11-23"
     }
@@ -2657,7 +2789,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 14.0,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2024-12-30",
+        "price": 14.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2024-12-30"
     }
@@ -2670,7 +2809,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 3.42,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2011-05-05",
+        "price": 3.42,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2011-05-05"
     }
@@ -2683,7 +2829,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 7.5,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2011-04-25",
+        "price": 7.5,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2011-04-25"
     }
@@ -2696,7 +2849,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 0.99,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2011-03-26",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2011-03-26"
     }
@@ -2722,7 +2882,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 2.25,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2011-03-18",
+        "price": 2.25,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2011-03-18"
     }
@@ -2735,7 +2902,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 3.25,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2010-11-18",
+        "price": 3.25,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2010-11-18"
     }
@@ -2748,7 +2922,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 8.0,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2006-06-03",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2010-10-27"
     }
@@ -2774,7 +2955,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 0.99,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2010-06-17",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2010-06-17"
     }
@@ -2787,7 +2975,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 1.81,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2010-04-21",
+        "price": 1.81,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2010-04-21"
     }
@@ -2800,7 +2995,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 3.58,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2006-08-23",
+        "price": 9.53,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2010-02-17"
     }
@@ -2826,7 +3028,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 6.38,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2010-02-15",
+        "price": 6.38,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2010-02-15"
     }
@@ -2839,7 +3048,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 9.5,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2010-02-14",
+        "price": 9.5,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2010-02-14"
     }
@@ -2865,7 +3081,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 6.05,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2010-02-13",
+        "price": 6.05,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2010-02-13"
     }
@@ -2878,7 +3101,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 2.13,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2010-02-13",
+        "price": 2.13,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2010-02-13"
     }
@@ -2891,7 +3121,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 6.05,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2007-04-15",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2010-02-13"
     }
@@ -2904,7 +3141,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 16.27,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2010-02-13",
+        "price": 16.27,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2010-02-13"
     }
@@ -2917,7 +3161,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 0.99,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2010-02-13",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2010-02-13"
     }
@@ -2930,7 +3181,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 52.0,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2010-02-13",
+        "price": 52.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2010-02-13"
     }
@@ -2943,7 +3201,20 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 15.5,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2010-02-12",
+        "price": 15.5,
+        "source": "eBay",
+        "grade": "Raw"
+      },
+      {
+        "date": "2006-02-26",
+        "price": 8.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2010-02-12"
     }
@@ -2956,7 +3227,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 31.0,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2006-05-22",
+        "price": 11.28,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2010-02-11"
     }
@@ -2969,7 +3247,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 11.37,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2010-02-11",
+        "price": 11.37,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2010-02-11"
     }
@@ -3073,7 +3358,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 1.75,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2009-02-08",
+        "price": 1.75,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2009-02-08"
     }
@@ -3086,7 +3378,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 24.99,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2009-01-14",
+        "price": 24.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2009-01-14"
     }
@@ -3099,7 +3398,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 7.3,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2008-12-27",
+        "price": 7.3,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2008-12-27"
     }
@@ -3112,7 +3418,20 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 2.0,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2008-12-25",
+        "price": 2.0,
+        "source": "eBay",
+        "grade": "Raw"
+      },
+      {
+        "date": "2006-02-03",
+        "price": 9.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2008-12-25"
     }
@@ -3138,7 +3457,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 3.8,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2008-11-08",
+        "price": 3.8,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2008-11-08"
     }
@@ -3151,7 +3477,20 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 3.43,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2008-09-14",
+        "price": 3.43,
+        "source": "eBay",
+        "grade": "Raw"
+      },
+      {
+        "date": "2006-03-17",
+        "price": 3.8,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2008-09-14"
     }
@@ -3164,7 +3503,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 3.42,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2008-09-14",
+        "price": 3.42,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2008-09-14"
     }
@@ -3177,7 +3523,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 1.74,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2008-09-14",
+        "price": 1.74,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2008-09-14"
     }
@@ -3190,7 +3543,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 2.95,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2008-09-08",
+        "price": 2.95,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2008-09-08"
     }
@@ -3203,7 +3563,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 0.3,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2008-09-08",
+        "price": 0.3,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2008-09-08"
     }
@@ -3216,7 +3583,20 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 9.5,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2008-06-25",
+        "price": 9.5,
+        "source": "eBay",
+        "grade": "Raw"
+      },
+      {
+        "date": "2006-06-06",
+        "price": 23.51,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2008-06-25"
     }
@@ -3255,7 +3635,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 0.99,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2008-04-24",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2008-04-24"
     }
@@ -3268,7 +3655,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 0.99,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2008-03-30",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2008-03-30"
     }
@@ -3281,7 +3675,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 0.99,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2008-03-30",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2008-03-30"
     }
@@ -3294,7 +3695,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 0.99,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2008-03-30",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2008-03-30"
     }
@@ -3307,7 +3715,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 0.99,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2008-03-30",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2008-03-30"
     }
@@ -3320,7 +3735,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 0.99,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2008-03-30",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2008-03-30"
     }
@@ -3333,7 +3755,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 3.99,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2008-03-21",
+        "price": 3.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2008-03-21"
     }
@@ -3346,7 +3775,26 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 0.99,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2008-03-09",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      },
+      {
+        "date": "2006-05-02",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      },
+      {
+        "date": "2006-02-27",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2008-03-09"
     }
@@ -3359,7 +3807,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 1.25,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2008-03-02",
+        "price": 1.25,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2008-03-02"
     }
@@ -3372,7 +3827,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 6.0,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2007-08-18",
+        "price": 6.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2007-08-18"
     }
@@ -3385,7 +3847,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 1.99,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2007-06-10",
+        "price": 1.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2007-06-10"
     }
@@ -3411,7 +3880,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 3.99,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2007-05-13",
+        "price": 3.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2007-05-13"
     }
@@ -3424,7 +3900,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 1.5,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2007-05-12",
+        "price": 1.5,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2007-05-12"
     }
@@ -3450,7 +3933,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 7.76,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2007-04-30",
+        "price": 7.76,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2007-04-30"
     }
@@ -3476,7 +3966,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 0.99,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2007-04-19",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2007-04-19"
     }
@@ -3489,7 +3986,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 15.5,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2006-09-26",
+        "price": 30.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2007-04-19"
     }
@@ -3502,7 +4006,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 1.0,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2007-04-09",
+        "price": 1.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2007-04-09"
     }
@@ -3515,7 +4026,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 1.0,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2007-04-09",
+        "price": 1.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2007-04-09"
     }
@@ -3528,7 +4046,20 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 1.0,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2007-04-09",
+        "price": 1.0,
+        "source": "eBay",
+        "grade": "Raw"
+      },
+      {
+        "date": "2006-08-26",
+        "price": 3.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2007-04-09"
     }
@@ -3541,7 +4072,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 1.0,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2007-04-09",
+        "price": 1.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2007-04-09"
     }
@@ -3554,7 +4092,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 1.0,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2007-04-09",
+        "price": 1.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2007-04-09"
     }
@@ -3580,7 +4125,26 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 0.99,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2008-06-13",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      },
+      {
+        "date": "2006-11-24",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      },
+      {
+        "date": "2006-04-26",
+        "price": 4.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2006-11-24"
     }
@@ -3606,7 +4170,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 0.99,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2006-11-03",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2006-11-03"
     }
@@ -3619,7 +4190,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 11.27,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2006-11-01",
+        "price": 11.27,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2006-11-01"
     }
@@ -3632,7 +4210,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 0.88,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2006-10-26",
+        "price": 0.88,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2006-10-26"
     }
@@ -3645,7 +4230,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 10.5,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2006-10-02",
+        "price": 10.5,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2006-10-02"
     }
@@ -3658,7 +4250,20 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 10.5,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2008-03-16",
+        "price": 7.5,
+        "source": "eBay",
+        "grade": "Raw"
+      },
+      {
+        "date": "2006-09-26",
+        "price": 10.5,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2006-09-26"
     }
@@ -3684,7 +4289,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 0.99,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2006-09-05",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2006-09-05"
     }
@@ -3697,7 +4309,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 1.99,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2006-04-08",
+        "price": 1.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2006-08-11"
     }
@@ -3723,7 +4342,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 0.99,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2006-07-08",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2006-07-08"
     }
@@ -3749,7 +4375,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 1.0,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2006-05-25",
+        "price": 1.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2006-05-25"
     }
@@ -3762,7 +4395,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 7.0,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2006-03-17",
+        "price": 1.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2006-05-25"
     }
@@ -3775,7 +4415,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 7.0,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2006-05-25",
+        "price": 7.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2006-05-25"
     }
@@ -3788,7 +4435,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 2.25,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2006-05-17",
+        "price": 2.25,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2006-05-17"
     }
@@ -3814,7 +4468,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 3.25,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2006-05-11",
+        "price": 3.25,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2006-05-11"
     }
@@ -3840,7 +4501,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 3.99,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2006-04-30",
+        "price": 3.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2006-04-30"
     }
@@ -3853,7 +4521,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 1.0,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2006-04-08",
+        "price": 1.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2006-04-08"
     }
@@ -3866,7 +4541,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 4.0,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2006-04-08",
+        "price": 4.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2006-04-08"
     }
@@ -3879,7 +4561,20 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 3.59,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2020-01-19",
+        "price": 8.75,
+        "source": "eBay",
+        "grade": "Raw"
+      },
+      {
+        "date": "2006-04-06",
+        "price": 3.59,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2006-04-06"
     }
@@ -3892,7 +4587,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 1.99,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2006-04-06",
+        "price": 1.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2006-04-06"
     }
@@ -3905,7 +4607,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 0.5,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2006-03-19",
+        "price": 0.5,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2006-03-19"
     }
@@ -3918,7 +4627,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 5.02,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2006-02-26",
+        "price": 5.02,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2006-02-26"
     }
@@ -3931,7 +4647,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 7.5,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2006-02-24",
+        "price": 7.5,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2006-02-24"
     }
@@ -3957,7 +4680,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 2.25,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2006-01-31",
+        "price": 2.25,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2006-01-31"
     }
@@ -3996,7 +4726,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 1.0,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2005-11-17",
+        "price": 1.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2005-11-17"
     }
@@ -4178,7 +4915,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 19.5,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2008-04-12",
+        "price": 19.5,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2008-04-12"
     }
@@ -4204,7 +4948,20 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 12.99,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2007-04-15",
+        "price": 12.99,
+        "source": "eBay",
+        "grade": "Raw"
+      },
+      {
+        "date": "2006-04-02",
+        "price": 1.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2007-04-15"
     }
@@ -4230,7 +4987,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 12.48,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2006-09-18",
+        "price": 12.48,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2006-09-18"
     }
@@ -4256,7 +5020,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 0.99,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2006-07-15",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2006-07-15"
     }
@@ -4269,7 +5040,14 @@
     "lastSoldPrice": null,
     "lastSoldDate": null,
     "purchasePrice": 2.99,
-    "priceHistory": [],
+    "priceHistory": [
+      {
+        "date": "2006-07-14",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "purchaseDate": "2006-07-14"
     }
@@ -4410,6 +5188,12 @@
       {
         "date": "2014-04-28",
         "price": 12.99,
+        "source": "eBay",
+        "grade": "Raw"
+      },
+      {
+        "date": "2014-04-28",
+        "price": 10.0,
         "source": "eBay",
         "grade": "Raw"
       }
@@ -4612,6 +5396,12 @@
         "price": 7.5,
         "source": "eBay",
         "grade": "Raw"
+      },
+      {
+        "date": "2013-07-03",
+        "price": 14.99,
+        "source": "eBay",
+        "grade": "Raw"
       }
     ],
     "metadata": {
@@ -4750,6 +5540,12 @@
       {
         "date": "2010-02-13",
         "price": 6.05,
+        "source": "eBay",
+        "grade": "Raw"
+      },
+      {
+        "date": "2010-02-13",
+        "price": 0.99,
         "source": "eBay",
         "grade": "Raw"
       }
@@ -5090,6 +5886,12 @@
       {
         "date": "2007-05-19",
         "price": 50.0,
+        "source": "eBay",
+        "grade": "Raw"
+      },
+      {
+        "date": "2007-05-05",
+        "price": 0.99,
         "source": "eBay",
         "grade": "Raw"
       }
@@ -5810,5 +6612,337 @@
     "purchasePrice": null,
     "priceHistory": [],
     "metadata": {}
+  },
+  "2022-23-panini-contenders-legendary-contenders-autographs-bronze-lc-jwh-sn16": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T13:10:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 14.5,
+    "priceHistory": [
+      {
+        "date": "2026-07-30",
+        "price": 14.5,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2026-07-30"
+    }
+  },
+  "2020-21-panini-crown-royale-die-cuts-red-ca-jwh-sn10": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T13:10:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [
+      {
+        "date": "2022-06-05",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      },
+      {
+        "date": "2022-06-04",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2022-06-05"
+    }
+  },
+  "2020-21-panini-crown-royale-die-cuts-purple-ca-jwh-sn16": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T13:10:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 13.5,
+    "priceHistory": [
+      {
+        "date": "2022-06-04",
+        "price": 13.5,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2022-06-04"
+    }
+  },
+  "2021-22-topps-finest-wave-refractor-37-sn2": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T13:10:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 10.0,
+    "priceHistory": [
+      {
+        "date": "2022-05-30",
+        "price": 10.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2022-05-30"
+    }
+  },
+  "2021-22-topps-finest-black-refractor-37-sn2": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T13:10:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 19.95,
+    "priceHistory": [
+      {
+        "date": "2022-05-17",
+        "price": 19.95,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2022-05-17"
+    }
+  },
+  "2021-22-topps-finest-gold-refractor-37-sn33": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T13:10:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 27.0,
+    "priceHistory": [
+      {
+        "date": "2022-05-16",
+        "price": 27.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2022-05-16"
+    }
+  },
+  "2021-22-topps-finest-blue-refractor-37-sn103": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T13:10:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 4.99,
+    "priceHistory": [
+      {
+        "date": "2022-05-16",
+        "price": 4.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2022-05-16"
+    }
+  },
+  "2021-22-topps-finest-pink-refractor-37-sn54": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T13:10:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 4.3,
+    "priceHistory": [
+      {
+        "date": "2022-05-13",
+        "price": 4.3,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2022-05-13"
+    }
+  },
+  "1999-00-fleer-mystique-38": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T13:10:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 60.0,
+    "priceHistory": [
+      {
+        "date": "2020-02-09",
+        "price": 60.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2020-02-09"
+    }
+  },
+  "2005-06-sp-game-used-edition-masterpiece-37-sn1": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T13:10:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 52.2,
+    "priceHistory": [
+      {
+        "date": "2020-01-19",
+        "price": 52.2,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2020-01-19"
+    }
+  },
+  "2018-19-panini-flawless-legendary-scripts-emerald-ls-jwh-sn4": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T13:10:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 30.0,
+    "priceHistory": [
+      {
+        "date": "2019-11-12",
+        "price": 30.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2019-11-12"
+    }
+  },
+  "2009-10-panini-season-update-masterpiece-117-sn1": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T13:10:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 19.95,
+    "priceHistory": [
+      {
+        "date": "2013-07-02",
+        "price": 19.95,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2013-07-02"
+    }
+  },
+  "1996-97-ultra-on-the-block-platinum-medallion-p127": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T13:10:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 3.58,
+    "priceHistory": [
+      {
+        "date": "2010-02-17",
+        "price": 3.58,
+        "source": "eBay",
+        "grade": "Raw"
+      },
+      {
+        "date": "2009-10-15",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2010-02-17"
+    }
+  },
+  "2000-01-topps-gold-label-class-1-80": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T13:10:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 12.0,
+    "priceHistory": [
+      {
+        "date": "2006-10-26",
+        "price": 12.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-10-26"
+    }
+  },
+  "1996-97-ultra-platinum-medallion-p121": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T13:10:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [
+      {
+        "date": "2006-05-15",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-05-15"
+    }
+  },
+  "1994-95-skybox-hoops-magic-s-all-rookies-foil-tech-far5": {
+    "certNumber": null,
+    "lastQueried": "2026-08-29T13:10:00Z",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 13.28,
+    "priceHistory": [
+      {
+        "date": "2006-05-15",
+        "price": 13.28,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-05-15"
+    }
   }
 }
