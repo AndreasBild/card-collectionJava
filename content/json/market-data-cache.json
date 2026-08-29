@@ -125,38 +125,6 @@
       "gradePop": null,
       "certNumber": "26880752",
       "registryUrl": "https://www.psacard.com/cert/26880752"
-  "1996-97-flair-showcase-showtime-legacy-collection-row-0-seat-5-sn11" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-08-29T07:04:45.587702Z",
-    "popReport" : null,
-    "estimatedValue" : 159.095,
-    "lastSoldPrice" : 317.2,
-    "lastSoldDate" : "2026-08-28",
-    "purchasePrice" : null,
-    "priceHistory" : [ {
-      "date" : "2026-08-24",
-      "price" : 0.99,
-      "source" : "eBay (Fixed Price)",
-      "grade" : ""
-    }, {
-      "date" : "2026-08-28",
-      "price" : 317.2,
-      "source" : "eBay (Auction)",
-      "grade" : ""
-    } ],
-    "metadata" : { }
-  },
-  "2023-24-topps-chrome-frozenfractor-101-sn-4" : {
-    "certNumber" : "97840205",
-    "lastQueried" : "2026-08-24T10:40:53.105690Z",
-    "popReport" : {
-      "gradingCompany" : "PSA",
-      "grade" : "9",
-      "totalGraded" : 1,
-      "popHigher" : 0,
-      "gradePop" : null,
-      "certNumber" : "97840205",
-      "registryUrl" : "https://www.psacard.com/cert/97840205"
     },
     "estimatedValue": null,
     "lastSoldPrice": null,
@@ -197,74 +165,6 @@
         "price": 220.0,
         "source": "eBay (Best Offer Accepted)",
         "grade": "BGS 8"
-  "1996-97-flair-showcase-showpiece-legacy-collection-row-2-seat-5-sn22": {
-    "certNumber": null,
-    "lastQueried": "2026-08-29T07:05:46.249994Z",
-    "popReport": null,
-    "estimatedValue": 44.44,
-    "lastSoldPrice": 44.44,
-    "lastSoldDate": "2025-07-17",
-    "purchasePrice": null,
-    "priceHistory": [
-      {
-        "date": "2025-07-17",
-        "price": 44.44,
-        "source": "eBay (Best Offer Accepted)",
-        "grade": ""
-      }
-    ],
-    "metadata": {}
-  },
-  "1997-98-flair-showcase-showcase-legacy-collection-row-0-seat-64-sn69": {
-    "certNumber": null,
-    "lastQueried": "2026-08-29T07:06:30.924701Z",
-    "popReport": null,
-    "estimatedValue": 499.5,
-    "lastSoldPrice": 960.0,
-    "lastSoldDate": "2025-11-17",
-    "purchasePrice": null,
-    "priceHistory": [
-      {
-        "date": "2025-06-18",
-        "price": 39.0,
-        "source": "eBay (Auction)",
-        "grade": ""
-      },
-      {
-        "date": "2025-11-17",
-        "price": 960.0,
-        "source": "eBay (Auction)",
-        "grade": "PSA 10"
-      }
-    ],
-    "metadata": {}
-  },
-  "1997-98-flair-showcase-grace-legacy-collection-row-1-seat-64-sn60": {
-    "certNumber": null,
-    "lastQueried": "2026-08-29T07:06:32.048052Z",
-    "popReport": null,
-    "estimatedValue": 24.0,
-    "lastSoldPrice": 70.0,
-    "lastSoldDate": "2026-03-22",
-    "purchasePrice": null,
-    "priceHistory": [
-      {
-        "date": "2026-01-26",
-        "price": 24.0,
-        "source": "eBay (Auction)",
-        "grade": ""
-      },
-      {
-        "date": "2026-03-04",
-        "price": 18.5,
-        "source": "eBay (Auction)",
-        "grade": ""
-      },
-      {
-        "date": "2026-03-22",
-        "price": 70.0,
-        "source": "eBay (Best Offer Accepted)",
-        "grade": ""
       }
     ],
     "metadata": {}
@@ -280,50 +180,6 @@
       "gradePop": null,
       "certNumber": "134182801",
       "registryUrl": "https://www.psacard.com/cert/134182801"
-      "certNumber": "26880752",
-      "registryUrl": "https://www.psacard.com/cert/26880752"
-  "1996-97-skybox-e-2000-credentials-79-sn259" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-08-29T07:04:30.365935Z",
-    "popReport" : null,
-    "estimatedValue" : 173.0,
-    "lastSoldPrice" : 220.0,
-    "lastSoldDate" : "2026-07-30",
-    "purchasePrice" : null,
-    "priceHistory" : [ {
-      "date" : "2024-12-27",
-      "price" : 196.0,
-      "source" : "eBay (Best Offer Accepted)",
-      "grade" : "SGC 7"
-    }, {
-      "date" : "2025-07-09",
-      "price" : 150.0,
-      "source" : "eBay (Best Offer Accepted)",
-      "grade" : ""
-    }, {
-      "date" : "2025-12-26",
-      "price" : 100.0,
-      "source" : "eBay (Best Offer Accepted)",
-      "grade" : ""
-    }, {
-      "date" : "2026-07-30",
-      "price" : 220.0,
-      "source" : "eBay (Best Offer Accepted)",
-      "grade" : "BGS 8"
-    } ],
-    "metadata" : { }
-  },
-  "2021-22-topps-finest-red-refractor-fa-jhw-sn2" : {
-    "certNumber" : "134182801",
-    "lastQueried" : "2026-08-24T10:40:49.769016Z",
-    "popReport" : {
-      "gradingCompany" : "PSA",
-      "grade" : "9",
-      "totalGraded" : null,
-      "popHigher" : null,
-      "gradePop" : null,
-      "certNumber" : "134182801",
-      "registryUrl" : "https://www.psacard.com/cert/134182801"
     },
     "estimatedValue": null,
     "lastSoldPrice": null,
@@ -333,28 +189,6 @@
     "metadata": {
       "psaItemDescription": "TOPPS FINEST FINEST AUTOGRAPHS",
       "psaGradeRaw": "MINT 9"
-    }
-  },
-  "2023-24-panini-donruss-elite-impact-impressions-asia-red-ii-how-sn9": {
-    "certNumber": "93031361",
-    "lastQueried": "2026-08-24T10:40:52.007752Z",
-    "popReport": {
-      "gradingCompany": "PSA",
-      "grade": "10",
-      "totalGraded": null,
-      "popHigher": null,
-      "gradePop": null,
-      "certNumber": "93031361",
-      "registryUrl": "https://www.psacard.com/cert/93031361"
-    },
-    "estimatedValue": null,
-    "lastSoldPrice": null,
-    "lastSoldDate": null,
-    "purchasePrice": null,
-    "priceHistory": [],
-    "metadata": {
-      "psaItemDescription": "PANINI DONRUSS ELITE IMPACT IMPRESSIONS AUTOGRAPHS",
-      "psaGradeRaw": "GEM MT 10"
     }
   },
   "2023-24-topps-chrome-72-topps-autographs-purple-refractor-ta-jho-sn8": {
@@ -712,300 +546,11 @@
     "lastSoldDate": null,
     "purchasePrice": null,
     "priceHistory": [],
-    "metadata": {}
-  },
-  "1996-97-skybox-e-2000-credentials-79-sn259": {
-    "certNumber": null,
-    "lastQueried": "2026-08-29T07:04:30.365935Z",
-    "popReport": null,
-    "estimatedValue": 173.0,
-    "lastSoldPrice": 220.0,
-    "lastSoldDate": "2026-07-30",
-    "purchasePrice": null,
-    "priceHistory": [
-      {
-        "date": "2024-12-27",
-        "price": 196.0,
-        "source": "eBay (Best Offer Accepted)",
-        "grade": "SGC 7"
-      },
-      {
-        "date": "2025-07-09",
-        "price": 150.0,
-        "source": "eBay (Best Offer Accepted)",
-        "grade": ""
-      },
-      {
-        "date": "2025-12-26",
-        "price": 100.0,
-        "source": "eBay (Best Offer Accepted)",
-        "grade": ""
-      },
-      {
-        "date": "2026-07-30",
-        "price": 220.0,
-        "source": "eBay (Best Offer Accepted)",
-        "grade": "BGS 8"
-      }
-    ],
-    "metadata": {}
-  },
-  "2021-22-topps-finest-red-refractor-fa-jhw-sn2": {
-    "certNumber": "134182801",
-    "lastQueried": "2026-08-24T10:40:49.769016Z",
-    "popReport": {
-      "gradingCompany": "PSA",
-      "grade": "9",
-      "totalGraded": null,
-      "popHigher": null,
-      "gradePop": null,
-      "certNumber": "134182801",
-      "registryUrl": "https://www.psacard.com/cert/134182801"
-    },
-    "estimatedValue": null,
-    "lastSoldPrice": null,
-    "lastSoldDate": null,
-    "purchasePrice": null,
-    "priceHistory": [],
-    "metadata": {
-      "psaItemDescription": "TOPPS FINEST FINEST AUTOGRAPHS",
-      "psaGradeRaw": "MINT 9"
-    }
-  },
-  "1997-98-flair-showcase-flair-legacy-collection-row-3-seat-64-sn79": {
-    "certNumber": null,
-    "lastQueried": "2026-08-29T07:06:34.319406Z",
-    "popReport": null,
-    "estimatedValue": 28.25,
-    "lastSoldPrice": 36.0,
-    "lastSoldDate": "2026-02-26",
-    "purchasePrice": null,
-    "priceHistory": [
-      {
-        "date": "2025-06-18",
-        "price": 20.5,
-        "source": "eBay (Auction)",
-        "grade": ""
-      },
-      {
-        "date": "2026-02-26",
-        "price": 36.0,
-        "source": "eBay (Auction)",
-        "grade": ""
-      }
-    ],
-    "metadata": {}
-  },
-  "1995-96-topps-finest-mystery-bordered-test-refractor-m20-card830": {
-    "certNumber": "26215655",
-    "lastQueried": "2026-08-24T10:40:44.550033Z",
-    "popReport": {
-      "gradingCompany": "PSA",
-      "grade": "10",
-      "totalGraded": null,
-      "popHigher": null,
-      "gradePop": null,
-      "certNumber": "26215655",
-      "registryUrl": "https://www.psacard.com/cert/26215655"
-    },
-    "estimatedValue": null,
-    "lastSoldPrice": null,
-    "lastSoldDate": null,
-    "purchasePrice": null,
-    "priceHistory": [],
-    "metadata": {}
-  },
-  "1997-98-flair-showcase-showcase-row-0-seat-64-sn1543": {
-    "certNumber": null,
-    "lastQueried": "2026-08-29T07:06:29.812845Z",
-    "popReport": null,
-    "estimatedValue": 8.09,
-    "lastSoldPrice": 6.99,
-    "lastSoldDate": "2026-08-23",
-    "purchasePrice": null,
-    "priceHistory": [
-      {
-        "date": "2025-06-13",
-        "price": 5.5,
-        "source": "eBay (Auction)",
-        "grade": "PSA 8"
-      },
-      {
-        "date": "2025-06-22",
-        "price": 2.0,
-        "source": "eBay (Fixed Price)",
-        "grade": ""
-      },
-      {
-        "date": "2025-06-22",
-        "price": 3.5,
-        "source": "eBay (Fixed Price)",
-        "grade": ""
-      },
-      {
-        "date": "2025-08-07",
-        "price": 11.5,
-        "source": "eBay (Auction)",
-        "grade": ""
-      },
-      {
-        "date": "2025-08-22",
-        "price": 8.78,
-        "source": "eBay (Best Offer Accepted)",
-        "grade": ""
-      },
-      {
-        "date": "2025-08-23",
-        "price": 7.0,
-        "source": "eBay (Auction)",
-        "grade": ""
-      },
-      {
-        "date": "2025-11-28",
-        "price": 2.51,
-        "source": "eBay (Auction)",
-        "grade": ""
-      },
-      {
-        "date": "2026-01-12",
-        "price": 89.99,
-        "source": "eBay (Fixed Price)",
-        "grade": "PSA 9"
-      },
-      {
-        "date": "2026-01-14",
-        "price": 5.0,
-        "source": "eBay (Best Offer Accepted)",
-        "grade": ""
-      },
-      {
-        "date": "2026-01-16",
-        "price": 5.0,
-        "source": "eBay (Best Offer Accepted)",
-        "grade": ""
-      },
-      {
-        "date": "2026-04-11",
-        "price": 5.0,
-        "source": "eBay (Auction)",
-        "grade": ""
-      },
-      {
-        "date": "2026-04-17",
-        "price": 55.0,
-        "source": "eBay (Fixed Price)",
-        "grade": "PSA 10"
-      },
-      {
-        "date": "2026-04-17",
-        "price": 10.0,
-        "source": "eBay (Fixed Price)",
-        "grade": ""
-      },
-      {
-        "date": "2026-07-23",
-        "price": 1.99,
-        "source": "eBay (Auction)",
-        "grade": ""
-      },
-      {
-        "date": "2026-08-02",
-        "price": 8.09,
-        "source": "eBay (Fixed Price)",
-        "grade": ""
-      },
-      {
-        "date": "2026-08-02",
-        "price": 11.5,
-        "source": "eBay (Auction)",
-        "grade": ""
-      },
-      {
-        "date": "2026-08-09",
-        "price": 5.0,
-        "source": "eBay (Best Offer Accepted)",
-        "grade": ""
-      },
-      {
-        "date": "2026-08-18",
-        "price": 11.05,
-        "source": "eBay (Auction)",
-        "grade": ""
-      },
-      {
-        "date": "2026-08-23",
-        "price": 6.99,
-        "source": "eBay (Fixed Price)",
-        "grade": ""
-      }
-    ],
-    "metadata": {}
-  },
-  "1997-98-flair-showcase-style-legacy-collection-row-2-seat-64-sn86": {
-    "certNumber": null,
-    "lastQueried": "2026-08-29T07:06:33.181978Z",
-    "popReport": null,
-    "estimatedValue": 18.5,
-    "lastSoldPrice": 18.5,
-    "lastSoldDate": "2026-03-04",
-    "purchasePrice": null,
-    "priceHistory": [
-      {
-        "date": "2014-07-16",
-        "price": 4.25,
-        "source": "eBay (Auction)",
-        "grade": ""
-      },
-      {
-        "date": "2025-06-18",
-        "price": 22.5,
-        "source": "eBay (Auction)",
-        "grade": ""
-      },
-      {
-        "date": "2026-03-04",
-        "price": 18.5,
-        "source": "eBay (Auction)",
-        "grade": ""
-      }
-    ],
-    "metadata": {}
-  },
-  "2023-24-topps-chrome-superfractor-101-sn1": {
-    "certNumber": "105013673",
-    "lastQueried": "2026-08-24T10:40:53.477630Z",
-    "popReport": {
-      "gradingCompany": "PSA",
-      "grade": "10",
-      "totalGraded": 1,
-      "popHigher": 0,
-      "gradePop": null,
-      "certNumber": "105013673",
-      "registryUrl": "https://www.psacard.com/cert/105013673"
     "metadata": {
       "psaItemDescription": "FINEST MYSTERY",
       "psaGradeRaw": "GEM MT 10"
     }
   },
-  "1995-96-topps-finest-mystery-bordered-test-refractor-m20-card810": {
-    "certNumber": "40534062",
-    "lastQueried": "2026-08-24T10:40:39.206477Z",
-    "popReport": {
-      "gradingCompany": "PSA",
-      "grade": "8",
-      "totalGraded": null,
-      "popHigher": null,
-      "gradePop": null,
-      "certNumber": "40534062",
-      "registryUrl": "https://www.psacard.com/cert/40534062"
-    },
-    "estimatedValue": null,
-    "lastSoldPrice": null,
-    "lastSoldDate": null,
-    "purchasePrice": null,
-    "priceHistory": [],
-    "metadata": {}
-  },
   "1997-98-flair-showcase-flair-legacy-collection-row-3-seat-64-sn79": {
     "certNumber": null,
     "lastQueried": "2026-08-29T07:06:34.319406Z",
@@ -1024,113 +569,15 @@
       {
         "date": "2026-02-26",
         "price": 36.0,
+        "source": "eBay (Auction)",
+        "grade": ""
+      }
+    ],
     "metadata": {
       "psaItemDescription": "FINEST MYSTERY",
       "psaGradeRaw": "NM-MT 8"
     }
   },
-  "1994-95-collectors-choice-autographs-278-sn689": {
-    "certNumber": null,
-    "lastQueried": "2026-08-28T10:11:03.841594Z",
-    "popReport": null,
-    "estimatedValue": 2.2249999999999996,
-    "lastSoldPrice": 2.3,
-    "lastSoldDate": "2026-06-14",
-    "purchasePrice": null,
-    "priceHistory": [
-      {
-        "date": "2025-01-10",
-        "price": 2.15,
-        "source": "eBay (Fixed Price)",
-        "grade": ""
-      },
-      {
-        "date": "2026-06-14",
-        "price": 2.3,
-        "source": "eBay (Auction)",
-        "grade": ""
-      }
-    ],
-    "metadata": {}
-  },
-  "1997-98-skybox-e-x2001-credentials-credentials-now-32-sn29": {
-    "certNumber": null,
-    "lastQueried": "2026-08-29T07:05:18.065882Z",
-    "popReport": null,
-    "estimatedValue": 1290.0,
-    "lastSoldPrice": 1290.0,
-    "lastSoldDate": "2025-05-05",
-    "purchasePrice": null,
-    "priceHistory": [
-      {
-        "date": "2025-05-05",
-        "price": 1290.0,
-        "source": "eBay (Auction)",
-        "grade": "PSA 6"
-      }
-    ],
-    "metadata": {}
-  "1997-98-skybox-e-x2001-credentials-credentials-now-32-sn29" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-08-29T07:05:18.065882Z",
-    "popReport" : null,
-    "estimatedValue" : 1290.0,
-    "lastSoldPrice" : 1290.0,
-    "lastSoldDate" : "2025-05-05",
-    "purchasePrice" : null,
-    "priceHistory" : [ {
-      "date" : "2025-05-05",
-      "price" : 1290.0,
-      "source" : "eBay (Auction)",
-      "grade" : "PSA 6"
-    } ],
-    "metadata" : { }
-  },
-  "1994-95-collectors-choice-you-crash-the-game-rookie-scoring-gold-s4" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-08-28T10:11:27.521870Z",
-    "popReport" : null,
-    "estimatedValue" : 160.21,
-    "lastSoldPrice" : 317.2,
-    "lastSoldDate" : "2026-08-28",
-    "purchasePrice" : null,
-    "priceHistory" : [ {
-      "date" : "2026-08-27",
-      "price" : 3.22,
-      "source" : "eBay (Fixed Price)",
-      "grade" : ""
-    }, {
-      "date" : "2026-08-28",
-      "price" : 317.2,
-      "source" : "eBay (Auction)",
-      "grade" : ""
-    } ],
-    "metadata" : { }
-  },
-  "1994-95-collectors-choice-you-crash-the-game-rookie-scoring-gold-s4": {
-    "certNumber": null,
-    "lastQueried": "2026-08-28T10:11:27.521870Z",
-    "popReport": null,
-    "estimatedValue": 160.21,
-    "lastSoldPrice": 317.2,
-    "lastSoldDate": "2026-08-28",
-    "purchasePrice": null,
-    "priceHistory": [
-      {
-        "date": "2026-08-27",
-        "price": 3.22,
-        "source": "eBay (Fixed Price)",
-        "grade": ""
-      },
-      {
-        "date": "2026-08-28",
-        "price": 317.2,
-        "source": "eBay (Auction)",
-        "grade": ""
-      }
-    ],
-    "metadata": {}
-  },
   "1995-96-topps-finest-mystery-bordered-test-refractor-m20-card830": {
     "certNumber": "26215655",
     "lastQueried": "2026-08-24T10:40:44.550033Z",
@@ -1164,8 +611,6 @@
       "gradePop": null,
       "certNumber": "40534062",
       "registryUrl": "https://www.psacard.com/cert/40534062"
-      "certNumber": "26741999",
-      "registryUrl": "https://www.psacard.com/cert/26741999"
     },
     "estimatedValue": null,
     "lastSoldPrice": null,
@@ -3218,6 +2663,28 @@
       "purchasedFrom": "cardsavers",
       "purchaseDate": "8/16/2014",
       "purchaseItemId": "11413919"
+    }
+  },
+  "2023-24-panini-donruss-elite-impact-impressions-blue-ii-how-sn9": {
+    "certNumber": "93031361",
+    "lastQueried": "2026-08-24T10:40:52.007752Z",
+    "popReport": {
+      "gradingCompany": "PSA",
+      "grade": "10",
+      "totalGraded": null,
+      "popHigher": null,
+      "gradePop": null,
+      "certNumber": "93031361",
+      "registryUrl": "https://www.psacard.com/cert/93031361"
+    },
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": null,
+    "priceHistory": [],
+    "metadata": {
+      "psaItemDescription": "PANINI DONRUSS ELITE IMPACT IMPRESSIONS AUTOGRAPHS",
+      "psaGradeRaw": "GEM MT 10"
     }
   }
 }
