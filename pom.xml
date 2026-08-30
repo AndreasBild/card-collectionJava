@@ -177,6 +177,15 @@
                             <mainClass>de.maulmann.CardMarketEnricher</mainClass>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>enrich-sportscardspro</id>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>de.maulmann.SportsCardsProParser</mainClass>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
