@@ -740,6 +740,20 @@ public class SitemapGenerator {
                 if (!printRun.isEmpty() && !printRun.equals("-")) specs.add("Serial: " + printRun);
                 if (!grading.isEmpty() && !grading.equals("-")) specs.add("Grading: " + grading);
 
+                if (c.estimatedValue != null && c.estimatedValue > 0) {
+                    specs.add("Est. Market Value: $" + String.format(Locale.US, "%.2f", c.estimatedValue));
+                }
+                if (c.lastSoldPrice != null && c.lastSoldPrice > 0) {
+                    String compStr = "Last Comp: $" + String.format(Locale.US, "%.2f", c.lastSoldPrice);
+                    if (c.lastSoldDate != null && !c.lastSoldDate.isBlank()) {
+                        compStr += " (" + c.lastSoldDate + ")";
+                    }
+                    specs.add(compStr);
+                }
+                if (c.popTotal != null && c.popTotal > 0) {
+                    specs.add("PSA Pop: " + c.popTotal + (c.popHigher != null ? " (Higher: " + c.popHigher + ")" : ""));
+                }
+
                 if (!specs.isEmpty()) {
                     sb.append("- Attributes: ").append(String.join(" | ", specs)).append("\n");
                 }

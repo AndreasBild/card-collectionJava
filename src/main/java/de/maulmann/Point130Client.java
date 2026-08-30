@@ -126,8 +126,11 @@ public class Point130Client {
         }
 
         String printRun = card.get("Print Run");
-        if (printRun != null && !printRun.isBlank() && !"null".equalsIgnoreCase(printRun.trim())) {
-            sb.append("/").append(printRun.trim()).append(" ");
+        if (printRun != null && !printRun.isBlank() && !"null".equalsIgnoreCase(printRun.trim()) && !"-".equals(printRun.trim())) {
+            String cleanPrintRun = printRun.trim().replaceAll("[^0-9]", "");
+            if (!cleanPrintRun.isBlank()) {
+                sb.append("/").append(cleanPrintRun).append(" ");
+            }
         }
 
         String grader = card.get("Grading Co.");
@@ -235,7 +238,10 @@ public class Point130Client {
 
             double price;
             try {
-                price = Double.parseDouble(priceStr.replace(",", "").trim());
+                // Robustly clean currency symbols, commas, and trailing noise
+                String sanitized = priceStr.replaceAll("[^0-9.]", "").trim();
+                if (sanitized.isEmpty()) continue;
+                price = Double.parseDouble(sanitized);
             } catch (Exception e) {
                 continue;
             }
@@ -277,8 +283,8 @@ public class Point130Client {
         Double lastSold = latest.price();
         String lastDate = latest.date();
 
-        // Estimated Value (FMV) = median of up to the last 5 comps
-        Double estimatedValue = calculateMedianFmv(comps);
+        // Estimated Value (FMV) = Trimmed median with IQR outlier rejection
+        Double estimatedValue = calculateTrimmedFmv(comps);
 
         return new CardCompResult(Collections.unmodifiableList(comps), estimatedValue, lastSold, lastDate);
     }
@@ -353,23 +359,57 @@ public class Point130Client {
     }
 
     /**
-     * Calculates Fair Market Value as the median of the latest 5 comps.
+     * Calculates Fair Market Value as the IQR-filtered trimmed median of recent comps.
+     * Prevents single extreme anomalies (counterfeits, mislabeled reprints) from distorting valuations.
      */
-    private static Double calculateMedianFmv(List<PricePoint> comps) {
+    public static Double calculateTrimmedFmv(List<PricePoint> comps) {
         if (comps == null || comps.isEmpty()) return null;
 
-        int count = Math.min(5, comps.size());
+        int count = Math.min(8, comps.size());
         List<Double> recentPrices = new ArrayList<>();
         for (int i = comps.size() - count; i < comps.size(); i++) {
             recentPrices.add(comps.get(i).price());
         }
         recentPrices.sort(Double::compareTo);
 
-        if (recentPrices.size() % 2 == 1) {
-            return recentPrices.get(recentPrices.size() / 2);
+        // For 4 or more sales points, apply Interquartile Range (IQR) filtering
+        List<Double> filteredPrices;
+        if (recentPrices.size() >= 4) {
+            double q1 = getPercentile(recentPrices, 25.0);
+            double q3 = getPercentile(recentPrices, 75.0);
+            double iqr = q3 - q1;
+            double lowerBound = Math.max(0.0, q1 - (1.5 * iqr));
+            double upperBound = q3 + (1.5 * iqr);
+
+            filteredPrices = recentPrices.stream()
+                    .filter(p -> p >= lowerBound && p <= upperBound)
+                    .toList();
+
+            if (filteredPrices.isEmpty()) {
+                filteredPrices = recentPrices;
+            }
         } else {
-            int mid = recentPrices.size() / 2;
-            return (recentPrices.get(mid - 1) + recentPrices.get(mid)) / 2.0;
+            filteredPrices = recentPrices;
         }
+
+        if (filteredPrices.size() % 2 == 1) {
+            return filteredPrices.get(filteredPrices.size() / 2);
+        } else {
+            int mid = filteredPrices.size() / 2;
+            return (filteredPrices.get(mid - 1) + filteredPrices.get(mid)) / 2.0;
+        }
+    }
+
+    private static double getPercentile(List<Double> sortedList, double percentile) {
+        if (sortedList.isEmpty()) return 0.0;
+        if (sortedList.size() == 1) return sortedList.getFirst();
+        double rank = (percentile / 100.0) * (sortedList.size() - 1);
+        int lowerIndex = (int) Math.floor(rank);
+        int upperIndex = (int) Math.ceil(rank);
+        if (lowerIndex == upperIndex) {
+            return sortedList.get(lowerIndex);
+        }
+        double weight = rank - lowerIndex;
+        return sortedList.get(lowerIndex) * (1.0 - weight) + sortedList.get(upperIndex) * weight;
     }
 }

@@ -88,13 +88,16 @@ public class SvgSparklineGenerator {
                 pointsStr,
                 lastX, (double) height));
 
-        String ariaLabel = String.format(Locale.US,
+        String titleText = String.format(Locale.US, "Price Trend: $%.2f to $%.2f", first.price(), last.price());
+        String descText = String.format(Locale.US,
                 "Price trend chart from $%.2f to $%.2f across %d sales data points.",
                 first.price(), last.price(), n);
 
         return "<svg class=\"price-sparkline-svg\" viewBox=\"0 0 " + width + " " + height + "\" " +
                 "width=\"" + width + "\" height=\"" + height + "\" " +
-                "role=\"img\" aria-label=\"" + escapeXml(ariaLabel) + "\" preserveAspectRatio=\"none\">\n" +
+                "role=\"img\" aria-label=\"" + escapeXml(descText) + "\" preserveAspectRatio=\"none\">\n" +
+                "  <title>" + escapeXml(titleText) + "</title>\n" +
+                "  <desc>" + escapeXml(descText) + "</desc>\n" +
                 "  <defs>\n" +
                 "    <linearGradient id=\"grad-" + safeId + "\" x1=\"0%\" y1=\"0%\" x2=\"0%\" y2=\"100%\">\n" +
                 "      <stop offset=\"0%\" stop-color=\"" + gradientStart + "\" />\n" +

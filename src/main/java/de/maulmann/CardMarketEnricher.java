@@ -54,6 +54,7 @@ public class CardMarketEnricher {
         boolean serialOnly = false;
         int limit = Integer.MAX_VALUE;
         String targetCardId = null;
+        int staleDays = -1;
 
         if (args != null) {
             for (int i = 0; i < args.length; i++) {
@@ -73,6 +74,10 @@ public class CardMarketEnricher {
                     try {
                         limit = Integer.parseInt(args[++i]);
                     } catch (NumberFormatException ignored) {}
+                } else if ("--stale-days".equals(arg) && i + 1 < args.length) {
+                    try {
+                        staleDays = Integer.parseInt(args[++i]);
+                    } catch (NumberFormatException ignored) {}
                 } else if ("--card".equals(arg) && i + 1 < args.length) {
                     targetCardId = args[++i];
                 }
@@ -86,7 +91,7 @@ public class CardMarketEnricher {
         }
 
         CardMarketEnricher enricher = new CardMarketEnricher();
-        EnrichmentReport report = enricher.enrichCards(cards, enrichCerts, enrichComps, forceRefresh, limit, targetCardId, serialOnly);
+        EnrichmentReport report = enricher.enrichCards(cards, enrichCerts, enrichComps, forceRefresh, limit, targetCardId, serialOnly, staleDays);
 
         logger.info("==================================================");
         logger.info("📊 EXACT ENRICHMENT REPORT");
@@ -123,6 +128,19 @@ public class CardMarketEnricher {
             int limit,
             String targetCardId,
             boolean serialOnly
+    ) {
+        return enrichCards(cards, enrichCerts, enrichComps, forceRefresh, limit, targetCardId, serialOnly, -1);
+    }
+
+    public EnrichmentReport enrichCards(
+            List<CardData> cards,
+            boolean enrichCerts,
+            boolean enrichComps,
+            boolean forceRefresh,
+            int limit,
+            String targetCardId,
+            boolean serialOnly,
+            int staleDays
     ) {
         int totalInspected = 0;
         int certsFound = 0;
@@ -167,11 +185,12 @@ public class CardMarketEnricher {
 
             MarketDataEntry currentEntry = existingOpt.orElse(MarketDataEntry.builder().build());
             boolean modified = false;
+            boolean isStale = staleDays > 0 && cache.isStale(cardId, staleDays);
 
             // 1. Graded Census / Pop Report Lookup
             if (enrichCerts && certNum != null && !certNum.isBlank()) {
                 String grader = c.get("Grading Co.");
-                if (grader != null && !grader.isBlank() && (forceRefresh || currentEntry.popReport() == null)) {
+                if (grader != null && !grader.isBlank() && (forceRefresh || isStale || currentEntry.popReport() == null)) {
                     certsFound++;
                     logger.info("Querying {} cert #{} for card: {} (ID: {})", grader, certNum, c.filenameBase, cardId);
                     Optional<MarketDataEntry> certDataOpt = psaScraper.fetchCertData(grader, certNum);
@@ -199,7 +218,7 @@ public class CardMarketEnricher {
             }
 
             // 2. 130point / eBay Market Sales Comps Lookup
-            if (enrichComps && (forceRefresh || currentEntry.estimatedValue() == null || currentEntry.priceHistory().isEmpty())) {
+            if (enrichComps && (forceRefresh || isStale || currentEntry.estimatedValue() == null || currentEntry.priceHistory().isEmpty())) {
                 compsQueried++;
                 logger.info("Querying 130point comps for card: {} (ID: {})", c.filenameBase, cardId);
                 Optional<Point130Client.CardCompResult> compResultOpt = point130Client.fetchComps(c);
