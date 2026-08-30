@@ -141,6 +141,20 @@
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1998-topps/juwan-howard-155"
     }
   },
+  "1996-97-ud-folz-38" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-08-29T07:25:00Z",
+    "popReport" : null,
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : 3.0,
+    "priceHistory" : [ ],
+    "metadata" : {
+      "purchaseDate" : "11/24/2025",
+      "purchaseItemId" : "8513713"
+    }
+  },
   "2005-06-sp-game-used-edition-masterpiece-37-sn1" : {
     "certNumber" : null,
     "lastQueried" : "2026-08-29T13:10:00Z",
@@ -157,20 +171,6 @@
     } ],
     "metadata" : {
       "purchaseDate" : "2020-01-19"
-    }
-  },
-  "1996-97-ud-folz-38" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-08-29T07:25:00Z",
-    "popReport" : null,
-    "estimatedValue" : null,
-    "lastSoldPrice" : null,
-    "lastSoldDate" : null,
-    "purchasePrice" : 3.0,
-    "priceHistory" : [ ],
-    "metadata" : {
-      "purchaseDate" : "11/24/2025",
-      "purchaseItemId" : "8513713"
     }
   },
   "2001-02-topps-sprite-minyard-dm-jh" : {
@@ -385,6 +385,24 @@
       "purchaseDate" : "2006-10-03"
     }
   },
+  "2003-04-fleer-focus-anniversary-gold-105-sn25" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-08-29T10:28:00Z",
+    "popReport" : null,
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : 11.37,
+    "priceHistory" : [ {
+      "date" : "2010-02-11",
+      "price" : 11.37,
+      "source" : "eBay",
+      "grade" : "Raw"
+    } ],
+    "metadata" : {
+      "purchaseDate" : "2010-02-11"
+    }
+  },
   "1997-98-topps-chrome-refractor-t40-32" : {
     "certNumber" : null,
     "lastQueried" : "2026-08-29T07:15:00Z",
@@ -413,42 +431,6 @@
       "source" : "SportsCardInvestor"
     }
   },
-  "2003-04-fleer-focus-anniversary-gold-105-sn25" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-08-29T10:28:00Z",
-    "popReport" : null,
-    "estimatedValue" : null,
-    "lastSoldPrice" : null,
-    "lastSoldDate" : null,
-    "purchasePrice" : 11.37,
-    "priceHistory" : [ {
-      "date" : "2010-02-11",
-      "price" : 11.37,
-      "source" : "eBay",
-      "grade" : "Raw"
-    } ],
-    "metadata" : {
-      "purchaseDate" : "2010-02-11"
-    }
-  },
-  "2006-07-sp-game-used-edition-authentic-fabrics-jersey-patch-afd-mh-sn1" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-08-29T12:26:00Z",
-    "popReport" : null,
-    "estimatedValue" : null,
-    "lastSoldPrice" : null,
-    "lastSoldDate" : null,
-    "purchasePrice" : 29.89,
-    "priceHistory" : [ {
-      "date" : "2008-03-09",
-      "price" : 29.89,
-      "source" : "eBay",
-      "grade" : "Raw"
-    } ],
-    "metadata" : {
-      "purchaseDate" : "2008-03-09"
-    }
-  },
   "1998-99-ultra-27" : {
     "certNumber" : null,
     "lastQueried" : "2026-08-30",
@@ -467,6 +449,24 @@
       "sportscardspro_ungraded" : "0.25",
       "sportscardspro_id" : "8884408",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1998-ultra/juwan-howard-27"
+    }
+  },
+  "2006-07-sp-game-used-edition-authentic-fabrics-jersey-patch-afd-mh-sn1" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-08-29T12:26:00Z",
+    "popReport" : null,
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : 29.89,
+    "priceHistory" : [ {
+      "date" : "2008-03-09",
+      "price" : 29.89,
+      "source" : "eBay",
+      "grade" : "Raw"
+    } ],
+    "metadata" : {
+      "purchaseDate" : "2008-03-09"
     }
   },
   "2003-04-fleer-patchworks-ruby-60-sn3" : {
@@ -708,7 +708,11 @@
     "purchasePrice" : 0.55,
     "priceHistory" : [ ],
     "metadata" : {
+      "tcdb_print_run" : "19500",
       "purchaseDate" : "11/19/2020",
+      "tcdb_url" : "https://www.tcdb.com/ViewCard.cfm/sid/69369/cid/5052186/1994-Score-Board-Draft-Day-DD12-Juwan-Howard",
+      "tcdb_sid" : "69369",
+      "tcdb_cid" : "5052186",
       "purchaseItemId" : "63995809"
     }
   },
@@ -741,21 +745,26 @@
     "priceHistory" : [ ],
     "metadata" : {
       "purchaseDate" : "11/19/2020",
+      "tcdb_url" : "https://www.tcdb.com/ViewCard.cfm/sid/69369/cid/15859358/1994-Score-Board-Draft-Day-DD13-Juwan-Howard",
+      "tcdb_sid" : "69369",
+      "tcdb_cid" : "15859358",
       "purchaseItemId" : "64046573"
     }
   },
-  "1995-superior-pics-gold-5" : {
+  "1994-score-board-draft-day-dd11" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-29T07:20:00Z",
+    "lastQueried" : "2026-08-30",
     "popReport" : null,
     "estimatedValue" : null,
     "lastSoldPrice" : null,
     "lastSoldDate" : null,
-    "purchasePrice" : 7.13,
+    "purchasePrice" : null,
     "priceHistory" : [ ],
     "metadata" : {
-      "purchaseDate" : "11/24/2025",
-      "purchaseItemId" : "90060575"
+      "tcdb_print_run" : "19500",
+      "tcdb_url" : "https://www.tcdb.com/ViewCard.cfm/sid/69369/cid/5052185/1994-Score-Board-Draft-Day-DD11-Juwan-Howard",
+      "tcdb_sid" : "69369",
+      "tcdb_cid" : "5052185"
     }
   },
   "2005-06-topps-bazooka-blue-133-sn1" : {
@@ -776,6 +785,20 @@
       "purchaseDate" : "2013-07-04"
     }
   },
+  "1995-superior-pics-gold-5" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-08-29T07:20:00Z",
+    "popReport" : null,
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : 7.13,
+    "priceHistory" : [ ],
+    "metadata" : {
+      "purchaseDate" : "11/24/2025",
+      "purchaseItemId" : "90060575"
+    }
+  },
   "1994-score-board-national-sportscollector-convention-nc4" : {
     "certNumber" : null,
     "lastQueried" : "2026-08-29T07:20:00Z",
@@ -786,26 +809,12 @@
     "purchasePrice" : 1.69,
     "priceHistory" : [ ],
     "metadata" : {
+      "tcdb_print_run" : "9900",
       "purchaseDate" : "11/19/2020",
+      "tcdb_url" : "https://www.tcdb.com/ViewCard.cfm/sid/94449/cid/6631734/1994-Score-Board-National-Sports-Collectors-Convention-NC4-Juwan-Howard",
+      "tcdb_sid" : "94449",
+      "tcdb_cid" : "6631734",
       "purchaseItemId" : "37216154"
-    }
-  },
-  "2000-01-fleer-triple-crown-173" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-08-29T12:26:00Z",
-    "popReport" : null,
-    "estimatedValue" : null,
-    "lastSoldPrice" : null,
-    "lastSoldDate" : null,
-    "purchasePrice" : 15.0,
-    "priceHistory" : [ {
-      "date" : "2008-09-24",
-      "price" : 15.0,
-      "source" : "eBay",
-      "grade" : "Raw"
-    } ],
-    "metadata" : {
-      "purchaseDate" : "2008-09-24"
     }
   },
   "1997-98-flair-showcase-style-legacy-collection-row-2-seat-64-sn86" : {
@@ -833,6 +842,24 @@
       "grade" : ""
     } ],
     "metadata" : { }
+  },
+  "2000-01-fleer-triple-crown-173" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-08-29T12:26:00Z",
+    "popReport" : null,
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : 15.0,
+    "priceHistory" : [ {
+      "date" : "2008-09-24",
+      "price" : 15.0,
+      "source" : "eBay",
+      "grade" : "Raw"
+    } ],
+    "metadata" : {
+      "purchaseDate" : "2008-09-24"
+    }
   },
   "2003-04-sp-game-used-edition-gold-63-sn100" : {
     "certNumber" : null,
@@ -1159,24 +1186,6 @@
       "purchaseDate" : "2010-04-21"
     }
   },
-  "1999-00-topps-bowman-s-best-atomic-refractor-71-sn98" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-08-29T12:26:00Z",
-    "popReport" : null,
-    "estimatedValue" : null,
-    "lastSoldPrice" : null,
-    "lastSoldDate" : null,
-    "purchasePrice" : 5.0,
-    "priceHistory" : [ {
-      "date" : "2006-05-27",
-      "price" : 5.0,
-      "source" : "eBay",
-      "grade" : "Raw"
-    } ],
-    "metadata" : {
-      "purchaseDate" : "2006-05-27"
-    }
-  },
   "1999-00-topps-finest-refractor-56" : {
     "certNumber" : null,
     "lastQueried" : "2026-08-30",
@@ -1196,6 +1205,24 @@
       "sportscardspro_ungraded" : "2.97",
       "sportscardspro_id" : "8325850",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1999-finest/juwan-howard-refractor-56"
+    }
+  },
+  "1999-00-topps-bowman-s-best-atomic-refractor-71-sn98" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-08-29T12:26:00Z",
+    "popReport" : null,
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : 5.0,
+    "priceHistory" : [ {
+      "date" : "2006-05-27",
+      "price" : 5.0,
+      "source" : "eBay",
+      "grade" : "Raw"
+    } ],
+    "metadata" : {
+      "purchaseDate" : "2006-05-27"
     }
   },
   "1997-98-ud3-season-ticket-autograph-jh" : {
@@ -1768,6 +1795,9 @@
     "priceHistory" : [ ],
     "metadata" : {
       "purchaseDate" : "8/16/2014",
+      "tcdb_url" : "https://www.tcdb.com/ViewCard.cfm/sid/59985/cid/5052196/1994-Signature-Rookies-Gold-Standard-Gold-Signature-GS9-Juwan-Howard",
+      "tcdb_sid" : "59985",
+      "tcdb_cid" : "5052196",
       "purchaseItemId" : "14566657"
     }
   },
@@ -2378,20 +2408,6 @@
       "purchaseDate" : "2010-09-08"
     }
   },
-  "1994-pro-mags-rookie-showcase-3" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-08-29T07:20:00Z",
-    "popReport" : null,
-    "estimatedValue" : null,
-    "lastSoldPrice" : null,
-    "lastSoldDate" : null,
-    "purchasePrice" : 12.25,
-    "priceHistory" : [ ],
-    "metadata" : {
-      "purchaseDate" : "11/23/2025",
-      "purchaseItemId" : "241152677"
-    }
-  },
   "2006-07-ud-reserve-gold-65" : {
     "certNumber" : null,
     "lastQueried" : "2026-08-29T07:20:00Z",
@@ -2404,6 +2420,20 @@
     "metadata" : {
       "purchaseDate" : "8/18/2014",
       "purchaseItemId" : "12470534"
+    }
+  },
+  "1994-pro-mags-rookie-showcase-3" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-08-29T07:20:00Z",
+    "popReport" : null,
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : 12.25,
+    "priceHistory" : [ ],
+    "metadata" : {
+      "purchaseDate" : "11/23/2025",
+      "purchaseItemId" : "241152677"
     }
   },
   "2023-24-panini-national-treasures-timeless-treasures-materials-international-red-tm-how-sn8" : {
@@ -2515,6 +2545,21 @@
     } ],
     "metadata" : {
       "purchaseDate" : "2008-03-09"
+    }
+  },
+  "1994-95-sp-5" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-08-30",
+    "popReport" : null,
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : null,
+    "priceHistory" : [ ],
+    "metadata" : {
+      "tcdb_url" : "https://www.tcdb.com/ViewCard.cfm/sid/59494/cid/3328078/1994-Classic-Four-Sport-5-Juwan-Howard",
+      "tcdb_sid" : "59494",
+      "tcdb_cid" : "3328078"
     }
   },
   "2006-07-sp-game-used-edition-authentic-fabrics-jersey-afd-mh-sn5" : {
@@ -2648,20 +2693,6 @@
       "purchaseDate" : "2005-09-01"
     }
   },
-  "2002-03-ud-championship-drive-21" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-08-29T07:20:00Z",
-    "popReport" : null,
-    "estimatedValue" : null,
-    "lastSoldPrice" : null,
-    "lastSoldDate" : null,
-    "purchasePrice" : 1.85,
-    "priceHistory" : [ ],
-    "metadata" : {
-      "purchaseDate" : "11/25/2025",
-      "purchaseItemId" : "59151139"
-    }
-  },
   "2004-05-topps-chrome-refractor-139" : {
     "certNumber" : null,
     "lastQueried" : "2026-08-29T10:28:00Z",
@@ -2678,6 +2709,20 @@
     } ],
     "metadata" : {
       "purchaseDate" : "2006-08-11"
+    }
+  },
+  "2002-03-ud-championship-drive-21" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-08-29T07:20:00Z",
+    "popReport" : null,
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : 1.85,
+    "priceHistory" : [ ],
+    "metadata" : {
+      "purchaseDate" : "11/25/2025",
+      "purchaseItemId" : "59151139"
     }
   },
   "2023-24-topps-chrome-certified-autographs-orange-basketball-refractor-ca-jh-sn11" : {
@@ -4434,7 +4479,11 @@
     "purchasePrice" : 0.7,
     "priceHistory" : [ ],
     "metadata" : {
+      "tcdb_print_run" : "1000",
       "purchaseDate" : "11/19/2020",
+      "tcdb_url" : "https://www.tcdb.com/ViewCard.cfm/sid/69224/cid/5051592/1994-Classic-Four-Sport-Printer-s-Proofs-5-Juwan-Howard",
+      "tcdb_sid" : "69224",
+      "tcdb_cid" : "5051592",
       "purchaseItemId" : "51166759"
     }
   },
@@ -4957,6 +5006,21 @@
       "grade" : ""
     } ],
     "metadata" : { }
+  },
+  "1994-95-collectors-choice-signature-silver-278" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-08-30",
+    "popReport" : null,
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : null,
+    "priceHistory" : [ ],
+    "metadata" : {
+      "tcdb_url" : "https://www.tcdb.com/ViewCard.cfm/sid/25589/cid/2998199/1994-95-Collector-s-Choice-Silver-Signature-278-Juwan-Howard",
+      "tcdb_sid" : "25589",
+      "tcdb_cid" : "2998199"
+    }
   },
   "1995-96-skybox-hoops-slamland-sl49" : {
     "certNumber" : null,
@@ -5527,6 +5591,22 @@
       "purchaseDate" : "2006-03-19"
     }
   },
+  "1994-classic-comic-gold-103" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-08-30",
+    "popReport" : null,
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : null,
+    "priceHistory" : [ ],
+    "metadata" : {
+      "tcdb_print_run" : "975",
+      "tcdb_url" : "https://www.tcdb.com/ViewCard.cfm/sid/69234/cid/8125981/1994-Classic-Draft-Printer-s-Proofs-103-Juwan-Howard",
+      "tcdb_sid" : "69234",
+      "tcdb_cid" : "8125981"
+    }
+  },
   "1998-99-ud-choice-starquest-blue-sq29" : {
     "certNumber" : null,
     "lastQueried" : "2026-08-29T10:30:00Z",
@@ -5578,9 +5658,12 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_psa10" : "16.5",
       "sportscardspro_ungraded" : "1.62",
       "sportscardspro_grade9" : "11.5",
+      "sportscardspro_psa10" : "16.5",
+      "tcdb_url" : "https://www.tcdb.com/ViewCard.cfm/sid/59823/cid/5051549/1994-Classic-Draft-103-Juwan-Howard",
+      "tcdb_sid" : "59823",
+      "tcdb_cid" : "5051549",
       "sportscardspro_id" : "3596319",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1994-classic-illustration/juwan-howard-103"
     }
@@ -5776,6 +5859,22 @@
     } ],
     "metadata" : {
       "purchaseDate" : "2008-03-30"
+    }
+  },
+  "1994-signature-rookies-gold-standard-24-k-gold-nno-sn1089" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-08-30",
+    "popReport" : null,
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : null,
+    "priceHistory" : [ ],
+    "metadata" : {
+      "tcdb_print_run" : "7500",
+      "tcdb_url" : "https://www.tcdb.com/ViewCard.cfm/sid/72428/cid/5894790/1994-Signature-Rookies-Tetrad-Flip-Cards-NNO-Juwan-Howard-/-Jalen-Rose",
+      "tcdb_sid" : "72428",
+      "tcdb_cid" : "5894790"
     }
   },
   "2006-07-ultra-gold-medallion-53" : {
@@ -6713,6 +6812,9 @@
     "priceHistory" : [ ],
     "metadata" : {
       "purchaseDate" : "2/10/2023",
+      "tcdb_url" : "https://www.tcdb.com/ViewCard.cfm/sid/25587/cid/2997449/1994-95-Collector-s-Choice-You-Crash-the-Game-Rookie-Scoring-Exchange-S4-Juwan-Howard",
+      "tcdb_sid" : "25587",
+      "tcdb_cid" : "2997449",
       "purchaseItemId" : "63075033"
     }
   },
@@ -6767,8 +6869,11 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_id" : "10505161",
+      "tcdb_url" : "https://www.tcdb.com/ViewCard.cfm/sid/59823/cid/5051451/1994-Classic-Draft-5-Juwan-Howard",
       "sportscardspro_ungraded" : "0.99",
+      "tcdb_sid" : "59823",
+      "tcdb_cid" : "5051451",
+      "sportscardspro_id" : "10505161",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1994-classic-draft-roy-sweepstakes/juwan-howard-5"
     }
   },
