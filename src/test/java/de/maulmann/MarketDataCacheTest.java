@@ -64,4 +64,28 @@ class MarketDataCacheTest {
         assertNotNull(cache);
         assertEquals(0, cache.size());
     }
+
+    @Test
+    @DisplayName("Should correctly identify stale and fresh cache entries based on TTL")
+    void testIsStale() {
+        MarketDataCache cache = new MarketDataCache();
+
+        // Non-existent card is always considered stale
+        assertTrue(cache.isStale("non-existent", 30));
+
+        // Fresh entry (queried today)
+        MarketDataEntry fresh = MarketDataEntry.builder()
+                .lastQueried(java.time.Instant.now().toString())
+                .build();
+        cache.put("card-fresh", fresh);
+        assertFalse(cache.isStale("card-fresh", 30));
+
+        // Old entry (queried 60 days ago)
+        MarketDataEntry old = MarketDataEntry.builder()
+                .lastQueried(java.time.Instant.now().minus(java.time.Duration.ofDays(60)).toString())
+                .build();
+        cache.put("card-old", old);
+        assertTrue(cache.isStale("card-old", 30));
+        assertFalse(cache.isStale("card-old", 90));
+    }
 }

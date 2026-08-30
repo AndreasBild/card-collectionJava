@@ -101,6 +101,26 @@ public class MarketDataCache {
         return Collections.unmodifiableMap(entriesById);
     }
 
+    public boolean isStale(String cardId, long maxAgeDays) {
+        if (cardId == null) return true;
+        MarketDataEntry entry = entriesById.get(cardId);
+        if (entry == null || entry.lastQueried() == null || entry.lastQueried().isBlank()) {
+            return true;
+        }
+        try {
+            java.time.Instant queriedAt = java.time.Instant.parse(entry.lastQueried());
+            java.time.Instant cutoff = java.time.Instant.now().minus(java.time.Duration.ofDays(maxAgeDays));
+            return queriedAt.isBefore(cutoff);
+        } catch (Exception e) {
+            try {
+                java.time.LocalDate date = java.time.LocalDate.parse(entry.lastQueried().substring(0, 10));
+                return date.plusDays(maxAgeDays).isBefore(java.time.LocalDate.now());
+            } catch (Exception ignored) {
+                return true;
+            }
+        }
+    }
+
     public void saveDefault() throws IOException {
         save(DEFAULT_CACHE_PATH);
     }

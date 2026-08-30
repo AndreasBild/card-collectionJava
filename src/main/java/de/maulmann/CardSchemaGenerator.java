@@ -437,6 +437,15 @@ public class CardSchemaGenerator {
         if (c.has("Memorabilia") && c.get("Memorabilia").equalsIgnoreCase("Yes")) {
             additionalProperties.add("{\"@type\": \"PropertyValue\", \"name\": \"Memorabilia\", \"value\": \"Game-Used / Patch\"}");
         }
+        if (c.popTotal != null && c.popTotal > 0) {
+            additionalProperties.add("{\"@type\": \"PropertyValue\", \"name\": \"PSA Population\", \"value\": \"" + c.popTotal + "\"}");
+        }
+        if (c.popHigher != null) {
+            additionalProperties.add("{\"@type\": \"PropertyValue\", \"name\": \"PSA Higher Grades\", \"value\": \"" + c.popHigher + "\"}");
+        }
+        if (c.lastSoldDate != null && !c.lastSoldDate.isBlank()) {
+            additionalProperties.add("{\"@type\": \"PropertyValue\", \"name\": \"Last Sale Date\", \"value\": \"" + escapeJson(c.lastSoldDate) + "\"}");
+        }
 
         if (!additionalProperties.isEmpty()) {
             sb.append(",\n  \"additionalProperty\": [\n");

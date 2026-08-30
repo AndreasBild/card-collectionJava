@@ -140,4 +140,54 @@ class Point130ClientTest {
         assertNull(result.estimatedValue());
         assertNull(result.lastSoldPrice());
     }
+
+    @Test
+    @DisplayName("Should correctly filter extreme outliers using IQR in calculateTrimmedFmv")
+    void testIqrOutlierFiltering() {
+        // Series with normal sales around $50-$60 and one massive outlier ($500)
+        java.util.List<PricePoint> points = java.util.List.of(
+                new PricePoint("2026-01-01", 50.0, "eBay", "Raw"),
+                new PricePoint("2026-01-02", 52.0, "eBay", "Raw"),
+                new PricePoint("2026-01-03", 55.0, "eBay", "Raw"),
+                new PricePoint("2026-01-04", 58.0, "eBay", "Raw"),
+                new PricePoint("2026-01-05", 500.0, "eBay Fake/Lot", "Raw")
+        );
+
+        Double fmv = Point130Client.calculateTrimmedFmv(points);
+        assertNotNull(fmv);
+        // The outlier $500 should be rejected by IQR filtering, resulting in a median around 53.5
+        assertTrue(fmv < 100.0, "FMV should reject $500 outlier, was " + fmv);
+        assertEquals(53.5, fmv, 2.0);
+    }
+
+    @Test
+    @DisplayName("Should parse multi-currency price strings and symbols cleanly")
+    void testMultiCurrencyParsing() {
+        String mockHtml = """
+            <table class="salesTable">
+                <tbody>
+                    <tr id="dRow" data-price="£24.99">
+                        <td><span id="titleText">1994 Collectors Choice #278 Juwan Howard</span><span id="dateText">10 Jan 2026</span></td>
+                    </tr>
+                    <tr id="dRow" data-price="€30,50">
+                        <td><span id="titleText">1994 Collectors Choice #278 Juwan Howard</span><span id="dateText">15 Jan 2026</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            """;
+
+        CardJson refJson = new CardJson.Builder()
+                .id("card-currency")
+                .player("Juwan Howard")
+                .cardNumber("278")
+                .build();
+        CardData refCard = new CardData(refJson);
+
+        Point130Client client = new Point130Client();
+        Point130Client.CardCompResult result = client.parseSalesHtml(mockHtml, refCard);
+
+        assertNotNull(result);
+        assertEquals(2, result.comps().size());
+        assertEquals(24.99, result.comps().get(0).price(), 0.01);
+    }
 }

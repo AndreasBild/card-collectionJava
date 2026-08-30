@@ -109,6 +109,12 @@ Execute full local verification before committing:
 - **Secret Protection:** NEVER commit AWS credentials, Firebase Service Account keys, IndexNow API keys, or `.env` files into source control.
 - **Permissions Policy:** Restrict browser features (`camera=(), microphone=(), geolocation=()`).
 
+### 3.7 Market Intelligence, Valuation & Privacy Invariants
+- **Verified Sales & Census:** Market data is populated strictly via verified certs and completed transaction parsers ([`Point130Client`](file:///src/main/java/de/maulmann/Point130Client.java), [`PsaCertScraper`](file:///src/main/java/de/maulmann/PsaCertScraper.java)) cached in `content/json/market-data-cache.json`.
+- **IQR Outlier Rejection:** Valuations compute trimmed medians with Interquartile Range ($1.5 \times \text{IQR}$) filtering to prevent counterfeit/reprint distortions.
+- **Strict Privacy Safeguards:** Acquisition costs from private ledgers must never be exposed in public Schema.org price offers or AI manifests unless explicitly marked public.
+- **Accessible Zero-JS Sparklines:** Pre-computed responsive vector charts in [`SvgSparklineGenerator`](file:///src/main/java/de/maulmann/SvgSparklineGenerator.java) must embed `<title>`, `<desc>`, and `role="img"` for screen-reader accessibility.
+
 ---
 
 ## 4. Agent Execution, Token Economics & Tool Usage
