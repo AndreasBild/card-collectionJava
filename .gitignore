@@ -4,6 +4,7 @@ build/
 output/
 cards/
 images/
+gradingImages/
 MissingImages.txt
 cp.txt
 *.class
