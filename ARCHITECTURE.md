@@ -208,9 +208,25 @@ mvn clean compile exec:java -Dexec.mainClass="de.maulmann.SiteBuilderPipeline"
 # Run all unit and integration tests
 mvn test
 
+# Fast single test class execution (inner loop)
+mvn test -Dtest=TargetClassTest
+
 # Check and apply Spotless code formatting
 mvn spotless:check
 mvn spotless:apply
+```
+
+### 6.4 Market Data & Checklist Enrichment Profiles
+Execute specialized ingestion and pricing enrichers without full site generation:
+```bash
+# Enrich sales comps & cert census from Point130 / PSA
+mvn exec:java@enrich-market-data
+
+# Enrich condition pricing from SportsCardsPro
+mvn exec:java@enrich-sportscardspro
+
+# Enrich card checklist and attributes from TCDB
+mvn exec:java@enrich-tcdb
 ```
 
 ---
