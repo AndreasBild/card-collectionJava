@@ -127,6 +127,28 @@ class Point130ClientTest {
         assertTrue(client.isRelevantMatch("1994-95 Upper Deck Collectors Choice Juwan Howard Card 278", card));
         assertFalse(client.isRelevantMatch("1994 Collectors Choice #100 Chris Webber", card));
         assertFalse(client.isRelevantMatch("1994 Collectors Choice #15 Juwan Howard", card));
+
+        // Test Grade Number Confusion: Card #10 should not match title with card #45 even if it has PSA 10
+        CardData card10 = new CardData(new CardJson.Builder().player("Juwan Howard").cardNumber("10").build());
+        assertFalse(client.isRelevantMatch("1994 Collectors Choice Juwan Howard #45 PSA 10", card10));
+        assertTrue(client.isRelevantMatch("1994 Collectors Choice Juwan Howard #10 PSA 10", card10));
+        assertFalse(client.isRelevantMatch("1994 Collectors Choice Juwan Howard #15 PSA 9", new CardData(new CardJson.Builder().player("Juwan Howard").cardNumber("9").build())));
+
+        // Test Alphanumeric Card Numbers (e.g. M20, JH-1)
+        CardData alphaCard = new CardData(new CardJson.Builder().player("Juwan Howard").cardNumber("M20").build());
+        assertTrue(client.isRelevantMatch("1995 Topps Finest Juwan Howard #M20", alphaCard));
+        assertTrue(client.isRelevantMatch("1995 Topps Finest Juwan Howard M20", alphaCard));
+        assertFalse(client.isRelevantMatch("1995 Topps Finest Juwan Howard #M15", alphaCard));
+    }
+
+    @Test
+    @DisplayName("Should accurately parse dates or return null without inventing today's date")
+    void testDateParsing() {
+        assertEquals("2026-01-10", Point130Client.parseDateToIso("Mon 10 Jan 2026 12:00:00 GMT"));
+        assertEquals("2026-06-14", Point130Client.parseDateToIso("Sun 14 Jun 2026 17:05:33 GMT"));
+        assertEquals("2025-11-20", Point130Client.parseDateToIso("2025-11-20"));
+        assertNull(Point130Client.parseDateToIso(""));
+        assertNull(Point130Client.parseDateToIso("invalid-date-string"));
     }
 
     @Test
