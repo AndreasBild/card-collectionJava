@@ -323,7 +323,28 @@ public class CardMetadataRenderer {
         if ("Baseball.html".equals(overviewPage) || isBaseballPlayer(p)) {
             return p + " is an iconic Major League Baseball player featured in this premium sports memorabilia release.";
         }
-        return p + " is an iconic professional basketball star featured in this ultra-premium collection release.";
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(p);
+        String team = c.get("Team");
+        if (team != null && !team.isBlank()) {
+            sb.append(" starred for the ").append(team);
+        } else {
+            sb.append(" is highlighted");
+        }
+        String season = c.get("Season");
+        if (season != null && !season.isBlank()) {
+            sb.append(" during the ").append(season).append(" campaign");
+        }
+        sb.append(", capturing his court presence and veteran leadership.");
+        if (c.isRookie()) {
+            sb.append(" This issue represents a key rookie-year appearance from his introductory season in professional basketball.");
+        } else if (c.isAutograph()) {
+            sb.append(" This piece is further distinguished by an official manufacturer-certified autograph.");
+        } else if (c.isPatch()) {
+            sb.append(" The card embeds authentic game-worn memorabilia celebrating his professional tenure.");
+        }
+        return sb.toString();
     }
 
     public static String getEraContext(CardData c, String overviewPage, TriviaManager triviaManager) {
@@ -342,7 +363,32 @@ public class CardMetadataRenderer {
             }
         }
 
-        return "Modern NBA Hobby Era: Continuous innovation in card technology, serial numbering, and certified autographs.";
+        String brand = c.get("Brand");
+        String company = c.get("Company");
+        String season = c.get("Season");
+        StringBuilder sb = new StringBuilder();
+        if (season != null && !season.isBlank()) {
+            sb.append(season).append(" Hobby Era: ");
+        } else {
+            sb.append("Contemporary Basketball Hobby Era: ");
+        }
+        if (brand != null && !brand.isBlank()) {
+            sb.append("The ").append(brand).append(" release");
+            if (company != null && !company.isBlank() && !brand.toLowerCase().contains(company.toLowerCase())) {
+                sb.append(" by ").append(company);
+            }
+            sb.append(" exemplifies ");
+        } else {
+            sb.append("This era represents ");
+        }
+        if (c.has("Print Run") || c.has("Serial")) {
+            sb.append("the advent of limited serial-numbered chase cards and premium finishing techniques that shaped modern sports card collecting.");
+        } else if (c.isRefractorOrFoil()) {
+            sb.append("the widespread adoption of premium refractive foil and chromium card chemistry that redefined 90s aesthetic standards.");
+        } else {
+            sb.append("groundbreaking photography and innovative insert architectures that defined the golden age of basketball card collecting.");
+        }
+        return sb.toString();
     }
 
     public static String getPrimaryPlayer(CardData c) {

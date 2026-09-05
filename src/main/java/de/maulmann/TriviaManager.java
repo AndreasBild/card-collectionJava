@@ -103,7 +103,7 @@ public class TriviaManager {
                 baseKey = baseKey.split("_")[0];
             }
 
-            String cardValue = cardData.getOrDefault(baseKey, "").trim().toLowerCase();
+            String cardValue = getCardAttributeCaseInsensitive(cardData, baseKey).trim().toLowerCase();
             String conditionValue = entry.getValue().asText().trim().toLowerCase();
 
             if (negate) {
@@ -121,5 +121,17 @@ public class TriviaManager {
             }
         }
         return true;
+    }
+
+    private String getCardAttributeCaseInsensitive(Map<String, String> cardData, String key) {
+        if (cardData == null || key == null) return "";
+        String direct = cardData.get(key);
+        if (direct != null) return direct;
+        for (Map.Entry<String, String> entry : cardData.entrySet()) {
+            if (entry.getKey().equalsIgnoreCase(key)) {
+                return entry.getValue() != null ? entry.getValue() : "";
+            }
+        }
+        return "";
     }
 }
