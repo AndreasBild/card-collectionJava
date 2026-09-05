@@ -129,4 +129,32 @@ class CardMetadataRendererTest {
         assertTrue(ogHtml.contains("name=\"twitter:card\" content=\"summary_large_image\""), "twitter:card must be summary_large_image");
         assertTrue(ogHtml.contains("name=\"twitter:image\" content=\"https://www.maulmann.de/images/1997-98/juwan-howard-pmg-front.avif\""), "twitter:image must be absolute URL");
     }
+
+    @Test
+    @DisplayName("getSeasonHighlights and getEraContext should produce rich dynamic descriptions when no static trivia matches")
+    void testDynamicSeasonHighlightsAndEraContextFallback() {
+        CardJson c = CardJson.builder()
+                .player("Juwan Howard")
+                .season("2008-09")
+                .team("Charlotte Bobcats")
+                .brand("Topps Signature")
+                .company("Topps")
+                .isAutograph(true)
+                .isPatch(false)
+                .printRun(50)
+                .build();
+
+        CardData cardData = new CardData(c, "bobcats-auto-50");
+
+        // Pass null or empty manager to trigger dynamic fallback synthesis
+        String highlights = CardMetadataRenderer.getSeasonHighlights(cardData, "Juwan-Howard-Collection.html", null);
+        assertTrue(highlights.contains("Charlotte Bobcats"), "Highlights fallback must mention team");
+        assertTrue(highlights.contains("2008-09"), "Highlights fallback must mention season");
+        assertTrue(highlights.contains("official manufacturer-certified autograph"), "Highlights fallback must mention certified autograph");
+
+        String era = CardMetadataRenderer.getEraContext(cardData, "Juwan-Howard-Collection.html", null);
+        assertTrue(era.contains("2008-09 Hobby Era"), "Era fallback must mention season era");
+        assertTrue(era.contains("Topps Signature"), "Era fallback must mention brand");
+        assertTrue(era.contains("serial-numbered chase cards"), "Era fallback must mention serial numbering");
+    }
 }

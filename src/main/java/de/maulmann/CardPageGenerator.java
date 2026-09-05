@@ -401,7 +401,7 @@ public class CardPageGenerator {
         data.put("grading", (grading.trim().length() > 1 && !grading.trim().equals("null null")) ? grading : "");
 
         data.put("hobbyTrivia", triviaManager.getTrivia("hobbyTrivia", c.attributes));
-        data.put("techTrivia", triviaManager.getTrivia("cardTechTrivia", c.attributes));
+        data.put("techTrivia", triviaManager.getTrivia("techTrivia", c.attributes));
         data.put("playerHighlights", getSeasonHighlights(c, overviewPage));
         data.put("eraContext", getEraContext(c, overviewPage));
         String primaryP = CardMetadataRenderer.getPrimaryPlayerName(c.get("Player"));

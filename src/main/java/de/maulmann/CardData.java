@@ -167,6 +167,19 @@ public class CardData {
         return isValid(get("Grading Co.")) && isValid(get("Grade"));
     }
 
+    public boolean isRookie() {
+        return "Yes".equalsIgnoreCase(get("Rookie")) || (sourceJson != null && sourceJson.isRookie());
+    }
+
+    public boolean isAutograph() {
+        return "Yes".equalsIgnoreCase(get("Autograph")) || (sourceJson != null && sourceJson.isAutograph());
+    }
+
+    public boolean isPatch() {
+        return "Yes".equalsIgnoreCase(get("Memorabilia")) || "Yes".equalsIgnoreCase(get("Game Used"))
+                || (sourceJson != null && sourceJson.isPatch());
+    }
+
     public String getVerificationUrl() {
         if (certNumber != null && !certNumber.isBlank()) {
             return PopReport.getVerificationUrl(get("Grading Co."), certNumber);

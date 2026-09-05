@@ -137,6 +137,58 @@
       "text": "Fleer Ultra was the choice for collectors seeking high-gloss finishes and diverse insert sets. It pushed the boundaries of card coatings and multi-tiered parallel systems."
     },
     {
+      "condition": { "Theme": "Triumvirate" },
+      "text": "Stadium Club Triumvirate inserts are among the most celebrated 1990s basketball chase cards. Engineered as a 3-card interlocking die-cut puzzle featuring top stars, they came in three distinct tiers of light refraction and scarcity: Luminous (1:48 packs), Luminescent (1:192 packs), and the coveted Illuminator (1:384 packs)."
+    },
+    {
+      "condition": { "Theme": "Essential Credentials" },
+      "text": "E-X Essential Credentials (Now and Future) represent the pinnacle of late 1990s acetate card craftsmanship. With inverted serial numbering based on the player's card checklist number, pulling a single-digit 'Now' parallel was a legendary hobby milestone."
+    },
+    {
+      "condition": { "Theme": "Autographics" },
+      "text": "SkyBox Autographics (launched in 1996) was the industry's first widespread on-card certified autograph insert program. Stamped with an embossed foil seal of authenticity, it revolutionized modern signature collecting."
+    },
+    {
+      "condition": { "Theme": "Crash The Game" },
+      "text": "Collector's Choice 'Crash The Game' cards were interactive hobby innovations. Collectors tracked real-time NBA scoring, assist, or rebound milestones to redeem winning cards for exclusive silver and gold parallel sets directly from Upper Deck."
+    },
+    {
+      "condition": { "Theme": "StarQuest" },
+      "text": "Upper Deck StarQuest inserts featured a multi-tiered rarity hierarchy indicated by star ratings: Common 1-Star (Blue), Uncommon 2-Star (Green), Rare 3-Star (Red), and the elusive Super Rare 4-Star (Gold)."
+    },
+    {
+      "condition": { "Variant": "Members Only" },
+      "text": "Stadium Club Members Only parallels were distributed exclusively to registered members of Topps' official collector club. Stamped with an iconic gold-foil Members Only insignia, these limited factory-set issues remain distinct 90s oddities."
+    },
+    {
+      "condition": { "Brand": "SPx" },
+      "text": "Upper Deck SPx redefined the hobby in 1996 by replacing traditional cardboard with thick, perimeter-die-cut cards embedded with high-resolution 3D holograms, later evolving into serial-numbered SPx Finite and Grand Finale lines."
+    },
+    {
+      "condition": { "Brand": "Gold Label" },
+      "text": "Topps Gold Label brought luxury aesthetics to the hobby with high-gloss black borders and tiered micro-etched metal flake finishes (Class 1, Class 2, Class 3), creating a distinct high-end look."
+    },
+    {
+      "condition": { "Theme": "Holoview" },
+      "text": "Upper Deck Holoview inserts showcased full-color, motion-shifting holographic portraits that rotated dynamically as the card caught the light, setting a high watermark for 90s visual effects."
+    },
+    {
+      "condition": { "Variant": "Platinum Medallion" },
+      "text": "Fleer Ultra Platinum Medallions are legendary late-90s grails. Heavily short-printed (often to 100 or fewer copies) with an eye-catching platinum foil border, they command fierce bidding wars among player and set collectors."
+    },
+    {
+      "condition": { "Variant": "Gold Medallion" },
+      "text": "Fleer Ultra Gold Medallion parallels offered one guaranteed parallel per pack in select years, bathing the player photography in luxurious embossed gold foil that elevated the base card into a premium showpiece."
+    },
+    {
+      "condition": { "Brand": "Bowman's Best" },
+      "text": "Bowman's Best was Topps' premium crossover brand, blending high-end chromium card chemistry with premier rookie and veteran photography and iconic Atomic Refractors."
+    },
+    {
+      "condition": { "Brand": "Flair Showcase" },
+      "text": "Flair Showcase revolutionized basketball cards with its tiered seating hierarchy: Row 2 ('Style'), Row 1 ('Grace'), and Row 0 ('Showcase'), featuring distinct photography, foil stamping, and holographic coatings on thick, premium cardstock."
+    },
+    {
       "condition": {"Player": "Juwan Howard" },
       "text": "The Juwan Howard collection spans multiple decades of basketball history, capturing everything from the high-flying 90s to his championship years with the Miami Heat. Each card represents a unique piece of this journey."
     }
@@ -331,6 +383,46 @@
       "text": "<strong>Memorabilia Card:</strong> This card contains a piece of a jersey, ball, or floor used by the player. These cards revolutionized the hobby in the late 90s by bringing a piece of the game directly into collectors' hands."
     },
     {
+      "condition": { "Print Run=": "5" },
+      "text": "<strong>Super Short Print (/5):</strong> Stamped with a microscopic print run of just 5 copies worldwide. Pulling or securing a copy numbered to /5 represents an elite accomplishment in player collection completeness."
+    },
+    {
+      "condition": { "Print Run=": "10" },
+      "text": "<strong>Super Short Print (/10):</strong> Extremely limited to only 10 copies in existence. Single-digit serial-numbered cards are fiercely contested at auction by master set curators."
+    },
+    {
+      "condition": { "Print Run=": "25" },
+      "text": "<strong>Short Print Parallel (/25):</strong> Limited to an exclusive run of 25 copies, providing a prestigious balance of scarcity, visual brilliance, and investment-grade appeal."
+    },
+    {
+      "condition": { "Print Run=": "50" },
+      "text": "<strong>Numbered Parallel (/50):</strong> Serial-numbered to just 50 copies worldwide, ensuring long-term hobby liquidity and low population counts in third-party grading registries."
+    },
+    {
+      "condition": { "Print Run=": "100" },
+      "text": "<strong>Century Parallel (/100):</strong> Limited to 100 copies worldwide—a benchmark print run made famous by iconic late-90s parallels like PMGs and Platinum Medallions."
+    },
+    {
+      "condition": { "Variant": "Gold Refractor" },
+      "text": "<strong>Gold Refractor:</strong> The Gold Refractor is traditionally one of the most prestigious parallel tiers in chromium sets, typically limited to /50 or /25 and radiating with rich golden light diffraction."
+    },
+    {
+      "condition": { "Variant": "Blue Refractor" },
+      "text": "<strong>Blue Refractor:</strong> Features a cool cyan/blue chromium coating that provides a stunning aesthetic and an exact team-color match for blue jersey franchises."
+    },
+    {
+      "condition": { "Variant": "Red Refractor" },
+      "text": "<strong>Red Refractor:</strong> Deep ruby-red prismatic coating, typically serial-numbered to very low print runs and highly prized by high-grade collectors."
+    },
+    {
+      "condition": { "Variant": "Black Refractor" },
+      "text": "<strong>Black Refractor:</strong> Deep obsidian borders accented with chromium light diffraction, offering an aggressive, stealth look."
+    },
+    {
+      "condition": { "Variant": "Spectrum" },
+      "text": "<strong>Spectrum Finish:</strong> Features full-card rainbow diffraction foil across the entire surface, transforming the card into a dazzling prism under direct lighting."
+    },
+    {
       "condition": {},
       "text": "<strong>Trading Card Manufacturing:</strong> Traditional trading card manufacturing involves multiple layers of printing and finishing. Even standard base cards from this era often featured premium UV coatings and high-quality card stock that was revolutionary at the time."
     }
@@ -471,6 +563,46 @@
     {
       "condition": { "Player": "Alonzo Mourning" },
       "text": "2006 NBA Champion with Miami, 2x Defensive Player of the Year, 7x All-Star center for the Heat and Hornets."
+    },
+    {
+      "condition": { "Team": "Washington Bullets" },
+      "text": "Capital Centre Bullets Era: Formed one of the Eastern Conference's most potent young frontcourts alongside Michigan teammate Chris Webber and 7'7\" center Gheorghe Mureșan, earning 1996 NBA All-Star and All-NBA Third Team honors."
+    },
+    {
+      "condition": { "Team": "Washington Wizards" },
+      "text": "Inaugural Wizards MCI Center Era: Served as the franchise cornerstone through the 1997 rebranding, establishing a lethal high-post scoring punch alongside league assist leader Rod Strickland and later teaming with Michael Jordan during MJ's historic Washington comeback."
+    },
+    {
+      "condition": { "Team": "Houston Rockets" },
+      "text": "Rockets Frontcourt Anchor: Key starter and defensive anchor alongside Hall of Fame center Yao Ming and scoring superstar Tracy McGrady in Jeff Van Gundy's physical Western Conference contender."
+    },
+    {
+      "condition": { "Team": "Denver Nuggets" },
+      "text": "Mile High Scoring Force: Primary offensive focal point at the Pepsi Center, averaging over 17 points and 7 rebounds while anchoring a rebuilding Denver frontcourt with veteran tenacity."
+    },
+    {
+      "condition": { "Team": "Orlando Magic" },
+      "text": "Orlando Magic Veteran Core: Started 81 games in 2003-04, averaging 17.0 points per night as the primary interior scoring partner to NBA scoring champion Tracy McGrady."
+    },
+    {
+      "condition": { "Team": "Miami Heat" },
+      "text": "Heatles Championship Glory: Revered locker room elder and defensive enforcer for Miami's 'Big Three' (LeBron James, Dwyane Wade, Chris Bosh), capturing back-to-back NBA Championships in 2012 and 2013."
+    },
+    {
+      "condition": { "Team": "Michigan Wolverines" },
+      "text": "Fab Five Cultural Revolution: Starred at center for the University of Michigan's world-famous Fab Five, reaching back-to-back NCAA Championship games in 1992 and 1993 while permanently reshaping basketball style and music culture."
+    },
+    {
+      "condition": { "Player": "Chris Webber" },
+      "text": "Fab Five & Bullets Brotherhood: Celebrates the iconic partnership between Juwan Howard and Chris Webber, who revolutionized college basketball at Michigan before reuniting as teammates in Washington."
+    },
+    {
+      "condition": { "Player": "Grant Hill" },
+      "text": "1994 Draft Class Rivals: Commemorates the elite 1994 NBA Draft connection between Juwan Howard and Grant Hill, who went from historic college showdowns (Michigan vs Duke) to NBA stardom."
+    },
+    {
+      "condition": { "Player": "Jett Howard" },
+      "text": "Generational Legacy: Father-and-son NBA milestone, celebrating Juwan Howard coaching his son Jett at the University of Michigan prior to Jett's selection in the first round of the 2023 NBA Draft."
     }
   ],
   "eraContext": [
@@ -593,6 +725,30 @@
     {
       "condition": { "Player": "Juwan Howard", "Season": "college" },
       "text": "The early 90s college basketball scene was revolutionized by the Fab Five. They introduced baggy shorts, black socks, and a trash-talking swagger that heavily influenced the aesthetic of 90s hip-hop and sports pop culture."
+    },
+    {
+      "condition": { "Team": "Washington Bullets" },
+      "text": "1990s Washington Bullets Era: Defined by fierce Atlantic Division rivalries, classic uniforms, and intense physical play at the Capital Centre before the franchise's transition to the modern Wizards era."
+    },
+    {
+      "condition": { "Team": "Washington Wizards" },
+      "text": "Turn-of-the-Century Wizards Era: Highlighted by the opening of the state-of-the-art MCI Center in downtown Washington D.C., new teal and bronze colors, and Michael Jordan's front-office tenure and legendary playing return."
+    },
+    {
+      "condition": { "Team": "Houston Rockets" },
+      "text": "Mid-2000s Houston Rockets Era: The Toyota Center era characterized by Jeff Van Gundy's stifling half-court defense, international basketball superstardom via Yao Ming, and thrilling Western Conference playoff clashes."
+    },
+    {
+      "condition": { "Team": "Denver Nuggets" },
+      "text": "Early 2000s Denver Nuggets Era: The dawn of the modern Nuggets at the Pepsi Center, featuring aggressive post play, mile-high home court advantage, and the bridging of Denver's roster toward a new generation."
+    },
+    {
+      "condition": { "Team": "Miami Heat" },
+      "text": "Miami Heat 'Heatles' Championship Era: The epicenter of global sports culture from 2010 to 2014, marked by back-to-back NBA Titles, four straight Finals appearances, and intense worldwide media focus."
+    },
+    {
+      "condition": { "Team": "Michigan Wolverines" },
+      "text": "Fab Five Cultural Phenomenon: Early 1990s NCAA basketball at its peak, as five freshmen revolutionized youth culture, hip-hop synergy, and collegiate athletics on television."
     }
   ],
   "rookieFaq": [
