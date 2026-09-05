@@ -39,7 +39,9 @@ public class Point130Client {
     private static final String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36";
 
     private static final Pattern DATE_PATTERN = Pattern.compile("(\\d{1,2})\\s+([A-Za-z]{3})\\s+(\\d{4})");
+    private static final Pattern ISO_DATE_PATTERN = Pattern.compile("\\b(\\d{4}-\\d{2}-\\d{2})\\b");
     private static final Pattern GRADE_PATTERN = Pattern.compile("\\b(PSA|BGS|SGC|CGC)\\s*(\\d+(?:\\.\\d+)?)\\b", Pattern.CASE_INSENSITIVE);
+    private static final Pattern EXPLICIT_CARD_NUM_PATTERN = Pattern.compile("(?:#|no\\.?\\s+|card\\s*#?\\s*)([A-Za-z0-9\\-]+)", Pattern.CASE_INSENSITIVE);
 
     private static final DateTimeFormatter DATE_PARSER = new DateTimeFormatterBuilder()
             .parseCaseInsensitive()
@@ -271,8 +273,8 @@ public class Point130Client {
             comps.add(new PricePoint(isoDate, price, "eBay (" + saleType + ")", detectedGrade));
         }
 
-        // Sort chronologically ascending (oldest to newest)
-        comps.sort(Comparator.comparing(PricePoint::date));
+        // Sort chronologically ascending (oldest to newest) null-safe
+        comps.sort(Comparator.comparing(PricePoint::date, Comparator.nullsFirst(Comparator.naturalOrder())));
 
         if (comps.isEmpty()) {
             return new CardCompResult(List.of(), null, null, null);
@@ -311,23 +313,60 @@ public class Point130Client {
 
         // Check card number if present and non-empty
         String number = referenceCard.get("Number");
-        if (number != null && !number.isBlank() && number.matches("\\d+")) {
-            // Must contain "#number" or "number" or "no. number"
-            Pattern numPattern = Pattern.compile("(?:#|no\\.?\\s*|\\b)" + Pattern.quote(number) + "\\b", Pattern.CASE_INSENSITIVE);
-            if (!numPattern.matcher(title).find()) {
-                return false;
+        if (number != null && !number.isBlank() && !"-".equals(number.trim()) && !"null".equalsIgnoreCase(number.trim())) {
+            String cleanNum = number.replace("#", "").trim();
+            if (!cleanNum.isEmpty()) {
+                // 1. If title explicitly declares card numbers (e.g. "#45" or "card 45"), check them
+                Matcher explicitMatcher = EXPLICIT_CARD_NUM_PATTERN.matcher(title);
+                boolean foundAnyExplicit = false;
+                boolean matchedExplicit = false;
+                while (explicitMatcher.find()) {
+                    foundAnyExplicit = true;
+                    String candidateNum = explicitMatcher.group(1).trim();
+                    if (isCardNumberMatch(cleanNum, candidateNum)) {
+                        matchedExplicit = true;
+                        break;
+                    }
+                }
+
+                if (foundAnyExplicit) {
+                    if (!matchedExplicit) {
+                        // Title explicitly has a different card number, reject
+                        return false;
+                    }
+                } else {
+                    // 2. No explicit "#" found. Strip grades (PSA 10), print runs (/25), years (1994), and lot sizes
+                    String strippedTitle = GRADE_PATTERN.matcher(title).replaceAll(" ");
+                    strippedTitle = Pattern.compile("/\\d+").matcher(strippedTitle).replaceAll(" ");
+                    strippedTitle = Pattern.compile("\\b(19\\d\\d|20\\d\\d)\\b").matcher(strippedTitle).replaceAll(" ");
+                    strippedTitle = Pattern.compile("(?i)\\blot\\s+of\\s+\\d+\\b").matcher(strippedTitle).replaceAll(" ");
+
+                    Pattern numPattern = Pattern.compile("\\b" + Pattern.quote(cleanNum) + "\\b", Pattern.CASE_INSENSITIVE);
+                    if (!numPattern.matcher(strippedTitle).find()) {
+                        return false;
+                    }
+                }
             }
         }
 
         return true;
     }
 
+    private static boolean isCardNumberMatch(String target, String candidate) {
+        if (target.equalsIgnoreCase(candidate)) return true;
+        try {
+            return Long.parseLong(target) == Long.parseLong(candidate);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
     /**
-     * Parses dates like "Sun 14 Jun 2026 17:05:33 GMT" into "2026-06-14".
+     * Parses dates like "Sun 14 Jun 2026 17:05:33 GMT" or "2026-06-14" into ISO format.
      */
     public static String parseDateToIso(String rawDateText) {
         if (rawDateText == null || rawDateText.isBlank()) {
-            return LocalDate.now().toString();
+            return null;
         }
 
         Matcher m = DATE_PATTERN.matcher(rawDateText);
@@ -343,7 +382,12 @@ public class Point130Client {
             }
         }
 
-        return LocalDate.now().toString();
+        Matcher isoMatcher = ISO_DATE_PATTERN.matcher(rawDateText);
+        if (isoMatcher.find()) {
+            return isoMatcher.group(1);
+        }
+
+        return null;
     }
 
     /**
