@@ -133,7 +133,21 @@ Execute full local verification before committing:
 - **Outer Quality Gate:** Reserve full test execution (`mvn test`), pipeline dry-runs (`mvn exec:java@local`), and Spotless formatting checks for Stage 5 pre-commit verification.
 - **Cache Preservation:** Never delete `output/generation-timestamps.properties` arbitrarily to avoid triggering expensive full AVIF conversions and static regeneration.
 
-### 4.3 Workspace Skills & Customizations
+### 4.3 Dynamic Model Tier Recommendation Protocol
+When creating implementation plans or analyzing tasks, the agent dynamically recommends the optimal model tier:
+- **Tier 1: Fast / Medium (Cost-Efficient)** (e.g., latest Flash / Medium available in IDE):
+  - *Applicability:* Freemarker templates (`.ftlh`), CSS styling, single-class JUnit tests, data enricher execution (`@enrich-market-data`, `@enrich-tcdb`, `@enrich-sportscardspro`), routine bugfixes, dependency bumps.
+  - *Benefit:* Ultra-fast turnaround, minimal latency, maximum token efficiency.
+- **Tier 2: Deep Reasoning / Pro (High-Capability)** (e.g., latest Pro / Thinking available in IDE):
+  - *Applicability:* Multi-system architecture refactoring, concurrency & Virtual Thread coordination, valuation algorithms (IQR outlier filtering, median pricing), complex cloud sync pipelines (AWS S3, CloudFront, Firestore).
+  - *Benefit:* Deep multi-step reasoning, exhaustive edge-case resolution, and structural schema validation.
+- **Plan Standard:** Every `implementation_plan.md` includes a `## 🎯 Recommended Execution Model` block declaring the tier and rationale.
+
+### 4.4 Working Tree Hygiene & Dataset Protection
+- **Preserve User Modifications:** The repository owner frequently works with `content/json/cards.json` and `MissingImages.txt`.
+- **Never Stage Unrelated Files:** Antigravity must never run `git add .` or stage unrelated modified data files. Only stage the files directly touched by the specific task.
+
+### 4.5 Workspace Skills & Customizations
 Use dedicated project skills located in `.agents/skills/`:
 - `test-suite`: Run JUnit 5 test suite with Java 26 preview features.
 - `static-analysis`: Run Spotless formatting checks and compiler linter.
@@ -142,6 +156,7 @@ Use dedicated project skills located in `.agents/skills/`:
 - `audit-performance`: Audit Core Web Vitals, HTML/CSS minification payloads, and Brotli/Gzip ratios.
 - `validate-snapshots`: Run HTML golden master snapshot tests and dead-link asset validators.
 
-### 4.4 Mandatory Automated PR Creation
+### 4.6 Mandatory Automated PR Creation
 At the conclusion of every completed task, Antigravity must automatically stage changes, commit with a semantic message, push to remote, and open/update the PR without requiring additional user prompting.
+
 
