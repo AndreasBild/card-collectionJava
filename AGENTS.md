@@ -48,15 +48,18 @@ flowchart TD
 - **Strict Branch Governance:** Antigravity must **NEVER** edit files or commit directly on `main`.
 - Work strictly on isolated feature/fix/chore branches (e.g. `feature/card-filters`, `fix/schema-breadcrumbs`, `chore/setup-agent-governance`).
 
-### Stage 4: TDD & Modular Implementation
+### Stage 4: TDD & Modular Implementation (Fast Inner Loop)
+- **Fast Inner Feedback Loop:** During active development, iterate rapidly without executing full regression suites:
+  - Verify syntax and types with `mvn test-compile`.
+  - Execute targeted single-class tests with `mvn test -Dtest=TargetClassTest`.
 - Employ test-driven development: write or update JUnit 5 test suites covering happy paths and edge cases.
 - Write production-grade, idiomatic Java 26 code utilizing modern language constructs.
 - **Zero Laziness / Zero Stubbing:** Never use placeholders such as `// TODO: implement logic here`. All code must be complete and compilable.
 
-### Stage 5: Quality Gate Verification
+### Stage 5: Quality Gate Verification (Comprehensive Outer Gate)
 Execute full local verification before committing:
 1. **Compilation & Inspections:** `mvn clean test-compile` (verifies Java 26 preview features and compiler warnings with `-Xlint:all`).
-2. **Code Formatting:** `mvn spotless:check` (or `mvn spotless:apply` to automatically apply Google Java Style).
+2. **Code Formatting:** `mvn spotless:apply` followed by `mvn spotless:check` (enforces Google Java Style).
 3. **Unit & Integration Tests:** `mvn test` (all tests in `src/test/java/de/maulmann/` pass cleanly).
 4. **Site Generation Verification:** `mvn exec:java@local` (validates pipeline generation, Freemarker template output, and timestamp tracking).
 5. **Compression Synchronicity:** Verify `.html.gz` and `.html.br` companions are generated alongside all static files.
@@ -119,13 +122,26 @@ Execute full local verification before committing:
 
 ## 4. Agent Execution, Token Economics & Tool Usage
 
-- **High-Signal Output:** Eliminate conversational fluff. Provide concise, actionable summaries with direct file links.
-- **Targeted Diff Edits:** Use surgical multi-replace / diff tools rather than rewriting entire large files unmodified.
-- **Workspace Skills & Customizations:** Use dedicated project skills located in `.agents/skills/`:
-  - `test-suite`: Run JUnit 5 test suite with Java 26 preview features.
-  - `static-analysis`: Run Spotless formatting checks and compiler linter.
-  - `verify-schema`: Validate Schema.org JSON-LD structured data and semantic metadata.
-  - `build-pipeline`: Execute local development or full production static site generation pipeline.
-  - `audit-performance`: Audit Core Web Vitals, HTML/CSS minification payloads, and Brotli/Gzip ratios.
-  - `validate-snapshots`: Run HTML golden master snapshot tests and dead-link asset validators.
-- **Mandatory Automated PR Creation:** At the conclusion of every completed task, Antigravity must automatically stage changes, commit with a semantic message, push to remote, and open/update the PR without requiring additional user prompting.
+### 4.1 Token Economics & Context Boundary Discipline
+- **Massive File Invariant:** Never load large raw datasets (`content/json/cards.json` [770 KB], `market-data-cache.json` [197 KB], or generated HTML files in `output/`) into context in full.
+- **Targeted Lookups:** Use `grep_search` or slice reads with bounded `StartLine` and `EndLine` (≤ 100 lines). Reference strongly typed models (`CardData`, `CardJson`) instead of parsing raw JSON dumps.
+- **Surgical Diff Edits:** Use narrow replacement blocks (`replace_file_content` / `multi_replace_file_content`). Never rewrite entire large classes unmodified.
+- **High-Signal Output:** Eliminate conversational filler. Provide concise, actionable summaries with direct clickable `file://` links.
+
+### 4.2 Dual-Loop Execution Protocol
+- **Inner Development Loop:** Use `mvn test-compile` and targeted tests (`mvn test -Dtest=TargetTest`) during active implementation to prevent log noise and conserve runner tokens.
+- **Outer Quality Gate:** Reserve full test execution (`mvn test`), pipeline dry-runs (`mvn exec:java@local`), and Spotless formatting checks for Stage 5 pre-commit verification.
+- **Cache Preservation:** Never delete `output/generation-timestamps.properties` arbitrarily to avoid triggering expensive full AVIF conversions and static regeneration.
+
+### 4.3 Workspace Skills & Customizations
+Use dedicated project skills located in `.agents/skills/`:
+- `test-suite`: Run JUnit 5 test suite with Java 26 preview features.
+- `static-analysis`: Run Spotless formatting checks and compiler linter.
+- `verify-schema`: Validate Schema.org JSON-LD structured data and semantic metadata.
+- `build-pipeline`: Execute local development or full production static site generation pipeline.
+- `audit-performance`: Audit Core Web Vitals, HTML/CSS minification payloads, and Brotli/Gzip ratios.
+- `validate-snapshots`: Run HTML golden master snapshot tests and dead-link asset validators.
+
+### 4.4 Mandatory Automated PR Creation
+At the conclusion of every completed task, Antigravity must automatically stage changes, commit with a semantic message, push to remote, and open/update the PR without requiring additional user prompting.
+

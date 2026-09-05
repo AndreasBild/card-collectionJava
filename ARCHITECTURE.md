@@ -139,6 +139,7 @@ flowchart TD
 │   │   └── auto-pr.yml           # Automated Pull Request creator
 │   └── pull_request_template.md  # Jules review checklist
 ├── .jules/
+│   ├── instructions.md           # Operational rules, test isolation & token efficiency for Jules
 │   └── setup.sh                  # Environment initialization script for Jules Cloud Agent
 ├── AGENTS.md                     # Core developer persona & coding standards
 ├── ARCHITECTURE.md               # System topology, workflow rules, and invariants
