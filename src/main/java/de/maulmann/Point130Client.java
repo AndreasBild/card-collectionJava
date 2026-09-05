@@ -1,6 +1,8 @@
 package de.maulmann;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
@@ -59,7 +61,7 @@ public class Point130Client {
 
     public Point130Client() {
         this(HttpClient.newBuilder()
-                .connectTimeout(Duration.ofSeconds(12))
+                .connectTimeout(Duration.ofSeconds(25))
                 .followRedirects(HttpClient.Redirect.NORMAL)
                 .build());
     }
@@ -157,8 +159,57 @@ public class Point130Client {
 
     /**
      * Executes HTTP POST query to 130point and parses returned transaction table.
+     * Uses curl ProcessBuilder as primary transport to bypass Cloudflare Error 1015 TLS fingerprint blocks,
+     * with transparent fallback to standard Java HttpClient.
      */
     public Optional<CardCompResult> fetchCompsForQuery(String query, CardData referenceCard) {
+        String html = fetchRawHtml(query);
+        if (html == null || html.isBlank()) {
+            return Optional.empty();
+        }
+        return Optional.of(parseSalesHtml(html, referenceCard));
+    }
+
+    private String fetchRawHtml(String query) {
+        // 1. Try curl transport first (bypasses Cloudflare 1015 TLS handshake bot challenge)
+        String curlResult = fetchViaCurl(query);
+        if (curlResult != null && !curlResult.isBlank() && !curlResult.contains("error code: 1015")) {
+            return curlResult;
+        }
+
+        // 2. Transparent fallback to Java HttpClient
+        return fetchViaHttpClient(query);
+    }
+
+    private String fetchViaCurl(String query) {
+        try {
+            ProcessBuilder pb = new ProcessBuilder(
+                    "curl", "-s", "-m", "60", "-X", "POST", SEARCH_ENDPOINT,
+                    "-H", "User-Agent: " + USER_AGENT,
+                    "-H", "Origin: https://130point.com",
+                    "-H", "Referer: https://130point.com/sales/",
+                    "-H", "X-Requested-With: XMLHttpRequest",
+                    "--data-urlencode", "query=" + query
+            );
+            Process p = pb.start();
+            StringBuilder sb = new StringBuilder();
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream(), StandardCharsets.UTF_8))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line).append("\n");
+                }
+            }
+            int exitCode = p.waitFor();
+            if (exitCode == 0 && sb.length() > 0) {
+                return sb.toString();
+            }
+        } catch (Exception e) {
+            logger.debug("curl transport unavailable, falling back to HttpClient: {}", e.getMessage());
+        }
+        return null;
+    }
+
+    private String fetchViaHttpClient(String query) {
         int maxAttempts = 3;
         for (int attempt = 1; attempt <= maxAttempts; attempt++) {
             try {
@@ -170,7 +221,12 @@ public class Point130Client {
                         .header("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
                         .header("Accept", "text/html, */*; q=0.01")
                         .header("X-Requested-With", "XMLHttpRequest")
-                        .timeout(Duration.ofSeconds(15))
+                        .header("Origin", "https://130point.com")
+                        .header("Referer", "https://130point.com/sales/")
+                        .header("Sec-Fetch-Dest", "empty")
+                        .header("Sec-Fetch-Mode", "cors")
+                        .header("Sec-Fetch-Site", "same-site")
+                        .timeout(Duration.ofSeconds(45))
                         .POST(HttpRequest.BodyPublishers.ofString(formBody))
                         .build();
 
@@ -180,41 +236,45 @@ public class Point130Client {
                     logger.warn("130point rate limit (429) hit for [{}]. Backing off (attempt {}/{})...", query, attempt, maxAttempts);
                     if (attempt < maxAttempts) {
                         try {
-                            TimeUnit.MILLISECONDS.sleep(2500L * attempt);
+                            TimeUnit.MILLISECONDS.sleep(4500L * attempt);
                         } catch (InterruptedException ie) {
                             Thread.currentThread().interrupt();
-                            return Optional.empty();
+                            return null;
                         }
                         continue;
                     }
-                    return Optional.empty();
+                    return null;
                 }
 
                 if (response.statusCode() != 200 || response.body() == null || response.body().isBlank()) {
                     logger.warn("130point query [{}] failed with HTTP status {}", query, response.statusCode());
-                    return Optional.empty();
+                    return null;
                 }
 
-                return Optional.of(parseSalesHtml(response.body(), referenceCard));
+                return response.body();
             } catch (IOException e) {
-                logger.warn("I/O error querying 130point for [{}]: {}", query, e.getMessage());
+                if (e instanceof java.net.http.HttpTimeoutException || (e.getMessage() != null && e.getMessage().contains("timed out"))) {
+                    logger.warn("130point query timed out for [{}] (attempt {}/{}). Retrying with backoff...", query, attempt, maxAttempts);
+                } else {
+                    logger.warn("I/O error querying 130point for [{}]: {}", query, e.getMessage());
+                }
                 if (attempt < maxAttempts) {
                     try {
-                        TimeUnit.MILLISECONDS.sleep(1500L * attempt);
+                        TimeUnit.MILLISECONDS.sleep(2000L * attempt);
                     } catch (InterruptedException ie) {
                         Thread.currentThread().interrupt();
-                        return Optional.empty();
+                        return null;
                     }
                     continue;
                 }
-                return Optional.empty();
+                return null;
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 logger.warn("130point request interrupted for [{}]", query);
-                return Optional.empty();
+                return null;
             }
         }
-        return Optional.empty();
+        return null;
     }
 
     /**
