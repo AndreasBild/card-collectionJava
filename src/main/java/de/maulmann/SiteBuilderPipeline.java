@@ -2,7 +2,10 @@ package de.maulmann;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
+import software.amazon.awssdk.auth.credentials.AwsCredentialsProviderChain;
 import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
+import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.core.async.AsyncRequestBody;
 import software.amazon.awssdk.http.nio.netty.NettyNioAsyncHttpClient;
 import software.amazon.awssdk.regions.Region;
@@ -25,8 +28,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -81,17 +86,44 @@ public class SiteBuilderPipeline {
         public final AtomicInteger orphansSwept = new AtomicInteger(0);
     }
 
+    public static AwsCredentialsProvider resolveAwsCredentialsProvider() {
+        return AwsCredentialsProviderChain.builder()
+                .credentialsProviders(
+                        DefaultCredentialsProvider.builder().build(),
+                        ProfileCredentialsProvider.create("JavaSDKUser")
+                )
+                .build();
+    }
+
     public static void main(String[] args) {
         long pipelineStart = System.currentTimeMillis();
         log.info("==================================================");
         log.info("🚀 STARTING MASTER BUILD PIPELINE");
         log.info("==================================================");
 
+        boolean forceSync = false;
+        boolean reconcile = false;
+        if (args != null) {
+            for (String arg : args) {
+                if ("--force-sync".equalsIgnoreCase(arg) || "-f".equalsIgnoreCase(arg)) {
+                    forceSync = true;
+                } else if ("--reconcile".equalsIgnoreCase(arg) || "-r".equalsIgnoreCase(arg)) {
+                    reconcile = true;
+                }
+            }
+        }
+        if (forceSync) {
+            log.info("⚡ Force-Sync mode enabled: ignoring cached hashes for remote image upload.");
+        }
+        if (reconcile) {
+            log.info("🔍 Reconciliation mode enabled: auditing remote S3 images against local output.");
+        }
+
         DeploymentMetrics metrics = new DeploymentMetrics();
 
         try (S3AsyncClient s3AsyncClient = S3AsyncClient.builder()
                 .region(REGION)
-                .credentialsProvider(DefaultCredentialsProvider.builder().build())
+                .credentialsProvider(resolveAwsCredentialsProvider())
                 .httpClientBuilder(NettyNioAsyncHttpClient.builder()
                         .maxConcurrency(500)
                         .connectionAcquisitionTimeout(Duration.ofSeconds(60))
@@ -111,7 +143,7 @@ public class SiteBuilderPipeline {
 
             boolean hasAwsCredentials = false;
             try {
-                DefaultCredentialsProvider.builder().build().resolveCredentials();
+                resolveAwsCredentialsProvider().resolveCredentials();
                 hasAwsCredentials = true;
             } catch (Exception _) {
                 log.info("ℹ️ Local build: AWS credentials not found. Skipping S3 upload & compression phases.");
@@ -128,7 +160,7 @@ public class SiteBuilderPipeline {
                     // --- PHASE 4: Upload Images (No Compression) ---
                     log.info("\n[PHASE 4] Syncing Images to S3...");
                     long p4Start = System.currentTimeMillis();
-                    processAndUploadImages(s3AsyncClient, tracker, metrics);
+                    processAndUploadImages(s3AsyncClient, tracker, metrics, forceSync, reconcile);
                     metrics.phase4Ms = System.currentTimeMillis() - p4Start;
 
                     // Speichere die neuen Hashes, damit sie beim nächsten Build bekannt sind
@@ -279,7 +311,40 @@ public class SiteBuilderPipeline {
         }
     }
 
+    public static Set<String> fetchExistingS3Keys(S3AsyncClient s3Client, String prefix) {
+        Set<String> keys = new HashSet<>();
+        if (s3Client == null) return keys;
+        try {
+            String continuationToken = null;
+            boolean isDone = false;
+            while (!isDone) {
+                ListObjectsV2Request.Builder reqBuilder = ListObjectsV2Request.builder()
+                        .bucket(BUCKET_NAME)
+                        .prefix(prefix);
+                if (continuationToken != null) {
+                    reqBuilder.continuationToken(continuationToken);
+                }
+                ListObjectsV2Response res = s3Client.listObjectsV2(reqBuilder.build()).join();
+                for (S3Object obj : res.contents()) {
+                    keys.add(obj.key());
+                }
+                if (res.nextContinuationToken() == null) {
+                    isDone = true;
+                } else {
+                    continuationToken = res.nextContinuationToken();
+                }
+            }
+        } catch (Exception e) {
+            log.warn("Could not fetch existing S3 keys for prefix {}: {}", prefix, e.getMessage());
+        }
+        return keys;
+    }
+
     private static void processAndUploadImages(S3AsyncClient s3Client, FileTracker tracker, DeploymentMetrics metrics) throws Exception {
+        processAndUploadImages(s3Client, tracker, metrics, false, false);
+    }
+
+    public static void processAndUploadImages(S3AsyncClient s3Client, FileTracker tracker, DeploymentMetrics metrics, boolean forceSync, boolean reconcile) throws Exception {
         Path imagesDir = Paths.get(IMAGES_DIR);
         Path outputDir = Paths.get(OUTPUT_DIR);
 
@@ -291,6 +356,15 @@ public class SiteBuilderPipeline {
         AtomicInteger uploadCount = metrics.imagesUploaded;
         AtomicInteger skipCount = metrics.imagesSkipped;
 
+        Set<String> existingRemoteKeys = null;
+        if (reconcile && s3Client != null) {
+            log.info("-> [Reconciliation] Auditing remote S3 images in bucket '{}'...", BUCKET_NAME);
+            existingRemoteKeys = fetchExistingS3Keys(s3Client, "images/");
+            log.info("-> [Reconciliation] Found {} existing image objects in S3.", existingRemoteKeys.size());
+        }
+
+        final Set<String> remoteKeys = existingRemoteKeys;
+
         List<CompletableFuture<Void>> futures = new ArrayList<>();
         try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
             try (Stream<Path> paths = Files.walk(imagesDir)) {
@@ -299,22 +373,26 @@ public class SiteBuilderPipeline {
                     String contentType = determineImageContentType(fileName);
 
                     if (contentType != null) {
+                        String s3Key = outputDir.relativize(file).toString().replace("\\", "/");
                         String currentHash = tracker.getHash(file);
                         String storedHash = tracker.getStoredHash(file);
-                        if (currentHash != null && currentHash.equals(storedHash)) {
+
+                        boolean isMissingRemote = (remoteKeys != null && !remoteKeys.contains(s3Key));
+                        if (!forceSync && !isMissingRemote && currentHash != null && currentHash.equals(storedHash)) {
                             skipCount.incrementAndGet();
                             return;
                         }
 
-                        String s3Key = outputDir.relativize(file).toString().replace("\\", "/");
+                        if (isMissingRemote && currentHash != null && currentHash.equals(storedHash)) {
+                            log.info("-> [Reconcile] Detected image missing on S3 despite cached hash: {}", s3Key);
+                        }
+
                         futures.add(CompletableFuture.runAsync(() -> {
                             try {
                                 metrics.imageBytes.addAndGet(Files.size(file));
                                 uploadRawFile(s3Client, file, s3Key, contentType, CACHE_LONG, uploadCount, tracker, currentHash);
                             } catch (Exception e) {
-                                if (!e.toString().contains("SdkClientException") && (e.getCause() == null || !e.getCause().toString().contains("SdkClientException"))) {
-                                    log.error("Failed to upload image {}: {}", fileName, e.getMessage());
-                                }
+                                log.error("Failed to process upload for image {}: {}", fileName, e.getMessage());
                             }
                         }, executor));
                     }
@@ -427,6 +505,9 @@ public class SiteBuilderPipeline {
         }
     }
 
+    private static final int MAX_UPLOAD_RETRIES = 3;
+    private static final long INITIAL_RETRY_BACKOFF_MS = 250;
+
     private static void invalidateCloudFrontCache() {
         log.info("\n[PHASE 6] Invalidating CloudFront Edge Caches...");
 
@@ -437,7 +518,7 @@ public class SiteBuilderPipeline {
 
         try (CloudFrontClient cloudFrontClient = CloudFrontClient.builder()
                 .region(Region.AWS_GLOBAL)
-                .credentialsProvider(DefaultCredentialsProvider.builder().build())
+                .credentialsProvider(resolveAwsCredentialsProvider())
                 .build()) {
 
             software.amazon.awssdk.services.cloudfront.model.Paths cfPaths =
@@ -464,11 +545,33 @@ public class SiteBuilderPipeline {
         }
     }
 
-    private static void uploadBytes(S3AsyncClient s3Client, String s3Key, byte[] data, String contentType, String contentEncoding, String cacheControl, AtomicInteger counter, FileTracker tracker, Path localFile, String preCalculatedHash) {
-        if (tracker != null && localFile != null) {
-            tracker.updateHash(localFile, preCalculatedHash);
+    private static void executeWithRetry(String s3Key, Runnable action) {
+        int attempt = 0;
+        long backoffMs = INITIAL_RETRY_BACKOFF_MS;
+        while (true) {
+            attempt++;
+            try {
+                action.run();
+                return;
+            } catch (Exception e) {
+                if (attempt >= MAX_UPLOAD_RETRIES) {
+                    log.error("Failed to upload {} to S3 after {} attempts: {}", s3Key, attempt, e.getMessage());
+                    throw e;
+                }
+                log.warn("Upload attempt {} failed for {}: {}. Retrying in {} ms...",
+                        attempt, s3Key, e.getMessage(), backoffMs);
+                try {
+                    Thread.sleep(backoffMs);
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                    throw new RuntimeException("Upload interrupted for " + s3Key, ie);
+                }
+                backoffMs *= 2;
+            }
         }
+    }
 
+    static void uploadBytes(S3AsyncClient s3Client, String s3Key, byte[] data, String contentType, String contentEncoding, String cacheControl, AtomicInteger counter, FileTracker tracker, Path localFile, String preCalculatedHash) {
         if (s3Client == null) return;
 
         PutObjectRequest request = PutObjectRequest.builder()
@@ -481,15 +584,15 @@ public class SiteBuilderPipeline {
                 .metadata(SECURITY_METADATA)
                 .build();
 
-        s3Client.putObject(request, AsyncRequestBody.fromBytes(data)).join();
-        counter.incrementAndGet();
-    }
+        executeWithRetry(s3Key, () -> s3Client.putObject(request, AsyncRequestBody.fromBytes(data)).join());
 
-    private static void uploadRawFile(S3AsyncClient s3Client, Path localFile, String s3Key, String contentType, String cacheControl, AtomicInteger counter, FileTracker tracker, String preCalculatedHash) {
         if (tracker != null && localFile != null) {
             tracker.updateHash(localFile, preCalculatedHash);
         }
+        counter.incrementAndGet();
+    }
 
+    static void uploadRawFile(S3AsyncClient s3Client, Path localFile, String s3Key, String contentType, String cacheControl, AtomicInteger counter, FileTracker tracker, String preCalculatedHash) {
         if (s3Client == null) return;
 
         PutObjectRequest request = PutObjectRequest.builder()
@@ -502,7 +605,11 @@ public class SiteBuilderPipeline {
                 .storageClass(StorageClass.INTELLIGENT_TIERING)
                 .build();
 
-        s3Client.putObject(request, AsyncRequestBody.fromFile(localFile)).join();
+        executeWithRetry(s3Key, () -> s3Client.putObject(request, AsyncRequestBody.fromFile(localFile)).join());
+
+        if (tracker != null && localFile != null) {
+            tracker.updateHash(localFile, preCalculatedHash);
+        }
         counter.incrementAndGet();
     }
 
