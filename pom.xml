@@ -123,6 +123,16 @@
             <artifactId>native-linux-x86_64</artifactId>
             <version>${brotli4j.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.aayushatharva.brotli4j</groupId>
+            <artifactId>native-windows-x86_64</artifactId>
+            <version>${brotli4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.aayushatharva.brotli4j</groupId>
+            <artifactId>native-osx-aarch64</artifactId>
+            <version>${brotli4j.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

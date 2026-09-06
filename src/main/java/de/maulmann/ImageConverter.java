@@ -275,9 +275,11 @@ public class ImageConverter {
     private static String findAvifenc() {
         String[] paths = {
             "avifenc",
+            "avifenc.exe",
             "/opt/homebrew/bin/avifenc",
             "/usr/local/bin/avifenc",
-            "/usr/bin/avifenc"
+            "/usr/bin/avifenc",
+            "C:\\Program Files\\libavif\\avifenc.exe"
         };
         for (String path : paths) {
             try {
