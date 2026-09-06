@@ -33,13 +33,20 @@ public class FileTracker {
     }
 
     /**
+     * Normalizes path separators to standard forward slashes for cross-platform compatibility.
+     */
+    public static String normalizePath(Path file) {
+        return file.toString().replace('\\', '/');
+    }
+
+    /**
      * Checks if the MD5 hash of the file has changed compared to the stored value.
      */
     public boolean hasChanged(Path file) {
         try {
             String currentHash = calculateMD5(file);
             if (currentHash == null) return true;
-            String storedHash = hashes.getProperty(file.toString());
+            String storedHash = hashes.getProperty(normalizePath(file));
             return !currentHash.equals(storedHash);
         } catch (Exception e) {
             return true; // Assume changed on error
@@ -51,7 +58,7 @@ public class FileTracker {
      */
     public void updateHash(Path file, String preCalculatedHash) {
         if (preCalculatedHash != null) {
-            hashes.setProperty(file.toString(), preCalculatedHash);
+            hashes.setProperty(normalizePath(file), preCalculatedHash);
         }
     }
 
@@ -70,7 +77,7 @@ public class FileTracker {
      * Returns the previously stored hash for a file.
      */
     public String getStoredHash(Path file) {
-        return hashes.getProperty(file.toString());
+        return hashes.getProperty(normalizePath(file));
     }
 
     /**
