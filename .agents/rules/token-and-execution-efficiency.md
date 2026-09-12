@@ -62,3 +62,8 @@ Execute only after the inner loop passes and task logic is finalized:
 ## 8. High-Signal Communication
 - Eliminate conversational pleasantries, repetitive apologies, and generic introductions.
 - Always provide concise, actionable markdown with direct clickable `file://` links.
+
+## 9. Subagent Boundary Isolation & Delegation Protocol
+- **Offload Heavy Terminal Runs**: Offload full regression builds (`mvn test`), full static site generation (`mvn exec:java@local`), and bulk web scrapers to isolated subagents or background tasks.
+- **Context Protection**: A subagent executes with a fresh context window and does not drag the primary chat's conversation history.
+- **Executive Memo Delivery**: Subagents must return only a structured **Executive Diff Memo** (e.g., test pass/fail count, list of modified files, specific failure stacktraces) to the parent chat, never raw multi-thousand-line logs.
