@@ -20,31 +20,31 @@ The development infrastructure combines **Local Generation (Antigravity)**, **ID
 ```mermaid
 flowchart TD
     subgraph Step1 ["1. Initialization (IntelliJ)"]
-        Main[Branch: main] -->|Create Feature Branch| FB[Branch: feature/xyz]
+        Main["Branch: main"] -->|Create Feature Branch| FB["Branch: feature/xyz"]
     end
 
     subgraph Step2 ["2. Generation (Antigravity)"]
-        FB -->|Run Prompts / Tasks| AG[Antigravity Agent (Terminal / IDE)]
-        AG -->|Generate / Refactor Code| Files[Local File Changes]
+        FB -->|Run Prompts / Tasks| AG["Antigravity Agent (Terminal / IDE)"]
+        AG -->|Generate / Refactor Code| Files["Local File Changes"]
     end
 
     subgraph Step3_4 ["3 & 4. Compile, Analyze & Refine (IntelliJ)"]
-        Files --> Sync[IntelliJ File Sync]
-        Sync --> Compile[Syntax & Type Check / Compile]
-        Sync --> DBCheck[Verify MySQL / Data Logic via IntelliJ DB Tools]
-        Sync --> StaticAnalysis[Static Code Analysis & Lints]
+        Files --> Sync["IntelliJ File Sync"]
+        Sync --> Compile["Syntax & Type Check / Compile"]
+        Sync --> DBCheck["Verify MySQL / Data Logic via IntelliJ DB Tools"]
+        Sync --> StaticAnalysis["Static Code Analysis & Lints"]
     end
 
     subgraph Step5 ["5. Commit & Push (IntelliJ)"]
-        Compile & DBCheck & StaticAnalysis --> Commit[IntelliJ Commit & Push to Origin]
+        Compile & DBCheck & StaticAnalysis --> Commit["IntelliJ Commit & Push to Origin"]
     end
 
     subgraph Step6 ["6. PR & Jules Integration (GitHub)"]
-        Commit --> PR[Create Pull Request on GitHub]
-        PR --> Jules[Jules Agent (Async on GitHub)]
-        Jules -->|Generate Missing Unit Tests| Tests[Unit & Integration Tests]
-        Jules -->|Run Build & Verify CI| CI[GitHub Actions Build Checks]
-        CI -->|Pass & Review| Merge[Merge into main]
+        Commit --> PR["Create Pull Request on GitHub"]
+        PR --> Jules["Jules Agent (Async on GitHub)"]
+        Jules -->|Generate Missing Unit Tests| Tests["Unit & Integration Tests"]
+        Jules -->|Run Build & Verify CI| CI["GitHub Actions Build Checks"]
+        CI -->|Pass & Review| Merge["Merge into main"]
     end
 ```
 
@@ -76,34 +76,34 @@ To prevent faulty generated code from reaching production, **Antigravity, Jules,
 ```mermaid
 flowchart TD
     subgraph Inputs ["1. Raw Inputs & Assets"]
-        HTML[Raw Content / HTML <br/><code>content/</code>]
-        IMG[Original Images <br/><code>images/</code>]
-        FTL[Freemarker Templates <br/><code>src/main/resources/templates/</code>]
-        FS[(Firebase Firestore <br/>Card Ratings)]
+        HTML["Raw Content / HTML (content/)"]
+        IMG["Original Images (images/)"]
+        FTL["Freemarker Templates (templates/)"]
+        FS[("Firebase Firestore (Card Ratings)")]
     end
 
     subgraph CoreEngine ["2. Processing Engine (Java 26)"]
-        Loader[CardDataLoader & HtmlToJsonConverter]
-        Tracker[TimestampTracker & FileTracker]
-        Gen[CardPageGenerator & SharedTemplates]
-        Binder[BinderPageGenerator & RainbowPageGenerator]
-        Static[StaticPageGenerator]
-        Schema[CardSchemaGenerator (JSON-LD)]
-        ImgConv[ImageConverter (Pure AVIF/Responsive)]
-        Rating[FirestoreRatingInjector]
+        Loader["CardDataLoader & HtmlToJsonConverter"]
+        Tracker["TimestampTracker & FileTracker"]
+        Gen["CardPageGenerator & SharedTemplates"]
+        Binder["BinderPageGenerator & RainbowPageGenerator"]
+        Static["StaticPageGenerator"]
+        Schema["CardSchemaGenerator (JSON-LD)"]
+        ImgConv["ImageConverter (Pure AVIF/Responsive)"]
+        Rating["FirestoreRatingInjector"]
     end
 
     subgraph Optimization ["3. Post-Processing & Compression"]
-        Min[HTMLMinifier & CSSMinifier]
-        CompGZ[GZIPCompressor]
-        CompBR[BrotliCompressor]
-        Sitemap[SitemapGenerator]
+        Min["HTMLMinifier & CSSMinifier"]
+        CompGZ["GZIPCompressor"]
+        CompBR["BrotliCompressor"]
+        Sitemap["SitemapGenerator"]
     end
 
     subgraph Outputs ["4. Output & Deployment"]
-        Dist[Static Site Output <br/><code>output/</code>]
-        AWS[AWS S3 + CloudFront CDN]
-        INow[IndexNow API Submissions]
+        Dist["Static Site Output (output/)"]
+        AWS["AWS S3 + CloudFront CDN"]
+        INow["IndexNow API Submissions"]
     end
 
     HTML --> Loader
