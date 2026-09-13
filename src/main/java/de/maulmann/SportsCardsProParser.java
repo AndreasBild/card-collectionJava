@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -28,8 +26,6 @@ import org.slf4j.LoggerFactory;
 public class SportsCardsProParser {
 
     private static final Logger logger = LoggerFactory.getLogger(SportsCardsProParser.class);
-    private static final Pattern CARD_NUMBER_PATTERN = Pattern.compile("#([A-Za-z0-9\\-]+)");
-    private static final Pattern YEAR_PATTERN = Pattern.compile("\\b(19\\d\\d|20\\d\\d)\\b");
 
     public record SportsCardsProItem(
             String productId,
@@ -293,21 +289,11 @@ public class SportsCardsProParser {
     }
 
     private static String extractCardNumber(String title) {
-        if (title == null) return null;
-        Matcher m = CARD_NUMBER_PATTERN.matcher(title);
-        if (m.find()) {
-            return m.group(1);
-        }
-        return null;
+        return CardUtils.extractCardNumber(title);
     }
 
     private static String extractYear(String setName) {
-        if (setName == null) return null;
-        Matcher m = YEAR_PATTERN.matcher(setName);
-        if (m.find()) {
-            return m.group(1);
-        }
-        return null;
+        return CardUtils.extractYear(setName);
     }
 
     public static void main(String[] args) throws IOException {

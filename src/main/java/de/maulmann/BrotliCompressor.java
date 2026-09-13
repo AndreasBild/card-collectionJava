@@ -29,11 +29,7 @@ public class BrotliCompressor {
              OutputStream out = Files.newOutputStream(outputFile.toPath());
              BrotliOutputStream brOut = new BrotliOutputStream(out, params)) {
 
-            byte[] buffer = new byte[65536];
-            int len;
-            while ((len = in.read(buffer)) != -1) {
-                brOut.write(buffer, 0, len);
-            }
+            in.transferTo(brOut);
         }
     }
 

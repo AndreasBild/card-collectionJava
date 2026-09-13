@@ -86,4 +86,22 @@ class CardUtilsTest {
         assertEquals("UTF-8", cfg.getDefaultEncoding());
         assertSame(cfg, CardUtils.getFreeMarkerConfig(), "Must return identical singleton instance");
     }
+
+    @Test
+    @DisplayName("extractCardNumber should parse card numbers with '#' prefix")
+    void testExtractCardNumber() {
+        assertNull(CardUtils.extractCardNumber(null));
+        assertNull(CardUtils.extractCardNumber("No card number here"));
+        assertEquals("33", CardUtils.extractCardNumber("1997-98 Fleer Metal Universe #33 Juwan Howard"));
+        assertEquals("RC-1", CardUtils.extractCardNumber("Topps Chrome #RC-1 Refractor"));
+    }
+
+    @Test
+    @DisplayName("extractYear should parse 4-digit years")
+    void testExtractYear() {
+        assertNull(CardUtils.extractYear(null));
+        assertNull(CardUtils.extractYear("No year text"));
+        assertEquals("1997", CardUtils.extractYear("1997-98 Fleer Metal"));
+        assertEquals("2021", CardUtils.extractYear("Panini Prizm 2021"));
+    }
 }

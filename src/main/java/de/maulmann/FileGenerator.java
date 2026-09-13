@@ -1,6 +1,5 @@
 package de.maulmann;
 
-import freemarker.template.Configuration;
 import freemarker.template.Template;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,8 +43,6 @@ public class FileGenerator {
         }
         return cachedFilteredCards;
     }
-
-    private static final SimpleLazyConstant<Configuration> FM_CONFIG = SimpleLazyConstant.of(CardUtils::getFreeMarkerConfig);
 
     // --- 0. LATEST METADATA FÜR PWA ---
     public static void generateLatestMetadata(int totalCardCount) {
@@ -259,7 +256,7 @@ public class FileGenerator {
             Files.createDirectories(outPath.getParent());
         }
 
-        Template template = FM_CONFIG.get().getTemplate(templateName);
+        Template template = CardUtils.getFreeMarkerConfig().getTemplate(templateName);
 
         StringWriter stringWriter = new StringWriter();
         template.process(data, stringWriter);

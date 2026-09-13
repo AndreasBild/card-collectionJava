@@ -253,7 +253,7 @@ public class CardMetadataRenderer {
             item.put("url", relUrl);
             item.put("link", relUrl);
 
-            String rawImageBase = c.filenameBase.substring(0, c.filenameBase.lastIndexOf("-"));
+            String rawImageBase = c.getRawImageBase();
             String imageBaseName = CardPageGenerator.resolveDiskImageBase(c.seasonFolder, rawImageBase, c);
             String imgBase = RELATIVE_IMAGES_PATH + "/" + c.seasonFolder + "/" + imageBaseName + "-front";
             String thumbAvif = imgBase + "-200w.avif";
@@ -392,9 +392,7 @@ public class CardMetadataRenderer {
     }
 
     public static String getPrimaryPlayer(CardData c) {
-        String raw = c.get("Player");
-        if (raw == null || raw.trim().isEmpty()) return "Juwan Howard";
-        return raw.contains(",") ? raw.split(",")[0].trim() : raw.trim();
+        return (c != null) ? c.getPrimaryPlayer() : "Juwan Howard";
     }
 
     public static String getPrimaryPlayerName(String player) {
@@ -410,7 +408,6 @@ public class CardMetadataRenderer {
     }
 
     public static String formatMulti(String s) {
-        if (s == null) return "";
-        return s.replace(",", " / ");
+        return CardUtils.formatMulti(s);
     }
 }

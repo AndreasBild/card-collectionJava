@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import de.maulmann.TriviaManager.FaqItem;
 
 /**
  * Isolated service for generating JSON-LD Schema.org metadata and FAQ sections for card detail pages.
@@ -75,8 +76,6 @@ public class CardSchemaGenerator {
         return new CachedRatingData(0, 0.0, 0.0, 0.0);
     }
 
-    public record FaqItem(String question, String answer) {}
-
     public static List<FaqItem> computeFaqItems(CardData c) {
         List<FaqItem> items = new ArrayList<>();
 
@@ -136,10 +135,8 @@ public class CardSchemaGenerator {
             items.add(new FaqItem("Is this card professionally graded?", "Yes, this card has been graded by " + c.get("Grading Co.") + " and received a condition score of " + c.get("Grade") + "."));
         }
 
-        List<TriviaManager.FaqItem> rookieFaqs = TRIVIA_MANAGER.getFaqs("rookieFaq", c.attributes);
-        for (TriviaManager.FaqItem faq : rookieFaqs) {
-            items.add(new FaqItem(faq.question(), faq.answer()));
-        }
+        List<FaqItem> rookieFaqs = TRIVIA_MANAGER.getFaqs("rookieFaq", c.attributes);
+        items.addAll(rookieFaqs);
 
         return items;
     }

@@ -27,8 +27,6 @@ public class TcdbParser {
     private static final Logger logger = LoggerFactory.getLogger(TcdbParser.class);
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    private static final Pattern CARD_NUMBER_PATTERN = Pattern.compile("#([A-Za-z0-9\\-]+)");
-    private static final Pattern YEAR_PATTERN = Pattern.compile("\\b(19\\d\\d|20\\d\\d)\\b");
     private static final Pattern PRINT_RUN_PATTERN = Pattern.compile("(?i)PR\\s*(\\d+)");
     private static final Pattern SID_CID_PATTERN = Pattern.compile("sid/(\\d+)/cid/(\\d+)");
 
@@ -53,8 +51,11 @@ public class TcdbParser {
             return List.of();
         }
 
-        JsonNode root = MAPPER.readTree(jsonPath.toFile());
-        if (!root.isArray()) {
+        JsonNode root;
+        try (var in = Files.newInputStream(jsonPath)) {
+            root = MAPPER.readTree(in);
+        }
+        if (root == null || !root.isArray()) {
             return List.of();
         }
 
@@ -257,21 +258,11 @@ public class TcdbParser {
     }
 
     private static String extractCardNumber(String title) {
-        if (title == null) return null;
-        Matcher m = CARD_NUMBER_PATTERN.matcher(title);
-        if (m.find()) {
-            return m.group(1);
-        }
-        return null;
+        return CardUtils.extractCardNumber(title);
     }
 
     private static String extractYear(String text) {
-        if (text == null) return null;
-        Matcher m = YEAR_PATTERN.matcher(text);
-        if (m.find()) {
-            return m.group(1);
-        }
-        return null;
+        return CardUtils.extractYear(text);
     }
 
     private static String extractPrintRun(String text) {
