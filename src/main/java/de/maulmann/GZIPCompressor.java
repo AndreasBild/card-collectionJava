@@ -27,11 +27,7 @@ public class GZIPCompressor {
                  }
              }) {
 
-            byte[] buffer = new byte[65536]; // Increased from 1KB to 64KB
-            int len;
-            while ((len = in.read(buffer)) != -1) {
-                gzipOS.write(buffer, 0, len);
-            }
+            in.transferTo(gzipOS);
         }
     }
 

@@ -188,6 +188,24 @@ public class CardData {
     }
 
     /**
+     * Returns the base image filename without unique stable ID suffix.
+     */
+    public String getRawImageBase() {
+        if (filenameBase == null) return "card";
+        int lastDash = filenameBase.lastIndexOf("-");
+        return (lastDash > 0) ? filenameBase.substring(0, lastDash) : filenameBase;
+    }
+
+    /**
+     * Returns the primary player name for multi-player or collection cards.
+     */
+    public String getPrimaryPlayer() {
+        String raw = get("Player");
+        if (raw == null || raw.trim().isEmpty()) return "Juwan Howard";
+        return raw.contains(",") ? raw.split(",")[0].trim() : raw.trim();
+    }
+
+    /**
      * Checks if this card is serial-numbered matching Juwan Howard's primary jersey #5.
      */
     public boolean isJerseyNumberMatch() {

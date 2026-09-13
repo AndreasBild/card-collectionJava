@@ -87,4 +87,25 @@ public final class CardUtils {
         return str != null && !str.trim().isEmpty()
                 && !str.equalsIgnoreCase("null") && !str.equals("-");
     }
+
+    private static final java.util.regex.Pattern CARD_NUMBER_PATTERN = java.util.regex.Pattern.compile("#([A-Za-z0-9\\-]+)");
+    private static final java.util.regex.Pattern YEAR_PATTERN = java.util.regex.Pattern.compile("\\b(19\\d\\d|20\\d\\d)\\b");
+
+    /**
+     * Extracts card number from title or text with '#' prefix (e.g. "#33" -> "33").
+     */
+    public static String extractCardNumber(String text) {
+        if (text == null) return null;
+        java.util.regex.Matcher m = CARD_NUMBER_PATTERN.matcher(text);
+        return m.find() ? m.group(1) : null;
+    }
+
+    /**
+     * Extracts 4-digit year from title or text (e.g. "1997-98 Fleer" -> "1997").
+     */
+    public static String extractYear(String text) {
+        if (text == null) return null;
+        java.util.regex.Matcher m = YEAR_PATTERN.matcher(text);
+        return m.find() ? m.group(1) : null;
+    }
 }

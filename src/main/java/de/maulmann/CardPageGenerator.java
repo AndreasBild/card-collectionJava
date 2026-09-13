@@ -302,7 +302,7 @@ public class CardPageGenerator {
         String metaDesc = generateMetaDescription(c);
 
         String seasonImgFolder = RELATIVE_IMAGES_PATH + "/" + c.seasonFolder;
-        String imageBaseName = c.filenameBase.substring(0, c.filenameBase.lastIndexOf("-"));
+        String imageBaseName = c.getRawImageBase();
         String resolvedImageBase = resolveDiskImageBase(c.seasonFolder, imageBaseName, c);
 
         String frontImgPath = seasonImgFolder + "/" + resolvedImageBase + "-front.avif";
@@ -316,7 +316,7 @@ public class CardPageGenerator {
         data.put("initialRatingAverage", String.format(Locale.US, "%.1f", cachedRating.average()));
         data.put("initialRatingPercentage", (int) Math.round(cachedRating.percentage()));
 
-        List<CardSchemaGenerator.FaqItem> faqItems = CardSchemaGenerator.computeFaqItems(c);
+        var faqItems = CardSchemaGenerator.computeFaqItems(c);
         String faqHtml = CardSchemaGenerator.generateFaqHtml(faqItems);
         String frontImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + resolvedImageBase + "-front.avif";
         String cardPreload = "<link rel=\"preload\" as=\"image\" type=\"image/avif\" " +
@@ -658,38 +658,10 @@ public class CardPageGenerator {
 
     public static List<Map<String, String>> findSameBrandCards(de.maulmann.CardData currentCard, de.maulmann.CardIndex index, int limit) {
         if (currentCard == null || index == null || limit <= 0) return Collections.emptyList();
-
-        String season = currentCard.get("Season");
         String brand = currentCard.get("Brand");
         if (!isValid(brand)) return Collections.emptyList();
 
-        List<de.maulmann.CardData> pool = index.getByBrand(brand);
-        List<de.maulmann.CardData> selected = new ArrayList<>();
-        Set<String> addedIds = new HashSet<>();
-        if (currentCard.stableId != null) addedIds.add(currentCard.stableId);
-
-        // Pass 1: Same season & same brand
-        if (isValid(season)) {
-            for (de.maulmann.CardData c : pool) {
-                if (selected.size() >= limit) break;
-                if (c.stableId != null && !addedIds.contains(c.stableId) && season.equalsIgnoreCase(c.get("Season"))) {
-                    selected.add(c);
-                    addedIds.add(c.stableId);
-                }
-            }
-        }
-
-        // Pass 2: Fallback across other seasons if count < limit
-        if (selected.size() < limit) {
-            for (de.maulmann.CardData c : pool) {
-                if (selected.size() >= limit) break;
-                if (c.stableId != null && !addedIds.contains(c.stableId)) {
-                    selected.add(c);
-                    addedIds.add(c.stableId);
-                }
-            }
-        }
-
+        List<de.maulmann.CardData> selected = findCardsByDimension(currentCard, index.getByBrand(brand), null, limit);
         List<Map<String, String>> result = new ArrayList<>();
         for (de.maulmann.CardData c : selected) {
             String title = formatShowcaseCardTitle(c);
@@ -706,17 +678,32 @@ public class CardPageGenerator {
 
     public static List<Map<String, String>> findSameCompanyCards(de.maulmann.CardData currentCard, de.maulmann.CardIndex index, Set<String> excludeStableIds, int limit) {
         if (currentCard == null || index == null || limit <= 0) return Collections.emptyList();
-
-        String season = currentCard.get("Season");
         String company = currentCard.get("Company");
         if (!isValid(company)) return Collections.emptyList();
 
-        List<de.maulmann.CardData> pool = index.getByCompany(company);
+        List<de.maulmann.CardData> selected = findCardsByDimension(currentCard, index.getByCompany(company), excludeStableIds, limit);
+        List<Map<String, String>> result = new ArrayList<>();
+        for (de.maulmann.CardData c : selected) {
+            String title = formatShowcaseCardTitle(c);
+            String url = getRelativeCardUrl(currentCard, c);
+            result.add(Map.of("title", title, "url", url));
+        }
+        return result;
+    }
+
+    private static List<de.maulmann.CardData> findCardsByDimension(
+            de.maulmann.CardData currentCard,
+            List<de.maulmann.CardData> pool,
+            Set<String> excludeStableIds,
+            int limit) {
+        if (currentCard == null || pool == null || pool.isEmpty() || limit <= 0) return Collections.emptyList();
+
+        String season = currentCard.get("Season");
         List<de.maulmann.CardData> selected = new ArrayList<>();
         Set<String> addedIds = new HashSet<>(excludeStableIds != null ? excludeStableIds : Collections.emptySet());
         if (currentCard.stableId != null) addedIds.add(currentCard.stableId);
 
-        // Pass 1: Same season & same company
+        // Pass 1: Same season & same dimension
         if (isValid(season)) {
             for (de.maulmann.CardData c : pool) {
                 if (selected.size() >= limit) break;
@@ -737,14 +724,7 @@ public class CardPageGenerator {
                 }
             }
         }
-
-        List<Map<String, String>> result = new ArrayList<>();
-        for (de.maulmann.CardData c : selected) {
-            String title = formatShowcaseCardTitle(c);
-            String url = getRelativeCardUrl(currentCard, c);
-            result.add(Map.of("title", title, "url", url));
-        }
-        return result;
+        return selected;
     }
 
     private static String formatShowcaseCardTitle(de.maulmann.CardData c) {
@@ -785,7 +765,7 @@ public class CardPageGenerator {
 
         for (de.maulmann.CardData c : cards) {
             String seasonFolder = c.seasonFolder != null ? c.seasonFolder : "Unknown_Season";
-            String rawImageBase = c.filenameBase.contains("-") ? c.filenameBase.substring(0, c.filenameBase.lastIndexOf("-")) : c.filenameBase;
+            String rawImageBase = c.getRawImageBase();
             String resolvedImageBase = resolveDiskImageBase(seasonFolder, rawImageBase, c);
 
             boolean frontExists = checkSideImageExists(seasonFolder, resolvedImageBase, "front", extensions);

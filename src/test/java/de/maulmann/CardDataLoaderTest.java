@@ -79,4 +79,21 @@ class CardDataLoaderTest {
         assertNotNull(cards);
         assertTrue(cards.isEmpty(), "Malformed JSON must return empty list without throwing");
     }
+
+    @Test
+    @DisplayName("CardData helper methods getRawImageBase and getPrimaryPlayer should work as expected")
+    void testCardDataHelpers() {
+        CardJson c = CardJson.builder()
+                .player("Juwan Howard, Calbert Cheaney")
+                .season("1997-98")
+                .company("Fleer")
+                .brand("SkyBox")
+                .variant("Base")
+                .cardNumber("10")
+                .build();
+        CardData cardData = new CardData(c, "unique123");
+
+        assertEquals("Juwan Howard", cardData.getPrimaryPlayer());
+        assertEquals(cardData.filenameBase.substring(0, cardData.filenameBase.lastIndexOf("-")), cardData.getRawImageBase());
+    }
 }
