@@ -5189,3 +5189,78 @@ img[loading="lazy"]:not([src=""]) {
     color: #a7f3d0;
     margin-left: 4px;
 }
+
+/* --- PWA WINDOW CONTROLS OVERLAY & UPDATE TOAST --- */
+@media (display-mode: window-controls-overlay) {
+    .topnav {
+        padding-left: env(titlebar-area-x, 0);
+        padding-right: calc(100% - env(titlebar-area-x, 0) - env(titlebar-area-width, 100%));
+        height: env(titlebar-area-height, 52px);
+        app-region: drag;
+        -webkit-app-region: drag;
+    }
+    .topnav a,
+    .topnav button,
+    .topnav input,
+    .nav-dropdown,
+    .burger-icon-button {
+        app-region: no-drag;
+        -webkit-app-region: no-drag;
+    }
+}
+
+.pwa-update-toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 10001;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--accent-gold);
+    box-shadow: var(--shadow-gold), var(--shadow-lg);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    backdrop-filter: blur(12px);
+    animation: pwaSlideUp 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+@keyframes pwaSlideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.pwa-update-toast button {
+    background: var(--accent-gold);
+    color: #0b0f19;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 6px 14px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.pwa-update-toast button:hover {
+    background: var(--accent-gold-hover);
+    transform: translateY(-1px);
+}
+
+.pwa-update-toast button#pwa-update-dismiss {
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 1.25rem;
+    padding: 0 4px;
+    line-height: 1;
+}
+
+.pwa-update-toast button#pwa-update-dismiss:hover {
+    color: var(--text-primary);
+    transform: none;
+}
+

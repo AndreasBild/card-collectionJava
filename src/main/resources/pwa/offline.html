@@ -3,15 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#317EFB">
+    <meta name="theme-color" content="#0b0f19">
     <title>Offline - Maulmann Cards</title>
     <style>
+        :root {
+            --bg-dark: #0b0f19;
+            --bg-card: #151b2b;
+            --accent-gold: #d4af37;
+            --text-primary: #f0f2f5;
+            --text-secondary: #9ca3af;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+        * { box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             text-align: center;
-            padding: 50px 20px;
-            background: #f4f7f9;
-            color: #333;
+            padding: 30px 20px;
+            background: var(--bg-dark);
+            color: var(--text-primary);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -20,40 +29,90 @@
             margin: 0;
         }
         .container {
-            max-width: 400px;
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        h1 { color: #2c3e50; margin-top: 0; }
-        p { color: #5a6c7d; line-height: 1.6; }
-        .back-btn {
-            display: inline-block;
-            margin-top: 25px;
-            padding: 12px 24px;
-            background: #3a7504;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 600;
-            transition: background 0.2s;
-        }
-        .back-btn:hover {
-            background: #2d5a03;
+            max-width: 440px;
+            width: 100%;
+            background: var(--bg-card);
+            padding: 40px 30px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
         }
         .icon {
-            font-size: 64px;
-            margin-bottom: 20px;
+            font-size: 56px;
+            margin-bottom: 16px;
+            display: inline-block;
+            filter: drop-shadow(0 4px 12px rgba(212, 175, 55, 0.2));
+        }
+        h1 {
+            color: var(--text-primary);
+            font-size: 1.75rem;
+            margin: 0 0 12px;
+            letter-spacing: -0.5px;
+        }
+        p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0 0 24px;
+        }
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .btn-primary {
+            display: block;
+            padding: 12px 20px;
+            background: var(--accent-gold);
+            color: #0b0f19;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: none;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+        .btn-primary:hover {
+            opacity: 0.92;
+            transform: translateY(-1px);
+        }
+        .cached-links {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        .cached-link {
+            font-size: 0.85rem;
+            color: var(--accent-gold);
+            text-decoration: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            transition: background 0.2s;
+        }
+        .cached-link:hover {
+            background: rgba(212, 175, 55, 0.15);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="icon">📡❌</div>
+    <main class="container">
+        <div class="icon" aria-hidden="true">📡❌</div>
         <h1>You are offline</h1>
-        <p>It seems you don't have an internet connection right now. Some pages you've visited before might still be available.</p>
-        <a href="./index.html" class="back-btn" title="Return to Home">Return to Home</a>
-    </div>
+        <p>No active network connection detected. Previously visited cards and pages stored in your local cache remain available.</p>
+        <div class="btn-group">
+            <button type="button" class="btn-primary" onclick="window.location.reload()">Try Reconnecting</button>
+        </div>
+        <nav class="cached-links" aria-label="Cached Pages">
+            <a href="./index.html" class="cached-link">Home</a>
+            <a href="./Juwan-Howard-Collection.html" class="cached-link">Collection</a>
+            <a href="./binder.html" class="cached-link">3D Binder</a>
+        </nav>
+    </main>
 </body>
 </html>
