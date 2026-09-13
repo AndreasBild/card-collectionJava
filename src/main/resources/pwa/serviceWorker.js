@@ -4,22 +4,13 @@ const CACHE_NAME = APP_PREFIX + VERSION;
 const IMAGE_CACHE = APP_PREFIX + 'images_v1';
 const OFFLINE_URL = './offline.html';
 
-// The files to make available for offline use.
+// The core app shell to pre-cache during installation. Heavy collection pages are cached on-demand.
 const URLS = [
     './',
     './index.html',
-    './Juwan-Howard-Collection.html',
-    './binder.html',
-    './Baseball.html',
-    './Flawless.html',
-    './Panini.html',
-    './Wantlist.html',
-    './rainbows.html',
-    './imprint.html',
-    './privacy.html',
-    './collector-features.js',
     OFFLINE_URL,
     './manifest.json',
+    './collector-features.js',
     './css/main.css',
     './favicon/android-chrome-192x192.png',
     './favicon/android-chrome-512x512.png',
@@ -63,61 +54,96 @@ self.addEventListener('activate', function (e) {
 
 // Maximum number of card scans to store offline in LRU image cache
 const MAX_IMAGE_CACHE_ENTRIES = 250;
+let trimScheduled = false;
 
-async function trimCache(cacheName, maxItems) {
-    try {
-        const cache = await caches.open(cacheName);
-        const keys = await cache.keys();
-        if (keys.length > maxItems) {
-            await cache.delete(keys[0]);
-            await trimCache(cacheName, maxItems);
-        }
-    } catch (_) {}
+function scheduleTrimImageCache() {
+    if (trimScheduled) return;
+    trimScheduled = true;
+    setTimeout(async () => {
+        trimScheduled = false;
+        try {
+            const cache = await caches.open(IMAGE_CACHE);
+            const keys = await cache.keys();
+            if (keys.length > MAX_IMAGE_CACHE_ENTRIES) {
+                const toDelete = keys.slice(0, keys.length - MAX_IMAGE_CACHE_ENTRIES);
+                await Promise.all(toDelete.map(k => cache.delete(k)));
+            }
+        } catch (_) {}
+    }, 3000);
 }
 
 // Respond with cached resources
 self.addEventListener('fetch', function (event) {
     const request = event.request;
-    const url = new URL(request.url);
 
     // Skip non-GET requests
     if (request.method !== 'GET') return;
 
-    // Strategy for Images: Cache First, then Network with LRU pruning
+    // Strategy for Images: Cache First, then Network with debounced LRU pruning
     if (request.destination === 'image') {
         event.respondWith(
-            caches.open(IMAGE_CACHE).then(cache => {
-                return cache.match(request).then(response => {
-                    return response || fetch(request).then(networkResponse => {
-                        if (networkResponse.ok) {
-                            cache.put(request, networkResponse.clone());
-                            trimCache(IMAGE_CACHE, MAX_IMAGE_CACHE_ENTRIES);
-                        }
-                        return networkResponse;
-                    });
-                });
+            caches.open(IMAGE_CACHE).then(async (cache) => {
+                const cached = await cache.match(request);
+                if (cached) return cached;
+                try {
+                    const networkResponse = await fetch(request);
+                    if (networkResponse && networkResponse.ok) {
+                        cache.put(request, networkResponse.clone());
+                        scheduleTrimImageCache();
+                    }
+                    return networkResponse;
+                } catch (_) {
+                    return cached || Response.error();
+                }
             })
         );
         return;
     }
 
-    // Strategy for HTML and other assets: Stale-While-Revalidate
+    // Strategy for Navigation (HTML documents): Fast Cache with Navigation Preload & SWR background update
+    if (request.mode === 'navigate') {
+        event.respondWith((async () => {
+            const cache = await caches.open(CACHE_NAME);
+            const cachedResponse = await cache.match(request, { ignoreSearch: true });
+
+            const networkFetch = (async () => {
+                try {
+                    const preloadResponse = await event.preloadResponse;
+                    const networkResponse = preloadResponse || await fetch(request);
+                    if (networkResponse && networkResponse.ok && request.url.startsWith('http')) {
+                        await cache.put(request, networkResponse.clone());
+                    }
+                    return networkResponse;
+                } catch (_) {
+                    return null;
+                }
+            })();
+
+            if (cachedResponse) {
+                event.waitUntil(networkFetch);
+                return cachedResponse;
+            }
+
+            const response = await networkFetch;
+            if (response) return response;
+
+            const offlineResponse = await cache.match(OFFLINE_URL);
+            return offlineResponse || Response.error();
+        })());
+        return;
+    }
+
+    // Strategy for Static Assets (CSS, JS, manifest, fonts): Stale-While-Revalidate
     event.respondWith(
         caches.open(CACHE_NAME).then(cache => {
             return cache.match(request, { ignoreSearch: true }).then(cachedResponse => {
                 const fetchPromise = fetch(request).then(networkResponse => {
-                    // Update cache with new version
-                    if (networkResponse.ok && request.url.startsWith('http')) {
+                    if (networkResponse && networkResponse.ok && request.url.startsWith('http')) {
                         const responseClone = networkResponse.clone();
                         event.waitUntil(cache.put(request, responseClone));
                     }
                     return networkResponse;
-                }).catch(() => {
-                    // If network fails and no cache, show offline page for HTML requests
-                    if (request.mode === 'navigate') {
-                        return cache.match(OFFLINE_URL);
-                    }
-                });
+                }).catch(() => null);
                 return cachedResponse || fetchPromise;
             });
         })

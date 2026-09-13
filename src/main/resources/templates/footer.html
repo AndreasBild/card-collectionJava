@@ -28,39 +28,33 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const subscribeBtn = document.getElementById('subscribePush');
-        if (subscribeBtn && 'serviceWorker' in navigator && 'PushManager' in window) {
-            navigator.serviceWorker.ready.then(registration => {
-                if (!registration || !registration.pushManager) return;
-                registration.pushManager.getSubscription().then(subscription => {
-                    if (!subscription) {
-                        subscribeBtn.style.display = 'inline-block';
-                    }
-                }).catch(() => {
-                });
-            }).catch(() => {
-            });
+        if (!subscribeBtn || !('Notification' in window) || !('serviceWorker' in navigator)) return;
 
-            subscribeBtn.addEventListener('click', () => {
-                navigator.serviceWorker.ready.then(registration => {
-                    if (localStorage.getItem('user_consent') !== 'accepted') {
-                        if (window.showConsentBanner) {
-                            window.showConsentBanner();
-                        }
-                        return;
-                    }
-
-                    if ('Notification' in window) {
-                        Notification.requestPermission().then(permission => {
-                            if (permission === 'granted') {
-                                subscribeBtn.style.display = 'none';
-                                alert('Notifications enabled! You will receive updates about new cards.');
-                            }
-                        }).catch(() => {
-                        });
-                    }
-                }).catch(() => {
-                });
-            });
+        const isEnabled = localStorage.getItem('pwa_notifications_enabled') === 'true';
+        if (Notification.permission === 'default' && !isEnabled) {
+            subscribeBtn.style.display = 'inline-block';
         }
+
+        subscribeBtn.addEventListener('click', () => {
+            if (localStorage.getItem('user_consent') !== 'accepted') {
+                if (window.showConsentBanner) {
+                    window.showConsentBanner();
+                }
+                return;
+            }
+
+            Notification.requestPermission().then(permission => {
+                if (permission === 'granted') {
+                    localStorage.setItem('pwa_notifications_enabled', 'true');
+                    subscribeBtn.textContent = '✓ Notifications Enabled';
+                    subscribeBtn.style.pointerEvents = 'none';
+                    setTimeout(() => {
+                        subscribeBtn.style.display = 'none';
+                    }, 2500);
+                } else if (permission === 'denied') {
+                    subscribeBtn.style.display = 'none';
+                }
+            }).catch(() => {});
+        });
     });
 </script>
