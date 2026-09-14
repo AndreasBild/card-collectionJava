@@ -49,4 +49,4 @@ mvn exec:java@local
   gh pr create --base main --head $(git branch --show-current) --fill
   ```
 - Pushing also triggers `.github/workflows/auto-pr.yml` on GitHub for automated Jules CI review.
-- **Never stop before opening the PR:** The workflow must complete with the PR opened and reported to the user.
+- **Mandatory Completion Invariant:** A task is **NOT** finished until the code has passed quality gates, changes are pushed, and the Pull Request is opened via `gh pr create`. Antigravity must never stop or complete an implementation turn without creating the PR and sharing its URL.
