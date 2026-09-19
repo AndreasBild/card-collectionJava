@@ -446,6 +446,9 @@ public class CardPageGenerator {
         data.put("estimatedValueFormatted", CardPricingService.formatUsd(c.estimatedValue));
         data.put("lastSoldPriceFormatted", CardPricingService.formatUsd(c.lastSoldPrice));
         data.put("purchasePriceFormatted", CardPricingService.formatUsd(c.purchasePrice));
+        data.put("beckettValueFormatted", CardPricingService.formatUsd(c.beckettValue));
+        data.put("hasBeckettValue", c.beckettValue != null && c.beckettValue > 0);
+        data.put("isBeckettEstimated", c.estimatedValue != null && c.beckettValue != null && c.estimatedValue.equals(c.beckettValue) && c.lastSoldPrice == null);
         data.put("lastSoldDate", c.lastSoldDate != null ? c.lastSoldDate : "");
 
         Double growthPct = CardPricingService.calculateGrowthPct(c);
@@ -459,6 +462,7 @@ public class CardPageGenerator {
         data.put("hasPricing", (c.estimatedValue != null && c.estimatedValue > 0)
                 || (c.lastSoldPrice != null && c.lastSoldPrice > 0)
                 || (c.purchasePrice != null && c.purchasePrice > 0)
+                || (c.beckettValue != null && c.beckettValue > 0)
                 || (c.priceHistory != null && !c.priceHistory.isEmpty()));
 
         data.put("point130Url", MarketPriceFetcher.build130PointUrl(c));

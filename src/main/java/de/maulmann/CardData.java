@@ -28,6 +28,7 @@ public class CardData {
     public final Double lastSoldPrice;
     public final String lastSoldDate;
     public final Double purchasePrice;
+    public final Double beckettValue;
     public final Integer popTotal;
     public final Integer popHigher;
     public final String id;
@@ -75,6 +76,11 @@ public class CardData {
         this.lastSoldPrice = c.lastSoldPrice();
         this.lastSoldDate = c.lastSoldDate();
         this.purchasePrice = c.purchasePrice();
+        this.beckettValue = c.beckettValue();
+        if (c.beckettValue() != null) {
+            this.attributes.put("Beckett Value", CardPricingService.formatUsd(c.beckettValue()));
+            this.attributes.put("BV", CardPricingService.formatUsd(c.beckettValue()));
+        }
         this.priceHistory = c.priceHistory() != null ? Collections.unmodifiableList(c.priceHistory()) : Collections.emptyList();
 
         if (c.popReport() != null) {

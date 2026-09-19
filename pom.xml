@@ -208,6 +208,15 @@
                             <mainClass>de.maulmann.TcdbParser</mainClass>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>enrich-beckett</id>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>de.maulmann.MrtorteBeckettEnricher</mainClass>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>

@@ -103,4 +103,29 @@ class CardPricingServiceTest {
         CardData cdRefractor = new CardData(refractor, "refractor");
         assertTrue(cdRefractor.isRefractorOrFoil(), "Must identify Atomic Refractor as foil/refractor");
     }
+
+    @Test
+    @DisplayName("Should use beckettValue as fallback in getEffectiveValue when estimatedValue is absent")
+    void testEffectiveValueWithBeckettFallback() {
+        CardJson c = CardJson.builder()
+                .player("Juwan Howard")
+                .season("1994-95")
+                .cardNumber("278")
+                .beckettValue(1.25)
+                .build();
+        CardData cd = new CardData(c, "c-bv");
+
+        assertEquals(1.25, CardPricingService.getEffectiveValue(cd));
+
+        // When estimatedValue is present, it takes precedence
+        CardJson cWithEst = CardJson.builder()
+                .player("Juwan Howard")
+                .season("1994-95")
+                .cardNumber("278")
+                .estimatedValue(5.0)
+                .beckettValue(1.25)
+                .build();
+        CardData cdWithEst = new CardData(cWithEst, "c-est");
+        assertEquals(5.0, CardPricingService.getEffectiveValue(cdWithEst));
+    }
 }

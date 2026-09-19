@@ -23,18 +23,30 @@ public class CardDataLoader {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     public static List<CardJson> loadCardsFromJson(String jsonPath) {
-        return loadCardsFromJson(jsonPath, MarketDataCache.loadDefault());
+        return loadCardsFromJson(jsonPath, MarketDataCache.loadDefault(), BeckettValueCache.loadDefault());
     }
 
     public static List<CardJson> loadCardsFromJson(String jsonPath, MarketDataCache marketCache) {
-        List<CardJson> rawCards = loadRawCards(jsonPath);
-        if (marketCache == null || marketCache.size() == 0) {
-            return rawCards;
-        }
+        return loadCardsFromJson(jsonPath, marketCache, BeckettValueCache.loadDefault());
+    }
 
+    public static List<CardJson> loadCardsFromJson(String jsonPath, MarketDataCache marketCache, BeckettValueCache beckettCache) {
+        List<CardJson> rawCards = loadRawCards(jsonPath);
         return rawCards.stream().map(c -> {
-            Optional<MarketDataEntry> match = marketCache.findMatch(c.id(), c.certNumber());
-            return match.map(c::enrichWith).orElse(c);
+            CardJson enriched = c;
+            if (marketCache != null && marketCache.size() > 0) {
+                Optional<MarketDataEntry> match = marketCache.findMatch(enriched.id(), enriched.certNumber());
+                if (match.isPresent()) {
+                    enriched = enriched.enrichWith(match.get());
+                }
+            }
+            if (beckettCache != null && beckettCache.size() > 0) {
+                Optional<BeckettValueEntry> bvMatch = beckettCache.get(enriched.id());
+                if (bvMatch.isPresent()) {
+                    enriched = enriched.enrichWith(bvMatch.get());
+                }
+            }
+            return enriched;
         }).toList();
     }
 
@@ -45,6 +57,11 @@ public class CardDataLoader {
 
     public static List<CardData> loadCards(Path path, MarketDataCache marketCache) {
         List<CardJson> jsonList = loadCardsFromJson(path.toString(), marketCache);
+        return jsonList.stream().map(CardData::new).toList();
+    }
+
+    public static List<CardData> loadCards(Path path, MarketDataCache marketCache, BeckettValueCache beckettCache) {
+        List<CardJson> jsonList = loadCardsFromJson(path.toString(), marketCache, beckettCache);
         return jsonList.stream().map(CardData::new).toList();
     }
 
