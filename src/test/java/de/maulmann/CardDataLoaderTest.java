@@ -96,4 +96,41 @@ class CardDataLoaderTest {
         assertEquals("Juwan Howard", cardData.getPrimaryPlayer());
         assertEquals(cardData.filenameBase.substring(0, cardData.filenameBase.lastIndexOf("-")), cardData.getRawImageBase());
     }
+
+    @Test
+    @DisplayName("loadCardsFromJson should enrich cards with BeckettValueCache")
+    void testLoadCardsFromJsonWithBeckettCache() throws IOException {
+        Path jsonFile = tempDir.resolve("cards_bv_test.json");
+        String jsonContent = """
+            [
+              {
+                "id": "1994-95-collectors-choice-278",
+                "player": "Juwan Howard",
+                "season": "1994-95",
+                "brand": "Collector's Choice",
+                "cardNumber": "278"
+              }
+            ]
+            """;
+        Files.writeString(jsonFile, jsonContent);
+
+        BeckettValueCache bvCache = new BeckettValueCache();
+        bvCache.put("1994-95-collectors-choice-278", BeckettValueEntry.builder()
+                .cardName("1994-95 Collector's Choice #278 RC")
+                .beckettValue(1.25)
+                .category("Commons/Inserts")
+                .build());
+
+        List<CardJson> cards = CardDataLoader.loadCardsFromJson(jsonFile.toString(), new MarketDataCache(), bvCache);
+        assertNotNull(cards);
+        assertEquals(1, cards.size());
+        CardJson enriched = cards.getFirst();
+        assertEquals(1.25, enriched.beckettValue());
+        assertEquals(1.25, enriched.estimatedValue(), "Estimated value should fallback to beckettValue when not set");
+
+        CardData cardData = new CardData(enriched);
+        assertEquals(1.25, cardData.beckettValue);
+        assertEquals("$1.25", cardData.attributes.get("Beckett Value"));
+        assertEquals(1.25, CardPricingService.getEffectiveValue(cardData));
+    }
 }

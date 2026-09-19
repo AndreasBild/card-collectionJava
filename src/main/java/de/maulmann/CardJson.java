@@ -36,7 +36,8 @@ public record CardJson(
         @JsonProperty("priceHistory") List<PricePoint> priceHistory,
         @JsonProperty("popReport") PopReport popReport,
         @JsonProperty("popTotal") Integer popTotal,
-        @JsonProperty("popHigher") Integer popHigher
+        @JsonProperty("popHigher") Integer popHigher,
+        @JsonProperty("beckettValue") @JsonAlias({"bv", "beckett_value"}) Double beckettValue
 ) {
 
     public CardJson(
@@ -63,7 +64,7 @@ public record CardJson(
                 id, player, season, team, company, brand, theme, variant,
                 cardNumber, serialNumber, printRun, gradingCompany, grade, null,
                 collection, notes, isAutograph, isPatch, isRookie,
-                null, null, null, null, null, null, null, null
+                null, null, null, null, null, null, null, null, null
         );
     }
 
@@ -88,6 +89,7 @@ public record CardJson(
             case "autograph", "auto", "isautograph" -> isAutograph ? "Yes" : "No";
             case "memorabilia", "game used", "patch", "ispatch", "mem / patch" -> isPatch ? "Yes" : "No";
             case "rookie", "rookie card", "isrookie" -> isRookie ? "Yes" : "No";
+            case "beckett value", "beckettvalue", "bv" -> beckettValue != null ? String.valueOf(beckettValue) : null;
             default -> null;
         };
     }
@@ -121,7 +123,43 @@ public record CardJson(
                 .priceHistory(this.priceHistory != null && !this.priceHistory.isEmpty() ? this.priceHistory : entry.priceHistory())
                 .popReport(this.popReport != null ? this.popReport : entry.popReport())
                 .popTotal(this.popTotal != null ? this.popTotal : (entry.popReport() != null ? entry.popReport().totalGraded() : null))
-                .popHigher(this.popHigher != null ? this.popHigher : (entry.popReport() != null ? entry.popReport().popHigher() : null));
+                .popHigher(this.popHigher != null ? this.popHigher : (entry.popReport() != null ? entry.popReport().popHigher() : null))
+                .beckettValue(this.beckettValue);
+        return b.build();
+    }
+
+    public CardJson enrichWith(BeckettValueEntry entry) {
+        if (entry == null || entry.beckettValue() == null) return this;
+        Double effectiveEst = (this.estimatedValue != null && this.estimatedValue > 0.0) ? this.estimatedValue : entry.beckettValue();
+        Builder b = builder()
+                .id(this.id)
+                .player(this.player)
+                .season(this.season)
+                .team(this.team)
+                .company(this.company)
+                .brand(this.brand)
+                .theme(this.theme)
+                .variant(this.variant)
+                .cardNumber(this.cardNumber)
+                .serialNumber(this.serialNumber)
+                .printRun(this.printRun)
+                .gradingCompany(this.gradingCompany)
+                .grade(this.grade)
+                .certNumber(this.certNumber)
+                .collection(this.collection)
+                .notes(this.notes)
+                .isAutograph(this.isAutograph)
+                .isPatch(this.isPatch)
+                .isRookie(this.isRookie)
+                .estimatedValue(effectiveEst)
+                .lastSoldPrice(this.lastSoldPrice)
+                .lastSoldDate(this.lastSoldDate)
+                .purchasePrice(this.purchasePrice)
+                .priceHistory(this.priceHistory)
+                .popReport(this.popReport)
+                .popTotal(this.popTotal)
+                .popHigher(this.popHigher)
+                .beckettValue(this.beckettValue != null ? this.beckettValue : entry.beckettValue());
         return b.build();
     }
 
@@ -157,6 +195,7 @@ public record CardJson(
         private PopReport popReport;
         private Integer popTotal;
         private Integer popHigher;
+        private Double beckettValue;
 
         public Builder id(String id) { this.id = id; return this; }
         public Builder player(String player) { this.player = player; return this; }
@@ -185,6 +224,7 @@ public record CardJson(
         public Builder popReport(PopReport popReport) { this.popReport = popReport; return this; }
         public Builder popTotal(Integer popTotal) { this.popTotal = popTotal; return this; }
         public Builder popHigher(Integer popHigher) { this.popHigher = popHigher; return this; }
+        public Builder beckettValue(Double beckettValue) { this.beckettValue = beckettValue; return this; }
 
         public CardJson build() {
             return new CardJson(
@@ -192,7 +232,7 @@ public record CardJson(
                     cardNumber, serialNumber, printRun, gradingCompany, grade, certNumber,
                     collection, notes, isAutograph, isPatch, isRookie,
                     estimatedValue, lastSoldPrice, lastSoldDate, purchasePrice,
-                    priceHistory, popReport, popTotal, popHigher
+                    priceHistory, popReport, popTotal, popHigher, beckettValue
             );
         }
     }

@@ -228,6 +228,12 @@ ${topNavHtml?no_esc}
                     <td class="specs-td"><strong class="specs-value-highlight">${estimatedValueFormatted}</strong></td>
                 </tr>
             </#if>
+            <#if (beckettValueFormatted??) && (beckettValueFormatted != "—")>
+                <tr>
+                    <th class="specs-th">Beckett Value (BV)</th>
+                    <td class="specs-td"><strong class="specs-value-highlight">${beckettValueFormatted}</strong></td>
+                </tr>
+            </#if>
         </table>
     </div>
 
@@ -238,7 +244,7 @@ ${topNavHtml?no_esc}
                     <div class="market-header">
                         <div class="market-title-group">
                             <h2 class="market-title">&#x1F4C8; Market Value &amp; Price History</h2>
-                            <p class="market-subtitle">Confirmed sales (eBay / PSA / Fanatics / Self-Purchase)</p>
+                            <p class="market-subtitle">Confirmed sales &amp; valuations (eBay / PSA / Fanatics / Beckett / Self-Purchase)</p>
                         </div>
                         <#if growthPctFormatted != "">
                             <span class="growth-badge <#if isGrowthPositive>growth-positive<#else>growth-negative</#if>">
@@ -249,8 +255,14 @@ ${topNavHtml?no_esc}
                     <div class="market-metrics-grid">
                         <#if estimatedValueFormatted != "—">
                         <div class="market-metric">
-                            <span class="metric-label">Estimated Value (FMV)</span>
+                            <span class="metric-label"><#if (isBeckettEstimated?? && isBeckettEstimated)>Beckett Book Value (BV)<#else>Estimated Value (FMV)</#if></span>
                             <span class="metric-value metric-primary">${estimatedValueFormatted}</span>
+                        </div>
+                        </#if>
+                        <#if (beckettValueFormatted??) && (beckettValueFormatted != "—") && !(isBeckettEstimated?? && isBeckettEstimated)>
+                        <div class="market-metric">
+                            <span class="metric-label">Beckett Book Value</span>
+                            <span class="metric-value">${beckettValueFormatted}</span>
                         </div>
                         </#if>
                         <#if lastSoldPriceFormatted != "—">
