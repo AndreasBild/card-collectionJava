@@ -13,6 +13,7 @@
 - **Surgical Diff Edits:** Use narrow replacement blocks (`replace_file_content`). Never rewrite entire large classes unmodified.
 - **Dual-Loop Execution:** Inner loop uses `mvn test-compile` and targeted `mvn test -Dtest=TargetClassTest`. Full regression (`mvn test`, `mvn exec:java@local`) is reserved for pre-PR quality gates.
 - **Dynamic Model Tier:** Recommend **Tier 1 (Fast / Medium)** for templates, styling, single tests, and scrapers; **Tier 2 (Deep Reasoning / Pro)** for concurrency, complex valuation algorithms (IQR trimming), and cloud sync pipelines.
+- **Continuous Self-Improvement:** Autonomously reflect on errors/feedback to refine `.agents/` rules and skills via `self-improvement` while preserving all core invariants.
 
 ## 3. Progressive Skill Router (On-Demand Execution)
 Operational runbooks consume ~30 tokens of metadata until triggered. Use dedicated project skills in `.agents/skills/`:
@@ -28,3 +29,5 @@ Operational runbooks consume ~30 tokens of metadata until triggered. Use dedicat
 | **Market Data** | `enrich-market-data` | Fetch sales comps (Point130), TCDB checklists, and apply IQR outlier filtering. |
 | **Git & PR** | `git-pr-workflow` | Execute 6-stage lifecycle, stage semantic commits, and automate `gh pr create` handoff to Jules. |
 | **Context Audit** | `optimize-context` | Audit token budgets, detect rule bloat, and adapt to new model optimizations. |
+| **Self-Improvement** | `self-improvement` | Recursive self-improvement loop: detect inefficiencies, audit invariants, and refine config. |
+

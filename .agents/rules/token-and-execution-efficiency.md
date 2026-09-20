@@ -67,3 +67,9 @@ Execute only after the inner loop passes and task logic is finalized:
 - **Offload Heavy Terminal Runs**: Offload full regression builds (`mvn test`), full static site generation (`mvn exec:java@local`), and bulk web scrapers to isolated subagents or background tasks.
 - **Context Protection**: A subagent executes with a fresh context window and does not drag the primary chat's conversation history.
 - **Executive Memo Delivery**: Subagents must return only a structured **Executive Diff Memo** (e.g., test pass/fail count, list of modified files, specific failure stacktraces) to the parent chat, never raw multi-thousand-line logs.
+
+## 10. Recursive Self-Improvement & Continuous Calibration
+- **Post-Task Reflection:** When a command fails due to obsolete flags, or when the user corrects an assumption or workflow preference, the agent must autonomously evaluate if `.agents/rules/` or `.agents/skills/` need updating.
+- **Progressive Ingestion:** Routine friction points and user tips must be distilled into the appropriate skill (or rule) via the `self-improvement` skill, ensuring the same mistake is never repeated.
+- **Non-Interference with Invariants:** System invariants (branch protection, no raw dataset dumps into context, compiler preview levels) must never be relaxed or modified during self-improvement.
+
