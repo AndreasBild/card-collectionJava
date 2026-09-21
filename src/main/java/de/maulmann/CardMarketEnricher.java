@@ -187,11 +187,14 @@ public class CardMarketEnricher {
             boolean modified = false;
             boolean isStale = staleDays > 0 && cache.isStale(cardId, staleDays);
 
+            boolean queried = false;
+
             // 1. Graded Census / Pop Report Lookup
             if (enrichCerts && certNum != null && !certNum.isBlank()) {
                 String grader = c.get("Grading Co.");
                 if (grader != null && !grader.isBlank() && (forceRefresh || isStale || currentEntry.popReport() == null)) {
                     certsFound++;
+                    queried = true;
                     logger.info("Querying {} cert #{} for card: {} (ID: {})", grader, certNum, c.filenameBase, cardId);
                     Optional<MarketDataEntry> certDataOpt = psaScraper.fetchCertData(grader, certNum);
 
@@ -220,6 +223,7 @@ public class CardMarketEnricher {
             // 2. 130point / eBay Market Sales Comps Lookup
             if (enrichComps && (forceRefresh || isStale || currentEntry.estimatedValue() == null || currentEntry.priceHistory().isEmpty())) {
                 compsQueried++;
+                queried = true;
                 logger.info("Querying 130point comps for card: {} (ID: {})", c.filenameBase, cardId);
                 Optional<Point130Client.CardCompResult> compResultOpt = point130Client.fetchComps(c);
 
@@ -248,9 +252,12 @@ public class CardMarketEnricher {
 
             if (modified) {
                 cache.put(cardId, currentEntry);
-                processedCount++;
             } else if (existingOpt.isPresent()) {
                 skippedCached++;
+            }
+
+            if (queried) {
+                processedCount++;
             }
 
             if (currentEntry.estimatedValue() != null || currentEntry.lastSoldPrice() != null) {
