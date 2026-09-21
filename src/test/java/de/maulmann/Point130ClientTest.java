@@ -212,4 +212,65 @@ class Point130ClientTest {
         assertEquals(2, result.comps().size());
         assertEquals(24.99, result.comps().get(0).price(), 0.01);
     }
+
+    @Test
+    @DisplayName("Should prevent cross-matching between high-value parallels and base listings")
+    void testParallelVsBaseRelevanceFiltering() {
+        Point130Client client = new Point130Client();
+
+        // 1. PMG Red (#/100)
+        CardData pmgRedCard = new CardData(new CardJson.Builder()
+                .player("Juwan Howard")
+                .brand("Fleer Metal Universe")
+                .cardNumber("33 PMG")
+                .variant("Precious Metal Gems Red")
+                .printRun(100)
+                .build());
+
+        // Must match PMG listing
+        assertTrue(client.isRelevantMatch("1997-98 Fleer Metal Universe Juwan Howard #33 PMG Red /100 BGS 8.5", pmgRedCard));
+        assertTrue(client.isRelevantMatch("1997 Metal Universe Precious Metal Gems Juwan Howard #33", pmgRedCard));
+
+        // Must NOT match Base card listing
+        assertFalse(client.isRelevantMatch("1997-98 Fleer Metal Universe Juwan Howard #33", pmgRedCard));
+        assertFalse(client.isRelevantMatch("1997 Metal Universe Base Set Juwan Howard Card #33", pmgRedCard));
+
+        // Must NOT match PMG Green listing
+        assertFalse(client.isRelevantMatch("1997-98 Fleer Metal Universe Juwan Howard #33 PMG Green /100", pmgRedCard));
+
+        // 2. Flair Showcase Legacy Collection (Row 2 #64)
+        CardData legacyRow2Card = new CardData(new CardJson.Builder()
+                .player("Juwan Howard")
+                .brand("Flair Showcase")
+                .cardNumber("ROW 2 SEAT 64")
+                .theme("Style")
+                .variant("Legacy Collection")
+                .printRun(100)
+                .build());
+
+        // Must match Legacy Row 2 listing
+        assertTrue(client.isRelevantMatch("1997-98 Flair Showcase Legacy Collection Row 2 Juwan Howard #64 /100", legacyRow2Card));
+
+        // Must NOT match Base Row 2 listing
+        assertFalse(client.isRelevantMatch("1997-98 Flair Showcase Row 2 Juwan Howard #64", legacyRow2Card));
+        assertFalse(client.isRelevantMatch("1997-98 Flair Showcase Style Juwan Howard #64", legacyRow2Card));
+
+        // Must NOT match Legacy Row 0 or Row 1 listing
+        assertFalse(client.isRelevantMatch("1997-98 Flair Showcase Legacy Collection Row 0 Juwan Howard #64 /100", legacyRow2Card));
+        assertFalse(client.isRelevantMatch("1997-98 Flair Showcase Legacy Collection Row 1 Juwan Howard #64 /100", legacyRow2Card));
+
+        // 3. Base Card rejecting parallel listings
+        CardData baseCard = new CardData(new CardJson.Builder()
+                .player("Juwan Howard")
+                .brand("Fleer Metal Universe")
+                .cardNumber("33")
+                .variant("Base")
+                .theme("Base Set")
+                .build());
+
+        assertTrue(client.isRelevantMatch("1997-98 Fleer Metal Universe Juwan Howard #33", baseCard));
+        assertFalse(client.isRelevantMatch("1997-98 Fleer Metal Universe Juwan Howard #33 PMG /100", baseCard));
+        assertFalse(client.isRelevantMatch("1997-98 Fleer Metal Universe Juwan Howard #33 Precious Metal Gems Red", baseCard));
+        assertFalse(client.isRelevantMatch("1997-98 Fleer Metal Universe Juwan Howard #33 Refractor", baseCard));
+    }
 }

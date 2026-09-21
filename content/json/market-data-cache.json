@@ -51,7 +51,7 @@
   },
   "1998-99-topps-finest-arena-stars-as15" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 1.97,
     "lastSoldPrice" : 1.97,
@@ -122,7 +122,7 @@
   },
   "1998-99-topps-155" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 3.19,
     "lastSoldPrice" : 3.19,
@@ -330,7 +330,7 @@
   },
   "2003-04-topps-finest-99" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 7.95,
     "lastSoldPrice" : 7.95,
@@ -343,8 +343,8 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "7.95",
       "sportscardspro_psa10" : "25.0",
+      "sportscardspro_ungraded" : "7.95",
       "sportscardspro_id" : "8330986",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-2003-finest/juwan-howard-99"
     }
@@ -433,7 +433,7 @@
   },
   "1998-99-ultra-27" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 0.25,
     "lastSoldPrice" : 0.25,
@@ -446,8 +446,8 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "0.25",
       "sportscardspro_id" : "8884408",
+      "sportscardspro_ungraded" : "0.25",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1998-ultra/juwan-howard-27"
     }
   },
@@ -503,7 +503,7 @@
   },
   "1997-98-topps-topps-40-t40-32" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 1.31,
     "lastSoldPrice" : 1.31,
@@ -516,8 +516,8 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "1.31",
       "sportscardspro_id" : "7264116",
+      "sportscardspro_ungraded" : "1.31",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1997-topps-topps-40/juwan-howard-t40-32"
     }
   },
@@ -554,7 +554,7 @@
   },
   "1998-99-topps-east-west-refractor-ew11" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 47.53,
     "lastSoldPrice" : 47.53,
@@ -821,26 +821,11 @@
     "certNumber" : null,
     "lastQueried" : "2026-08-29T07:06:33.181978Z",
     "popReport" : null,
-    "estimatedValue" : 18.5,
-    "lastSoldPrice" : 18.5,
-    "lastSoldDate" : "2026-03-04",
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
     "purchasePrice" : null,
-    "priceHistory" : [ {
-      "date" : "2014-07-16",
-      "price" : 4.25,
-      "source" : "eBay (Auction)",
-      "grade" : ""
-    }, {
-      "date" : "2025-06-18",
-      "price" : 22.5,
-      "source" : "eBay (Auction)",
-      "grade" : ""
-    }, {
-      "date" : "2026-03-04",
-      "price" : 18.5,
-      "source" : "eBay (Auction)",
-      "grade" : ""
-    } ],
+    "priceHistory" : [ ],
     "metadata" : { }
   },
   "2000-01-fleer-triple-crown-173" : {
@@ -966,7 +951,7 @@
   },
   "1996-97-skybox-z-force-95" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 0.99,
     "lastSoldPrice" : 0.99,
@@ -979,8 +964,8 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "0.99",
       "sportscardspro_id" : "7264097",
+      "sportscardspro_ungraded" : "0.99",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1996-skybox-z-force/juwan-howard-95"
     }
   },
@@ -1040,7 +1025,7 @@
   },
   "1998-99-upper-deck-forces-sky-f29" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 4.05,
     "lastSoldPrice" : 4.05,
@@ -1053,14 +1038,14 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "4.05",
       "sportscardspro_id" : "8958661",
+      "sportscardspro_ungraded" : "4.05",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1998-upper-deck-forces/juwan-howard-quantum-bronze-f29"
     }
   },
   "2005-06-topps-total-199" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 0.24,
     "lastSoldPrice" : 0.24,
@@ -1073,8 +1058,8 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "0.24",
       "sportscardspro_id" : "8723520",
+      "sportscardspro_ungraded" : "0.24",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-2005-topps-total/juwan-howard-199"
     }
   },
@@ -1188,7 +1173,7 @@
   },
   "1999-00-topps-finest-refractor-56" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 30.0,
     "lastSoldPrice" : 30.0,
@@ -1265,25 +1250,12 @@
     "certNumber" : null,
     "lastQueried" : "2026-08-29T07:06:34.319406Z",
     "popReport" : null,
-    "estimatedValue" : 28.25,
-    "lastSoldPrice" : 36.0,
-    "lastSoldDate" : "2026-02-26",
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
     "purchasePrice" : null,
-    "priceHistory" : [ {
-      "date" : "2025-06-18",
-      "price" : 20.5,
-      "source" : "eBay (Auction)",
-      "grade" : ""
-    }, {
-      "date" : "2026-02-26",
-      "price" : 36.0,
-      "source" : "eBay (Auction)",
-      "grade" : ""
-    } ],
-    "metadata" : {
-      "psaItemDescription" : "FINEST MYSTERY",
-      "psaGradeRaw" : "NM-MT 8"
-    }
+    "priceHistory" : [ ],
+    "metadata" : { }
   },
   "1997-98-topps-finest-catalyst-embossed-refractor-158-c8-sn45" : {
     "certNumber" : null,
@@ -1404,7 +1376,7 @@
   },
   "1994-classic-4-sports-printers-proof-5" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 1.19,
     "lastSoldPrice" : 1.19,
@@ -1612,7 +1584,7 @@
   },
   "1998-99-spx-finite-76-sn2819" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 0.28,
     "lastSoldPrice" : 0.28,
@@ -1867,7 +1839,7 @@
   },
   "2004-05-fleer-authentix-87" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 6.0,
     "lastSoldPrice" : 6.0,
@@ -1880,8 +1852,8 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "6.0",
       "sportscardspro_id" : "143590",
+      "sportscardspro_ungraded" : "6.0",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-2004-fleer-authentix/juwan-howard-87"
     }
   },
@@ -1900,7 +1872,7 @@
   },
   "1999-00-fleer-mystique-38" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 0.99,
     "lastSoldPrice" : 0.99,
@@ -1921,7 +1893,7 @@
   },
   "1998-99-upper-deck-160" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 0.25,
     "lastSoldPrice" : 0.25,
@@ -1934,8 +1906,8 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "0.25",
       "sportscardspro_id" : "8958018",
+      "sportscardspro_ungraded" : "0.25",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1998-upper-deck/juwan-howard-160"
     }
   },
@@ -2022,7 +1994,7 @@
   },
   "1999-00-fleer-force-68" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 1.49,
     "lastSoldPrice" : 1.49,
@@ -2035,8 +2007,8 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "1.49",
       "sportscardspro_id" : "5963070",
+      "sportscardspro_ungraded" : "1.49",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1999-fleer-force/juwan-howard-68"
     }
   },
@@ -2178,16 +2150,24 @@
   },
   "2000-01-fleer-authority-prominence-85-sn40" : {
     "certNumber" : "0000911310",
-    "lastQueried" : "2026-08-29T07:20:00Z",
-    "popReport" : null,
+    "lastQueried" : "2026-09-15T19:19:40.582179Z",
+    "popReport" : {
+      "gradingCompany" : "BGS",
+      "grade" : "Graded",
+      "totalGraded" : null,
+      "popHigher" : null,
+      "gradePop" : null,
+      "certNumber" : "0000911310",
+      "registryUrl" : "https://www.beckett.com/grading/cert-verification?cert_num=0000911310"
+    },
     "estimatedValue" : null,
     "lastSoldPrice" : null,
     "lastSoldDate" : null,
     "purchasePrice" : 11.0,
     "priceHistory" : [ ],
     "metadata" : {
-      "purchaseDate" : "12/26/2013",
-      "purchaseItemId" : "12304363"
+      "purchaseItemId" : "12304363",
+      "purchaseDate" : "12/26/2013"
     }
   },
   "2002-03-sp-authentic-19" : {
@@ -2363,7 +2343,7 @@
   },
   "1995-96-sp-144" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 0.71,
     "lastSoldPrice" : 0.71,
@@ -2376,8 +2356,8 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "0.71",
       "sportscardspro_id" : "83538",
+      "sportscardspro_ungraded" : "0.71",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1995-sp/juwan-howard-144"
     }
   },
@@ -2826,7 +2806,7 @@
   },
   "1999-00-topps-finest-56" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 1.35,
     "lastSoldPrice" : 1.35,
@@ -2839,15 +2819,15 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "1.35",
       "sportscardspro_psa10" : "279.0",
+      "sportscardspro_ungraded" : "1.35",
       "sportscardspro_id" : "6714531",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1999-finest/juwan-howard-56"
     }
   },
   "1999-00-fleer-mystique-gold-38" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 2.99,
     "lastSoldPrice" : 2.99,
@@ -2860,8 +2840,8 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "2.99",
       "sportscardspro_id" : "8325322",
+      "sportscardspro_ungraded" : "2.99",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1999-fleer-mystique/juwan-howard-gold-38"
     }
   },
@@ -3090,7 +3070,7 @@
   },
   "1997-98-ultra-inside-outside-2" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 1.59,
     "lastSoldPrice" : 1.59,
@@ -3103,8 +3083,8 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "1.59",
       "sportscardspro_id" : "3393137",
+      "sportscardspro_ungraded" : "1.59",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1997-ultra-rim-rockers/juwan-howard-2"
     }
   },
@@ -3128,7 +3108,7 @@
   },
   "1998-99-skybox-e-x-century-essential-credentials-credentials-now-34-sn43" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 311.0,
     "lastSoldPrice" : 311.0,
@@ -3149,7 +3129,7 @@
   },
   "1995-96-topps-finest-mystery-bordered-test-refractor-m20" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 3.25,
     "lastSoldPrice" : 3.25,
@@ -3635,7 +3615,7 @@
   },
   "1994-95-skybox-hoops-378" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 1.48,
     "lastSoldPrice" : 1.48,
@@ -3648,16 +3628,16 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
+      "sportscardspro_psa10" : "19.76",
       "sportscardspro_ungraded" : "1.48",
       "sportscardspro_grade9" : "9.7",
-      "sportscardspro_psa10" : "19.76",
       "sportscardspro_id" : "5670019",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1994-hoops/juwan-howard-378"
     }
   },
   "1997-98-upper-deck-ultimates-u11" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 2.0,
     "lastSoldPrice" : 2.0,
@@ -3670,8 +3650,8 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "2.0",
       "sportscardspro_id" : "6769023",
+      "sportscardspro_ungraded" : "2.0",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1997-upper-deck-ultimates/juwan-howard-u11"
     }
   },
@@ -3775,7 +3755,7 @@
   },
   "2004-05-topps-chrome-139" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 1.5,
     "lastSoldPrice" : 1.5,
@@ -3788,8 +3768,8 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "1.5",
       "sportscardspro_id" : "144280",
+      "sportscardspro_ungraded" : "1.5",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-2004-topps-chrome/juwan-howard-139"
     }
   },
@@ -3813,7 +3793,7 @@
   },
   "1998-99-flair-showcase-power-legacy-collection-42-sn20" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 3.0,
     "lastSoldPrice" : 3.0,
@@ -3922,7 +3902,7 @@
   },
   "1999-00-fleer-force-forcefield-68" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 0.25,
     "lastSoldPrice" : 0.25,
@@ -3935,8 +3915,8 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "0.25",
       "sportscardspro_id" : "8355416",
+      "sportscardspro_ungraded" : "0.25",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1999-fleer-force/juwan-howard-forcefield-68"
     }
   },
@@ -3955,7 +3935,7 @@
   },
   "2003-04-flair-5" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 0.25,
     "lastSoldPrice" : 0.25,
@@ -3968,8 +3948,8 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "0.25",
       "sportscardspro_id" : "6114602",
+      "sportscardspro_ungraded" : "0.25",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-2003-flair/juwan-howard-5"
     }
   },
@@ -4208,7 +4188,7 @@
   },
   "1994-95-ultra-343" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 1.25,
     "lastSoldPrice" : 1.25,
@@ -4221,8 +4201,8 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "1.25",
       "sportscardspro_psa10" : "19.99",
+      "sportscardspro_ungraded" : "1.25",
       "sportscardspro_id" : "2932758",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1994-ultra/juwan-howard-343"
     }
@@ -4347,7 +4327,7 @@
   },
   "1998-99-upper-deck-aerodynamics-sky-a24" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 3.61,
     "lastSoldPrice" : 3.61,
@@ -4360,8 +4340,8 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "3.61",
       "sportscardspro_id" : "8958620",
+      "sportscardspro_ungraded" : "3.61",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1998-upper-deck-aerodynamics/juwan-howard-quantum-bronze-a24"
     }
   },
@@ -4522,7 +4502,7 @@
   },
   "1998-99-topps-east-west-ew11" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 8.0,
     "lastSoldPrice" : 8.0,
@@ -4535,9 +4515,9 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
+      "sportscardspro_psa10" : "200.0",
       "sportscardspro_ungraded" : "8.0",
       "sportscardspro_grade9" : "30.0",
-      "sportscardspro_psa10" : "200.0",
       "sportscardspro_id" : "4567557",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1998-topps-east-west/juwan-howard-chris-webber-ew11"
     }
@@ -4613,7 +4593,7 @@
   },
   "2003-04-fleer-focus-105" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 0.99,
     "lastSoldPrice" : 0.99,
@@ -4626,8 +4606,8 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "0.99",
       "sportscardspro_id" : "8453200",
+      "sportscardspro_ungraded" : "0.99",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-2003-fleer-focus/juwan-howard-105"
     }
   },
@@ -4661,7 +4641,7 @@
   },
   "2004-05-sp-authentic-28" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 1.65,
     "lastSoldPrice" : 1.65,
@@ -4674,8 +4654,8 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "1.65",
       "sportscardspro_id" : "143781",
+      "sportscardspro_ungraded" : "1.65",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-2004-sp-authentic/juwan-howard-28"
     }
   },
@@ -4812,7 +4792,7 @@
   },
   "1997-98-ultra-big-shots-7" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 1.59,
     "lastSoldPrice" : 1.59,
@@ -4825,16 +4805,16 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
+      "sportscardspro_psa10" : "81.03",
       "sportscardspro_ungraded" : "1.59",
       "sportscardspro_grade9" : "18.86",
-      "sportscardspro_psa10" : "81.03",
       "sportscardspro_id" : "2347914",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1997-ultra-big-shots/juwan-howard-7"
     }
   },
   "1998-99-spx-finite-star-power-92-sn1072" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 1.69,
     "lastSoldPrice" : 1.69,
@@ -4847,8 +4827,8 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "1.69",
       "sportscardspro_id" : "93153",
+      "sportscardspro_ungraded" : "1.69",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1998-spx-finite/juwan-howard-92"
     }
   },
@@ -4913,7 +4893,7 @@
   },
   "1998-99-skybox-thunder-125" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 0.17,
     "lastSoldPrice" : 0.17,
@@ -4926,8 +4906,8 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "0.17",
       "sportscardspro_id" : "6563796",
+      "sportscardspro_ungraded" : "0.17",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1998-skybox-thunder/juwan-howard-125"
     }
   },
@@ -5024,7 +5004,7 @@
   },
   "1995-96-skybox-hoops-slamland-sl49" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 1.18,
     "lastSoldPrice" : 1.18,
@@ -5037,8 +5017,8 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "1.18",
       "sportscardspro_id" : "5661826",
+      "sportscardspro_ungraded" : "1.18",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1995-hoops-slamland/juwan-howard-sl49"
     }
   },
@@ -5096,7 +5076,7 @@
   },
   "1996-97-skybox-z-force-zuperman-176" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 1.49,
     "lastSoldPrice" : 1.49,
@@ -5109,8 +5089,8 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "1.49",
       "sportscardspro_id" : "8650747",
+      "sportscardspro_ungraded" : "1.49",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1996-skybox-z-force/juwan-howard-176"
     }
   },
@@ -5129,8 +5109,16 @@
   },
   "2007-08-sp-game-used-edition-by-the-letter-jersey-patch-bl-ju-sn5" : {
     "certNumber" : "0005843820",
-    "lastQueried" : "2026-08-29T10:28:00Z",
-    "popReport" : null,
+    "lastQueried" : "2026-09-15T19:31:26.125715Z",
+    "popReport" : {
+      "gradingCompany" : "BGS",
+      "grade" : "Graded",
+      "totalGraded" : null,
+      "popHigher" : null,
+      "gradePop" : null,
+      "certNumber" : "0005843820",
+      "registryUrl" : "https://www.beckett.com/grading/cert-verification?cert_num=0005843820"
+    },
     "estimatedValue" : null,
     "lastSoldPrice" : null,
     "lastSoldDate" : null,
@@ -5142,7 +5130,7 @@
   },
   "1995-96-topps-finest-mystery-bordered-m20" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 2.9,
     "lastSoldPrice" : 2.9,
@@ -5163,7 +5151,7 @@
   },
   "2021-22-panini-donruss-optic-opti-graphs-pulsar-og-jwh-sn6" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 14.04,
     "lastSoldPrice" : 14.04,
@@ -5176,14 +5164,14 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "14.04",
       "sportscardspro_id" : "4189480",
+      "sportscardspro_ungraded" : "14.04",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-2021-panini-donruss-optic-opti-graphs/juwan-howard-choice-og-jwh"
     }
   },
   "1998-99-upper-deck-highway-99-297" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 0.99,
     "lastSoldPrice" : 0.99,
@@ -5196,8 +5184,8 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "0.99",
       "sportscardspro_id" : "8958439",
+      "sportscardspro_ungraded" : "0.99",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1998-upper-deck/juwan-howard-297"
     }
   },
@@ -5339,35 +5327,15 @@
     "certNumber" : null,
     "lastQueried" : "2026-08-29T07:06:30.924701Z",
     "popReport" : null,
-    "estimatedValue" : 499.5,
+    "estimatedValue" : 960.0,
     "lastSoldPrice" : 960.0,
     "lastSoldDate" : "2025-11-17",
     "purchasePrice" : 4.99,
     "priceHistory" : [ {
-      "date" : "2025-06-18",
-      "price" : 39.0,
-      "source" : "eBay (Auction)",
-      "grade" : ""
-    }, {
       "date" : "2025-11-17",
       "price" : 960.0,
       "source" : "eBay (Auction)",
       "grade" : "PSA 10"
-    }, {
-      "date" : "2007-02-03",
-      "price" : 6.75,
-      "source" : "eBay",
-      "grade" : "Raw"
-    }, {
-      "date" : "2007-02-03",
-      "price" : 5.5,
-      "source" : "eBay",
-      "grade" : "Raw"
-    }, {
-      "date" : "2007-02-03",
-      "price" : 6.5,
-      "source" : "eBay",
-      "grade" : "Raw"
     } ],
     "metadata" : {
       "purchaseDate" : "2007-07-12"
@@ -5553,7 +5521,7 @@
   },
   "2004-05-topps-104" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 0.99,
     "lastSoldPrice" : 0.99,
@@ -5645,7 +5613,7 @@
   },
   "1994-classic-comic-103" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 1.42,
     "lastSoldPrice" : 1.42,
@@ -5802,7 +5770,7 @@
   },
   "1997-98-skybox-z-force-zensations-6" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 1.84,
     "lastSoldPrice" : 1.84,
@@ -5815,8 +5783,8 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "1.84",
       "sportscardspro_id" : "6564161",
+      "sportscardspro_ungraded" : "1.84",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1997-skybox-z-force-zensations/juwan-howard-6"
     }
   },
@@ -6039,7 +6007,7 @@
   },
   "2005-06-ud-espn-30" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 0.25,
     "lastSoldPrice" : 0.25,
@@ -6052,8 +6020,8 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "0.25",
       "sportscardspro_id" : "5049905",
+      "sportscardspro_ungraded" : "0.25",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-2005-upper-deck-espn/juwan-howard-30"
     }
   },
@@ -6531,7 +6499,7 @@
   },
   "1998-99-skybox-hoops-109" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 0.12,
     "lastSoldPrice" : 0.12,
@@ -6544,8 +6512,8 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "0.12",
       "sportscardspro_id" : "6791534",
+      "sportscardspro_ungraded" : "0.12",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1998-skybox-molten-metal/juwan-howard-109"
     }
   },
@@ -6569,7 +6537,7 @@
   },
   "1998-99-ud-choice-153" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 0.25,
     "lastSoldPrice" : 0.25,
@@ -6582,8 +6550,8 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "0.25",
       "sportscardspro_id" : "5943589",
+      "sportscardspro_ungraded" : "0.25",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1998-ud-choice-preview/juwan-howard-153"
     }
   },
@@ -6856,7 +6824,7 @@
   },
   "1994-classic-5" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 1.79,
     "lastSoldPrice" : 1.79,
@@ -6987,30 +6955,20 @@
     "certNumber" : null,
     "lastQueried" : "2026-08-29T07:04:45.587702Z",
     "popReport" : null,
-    "estimatedValue" : 159.095,
+    "estimatedValue" : 317.2,
     "lastSoldPrice" : 317.2,
     "lastSoldDate" : "2026-08-28",
     "purchasePrice" : 4.99,
     "priceHistory" : [ {
-      "date" : "2026-08-24",
-      "price" : 0.99,
-      "source" : "eBay (Fixed Price)",
-      "grade" : ""
+      "date" : "2006-04-30",
+      "price" : 4.99,
+      "source" : "eBay",
+      "grade" : "Raw"
     }, {
       "date" : "2026-08-28",
       "price" : 317.2,
       "source" : "eBay (Auction)",
       "grade" : ""
-    }, {
-      "date" : "2007-07-12",
-      "price" : 4.99,
-      "source" : "eBay",
-      "grade" : "Raw"
-    }, {
-      "date" : "2006-04-30",
-      "price" : 4.99,
-      "source" : "eBay",
-      "grade" : "Raw"
     } ],
     "metadata" : {
       "purchaseDate" : "2006-04-30"
@@ -7020,16 +6978,11 @@
     "certNumber" : null,
     "lastQueried" : "2026-08-29T07:05:46.249994Z",
     "popReport" : null,
-    "estimatedValue" : 44.44,
-    "lastSoldPrice" : 44.44,
-    "lastSoldDate" : "2025-07-17",
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
     "purchasePrice" : 4.75,
     "priceHistory" : [ {
-      "date" : "2025-07-17",
-      "price" : 44.44,
-      "source" : "eBay (Best Offer Accepted)",
-      "grade" : ""
-    }, {
       "date" : "2006-02-06",
       "price" : 4.75,
       "source" : "eBay",
@@ -7122,7 +7075,7 @@
   },
   "1994-95-fleer-381" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 0.95,
     "lastSoldPrice" : 0.95,
@@ -7135,9 +7088,9 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
+      "sportscardspro_psa10" : "61.5",
       "sportscardspro_ungraded" : "0.95",
       "sportscardspro_grade9" : "15.26",
-      "sportscardspro_psa10" : "61.5",
       "sportscardspro_id" : "2920524",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1994-fleer/juwan-howard-381"
     }
@@ -7336,7 +7289,7 @@
   },
   "1998-99-sp-authentic-88" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 0.61,
     "lastSoldPrice" : 0.61,
@@ -7409,7 +7362,7 @@
   },
   "1998-99-spx-finite-top-flight-195-sn572" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-30",
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
     "estimatedValue" : 1.79,
     "lastSoldPrice" : 1.79,
@@ -7422,8 +7375,8 @@
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "sportscardspro_ungraded" : "1.79",
       "sportscardspro_id" : "8678698",
+      "sportscardspro_ungraded" : "1.79",
       "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1998-spx-finite/juwan-howard-195"
     }
   },

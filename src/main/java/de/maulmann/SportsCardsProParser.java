@@ -168,13 +168,35 @@ public class SportsCardsProParser {
             }
 
             // Check parallel / variant alignment
-            boolean isParallelItem = itemTitle.contains("[") || itemTitle.contains("refractor") || itemTitle.contains("gold") || itemTitle.contains("silver");
+            boolean isParallelItem = itemTitle.contains("[") || itemTitle.contains("refractor") || itemTitle.contains("gold")
+                    || itemTitle.contains("silver") || itemTitle.contains("pmg") || itemTitle.contains("precious metal")
+                    || itemTitle.contains("legacy") || itemTitle.contains("ruby") || itemTitle.contains("emerald")
+                    || itemTitle.contains("platinum") || itemTitle.contains("credentials") || itemTitle.contains("masterpiece")
+                    || itemTitle.contains("1/1");
+
             boolean isParallelCard = (variant != null && !variant.isBlank() && !"Base".equalsIgnoreCase(variant))
-                    || (theme != null && (theme.toLowerCase(Locale.ROOT).contains("refractor") || theme.toLowerCase(Locale.ROOT).contains("gold")));
+                    || (theme != null && (theme.toLowerCase(Locale.ROOT).contains("refractor") || theme.toLowerCase(Locale.ROOT).contains("gold")
+                    || theme.toLowerCase(Locale.ROOT).contains("pmg") || theme.toLowerCase(Locale.ROOT).contains("precious metal")
+                    || theme.toLowerCase(Locale.ROOT).contains("legacy") || theme.toLowerCase(Locale.ROOT).contains("ruby")));
 
             if (isParallelItem != isParallelCard) {
                 // Skip mismatch between base and parallel
                 continue;
+            }
+
+            if (isParallelItem && isParallelCard) {
+                String varLower = variant != null ? variant.toLowerCase(Locale.ROOT) : "";
+                String themeLower = theme != null ? theme.toLowerCase(Locale.ROOT) : "";
+                if ((varLower.contains("pmg") || themeLower.contains("pmg") || varLower.contains("precious metal"))
+                        && !itemTitle.contains("pmg") && !itemTitle.contains("precious metal")) {
+                    continue;
+                }
+                if ((varLower.contains("legacy") || themeLower.contains("legacy")) && !itemTitle.contains("legacy")) {
+                    continue;
+                }
+                if ((varLower.contains("refractor") || themeLower.contains("refractor")) && !itemTitle.contains("refractor")) {
+                    continue;
+                }
             }
 
             if (setMatch) {
