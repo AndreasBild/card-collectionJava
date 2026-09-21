@@ -84,4 +84,47 @@ class MrtorteBeckettEnricherTest {
         assertEquals("1994-95 Collector's Choice #278 RC", match.get().cardName());
         assertEquals(1.25, match.get().beckettValue());
     }
+
+    @Test
+    @DisplayName("Should prevent cross-matching between high-value parallels and base or cheap inserts")
+    void testParallelVsBaseMatching() {
+        MrtorteBeckettEnricher enricher = new MrtorteBeckettEnricher();
+
+        // 1. PMG Red (#33 PMG) must NOT match "Total O #3"
+        CardData pmgCard = new CardData(new CardJson.Builder()
+                .season("1997-98")
+                .brand("Fleer Metal Universe")
+                .cardNumber("33 PMG")
+                .variant("Precious Metal Gems Red")
+                .printRun(100)
+                .build());
+
+        List<MrtorteBeckettEnricher.ScrapedCard> pmgCandidates = List.of(
+                new MrtorteBeckettEnricher.ScrapedCard("1997-98 Fleer Total O #3", 2.0, null, null, null, "Commons/Inserts"),
+                new MrtorteBeckettEnricher.ScrapedCard("1997-98 Fleer Metal Universe #33", 1.0, null, null, null, "Commons/Inserts")
+        );
+
+        Optional<MrtorteBeckettEnricher.ScrapedCard> pmgMatch = enricher.findBestMatch(pmgCard, pmgCandidates);
+        assertTrue(pmgMatch.isEmpty(), "PMG Red should not match cheap base or Total O insert");
+
+        // 2. Base card must NOT match Legacy Collection parallel
+        CardData baseCard = new CardData(new CardJson.Builder()
+                .season("1997-98")
+                .brand("Flair Showcase")
+                .cardNumber("ROW 2 SEAT 64")
+                .theme("Style")
+                .variant("Base")
+                .build());
+
+        List<MrtorteBeckettEnricher.ScrapedCard> baseCandidates = List.of(
+                new MrtorteBeckettEnricher.ScrapedCard("1997-98 Flair Showcase Legacy Collection Row 0 #64", 40.0, "77", "100", null, "Numbered/Hits"),
+                new MrtorteBeckettEnricher.ScrapedCard("1997-98 Flair Showcase Legacy Collection Row 2 #64", 30.0, "86", "100", null, "Numbered/Hits"),
+                new MrtorteBeckettEnricher.ScrapedCard("1997-98 Flair Showcase Row 2 #64", 0.75, null, null, null, "Commons/Inserts")
+        );
+
+        Optional<MrtorteBeckettEnricher.ScrapedCard> baseMatch = enricher.findBestMatch(baseCard, baseCandidates);
+        assertTrue(baseMatch.isPresent());
+        assertEquals("1997-98 Flair Showcase Row 2 #64", baseMatch.get().cardName());
+        assertEquals(0.75, baseMatch.get().beckettValue());
+    }
 }

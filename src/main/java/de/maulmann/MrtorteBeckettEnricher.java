@@ -203,18 +203,31 @@ public class MrtorteBeckettEnricher {
                 }
             }
 
+            // Row alignment for Flair Showcase
+            Matcher lRowM = Pattern.compile("\\brow\\s*(\\d+)\\b").matcher(clean(lc.get("Number")));
+            if (lRowM.find()) {
+                String lRow = lRowM.group(1);
+                Matcher sRowM = Pattern.compile("\\brow\\s*(\\d+)\\b").matcher(sName);
+                if (sRowM.find()) {
+                    String sRow = sRowM.group(1);
+                    if (!lRow.equals(sRow)) {
+                        continue; // Skip different Flair Showcase Rows
+                    }
+                }
+            }
+
             // Card number match
             Matcher nm = PATTERN_CARD_NUM.matcher(sc.cardName());
             String sNum = nm.find() ? nm.group(1).toLowerCase(Locale.ROOT) : "";
-            if (!lNum.isEmpty() && !sNum.isEmpty()) {
-                if (lNum.equals(sNum)) {
+            String lToken = extractNumberToken(lNum);
+            String sToken = extractNumberToken(sNum);
+            if (!lToken.isEmpty() && !sToken.isEmpty()) {
+                if (lToken.equals(sToken)) {
                     score += 35;
-                } else if (lNum.contains(sNum) || sNum.contains(lNum)) {
-                    score += 15;
                 } else {
-                    score -= 30;
+                    score -= 40; // Reject different card numbers
                 }
-            } else if (lNum.isEmpty() && sNum.isEmpty()) {
+            } else if (lToken.isEmpty() && sToken.isEmpty()) {
                 score += 10;
             }
 
@@ -238,14 +251,46 @@ public class MrtorteBeckettEnricher {
                 }
             }
 
-            // Variant
-            if (!lVariant.isEmpty() && !"base".equals(lVariant)) {
-                for (String word : lVariant.split("\\s+")) {
-                    if (word.length() > 2 && sName.contains(word)) score += 15;
+            // Parallel & Variant Alignment
+            boolean lIsBase = lVariant.isEmpty() || "base".equals(lVariant);
+            boolean sIsParallel = sName.contains("legacy") || sName.contains("pmg") || sName.contains("precious metal")
+                    || sName.contains("refractor") || sName.contains("ruby") || sName.contains("emerald")
+                    || sName.contains("platinum") || sName.contains("credentials") || sName.contains("gold")
+                    || sName.contains("silver") || sName.contains("masterpiece") || sName.contains("1/1");
+
+            boolean lIsParallel = !lIsBase
+                    || (!lTheme.isEmpty() && (lTheme.contains("refractor") || lTheme.contains("legacy") || lTheme.contains("precious metal") || lTheme.contains("gold")));
+
+            // If local card is base, candidate MUST NOT be a parallel
+            if (lIsBase && sIsParallel) {
+                continue;
+            }
+
+            // If local card is a parallel, candidate MUST match the parallel family
+            if (lIsParallel) {
+                boolean pmgMatch = (lVariant.contains("pmg") || lVariant.contains("precious metal") || lTheme.contains("precious metal"))
+                        && (sName.contains("pmg") || sName.contains("precious metal"));
+                boolean legacyMatch = (lVariant.contains("legacy") || lTheme.contains("legacy")) && sName.contains("legacy");
+                boolean refractorMatch = (lVariant.contains("refractor") || lTheme.contains("refractor")) && sName.contains("refractor");
+                boolean rubyMatch = lVariant.contains("ruby") && sName.contains("ruby");
+                boolean emeraldMatch = lVariant.contains("emerald") && sName.contains("emerald");
+                boolean credentialsMatch = lVariant.contains("credentials") && sName.contains("credentials");
+                boolean goldMatch = lVariant.contains("gold") && sName.contains("gold");
+                boolean silverMatch = lVariant.contains("silver") && sName.contains("silver");
+                boolean platinumMatch = lVariant.contains("platinum") && sName.contains("platinum");
+
+                boolean specificMatch = pmgMatch || legacyMatch || refractorMatch || rubyMatch || emeraldMatch
+                        || credentialsMatch || goldMatch || silverMatch || platinumMatch;
+
+                if (!specificMatch) {
+                    continue; // Skip mismatching parallel
                 }
-            } else if ("base".equals(lVariant)) {
-                if (sName.contains("refractor") || sName.contains("gold") || sName.contains("silver") || sName.contains("platinum") || sName.contains("credentials")) {
-                    score -= 15;
+                score += 30;
+            } else {
+                if (!lVariant.isEmpty() && !"base".equals(lVariant)) {
+                    for (String word : lVariant.split("\\s+")) {
+                        if (word.length() > 2 && sName.contains(word)) score += 15;
+                    }
                 }
             }
 
@@ -270,6 +315,20 @@ public class MrtorteBeckettEnricher {
             return Optional.of(bestCandidate);
         }
         return Optional.empty();
+    }
+
+    private static String extractNumberToken(String numStr) {
+        if (numStr == null || numStr.isBlank()) return "";
+        String s = numStr.trim().toLowerCase(Locale.ROOT).replace("#", "");
+        Matcher seatM = Pattern.compile("\\bseat\\s*(\\d+)\\b").matcher(s);
+        if (seatM.find()) {
+            return seatM.group(1);
+        }
+        Matcher leadingDigits = Pattern.compile("^(\\d+)").matcher(s);
+        if (leadingDigits.find()) {
+            return leadingDigits.group(1);
+        }
+        return s.replaceAll("[^a-z0-9]", "");
     }
 
     private static String clean(String s) {

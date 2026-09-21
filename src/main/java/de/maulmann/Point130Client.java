@@ -401,7 +401,16 @@ public class Point130Client {
                     strippedTitle = Pattern.compile("\\b(19\\d\\d|20\\d\\d)\\b").matcher(strippedTitle).replaceAll(" ");
                     strippedTitle = Pattern.compile("(?i)\\blot\\s+of\\s+\\d+\\b").matcher(strippedTitle).replaceAll(" ");
 
-                    Pattern numPattern = Pattern.compile("\\b" + Pattern.quote(cleanNum) + "\\b", Pattern.CASE_INSENSITIVE);
+                    String targetDigits = cleanNum.replaceAll("[^0-9]", "");
+                    Matcher seatMatcher = Pattern.compile("(?i)\\bseat\\s*(\\d+)\\b").matcher(cleanNum);
+                    if (seatMatcher.find()) {
+                        targetDigits = seatMatcher.group(1);
+                    }
+                    String patternNum = Pattern.quote(cleanNum);
+                    if (!targetDigits.isEmpty()) {
+                        patternNum = "(?:" + Pattern.quote(cleanNum) + "|\\b" + Pattern.quote(targetDigits) + ")";
+                    }
+                    Pattern numPattern = Pattern.compile("\\b" + patternNum + "\\b", Pattern.CASE_INSENSITIVE);
                     if (!numPattern.matcher(strippedTitle).find()) {
                         return false;
                     }
@@ -409,16 +418,127 @@ public class Point130Client {
             }
         }
 
+        // Row alignment check for Flair Showcase
+        Matcher cardRowMatcher = Pattern.compile("(?i)\\brow\\s*(\\d+)\\b").matcher(number != null ? number : "");
+        if (cardRowMatcher.find()) {
+            String cardRow = cardRowMatcher.group(1);
+            Matcher titleRowMatcher = Pattern.compile("(?i)\\brow\\s*(\\d+)\\b").matcher(title);
+            if (titleRowMatcher.find()) {
+                String titleRow = titleRowMatcher.group(1);
+                if (!cardRow.equals(titleRow)) {
+                    return false;
+                }
+            }
+        }
+
+        // Parallel & Variant Alignment
+        String variant = referenceCard.get("Variant");
+        String theme = referenceCard.get("Theme");
+        String printRun = referenceCard.get("Print Run");
+
+        String varLower = variant != null ? variant.toLowerCase(Locale.ROOT) : "";
+        String themeLower = theme != null ? theme.toLowerCase(Locale.ROOT) : "";
+
+        boolean isPmg = varLower.contains("pmg") || varLower.contains("precious metal") || themeLower.contains("precious metal");
+        boolean isLegacy = varLower.contains("legacy") || themeLower.contains("legacy");
+        boolean isRuby = varLower.contains("ruby") || varLower.contains("rubies");
+        boolean isEmerald = varLower.contains("emerald");
+        boolean isRefractor = varLower.contains("refractor") || themeLower.contains("refractor");
+        boolean isSuperfractor = varLower.contains("superfractor");
+        boolean is1of1 = varLower.contains("1/1") || varLower.contains("masterpiece") || "1".equals(printRun);
+        boolean isCredentials = varLower.contains("credentials");
+        boolean isPlatinum = varLower.contains("platinum");
+        boolean isGold = varLower.contains("gold") && !varLower.contains("marigold");
+        boolean isSilver = varLower.contains("silver");
+
+        boolean isHighEndParallel = isPmg || isLegacy || isRuby || isEmerald || isSuperfractor || is1of1 || isCredentials;
+
+        if (isHighEndParallel) {
+            if (isPmg && !lowerTitle.contains("pmg") && !lowerTitle.contains("precious metal")) {
+                return false;
+            }
+            if (isLegacy && !lowerTitle.contains("legacy")) {
+                return false;
+            }
+            if (isRuby && !lowerTitle.contains("ruby") && !lowerTitle.contains("rubies")) {
+                return false;
+            }
+            if (isEmerald && !lowerTitle.contains("emerald")) {
+                return false;
+            }
+            if (isSuperfractor && !lowerTitle.contains("superfractor")) {
+                return false;
+            }
+            if (is1of1 && !lowerTitle.contains("1/1") && !lowerTitle.contains("1 of 1") && !lowerTitle.contains("masterpiece")) {
+                return false;
+            }
+            if (isCredentials && !lowerTitle.contains("credentials")) {
+                return false;
+            }
+
+            // Differentiate PMG Red vs PMG Green
+            if (isPmg) {
+                if (varLower.contains("green") && lowerTitle.contains("red") && !lowerTitle.contains("green")) {
+                    return false;
+                }
+                if (varLower.contains("red") && lowerTitle.contains("green") && !lowerTitle.contains("red")) {
+                    return false;
+                }
+            }
+        } else {
+            // General refractor / metallic parallel checks
+            if (isRefractor && !lowerTitle.contains("refractor")) {
+                return false;
+            }
+            if (isPlatinum && !lowerTitle.contains("platinum")) {
+                return false;
+            }
+            if (isGold && !lowerTitle.contains("gold")) {
+                return false;
+            }
+            if (isSilver && !lowerTitle.contains("silver")) {
+                return false;
+            }
+        }
+
+        // Conversely, if reference card is a BASE card, reject listings that are for rare parallels
+        boolean isBase = (variant == null || variant.isBlank() || "Base".equalsIgnoreCase(variant))
+                && (theme == null || theme.isBlank() || "Base Set".equalsIgnoreCase(theme) || "Base".equalsIgnoreCase(theme))
+                && (printRun == null || printRun.isBlank() || "-".equals(printRun) || "null".equalsIgnoreCase(printRun));
+
+        if (isBase) {
+            if (lowerTitle.contains("pmg") || lowerTitle.contains("precious metal")
+                    || lowerTitle.contains("legacy collection") || lowerTitle.contains("legacy")
+                    || lowerTitle.contains("refractor") || lowerTitle.contains("ruby")
+                    || lowerTitle.contains("emerald") || lowerTitle.contains("credentials")
+                    || lowerTitle.contains("superfractor") || lowerTitle.contains("masterpiece")
+                    || lowerTitle.contains("1/1") || lowerTitle.contains("1 of 1")) {
+                return false;
+            }
+        }
+
         return true;
     }
 
     private static boolean isCardNumberMatch(String target, String candidate) {
+        if (target == null || candidate == null) return false;
         if (target.equalsIgnoreCase(candidate)) return true;
-        try {
-            return Long.parseLong(target) == Long.parseLong(candidate);
-        } catch (NumberFormatException e) {
-            return false;
+
+        String targetClean = target;
+        Matcher seatMatcher = Pattern.compile("(?i)\\bseat\\s*(\\d+)\\b").matcher(target);
+        if (seatMatcher.find()) {
+            targetClean = seatMatcher.group(1);
         }
+
+        String targetDigits = targetClean.replaceAll("[^0-9]", "");
+        String candDigits = candidate.replaceAll("[^0-9]", "");
+        if (!targetDigits.isEmpty() && !candDigits.isEmpty()) {
+            if (targetDigits.equals(candDigits)) return true;
+            try {
+                return Long.parseLong(targetDigits) == Long.parseLong(candDigits);
+            } catch (NumberFormatException ignored) {}
+        }
+        return false;
     }
 
     /**
