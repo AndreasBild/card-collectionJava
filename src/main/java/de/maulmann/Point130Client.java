@@ -232,11 +232,12 @@ public class Point130Client {
 
                 HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-                if (response.statusCode() == 429) {
-                    logger.warn("130point rate limit (429) hit for [{}]. Backing off (attempt {}/{})...", query, attempt, maxAttempts);
+                if (response.statusCode() == 429 || response.statusCode() == 403 || response.statusCode() == 503) {
+                    logger.warn("130point HTTP {} for [{}]. Backing off with jitter (attempt {}/{})...", response.statusCode(), query, attempt, maxAttempts);
                     if (attempt < maxAttempts) {
                         try {
-                            TimeUnit.MILLISECONDS.sleep(4500L * attempt);
+                            long jitter = (long) (Math.random() * 1000);
+                            TimeUnit.MILLISECONDS.sleep(4500L * attempt + jitter);
                         } catch (InterruptedException ie) {
                             Thread.currentThread().interrupt();
                             return null;

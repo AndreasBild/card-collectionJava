@@ -4,8 +4,11 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -26,16 +29,22 @@ public class CardMarketEnricher {
     private final MarketDataCache cache;
     private final PsaCertScraper psaScraper;
     private final Point130Client point130Client;
+    private final ValuationOverridesLoader overridesLoader;
     private final long delayMs;
 
     public CardMarketEnricher() {
-        this(MarketDataCache.loadDefault(), new PsaCertScraper(), new Point130Client(), DEFAULT_DELAY_MS);
+        this(MarketDataCache.loadDefault(), new PsaCertScraper(), new Point130Client(), ValuationOverridesLoader.loadDefault(), DEFAULT_DELAY_MS);
     }
 
     public CardMarketEnricher(MarketDataCache cache, PsaCertScraper psaScraper, Point130Client point130Client, long delayMs) {
+        this(cache, psaScraper, point130Client, ValuationOverridesLoader.loadDefault(), delayMs);
+    }
+
+    public CardMarketEnricher(MarketDataCache cache, PsaCertScraper psaScraper, Point130Client point130Client, ValuationOverridesLoader overridesLoader, long delayMs) {
         this.cache = cache;
         this.psaScraper = psaScraper;
         this.point130Client = point130Client;
+        this.overridesLoader = overridesLoader;
         this.delayMs = delayMs;
     }
 
@@ -55,6 +64,7 @@ public class CardMarketEnricher {
         int limit = Integer.MAX_VALUE;
         String targetCardId = null;
         int staleDays = -1;
+        boolean tieredStaleness = false;
 
         if (args != null) {
             for (int i = 0; i < args.length; i++) {
@@ -70,6 +80,8 @@ public class CardMarketEnricher {
                     enrichComps = true;
                 } else if ("--serial".equals(arg) || "--serial-only".equals(arg) || "--numbered".equals(arg)) {
                     serialOnly = true;
+                } else if ("--tiered".equals(arg) || "--tiered-staleness".equals(arg)) {
+                    tieredStaleness = true;
                 } else if ("--limit".equals(arg) && i + 1 < args.length) {
                     try {
                         limit = Integer.parseInt(args[++i]);
@@ -91,7 +103,7 @@ public class CardMarketEnricher {
         }
 
         CardMarketEnricher enricher = new CardMarketEnricher();
-        EnrichmentReport report = enricher.enrichCards(cards, enrichCerts, enrichComps, forceRefresh, limit, targetCardId, serialOnly, staleDays);
+        EnrichmentReport report = enricher.enrichCards(cards, enrichCerts, enrichComps, forceRefresh, limit, targetCardId, serialOnly, staleDays, tieredStaleness);
 
         logger.info("==================================================");
         logger.info("📊 EXACT ENRICHMENT REPORT");
@@ -142,6 +154,20 @@ public class CardMarketEnricher {
             boolean serialOnly,
             int staleDays
     ) {
+        return enrichCards(cards, enrichCerts, enrichComps, forceRefresh, limit, targetCardId, serialOnly, staleDays, false);
+    }
+
+    public EnrichmentReport enrichCards(
+            List<CardData> cards,
+            boolean enrichCerts,
+            boolean enrichComps,
+            boolean forceRefresh,
+            int limit,
+            String targetCardId,
+            boolean serialOnly,
+            int staleDays,
+            boolean tieredStaleness
+    ) {
         int totalInspected = 0;
         int certsFound = 0;
         int compsQueried = 0;
@@ -159,12 +185,11 @@ public class CardMarketEnricher {
                 continue;
             }
 
-            if (serialOnly) {
-                boolean isSerial = (c.sourceJson != null && (c.sourceJson.serialNumber() != null || c.sourceJson.printRun() != null))
-                        || (c.attributes != null && (c.attributes.get("Serial") != null || c.attributes.get("Print Run") != null));
-                if (!isSerial) {
-                    continue;
-                }
+            boolean isSerial = (c.sourceJson != null && (c.sourceJson.serialNumber() != null || c.sourceJson.printRun() != null))
+                    || (c.attributes != null && (c.attributes.get("Serial") != null || c.attributes.get("Print Run") != null));
+
+            if (serialOnly && !isSerial) {
+                continue;
             }
 
             if (processedCount >= limit) {
@@ -173,6 +198,12 @@ public class CardMarketEnricher {
 
             totalInspected++;
             String certNum = c.certNumber;
+
+            // Check if card has a curated override
+            if (overridesLoader != null && overridesLoader.hasOverride(cardId) && !forceRefresh) {
+                skippedCached++;
+                continue;
+            }
 
             Optional<MarketDataEntry> existingOpt = cache.get(cardId);
             if (existingOpt.isPresent()) {
@@ -185,7 +216,19 @@ public class CardMarketEnricher {
 
             MarketDataEntry currentEntry = existingOpt.orElse(MarketDataEntry.builder().build());
             boolean modified = false;
-            boolean isStale = staleDays > 0 && cache.isStale(cardId, staleDays);
+
+            int effectiveStaleDays = staleDays;
+            if (tieredStaleness) {
+                if (isSerial) {
+                    effectiveStaleDays = 14;
+                } else if (certNum != null && !certNum.isBlank()) {
+                    effectiveStaleDays = 30;
+                } else {
+                    effectiveStaleDays = 90;
+                }
+            }
+
+            boolean isStale = effectiveStaleDays > 0 && cache.isStale(cardId, effectiveStaleDays);
 
             boolean queried = false;
 
@@ -229,6 +272,7 @@ public class CardMarketEnricher {
 
                 if (compResultOpt.isPresent() && !compResultOpt.get().comps().isEmpty()) {
                     Point130Client.CardCompResult compResult = compResultOpt.get();
+                    List<PricePoint> mergedComps = mergePriceHistory(currentEntry.priceHistory(), compResult.comps());
                     currentEntry = MarketDataEntry.builder()
                             .certNumber(currentEntry.certNumber() != null ? currentEntry.certNumber() : certNum)
                             .lastQueried(Instant.now().toString())
@@ -237,7 +281,7 @@ public class CardMarketEnricher {
                             .lastSoldPrice(compResult.lastSoldPrice())
                             .lastSoldDate(compResult.lastSoldDate())
                             .purchasePrice(currentEntry.purchasePrice())
-                            .priceHistory(compResult.comps())
+                            .priceHistory(mergedComps)
                             .metadata(currentEntry.metadata())
                             .build();
                     queriedSuccess++;
@@ -246,6 +290,20 @@ public class CardMarketEnricher {
                             compResult.comps().size(), compResult.estimatedValue(), compResult.lastSoldPrice(), compResult.lastSoldDate());
                 } else {
                     queriedFailed++;
+                    if (existingOpt.isPresent()) {
+                        MarketDataEntry refreshed = MarketDataEntry.builder()
+                                .certNumber(currentEntry.certNumber())
+                                .lastQueried(Instant.now().toString())
+                                .popReport(currentEntry.popReport())
+                                .estimatedValue(currentEntry.estimatedValue())
+                                .lastSoldPrice(currentEntry.lastSoldPrice())
+                                .lastSoldDate(currentEntry.lastSoldDate())
+                                .purchasePrice(currentEntry.purchasePrice())
+                                .priceHistory(currentEntry.priceHistory())
+                                .metadata(currentEntry.metadata())
+                                .build();
+                        cache.put(cardId, refreshed);
+                    }
                 }
                 throttle();
             }
@@ -272,6 +330,31 @@ public class CardMarketEnricher {
         }
 
         return new EnrichmentReport(totalInspected, certsFound, compsQueried, skippedCached, queriedSuccess, queriedFailed, exactPriced);
+    }
+
+    public static List<PricePoint> mergePriceHistory(List<PricePoint> existing, List<PricePoint> incoming) {
+        if ((existing == null || existing.isEmpty()) && (incoming == null || incoming.isEmpty())) {
+            return Collections.emptyList();
+        }
+        if (existing == null || existing.isEmpty()) return incoming;
+        if (incoming == null || incoming.isEmpty()) return existing;
+
+        Map<String, PricePoint> merged = new LinkedHashMap<>();
+        for (PricePoint p : existing) {
+            if (p != null) {
+                String key = (p.date() != null ? p.date() : "") + "|" + p.price() + "|" + (p.grade() != null ? p.grade() : "");
+                merged.put(key, p);
+            }
+        }
+        for (PricePoint p : incoming) {
+            if (p != null) {
+                String key = (p.date() != null ? p.date() : "") + "|" + p.price() + "|" + (p.grade() != null ? p.grade() : "");
+                merged.put(key, p);
+            }
+        }
+        List<PricePoint> result = new ArrayList<>(merged.values());
+        result.sort(Comparator.comparing(p -> (p.date() != null ? p.date() : "")));
+        return Collections.unmodifiableList(result);
     }
 
     private void throttle() {

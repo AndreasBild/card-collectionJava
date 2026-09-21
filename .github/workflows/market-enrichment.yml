@@ -1,0 +1,78 @@
+name: Weekly Market Data Enrichment
+
+on:
+  schedule:
+    # Runs at 03:00 UTC every Sunday
+    - cron: '0 3 * * 0'
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: 'Maximum cards to query'
+        required: false
+        default: '50'
+      stale_days:
+        description: 'Stale threshold in days'
+        required: false
+        default: '14'
+      serial_only:
+        description: 'Filter serial-numbered only (true/false)'
+        required: false
+        default: 'true'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  enrich-market-data:
+    name: Enrich Comps & Refresh Pricing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 26
+        uses: actions/setup-java@v6
+        with:
+          java-version: '26'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Run Market Data Enrichment (Tiered & Batched)
+        run: |
+          LIMIT="${{ github.event.inputs.limit || '50' }}"
+          STALE_DAYS="${{ github.event.inputs.stale_days || '14' }}"
+          SERIAL_FLAG="${{ (github.event.inputs.serial_only == 'false') && '' || '--serial-only' }}"
+          echo "Executing market enrichment: limit=$LIMIT, stale_days=$STALE_DAYS, serial_only=$SERIAL_FLAG"
+          mvn exec:java@enrich-market-data -Dexec.args="--comps $SERIAL_FLAG --stale-days $STALE_DAYS --limit $LIMIT" -B
+
+      - name: Run Spotless & Regression Tests
+        run: mvn spotless:apply test -B
+
+      - name: Commit and Open PR if Market Data Changed
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          if git diff --quiet content/json/market-data-cache.json; then
+            echo "No market data updates detected. Cache is up to date."
+            exit 0
+          fi
+          
+          DATE=$(date +'%Y-%m-%d')
+          BRANCH="chore/market-pricing-update-$DATE"
+          git checkout -b "$BRANCH"
+          git add content/json/market-data-cache.json
+          git commit -m "chore(market): weekly automated market data pricing refresh ($DATE)"
+          git push origin "$BRANCH"
+          
+          gh pr create \
+            --base main \
+            --head "$BRANCH" \
+            --title "chore(market): weekly automated market data pricing refresh ($DATE)" \
+            --body "Automated weekly market comps refresh completed by GitHub Actions. Verified spotless formatting and test suite pass." \
+            || echo "Pull request creation completed or already open."
