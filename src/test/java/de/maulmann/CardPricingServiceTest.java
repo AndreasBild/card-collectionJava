@@ -128,4 +128,47 @@ class CardPricingServiceTest {
         CardData cdWithEst = new CardData(cWithEst, "c-est");
         assertEquals(5.0, CardPricingService.getEffectiveValue(cdWithEst));
     }
+
+    @Test
+    @DisplayName("Should give curated overrides precedence over standard market values in getEffectiveValue")
+    void testEffectiveValueWithOverridePrecedence() {
+        CardJson pmgCard = CardJson.builder()
+                .id("1997-98-fleer-metal-universe-precious-metal-gems-red-33-pmg-sn47")
+                .player("Juwan Howard")
+                .season("1997-98")
+                .estimatedValue(50.0) // Lower unverified estimate in json
+                .build();
+        CardData cdPmg = new CardData(pmgCard, "pmg-override-test");
+
+        Double effective = CardPricingService.getEffectiveValue(cdPmg);
+        assertNotNull(effective);
+        assertEquals(1250.0, effective, 0.01, "Curated override ($1,250.00) must take precedence over $50.00");
+
+        CardPricingService.ValuationDetails details = CardPricingService.getValuationDetails(cdPmg);
+        assertNotNull(details);
+        assertTrue(details.isOverride());
+        assertEquals(1250.0, details.effectiveValue(), 0.01);
+        assertEquals("eBay Historical / PWCC", details.source());
+        assertEquals("Raw", details.grade());
+    }
+
+    @Test
+    @DisplayName("Should calculate valuation details correctly across all fallback tiers")
+    void testValuationDetailsFallbacks() {
+        // Fallback to Market FMV
+        CardJson cFmv = CardJson.builder().id("regular-card").estimatedValue(45.0).grade("PSA 9").build();
+        CardData cdFmv = new CardData(cFmv, "cd-fmv");
+        CardPricingService.ValuationDetails dFmv = CardPricingService.getValuationDetails(cdFmv);
+        assertFalse(dFmv.isOverride());
+        assertEquals(45.0, dFmv.effectiveValue());
+        assertEquals("Market FMV", dFmv.source());
+        assertEquals("PSA 9", dFmv.grade());
+
+        // Fallback to Acquisition Cost
+        CardJson cCost = CardJson.builder().id("cost-card").purchasePrice(12.50).build();
+        CardData cdCost = new CardData(cCost, "cd-cost");
+        CardPricingService.ValuationDetails dCost = CardPricingService.getValuationDetails(cdCost);
+        assertEquals(12.50, dCost.effectiveValue());
+        assertEquals("Acquisition Cost", dCost.source());
+    }
 }

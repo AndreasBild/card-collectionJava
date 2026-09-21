@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.TreeMap;
 
 /**
@@ -75,11 +76,37 @@ public class CardPricingService {
         );
     }
 
+    private static final SimpleLazyConstant<ValuationOverridesLoader> OVERRIDES_LOADER =
+            SimpleLazyConstant.of(ValuationOverridesLoader::loadDefault);
+
+    public record ValuationDetails(
+            Double effectiveValue,
+            String source,
+            String grade,
+            Double growthPct,
+            boolean isOverride
+    ) {}
+
     /**
-     * Determines the most accurate current market value (estimated value, last sold price, or latest history point).
+     * Determines the most accurate current market value (override, estimated value, last sold price, or history).
      */
     public static Double getEffectiveValue(CardData c) {
         if (c == null) return null;
+
+        String cardId = c.id != null ? c.id : (c.sourceJson != null ? c.sourceJson.id() : null);
+        if (cardId != null) {
+            Optional<ValuationOverride> voOpt = OVERRIDES_LOADER.get().getOverride(cardId);
+            if (voOpt.isPresent()) {
+                ValuationOverride vo = voOpt.get();
+                if (vo.estimatedValue() != null && vo.estimatedValue() > 0.0) {
+                    return vo.estimatedValue();
+                }
+                if (vo.lastSoldPrice() != null && vo.lastSoldPrice() > 0.0) {
+                    return vo.lastSoldPrice();
+                }
+            }
+        }
+
         if (c.estimatedValue != null && c.estimatedValue > 0.0) {
             return c.estimatedValue;
         }
@@ -96,6 +123,48 @@ public class CardPricingService {
             return c.purchasePrice;
         }
         return null;
+    }
+
+    /**
+     * Returns rich valuation metadata including source attribution, grade tier, and override status.
+     */
+    public static ValuationDetails getValuationDetails(CardData c) {
+        if (c == null) {
+            return new ValuationDetails(null, "None", "Raw", null, false);
+        }
+
+        String cardId = c.id != null ? c.id : (c.sourceJson != null ? c.sourceJson.id() : null);
+        if (cardId != null) {
+            Optional<ValuationOverride> voOpt = OVERRIDES_LOADER.get().getOverride(cardId);
+            if (voOpt.isPresent()) {
+                ValuationOverride vo = voOpt.get();
+                Double val = vo.estimatedValue() != null && vo.estimatedValue() > 0.0
+                        ? vo.estimatedValue()
+                        : vo.lastSoldPrice();
+                if (val != null && val > 0.0) {
+                    return new ValuationDetails(val, vo.source(), vo.grade(), calculateGrowthPct(c), true);
+                }
+            }
+        }
+
+        if (c.estimatedValue != null && c.estimatedValue > 0.0) {
+            return new ValuationDetails(c.estimatedValue, "Market FMV", c.get("Grade"), calculateGrowthPct(c), false);
+        }
+        if (c.lastSoldPrice != null && c.lastSoldPrice > 0.0) {
+            return new ValuationDetails(c.lastSoldPrice, "Last Sold Comp", c.get("Grade"), calculateGrowthPct(c), false);
+        }
+        if (c.priceHistory != null && !c.priceHistory.isEmpty()) {
+            PricePoint last = c.priceHistory.getLast();
+            return new ValuationDetails(last.price(), last.source(), last.grade(), calculateGrowthPct(c), false);
+        }
+        if (c.beckettValue != null && c.beckettValue > 0.0) {
+            return new ValuationDetails(c.beckettValue, "Beckett Book Value", "Raw", calculateGrowthPct(c), false);
+        }
+        if (c.purchasePrice != null && c.purchasePrice > 0.0) {
+            return new ValuationDetails(c.purchasePrice, "Acquisition Cost", c.get("Grade"), 0.0, false);
+        }
+
+        return new ValuationDetails(null, "Unpriced", c.get("Grade"), null, false);
     }
 
     /**

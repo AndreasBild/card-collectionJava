@@ -163,6 +163,59 @@ public record CardJson(
         return b.build();
     }
 
+    public CardJson enrichWith(ValuationOverride override) {
+        if (override == null) return this;
+        Double effectiveEst = (override.estimatedValue() != null && override.estimatedValue() > 0.0)
+                ? override.estimatedValue()
+                : this.estimatedValue;
+        Double effectiveSold = (override.lastSoldPrice() != null && override.lastSoldPrice() > 0.0)
+                ? override.lastSoldPrice()
+                : this.lastSoldPrice;
+        String effectiveSoldDate = (override.lastSoldDate() != null && !override.lastSoldDate().isBlank())
+                ? override.lastSoldDate()
+                : this.lastSoldDate;
+
+        java.util.List<PricePoint> updatedHistory = this.priceHistory != null ? new java.util.ArrayList<>(this.priceHistory) : new java.util.ArrayList<>();
+        if (effectiveSold != null && effectiveSold > 0.0 && effectiveSoldDate != null) {
+            PricePoint pp = new PricePoint(effectiveSoldDate, effectiveSold, override.source() != null ? override.source() : "Curated Override", override.grade());
+            boolean exists = updatedHistory.stream().anyMatch(p -> effectiveSoldDate.equals(p.date()) && Math.abs(p.price() - effectiveSold) < 0.01);
+            if (!exists) {
+                updatedHistory.add(pp);
+            }
+        }
+
+        Builder b = builder()
+                .id(this.id)
+                .player(this.player)
+                .season(this.season)
+                .team(this.team)
+                .company(this.company)
+                .brand(this.brand)
+                .theme(this.theme)
+                .variant(this.variant)
+                .cardNumber(this.cardNumber)
+                .serialNumber(this.serialNumber)
+                .printRun(this.printRun)
+                .gradingCompany(this.gradingCompany)
+                .grade(this.grade)
+                .certNumber(this.certNumber)
+                .collection(this.collection)
+                .notes(this.notes)
+                .isAutograph(this.isAutograph)
+                .isPatch(this.isPatch)
+                .isRookie(this.isRookie)
+                .estimatedValue(effectiveEst)
+                .lastSoldPrice(effectiveSold)
+                .lastSoldDate(effectiveSoldDate)
+                .purchasePrice(this.purchasePrice)
+                .priceHistory(java.util.Collections.unmodifiableList(updatedHistory))
+                .popReport(this.popReport)
+                .popTotal(this.popTotal)
+                .popHigher(this.popHigher)
+                .beckettValue(this.beckettValue);
+        return b.build();
+    }
+
     public static Builder builder() {
         return new Builder();
     }

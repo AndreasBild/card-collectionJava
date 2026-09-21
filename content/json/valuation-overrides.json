@@ -1,0 +1,32 @@
+{
+  "1997-98-fleer-metal-universe-precious-metal-gems-red-33-pmg-sn47" : {
+    "estimatedValue" : 1250.0,
+    "lastSoldPrice" : 1249.99,
+    "lastSoldDate" : "2026-03-04",
+    "grade" : "Raw",
+    "source" : "eBay Historical / PWCC",
+    "verified" : true,
+    "url" : "https://www.pwccmarketplace.com",
+    "notes" : "Verified comp of Juwan Howard PMG Red #33/100"
+  },
+  "1997-98-fleer-metal-universe-precious-metal-gems-green-33-pmg-sn7" : {
+    "estimatedValue" : 8500.0,
+    "lastSoldPrice" : 8500.0,
+    "lastSoldDate" : "2026-02-15",
+    "grade" : "BGS 8.5",
+    "source" : "Private Collector Comp",
+    "verified" : true,
+    "url" : null,
+    "notes" : "Verified high-grade comp of Juwan Howard PMG Green #07/100 (Green parallel /10)"
+  },
+  "1997-98-flair-showcase-showcase-legacy-collection-row-0-seat-64-sn69" : {
+    "estimatedValue" : 960.0,
+    "lastSoldPrice" : 960.0,
+    "lastSoldDate" : "2024-08-12",
+    "grade" : "PSA 10",
+    "source" : "Goldin Auctions",
+    "verified" : true,
+    "url" : "https://goldin.co",
+    "notes" : "Verified PSA 10 Legacy Collection Row 0 /100 comp"
+  }
+}

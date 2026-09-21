@@ -23,14 +23,23 @@ public class CardDataLoader {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     public static List<CardJson> loadCardsFromJson(String jsonPath) {
-        return loadCardsFromJson(jsonPath, MarketDataCache.loadDefault(), BeckettValueCache.loadDefault());
+        return loadCardsFromJson(jsonPath, MarketDataCache.loadDefault(), BeckettValueCache.loadDefault(), ValuationOverridesLoader.loadDefault());
     }
 
     public static List<CardJson> loadCardsFromJson(String jsonPath, MarketDataCache marketCache) {
-        return loadCardsFromJson(jsonPath, marketCache, BeckettValueCache.loadDefault());
+        return loadCardsFromJson(jsonPath, marketCache, BeckettValueCache.loadDefault(), ValuationOverridesLoader.loadDefault());
     }
 
     public static List<CardJson> loadCardsFromJson(String jsonPath, MarketDataCache marketCache, BeckettValueCache beckettCache) {
+        return loadCardsFromJson(jsonPath, marketCache, beckettCache, ValuationOverridesLoader.loadDefault());
+    }
+
+    public static List<CardJson> loadCardsFromJson(
+            String jsonPath,
+            MarketDataCache marketCache,
+            BeckettValueCache beckettCache,
+            ValuationOverridesLoader overridesLoader
+    ) {
         List<CardJson> rawCards = loadRawCards(jsonPath);
         return rawCards.stream().map(c -> {
             CardJson enriched = c;
@@ -44,6 +53,12 @@ public class CardDataLoader {
                 Optional<BeckettValueEntry> bvMatch = beckettCache.get(enriched.id());
                 if (bvMatch.isPresent()) {
                     enriched = enriched.enrichWith(bvMatch.get());
+                }
+            }
+            if (overridesLoader != null && overridesLoader.size() > 0) {
+                Optional<ValuationOverride> ovMatch = overridesLoader.getOverride(enriched.id());
+                if (ovMatch.isPresent()) {
+                    enriched = enriched.enrichWith(ovMatch.get());
                 }
             }
             return enriched;
@@ -62,6 +77,16 @@ public class CardDataLoader {
 
     public static List<CardData> loadCards(Path path, MarketDataCache marketCache, BeckettValueCache beckettCache) {
         List<CardJson> jsonList = loadCardsFromJson(path.toString(), marketCache, beckettCache);
+        return jsonList.stream().map(CardData::new).toList();
+    }
+
+    public static List<CardData> loadCards(
+            Path path,
+            MarketDataCache marketCache,
+            BeckettValueCache beckettCache,
+            ValuationOverridesLoader overridesLoader
+    ) {
+        List<CardJson> jsonList = loadCardsFromJson(path.toString(), marketCache, beckettCache, overridesLoader);
         return jsonList.stream().map(CardData::new).toList();
     }
 
