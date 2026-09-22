@@ -148,8 +148,10 @@
                     <showWarnings>true</showWarnings>
                     <showDeprecation>true</showDeprecation>
                     <compilerArgs>
+                        <arg>--enable-preview</arg>
                         <arg>-Xlint:all</arg>
                         <arg>-Xlint:-processing</arg>
+                        <arg>-proc:none</arg>
                     </compilerArgs>
                     <fork>true</fork>
                 </configuration>
@@ -224,7 +226,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.6.0</version>
                 <configuration>
-                    <argLine>--enable-native-access=ALL-UNNAMED --sun-misc-unsafe-memory-access=allow</argLine>
+                    <argLine>--enable-preview --enable-native-access=ALL-UNNAMED --sun-misc-unsafe-memory-access=allow</argLine>
                     <forkCount>1</forkCount>
                     <reuseForks>true</reuseForks>
                 </configuration>
@@ -243,7 +245,6 @@
                 </executions>
                 <configuration>
                     <java>
-                        <removeUnusedImports />
                         <trimTrailingWhitespace />
                         <endWithNewline />
                     </java>

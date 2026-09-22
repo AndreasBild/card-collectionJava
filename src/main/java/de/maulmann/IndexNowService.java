@@ -24,6 +24,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Gatherers;
 
 /**
  * Service for notifying search engines via the IndexNow API protocol.
@@ -254,10 +255,9 @@ public class IndexNowService {
         }
 
         return CompletableFuture.runAsync(() -> {
-            for (int i = 0; i < validUrls.size(); i += MAX_URLS_PER_REQUEST) {
-                List<String> batch = validUrls.subList(i, Math.min(i + MAX_URLS_PER_REQUEST, validUrls.size()));
-                sendPayloadWithRetry(batch);
-            }
+            validUrls.stream()
+                    .gather(Gatherers.windowFixed(MAX_URLS_PER_REQUEST))
+                    .forEach(IndexNowService::sendPayloadWithRetry);
         }, executor);
     }
 
