@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Gatherers;
 
 /**
  * Specialized generator for the 3D Collector's 9-Pocket digital binder page.
@@ -74,20 +75,20 @@ public class BinderPageGenerator {
                 binderCardItems.add(item);
             }
 
-            // Chunk cards into 9-card pages (3x3 grid)
-            List<List<Map<String, Object>>> binderPages = new ArrayList<>();
+            // Chunk cards into 9-card pages (3x3 grid) using Java Stream Gatherers
             final int POCKETS_PER_PAGE = 9;
-            for (int i = 0; i < binderCardItems.size(); i += POCKETS_PER_PAGE) {
-                int end = Math.min(i + POCKETS_PER_PAGE, binderCardItems.size());
-                List<Map<String, Object>> pageSlots = new ArrayList<>(binderCardItems.subList(i, end));
-                // Pad to 9 slots if last page has fewer cards
-                while (pageSlots.size() < POCKETS_PER_PAGE) {
-                    Map<String, Object> emptySlot = new HashMap<>();
-                    emptySlot.put("isEmpty", true);
-                    pageSlots.add(emptySlot);
-                }
-                binderPages.add(pageSlots);
-            }
+            List<List<Map<String, Object>>> binderPages = binderCardItems.stream()
+                    .gather(Gatherers.windowFixed(POCKETS_PER_PAGE))
+                    .map(page -> {
+                        List<Map<String, Object>> slots = new ArrayList<>(page);
+                        while (slots.size() < POCKETS_PER_PAGE) {
+                            Map<String, Object> emptySlot = new HashMap<>();
+                            emptySlot.put("isEmpty", true);
+                            slots.add(emptySlot);
+                        }
+                        return slots;
+                    })
+                    .toList();
 
             data.put("binderPages", binderPages);
             data.put("totalCards", binderCardItems.size());

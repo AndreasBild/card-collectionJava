@@ -12,7 +12,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -64,7 +63,6 @@ public class ImageConverter {
         // Initialisierung des Hash-Checkers
         FileTracker tracker = new FileTracker("output/image-build-hashes.properties");
 
-        List<CompletableFuture<Void>> futures = new ArrayList<>();
         try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
             List<Path> allFiles;
             try (Stream<Path> stream = Files.walk(sourceDir)) {
@@ -92,7 +90,7 @@ public class ImageConverter {
                         continue;
                     }
 
-                    futures.add(CompletableFuture.runAsync(() -> {
+                    executor.submit(() -> {
                         try {
                             boolean wasConverted = convertAndSaveImageSet(file, sourceDir, avifOutDir, tracker);
                             if (wasConverted) {
@@ -104,10 +102,9 @@ public class ImageConverter {
                             log.error("Failed to process {}: {}", file, e.getMessage());
                             failureCount.incrementAndGet();
                         }
-                    }, executor));
+                    });
                 }
             }
-            CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new)).join();
         } catch (Exception e) {
             log.error("Critical error during parallel image processing: {}", e.getMessage());
         }

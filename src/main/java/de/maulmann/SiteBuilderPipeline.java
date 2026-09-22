@@ -224,7 +224,6 @@ public class SiteBuilderPipeline {
         AtomicInteger skipCount = metrics.webFilesSkipped;
         final int BROTLI_FAST_QUALITY = 9;
 
-        List<CompletableFuture<Void>> futures = new ArrayList<>();
         try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
             try (Stream<Path> paths = Files.walk(outputDir)) {
                 paths.filter(Files::isRegularFile).forEach(file -> {
@@ -242,7 +241,7 @@ public class SiteBuilderPipeline {
                         return;
                     }
 
-                    futures.add(CompletableFuture.runAsync(() -> {
+                    executor.submit(() -> {
                         try {
                             String ext = fileName.contains(".") ? fileName.substring(fileName.lastIndexOf('.') + 1) : "";
                             switch (ext) {
@@ -299,10 +298,9 @@ public class SiteBuilderPipeline {
                                 log.error("Failed to process {}: {}", fileName, e.getMessage());
                             }
                         }
-                    }, executor));
+                    });
                 });
             }
-            CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new)).join();
         }
 
         log.info("-> Uploaded {} web files. (Skipped {} unmodified files).", uploadCount.get(), skipCount.get());
@@ -365,7 +363,6 @@ public class SiteBuilderPipeline {
 
         final Set<String> remoteKeys = existingRemoteKeys;
 
-        List<CompletableFuture<Void>> futures = new ArrayList<>();
         try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
             try (Stream<Path> paths = Files.walk(imagesDir)) {
                 paths.filter(Files::isRegularFile).forEach(file -> {
@@ -387,18 +384,17 @@ public class SiteBuilderPipeline {
                             log.info("-> [Reconcile] Detected image missing on S3 despite cached hash: {}", s3Key);
                         }
 
-                        futures.add(CompletableFuture.runAsync(() -> {
+                        executor.submit(() -> {
                             try {
                                 metrics.imageBytes.addAndGet(Files.size(file));
                                 uploadRawFile(s3Client, file, s3Key, contentType, CACHE_LONG, uploadCount, tracker, currentHash);
                             } catch (Exception e) {
                                 log.error("Failed to process upload for image {}: {}", fileName, e.getMessage());
                             }
-                        }, executor));
+                        });
                     }
                 });
             }
-            CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new)).join();
         }
 
         log.info("-> Synced {} images. (Skipped {} unmodified images).", uploadCount.get(), skipCount.get());
@@ -689,7 +685,7 @@ public class SiteBuilderPipeline {
 
         AtomicReference<List<CardData>> generatedCards = new AtomicReference<>();
         try (ExecutorService phaseExecutor = Executors.newVirtualThreadPerTaskExecutor()) {
-            CompletableFuture<Void> htmlTask = CompletableFuture.runAsync(() -> {
+            phaseExecutor.submit(() -> {
                 log.info("  -> [PHASE 1] Generating HTML files and Sitemap...");
                 FileGenerator.setTimestampTracker(timeTracker);
                 CardPageGenerator.setTimestampTracker(timeTracker);
@@ -705,15 +701,12 @@ public class SiteBuilderPipeline {
 
                 SitemapGenerator.generate(cards); // Sitemap & robots.txt now ready
                 timeTracker.save();
-            }, phaseExecutor);
+            });
 
-            CompletableFuture<Void> imageTask = CompletableFuture.runAsync(() -> {
+            phaseExecutor.submit(() -> {
                 log.info("  -> [PHASE 2] Converting images to AVIF ...");
                 ImageConverter.main(new String[0]);
-            }, phaseExecutor);
-
-            // Wait for both tasks to complete concurrently
-            CompletableFuture.allOf(htmlTask, imageTask).join();
+            });
         }
         return generatedCards.get();
     }
