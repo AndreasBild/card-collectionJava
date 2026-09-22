@@ -61,7 +61,7 @@ To prevent faulty generated code from reaching production, **Antigravity, Jules,
 ### 3.2 Six-Stage Workflow Cycle
 1. **Initialisierung (Initialization):** Create a dedicated feature branch via IntelliJ Git integration.
 2. **Generierung (Generation):** Execute Antigravity commands/prompts in the terminal or workspace to generate or refactor code.
-3. **Kompilierung & Typenprüfung (Compile & Type Check):** Switch to IntelliJ IDEA. The IDE synchronizes file changes and is used for syntax verification, Java 26 preview type checking, and static code inspection.
+3. **Kompilierung & Typenprüfung (Compile & Type Check):** Switch to IntelliJ IDEA. The IDE synchronizes file changes and is used for syntax verification, Java 27 preview type checking, and static code inspection.
 4. **Refining & Verification:** Perform manual adjustments, fix compiler warnings/errors, and use IntelliJ Database Tools to verify MySQL/Firestore schemas and queries.
 5. **Commit & Push:** After local verification passes, stage and commit the changes via IntelliJ IDEA in the feature branch and push to GitHub.
 6. **PR & Jules-Integration:** Open a Pull Request on GitHub. The **Jules** agent asynchronously:
@@ -82,7 +82,7 @@ flowchart TD
         FS[("Firebase Firestore (Card Ratings)")]
     end
 
-    subgraph CoreEngine ["2. Processing Engine (Java 26)"]
+    subgraph CoreEngine ["2. Processing Engine (Java 27)"]
         Loader["CardDataLoader & HtmlToJsonConverter"]
         Tracker["TimestampTracker & FileTracker"]
         Gen["CardPageGenerator & SharedTemplates"]
@@ -130,7 +130,7 @@ flowchart TD
 ```text
 .
 ├── .agents/
-│   ├── rules/                    # Antigravity micro-rules (java26, pure-avif, compression, pwa, freemarker, git)
+│   ├── rules/                    # Antigravity micro-rules (java27, pure-avif, compression, pwa, freemarker, git)
 │   └── skills/                   # Antigravity skills (build-pipeline, verify-schema, validate-snapshots, audit-performance)
 ├── .editorconfig                 # Standardized formatting for IDE & Agents
 ├── .github/

@@ -2,7 +2,7 @@
 
 ## 1. System Role & Core Invariants
 - **Role:** Principal Systems & Performance Engineer operating locally for `card-collectionJava` (`maulmann.de`).
-- **Runtime & Language:** Java 26 Preview Features (`--enable-preview`), Virtual Threads (`Executors.newVirtualThreadPerTaskExecutor()`), Records, Pattern Matching. Never downgrade compiler versions in `pom.xml`.
+- **Runtime & Language:** Java 27 Preview Features (`--enable-preview`), Virtual Threads (`Executors.newVirtualThreadPerTaskExecutor()`), Records, Pattern Matching. Never downgrade compiler versions in `pom.xml`.
 - **Branch Protection:** Antigravity must **NEVER** edit files or commit directly on `main`. Work strictly on isolated feature/fix/chore branches.
 - **Mandatory PR Lifecycle:** Every implementation task must conclude with staging only affected files, committing with semantic conventions, pushing to `origin`, and automatically opening a Pull Request (`gh pr create`). Never stop or finish a task without creating the Pull Request.
 - **Frontend & Assets:** Zero/Micro-JS architecture, pure AVIF image engine (`200w`, `400w`, `600w`, `900w`), synchronous `.gz` and `.br` companion generation, strict CWV budget ($\text{LCP} < 1.2\text{s}$, $\text{CLS} = 0$, $\text{INP} = 0$).
@@ -20,7 +20,7 @@ Operational runbooks consume ~30 tokens of metadata until triggered. Use dedicat
 
 | Workflow | Skill Name | Description |
 | :--- | :--- | :--- |
-| **Test Suite** | `test-suite` | Run JUnit 5 unit, snapshot, and integration test suite with Java 26 preview features. |
+| **Test Suite** | `test-suite` | Run JUnit 5 unit, snapshot, and integration test suite with Java 27 preview features. |
 | **Static Analysis** | `static-analysis` | Run Spotless Google Java Style checks and Maven compiler static analysis. |
 | **Site Build** | `build-pipeline` | Execute local dev (`LocalDevPipeline`) or full production pipeline and verify companion outputs. |
 | **Schema & SEO** | `verify-schema` | Validate Schema.org JSON-LD structured data and semantic HTML metadata. |
