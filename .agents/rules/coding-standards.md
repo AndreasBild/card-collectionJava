@@ -1,7 +1,7 @@
-# Modern Java 26 Coding Standards & Quality Guidelines
+# Modern Java 27 Coding Standards & Quality Guidelines
 
 ## 1. JVM & Language Invariants
-- **Java 26 Preview Features:** Strictly maintain Java 26 preview features. Never downgrade `<maven.compiler.source>`, `<maven.compiler.target>`, or `<maven.compiler.release>` in `pom.xml`.
+- **Java 27 Preview Features:** Strictly maintain Java 27 preview features. Never downgrade `<maven.compiler.source>`, `<maven.compiler.target>`, or `<maven.compiler.release>` in `pom.xml`.
 - **Compiler Flags:** Always ensure surefire and compiler plugins include `--enable-preview` and `-Xlint:all`.
 
 ## 2. Modern Concurrency & Architecture

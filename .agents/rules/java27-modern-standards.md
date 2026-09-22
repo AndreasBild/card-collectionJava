@@ -1,8 +1,8 @@
-# Modern Java 26 Standards & Code Quality
+# Modern Java 27 Standards & Code Quality
 
 ## Language & JVM Invariants
-1. **Java 26 Preview Features:**
-   - Compile and execute strictly on Java 26 with `--enable-preview`.
+1. **Java 27 Preview Features:**
+   - Compile and execute strictly on Java 27 with `--enable-preview`.
    - Never downgrade `<maven.compiler.source>`, `<maven.compiler.target>`, or `<maven.compiler.release>` in `pom.xml`.
 
 2. **Modern Concurrency & Records:**

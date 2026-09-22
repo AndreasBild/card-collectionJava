@@ -23,7 +23,7 @@ Before staging or committing any code, execute the local quality gate:
 # 1. Spotless formatting
 mvn spotless:check
 
-# 2. JUnit 5 test suite with Java 26 preview features
+# 2. JUnit 5 test suite with Java 27 preview features
 mvn clean test
 
 # 3. Local pipeline dry-run

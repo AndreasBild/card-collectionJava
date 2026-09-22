@@ -12,7 +12,7 @@ Use this skill to execute the recursive self-improvement loop: autonomously asse
 Execute this loop when:
 1. **User Correction / Feedback:** The user corrects an assumption, provides workflow guidance, or triggers `/learn`.
 2. **Post-Task Friction:** A command or test failed due to missing context, an outdated rule, or suboptimal tool choice.
-3. **Project Goal Evolution:** New architecture choices (e.g. Java 26 preview features, virtual threads, CWV targets, AVIF engine) require updated guardrails.
+3. **Project Goal Evolution:** New architecture choices (e.g. Java 27 preview features, virtual threads, CWV targets, AVIF engine) require updated guardrails.
 4. **Scheduled Self-Audit:** A scheduled periodic heartbeat (via `schedule` cron or timer) triggers an automated sanity audit.
 
 ---
@@ -22,7 +22,7 @@ Execute this loop when:
 Recursive self-improvement must **never** weaken system invariants:
 - **Never bypass branch protection:** Never edit or commit directly on `main`. Work on `feat/*` or `chore/*`.
 - **Never weaken data isolation:** Never embed or read raw `cards.json` (770 KB) or `market-data-cache.json` in full.
-- **Never downgrade runtime:** Keep Java 26 Preview (`--enable-preview`) and Virtual Threads intact.
+- **Never downgrade runtime:** Keep Java 27 Preview (`--enable-preview`) and Virtual Threads intact.
 - **Token budget preservation:** Keep [`AGENTS.md`](../../AGENTS.md) strictly $\le 60$ lines ($\le 500$ tokens).
 
 ---

@@ -15,8 +15,8 @@
 ### Stage 3: Branch Isolation
 - [x] Created dedicated branch (`feature/*`, `fix/*`, or `chore/*`) isolated from `main`.
 
-### Stage 4: Implementation (TDD & Java 26)
-- [x] Implemented with modern Java 26 constructs (Records, Virtual Threads, Pattern Matching).
+### Stage 4: Implementation (TDD & Java 27)
+- [x] Implemented with modern Java 27 constructs (Records, Virtual Threads, Pattern Matching).
 - [x] Zero stubbing / zero TODO placeholders in production paths.
 
 ### Stage 5: Local Quality Gate Verification

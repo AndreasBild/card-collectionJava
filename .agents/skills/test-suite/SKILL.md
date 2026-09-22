@@ -1,6 +1,6 @@
 ---
 name: test-suite
-description: Execute JUnit 5 unit, snapshot, and integration test suite with Java 26 preview features enabled.
+description: Execute JUnit 5 unit, snapshot, and integration test suite with Java 27 preview features enabled.
 ---
 
 # Test Suite Skill

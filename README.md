@@ -1,6 +1,6 @@
 # 🏀 maulmann.de – Card Collection Engine (`card-collectionJava`)
 
-[![Java 26](https://img.shields.io/badge/Java-26%20Preview-ED8B00?logo=openjdk&logoColor=white)](https://openjdk.org/)
+[![Java 27](https://img.shields.io/badge/Java-27%20Preview-ED8B00?logo=openjdk&logoColor=white)](https://openjdk.org/)
 [![Maven Build & CI](https://img.shields.io/badge/Build-Maven%203.9+-C71A36?logo=apachemaven&logoColor=white)](pom.xml)
 [![Zero-JS Performance](https://img.shields.io/badge/Performance-Core%20Web%20Vitals%20100-brightgreen)](https://www.maulmann.de)
 [![LLMO & SEO](https://img.shields.io/badge/SEO-Schema.org%20JSON--LD-blue)](src/main/java/de/maulmann/CardSchemaGenerator.java)
@@ -31,7 +31,7 @@
 ## 📁 Repository Quick Links & Documentation
 
 - 📘 [**ARCHITECTURE.md**](ARCHITECTURE.md) – Detailed system architecture, data DAG, and the 6-stage development lifecycle.
-- 🤖 [**AGENTS.md**](AGENTS.md) – Operational guidelines, Java 26 standards, and persona boundaries (Antigravity & Jules).
+- 🤖 [**AGENTS.md**](AGENTS.md) – Operational guidelines, Java 27 standards, and persona boundaries (Antigravity & Jules).
 - 📜 [**llms.txt**](llms.txt) – AI crawler manifest and semantic structure map.
 
 ---

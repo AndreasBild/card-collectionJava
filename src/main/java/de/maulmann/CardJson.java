@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 /**
- * Immutable Java 26 Record representation of a Trading Card dataset entry.
+ * Immutable Java 27 Record representation of a Trading Card dataset entry.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record CardJson(
