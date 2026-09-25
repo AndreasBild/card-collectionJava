@@ -104,8 +104,8 @@ ${topNavHtml?no_esc}
                     <!-- PARALLEL CHECKLIST PILLS -->
                     <div class="rainbow-checklist-pills">
                         <#list set.cards as card>
-                            <span class="checklist-pill acquired" title="${card.title} - ${card.serial!''}">
-                                <span class="pill-check">&#10003;</span> ${card.variant} <#if card.serial?? && card.serial != ''><span class="pill-serial">${card.serial}</span></#if>
+                            <span class="checklist-pill ${(card.acquired!true)?then('acquired', 'seeking')}" title="${card.title} - ${card.serial!''}">
+                                <#if card.acquired!true><span class="pill-check">&#10003;</span><#else><span class="pill-check pill-seeking">&plus;</span></#if> ${card.variant} <#if card.serial?? && card.serial != ''><span class="pill-serial">${card.serial}</span></#if>
                             </span>
                         </#list>
                     </div>
