@@ -774,11 +774,26 @@ public class CardPageGenerator {
         int totalBackMissing = 0;
 
         String[] extensions = {".avif", ".jpg", ".jpeg", ".png", ".webp"};
+        Set<String> validImageKeys = new HashSet<>();
 
         for (de.maulmann.CardData c : cards) {
             String seasonFolder = c.seasonFolder != null ? c.seasonFolder : "Unknown_Season";
             String rawImageBase = c.getRawImageBase();
             String resolvedImageBase = resolveDiskImageBase(seasonFolder, rawImageBase, c);
+
+            addCandidateImageKeys(validImageKeys, seasonFolder, rawImageBase);
+            addCandidateImageKeys(validImageKeys, seasonFolder, resolvedImageBase);
+            if (c.isGraded()) {
+                String gradingCo = c.get("Grading Co.");
+                String grade = c.get("Grade");
+                if (isValid(gradingCo) && isValid(grade)) {
+                    String suffix = "-" + CardData.cleanFilename(gradingCo) + "-" + CardData.cleanFilename(grade);
+                    if (rawImageBase.endsWith(suffix)) {
+                        String baseWithoutGrading = rawImageBase.substring(0, rawImageBase.length() - suffix.length());
+                        addCandidateImageKeys(validImageKeys, seasonFolder, baseWithoutGrading);
+                    }
+                }
+            }
 
             boolean frontExists = checkSideImageExists(seasonFolder, resolvedImageBase, "front", extensions);
             boolean backExists = checkSideImageExists(seasonFolder, resolvedImageBase, "back", extensions);
@@ -825,6 +840,89 @@ public class CardPageGenerator {
             reportLines.add("");
         }
 
+        // Audit images/ directory for unlinked / orphaned files ("Karteileichen")
+        Map<String, List<String>> unlinkedByFolder = new TreeMap<>();
+        int totalUnlinked = 0;
+        Path imagesDir = Paths.get("images");
+        Pattern seasonPattern = Pattern.compile("(?i)\\b((?:19|20)\\d{2}(?:-\\d{2})?)\\b");
+        String[] standardExtensions = {".jpg", ".jpeg", ".png", ".webp", ".avif", ".gif", ".bmp"};
+
+        if (Files.exists(imagesDir)) {
+            try (Stream<Path> stream = Files.walk(imagesDir)) {
+                List<Path> files = stream.filter(Files::isRegularFile).sorted().toList();
+                for (Path p : files) {
+                    String fileName = p.getFileName().toString();
+                    if (fileName.startsWith(".")) continue;
+
+                    Path rel = imagesDir.relativize(p);
+                    String folder = rel.getNameCount() >= 2 ? rel.getName(0).toString() : "ROOT";
+
+                    String lowerName = fileName.toLowerCase();
+                    String stem = null;
+                    for (String ext : standardExtensions) {
+                        if (lowerName.endsWith(ext)) {
+                            // Check for consecutive dots like ..jpg
+                            if (!lowerName.endsWith(".." + ext.substring(1))) {
+                                stem = fileName.substring(0, fileName.length() - ext.length());
+                            }
+                            break;
+                        }
+                    }
+
+                    String reason;
+                    if (rel.getNameCount() < 2) {
+                        reason = "[MISPLACED ROOT FILE] File located directly in images/ root instead of a season folder";
+                    } else if (stem == null) {
+                        reason = "[INVALID EXTENSION / BACKUP] File has invalid or backup extension: " + fileName;
+                    } else {
+                        String key = folder.toLowerCase() + "/" + stem.toLowerCase();
+                        if (!validImageKeys.contains(key)) {
+                            var matcher = seasonPattern.matcher(fileName);
+                            String detectedSeason = null;
+                            while (matcher.find()) {
+                                String s = matcher.group(1);
+                                if (!s.equalsIgnoreCase(folder)) {
+                                    detectedSeason = s;
+                                }
+                            }
+                            if (detectedSeason != null) {
+                                reason = "[WRONG SEASON FOLDER] In folder '" + folder + "', but filename indicates season '" + detectedSeason + "'";
+                            } else {
+                                reason = "[UNLINKED SOURCE IMAGE] No matching card found in collection dataset";
+                            }
+                        } else {
+                            continue;
+                        }
+                    }
+
+                    totalUnlinked++;
+                    unlinkedByFolder.computeIfAbsent(folder, k -> new ArrayList<>())
+                            .add(reason + " -> " + rel.toString().replace('\\', '/'));
+                }
+            } catch (IOException e) {
+                log.warn("Could not audit unlinked source images in {}: {}", imagesDir, e.getMessage());
+            }
+        }
+
+        reportLines.add("================================================================================");
+        reportLines.add("UNLINKED / ORPHANED SOURCE IMAGES (images/ directory)");
+        if (totalUnlinked == 0) {
+            reportLines.add("Total Unlinked Files: 0 (All source images successfully match cards in collection)");
+            reportLines.add("================================================================================");
+        } else {
+            reportLines.add("Total Unlinked Files: " + totalUnlinked);
+            reportLines.add("Files in source images/ directory without matching cards (possible typos,");
+            reportLines.add("obsolete backup files, wrong season folder, or uncataloged scans):");
+            reportLines.add("================================================================================");
+            reportLines.add("");
+
+            for (Map.Entry<String, List<String>> entry : unlinkedByFolder.entrySet()) {
+                reportLines.add("--- FOLDER: " + entry.getKey() + " (" + entry.getValue().size() + " unlinked) ---");
+                reportLines.addAll(entry.getValue());
+                reportLines.add("");
+            }
+        }
+
         try {
             Path outPath = Paths.get("output", "MissingImages.txt");
             if (outPath.getParent() != null) {
@@ -833,11 +931,40 @@ public class CardPageGenerator {
             Path rootPath = Paths.get("MissingImages.txt");
             Files.write(outPath, reportLines, StandardCharsets.UTF_8);
             Files.write(rootPath, reportLines, StandardCharsets.UTF_8);
-            log.info("Saved MissingImages.txt with {} entries across {} seasons.",
-                    (totalFrontMissing + totalBackMissing), missingBySeason.size());
+            log.info("Saved MissingImages.txt with {} missing entries across {} seasons and {} unlinked source files.",
+                    (totalFrontMissing + totalBackMissing), missingBySeason.size(), totalUnlinked);
         } catch (IOException e) {
             log.error("Failed to write MissingImages.txt", e);
         }
+    }
+
+    private static void addCandidateImageKeys(Set<String> set, String season, String base) {
+        if (base == null || base.isBlank()) return;
+        String seasonLower = season.toLowerCase();
+        String baseLower = base.toLowerCase();
+
+        set.add(seasonLower + "/" + baseLower + "-front");
+        set.add(seasonLower + "/" + baseLower + "-back");
+
+        String altBase = PATTERN_ALT_BASE.matcher(base).replaceAll("-sn$1");
+        set.add(seasonLower + "/" + altBase.toLowerCase() + "-front");
+        set.add(seasonLower + "/" + altBase.toLowerCase() + "-back");
+
+        String altBaseNoZero = PATTERN_ALT_BASE_NO_ZERO.matcher(altBase).replaceAll("-sn$1$2");
+        set.add(seasonLower + "/" + altBaseNoZero.toLowerCase() + "-front");
+        set.add(seasonLower + "/" + altBaseNoZero.toLowerCase() + "-back");
+
+        String altBaseNegative = PATTERN_ALT_BASE_NEG.matcher(base).replaceAll("-sn$1");
+        set.add(seasonLower + "/" + altBaseNegative.toLowerCase() + "-front");
+        set.add(seasonLower + "/" + altBaseNegative.toLowerCase() + "-back");
+
+        String altVar1 = PATTERN_ALT_VAR1.matcher(base).replaceAll("-Base-$1");
+        set.add(seasonLower + "/" + altVar1.toLowerCase() + "-front");
+        set.add(seasonLower + "/" + altVar1.toLowerCase() + "-back");
+
+        String altVar2 = PATTERN_ALT_VAR2.matcher(base).replaceAll("-Base-$1");
+        set.add(seasonLower + "/" + altVar2.toLowerCase() + "-front");
+        set.add(seasonLower + "/" + altVar2.toLowerCase() + "-back");
     }
 
     private static boolean checkSideImageExists(String seasonFolder, String imageBaseName, String side, String[] extensions) {
