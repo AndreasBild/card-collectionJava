@@ -427,27 +427,27 @@
     "brand": "Collectors Choice",
     "theme": "You Crash The Game Rookie Scoring",
     "variant": "Redemption",
-    "pack_odds": "N/A",
-    "source": "Heuristic Default",
-    "confidence": "UNVERIFIED"
+    "pack_odds": "1:20 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
   },
   "1994-95|collectors choice|you crash the game rookie scoring|gold": {
     "season": "1994-95",
     "brand": "Collectors Choice",
     "theme": "You Crash The Game Rookie Scoring",
     "variant": "Gold",
-    "pack_odds": "N/A",
-    "source": "Heuristic Default",
-    "confidence": "UNVERIFIED"
+    "pack_odds": "1:20 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
   },
   "1994-95|collectors choice|draft trade lottery picks|base": {
     "season": "1994-95",
     "brand": "Collectors Choice",
     "theme": "Draft Trade Lottery Picks",
     "variant": "Base",
-    "pack_odds": "N/A",
-    "source": "Heuristic Default",
-    "confidence": "UNVERIFIED"
+    "pack_odds": "1:36 Packs (Exchange Card)",
+    "source": "Beckett / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
   },
   "1994-95|topps embossed|base set|base": {
     "season": "1994-95",
@@ -3679,5 +3679,1463 @@
     "pack_odds": "1:24 Packs",
     "source": "Alias Mapping",
     "confidence": "AUTOMATED"
+  },
+  "1994-95|flair|wave of the future|base": {
+    "season": "1994-95",
+    "brand": "Flair",
+    "theme": "Wave Of The Future",
+    "variant": "Base",
+    "pack_odds": "1:7 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1994-95|skybox hoops|magic's all rookies|base": {
+    "season": "1994-95",
+    "brand": "Skybox Hoops",
+    "theme": "Magic'S All Rookies",
+    "variant": "Base",
+    "pack_odds": "1:12 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1994-95|skybox hoops|magic's all rookies|jumbo": {
+    "season": "1994-95",
+    "brand": "Skybox Hoops",
+    "theme": "Magic'S All Rookies",
+    "variant": "Jumbo",
+    "pack_odds": "1:1 Pack",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1994-95|skybox hoops|magic's all rookies|foil tech": {
+    "season": "1994-95",
+    "brand": "Skybox Hoops",
+    "theme": "Magic'S All Rookies",
+    "variant": "Foil Tech",
+    "pack_odds": "1:36 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1994-95|skybox premium|head of the class|base": {
+    "season": "1994-95",
+    "brand": "Skybox Premium",
+    "theme": "Head Of The Class",
+    "variant": "Base",
+    "pack_odds": "1:480 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1994-95|upper deck|rookie standouts|base": {
+    "season": "1994-95",
+    "brand": "Upper Deck",
+    "theme": "Rookie Standouts",
+    "variant": "Base",
+    "pack_odds": "1:30 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1994-95|upper deck|special edition|base": {
+    "season": "1994-95",
+    "brand": "Upper Deck",
+    "theme": "Special Edition",
+    "variant": "Base",
+    "pack_odds": "1:1 Pack",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1994-95|upper deck|special edition|gold": {
+    "season": "1994-95",
+    "brand": "Upper Deck",
+    "theme": "Special Edition",
+    "variant": "Gold",
+    "pack_odds": "1:35 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|upper deck|special edition|base": {
+    "season": "1995-96",
+    "brand": "Upper Deck",
+    "theme": "Special Edition",
+    "variant": "Base",
+    "pack_odds": "1:1 Pack",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|upper deck|special edition|gold": {
+    "season": "1995-96",
+    "brand": "Upper Deck",
+    "theme": "Special Edition",
+    "variant": "Gold",
+    "pack_odds": "1:27 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|upper deck|base set|electric court gold": {
+    "season": "1995-96",
+    "brand": "Upper Deck",
+    "theme": "Base Set",
+    "variant": "Electric Court Gold",
+    "pack_odds": "1:35 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|fleer|total o|base": {
+    "season": "1996-97",
+    "brand": "Fleer",
+    "theme": "Total O",
+    "variant": "Base",
+    "pack_odds": "1:44 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|fleer metal|maximum metal|base": {
+    "season": "1996-97",
+    "brand": "Fleer Metal",
+    "theme": "Maximum Metal",
+    "variant": "Base",
+    "pack_odds": "1:180 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|fleer metal|molten metal|base": {
+    "season": "1996-97",
+    "brand": "Fleer Metal",
+    "theme": "Molten Metal",
+    "variant": "Base",
+    "pack_odds": "1:72 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|fleer metal|net-rageous|base": {
+    "season": "1996-97",
+    "brand": "Fleer Metal",
+    "theme": "Net-Rageous",
+    "variant": "Base",
+    "pack_odds": "1:288 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|skybox e-x2000|star date 2000|base": {
+    "season": "1996-97",
+    "brand": "Skybox E-X2000",
+    "theme": "Star Date 2000",
+    "variant": "Base",
+    "pack_odds": "1:9 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|skybox e-2000|star date 2000|base": {
+    "season": "1996-97",
+    "brand": "Skybox E-2000",
+    "theme": "Star Date 2000",
+    "variant": "Base",
+    "pack_odds": "1:9 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|skybox e-2000|base set|credentials": {
+    "season": "1996-97",
+    "brand": "Skybox E-2000",
+    "theme": "Base Set",
+    "variant": "Credentials",
+    "pack_odds": "1:360 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps|nba at 50|base": {
+    "season": "1996-97",
+    "brand": "Topps",
+    "theme": "Nba At 50",
+    "variant": "Base",
+    "pack_odds": "1:6 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps|profiles|base": {
+    "season": "1996-97",
+    "brand": "Topps",
+    "theme": "Profiles",
+    "variant": "Base",
+    "pack_odds": "1:9 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps|super team conference winners bordered|refractor": {
+    "season": "1996-97",
+    "brand": "Topps",
+    "theme": "Super Team Conference Winners Bordered",
+    "variant": "Refractor",
+    "pack_odds": "1:72 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|flair showcase|style|base": {
+    "season": "1997-98",
+    "brand": "Flair Showcase",
+    "theme": "Style",
+    "variant": "Base",
+    "pack_odds": "1:4 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|flair showcase|grace|base": {
+    "season": "1997-98",
+    "brand": "Flair Showcase",
+    "theme": "Grace",
+    "variant": "Base",
+    "pack_odds": "1:10 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|flair showcase|showcase|base": {
+    "season": "1997-98",
+    "brand": "Flair Showcase",
+    "theme": "Showcase",
+    "variant": "Base",
+    "pack_odds": "1:10 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|flair showcase|flair|base": {
+    "season": "1997-98",
+    "brand": "Flair Showcase",
+    "theme": "Flair",
+    "variant": "Base",
+    "pack_odds": "1:24 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|fleer|game breakers|base": {
+    "season": "1997-98",
+    "brand": "Fleer",
+    "theme": "Game Breakers",
+    "variant": "Base",
+    "pack_odds": "1:288 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|fleer|key ingredients|base": {
+    "season": "1997-98",
+    "brand": "Fleer",
+    "theme": "Key Ingredients",
+    "variant": "Base",
+    "pack_odds": "1:2 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|fleer|key ingredients|gold": {
+    "season": "1997-98",
+    "brand": "Fleer",
+    "theme": "Key Ingredients",
+    "variant": "Gold",
+    "pack_odds": "1:18 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|fleer|zone|base": {
+    "season": "1997-98",
+    "brand": "Fleer",
+    "theme": "Zone",
+    "variant": "Base",
+    "pack_odds": "1:36 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|fleer|franchise futures|base": {
+    "season": "1997-98",
+    "brand": "Fleer",
+    "theme": "Franchise Futures",
+    "variant": "Base",
+    "pack_odds": "1:36 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|fleer metal universe|silver slams|base": {
+    "season": "1997-98",
+    "brand": "Fleer Metal Universe",
+    "theme": "Silver Slams",
+    "variant": "Base",
+    "pack_odds": "1:6 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|fleer metal universe|titanium|base": {
+    "season": "1997-98",
+    "brand": "Fleer Metal Universe",
+    "theme": "Titanium",
+    "variant": "Base",
+    "pack_odds": "1:72 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|fleer metal universe championship|all-millennium team|base": {
+    "season": "1997-98",
+    "brand": "Fleer Metal Universe Championship",
+    "theme": "All-Millennium Team",
+    "variant": "Base",
+    "pack_odds": "1:6 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|fleer metal universe championship|base set|precious metal gems": {
+    "season": "1997-98",
+    "brand": "Fleer Metal Universe Championship",
+    "theme": "Base Set",
+    "variant": "Precious Metal Gems",
+    "pack_odds": "1:288 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|skybox e-x2001|credentials|credentials now": {
+    "season": "1997-98",
+    "brand": "Skybox E-X2001",
+    "theme": "Credentials",
+    "variant": "Credentials Now",
+    "pack_odds": "1:72 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|skybox e-x2001|credentials|credentials future": {
+    "season": "1997-98",
+    "brand": "Skybox E-X2001",
+    "theme": "Credentials",
+    "variant": "Credentials Future",
+    "pack_odds": "1:72 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|skybox premium|jam pack|base": {
+    "season": "1997-98",
+    "brand": "Skybox Premium",
+    "theme": "Jam Pack",
+    "variant": "Base",
+    "pack_odds": "1:18 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|skybox z-force|limited access|base": {
+    "season": "1997-98",
+    "brand": "Skybox Z-Force",
+    "theme": "Limited Access",
+    "variant": "Base",
+    "pack_odds": "1:360 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|skybox z-force|zensations|base": {
+    "season": "1997-98",
+    "brand": "Skybox Z-Force",
+    "theme": "Zensations",
+    "variant": "Base",
+    "pack_odds": "1:6 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|sp authentic|sign of the times|base": {
+    "season": "1997-98",
+    "brand": "Sp Authentic",
+    "theme": "Sign Of The Times",
+    "variant": "Base",
+    "pack_odds": "1:42 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|sp authentic|profiles|level 1": {
+    "season": "1997-98",
+    "brand": "Sp Authentic",
+    "theme": "Profiles",
+    "variant": "Level 1",
+    "pack_odds": "1:3 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|sp authentic|profiles|level 2": {
+    "season": "1997-98",
+    "brand": "Sp Authentic",
+    "theme": "Profiles",
+    "variant": "Level 2",
+    "pack_odds": "1:3 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|sp authentic|profiles|level 3": {
+    "season": "1997-98",
+    "brand": "Sp Authentic",
+    "theme": "Profiles",
+    "variant": "Level 3",
+    "pack_odds": "1:3 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|spx|base set|sky": {
+    "season": "1997-98",
+    "brand": "Spx",
+    "theme": "Base Set",
+    "variant": "Sky",
+    "pack_odds": "1:1 Pack",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|spx|base set|bronze": {
+    "season": "1997-98",
+    "brand": "Spx",
+    "theme": "Base Set",
+    "variant": "Bronze",
+    "pack_odds": "1:3 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|topps|minted in springfield|base": {
+    "season": "1997-98",
+    "brand": "Topps",
+    "theme": "Minted In Springfield",
+    "variant": "Base",
+    "pack_odds": "1:6 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|topps|topps 40|base": {
+    "season": "1997-98",
+    "brand": "Topps",
+    "theme": "Topps 40",
+    "variant": "Base",
+    "pack_odds": "1:12 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|topps|rock stars|base": {
+    "season": "1997-98",
+    "brand": "Topps",
+    "theme": "Rock Stars",
+    "variant": "Base",
+    "pack_odds": "1:36 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|topps|rock stars|refractor": {
+    "season": "1997-98",
+    "brand": "Topps",
+    "theme": "Rock Stars",
+    "variant": "Refractor",
+    "pack_odds": "1:144 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "2000-01|topps gold label|class 2|base": {
+    "season": "2000-01",
+    "brand": "Topps Gold Label",
+    "theme": "Class 2",
+    "variant": "Base",
+    "pack_odds": "1:4 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "2000-01|topps gold label|class 3|base": {
+    "season": "2000-01",
+    "brand": "Topps Gold Label",
+    "theme": "Class 3",
+    "variant": "Base",
+    "pack_odds": "1:12 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "2000-01|topps gold label|premium|base": {
+    "season": "2000-01",
+    "brand": "Topps Gold Label",
+    "theme": "Premium",
+    "variant": "Base",
+    "pack_odds": "1:11 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|ultra|ultrabilities|starter": {
+    "season": "1997-98",
+    "brand": "Ultra",
+    "theme": "Ultrabilities",
+    "variant": "Starter",
+    "pack_odds": "1:6 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|ultra|ultrabilities|all-star": {
+    "season": "1997-98",
+    "brand": "Ultra",
+    "theme": "Ultrabilities",
+    "variant": "All-Star",
+    "pack_odds": "1:28 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|ultra|ultrabilities|superstar": {
+    "season": "1997-98",
+    "brand": "Ultra",
+    "theme": "Ultrabilities",
+    "variant": "Superstar",
+    "pack_odds": "1:288 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|ultra|big shots|base": {
+    "season": "1997-98",
+    "brand": "Ultra",
+    "theme": "Big Shots",
+    "variant": "Base",
+    "pack_odds": "1:4 Series 1 Packs",
+    "source": "TCDB / Box Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|ultra|inside/outside|base": {
+    "season": "1997-98",
+    "brand": "Ultra",
+    "theme": "Inside/Outside",
+    "variant": "Base",
+    "pack_odds": "1:6 Series 1 Packs",
+    "source": "TCDB / Box Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|ultra|jam city|base": {
+    "season": "1997-98",
+    "brand": "Ultra",
+    "theme": "Jam City",
+    "variant": "Base",
+    "pack_odds": "1:8 Series 1 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|ultra|sweet deal|base": {
+    "season": "1997-98",
+    "brand": "Ultra",
+    "theme": "Sweet Deal",
+    "variant": "Base",
+    "pack_odds": "1:6 Series 2 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|ultra|neat feats|base": {
+    "season": "1997-98",
+    "brand": "Ultra",
+    "theme": "Neat Feats",
+    "variant": "Base",
+    "pack_odds": "1:8 Series 2 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|ultra|rim rocker|base": {
+    "season": "1997-98",
+    "brand": "Ultra",
+    "theme": "Rim Rocker",
+    "variant": "Base",
+    "pack_odds": "1:8 Series 2 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|ultra|court masters|base": {
+    "season": "1996-97",
+    "brand": "Ultra",
+    "theme": "Court Masters",
+    "variant": "Base",
+    "pack_odds": "1:180 Retail Packs",
+    "source": "Beckett / TCDB Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|ultra|rising stars|base": {
+    "season": "1996-97",
+    "brand": "Ultra",
+    "theme": "Rising Stars",
+    "variant": "Base",
+    "pack_odds": "1:180 Hobby Packs",
+    "source": "Beckett / TCDB Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps bowman's best|best cuts|base": {
+    "season": "1996-97",
+    "brand": "Topps Bowman's Best",
+    "theme": "Best Cuts",
+    "variant": "Base",
+    "pack_odds": "1:24 Hobby Packs",
+    "source": "Beckett / TCDB Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps bowman's best|honor roll|base": {
+    "season": "1996-97",
+    "brand": "Topps Bowman's Best",
+    "theme": "Honor Roll",
+    "variant": "Base",
+    "pack_odds": "1:48 Hobby Packs",
+    "source": "Beckett / TCDB Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|bowman's best|best cuts|base": {
+    "season": "1996-97",
+    "brand": "Bowman's Best",
+    "theme": "Best Cuts",
+    "variant": "Base",
+    "pack_odds": "1:24 Hobby Packs",
+    "source": "Beckett / TCDB Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|bowman's best|honor roll|base": {
+    "season": "1996-97",
+    "brand": "Bowman's Best",
+    "theme": "Honor Roll",
+    "variant": "Base",
+    "pack_odds": "1:48 Hobby Packs",
+    "source": "Beckett / TCDB Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|skybox premium|close ups|base": {
+    "season": "1996-97",
+    "brand": "SkyBox Premium",
+    "theme": "Close Ups",
+    "variant": "Base",
+    "pack_odds": "1:24 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|skybox premium|net set|base": {
+    "season": "1996-97",
+    "brand": "SkyBox Premium",
+    "theme": "Net Set",
+    "variant": "Base",
+    "pack_odds": "1:48 Series 2 Hobby Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|skybox premium|thunder and lightning|base": {
+    "season": "1996-97",
+    "brand": "SkyBox Premium",
+    "theme": "Thunder and Lightning",
+    "variant": "Base",
+    "pack_odds": "1:144 Series 2 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|fleer metal|power tools|base": {
+    "season": "1996-97",
+    "brand": "Fleer Metal",
+    "theme": "Power Tools",
+    "variant": "Base",
+    "pack_odds": "1:18 Series 1 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|metal|power tools|base": {
+    "season": "1996-97",
+    "brand": "Metal",
+    "theme": "Power Tools",
+    "variant": "Base",
+    "pack_odds": "1:18 Series 1 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|fleer|franchise futures|base": {
+    "season": "1996-97",
+    "brand": "Fleer",
+    "theme": "Franchise Futures",
+    "variant": "Base",
+    "pack_odds": "1:54 Series 1 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|sp|holoviews|base": {
+    "season": "1996-97",
+    "brand": "SP",
+    "theme": "Holoviews",
+    "variant": "Base",
+    "pack_odds": "1:10 Packs",
+    "source": "TCDB / Box Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|sp|spx force|base": {
+    "season": "1996-97",
+    "brand": "SP",
+    "theme": "SPX Force",
+    "variant": "Base",
+    "pack_odds": "1:360 Packs",
+    "source": "Beckett / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|spx|holoview heroes|base": {
+    "season": "1996-97",
+    "brand": "SPx",
+    "theme": "Holoview Heroes",
+    "variant": "Base",
+    "pack_odds": "1:75 Packs",
+    "source": "TCDB / Box Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps stadium club|class acts|base": {
+    "season": "1996-97",
+    "brand": "Topps Stadium Club",
+    "theme": "Class Acts",
+    "variant": "Base",
+    "pack_odds": "1:24 Series 2 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps stadium club|high risers|base": {
+    "season": "1996-97",
+    "brand": "Topps Stadium Club",
+    "theme": "High Risers",
+    "variant": "Base",
+    "pack_odds": "1:36 Series 2 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps stadium club|top crop|base": {
+    "season": "1996-97",
+    "brand": "Topps Stadium Club",
+    "theme": "Top Crop",
+    "variant": "Base",
+    "pack_odds": "1:24 Series 1 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|stadium club|class acts|base": {
+    "season": "1996-97",
+    "brand": "Stadium Club",
+    "theme": "Class Acts",
+    "variant": "Base",
+    "pack_odds": "1:24 Series 2 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|stadium club|high risers|base": {
+    "season": "1996-97",
+    "brand": "Stadium Club",
+    "theme": "High Risers",
+    "variant": "Base",
+    "pack_odds": "1:36 Series 2 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|stadium club|top crop|base": {
+    "season": "1996-97",
+    "brand": "Stadium Club",
+    "theme": "Top Crop",
+    "variant": "Base",
+    "pack_odds": "1:24 Series 1 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps chrome|profiles|base": {
+    "season": "1996-97",
+    "brand": "Topps Chrome",
+    "theme": "ProFiles",
+    "variant": "Base",
+    "pack_odds": "1:8 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|skybox hoops|hip notized|base": {
+    "season": "1996-97",
+    "brand": "SkyBox Hoops",
+    "theme": "HIP Notized",
+    "variant": "Base",
+    "pack_odds": "1:4 Series 1 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|skybox hoops|starting five|base": {
+    "season": "1996-97",
+    "brand": "SkyBox Hoops",
+    "theme": "Starting Five",
+    "variant": "Base",
+    "pack_odds": "1:12 Series 2 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|skybox hoops|fly with|base": {
+    "season": "1996-97",
+    "brand": "SkyBox Hoops",
+    "theme": "Fly With",
+    "variant": "Base",
+    "pack_odds": "1:24 Series 2 Retail Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|hoops|hip notized|base": {
+    "season": "1996-97",
+    "brand": "Hoops",
+    "theme": "HIP Notized",
+    "variant": "Base",
+    "pack_odds": "1:4 Series 1 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|hoops|starting five|base": {
+    "season": "1996-97",
+    "brand": "Hoops",
+    "theme": "Starting Five",
+    "variant": "Base",
+    "pack_odds": "1:12 Series 2 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|hoops|fly with|base": {
+    "season": "1996-97",
+    "brand": "Hoops",
+    "theme": "Fly With",
+    "variant": "Base",
+    "pack_odds": "1:24 Series 2 Retail Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps|mystery finest borderless|base": {
+    "season": "1996-97",
+    "brand": "Topps",
+    "theme": "Mystery Finest Borderless",
+    "variant": "Base",
+    "pack_odds": "1:72 Series 2 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps|mystery finest bordered|base": {
+    "season": "1996-97",
+    "brand": "Topps",
+    "theme": "Mystery Finest Bordered",
+    "variant": "Base",
+    "pack_odds": "1:36 Series 2 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps finest|foundations|base": {
+    "season": "1996-97",
+    "brand": "Topps Finest",
+    "theme": "Foundations",
+    "variant": "Base",
+    "pack_odds": "1:4 Packs",
+    "source": "TCDB / Foil Tier Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps finest|sterling|base": {
+    "season": "1996-97",
+    "brand": "Topps Finest",
+    "theme": "Sterling",
+    "variant": "Base",
+    "pack_odds": "1:24 Packs",
+    "source": "TCDB / Foil Tier Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|finest|foundations|base": {
+    "season": "1996-97",
+    "brand": "Finest",
+    "theme": "Foundations",
+    "variant": "Base",
+    "pack_odds": "1:4 Packs",
+    "source": "TCDB / Foil Tier Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|finest|sterling|base": {
+    "season": "1996-97",
+    "brand": "Finest",
+    "theme": "Sterling",
+    "variant": "Base",
+    "pack_odds": "1:24 Packs",
+    "source": "TCDB / Foil Tier Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|ud3|the winning edge|base": {
+    "season": "1996-97",
+    "brand": "UD3",
+    "theme": "The Winning Edge",
+    "variant": "Base",
+    "pack_odds": "1:1 Hobby Packs",
+    "source": "TCDB / Box Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|topps finest|catalyst|base": {
+    "season": "1997-98",
+    "brand": "Topps Finest",
+    "theme": "Catalyst",
+    "variant": "Base",
+    "pack_odds": "1:24 Packs",
+    "source": "TCDB / Foil Tier Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|topps finest|catalyst|embossed": {
+    "season": "1997-98",
+    "brand": "Topps Finest",
+    "theme": "Catalyst",
+    "variant": "Embossed",
+    "pack_odds": "1:96 Packs",
+    "source": "Beckett / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|finest|catalyst|base": {
+    "season": "1997-98",
+    "brand": "Finest",
+    "theme": "Catalyst",
+    "variant": "Base",
+    "pack_odds": "1:24 Packs",
+    "source": "TCDB / Foil Tier Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|finest|catalyst|embossed": {
+    "season": "1997-98",
+    "brand": "Finest",
+    "theme": "Catalyst",
+    "variant": "Embossed",
+    "pack_odds": "1:96 Packs",
+    "source": "Beckett / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|fleer|traditions|crystal": {
+    "season": "1997-98",
+    "brand": "Fleer",
+    "theme": "Traditions",
+    "variant": "Crystal",
+    "pack_odds": "1:2 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|fleer|traditions|tiffany": {
+    "season": "1997-98",
+    "brand": "Fleer",
+    "theme": "Traditions",
+    "variant": "Tiffany",
+    "pack_odds": "1:20 Hobby Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|skybox hoops|frequent flyer club|base": {
+    "season": "1997-98",
+    "brand": "SkyBox Hoops",
+    "theme": "Frequent Flyer Club",
+    "variant": "Base",
+    "pack_odds": "1:36 Series 1 Hobby Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|skybox hoops|frequent flyer club|upgrade": {
+    "season": "1997-98",
+    "brand": "SkyBox Hoops",
+    "theme": "Frequent Flyer Club",
+    "variant": "Upgrade",
+    "pack_odds": "1:360 Series 1 Hobby Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|skybox hoops|talkin' hoops|base": {
+    "season": "1997-98",
+    "brand": "SkyBox Hoops",
+    "theme": "Talkin' Hoops",
+    "variant": "Base",
+    "pack_odds": "1:1 Series 1 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|hoops|frequent flyer club|base": {
+    "season": "1997-98",
+    "brand": "Hoops",
+    "theme": "Frequent Flyer Club",
+    "variant": "Base",
+    "pack_odds": "1:36 Series 1 Hobby Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|hoops|frequent flyer club|upgrade": {
+    "season": "1997-98",
+    "brand": "Hoops",
+    "theme": "Frequent Flyer Club",
+    "variant": "Upgrade",
+    "pack_odds": "1:360 Series 1 Hobby Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|hoops|talkin' hoops|base": {
+    "season": "1997-98",
+    "brand": "Hoops",
+    "theme": "Talkin' Hoops",
+    "variant": "Base",
+    "pack_odds": "1:1 Series 1 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|fleer metal universe|gold universe|base": {
+    "season": "1997-98",
+    "brand": "Fleer Metal Universe",
+    "theme": "Gold Universe",
+    "variant": "Base",
+    "pack_odds": "1:192 Retail Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|metal universe|gold universe|base": {
+    "season": "1997-98",
+    "brand": "Metal Universe",
+    "theme": "Gold Universe",
+    "variant": "Base",
+    "pack_odds": "1:192 Retail Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|skybox z-force|fast track|base": {
+    "season": "1997-98",
+    "brand": "SkyBox Z-Force",
+    "theme": "Fast Track",
+    "variant": "Base",
+    "pack_odds": "1:24 Series 1 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|z-force|fast track|base": {
+    "season": "1997-98",
+    "brand": "Z-Force",
+    "theme": "Fast Track",
+    "variant": "Base",
+    "pack_odds": "1:24 Series 1 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|topps stadium club|base set|first day issue": {
+    "season": "1997-98",
+    "brand": "Topps Stadium Club",
+    "theme": "Base Set",
+    "variant": "First Day Issue",
+    "pack_odds": "1:24 Retail Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|stadium club|base set|first day issue": {
+    "season": "1997-98",
+    "brand": "Stadium Club",
+    "theme": "Base Set",
+    "variant": "First Day Issue",
+    "pack_odds": "1:24 Retail Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|topps|autographs|base": {
+    "season": "1997-98",
+    "brand": "Topps",
+    "theme": "Autographs",
+    "variant": "Base",
+    "pack_odds": "1:212 Series 1 Hobby Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|ud3|season ticket autograph|base": {
+    "season": "1997-98",
+    "brand": "UD3",
+    "theme": "Season Ticket Autograph",
+    "variant": "Base",
+    "pack_odds": "1:1,800 Packs",
+    "source": "Beckett / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|upper deck|team mates|base": {
+    "season": "1997-98",
+    "brand": "Upper Deck",
+    "theme": "Team Mates",
+    "variant": "Base",
+    "pack_odds": "1:4 Series 1 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|collectors choice|starquest|red": {
+    "season": "1997-98",
+    "brand": "Collectors Choice",
+    "theme": "StarQuest",
+    "variant": "Red",
+    "pack_odds": "1:21 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|collectors choice|super action stickums|base": {
+    "season": "1997-98",
+    "brand": "Collectors Choice",
+    "theme": "Super Action StickUms",
+    "variant": "Base",
+    "pack_odds": "1:2 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|collectors choice|mini cards|base": {
+    "season": "1997-98",
+    "brand": "Collectors Choice",
+    "theme": "Mini Cards",
+    "variant": "Base",
+    "pack_odds": "1:1 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|collectors choice|base set|players club": {
+    "season": "1995-96",
+    "brand": "Collectors Choice",
+    "theme": "Base Set",
+    "variant": "Players Club",
+    "pack_odds": "1:1 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|collectors choice|base set|players club platinum": {
+    "season": "1995-96",
+    "brand": "Collectors Choice",
+    "theme": "Base Set",
+    "variant": "Players Club Platinum",
+    "pack_odds": "1:34 Packs",
+    "source": "Beckett / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|collectors choice|scouting report|players club": {
+    "season": "1995-96",
+    "brand": "Collectors Choice",
+    "theme": "Scouting Report",
+    "variant": "Players Club",
+    "pack_odds": "1:1 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|collectors choice|scouting report|players club platinum": {
+    "season": "1995-96",
+    "brand": "Collectors Choice",
+    "theme": "Scouting Report",
+    "variant": "Players Club Platinum",
+    "pack_odds": "1:34 Packs",
+    "source": "Beckett / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|upper deck|base set|electric court": {
+    "season": "1995-96",
+    "brand": "Upper Deck",
+    "theme": "Base Set",
+    "variant": "Electric Court",
+    "pack_odds": "1:1 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|upper deck|slams & jams|electric court": {
+    "season": "1995-96",
+    "brand": "Upper Deck",
+    "theme": "Slams & Jams",
+    "variant": "Electric Court",
+    "pack_odds": "1:1 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|upper deck|slams & jams|electric court gold": {
+    "season": "1995-96",
+    "brand": "Upper Deck",
+    "theme": "Slams & Jams",
+    "variant": "Electric Court Gold",
+    "pack_odds": "1:27 Retail Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|sp|all-stars|base": {
+    "season": "1995-96",
+    "brand": "SP",
+    "theme": "All-Stars",
+    "variant": "Base",
+    "pack_odds": "1:3 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|sp|all-stars|gold": {
+    "season": "1995-96",
+    "brand": "SP",
+    "theme": "All-Stars",
+    "variant": "Gold",
+    "pack_odds": "1:61 Packs",
+    "source": "Beckett / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|sp|holoviews|base": {
+    "season": "1995-96",
+    "brand": "SP",
+    "theme": "Holoviews",
+    "variant": "Base",
+    "pack_odds": "1:5 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|sp|holoviews|die-cut": {
+    "season": "1995-96",
+    "brand": "SP",
+    "theme": "Holoviews",
+    "variant": "Die-Cut",
+    "pack_odds": "1:75 Packs",
+    "source": "Beckett / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|sp championship|champions of the court|base": {
+    "season": "1995-96",
+    "brand": "SP Championship",
+    "theme": "Champions Of The Court",
+    "variant": "Base",
+    "pack_odds": "1:6 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|sp championship|champions of the court|die-cut": {
+    "season": "1995-96",
+    "brand": "SP Championship",
+    "theme": "Champions Of The Court",
+    "variant": "Die-Cut",
+    "pack_odds": "1:75 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|sp championship|championship shots|gold": {
+    "season": "1995-96",
+    "brand": "SP Championship",
+    "theme": "Championship Shots",
+    "variant": "Gold",
+    "pack_odds": "1:62 Packs",
+    "source": "Beckett / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|fleer|class encounters|base": {
+    "season": "1995-96",
+    "brand": "Fleer",
+    "theme": "Class Encounters",
+    "variant": "Base",
+    "pack_odds": "1:2 Series 2 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|skybox hoops|block party|base": {
+    "season": "1995-96",
+    "brand": "SkyBox Hoops",
+    "theme": "Block Party",
+    "variant": "Base",
+    "pack_odds": "1:2 Series 1 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|skybox hoops|hoopstars|base": {
+    "season": "1995-96",
+    "brand": "SkyBox Hoops",
+    "theme": "HoopStars ",
+    "variant": "Base",
+    "pack_odds": "1:16 Series 2 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|skybox hoops|slamland|base": {
+    "season": "1995-96",
+    "brand": "SkyBox Hoops",
+    "theme": "SlamLand",
+    "variant": "Base",
+    "pack_odds": "1 Per Series 2 Box",
+    "source": "TCDB / Box Topper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|hoops|block party|base": {
+    "season": "1995-96",
+    "brand": "Hoops",
+    "theme": "Block Party",
+    "variant": "Base",
+    "pack_odds": "1:2 Series 1 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|hoops|hoopstars|base": {
+    "season": "1995-96",
+    "brand": "Hoops",
+    "theme": "HoopStars ",
+    "variant": "Base",
+    "pack_odds": "1:16 Series 2 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|hoops|slamland|base": {
+    "season": "1995-96",
+    "brand": "Hoops",
+    "theme": "SlamLand",
+    "variant": "Base",
+    "pack_odds": "1 Per Series 2 Box",
+    "source": "TCDB / Box Topper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|skybox premium|close ups|base": {
+    "season": "1995-96",
+    "brand": "SkyBox Premium",
+    "theme": "Close Ups",
+    "variant": "Base",
+    "pack_odds": "1:9 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|skybox premium|stand outs|base": {
+    "season": "1995-96",
+    "brand": "SkyBox Premium",
+    "theme": "Stand Outs",
+    "variant": "Base",
+    "pack_odds": "1:18 Hobby Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|ultra|all rookie team|base": {
+    "season": "1995-96",
+    "brand": "Ultra",
+    "theme": "All Rookie Team",
+    "variant": "Base",
+    "pack_odds": "1:7 Series 1 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|topps stadium club|beam team|base": {
+    "season": "1995-96",
+    "brand": "Topps Stadium Club",
+    "theme": "Beam Team",
+    "variant": "Base",
+    "pack_odds": "1:18 Series 1 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|stadium club|beam team|base": {
+    "season": "1995-96",
+    "brand": "Stadium Club",
+    "theme": "Beam Team",
+    "variant": "Base",
+    "pack_odds": "1:18 Series 1 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|topps gallery|base set|player's private issue": {
+    "season": "1995-96",
+    "brand": "Topps Gallery",
+    "theme": "Base Set",
+    "variant": "Player's Private Issue",
+    "pack_odds": "1:12 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|topps|whiz kids|base": {
+    "season": "1995-96",
+    "brand": "Topps",
+    "theme": "Whiz Kids",
+    "variant": "Base",
+    "pack_odds": "1:24 Series 1 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|topps|rattle and roll|base": {
+    "season": "1995-96",
+    "brand": "Topps",
+    "theme": "Rattle And Roll",
+    "variant": "Base",
+    "pack_odds": "1:12 Series 2 Retail Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|e-xl|base set|blue": {
+    "season": "1995-96",
+    "brand": "E-XL",
+    "theme": "Base Set",
+    "variant": "Blue",
+    "pack_odds": "1:1 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|e-xl|unstoppable|base": {
+    "season": "1995-96",
+    "brand": "E-XL",
+    "theme": "Unstoppable",
+    "variant": "Base",
+    "pack_odds": "1:6 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|topps finest|dish and swish|base": {
+    "season": "1995-96",
+    "brand": "Topps Finest",
+    "theme": "Dish And Swish",
+    "variant": "Base",
+    "pack_odds": "1:24 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|topps finest|mystery bordered|base": {
+    "season": "1995-96",
+    "brand": "Topps Finest",
+    "theme": "Mystery Bordered",
+    "variant": "Base",
+    "pack_odds": "1:24 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|topps finest|mystery borderless|base": {
+    "season": "1995-96",
+    "brand": "Topps Finest",
+    "theme": "Mystery Borderless",
+    "variant": "Base",
+    "pack_odds": "1:24 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1994-95|topps embossed|golden idol|gold": {
+    "season": "1994-95",
+    "brand": "Topps Embossed",
+    "theme": "Golden Idol",
+    "variant": "Gold",
+    "pack_odds": "1:1 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1994-95|ultra|all rookies|base": {
+    "season": "1994-95",
+    "brand": "Ultra",
+    "theme": "All Rookies",
+    "variant": "Base",
+    "pack_odds": "1:5 Series 2 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1994-95|upper deck|draft lottery picks|base": {
+    "season": "1994-95",
+    "brand": "Upper Deck",
+    "theme": "Draft Lottery Picks",
+    "variant": "Base",
+    "pack_odds": "1:240 Series 1 Packs (Exchange Card)",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1994-95|upper deck|predictor award winners|base": {
+    "season": "1994-95",
+    "brand": "Upper Deck",
+    "theme": "Predictor Award Winners",
+    "variant": "Base",
+    "pack_odds": "1:30 Series 2 Hobby Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1994-95|fleer|lottery exchange|base": {
+    "season": "1994-95",
+    "brand": "Fleer",
+    "theme": "Lottery Exchange",
+    "variant": "Base",
+    "pack_odds": "1:150 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1994-95|skybox hoops|draft redemption|base": {
+    "season": "1994-95",
+    "brand": "SkyBox Hoops",
+    "theme": "Draft Redemption",
+    "variant": "Base",
+    "pack_odds": "1:360 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1994-95|hoops|draft redemption|base": {
+    "season": "1994-95",
+    "brand": "Hoops",
+    "theme": "Draft Redemption",
+    "variant": "Base",
+    "pack_odds": "1:360 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1994-95|sp|holoviews|base": {
+    "season": "1994-95",
+    "brand": "SP",
+    "theme": "Holoviews",
+    "variant": "Base",
+    "pack_odds": "1:5 Packs",
+    "source": "TCDB / Wrapper Stated Odds",
+    "confidence": "VERIFIED"
   }
 }
