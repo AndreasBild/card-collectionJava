@@ -199,6 +199,10 @@ public class CardMetadataRenderer {
             sb.append(" Contains authentic game-used memorabilia patch.");
         }
 
+        if (c.has("Pack Odds")) {
+            sb.append(" Factory pack insertion odds: ").append(c.get("Pack Odds")).append(".");
+        }
+
         return sb.toString();
     }
 

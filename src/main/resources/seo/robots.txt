@@ -4,4 +4,42 @@ Allow: /
 User-agent: Googlebot-Image
 Allow: /images/
 
-Sitemap: https://www.maulmann.de/sitemap.xml.gz
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: ByteDance
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://www.maulmann.de/sitemap.xml
+Sitemap: https://www.maulmann.de/llms.txt
+Sitemap: https://www.maulmann.de/llms-full.txt

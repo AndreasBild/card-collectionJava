@@ -299,4 +299,77 @@ class CardSchemaGeneratorTest {
         assertTrue(links.contains("https://www.nba.com/stats/player/434"));
         assertEquals("Professional Basketball Player & Coach", aboutNode.get("jobTitle").asText());
     }
+
+    @Test
+    void testPackOddsInProductSchemaAndFaqAndDateModified() throws Exception {
+        CardJson c = CardJson.builder()
+                .player("Juwan Howard")
+                .season("1996-97")
+                .brand("Flair Showcase")
+                .theme("Row 0")
+                .variant("Legacy Collection")
+                .cardNumber("5")
+                .serialNumber("5")
+                .printRun(150)
+                .packOdds("1:30 Packs")
+                .lastSoldDate("2026-02-15")
+                .build();
+
+        CardData cardData = new CardData(c, "flair-showcase-row0-legacy-5");
+        cardData.seasonFolder = "1996-97";
+        cardData.filename = "juwan-howard-flair-legacy-5.html";
+
+        var faqItems = CardSchemaGenerator.computeFaqItems(cardData);
+        String jsonLdHtml = CardSchemaGenerator.generateJsonLd(cardData, "Legacy Collection card", "1996-97 Flair Showcase Legacy Collection #5", "Juwan-Howard-Collection.html", "1996-97-flair-legacy-5", faqItems);
+
+        Document doc = Jsoup.parseBodyFragment(jsonLdHtml);
+        Element ldJsonScript = doc.selectFirst("script[type=application/ld+json]");
+        assertNotNull(ldJsonScript);
+
+        JsonNode root = objectMapper.readTree(ldJsonScript.html());
+        JsonNode graph = root.get("@graph");
+        assertNotNull(graph);
+
+        // 1. Verify ItemPage dateModified
+        JsonNode itemPageNode = null;
+        JsonNode faqNode = null;
+        for (JsonNode node : graph) {
+            String type = node.get("@type").asText();
+            if ("ItemPage".equals(type)) itemPageNode = node;
+            if ("FAQPage".equals(type)) faqNode = node;
+        }
+        assertNotNull(itemPageNode, "ItemPage node must exist");
+        assertEquals("2026-02-15", itemPageNode.get("dateModified").asText(), "ItemPage should contain dateModified from lastSoldDate");
+
+        // 2. Verify FAQPage question and answer for pack odds
+        assertNotNull(faqNode, "FAQPage node must exist");
+        JsonNode mainEntity = faqNode.get("mainEntity");
+        assertTrue(mainEntity.isArray());
+        boolean foundOddsFaq = false;
+        for (JsonNode qNode : mainEntity) {
+            if ("What are the pack insertion odds for this card?".equals(qNode.get("name").asText())) {
+                foundOddsFaq = true;
+                assertEquals("This card features an official factory pack insertion ratio of 1:30 Packs, making it a rare and coveted find from original packs.",
+                        qNode.get("acceptedAnswer").get("text").asText());
+            }
+        }
+        assertTrue(foundOddsFaq, "FAQPage must contain question regarding pack insertion odds");
+
+        // 3. Verify Product additionalProperty has Pack Insertion Odds
+        Element productScript = doc.selectFirst("script#product-schema-template");
+        assertNotNull(productScript);
+        JsonNode productJson = objectMapper.readTree(productScript.html());
+        JsonNode additionalProps = productJson.get("additionalProperty");
+        assertNotNull(additionalProps);
+        assertTrue(additionalProps.isArray());
+
+        boolean foundOddsProp = false;
+        for (JsonNode prop : additionalProps) {
+            if ("Pack Insertion Odds".equals(prop.get("name").asText())) {
+                foundOddsProp = true;
+                assertEquals("1:30 Packs", prop.get("value").asText());
+            }
+        }
+        assertTrue(foundOddsProp, "Product schema additionalProperty must contain Pack Insertion Odds");
+    }
 }
