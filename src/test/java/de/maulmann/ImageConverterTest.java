@@ -6,6 +6,7 @@ import org.junit.jupiter.api.io.TempDir;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -71,5 +72,16 @@ class ImageConverterTest {
     @DisplayName("updateMissingImagesReportIfCardsAvailable should run gracefully without exceptions")
     void testUpdateMissingImagesReportIfCardsAvailable() {
         assertDoesNotThrow(ImageConverter::updateMissingImagesReportIfCardsAvailable);
+    }
+
+    @Test
+    @DisplayName("generateMissingImagesReport should include unlinked source images section in report")
+    void testMissingImagesReportIncludesUnlinkedSection() throws Exception {
+        ImageConverter.updateMissingImagesReportIfCardsAvailable();
+        Path reportFile = Paths.get("MissingImages.txt");
+        assertTrue(Files.exists(reportFile), "MissingImages.txt should exist");
+        String content = Files.readString(reportFile);
+        assertTrue(content.contains("UNLINKED / ORPHANED SOURCE IMAGES (images/ directory)"),
+                "Report must contain unlinked source images header");
     }
 }
