@@ -705,10 +705,17 @@ public class SiteBuilderPipeline {
 
             phaseExecutor.submit(() -> {
                 log.info("  -> [PHASE 2] Converting images to AVIF ...");
-                ImageConverter.main(new String[0]);
+                ImageConverter.main(new String[]{"--no-report"});
             });
         }
-        return generatedCards.get();
+
+        // --- POST-PHASE: Refresh image keys and update MissingImages.txt now that AVIF conversion is complete ---
+        List<CardData> cards = generatedCards.get();
+        if (cards != null && !cards.isEmpty()) {
+            CardPageGenerator.refreshExistingImageKeys();
+            CardPageGenerator.generateMissingImagesReport(cards);
+        }
+        return cards;
     }
 
 }
