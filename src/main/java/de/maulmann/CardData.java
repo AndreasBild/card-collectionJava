@@ -61,6 +61,10 @@ public class CardData {
         if (c.cardNumber() != null) this.attributes.put("Number", c.cardNumber());
         if (c.serialNumber() != null) this.attributes.put("Serial", c.serialNumber());
         if (c.printRun() != null) this.attributes.put("Print Run", String.valueOf(c.printRun()));
+        if (c.packOdds() != null && !c.packOdds().isBlank()) {
+            this.attributes.put("Pack Odds", c.packOdds());
+            this.attributes.put("Ratio", c.packOdds());
+        }
         if (c.gradingCompany() != null) this.attributes.put("Grading Co.", c.gradingCompany());
         if (c.grade() != null) this.attributes.put("Grade", c.grade());
         if (c.notes() != null) this.attributes.put("Notes", c.notes());

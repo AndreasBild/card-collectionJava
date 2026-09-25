@@ -1,0 +1,3071 @@
+{
+  "1996-97|flair showcase|showtime|legacy collection": {
+    "season": "1996-97",
+    "brand": "Flair Showcase",
+    "theme": "ShowTime",
+    "variant": "Legacy Collection",
+    "pack_odds": "1:30 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|flair showcase|showstopper|legacy collection": {
+    "season": "1996-97",
+    "brand": "Flair Showcase",
+    "theme": "ShowStopper",
+    "variant": "Legacy Collection",
+    "pack_odds": "1:30 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|flair showcase|showpiece|legacy collection": {
+    "season": "1996-97",
+    "brand": "Flair Showcase",
+    "theme": "ShowPiece",
+    "variant": "Legacy Collection",
+    "pack_odds": "1:30 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|flair showcase|showtime|base": {
+    "season": "1996-97",
+    "brand": "Flair Showcase",
+    "theme": "ShowTime",
+    "variant": "Base",
+    "pack_odds": "1:24 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|flair showcase|showstopper|base": {
+    "season": "1996-97",
+    "brand": "Flair Showcase",
+    "theme": "ShowStopper",
+    "variant": "Base",
+    "pack_odds": "1:4 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|flair showcase|showpiece|base": {
+    "season": "1996-97",
+    "brand": "Flair Showcase",
+    "theme": "ShowPiece",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|flair showcase|showcase|legacy collection": {
+    "season": "1997-98",
+    "brand": "Flair Showcase",
+    "theme": "Showcase",
+    "variant": "Legacy Collection",
+    "pack_odds": "1:36 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|flair showcase|grace|legacy collection": {
+    "season": "1997-98",
+    "brand": "Flair Showcase",
+    "theme": "Grace",
+    "variant": "Legacy Collection",
+    "pack_odds": "1:36 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|flair showcase|style|legacy collection": {
+    "season": "1997-98",
+    "brand": "Flair Showcase",
+    "theme": "Style",
+    "variant": "Legacy Collection",
+    "pack_odds": "1:36 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|flair showcase|flair|legacy collection": {
+    "season": "1997-98",
+    "brand": "Flair Showcase",
+    "theme": "Flair",
+    "variant": "Legacy Collection",
+    "pack_odds": "1:36 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1998-99|flair showcase|passion|legacy collection": {
+    "season": "1998-99",
+    "brand": "Flair Showcase",
+    "theme": "Passion",
+    "variant": "Legacy Collection",
+    "pack_odds": "1:36 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1998-99|flair showcase|power|legacy collection": {
+    "season": "1998-99",
+    "brand": "Flair Showcase",
+    "theme": "Power",
+    "variant": "Legacy Collection",
+    "pack_odds": "1:36 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1998-99|flair showcase|showcase|legacy collection": {
+    "season": "1998-99",
+    "brand": "Flair Showcase",
+    "theme": "Showcase",
+    "variant": "Legacy Collection",
+    "pack_odds": "1:36 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps chrome|base set|refractor": {
+    "season": "1996-97",
+    "brand": "Topps Chrome",
+    "theme": "Base Set",
+    "variant": "Refractor",
+    "pack_odds": "1:12 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|topps chrome|base set|refractor": {
+    "season": "1997-98",
+    "brand": "Topps Chrome",
+    "theme": "Base Set",
+    "variant": "Refractor",
+    "pack_odds": "1:12 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1998-99|topps chrome|base set|refractor": {
+    "season": "1998-99",
+    "brand": "Topps Chrome",
+    "theme": "Base Set",
+    "variant": "Refractor",
+    "pack_odds": "1:12 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|fleer metal universe|base set|precious metal gems red": {
+    "season": "1997-98",
+    "brand": "Fleer Metal Universe",
+    "theme": "Base Set",
+    "variant": "Precious Metal Gems Red",
+    "pack_odds": "1:288 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|fleer metal universe|base set|precious metal gems green": {
+    "season": "1997-98",
+    "brand": "Fleer Metal Universe",
+    "theme": "Base Set",
+    "variant": "Precious Metal Gems Green",
+    "pack_odds": "1:288 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|skybox premium|base set|star rubies": {
+    "season": "1997-98",
+    "brand": "SkyBox Premium",
+    "theme": "Base Set",
+    "variant": "Star Rubies",
+    "pack_odds": "1:240 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1998-99|skybox premium|base set|star rubies": {
+    "season": "1998-99",
+    "brand": "SkyBox Premium",
+    "theme": "Base Set",
+    "variant": "Star Rubies",
+    "pack_odds": "1:240 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|skybox premium|golden touch|base": {
+    "season": "1997-98",
+    "brand": "SkyBox Premium",
+    "theme": "Golden Touch",
+    "variant": "Base",
+    "pack_odds": "1:360 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|skybox premium|autographics|base": {
+    "season": "1996-97",
+    "brand": "SkyBox Premium",
+    "theme": "Autographics",
+    "variant": "Base",
+    "pack_odds": "1:72 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|skybox premium|autographics|base": {
+    "season": "1997-98",
+    "brand": "SkyBox Premium",
+    "theme": "Autographics",
+    "variant": "Base",
+    "pack_odds": "1:72 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1998-99|skybox premium|autographics|base": {
+    "season": "1998-99",
+    "brand": "SkyBox Premium",
+    "theme": "Autographics",
+    "variant": "Base",
+    "pack_odds": "1:72 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|e-x2001|jambalaya|base": {
+    "season": "1997-98",
+    "brand": "E-X2001",
+    "theme": "Jambalaya",
+    "variant": "Base",
+    "pack_odds": "1:720 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1998-99|e-x century|jambalaya|base": {
+    "season": "1998-99",
+    "brand": "E-X Century",
+    "theme": "Jambalaya",
+    "variant": "Base",
+    "pack_odds": "1:720 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|e-x2001|base set|essential credentials now": {
+    "season": "1997-98",
+    "brand": "E-X2001",
+    "theme": "Base Set",
+    "variant": "Essential Credentials Now",
+    "pack_odds": "1:72 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|e-x2001|base set|essential credentials future": {
+    "season": "1997-98",
+    "brand": "E-X2001",
+    "theme": "Base Set",
+    "variant": "Essential Credentials Future",
+    "pack_odds": "1:72 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|e-x2000|base set|credentials": {
+    "season": "1996-97",
+    "brand": "E-X2000",
+    "theme": "Base Set",
+    "variant": "Credentials",
+    "pack_odds": "1:360 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|e-x2000|a cut above|base": {
+    "season": "1996-97",
+    "brand": "E-X2000",
+    "theme": "A Cut Above",
+    "variant": "Base",
+    "pack_odds": "1:288 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|skybox z-force|base set|rave": {
+    "season": "1997-98",
+    "brand": "SkyBox Z-Force",
+    "theme": "Base Set",
+    "variant": "Rave",
+    "pack_odds": "1:288 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|skybox z-force|base set|super rave": {
+    "season": "1997-98",
+    "brand": "SkyBox Z-Force",
+    "theme": "Base Set",
+    "variant": "Super Rave",
+    "pack_odds": "1:1152 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|fleer ultra|base set|platinum medallion": {
+    "season": "1997-98",
+    "brand": "Fleer Ultra",
+    "theme": "Base Set",
+    "variant": "Platinum Medallion",
+    "pack_odds": "1:180 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1998-99|fleer ultra|base set|platinum medallion": {
+    "season": "1998-99",
+    "brand": "Fleer Ultra",
+    "theme": "Base Set",
+    "variant": "Platinum Medallion",
+    "pack_odds": "1:180 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|fleer ultra|stars|gold": {
+    "season": "1997-98",
+    "brand": "Fleer Ultra",
+    "theme": "Stars",
+    "variant": "Gold",
+    "pack_odds": "1:288 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1998-99|fleer brilliants|base set|24-karat gold": {
+    "season": "1998-99",
+    "brand": "Fleer Brilliants",
+    "theme": "Base Set",
+    "variant": "24-Karat Gold",
+    "pack_odds": "1:24 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|bowman's best|base set|atomic refractor": {
+    "season": "1996-97",
+    "brand": "Bowman's Best",
+    "theme": "Base Set",
+    "variant": "Atomic Refractor",
+    "pack_odds": "1:24 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|bowman's best|base set|atomic refractor": {
+    "season": "1997-98",
+    "brand": "Bowman's Best",
+    "theme": "Base Set",
+    "variant": "Atomic Refractor",
+    "pack_odds": "1:24 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|topps stadium club|triumvirate|illuminator": {
+    "season": "1997-98",
+    "brand": "Topps Stadium Club",
+    "theme": "Triumvirate",
+    "variant": "Illuminator",
+    "pack_odds": "1:384 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|topps stadium club|triumvirate|luminescent": {
+    "season": "1997-98",
+    "brand": "Topps Stadium Club",
+    "theme": "Triumvirate",
+    "variant": "Luminescent",
+    "pack_odds": "1:192 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|topps stadium club|triumvirate|base": {
+    "season": "1997-98",
+    "brand": "Topps Stadium Club",
+    "theme": "Triumvirate",
+    "variant": "Base",
+    "pack_odds": "1:96 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|topps stadium club|co-signers|base": {
+    "season": "1997-98",
+    "brand": "Topps Stadium Club",
+    "theme": "Co-Signers",
+    "variant": "Base",
+    "pack_odds": "1:288 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|topps stadium club|base set|one of a kind": {
+    "season": "1997-98",
+    "brand": "Topps Stadium Club",
+    "theme": "Base Set",
+    "variant": "One of a Kind",
+    "pack_odds": "1:150 Packs",
+    "source": "TCDB / Stated Odds",
+    "confidence": "VERIFIED"
+  },
+  "1994-95|collectors choice|base set|base": {
+    "season": "1994-95",
+    "brand": "Collectors Choice",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1994-95|collectors choice|signature|silver": {
+    "season": "1994-95",
+    "brand": "Collectors Choice",
+    "theme": "Signature",
+    "variant": "Silver",
+    "pack_odds": "N/A",
+    "source": "Heuristic Default",
+    "confidence": "UNVERIFIED"
+  },
+  "1994-95|collectors choice|signature|gold": {
+    "season": "1994-95",
+    "brand": "Collectors Choice",
+    "theme": "Signature",
+    "variant": "Gold",
+    "pack_odds": "N/A",
+    "source": "Heuristic Default",
+    "confidence": "UNVERIFIED"
+  },
+  "1994-95|collectors choice|autographs|base": {
+    "season": "1994-95",
+    "brand": "Collectors Choice",
+    "theme": "Autographs",
+    "variant": "Base",
+    "pack_odds": "N/A",
+    "source": "Heuristic Default",
+    "confidence": "UNVERIFIED"
+  },
+  "1994-95|collectors choice|you crash the game rookie scoring|redemption": {
+    "season": "1994-95",
+    "brand": "Collectors Choice",
+    "theme": "You Crash The Game Rookie Scoring",
+    "variant": "Redemption",
+    "pack_odds": "N/A",
+    "source": "Heuristic Default",
+    "confidence": "UNVERIFIED"
+  },
+  "1994-95|collectors choice|you crash the game rookie scoring|gold": {
+    "season": "1994-95",
+    "brand": "Collectors Choice",
+    "theme": "You Crash The Game Rookie Scoring",
+    "variant": "Gold",
+    "pack_odds": "N/A",
+    "source": "Heuristic Default",
+    "confidence": "UNVERIFIED"
+  },
+  "1994-95|collectors choice|draft trade lottery picks|base": {
+    "season": "1994-95",
+    "brand": "Collectors Choice",
+    "theme": "Draft Trade Lottery Picks",
+    "variant": "Base",
+    "pack_odds": "N/A",
+    "source": "Heuristic Default",
+    "confidence": "UNVERIFIED"
+  },
+  "1994-95|topps embossed|base set|base": {
+    "season": "1994-95",
+    "brand": "Topps Embossed",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1994-95|topps finest|base set|base": {
+    "season": "1994-95",
+    "brand": "Topps Finest",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1994-95|flair|base set|base": {
+    "season": "1994-95",
+    "brand": "Flair",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1994-95|fleer|base set|base": {
+    "season": "1994-95",
+    "brand": "Fleer",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1994-95|skybox hoops|base set|base": {
+    "season": "1994-95",
+    "brand": "SkyBox Hoops",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1994-95|sp|base set|base": {
+    "season": "1994-95",
+    "brand": "SP",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1994-95|sp championship|base set|base": {
+    "season": "1994-95",
+    "brand": "SP Championship",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1994-95|skybox premium|base set|base": {
+    "season": "1994-95",
+    "brand": "SkyBox Premium",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1994-95|topps stadium club|base set|base": {
+    "season": "1994-95",
+    "brand": "Topps Stadium Club",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1994-95|topps|base set|base": {
+    "season": "1994-95",
+    "brand": "Topps",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1994-95|ultra|base set|base": {
+    "season": "1994-95",
+    "brand": "Ultra",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1994-95|upper deck|base set|base": {
+    "season": "1994-95",
+    "brand": "Upper Deck",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1995-96|collectors choice|base set|base": {
+    "season": "1995-96",
+    "brand": "Collectors Choice",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1995-96|e-xl|base set|base": {
+    "season": "1995-96",
+    "brand": "E-XL",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1995-96|topps finest|base set|base": {
+    "season": "1995-96",
+    "brand": "Topps Finest",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1995-96|flair|base set|base": {
+    "season": "1995-96",
+    "brand": "Flair",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1995-96|fleer|base set|base": {
+    "season": "1995-96",
+    "brand": "Fleer",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1995-96|skybox hoops|base set|base": {
+    "season": "1995-96",
+    "brand": "SkyBox Hoops",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1995-96|jam session|base set|base": {
+    "season": "1995-96",
+    "brand": "Jam Session",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1995-96|fleer metal|base set|base": {
+    "season": "1995-96",
+    "brand": "Fleer Metal",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1995-96|skybox premium|base set|base": {
+    "season": "1995-96",
+    "brand": "SkyBox Premium",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1995-96|sp|base set|base": {
+    "season": "1995-96",
+    "brand": "SP",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1995-96|sp championship|base set|base": {
+    "season": "1995-96",
+    "brand": "SP Championship",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1995-96|topps stadium club|base set|base": {
+    "season": "1995-96",
+    "brand": "Topps Stadium Club",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1995-96|topps|base set|base": {
+    "season": "1995-96",
+    "brand": "Topps",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1995-96|topps gallery|base set|base": {
+    "season": "1995-96",
+    "brand": "Topps Gallery",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1995-96|ultra|base set|base": {
+    "season": "1995-96",
+    "brand": "Ultra",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1995-96|upper deck|base set|base": {
+    "season": "1995-96",
+    "brand": "Upper Deck",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1996-97|topps bowman's best|base set|base": {
+    "season": "1996-97",
+    "brand": "Topps Bowman's Best",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1996-97|collectors choice|base set|base": {
+    "season": "1996-97",
+    "brand": "Collectors Choice",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1996-97|skybox e-2000|base set|base": {
+    "season": "1996-97",
+    "brand": "SkyBox E-2000",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1996-97|fleer|base set|base": {
+    "season": "1996-97",
+    "brand": "Fleer",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1996-97|skybox hoops|base set|base": {
+    "season": "1996-97",
+    "brand": "SkyBox Hoops",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1996-97|fleer metal|base set|base": {
+    "season": "1996-97",
+    "brand": "Fleer Metal",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1996-97|skybox premium|base set|base": {
+    "season": "1996-97",
+    "brand": "SkyBox Premium",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1996-97|sp|base set|base": {
+    "season": "1996-97",
+    "brand": "SP",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1996-97|topps stadium club|base set|base": {
+    "season": "1996-97",
+    "brand": "Topps Stadium Club",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1996-97|topps|base set|base": {
+    "season": "1996-97",
+    "brand": "Topps",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1996-97|topps chrome|base set|base": {
+    "season": "1996-97",
+    "brand": "Topps Chrome",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1996-97|ud3|base set|base": {
+    "season": "1996-97",
+    "brand": "UD3",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1996-97|ultra|base set|base": {
+    "season": "1996-97",
+    "brand": "Ultra",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1996-97|upper deck|base set|base": {
+    "season": "1996-97",
+    "brand": "Upper Deck",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1996-97|skybox z-force|base set|base": {
+    "season": "1996-97",
+    "brand": "SkyBox Z-Force",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1996-97|spx|base set|base": {
+    "season": "1996-97",
+    "brand": "SPx",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1996-97|ud folz|base set|base": {
+    "season": "1996-97",
+    "brand": "UD Folz",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1997-98|topps bowman's best|base set|base": {
+    "season": "1997-98",
+    "brand": "Topps Bowman's Best",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1997-98|collectors choice|base set|base": {
+    "season": "1997-98",
+    "brand": "Collectors Choice",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1997-98|skybox e-x2001|base set|base": {
+    "season": "1997-98",
+    "brand": "SkyBox E-X2001",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1997-98|fleer|base set|base": {
+    "season": "1997-98",
+    "brand": "Fleer",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1997-98|skybox hoops|base set|base": {
+    "season": "1997-98",
+    "brand": "SkyBox Hoops",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1997-98|fleer metal universe championship|base set|base": {
+    "season": "1997-98",
+    "brand": "Fleer Metal Universe Championship",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1997-98|fleer metal universe|base set|base": {
+    "season": "1997-98",
+    "brand": "Fleer Metal Universe",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1997-98|skybox premium|base set|base": {
+    "season": "1997-98",
+    "brand": "SkyBox Premium",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1997-98|sp authentic|base set|base": {
+    "season": "1997-98",
+    "brand": "SP Authentic",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1997-98|spx|base set|base": {
+    "season": "1997-98",
+    "brand": "SPx",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1997-98|topps stadium club|base set|base": {
+    "season": "1997-98",
+    "brand": "Topps Stadium Club",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1997-98|topps|base set|base": {
+    "season": "1997-98",
+    "brand": "Topps",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1997-98|topps chrome|base set|base": {
+    "season": "1997-98",
+    "brand": "Topps Chrome",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1997-98|ultra|base set|base": {
+    "season": "1997-98",
+    "brand": "Ultra",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1997-98|upper deck|base set|base": {
+    "season": "1997-98",
+    "brand": "Upper Deck",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1997-98|skybox z-force|base set|base": {
+    "season": "1997-98",
+    "brand": "SkyBox Z-Force",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1997-98|ud hardcourt|base set|base": {
+    "season": "1997-98",
+    "brand": "UD Hardcourt",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1998-99|topps bowman's best|base set|base": {
+    "season": "1998-99",
+    "brand": "Topps Bowman's Best",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1998-99|skybox e-x century|base set|base": {
+    "season": "1998-99",
+    "brand": "SkyBox E-X Century",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1998-99|topps finest|base set|base": {
+    "season": "1998-99",
+    "brand": "Topps Finest",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1998-99|fleer|base set|base": {
+    "season": "1998-99",
+    "brand": "Fleer",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1998-99|fleer brilliants|base set|base": {
+    "season": "1998-99",
+    "brand": "Fleer Brilliants",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1998-99|fleer vintage 61|base set|base": {
+    "season": "1998-99",
+    "brand": "Fleer Vintage 61",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1998-99|skybox hoops|base set|base": {
+    "season": "1998-99",
+    "brand": "SkyBox Hoops",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1998-99|fleer metal universe|base set|base": {
+    "season": "1998-99",
+    "brand": "Fleer Metal Universe",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1998-99|skybox premium|base set|base": {
+    "season": "1998-99",
+    "brand": "SkyBox Premium",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1998-99|skybox thunder|base set|base": {
+    "season": "1998-99",
+    "brand": "SkyBox Thunder",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1998-99|sp authentic|base set|base": {
+    "season": "1998-99",
+    "brand": "SP Authentic",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1998-99|spx finite|base set|base": {
+    "season": "1998-99",
+    "brand": "SPx Finite",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1998-99|topps stadium club|base set|base": {
+    "season": "1998-99",
+    "brand": "Topps Stadium Club",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1998-99|topps stadium club chrome|base set|base": {
+    "season": "1998-99",
+    "brand": "Topps Stadium Club Chrome",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1998-99|topps|base set|base": {
+    "season": "1998-99",
+    "brand": "Topps",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1998-99|topps chrome|base set|base": {
+    "season": "1998-99",
+    "brand": "Topps Chrome",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1998-99|ud choice|base set|base": {
+    "season": "1998-99",
+    "brand": "UD Choice",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1998-99|ud ionix|base set|base": {
+    "season": "1998-99",
+    "brand": "UD Ionix",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1998-99|ud kellogg's nba|base set|base": {
+    "season": "1998-99",
+    "brand": "UD Kellogg's NBA",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1998-99|ultra|base set|base": {
+    "season": "1998-99",
+    "brand": "Ultra",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1998-99|upper deck|base set|base": {
+    "season": "1998-99",
+    "brand": "Upper Deck",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1998-99|ud encore|base set|base": {
+    "season": "1998-99",
+    "brand": "UD Encore",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1998-99|ud ovation|base set|base": {
+    "season": "1998-99",
+    "brand": "UD Ovation",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|ud black diamond|base set|base": {
+    "season": "1999-00",
+    "brand": "UD Black Diamond",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|topps bowman's best|base set|base": {
+    "season": "1999-00",
+    "brand": "Topps Bowman's Best",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|e-x|base set|base": {
+    "season": "1999-00",
+    "brand": "E-X",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|topps finest|base set|base": {
+    "season": "1999-00",
+    "brand": "Topps Finest",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|flair showcase|base set|base": {
+    "season": "1999-00",
+    "brand": "Flair Showcase",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|fleer tradition|base set|base": {
+    "season": "1999-00",
+    "brand": "Fleer Tradition",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|fleer focus|base set|base": {
+    "season": "1999-00",
+    "brand": "Fleer Focus",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|fleer force|base set|base": {
+    "season": "1999-00",
+    "brand": "Fleer Force",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|fleer mystique|base set|base": {
+    "season": "1999-00",
+    "brand": "Fleer Mystique",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|skybox hoops|base set|base": {
+    "season": "1999-00",
+    "brand": "SkyBox Hoops",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|skybox hoops decade|base set|base": {
+    "season": "1999-00",
+    "brand": "Skybox Hoops Decade",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|fleer metal|base set|base": {
+    "season": "1999-00",
+    "brand": "Fleer Metal",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|skybox apex|base set|base": {
+    "season": "1999-00",
+    "brand": "SkyBox Apex",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|skybox dominion|base set|base": {
+    "season": "1999-00",
+    "brand": "SkyBox Dominion",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|skybox impact|base set|base": {
+    "season": "1999-00",
+    "brand": "SkyBox Impact",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|skybox premium|base set|base": {
+    "season": "1999-00",
+    "brand": "SkyBox Premium",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|sp authentic|base set|base": {
+    "season": "1999-00",
+    "brand": "SP Authentic",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|spx|base set|base": {
+    "season": "1999-00",
+    "brand": "SPx",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|topps stadium club|base set|base": {
+    "season": "1999-00",
+    "brand": "Topps Stadium Club",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|topps stadium club chrome|base set|base": {
+    "season": "1999-00",
+    "brand": "Topps Stadium Club Chrome",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|topps|base set|base": {
+    "season": "1999-00",
+    "brand": "Topps",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|topps chrome|base set|base": {
+    "season": "1999-00",
+    "brand": "Topps Chrome",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|topps tip off|base set|base": {
+    "season": "1999-00",
+    "brand": "Topps Tip Off",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|topps gallery|base set|base": {
+    "season": "1999-00",
+    "brand": "Topps Gallery",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|ultra|base set|base": {
+    "season": "1999-00",
+    "brand": "Ultra",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|ud ionix|base set|base": {
+    "season": "1999-00",
+    "brand": "UD Ionix",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|ud encore|base set|base": {
+    "season": "1999-00",
+    "brand": "UD Encore",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|ud gold reserve|base set|base": {
+    "season": "1999-00",
+    "brand": "UD Gold Reserve",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|ud hardcourt|base set|base": {
+    "season": "1999-00",
+    "brand": "UD Hardcourt",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|ud hologrfx|base set|base": {
+    "season": "1999-00",
+    "brand": "UD HoloGrFX",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|ud mvp|base set|base": {
+    "season": "1999-00",
+    "brand": "UD MVP",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|upper deck|base set|base": {
+    "season": "1999-00",
+    "brand": "Upper Deck",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|ud ovation|base set|base": {
+    "season": "1999-00",
+    "brand": "UD Ovation",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|ud retro|base set|base": {
+    "season": "1999-00",
+    "brand": "UD Retro",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|ud ultimate victory|base set|base": {
+    "season": "1999-00",
+    "brand": "UD Ultimate Victory",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1999-00|ud victory|base set|base": {
+    "season": "1999-00",
+    "brand": "UD Victory",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2000-01|ud black diamond|base set|base": {
+    "season": "2000-01",
+    "brand": "UD Black Diamond",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2000-01|topps bowman's best|base set|base": {
+    "season": "2000-01",
+    "brand": "Topps Bowman's Best",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2000-01|e-x|base set|base": {
+    "season": "2000-01",
+    "brand": "E-X",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2000-01|topps finest|base set|base": {
+    "season": "2000-01",
+    "brand": "Topps Finest",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2000-01|fleer authority|base set|base": {
+    "season": "2000-01",
+    "brand": "Fleer Authority",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2000-01|fleer focus|base set|base": {
+    "season": "2000-01",
+    "brand": "Fleer Focus",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2000-01|fleer futures|base set|base": {
+    "season": "2000-01",
+    "brand": "Fleer Futures",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2000-01|fleer game time|base set|base": {
+    "season": "2000-01",
+    "brand": "Fleer Game Time",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2000-01|fleer genuine|base set|base": {
+    "season": "2000-01",
+    "brand": "Fleer Genuine",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2000-01|fleer legacy|base set|base": {
+    "season": "2000-01",
+    "brand": "Fleer Legacy",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2000-01|fleer mystique|base set|base": {
+    "season": "2000-01",
+    "brand": "Fleer Mystique",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2000-01|fleer premium|base set|base": {
+    "season": "2000-01",
+    "brand": "Fleer Premium",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2000-01|fleer showcase|base set|base": {
+    "season": "2000-01",
+    "brand": "Fleer Showcase",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2000-01|fleer tradition|base set|base": {
+    "season": "2000-01",
+    "brand": "Fleer Tradition",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2000-01|fleer triple crown|base set|base": {
+    "season": "2000-01",
+    "brand": "Fleer Triple Crown",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2000-01|fleer hoops hot prospects|base set|base": {
+    "season": "2000-01",
+    "brand": "Fleer Hoops Hot Prospects",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2000-01|spx|base set|base": {
+    "season": "2000-01",
+    "brand": "SPx",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2000-01|topps stadium club|base set|base": {
+    "season": "2000-01",
+    "brand": "Topps Stadium Club",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2000-01|topps|base set|base": {
+    "season": "2000-01",
+    "brand": "Topps",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2000-01|topps chrome|base set|base": {
+    "season": "2000-01",
+    "brand": "Topps Chrome",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2000-01|topps gallery|base set|base": {
+    "season": "2000-01",
+    "brand": "Topps Gallery",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2000-01|topps heritage|base set|base": {
+    "season": "2000-01",
+    "brand": "Topps Heritage",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2000-01|topps reserve|base set|base": {
+    "season": "2000-01",
+    "brand": "Topps Reserve",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2000-01|topps stars|base set|base": {
+    "season": "2000-01",
+    "brand": "Topps Stars",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2000-01|ultra|base set|base": {
+    "season": "2000-01",
+    "brand": "Ultra",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2000-01|upper deck|base set|base": {
+    "season": "2000-01",
+    "brand": "Upper Deck",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2000-01|ud mvp|base set|base": {
+    "season": "2000-01",
+    "brand": "UD MVP",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2000-01|ud pros & prospects|base set|base": {
+    "season": "2000-01",
+    "brand": "UD Pros & Prospects",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2000-01|ud reserve|base set|base": {
+    "season": "2000-01",
+    "brand": "UD Reserve",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2000-01|ud slam|base set|base": {
+    "season": "2000-01",
+    "brand": "UD SLAM",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2001-02|e-x|base set|base": {
+    "season": "2001-02",
+    "brand": "E-X",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2001-02|fleer exclusives|base set|base": {
+    "season": "2001-02",
+    "brand": "Fleer Exclusives",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2001-02|fleer force|base set|base": {
+    "season": "2001-02",
+    "brand": "Fleer Force",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2001-02|fleer genuine|base set|base": {
+    "season": "2001-02",
+    "brand": "Fleer Genuine",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2001-02|fleer marquee|base set|base": {
+    "season": "2001-02",
+    "brand": "Fleer Marquee",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2001-02|fleer maximum|base set|base": {
+    "season": "2001-02",
+    "brand": "Fleer Maximum",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2001-02|fleer platinum|base set|base": {
+    "season": "2001-02",
+    "brand": "Fleer Platinum",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2001-02|fleer premium|base set|base": {
+    "season": "2001-02",
+    "brand": "Fleer Premium",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2001-02|fleer shoebox|base set|base": {
+    "season": "2001-02",
+    "brand": "Fleer Shoebox",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2001-02|fleer legacy|base set|base": {
+    "season": "2001-02",
+    "brand": "Fleer Legacy",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2001-02|sp authentic|base set|base": {
+    "season": "2001-02",
+    "brand": "SP Authentic",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2001-02|topps chrome|base set|base": {
+    "season": "2001-02",
+    "brand": "Topps Chrome",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2001-02|topps heritage|base set|base": {
+    "season": "2001-02",
+    "brand": "Topps Heritage",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2001-02|topps|base set|base": {
+    "season": "2001-02",
+    "brand": "Topps",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2001-02|topps sprite minyard|base set|base": {
+    "season": "2001-02",
+    "brand": "Topps Sprite Minyard",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2001-02|ultra|base set|base": {
+    "season": "2001-02",
+    "brand": "Ultra",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2001-02|upper deck|base set|base": {
+    "season": "2001-02",
+    "brand": "Upper Deck",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2001-02|ud flight team|base set|base": {
+    "season": "2001-02",
+    "brand": "UD Flight Team",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2001-02|ud honor roll|base set|base": {
+    "season": "2001-02",
+    "brand": "UD Honor Roll",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2001-02|ud inspirations|base set|base": {
+    "season": "2001-02",
+    "brand": "UD Inspirations",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2001-02|ud mvp|base set|base": {
+    "season": "2001-02",
+    "brand": "UD MVP",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2002-03|topps finest|base set|base": {
+    "season": "2002-03",
+    "brand": "Topps Finest",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2002-03|flair|base set|base": {
+    "season": "2002-03",
+    "brand": "Flair",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2002-03|fleer authentix|base set|base": {
+    "season": "2002-03",
+    "brand": "Fleer Authentix",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2002-03|fleer box score|base set|base": {
+    "season": "2002-03",
+    "brand": "Fleer Box Score",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2002-03|fleer genuine|base set|base": {
+    "season": "2002-03",
+    "brand": "Fleer Genuine",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2002-03|fleer platinum|base set|base": {
+    "season": "2002-03",
+    "brand": "Fleer Platinum",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2002-03|fleer premium|base set|base": {
+    "season": "2002-03",
+    "brand": "Fleer Premium",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2002-03|fleer showcase|base set|base": {
+    "season": "2002-03",
+    "brand": "Fleer Showcase",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2002-03|fleer tradition|base set|base": {
+    "season": "2002-03",
+    "brand": "Fleer Tradition",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2002-03|fleer nba hoops stars|base set|base": {
+    "season": "2002-03",
+    "brand": "Fleer NBA Hoops Stars",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2002-03|sp authentic|base set|base": {
+    "season": "2002-03",
+    "brand": "SP Authentic",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2002-03|sp game used edition|base set|base": {
+    "season": "2002-03",
+    "brand": "SP Game Used Edition",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2002-03|spx|base set|base": {
+    "season": "2002-03",
+    "brand": "SPx",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2002-03|topps stadium club|base set|base": {
+    "season": "2002-03",
+    "brand": "Topps Stadium Club",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2002-03|topps chrome|base set|base": {
+    "season": "2002-03",
+    "brand": "Topps Chrome",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2002-03|topps jersey edition|base set|base": {
+    "season": "2002-03",
+    "brand": "Topps Jersey Edition",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2002-03|topps pristine|base set|base": {
+    "season": "2002-03",
+    "brand": "Topps Pristine",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2002-03|ultra|base set|base": {
+    "season": "2002-03",
+    "brand": "Ultra",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2002-03|ud authentics|base set|base": {
+    "season": "2002-03",
+    "brand": "UD Authentics",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2002-03|ud finite|base set|base": {
+    "season": "2002-03",
+    "brand": "UD Finite",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2002-03|ud glass|base set|base": {
+    "season": "2002-03",
+    "brand": "UD Glass",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2002-03|ud hardcourt|base set|base": {
+    "season": "2002-03",
+    "brand": "UD Hardcourt",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2002-03|ud inspirations|base set|base": {
+    "season": "2002-03",
+    "brand": "UD Inspirations",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2002-03|ud ultimate collection|base set|base": {
+    "season": "2002-03",
+    "brand": "UD Ultimate Collection",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2002-03|ud championship drive|base set|base": {
+    "season": "2002-03",
+    "brand": "UD Championship Drive",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2002-03|upper deck|base set|base": {
+    "season": "2002-03",
+    "brand": "Upper Deck",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2002-03|ud honor roll|base set|base": {
+    "season": "2002-03",
+    "brand": "UD Honor Roll",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2002-03|ud mvp|base set|base": {
+    "season": "2002-03",
+    "brand": "UD MVP",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2002-03|ud ovation|base set|base": {
+    "season": "2002-03",
+    "brand": "UD Ovation",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2002-03|ud sweet shot|base set|base": {
+    "season": "2002-03",
+    "brand": "UD Sweet Shot",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|topps bazooka|base set|base": {
+    "season": "2003-04",
+    "brand": "Topps Bazooka",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|ud black diamond|base set|base": {
+    "season": "2003-04",
+    "brand": "UD Black Diamond",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|topps bowman's best|base set|base": {
+    "season": "2003-04",
+    "brand": "Topps Bowman's Best",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|e-x|base set|base": {
+    "season": "2003-04",
+    "brand": "E-X",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|topps finest|base set|base": {
+    "season": "2003-04",
+    "brand": "Topps Finest",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|flair|base set|base": {
+    "season": "2003-04",
+    "brand": "Flair",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|flair final edition|base set|base": {
+    "season": "2003-04",
+    "brand": "Flair Final Edition",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|fleer authentix|base set|base": {
+    "season": "2003-04",
+    "brand": "Fleer Authentix",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|fleer focus|base set|base": {
+    "season": "2003-04",
+    "brand": "Fleer Focus",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|fleer patchworks|base set|base": {
+    "season": "2003-04",
+    "brand": "Fleer Patchworks",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|fleer platinum|base set|base": {
+    "season": "2003-04",
+    "brand": "Fleer Platinum",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|fleer showcase|base set|base": {
+    "season": "2003-04",
+    "brand": "Fleer Showcase",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|fleer tradition|base set|base": {
+    "season": "2003-04",
+    "brand": "Fleer Tradition",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|sp game used edition|base set|base": {
+    "season": "2003-04",
+    "brand": "SP Game Used Edition",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|spx|base set|base": {
+    "season": "2003-04",
+    "brand": "SPx",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|topps chrome|base set|base": {
+    "season": "2003-04",
+    "brand": "Topps Chrome",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|topps|base set|base": {
+    "season": "2003-04",
+    "brand": "Topps",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|topps first edition|base set|base": {
+    "season": "2003-04",
+    "brand": "Topps First Edition",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|topps contemporary collection|base set|base": {
+    "season": "2003-04",
+    "brand": "Topps Contemporary Collection",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|topps jersey edition|base set|base": {
+    "season": "2003-04",
+    "brand": "Topps Jersey Edition",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|topps pristine|base set|base": {
+    "season": "2003-04",
+    "brand": "Topps Pristine",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|topps rookie matrix|base set|base": {
+    "season": "2003-04",
+    "brand": "Topps Rookie Matrix",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|ud glass|base set|base": {
+    "season": "2003-04",
+    "brand": "UD Glass",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|ultra|base set|base": {
+    "season": "2003-04",
+    "brand": "Ultra",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|ud standing o|base set|base": {
+    "season": "2003-04",
+    "brand": "UD Standing O",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|ud finite|base set|base": {
+    "season": "2003-04",
+    "brand": "UD Finite",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|ud legends|base set|base": {
+    "season": "2003-04",
+    "brand": "UD Legends",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|upper deck|base set|base": {
+    "season": "2003-04",
+    "brand": "Upper Deck",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|ud mvp|base set|base": {
+    "season": "2003-04",
+    "brand": "UD MVP",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|ud ultimate collection|base set|base": {
+    "season": "2003-04",
+    "brand": "UD Ultimate Collection",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2003-04|ud victory|base set|base": {
+    "season": "2003-04",
+    "brand": "UD Victory",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2004-05|topps bazooka|base set|base": {
+    "season": "2004-05",
+    "brand": "Topps Bazooka",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2004-05|ud black diamond|base set|base": {
+    "season": "2004-05",
+    "brand": "UD Black Diamond",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2004-05|e-xl|base set|base": {
+    "season": "2004-05",
+    "brand": "E-XL",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2004-05|fleer authentix|base set|base": {
+    "season": "2004-05",
+    "brand": "Fleer Authentix",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2004-05|fleer tradition|base set|base": {
+    "season": "2004-05",
+    "brand": "Fleer Tradition",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2004-05|sp authentic|base set|base": {
+    "season": "2004-05",
+    "brand": "SP Authentic",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2004-05|sp game used edition|base set|base": {
+    "season": "2004-05",
+    "brand": "SP Game Used Edition",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2004-05|ud sweet shot|base set|base": {
+    "season": "2004-05",
+    "brand": "UD Sweet Shot",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2004-05|topps|base set|base": {
+    "season": "2004-05",
+    "brand": "Topps",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2004-05|topps first edition|base set|base": {
+    "season": "2004-05",
+    "brand": "Topps First Edition",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2004-05|topps chrome|base set|base": {
+    "season": "2004-05",
+    "brand": "Topps Chrome",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2004-05|topps luxury box|base set|base": {
+    "season": "2004-05",
+    "brand": "Topps Luxury Box",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2004-05|topps pristine|base set|base": {
+    "season": "2004-05",
+    "brand": "Topps Pristine",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2004-05|topps total|base set|base": {
+    "season": "2004-05",
+    "brand": "Topps Total",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2004-05|ultra|base set|base": {
+    "season": "2004-05",
+    "brand": "Ultra",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2004-05|upper deck|base set|base": {
+    "season": "2004-05",
+    "brand": "Upper Deck",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2004-05|ud all star lineup|base set|base": {
+    "season": "2004-05",
+    "brand": "UD All Star LineUp",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2004-05|ud r-class|base set|base": {
+    "season": "2004-05",
+    "brand": "UD R-Class",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2004-05|ud trilogy|base set|base": {
+    "season": "2004-05",
+    "brand": "UD Trilogy",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2005-06|topps bazooka|base set|base": {
+    "season": "2005-06",
+    "brand": "Topps Bazooka",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2005-06|sp game used edition|base set|base": {
+    "season": "2005-06",
+    "brand": "SP Game Used Edition",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2005-06|topps|base set|base": {
+    "season": "2005-06",
+    "brand": "Topps",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2005-06|topps first edition|base set|base": {
+    "season": "2005-06",
+    "brand": "Topps First Edition",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2005-06|topps total|base set|base": {
+    "season": "2005-06",
+    "brand": "Topps Total",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2005-06|ud ultimate collection|base set|base": {
+    "season": "2005-06",
+    "brand": "UD Ultimate Collection",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2005-06|ud espn|base set|base": {
+    "season": "2005-06",
+    "brand": "UD ESPN",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2005-06|ud hardcourt|base set|base": {
+    "season": "2005-06",
+    "brand": "UD Hardcourt",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2005-06|ud rookie debut|base set|base": {
+    "season": "2005-06",
+    "brand": "UD Rookie Debut",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2005-06|sp signature edition|base set|base": {
+    "season": "2005-06",
+    "brand": "SP Signature Edition",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2005-06|ud sweet shot|base set|base": {
+    "season": "2005-06",
+    "brand": "UD Sweet Shot",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2005-06|ud slam|base set|base": {
+    "season": "2005-06",
+    "brand": "UD SLAM",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2006-07|fleer|base set|base": {
+    "season": "2006-07",
+    "brand": "Fleer",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2006-07|sp game used edition|base set|base": {
+    "season": "2006-07",
+    "brand": "SP Game Used Edition",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2006-07|topps|base set|base": {
+    "season": "2006-07",
+    "brand": "Topps",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2006-07|topps turkey red|base set|base": {
+    "season": "2006-07",
+    "brand": "Topps Turkey Red",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2006-07|ultra|base set|base": {
+    "season": "2006-07",
+    "brand": "Ultra",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2006-07|upper deck|base set|base": {
+    "season": "2006-07",
+    "brand": "Upper Deck",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2006-07|ud reserve|base set|base": {
+    "season": "2006-07",
+    "brand": "UD Reserve",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2007-08|fleer|base set|base": {
+    "season": "2007-08",
+    "brand": "Fleer",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2007-08|ultra|base set|base": {
+    "season": "2007-08",
+    "brand": "Ultra",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2007-08|upper deck|base set|base": {
+    "season": "2007-08",
+    "brand": "Upper Deck",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2009-10|panini|base set|base": {
+    "season": "2009-10",
+    "brand": "Panini",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2009-10|panini absolute memorabilia|base set|base": {
+    "season": "2009-10",
+    "brand": "Panini Absolute Memorabilia",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2009-10|panini season update|base set|base": {
+    "season": "2009-10",
+    "brand": "Panini Season Update",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2010-11|panini absolute memorabilia|base set|base": {
+    "season": "2010-11",
+    "brand": "Panini Absolute Memorabilia",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2010-11|panini donruss|base set|base": {
+    "season": "2010-11",
+    "brand": "Panini Donruss",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2010-11|panini gold standard|base set|base": {
+    "season": "2010-11",
+    "brand": "Panini Gold Standard",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "2021-22|topps finest|base set|base": {
+    "season": "2021-22",
+    "brand": "Topps Finest",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1994|classic|base set|base": {
+    "season": "1994",
+    "brand": "Classic",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1994|classic 4 sports|base set|base": {
+    "season": "1994",
+    "brand": "Classic 4 Sports",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1995|assets|base set|base": {
+    "season": "1995",
+    "brand": "Assets",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1995|assets gold|base set|base": {
+    "season": "1995",
+    "brand": "Assets Gold",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1995|images 95|base set|base": {
+    "season": "1995",
+    "brand": "Images 95",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1995|classic|base set|base": {
+    "season": "1995",
+    "brand": "Classic",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1995|superior pics|base set|base": {
+    "season": "1995",
+    "brand": "Superior Pics",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1995|visions|base set|base": {
+    "season": "1995",
+    "brand": "Visions",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1996|assets|base set|base": {
+    "season": "1996",
+    "brand": "Assets",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  },
+  "1996|visions|base set|base": {
+    "season": "1996",
+    "brand": "Visions",
+    "theme": "Base Set",
+    "variant": "Base",
+    "pack_odds": "Standard Base",
+    "source": "Standard Base Definition",
+    "confidence": "DEFAULT"
+  }
+}

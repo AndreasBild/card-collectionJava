@@ -21,6 +21,7 @@ public record CardJson(
         @JsonProperty("cardNumber") @JsonAlias({"card_number", "cardNo", "number"}) String cardNumber,
         @JsonProperty("serialNumber") @JsonAlias({"serial_number", "serialNo", "serial"}) String serialNumber,
         @JsonProperty("printRun") @JsonAlias({"print_run", "printrun"}) Integer printRun,
+        @JsonProperty("packOdds") @JsonAlias({"pack_odds", "packOdds", "ratio", "insertion_ratio", "odds"}) String packOdds,
         @JsonProperty("gradingCompany") @JsonAlias({"grading_company", "gradingCo", "grader", "grading_company_name"}) String gradingCompany,
         @JsonProperty("grade") @JsonAlias({"cardGrade", "gradingGrade", "card_grade"}) String grade,
         @JsonProperty("certNumber") @JsonAlias({"gradingCertNumber", "grading_cert_number", "gradingCert", "cert_number", "psaNumber", "psaCertNumber", "certificateNumber", "cert", "gradingCertificate"}) String certNumber,
@@ -62,7 +63,7 @@ public record CardJson(
     ) {
         this(
                 id, player, season, team, company, brand, theme, variant,
-                cardNumber, serialNumber, printRun, gradingCompany, grade, null,
+                cardNumber, serialNumber, printRun, null, gradingCompany, grade, null,
                 collection, notes, isAutograph, isPatch, isRookie,
                 null, null, null, null, null, null, null, null, null
         );
@@ -84,6 +85,7 @@ public record CardJson(
             case "grade" -> grade;
             case "cert number", "certnumber", "psa number" -> certNumber != null ? certNumber : (popReport != null ? popReport.certNumber() : null);
             case "print run", "printrun" -> printRun != null ? String.valueOf(printRun) : null;
+            case "pack odds", "packodds", "ratio", "insertion ratio", "insertion_ratio" -> packOdds;
             case "notes" -> notes;
             case "collection" -> collection;
             case "autograph", "auto", "isautograph" -> isAutograph ? "Yes" : "No";
@@ -108,6 +110,7 @@ public record CardJson(
                 .cardNumber(this.cardNumber)
                 .serialNumber(this.serialNumber)
                 .printRun(this.printRun)
+                .packOdds(this.packOdds)
                 .gradingCompany(this.gradingCompany != null ? this.gradingCompany : (entry.popReport() != null ? entry.popReport().gradingCompany() : null))
                 .grade(this.grade != null ? this.grade : (entry.popReport() != null ? entry.popReport().grade() : null))
                 .certNumber(this.certNumber != null ? this.certNumber : entry.certNumber())
@@ -143,6 +146,7 @@ public record CardJson(
                 .cardNumber(this.cardNumber)
                 .serialNumber(this.serialNumber)
                 .printRun(this.printRun)
+                .packOdds(this.packOdds)
                 .gradingCompany(this.gradingCompany)
                 .grade(this.grade)
                 .certNumber(this.certNumber)
@@ -196,6 +200,7 @@ public record CardJson(
                 .cardNumber(this.cardNumber)
                 .serialNumber(this.serialNumber)
                 .printRun(this.printRun)
+                .packOdds(this.packOdds)
                 .gradingCompany(this.gradingCompany)
                 .grade(this.grade)
                 .certNumber(this.certNumber)
@@ -232,6 +237,7 @@ public record CardJson(
         private String cardNumber;
         private String serialNumber;
         private Integer printRun;
+        private String packOdds;
         private String gradingCompany;
         private String grade;
         private String certNumber;
@@ -261,6 +267,7 @@ public record CardJson(
         public Builder cardNumber(String cardNumber) { this.cardNumber = cardNumber; return this; }
         public Builder serialNumber(String serialNumber) { this.serialNumber = serialNumber; return this; }
         public Builder printRun(Integer printRun) { this.printRun = printRun; return this; }
+        public Builder packOdds(String packOdds) { this.packOdds = packOdds; return this; }
         public Builder gradingCompany(String gradingCompany) { this.gradingCompany = gradingCompany; return this; }
         public Builder grade(String grade) { this.grade = grade; return this; }
         public Builder certNumber(String certNumber) { this.certNumber = certNumber; return this; }
@@ -282,7 +289,7 @@ public record CardJson(
         public CardJson build() {
             return new CardJson(
                     id, player, season, team, company, brand, theme, variant,
-                    cardNumber, serialNumber, printRun, gradingCompany, grade, certNumber,
+                    cardNumber, serialNumber, printRun, packOdds, gradingCompany, grade, certNumber,
                     collection, notes, isAutograph, isPatch, isRookie,
                     estimatedValue, lastSoldPrice, lastSoldDate, purchasePrice,
                     priceHistory, popReport, popTotal, popHigher, beckettValue
