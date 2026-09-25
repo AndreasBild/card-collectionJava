@@ -54,7 +54,7 @@ public class RainbowPageGenerator {
                 strictRainbowGroups.computeIfAbsent(key, k -> new ArrayList<>()).add(c);
             }
 
-            // 1. Explicit Featured Single-Card Rainbow Checklists (> 3 cards)
+            // 1. Explicit Featured Single-Card Rainbow Checklists
             List<Map<String, Object>> targetRainbows = List.of(
                     Map.of(
                             "title", "1997-98 Fleer Metal Universe Base Set #33 Rainbow",
@@ -95,6 +95,154 @@ public class RainbowPageGenerator {
                                     Map.of("variant", "Blue", "serial", "/99"),
                                     Map.of("variant", "Contenders Autographs", "serial", "Auto")
                             )
+                    ),
+                    Map.of(
+                            "title", "1999-00 Topps Gold Label #27 Master Rainbow",
+                            "season", "1999-00", "company", "Topps", "brand", "Topps Gold Label", "theme", "Master Rainbow", "number", "27",
+                            "variants", List.of(
+                                    Map.of("theme", "Class 1", "variant", "Base", "displayVariant", "Class 1 Base", "serial", "Base"),
+                                    Map.of("theme", "Class 1", "variant", "Black Label", "displayVariant", "Class 1 Black Label", "serial", "Parallel"),
+                                    Map.of("theme", "Class 1", "variant", "Red Label", "displayVariant", "Class 1 Red Label", "serial", "/100"),
+                                    Map.of("theme", "Class 2", "variant", "Base", "displayVariant", "Class 2 Base", "serial", "Parallel"),
+                                    Map.of("theme", "Class 2", "variant", "Black Label", "displayVariant", "Class 2 Black Label", "serial", "Parallel"),
+                                    Map.of("theme", "Class 2", "variant", "Red Label", "displayVariant", "Class 2 Red Label", "serial", "/50"),
+                                    Map.of("theme", "Class 3", "variant", "Base", "displayVariant", "Class 3 Base", "serial", "Parallel"),
+                                    Map.of("theme", "Class 3", "variant", "Black Label", "displayVariant", "Class 3 Black Label", "serial", "Parallel"),
+                                    Map.of("theme", "Class 3", "variant", "Red Label", "displayVariant", "Class 3 Red Label", "serial", "/25")
+                            )
+                    ),
+                    Map.of(
+                            "title", "1998-99 Fleer Flair Showcase #42 Master Rainbow",
+                            "season", "1998-99", "company", "Fleer", "brand", "Flair Showcase", "theme", "Master Rainbow", "number", "42",
+                            "variants", List.of(
+                                    Map.of("theme", "Showcase", "variant", "Base", "displayVariant", "Row 3 Base (Showcase)", "serial", "Base"),
+                                    Map.of("theme", "Showcase", "variant", "Legacy Collection", "displayVariant", "Row 3 Legacy Collection", "serial", "/99"),
+                                    Map.of("theme", "Passion", "variant", "Base", "displayVariant", "Row 2 Base (Passion)", "serial", "Parallel"),
+                                    Map.of("theme", "Passion", "variant", "Legacy Collection", "displayVariant", "Row 2 Legacy Collection", "serial", "/99"),
+                                    Map.of("theme", "Power", "variant", "Base", "displayVariant", "Row 1 Base (Power)", "serial", "Parallel"),
+                                    Map.of("theme", "Power", "variant", "Legacy Collection", "displayVariant", "Row 1 Legacy Collection", "serial", "/99")
+                            )
+                    ),
+                    Map.of(
+                            "title", "1997-98 SkyBox E-X2001 #32 Essential Credentials Rainbow",
+                            "season", "1997-98", "company", "Fleer", "brand", "SkyBox E-X2001", "theme", "Essential Credentials", "number", "32",
+                            "variants", List.of(
+                                    Map.of("variant", "Base", "displayVariant", "Base", "serial", "Base"),
+                                    Map.of("variant", "Credentials Now", "displayVariant", "Essential Credentials Now", "serial", "/32"),
+                                    Map.of("variant", "Credentials Future", "displayVariant", "Essential Credentials Future", "serial", "/49")
+                            )
+                    ),
+                    Map.of(
+                            "title", "1998-99 SkyBox E-X Century #34 Essential Credentials Rainbow",
+                            "season", "1998-99", "company", "Fleer", "brand", "SkyBox E-X Century", "theme", "Essential Credentials", "number", "34",
+                            "variants", List.of(
+                                    Map.of("variant", "Base", "displayVariant", "Base", "serial", "Base"),
+                                    Map.of("variant", "Credentials Now", "displayVariant", "Essential Credentials Now", "serial", "/57"),
+                                    Map.of("variant", "Credentials Future", "displayVariant", "Essential Credentials Future", "serial", "/34")
+                            )
+                    ),
+                    Map.of(
+                            "title", "1999-00 Fleer E-X #15 Essential Credentials Rainbow",
+                            "season", "1999-00", "company", "Fleer", "brand", "E-X", "theme", "Essential Credentials", "number", "15",
+                            "variants", List.of(
+                                    Map.of("variant", "Base", "displayVariant", "Base", "serial", "Base"),
+                                    Map.of("variant", "Credentials Now", "displayVariant", "Essential Credentials Now", "serial", "/15"),
+                                    Map.of("variant", "Credentials Future", "displayVariant", "Essential Credentials Future", "serial", "/46")
+                            )
+                    ),
+                    Map.of(
+                            "title", "2003-04 Fleer E-X #25 Essential Credentials Rainbow",
+                            "season", "2003-04", "company", "Fleer", "brand", "E-X", "theme", "Essential Credentials", "number", "25",
+                            "variants", List.of(
+                                    Map.of("variant", "Base", "displayVariant", "Base", "serial", "Base"),
+                                    Map.of("variant", "Credentials Now", "displayVariant", "Essential Credentials Now", "serial", "/18"),
+                                    Map.of("variant", "Credentials Future", "displayVariant", "Essential Credentials Future", "serial", "/49")
+                            )
+                    ),
+                    Map.of(
+                            "title", "1996-97 Topps Bowman's Best #33 Rainbow",
+                            "season", "1996-97", "company", "Topps", "brand", "Topps Bowman's Best", "theme", "Base Set", "number", "33",
+                            "variants", List.of(
+                                    Map.of("variant", "Base", "displayVariant", "Base", "serial", "Base"),
+                                    Map.of("variant", "Refractor", "displayVariant", "Refractor", "serial", "Parallel"),
+                                    Map.of("variant", "Atomic Refractor", "displayVariant", "Atomic Refractor", "serial", "Parallel")
+                            )
+                    ),
+                    Map.of(
+                            "title", "1995 Classic #102 Early Career Rainbow",
+                            "season", "1995", "company", "Classic", "brand", "Classic", "theme", "Base Set & Autographs", "number", "102",
+                            "variants", List.of(
+                                    Map.of("theme", "Base Set", "variant", "Base", "displayVariant", "Base", "serial", "Base"),
+                                    Map.of("theme", "Base Set", "variant", "Silver", "displayVariant", "Silver", "serial", "Parallel"),
+                                    Map.of("theme", "Base Set", "variant", "Printers Proof", "displayVariant", "Printers Proof", "serial", "Proof"),
+                                    Map.of("theme", "Autographs", "variant", "Base", "displayVariant", "Autograph", "serial", "/3490"),
+                                    Map.of("theme", "Certified Autographs", "variant", "Base", "displayVariant", "Certified Autograph", "serial", "/990")
+                            )
+                    ),
+                    Map.of(
+                            "title", "1994-95 Collectors Choice #278 Rainbow",
+                            "season", "1994-95", "company", "Upper Deck", "brand", "Collectors Choice", "theme", "Base Set & Signatures", "number", "278",
+                            "variants", List.of(
+                                    Map.of("theme", "Base Set", "variant", "Base", "displayVariant", "Base", "serial", "Base"),
+                                    Map.of("theme", "Signature", "variant", "Silver", "displayVariant", "Silver Signature", "serial", "Parallel"),
+                                    Map.of("theme", "Signature", "variant", "Gold", "displayVariant", "Gold Signature", "serial", "Parallel"),
+                                    Map.of("theme", "Autographs", "variant", "Base", "displayVariant", "Autograph", "serial", "/750")
+                            )
+                    ),
+                    Map.of(
+                            "title", "2010-11 Panini Donruss #171 Rainbow",
+                            "season", "2010-11", "company", "Panini", "brand", "Panini Donruss", "theme", "Base Set", "number", "171",
+                            "variants", List.of(
+                                    Map.of("theme", "Base Set", "variant", "Base", "displayVariant", "Base", "serial", "Base"),
+                                    Map.of("theme", "Press Proof", "variant", "Base", "displayVariant", "Press Proof", "serial", "/100"),
+                                    Map.of("theme", "Die Cut", "variant", "Emerald", "displayVariant", "Emerald Die Cut", "serial", "Parallel"),
+                                    Map.of("theme", "Die Cut", "variant", "Sapphire", "displayVariant", "Sapphire Die Cut", "serial", "/49")
+                            )
+                    ),
+                    Map.of(
+                            "title", "1994 Signature Rookies #56 Tetrad Rainbow",
+                            "season", "1994", "company", "Signature Rookies", "brand", "Signature Rookies", "theme", "Tetrad", "number", "56",
+                            "variants", List.of(
+                                    Map.of("theme", "Tetrad", "variant", "Base", "displayVariant", "Base", "serial", "Base"),
+                                    Map.of("theme", "Tetrad", "variant", "Autograph", "displayVariant", "Autograph", "serial", "Auto"),
+                                    Map.of("theme", "Tetrad Authentic Signature", "variant", "Base", "displayVariant", "Authentic Signature", "serial", "/7750")
+                            )
+                    ),
+                    Map.of(
+                            "title", "1995-96 Upper Deck Base Set #160 Rainbow",
+                            "season", "1995-96", "company", "Upper Deck", "brand", "Upper Deck", "theme", "Base Set", "number", "160",
+                            "variants", List.of(
+                                    Map.of("variant", "Base", "displayVariant", "Base", "serial", "Base"),
+                                    Map.of("variant", "Electric Court", "displayVariant", "Electric Court", "serial", "Parallel"),
+                                    Map.of("variant", "Electric Court Gold", "displayVariant", "Electric Court Gold", "serial", "Parallel")
+                            )
+                    ),
+                    Map.of(
+                            "title", "1995-96 Upper Deck Base Set #207 Rainbow",
+                            "season", "1995-96", "company", "Upper Deck", "brand", "Upper Deck", "theme", "Base Set", "number", "207",
+                            "variants", List.of(
+                                    Map.of("variant", "Base", "displayVariant", "Base", "serial", "Base"),
+                                    Map.of("variant", "Electric Court", "displayVariant", "Electric Court", "serial", "Parallel"),
+                                    Map.of("variant", "Electric Court Gold", "displayVariant", "Electric Court Gold", "serial", "Parallel")
+                            )
+                    ),
+                    Map.of(
+                            "title", "1994 Classic 4 Sports #5 Rainbow",
+                            "season", "1994", "company", "Classic", "brand", "Classic 4 Sports", "theme", "Base Set & Autograph", "number", "5",
+                            "variants", List.of(
+                                    Map.of("theme", "Base Set", "variant", "Base", "displayVariant", "Base", "serial", "Base"),
+                                    Map.of("theme", "Base Set", "variant", "Printers Proof", "displayVariant", "Printers Proof", "serial", "Proof"),
+                                    Map.of("theme", "Autograph", "variant", "Base", "displayVariant", "Autograph", "serial", "/1275")
+                            )
+                    ),
+                    Map.of(
+                            "title", "1994 Classic Comic #103 Rainbow",
+                            "season", "1994", "company", "Classic", "brand", "Classic", "theme", "Comic", "number", "103",
+                            "variants", List.of(
+                                    Map.of("variant", "Base", "displayVariant", "Base", "serial", "Base"),
+                                    Map.of("variant", "Gold", "displayVariant", "Gold", "serial", "Parallel"),
+                                    Map.of("variant", "Printers Proof", "displayVariant", "Printers Proof", "serial", "/975")
+                            )
                     )
             );
 
@@ -117,7 +265,7 @@ public class RainbowPageGenerator {
                 @SuppressWarnings("unchecked")
                 List<Map<String, String>> expectedVariants = (List<Map<String, String>>) target.get("variants");
 
-                if (expectedVariants.size() <= 3) continue;
+                if (expectedVariants.size() < 3) continue;
 
                 Map<String, Object> setMap = new HashMap<>();
                 setMap.put("name", title);
@@ -129,16 +277,26 @@ public class RainbowPageGenerator {
 
                 List<Map<String, Object>> cardItems = new ArrayList<>();
                 int acquiredCount = 0;
-                List<CardJson> candidates = cardsBySeasonAndNumber.getOrDefault((season + "|" + number).toLowerCase(), Collections.emptyList());
+                List<CardJson> candidates = cardsBySeasonAndNumber.getOrDefault((season + "|" + normalizeCardNumber(number)).toLowerCase(), Collections.emptyList());
                 Set<String> matchedCardIds = new HashSet<>();
 
                 for (Map<String, String> spec : expectedVariants) {
                     String reqVariant = spec.get("variant");
                     String reqSerial = spec.get("serial");
+                    String reqTheme = spec.get("theme");
+                    String displayVariant = spec.getOrDefault("displayVariant", reqVariant);
 
                     CardJson matched = null;
                     for (CardJson c : candidates) {
                         if (c.id() != null && matchedCardIds.contains(c.id())) {
+                            continue;
+                        }
+                        if (c.brand() != null && !brand.equalsIgnoreCase(c.brand())
+                                && !c.brand().toLowerCase().contains(brand.toLowerCase())
+                                && !brand.toLowerCase().contains(c.brand().toLowerCase())) {
+                            continue;
+                        }
+                        if (reqTheme != null && (c.theme() == null || !c.theme().equalsIgnoreCase(reqTheme))) {
                             continue;
                         }
                         if (isVariantMatch(c.variant(), reqVariant)) {
@@ -153,7 +311,7 @@ public class RainbowPageGenerator {
                     if (matched != null) {
                         acquiredCount++;
                         Map<String, Object> itemMap = new HashMap<>();
-                        itemMap.put("variant", reqVariant);
+                        itemMap.put("variant", displayVariant);
                         itemMap.put("serial", CardStatsService.formatSerialAndPrintRun(matched.serialNumber(), matched.printRun(), reqSerial));
                         itemMap.put("acquired", true);
                         CardData cd = CardPageGenerator.computeCardData(matched);
@@ -171,10 +329,17 @@ public class RainbowPageGenerator {
                         itemMap.put("orientationClass", isLandscape ? "is-landscape" : "is-portrait");
 
                         cardItems.add(itemMap);
+                    } else {
+                        Map<String, Object> itemMap = new HashMap<>();
+                        itemMap.put("variant", displayVariant);
+                        itemMap.put("serial", reqSerial);
+                        itemMap.put("acquired", false);
+                        itemMap.put("title", "Seeking " + season + " " + brand + " " + displayVariant + " #" + number);
+                        cardItems.add(itemMap);
                     }
                 }
 
-                if (acquiredCount <= 1) continue;
+                if (acquiredCount < 1) continue;
 
                 int totalCount = expectedVariants.size();
                 int percentage = (int) Math.round(((double) acquiredCount / totalCount) * 100);
@@ -281,13 +446,15 @@ public class RainbowPageGenerator {
                 @SuppressWarnings("unchecked")
                 List<Map<String, Object>> cards = (List<Map<String, Object>>) set.get("cards");
                 if (cards != null) {
-                    totalRainbowCards += cards.size();
                     for (Map<String, Object> c : cards) {
-                        String serial = (String) c.get("serial");
-                        String variant = (String) c.get("variant");
-                        if ((serial != null && (serial.contains("1/1") || serial.equals("1/1") || serial.equals("#1/1")))
-                                || (variant != null && (variant.toLowerCase().contains("1 of 1") || variant.toLowerCase().contains("masterpiece")))) {
-                            totalRainbow1of1++;
+                        if (Boolean.TRUE.equals(c.get("acquired"))) {
+                            totalRainbowCards++;
+                            String serial = (String) c.get("serial");
+                            String variant = (String) c.get("variant");
+                            if ((serial != null && (serial.contains("1/1") || serial.equals("1/1") || serial.equals("#1/1")))
+                                    || (variant != null && (variant.toLowerCase().contains("1 of 1") || variant.toLowerCase().contains("masterpiece")))) {
+                                totalRainbow1of1++;
+                            }
                         }
                     }
                 }
@@ -319,7 +486,10 @@ public class RainbowPageGenerator {
         if (isDiamondGroup(cv, sv, "single", "single diamond", "diamond")) return true;
         if (isDiamondGroup(cv, sv, "double", "double diamond")) return true;
         if (isDiamondGroup(cv, sv, "triple", "triple diamond")) return true;
-        return isDiamondGroup(cv, sv, "quadruple", "quadruple diamond");
+        if (isDiamondGroup(cv, sv, "quadruple", "quadruple diamond")) return true;
+
+        if (isCredentialsGroup(cv, sv, "credentials now", "essential credentials now")) return true;
+        return isCredentialsGroup(cv, sv, "credentials future", "essential credentials future");
     }
 
     private static boolean isBaseVariant(String v) {
@@ -327,6 +497,16 @@ public class RainbowPageGenerator {
     }
 
     private static boolean isDiamondGroup(String cv, String sv, String... aliases) {
+        boolean cvMatch = false;
+        boolean svMatch = false;
+        for (String alias : aliases) {
+            if (cv.equals(alias)) cvMatch = true;
+            if (sv.equals(alias)) svMatch = true;
+        }
+        return cvMatch && svMatch;
+    }
+
+    private static boolean isCredentialsGroup(String cv, String sv, String... aliases) {
         boolean cvMatch = false;
         boolean svMatch = false;
         for (String alias : aliases) {
