@@ -427,18 +427,18 @@
     "brand": "Collectors Choice",
     "theme": "You Crash The Game Rookie Scoring",
     "variant": "Redemption",
-    "pack_odds": "N/A",
-    "source": "Heuristic Default",
-    "confidence": "UNVERIFIED"
+    "pack_odds": "1:20 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
   },
   "1994-95|collectors choice|you crash the game rookie scoring|gold": {
     "season": "1994-95",
     "brand": "Collectors Choice",
     "theme": "You Crash The Game Rookie Scoring",
     "variant": "Gold",
-    "pack_odds": "N/A",
-    "source": "Heuristic Default",
-    "confidence": "UNVERIFIED"
+    "pack_odds": "1:20 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
   },
   "1994-95|collectors choice|draft trade lottery picks|base": {
     "season": "1994-95",
@@ -3679,5 +3679,473 @@
     "pack_odds": "1:24 Packs",
     "source": "Alias Mapping",
     "confidence": "AUTOMATED"
+  },
+  "1994-95|flair|wave of the future|base": {
+    "season": "1994-95",
+    "brand": "Flair",
+    "theme": "Wave Of The Future",
+    "variant": "Base",
+    "pack_odds": "1:7 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1994-95|skybox hoops|magic's all rookies|base": {
+    "season": "1994-95",
+    "brand": "Skybox Hoops",
+    "theme": "Magic'S All Rookies",
+    "variant": "Base",
+    "pack_odds": "1:12 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1994-95|skybox hoops|magic's all rookies|jumbo": {
+    "season": "1994-95",
+    "brand": "Skybox Hoops",
+    "theme": "Magic'S All Rookies",
+    "variant": "Jumbo",
+    "pack_odds": "1:1 Pack",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1994-95|skybox hoops|magic's all rookies|foil tech": {
+    "season": "1994-95",
+    "brand": "Skybox Hoops",
+    "theme": "Magic'S All Rookies",
+    "variant": "Foil Tech",
+    "pack_odds": "1:36 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1994-95|skybox premium|head of the class|base": {
+    "season": "1994-95",
+    "brand": "Skybox Premium",
+    "theme": "Head Of The Class",
+    "variant": "Base",
+    "pack_odds": "1:480 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1994-95|upper deck|rookie standouts|base": {
+    "season": "1994-95",
+    "brand": "Upper Deck",
+    "theme": "Rookie Standouts",
+    "variant": "Base",
+    "pack_odds": "1:30 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1994-95|upper deck|special edition|base": {
+    "season": "1994-95",
+    "brand": "Upper Deck",
+    "theme": "Special Edition",
+    "variant": "Base",
+    "pack_odds": "1:1 Pack",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1994-95|upper deck|special edition|gold": {
+    "season": "1994-95",
+    "brand": "Upper Deck",
+    "theme": "Special Edition",
+    "variant": "Gold",
+    "pack_odds": "1:35 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|upper deck|special edition|base": {
+    "season": "1995-96",
+    "brand": "Upper Deck",
+    "theme": "Special Edition",
+    "variant": "Base",
+    "pack_odds": "1:1 Pack",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|upper deck|special edition|gold": {
+    "season": "1995-96",
+    "brand": "Upper Deck",
+    "theme": "Special Edition",
+    "variant": "Gold",
+    "pack_odds": "1:27 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|upper deck|base set|electric court gold": {
+    "season": "1995-96",
+    "brand": "Upper Deck",
+    "theme": "Base Set",
+    "variant": "Electric Court Gold",
+    "pack_odds": "1:35 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|fleer|total o|base": {
+    "season": "1996-97",
+    "brand": "Fleer",
+    "theme": "Total O",
+    "variant": "Base",
+    "pack_odds": "1:44 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|fleer metal|maximum metal|base": {
+    "season": "1996-97",
+    "brand": "Fleer Metal",
+    "theme": "Maximum Metal",
+    "variant": "Base",
+    "pack_odds": "1:180 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|fleer metal|molten metal|base": {
+    "season": "1996-97",
+    "brand": "Fleer Metal",
+    "theme": "Molten Metal",
+    "variant": "Base",
+    "pack_odds": "1:72 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|fleer metal|net-rageous|base": {
+    "season": "1996-97",
+    "brand": "Fleer Metal",
+    "theme": "Net-Rageous",
+    "variant": "Base",
+    "pack_odds": "1:288 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|skybox e-x2000|star date 2000|base": {
+    "season": "1996-97",
+    "brand": "Skybox E-X2000",
+    "theme": "Star Date 2000",
+    "variant": "Base",
+    "pack_odds": "1:9 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|skybox e-2000|star date 2000|base": {
+    "season": "1996-97",
+    "brand": "Skybox E-2000",
+    "theme": "Star Date 2000",
+    "variant": "Base",
+    "pack_odds": "1:9 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|skybox e-2000|base set|credentials": {
+    "season": "1996-97",
+    "brand": "Skybox E-2000",
+    "theme": "Base Set",
+    "variant": "Credentials",
+    "pack_odds": "1:360 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps|nba at 50|base": {
+    "season": "1996-97",
+    "brand": "Topps",
+    "theme": "Nba At 50",
+    "variant": "Base",
+    "pack_odds": "1:6 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps|profiles|base": {
+    "season": "1996-97",
+    "brand": "Topps",
+    "theme": "Profiles",
+    "variant": "Base",
+    "pack_odds": "1:9 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps|super team conference winners bordered|refractor": {
+    "season": "1996-97",
+    "brand": "Topps",
+    "theme": "Super Team Conference Winners Bordered",
+    "variant": "Refractor",
+    "pack_odds": "1:72 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|flair showcase|style|base": {
+    "season": "1997-98",
+    "brand": "Flair Showcase",
+    "theme": "Style",
+    "variant": "Base",
+    "pack_odds": "1:4 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|flair showcase|grace|base": {
+    "season": "1997-98",
+    "brand": "Flair Showcase",
+    "theme": "Grace",
+    "variant": "Base",
+    "pack_odds": "1:10 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|flair showcase|showcase|base": {
+    "season": "1997-98",
+    "brand": "Flair Showcase",
+    "theme": "Showcase",
+    "variant": "Base",
+    "pack_odds": "1:10 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|flair showcase|flair|base": {
+    "season": "1997-98",
+    "brand": "Flair Showcase",
+    "theme": "Flair",
+    "variant": "Base",
+    "pack_odds": "1:24 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|fleer|game breakers|base": {
+    "season": "1997-98",
+    "brand": "Fleer",
+    "theme": "Game Breakers",
+    "variant": "Base",
+    "pack_odds": "1:288 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|fleer|key ingredients|base": {
+    "season": "1997-98",
+    "brand": "Fleer",
+    "theme": "Key Ingredients",
+    "variant": "Base",
+    "pack_odds": "1:2 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|fleer|key ingredients|gold": {
+    "season": "1997-98",
+    "brand": "Fleer",
+    "theme": "Key Ingredients",
+    "variant": "Gold",
+    "pack_odds": "1:18 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|fleer|zone|base": {
+    "season": "1997-98",
+    "brand": "Fleer",
+    "theme": "Zone",
+    "variant": "Base",
+    "pack_odds": "1:36 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|fleer|franchise futures|base": {
+    "season": "1997-98",
+    "brand": "Fleer",
+    "theme": "Franchise Futures",
+    "variant": "Base",
+    "pack_odds": "1:36 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|fleer metal universe|silver slams|base": {
+    "season": "1997-98",
+    "brand": "Fleer Metal Universe",
+    "theme": "Silver Slams",
+    "variant": "Base",
+    "pack_odds": "1:6 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|fleer metal universe|titanium|base": {
+    "season": "1997-98",
+    "brand": "Fleer Metal Universe",
+    "theme": "Titanium",
+    "variant": "Base",
+    "pack_odds": "1:72 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|fleer metal universe championship|all-millennium team|base": {
+    "season": "1997-98",
+    "brand": "Fleer Metal Universe Championship",
+    "theme": "All-Millennium Team",
+    "variant": "Base",
+    "pack_odds": "1:6 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|fleer metal universe championship|base set|precious metal gems": {
+    "season": "1997-98",
+    "brand": "Fleer Metal Universe Championship",
+    "theme": "Base Set",
+    "variant": "Precious Metal Gems",
+    "pack_odds": "1:288 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|skybox e-x2001|credentials|credentials now": {
+    "season": "1997-98",
+    "brand": "Skybox E-X2001",
+    "theme": "Credentials",
+    "variant": "Credentials Now",
+    "pack_odds": "1:72 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|skybox e-x2001|credentials|credentials future": {
+    "season": "1997-98",
+    "brand": "Skybox E-X2001",
+    "theme": "Credentials",
+    "variant": "Credentials Future",
+    "pack_odds": "1:72 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|skybox premium|jam pack|base": {
+    "season": "1997-98",
+    "brand": "Skybox Premium",
+    "theme": "Jam Pack",
+    "variant": "Base",
+    "pack_odds": "1:18 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|skybox z-force|limited access|base": {
+    "season": "1997-98",
+    "brand": "Skybox Z-Force",
+    "theme": "Limited Access",
+    "variant": "Base",
+    "pack_odds": "1:360 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|skybox z-force|zensations|base": {
+    "season": "1997-98",
+    "brand": "Skybox Z-Force",
+    "theme": "Zensations",
+    "variant": "Base",
+    "pack_odds": "1:6 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|sp authentic|sign of the times|base": {
+    "season": "1997-98",
+    "brand": "Sp Authentic",
+    "theme": "Sign Of The Times",
+    "variant": "Base",
+    "pack_odds": "1:42 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|sp authentic|profiles|level 1": {
+    "season": "1997-98",
+    "brand": "Sp Authentic",
+    "theme": "Profiles",
+    "variant": "Level 1",
+    "pack_odds": "1:3 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|sp authentic|profiles|level 2": {
+    "season": "1997-98",
+    "brand": "Sp Authentic",
+    "theme": "Profiles",
+    "variant": "Level 2",
+    "pack_odds": "1:3 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|sp authentic|profiles|level 3": {
+    "season": "1997-98",
+    "brand": "Sp Authentic",
+    "theme": "Profiles",
+    "variant": "Level 3",
+    "pack_odds": "1:3 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|spx|base set|sky": {
+    "season": "1997-98",
+    "brand": "Spx",
+    "theme": "Base Set",
+    "variant": "Sky",
+    "pack_odds": "1:1 Pack",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|spx|base set|bronze": {
+    "season": "1997-98",
+    "brand": "Spx",
+    "theme": "Base Set",
+    "variant": "Bronze",
+    "pack_odds": "1:3 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|topps|minted in springfield|base": {
+    "season": "1997-98",
+    "brand": "Topps",
+    "theme": "Minted In Springfield",
+    "variant": "Base",
+    "pack_odds": "1:6 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|topps|topps 40|base": {
+    "season": "1997-98",
+    "brand": "Topps",
+    "theme": "Topps 40",
+    "variant": "Base",
+    "pack_odds": "1:12 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|topps|rock stars|base": {
+    "season": "1997-98",
+    "brand": "Topps",
+    "theme": "Rock Stars",
+    "variant": "Base",
+    "pack_odds": "1:36 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|topps|rock stars|refractor": {
+    "season": "1997-98",
+    "brand": "Topps",
+    "theme": "Rock Stars",
+    "variant": "Refractor",
+    "pack_odds": "1:144 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "2000-01|topps gold label|class 2|base": {
+    "season": "2000-01",
+    "brand": "Topps Gold Label",
+    "theme": "Class 2",
+    "variant": "Base",
+    "pack_odds": "1:4 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "2000-01|topps gold label|class 3|base": {
+    "season": "2000-01",
+    "brand": "Topps Gold Label",
+    "theme": "Class 3",
+    "variant": "Base",
+    "pack_odds": "1:12 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
+  },
+  "2000-01|topps gold label|premium|base": {
+    "season": "2000-01",
+    "brand": "Topps Gold Label",
+    "theme": "Premium",
+    "variant": "Base",
+    "pack_odds": "1:11 Packs",
+    "source": "TCDB / Beckett Verified",
+    "confidence": "VERIFIED"
   }
 }
