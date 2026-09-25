@@ -192,6 +192,12 @@ ${topNavHtml?no_esc}
                 <th class="specs-th">Serial / Print Run</th>
                 <td class="specs-td">${serialDisplay}</td>
             </tr>
+            <#if packOdds?? && packOdds != "" && packOdds != "—" && packOdds != "-">
+            <tr>
+                <th class="specs-th">Pack Odds</th>
+                <td class="specs-td">${packOdds}</td>
+            </tr>
+            </#if>
             <tr>
                 <th class="specs-th">Rookie Card</th>
                 <td class="specs-td">${rookie}</td>

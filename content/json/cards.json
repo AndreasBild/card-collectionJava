@@ -19,7 +19,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": true
+    "isRookie": true,
+    "packOdds": null
   },
   {
     "id": "1994-95-collectors-choice-signature-silver-278",
@@ -41,7 +42,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1994-95-collectors-choice-signature-gold-278",
@@ -63,7 +65,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1994-95-collectors-choice-autographs-278-sn689",
@@ -85,7 +88,8 @@
     "notes": null,
     "isAutograph": true,
     "isPatch": false,
-    "isRookie": true
+    "isRookie": true,
+    "packOdds": null
   },
   {
     "id": "1994-95-collectors-choice-you-crash-the-game-rookie-scoring-redemption-s4",
@@ -107,7 +111,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1994-95-collectors-choice-you-crash-the-game-rookie-scoring-gold-s4",
@@ -129,7 +134,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1994-95-collectors-choice-draft-trade-lottery-picks-5",
@@ -151,7 +157,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1994-95-topps-embossed-105",
@@ -173,7 +180,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": true
+    "isRookie": true,
+    "packOdds": null
   },
   {
     "id": "1994-95-topps-embossed-golden-idol-gold-105",
@@ -305,7 +313,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": true
+    "isRookie": true,
+    "packOdds": null
   },
   {
     "id": "1994-95-topps-finest-refractor-288",
@@ -415,7 +424,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": true
+    "isRookie": true,
+    "packOdds": null
   },
   {
     "id": "1994-95-flair-wave-of-the-future-3",
@@ -459,7 +469,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": true
+    "isRookie": true,
+    "packOdds": null
   },
   {
     "id": "1994-95-fleer-lottery-exchange-5",
@@ -503,7 +514,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": true
+    "isRookie": true,
+    "packOdds": null
   },
   {
     "id": "1994-95-skybox-hoops-top-this-425",
@@ -657,7 +669,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": true
+    "isRookie": true,
+    "packOdds": null
   },
   {
     "id": "1994-95-sp-5-card310",
@@ -679,7 +692,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": true
+    "isRookie": true,
+    "packOdds": null
   },
   {
     "id": "1994-95-sp-die-cut-d5",
@@ -789,7 +803,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": true
+    "isRookie": true,
+    "packOdds": null
   },
   {
     "id": "1994-95-sp-championship-die-cut-134",
@@ -833,7 +848,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": true
+    "isRookie": true,
+    "packOdds": null
   },
   {
     "id": "1994-95-skybox-premium-draft-picks-dp5",
@@ -899,7 +915,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": true
+    "isRookie": true,
+    "packOdds": null
   },
   {
     "id": "1994-95-topps-stadium-club-first-day-issue-210",
@@ -987,7 +1004,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": true
+    "isRookie": true,
+    "packOdds": null
   },
   {
     "id": "1994-95-topps-spectra-light-393",
@@ -1031,7 +1049,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": true
+    "isRookie": true,
+    "packOdds": null
   },
   {
     "id": "1994-95-ultra-all-rookies-3",
@@ -1097,7 +1116,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": true
+    "isRookie": true,
+    "packOdds": null
   },
   {
     "id": "1994-95-upper-deck-draft-lottery-picks-d5",
@@ -1273,7 +1293,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1995-96-collectors-choice-players-club-38",
@@ -1581,7 +1602,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1995-96-e-xl-88-card730",
@@ -1603,7 +1625,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1995-96-e-xl-blue-88",
@@ -1669,7 +1692,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1995-96-topps-finest-refractor-224",
@@ -1933,7 +1957,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1995-96-fleer-193",
@@ -1955,7 +1980,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1995-96-fleer-class-encounters-4",
@@ -2021,7 +2047,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1995-96-skybox-hoops-sizzlin-sophs-200",
@@ -2131,7 +2158,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1995-96-jam-session-die-cut-d116",
@@ -2175,7 +2203,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1995-96-fleer-metal-silver-spotlight-116",
@@ -2219,7 +2248,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1995-96-skybox-premium-121-card1020",
@@ -2241,7 +2271,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1995-96-skybox-premium-electrified-297",
@@ -2329,7 +2360,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1995-96-sp-144-card1070",
@@ -2351,7 +2383,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1995-96-sp-all-stars-as9",
@@ -2461,7 +2494,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1995-96-sp-championship-race-for-the-playoffs-146",
@@ -2593,7 +2627,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1995-96-topps-stadium-club-beam-team-bt2",
@@ -2703,7 +2738,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1995-96-topps-whiz-kids-wk3",
@@ -2769,7 +2805,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1995-96-topps-gallery-player-s-private-issue-21",
@@ -2813,7 +2850,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1995-96-ultra-gold-medallion-192",
@@ -2923,7 +2961,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1995-96-upper-deck-electric-court-160",
@@ -3011,7 +3050,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1995-96-upper-deck-electric-court-207",
@@ -3187,7 +3227,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1996-97-topps-bowman-s-best-refractor-33",
@@ -3517,7 +3558,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1996-97-collectors-choice-mini-cards-m178",
@@ -3737,7 +3779,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1996-97-skybox-e-2000-credentials-79-sn259",
@@ -3957,7 +4000,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:24 Packs"
   },
   {
     "id": "1996-97-flair-showcase-showstopper-row-1-seat-5",
@@ -3979,7 +4023,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:4 Packs"
   },
   {
     "id": "1996-97-flair-showcase-showpiece-row-2-seat-5",
@@ -4001,7 +4046,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1996-97-flair-showcase-showtime-legacy-collection-row-0-seat-5-sn11",
@@ -4023,7 +4069,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:30 Packs"
   },
   {
     "id": "1996-97-flair-showcase-showstopper-legacy-collection-row-1-seat-5-sn13",
@@ -4045,7 +4092,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:30 Packs"
   },
   {
     "id": "1996-97-flair-showcase-showpiece-legacy-collection-row-2-seat-5-sn22",
@@ -4067,7 +4115,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:30 Packs"
   },
   {
     "id": "1996-97-flair-hot-shots-die-cut-10",
@@ -4111,7 +4160,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1996-97-fleer-hardwood-leaders-148",
@@ -4221,7 +4271,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1996-97-skybox-hoops-career-best-game-333",
@@ -4331,7 +4382,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1996-97-fleer-metal-metal-shredders-240",
@@ -4485,7 +4537,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1996-97-skybox-premium-ruby-127",
@@ -4529,7 +4582,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1996-97-skybox-premium-ruby-245",
@@ -4683,7 +4737,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1996-97-sp-holoviews-pc40",
@@ -4771,7 +4826,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1996-97-topps-stadium-club-class-acts-ca4",
@@ -5057,7 +5113,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1996-97-topps-nba-at-50-137",
@@ -5343,7 +5400,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1996-97-topps-chrome-refractor-137r",
@@ -5365,7 +5423,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:12 Packs"
   },
   {
     "id": "1996-97-topps-chrome-profiles-pf12",
@@ -5409,7 +5468,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1996-97-ud3-the-winning-edge-w11",
@@ -5453,7 +5513,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1996-97-ultra-gold-medallion-g121",
@@ -5695,7 +5756,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1996-97-upper-deck-predictor-scoring-p20",
@@ -5761,7 +5823,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1996-97-skybox-z-force-zuperman-176",
@@ -5849,7 +5912,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1996-97-spx-gold-50",
@@ -5937,7 +6001,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-topps-bowman-s-best-34",
@@ -5959,7 +6024,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-topps-bowman-s-best-refractor-34",
@@ -6025,7 +6091,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-collectors-choice-352",
@@ -6047,7 +6114,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-collectors-choice-352-card3550",
@@ -6069,7 +6137,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-collectors-choice-mini-cards-m29",
@@ -6179,7 +6248,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-skybox-e-x2001-32-card3650",
@@ -6201,7 +6271,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-skybox-e-x2001-credentials-credentials-now-32-sn29",
@@ -6531,7 +6602,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:36 Packs"
   },
   {
     "id": "1997-98-flair-showcase-grace-legacy-collection-row-1-seat-64-sn60",
@@ -6553,7 +6625,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:36 Packs"
   },
   {
     "id": "1997-98-flair-showcase-style-legacy-collection-row-2-seat-64-sn86",
@@ -6575,7 +6648,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:36 Packs"
   },
   {
     "id": "1997-98-flair-showcase-flair-legacy-collection-row-3-seat-64-sn79",
@@ -6597,7 +6671,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:36 Packs"
   },
   {
     "id": "1997-98-fleer-125",
@@ -6619,7 +6694,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-fleer-207",
@@ -6641,7 +6717,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-fleer-traditions-crystal-125",
@@ -6883,7 +6960,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-skybox-hoops-328",
@@ -6905,7 +6983,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-skybox-hoops-frequent-flyer-club-ff19",
@@ -6993,7 +7072,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-fleer-metal-universe-championship-precious-metal-gems-11-sn32",
@@ -7059,7 +7139,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-fleer-metal-universe-33-card4210",
@@ -7081,7 +7162,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-fleer-metal-universe-precious-metal-gems-red-33-pmg-sn47",
@@ -7103,7 +7185,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:288 Packs"
   },
   {
     "id": "1997-98-fleer-metal-universe-precious-metal-gems-green-33-pmg-sn7",
@@ -7125,7 +7208,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:288 Packs"
   },
   {
     "id": "1997-98-fleer-metal-universe-silver-slams-9",
@@ -7213,7 +7297,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-skybox-premium-ruby-58-sr-sn31",
@@ -7323,7 +7408,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-sp-authentic-profiles-level-1-p29",
@@ -7521,7 +7607,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-spx-49-card4500",
@@ -7543,7 +7630,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-spx-sky-49",
@@ -7697,7 +7785,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-topps-stadium-club-113-card4610",
@@ -7719,7 +7808,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-topps-stadium-club-first-day-issue-113",
@@ -7763,7 +7853,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:150 Packs"
   },
   {
     "id": "1997-98-topps-stadium-club-members-only-114",
@@ -7807,7 +7898,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-topps-stadium-club-first-day-issue-114",
@@ -7851,7 +7943,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:150 Packs"
   },
   {
     "id": "1997-98-topps-stadium-club-co-signers-co7",
@@ -7873,7 +7966,8 @@
     "notes": null,
     "isAutograph": true,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:288 Packs"
   },
   {
     "id": "1997-98-topps-stadium-club-co-signers-co9",
@@ -7895,7 +7989,8 @@
     "notes": null,
     "isAutograph": true,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:288 Packs"
   },
   {
     "id": "1997-98-topps-stadium-club-co-signers-co9-card4691",
@@ -7917,7 +8012,8 @@
     "notes": null,
     "isAutograph": true,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:288 Packs"
   },
   {
     "id": "1997-98-topps-stadium-club-triumvirate-t3a",
@@ -7939,7 +8035,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:96 Packs"
   },
   {
     "id": "1997-98-topps-stadium-club-triumvirate-t3a-card4710",
@@ -7961,7 +8058,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:96 Packs"
   },
   {
     "id": "1997-98-topps-stadium-club-triumvirate-luminescent-t3a",
@@ -7983,7 +8081,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:192 Packs"
   },
   {
     "id": "1997-98-topps-stadium-club-triumvirate-illuminator-t3a",
@@ -8005,7 +8104,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:384 Packs"
   },
   {
     "id": "1997-98-topps-stadium-club-triumvirate-illuminator-t3a-card4740",
@@ -8027,7 +8127,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:384 Packs"
   },
   {
     "id": "1997-98-topps-stadium-club-triumvirate-t3b",
@@ -8049,7 +8150,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:96 Packs"
   },
   {
     "id": "1997-98-topps-stadium-club-triumvirate-luminescent-t3b",
@@ -8071,7 +8173,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:192 Packs"
   },
   {
     "id": "1997-98-topps-stadium-club-triumvirate-illuminator-t3b",
@@ -8093,7 +8196,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:384 Packs"
   },
   {
     "id": "1997-98-topps-stadium-club-triumvirate-t3c",
@@ -8115,7 +8219,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:96 Packs"
   },
   {
     "id": "1997-98-topps-stadium-club-triumvirate-luminescent-t3c",
@@ -8137,7 +8242,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:192 Packs"
   },
   {
     "id": "1997-98-topps-stadium-club-triumvirate-illuminator-t3c",
@@ -8159,7 +8265,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:384 Packs"
   },
   {
     "id": "1997-98-topps-27",
@@ -8181,7 +8288,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-topps-o-pee-chee-27",
@@ -8357,7 +8465,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-topps-chrome-refractor-27",
@@ -8379,7 +8488,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:12 Packs"
   },
   {
     "id": "1997-98-topps-chrome-t40-32",
@@ -8401,7 +8511,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-topps-chrome-refractor-t40-32",
@@ -8423,7 +8534,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:12 Packs"
   },
   {
     "id": "1997-98-topps-chrome-refractor-t40-32-card5040",
@@ -8445,7 +8557,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:12 Packs"
   },
   {
     "id": "1997-98-ud3-all-stars-26-as",
@@ -8555,7 +8668,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-ultra-gold-medallion-257-g",
@@ -8929,7 +9043,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-upper-deck-team-mates-t57",
@@ -9017,7 +9132,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-skybox-z-force-5-card5510",
@@ -9039,7 +9155,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-skybox-z-force-180",
@@ -9061,7 +9178,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-skybox-z-force-180-card5530",
@@ -9083,7 +9201,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-skybox-z-force-rave-5-sn307",
@@ -9105,7 +9224,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:288 Packs"
   },
   {
     "id": "1997-98-skybox-z-force-rave-5-sn358",
@@ -9127,7 +9247,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:288 Packs"
   },
   {
     "id": "1997-98-skybox-z-force-rave-180-sn18",
@@ -9149,7 +9270,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:288 Packs"
   },
   {
     "id": "1997-98-skybox-z-force-rave-180-sn326",
@@ -9171,7 +9293,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:288 Packs"
   },
   {
     "id": "1997-98-skybox-z-force-super-rave-180-sn7",
@@ -9193,7 +9316,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:1152 Packs"
   },
   {
     "id": "1997-98-skybox-z-force-fast-track-4",
@@ -9281,7 +9405,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-ud-hardcourt-50-card6710",
@@ -9303,7 +9428,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1997-98-ud-hardcourt-home-court-advantage-50",
@@ -9457,7 +9583,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1998-99-topps-bowman-s-best-refractor-81",
@@ -9655,7 +9782,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1998-99-skybox-e-x-century-essential-credentials-credentials-now-34-sn43",
@@ -9721,7 +9849,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1998-99-topps-finest-6-card7310",
@@ -9743,7 +9872,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1998-99-topps-finest-no-protector-6",
@@ -9919,7 +10049,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:36 Packs"
   },
   {
     "id": "1998-99-flair-showcase-passion-legacy-collection-42-sn7",
@@ -9941,7 +10072,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:36 Packs"
   },
   {
     "id": "1998-99-flair-showcase-showcase-legacy-collection-42-sn66",
@@ -9963,7 +10095,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:36 Packs"
   },
   {
     "id": "1998-99-fleer-5",
@@ -9985,7 +10118,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1998-99-fleer-brilliants-97",
@@ -10007,7 +10141,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1998-99-fleer-brilliants-97-card7610",
@@ -10029,7 +10164,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1998-99-fleer-brilliants-blue-97b",
@@ -10139,7 +10275,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1998-99-fleer-vintage-61-classic-5c-sn16",
@@ -10205,7 +10342,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1998-99-skybox-hoops-shout-outs-30",
@@ -10249,7 +10387,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1998-99-fleer-metal-universe-precious-metal-gems-5-sn33",
@@ -10425,7 +10564,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1998-99-skybox-premium-autographics-black-57",
@@ -10513,7 +10653,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1998-99-sp-authentic-88",
@@ -10535,7 +10676,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1998-99-sp-authentic-sign-of-the-times-bronze-hw",
@@ -10623,7 +10765,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1998-99-spx-finite-star-power-92-sn1072",
@@ -10887,7 +11030,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1998-99-topps-stadium-club-first-day-issue-183-sn124",
@@ -10953,7 +11097,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1998-99-topps-stadium-club-chrome-scc13-card8510",
@@ -10975,7 +11120,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1998-99-topps-stadium-club-chrome-refractor-scc13",
@@ -11063,7 +11209,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1998-99-topps-east-west-ew11",
@@ -11129,7 +11276,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1998-99-topps-chrome-155-card8660",
@@ -11151,7 +11299,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1998-99-topps-chrome-refractor-155",
@@ -11173,7 +11322,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": "1:12 Packs"
   },
   {
     "id": "1998-99-ud-choice-153",
@@ -11195,7 +11345,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1998-99-ud-choice-153-card8710",
@@ -11217,7 +11368,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1998-99-ud-choice-preview-153",
@@ -11393,7 +11545,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1998-99-ud-ionix-reciprocal-59-sn136",
@@ -11459,7 +11612,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1998-99-ultra-27",
@@ -11481,7 +11635,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1998-99-ultra-gold-medallion-27g",
@@ -11569,7 +11724,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1998-99-upper-deck-heart-soul-163",
@@ -11987,7 +12143,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1998-99-ud-encore-88-card9210",
@@ -12009,7 +12166,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1998-99-ud-encore-f-x-88-sn54",
@@ -12075,7 +12233,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1998-99-ud-ovation-gold-69-sn280",
@@ -12119,7 +12278,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-ud-black-diamond-diamond-cut-88",
@@ -12207,7 +12367,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-topps-bowman-s-best-refractor-71-sn293",
@@ -12273,7 +12434,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-e-x-essential-credentials-credentials-future-15-sn46",
@@ -12339,7 +12501,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-topps-finest-refractor-56",
@@ -12493,7 +12656,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-flair-showcase-18-card9810",
@@ -12515,7 +12679,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-flair-showcase-legacy-2000-18-sn14",
@@ -12581,7 +12746,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-fleer-tradition-roundball-collection-68rb",
@@ -12647,7 +12813,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-fleer-focus-masterpiece-mania-65-sn267",
@@ -12713,7 +12880,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-fleer-force-forcefield-68",
@@ -12757,7 +12925,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-fleer-mystique-gold-38",
@@ -12801,7 +12970,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-skybox-hoops-decade-68",
@@ -12823,7 +12993,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-skybox-hoops-decade-hoopla-68",
@@ -12933,7 +13104,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-fleer-metal-37-card10160",
@@ -12955,7 +13127,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-fleer-metal-37-card10170",
@@ -12977,7 +13150,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-fleer-metal-emerald-37-e",
@@ -13021,7 +13195,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-skybox-apex-x-tra-122x-sn7",
@@ -13065,7 +13240,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-skybox-impact-132",
@@ -13087,7 +13263,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-skybox-premium-66",
@@ -13109,7 +13286,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-skybox-premium-star-ruby-66-sn35",
@@ -13153,7 +13331,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-spx-88",
@@ -13175,7 +13354,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-spx-radiance-88-sn33",
@@ -13241,7 +13421,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-topps-stadium-club-chrome-25",
@@ -13263,7 +13444,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-topps-stadium-club-chrome-25-card10560",
@@ -13285,7 +13467,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-topps-stadium-club-chrome-25-card10570",
@@ -13307,7 +13490,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-topps-stadium-club-chrome-first-day-issue-25-sn67",
@@ -13395,7 +13579,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-topps-pre-production-pp6",
@@ -13483,7 +13668,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-topps-chrome-refractor-12",
@@ -13527,7 +13713,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-topps-gallery-76",
@@ -13549,7 +13736,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-topps-gallery-player-s-private-issue-76-sn75",
@@ -13791,7 +13979,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-ultra-gold-medallion-113g",
@@ -13879,7 +14068,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-ud-ionix-r60",
@@ -13901,7 +14091,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-ud-encore-88",
@@ -13923,7 +14114,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-ud-encore-88-card11110",
@@ -13945,7 +14137,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-ud-gold-reserve-231",
@@ -13967,7 +14160,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-ud-hardcourt-59",
@@ -13989,7 +14183,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-ud-hardcourt-baseline-groves-rainbow-59-sn226",
@@ -14077,7 +14272,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-ud-hologrfx-59-card11250",
@@ -14099,7 +14295,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-ud-hologrfx-ausome-59",
@@ -14143,7 +14340,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-ud-mvp-silver-script-173-sn75",
@@ -14209,7 +14407,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-upper-deck-129-card11350",
@@ -14231,7 +14430,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-upper-deck-now-showing-ns29",
@@ -14319,7 +14519,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-ud-ovation-standing-ovation-59-sn2",
@@ -14363,7 +14564,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-ud-retro-gold-12-sn181",
@@ -14407,7 +14609,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-ud-ultimate-victory-silver-88-sn1",
@@ -14473,7 +14676,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1999-00-ud-victory-dynamite-dunks-330",
@@ -14517,7 +14721,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-ud-black-diamond-gold-90-sn482",
@@ -14561,7 +14766,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-e-x-98",
@@ -14583,7 +14789,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-e-x-essential-credentials-credentials-now-98-sn16",
@@ -14627,7 +14834,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-topps-finest-gold-refractor-wrs-f-109-sn80",
@@ -14671,7 +14879,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-fleer-authority-prominence-85-sn73",
@@ -14737,7 +14946,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-fleer-focus-draft-position-118-dp-sn67",
@@ -14781,7 +14991,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-fleer-futures-copper-177-sn230",
@@ -14825,7 +15036,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-fleer-game-time-extra-8",
@@ -14869,7 +15081,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-fleer-legacy-90",
@@ -14891,7 +15104,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-fleer-legacy-ultimate-90-sn146",
@@ -14935,7 +15149,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-fleer-mystique-28-card12560",
@@ -14957,7 +15172,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-fleer-mystique-gold-28",
@@ -15001,7 +15217,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-fleer-showcase-7",
@@ -15023,7 +15240,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-fleer-showcase-legacy-collection-7-sn37",
@@ -15067,7 +15285,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-fleer-tradition-glossy-98",
@@ -15111,7 +15330,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-fleer-hoops-hot-prospects-3",
@@ -15133,7 +15353,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-spx-90",
@@ -15155,7 +15376,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-spx-spectrum-90-sn25",
@@ -15199,7 +15421,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-topps-stadium-club-game-worn-jersey-sc-ww2",
@@ -15243,7 +15466,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-topps-chrome-89",
@@ -15265,7 +15489,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-topps-chrome-refractor-89",
@@ -15309,7 +15534,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-topps-game-jerseys-game-worn-jersey-tr7",
@@ -15463,7 +15689,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-topps-heritage-authentic-arenas-aar7",
@@ -15529,7 +15756,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-topps-stars-26",
@@ -15551,7 +15779,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-topps-stars-copper-26-sn17",
@@ -15595,7 +15824,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-ultra-52-card13310",
@@ -15617,7 +15847,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-ultra-gold-medallion-52g",
@@ -15727,7 +15958,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-upper-deck-silver-182-sn294",
@@ -15793,7 +16025,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-ud-mvp-silver-script-187",
@@ -15859,7 +16092,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-ud-reserve-90",
@@ -15881,7 +16115,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-ud-slam-59",
@@ -15903,7 +16138,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2000-01-ud-slam-extra-strength-silver-59-sn238",
@@ -15969,7 +16205,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2001-02-e-x-essential-credentials-credentials-future-68-sn20",
@@ -16013,7 +16250,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2001-02-fleer-exclusives-84-card14060",
@@ -16035,7 +16273,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2001-02-fleer-force-171",
@@ -16057,7 +16296,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2001-02-fleer-force-special-forces-171-sn24",
@@ -16101,7 +16341,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2001-02-fleer-marquee-49",
@@ -16123,7 +16364,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2001-02-fleer-maximum-169",
@@ -16145,7 +16387,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2001-02-fleer-platinum-102",
@@ -16167,7 +16410,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2001-02-fleer-platinum-anniversary-edition-102-sn89",
@@ -16211,7 +16455,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2001-02-fleer-premium-star-ruby-110-sr-sn71",
@@ -16255,7 +16500,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2001-02-fleer-shoebox-145-card14410",
@@ -16277,7 +16523,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2001-02-fleer-shoebox-ruby-145-sn67",
@@ -16321,7 +16568,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2001-02-fleer-legacy-legacy-collection-74-sn22",
@@ -16365,7 +16613,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2001-02-topps-chrome-104",
@@ -16387,7 +16636,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2001-02-topps-chrome-refractor-104",
@@ -16453,7 +16703,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2001-02-topps-heritage-team-leaders-231",
@@ -16519,7 +16770,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2001-02-topps-sprite-minyard-dm-jh",
@@ -16541,7 +16793,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2001-02-ultra-142",
@@ -16563,7 +16816,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2001-02-ultra-gold-medallion-142",
@@ -16607,7 +16861,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2001-02-udx-10th-anniversary-34-sn30",
@@ -16673,7 +16928,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2001-02-ud-flight-team-copper-42-sn77",
@@ -16739,7 +16995,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2001-02-ud-inspirations-22",
@@ -16761,7 +17018,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2001-02-ud-mvp-35",
@@ -16783,7 +17041,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2001-02-ud-mvp-35-card15010",
@@ -16805,7 +17064,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2002-03-topps-finest-53",
@@ -16827,7 +17087,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2002-03-topps-finest-refractor-53-sn118",
@@ -16915,7 +17176,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2002-03-flair-legacy-collection-11-sn21",
@@ -16959,7 +17221,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2002-03-fleer-authentix-balcony-93-sn233",
@@ -17003,7 +17266,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2002-03-fleer-box-score-first-edition-53-sn97",
@@ -17047,7 +17311,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2002-03-fleer-hot-shots-hot-hands-give-and-go-106",
@@ -17135,7 +17400,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2002-03-fleer-platinum-platinum-40-sn61",
@@ -17179,7 +17445,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2002-03-fleer-premium-emerald-em-110-sn242",
@@ -17245,7 +17512,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2002-03-fleer-showcase-legacy-collection-6-row-3-sn11",
@@ -17289,7 +17557,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2002-03-fleer-tradition-crystal-179-sn146",
@@ -17355,7 +17624,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2002-03-fleer-nba-hoops-stars-five-stars-32-sn99",
@@ -17399,7 +17669,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2002-03-sp-authentic-ud-promo-19",
@@ -17465,7 +17736,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2002-03-sp-game-used-edition-authentic-fabrics-jersey-jp-jh-j-sn86",
@@ -17531,7 +17803,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2002-03-spx-spectrum-19-sn7",
@@ -17597,7 +17870,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2002-03-topps-stadium-club-10th-anniversary-36",
@@ -17707,7 +17981,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2002-03-topps-chrome-refractor-50",
@@ -17795,7 +18070,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2002-03-topps-jersey-edition-copper-je-jh-sn6",
@@ -17861,7 +18137,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2002-03-topps-pristine-gold-refractor-die-cut-24-sn91",
@@ -17949,7 +18226,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2002-03-ultra-gold-medallion-34",
@@ -17993,7 +18271,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2002-03-ud-authentics-gold-19-sn250",
@@ -18059,7 +18338,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2002-03-ud-glass-19",
@@ -18081,7 +18361,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2002-03-ud-hardcourt-18",
@@ -18103,7 +18384,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2002-03-ud-inspirations-19",
@@ -18125,7 +18407,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2002-03-ud-inspirations-dual-jerseys-jersey-127-sn647",
@@ -18191,7 +18474,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2002-03-ud-ultimate-collection-spectrum-13-sn19",
@@ -18235,7 +18519,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2002-03-ud-championship-drive-gold-21-sn125",
@@ -18301,7 +18586,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2002-03-upper-deck-exclusives-33-sn29",
@@ -18367,7 +18653,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2002-03-ud-mvp-41",
@@ -18389,7 +18676,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2002-03-ud-mvp-classic-41",
@@ -18455,7 +18743,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2002-03-ud-sweet-shot-19",
@@ -18477,7 +18766,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-topps-bazooka-19",
@@ -18499,7 +18789,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-topps-bazooka-gold-19",
@@ -18587,7 +18878,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-ud-black-diamond-bronze-93-sn93",
@@ -18653,7 +18945,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-topps-bowman-s-best-refractor-6-sn19",
@@ -18741,7 +19034,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-e-x-essential-credentials-credentials-future-25-sn49",
@@ -18807,7 +19101,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-topps-finest-99-card18310",
@@ -18829,7 +19124,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-topps-finest-refractor-99-sn120",
@@ -18917,7 +19213,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-flair-row-1-5-sn24",
@@ -18961,7 +19258,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-flair-final-edition-flair-collection-row-1-2-sn73",
@@ -19005,7 +19303,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-fleer-authentix-balcony-46-sn133",
@@ -19071,7 +19370,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-fleer-focus-105-card18660",
@@ -19093,7 +19393,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-fleer-focus-105-card18670",
@@ -19115,7 +19416,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-fleer-focus-century-edition-105-sn97",
@@ -19269,7 +19571,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-fleer-patchworks-ruby-60-sn3",
@@ -19313,7 +19616,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-fleer-platinum-platinum-52-sn27",
@@ -19357,7 +19661,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-fleer-showcase-legacy-collection-74-sn88",
@@ -19401,7 +19706,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-fleer-tradition-crystal-163-sn82",
@@ -19445,7 +19751,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-sp-game-used-edition-gold-63-sn100",
@@ -19511,7 +19818,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-spx-62-card19010",
@@ -19533,7 +19841,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-spx-spectrum-62-sn5",
@@ -19599,7 +19908,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-topps-chrome-refractor-59",
@@ -19665,7 +19975,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-topps-collection-edition-59",
@@ -19690,7 +20001,7 @@
     "isRookie": false
   },
   {
-    "id": "2003-04-topps-black-59-sn125",
+    "id": "2003-04-topps-black-59-sn152",
     "player": "Juwan Howard",
     "season": "2003-04",
     "team": "Denver Nuggets",
@@ -19699,7 +20010,7 @@
     "theme": "Base Set",
     "variant": "Black",
     "cardNumber": "59",
-    "serialNumber": "125",
+    "serialNumber": "152",
     "printRun": 500,
     "gradingCompany": null,
     "grade": null,
@@ -19753,7 +20064,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-topps-contemporary-collection-84",
@@ -19775,7 +20087,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-topps-contemporary-collection-red-84-sn18",
@@ -19841,7 +20154,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": true,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-topps-jersey-edition-copper-je-jh-sn6",
@@ -19907,7 +20221,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-topps-pristine-refractor-63-sn43",
@@ -19995,7 +20310,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-topps-rookie-matrix-mini-105",
@@ -20061,7 +20377,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-ud-glass-gold-42-sn14",
@@ -20149,7 +20466,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-ultra-gold-medallion-55",
@@ -20215,7 +20533,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-ud-standing-o-die-cut-58",
@@ -20259,7 +20578,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-ud-finite-gold-137-sn7",
@@ -20369,7 +20689,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-upper-deck-204",
@@ -20391,7 +20712,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-upper-deck-exclusives-204-sn13",
@@ -20435,7 +20757,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-ud-mvp-silver-131",
@@ -20523,7 +20846,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2003-04-ud-ultimate-collection-gold-79-sn20",
@@ -20589,7 +20913,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2004-05-topps-bazooka-96",
@@ -20611,7 +20936,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2004-05-topps-bazooka-gold-96",
@@ -20721,7 +21047,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2004-05-ud-black-diamond-red-29-sn24",
@@ -20809,7 +21136,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2004-05-e-xl-credentials-future-56-sn2",
@@ -20941,7 +21269,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2004-05-fleer-authentix-general-admission-87-sn64",
@@ -21117,7 +21446,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2004-05-fleer-tradition-blue-168",
@@ -21183,7 +21513,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2004-05-sp-authentic-limited-28-sn14",
@@ -21249,7 +21580,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": true,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2004-05-sp-game-used-edition-gold-81-sn58",
@@ -21337,7 +21669,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2004-05-topps-104",
@@ -21359,7 +21692,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2004-05-topps-black-104",
@@ -21425,7 +21759,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2004-05-topps-chrome-139",
@@ -21447,7 +21782,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2004-05-topps-chrome-refractor-139",
@@ -21557,7 +21893,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2004-05-topps-luxury-box-tier-reserved-44-sn142",
@@ -21645,7 +21982,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2004-05-topps-pristine-gold-refractor-27-sn1",
@@ -21711,7 +22049,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2004-05-topps-total-silver-8",
@@ -21755,7 +22094,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2004-05-ultra-gold-medallion-111",
@@ -21821,7 +22161,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2004-05-upper-deck-exclusives-64-sn55",
@@ -21887,7 +22228,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2004-05-upper-deck-majestic-materials-jersey-ma-jh",
@@ -21931,7 +22273,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2004-05-ud-r-class-gold-30-sn150",
@@ -21997,7 +22340,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2004-05-ud-trilogy-gold-34-sn35",
@@ -22085,7 +22429,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2005-06-topps-bazooka-gold-133",
@@ -22349,7 +22694,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2005-06-sp-game-used-edition-bronze-37-sn97",
@@ -22503,7 +22849,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2005-06-topps-hardwood-classics-jersey-hcr-jh",
@@ -22547,7 +22894,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2005-06-topps-total-199",
@@ -22569,7 +22917,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2005-06-topps-total-silver-199",
@@ -22679,7 +23028,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2005-06-ud-ultimate-collection-199-sn559",
@@ -22701,7 +23051,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2005-06-ud-ultimate-collection-blue-199-sn105",
@@ -22789,7 +23140,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2005-06-ud-hardcourt-30",
@@ -22811,7 +23163,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2005-06-ud-rookie-debut-34",
@@ -22833,7 +23186,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2005-06-ud-rookie-debut-silver-34-sn38",
@@ -22921,7 +23275,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2005-06-ud-sweet-shot-34",
@@ -22943,7 +23298,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2005-06-ud-sweet-shot-gold-34-sn17",
@@ -23009,7 +23365,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2006-07-fleer-66",
@@ -23031,7 +23388,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2006-07-ud-reflections-dual-fabric-copper-dr-hr-sn99",
@@ -23119,7 +23477,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2006-07-sp-game-used-edition-gold-33-sn72",
@@ -23295,7 +23654,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2006-07-topps-gold-111-sn476",
@@ -23471,7 +23831,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2006-07-topps-turkey-red-white-121",
@@ -23581,7 +23942,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2006-07-ultra-gold-medallion-53",
@@ -23691,7 +24053,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2006-07-ud-reserve-65",
@@ -23713,7 +24076,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2006-07-ud-reserve-gold-65",
@@ -23757,7 +24121,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2007-08-fleer-129-card34010",
@@ -23779,7 +24144,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2007-08-ud-artifacts-conference-pairings-cp-hr-sn124",
@@ -24043,7 +24409,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2007-08-ultra-gold-medallion-66",
@@ -24131,7 +24498,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2007-08-upper-deck-electric-court-10",
@@ -24285,7 +24653,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2009-10-panini-absolute-memorabilia-100",
@@ -24307,7 +24676,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2009-10-panini-absolute-memorabilia-spectrum-100-sn8",
@@ -24395,7 +24765,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2009-10-panini-season-update-gold-117-sn4",
@@ -24659,7 +25030,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2010-11-panini-absolute-memorabilia-spectrum-gold-82-sn38",
@@ -24725,7 +25097,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2010-11-panini-donruss-press-proof-171-sn18",
@@ -24879,7 +25252,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2010-11-panini-gold-standard-platinum-94-sn2",
@@ -25256,7 +25630,29 @@
     "isRookie": false
   },
   {
-    "id": "2013-14-panini-hoops-signatures-blue-113",
+    "id": "2013-14-panini-elite-back-to-the-future-prime-11-sn4",
+    "player": "Juwan Howard",
+    "season": "2013-14",
+    "team": "Washington Wizards",
+    "company": "Panini",
+    "brand": "Panini Elite",
+    "theme": "Back To The Future",
+    "variant": "Prime",
+    "cardNumber": "11",
+    "serialNumber": "4",
+    "printRun": 5,
+    "gradingCompany": null,
+    "grade": null,
+    "gradingCertNumber": null,
+    "gradingUrl": null,
+    "collection": "Juwan Howard",
+    "notes": null,
+    "isAutograph": false,
+    "isPatch": true,
+    "isRookie": false
+  },
+  {
+    "id": "2013-14-panini-hoops-signatures-blue-113-sn5",
     "player": "Juwan Howard",
     "season": "2013-14",
     "team": "Miami Heat",
@@ -25265,8 +25661,8 @@
     "theme": "Signatures",
     "variant": "Blue",
     "cardNumber": "113",
-    "serialNumber": null,
-    "printRun": null,
+    "serialNumber": "5",
+    "printRun": 10,
     "gradingCompany": null,
     "grade": null,
     "gradingCertNumber": null,
@@ -27214,6 +27610,28 @@
     "isRookie": false
   },
   {
+    "id": "2019-20-panini-impeccable-canvas-creations-silver-holo-cc-jwh-sn14",
+    "player": "Juwan Howard",
+    "season": "2019-20",
+    "team": "Washington Wizards",
+    "company": "Panini",
+    "brand": "Panini Impeccable",
+    "theme": "Canvas Creations",
+    "variant": "Silver Holo",
+    "cardNumber": "CC-JWH",
+    "serialNumber": "14",
+    "printRun": 25,
+    "gradingCompany": null,
+    "grade": null,
+    "gradingCertNumber": null,
+    "gradingUrl": null,
+    "collection": "Juwan Howard",
+    "notes": null,
+    "isAutograph": true,
+    "isPatch": false,
+    "isRookie": false
+  },
+  {
     "id": "2019-20-panini-impeccable-impeccable-stars-signatures-silver-holo-ist-jwh-sn9",
     "player": "Juwan Howard",
     "season": "2019-20",
@@ -27412,17 +27830,39 @@
     "isRookie": false
   },
   {
-    "id": "2020-21-panini-contenders-optic-contenders-autographs-orange-lca-juw-sn2",
+    "id": "2020-21-panini-contenders-optic-legendary-contenders-autographs-orange-lca-juw-sn2",
     "player": "Juwan Howard",
     "season": "2020-21",
     "team": "Miami Heat",
     "company": "Panini",
     "brand": "Panini Contenders Optic",
-    "theme": "Contenders Autographs",
+    "theme": "Legendary Contenders Autographs",
     "variant": "Orange",
     "cardNumber": "LCA-JUW",
     "serialNumber": "2",
     "printRun": 25,
+    "gradingCompany": null,
+    "grade": null,
+    "gradingCertNumber": null,
+    "gradingUrl": null,
+    "collection": "Juwan Howard",
+    "notes": null,
+    "isAutograph": true,
+    "isPatch": false,
+    "isRookie": false
+  },
+  {
+    "id": "2020-21-panini-contenders-optic-legendary-contenders-autographs-gold-vinyl-lca-juw-sn1",
+    "player": "Juwan Howard",
+    "season": "2020-21",
+    "team": "Miami Heat",
+    "company": "Panini",
+    "brand": "Panini Contenders Optic",
+    "theme": "Legendary Contenders Autographs",
+    "variant": "Gold Vinyl",
+    "cardNumber": "LCA-JUW",
+    "serialNumber": "1",
+    "printRun": 1,
     "gradingCompany": null,
     "grade": null,
     "gradingCertNumber": null,
@@ -27695,7 +28135,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2021-22-topps-finest-refractor-37",
@@ -28003,7 +28444,8 @@
     "notes": null,
     "isAutograph": true,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "2021-22-topps-finest-gold-refractor-fa-jhw-sn13",
@@ -28490,6 +28932,28 @@
     "isRookie": false
   },
   {
+    "id": "2022-23-panini-contenders-legendary-contenders-autographs-gold-lc-jwh-sn7",
+    "player": "Juwan Howard",
+    "season": "2022-23",
+    "team": "Dallas Mavericks",
+    "company": "Panini",
+    "brand": "Panini Contenders",
+    "theme": "Legendary Contenders Autographs",
+    "variant": "Gold",
+    "cardNumber": "LC-JWH",
+    "serialNumber": "7",
+    "printRun": 10,
+    "gradingCompany": null,
+    "grade": null,
+    "gradingCertNumber": null,
+    "gradingUrl": null,
+    "collection": "Juwan Howard",
+    "notes": null,
+    "isAutograph": true,
+    "isPatch": false,
+    "isRookie": false
+  },
+  {
     "id": "2022-23-panini-immaculate-collection-shadow-box-signatures-sbs-jwh-sn80",
     "player": "Juwan Howard",
     "season": "2022-23",
@@ -28633,6 +29097,28 @@
     "cardNumber": "FRF-JHO",
     "serialNumber": "5",
     "printRun": 10,
+    "gradingCompany": null,
+    "grade": null,
+    "gradingCertNumber": null,
+    "gradingUrl": null,
+    "collection": "Juwan Howard",
+    "notes": null,
+    "isAutograph": true,
+    "isPatch": false,
+    "isRookie": false
+  },
+  {
+    "id": "2022-23-panini-noir-shadow-signatures-gold-shs-jwh-sn11",
+    "player": "Juwan Howard",
+    "season": "2022-23",
+    "team": "Miami Heat",
+    "company": "Panini",
+    "brand": "Panini Noir",
+    "theme": "Shadow Signatures",
+    "variant": "Gold",
+    "cardNumber": "SHS-JWH",
+    "serialNumber": "11",
+    "printRun": 25,
     "gradingCompany": null,
     "grade": null,
     "gradingCertNumber": null,
@@ -30558,6 +31044,28 @@
     "isRookie": false
   },
   {
+    "id": "2025-26-topps-notch-signatures-black-holo-tns-jh-sn10",
+    "player": "Juwan Howard",
+    "season": "2025-26",
+    "team": "Washington Bullets",
+    "company": "Topps",
+    "brand": "Topps",
+    "theme": "Notch Signatures",
+    "variant": "Black Holo",
+    "cardNumber": "TNS-JH",
+    "serialNumber": "10",
+    "printRun": 10,
+    "gradingCompany": null,
+    "grade": null,
+    "gradingCertNumber": null,
+    "gradingUrl": null,
+    "collection": "Juwan Howard",
+    "notes": null,
+    "isAutograph": true,
+    "isPatch": false,
+    "isRookie": false
+  },
+  {
     "id": "2025-26-topps-notch-signatures-platinum-holo-tns-jh-sn1",
     "player": "Juwan Howard",
     "season": "2025-26",
@@ -30932,6 +31440,28 @@
     "isRookie": false
   },
   {
+    "id": "2025-26-topps-hoops-signs-pixel-burst-red-hs-jh-sn1",
+    "player": "Juwan Howard",
+    "season": "2025-26",
+    "team": "Washington Wizards",
+    "company": "Topps",
+    "brand": "Topps Hoops",
+    "theme": "Signs",
+    "variant": "Pixel Burst Red",
+    "cardNumber": "HS-JH",
+    "serialNumber": "1",
+    "printRun": 5,
+    "gradingCompany": null,
+    "grade": null,
+    "gradingCertNumber": null,
+    "gradingUrl": null,
+    "collection": "Juwan Howard",
+    "notes": null,
+    "isAutograph": true,
+    "isPatch": false,
+    "isRookie": false
+  },
+  {
     "id": "1994-classic-5",
     "player": "Juwan Howard",
     "season": "1994",
@@ -30951,7 +31481,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1994-classic-gold-5",
@@ -31105,7 +31636,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1994-classic-4-sports-printers-proof-5",
@@ -31655,7 +32187,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1995-assets-81",
@@ -31677,7 +32210,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1995-assets-gold-41",
@@ -31699,7 +32233,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1995-images-95-5",
@@ -31721,7 +32256,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1995-images-95-cp4-sn3826",
@@ -31743,7 +32279,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1995-classic-102",
@@ -31765,7 +32302,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1995-classic-silver-102",
@@ -31875,7 +32413,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1995-superior-pics-gold-5",
@@ -31985,7 +32524,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1995-signature-rookies-tetrad-autobilia-club-set-78",
@@ -32161,7 +32701,8 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   },
   {
     "id": "1996-assets-hot-print-15",
@@ -32205,7 +32746,7 @@
     "notes": null,
     "isAutograph": false,
     "isPatch": false,
-    "isRookie": false
+    "isRookie": false,
+    "packOdds": null
   }
 ]
-

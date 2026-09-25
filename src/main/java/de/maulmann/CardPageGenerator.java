@@ -404,6 +404,7 @@ public class CardPageGenerator {
             serialDisplay = (c.has("Serial") ? c.get("Serial") : "—") + " / " + (c.has("Print Run") ? c.get("Print Run") : "—");
         }
         data.put("serialDisplay", serialDisplay);
+        data.put("packOdds", isValid(c.get("Pack Odds")) ? c.get("Pack Odds") : (isValid(c.get("Ratio")) ? c.get("Ratio") : "—"));
 
         String grading = c.get("Grading Co.") + " " + c.get("Grade");
         data.put("grading", (grading.trim().length() > 1 && !grading.trim().equals("null null")) ? grading : "");
