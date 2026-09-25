@@ -400,18 +400,18 @@
     "brand": "Collectors Choice",
     "theme": "Signature",
     "variant": "Silver",
-    "pack_odds": "N/A",
-    "source": "Heuristic Default",
-    "confidence": "UNVERIFIED"
+    "pack_odds": "1:1 Pack",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
   },
   "1994-95|collectors choice|signature|gold": {
     "season": "1994-95",
     "brand": "Collectors Choice",
     "theme": "Signature",
     "variant": "Gold",
-    "pack_odds": "N/A",
-    "source": "Heuristic Default",
-    "confidence": "UNVERIFIED"
+    "pack_odds": "1:36 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
   },
   "1994-95|collectors choice|autographs|base": {
     "season": "1994-95",
@@ -3067,5 +3067,617 @@
     "pack_odds": "Standard Base",
     "source": "Standard Base Definition",
     "confidence": "DEFAULT"
+  },
+  "1994-95|topps finest|base set|refractor": {
+    "season": "1994-95",
+    "brand": "Topps Finest",
+    "theme": "Base Set",
+    "variant": "Refractor",
+    "pack_odds": "1:12 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1994-95|topps finest|collegiate best|refractor": {
+    "season": "1994-95",
+    "brand": "Topps Finest",
+    "theme": "Collegiate Best",
+    "variant": "Refractor",
+    "pack_odds": "1:12 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1994-95|sp|base set|die-cut": {
+    "season": "1994-95",
+    "brand": "Sp",
+    "theme": "Base Set",
+    "variant": "Die-Cut",
+    "pack_odds": "1:1 Pack",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1994-95|sp|holoviews|die-cut": {
+    "season": "1994-95",
+    "brand": "Sp",
+    "theme": "Holoviews",
+    "variant": "Die-Cut",
+    "pack_odds": "1:75 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1994-95|sp championship|base set|die-cut": {
+    "season": "1994-95",
+    "brand": "Sp Championship",
+    "theme": "Base Set",
+    "variant": "Die-Cut",
+    "pack_odds": "1:1 Pack",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1994-95|topps stadium club|base set|first day issue": {
+    "season": "1994-95",
+    "brand": "Topps Stadium Club",
+    "theme": "Base Set",
+    "variant": "First Day Issue",
+    "pack_odds": "1:24 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1994-95|topps|base set|spectra light": {
+    "season": "1994-95",
+    "brand": "Topps",
+    "theme": "Base Set",
+    "variant": "Spectra Light",
+    "pack_odds": "1:4 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|collectors choice|signature|silver": {
+    "season": "1995-96",
+    "brand": "Collectors Choice",
+    "theme": "Signature",
+    "variant": "Silver",
+    "pack_odds": "1:1 Pack",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|collectors choice|signature|gold": {
+    "season": "1995-96",
+    "brand": "Collectors Choice",
+    "theme": "Signature",
+    "variant": "Gold",
+    "pack_odds": "1:36 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|collectors choice|crash the game assists/rebounds|silver": {
+    "season": "1995-96",
+    "brand": "Collectors Choice",
+    "theme": "Crash The Game Assists/Rebounds",
+    "variant": "Silver",
+    "pack_odds": "1:5 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|collectors choice|crash the game assists/rebounds|gold": {
+    "season": "1995-96",
+    "brand": "Collectors Choice",
+    "theme": "Crash The Game Assists/Rebounds",
+    "variant": "Gold",
+    "pack_odds": "1:24 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|fleer metal|base set|silver spotlight": {
+    "season": "1995-96",
+    "brand": "Fleer Metal",
+    "theme": "Base Set",
+    "variant": "Silver Spotlight",
+    "pack_odds": "1:6 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|ultra|base set|gold medallion": {
+    "season": "1995-96",
+    "brand": "Ultra",
+    "theme": "Base Set",
+    "variant": "Gold Medallion",
+    "pack_odds": "1:1 Pack",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|ultra|all rookie team|gold medallion": {
+    "season": "1995-96",
+    "brand": "Ultra",
+    "theme": "All Rookie Team",
+    "variant": "Gold Medallion",
+    "pack_odds": "1:2 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|topps finest|base set|refractor": {
+    "season": "1995-96",
+    "brand": "Topps Finest",
+    "theme": "Base Set",
+    "variant": "Refractor",
+    "pack_odds": "1:12 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|topps finest|mystery bordered test|refractor": {
+    "season": "1995-96",
+    "brand": "Topps Finest",
+    "theme": "Mystery Bordered Test",
+    "variant": "Refractor",
+    "pack_odds": "1:12 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1995-96|topps finest|mystery borderless|refractor": {
+    "season": "1995-96",
+    "brand": "Topps Finest",
+    "theme": "Mystery Borderless",
+    "variant": "Refractor",
+    "pack_odds": "1:12 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|ultra|base set|gold medallion": {
+    "season": "1996-97",
+    "brand": "Ultra",
+    "theme": "Base Set",
+    "variant": "Gold Medallion",
+    "pack_odds": "1:1 Pack",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|ultra|base set|platinum medallion": {
+    "season": "1996-97",
+    "brand": "Ultra",
+    "theme": "Base Set",
+    "variant": "Platinum Medallion",
+    "pack_odds": "1:180 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|ultra|on the block|gold medallion": {
+    "season": "1996-97",
+    "brand": "Ultra",
+    "theme": "On The Block",
+    "variant": "Gold Medallion",
+    "pack_odds": "1:1 Pack",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|ultra|on the block|platinum medallion": {
+    "season": "1996-97",
+    "brand": "Ultra",
+    "theme": "On The Block",
+    "variant": "Platinum Medallion",
+    "pack_odds": "1:180 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps bowman's best|base set|refractor": {
+    "season": "1996-97",
+    "brand": "Topps Bowman'S Best",
+    "theme": "Base Set",
+    "variant": "Refractor",
+    "pack_odds": "1:12 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps bowman's best|base set|atomic refractor": {
+    "season": "1996-97",
+    "brand": "Topps Bowman'S Best",
+    "theme": "Base Set",
+    "variant": "Atomic Refractor",
+    "pack_odds": "1:24 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps bowman's best|best cuts|refractor": {
+    "season": "1996-97",
+    "brand": "Topps Bowman'S Best",
+    "theme": "Best Cuts",
+    "variant": "Refractor",
+    "pack_odds": "1:24 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps bowman's best|best cuts|atomic refractor": {
+    "season": "1996-97",
+    "brand": "Topps Bowman'S Best",
+    "theme": "Best Cuts",
+    "variant": "Atomic Refractor",
+    "pack_odds": "1:48 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps bowman's best|honor roll|refractor": {
+    "season": "1996-97",
+    "brand": "Topps Bowman'S Best",
+    "theme": "Honor Roll",
+    "variant": "Refractor",
+    "pack_odds": "1:24 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps bowman's best|honor roll|atomic refractor": {
+    "season": "1996-97",
+    "brand": "Topps Bowman'S Best",
+    "theme": "Honor Roll",
+    "variant": "Atomic Refractor",
+    "pack_odds": "1:48 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps bowman's best|retro|refractor": {
+    "season": "1996-97",
+    "brand": "Topps Bowman'S Best",
+    "theme": "Retro",
+    "variant": "Refractor",
+    "pack_odds": "1:24 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps bowman's best|retro|atomic refractor": {
+    "season": "1996-97",
+    "brand": "Topps Bowman'S Best",
+    "theme": "Retro",
+    "variant": "Atomic Refractor",
+    "pack_odds": "1:48 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps finest|foundations|refractor": {
+    "season": "1996-97",
+    "brand": "Topps Finest",
+    "theme": "Foundations",
+    "variant": "Refractor",
+    "pack_odds": "1:12 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps finest|gladiators|refractor": {
+    "season": "1996-97",
+    "brand": "Topps Finest",
+    "theme": "Gladiators",
+    "variant": "Refractor",
+    "pack_odds": "1:12 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps finest|sterling|refractor": {
+    "season": "1996-97",
+    "brand": "Topps Finest",
+    "theme": "Sterling",
+    "variant": "Refractor",
+    "pack_odds": "1:12 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps stadium club|class acts|refractor": {
+    "season": "1996-97",
+    "brand": "Topps Stadium Club",
+    "theme": "Class Acts",
+    "variant": "Refractor",
+    "pack_odds": "1:24 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps stadium club|class acts|atomic refractor": {
+    "season": "1996-97",
+    "brand": "Topps Stadium Club",
+    "theme": "Class Acts",
+    "variant": "Atomic Refractor",
+    "pack_odds": "1:72 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps|mystery finest bordered|refractor": {
+    "season": "1996-97",
+    "brand": "Topps",
+    "theme": "Mystery Finest Bordered",
+    "variant": "Refractor",
+    "pack_odds": "1:12 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|topps|mystery finest borderless|refractor": {
+    "season": "1996-97",
+    "brand": "Topps",
+    "theme": "Mystery Finest Borderless",
+    "variant": "Refractor",
+    "pack_odds": "1:12 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|spx|base set|gold": {
+    "season": "1996-97",
+    "brand": "Spx",
+    "theme": "Base Set",
+    "variant": "Gold",
+    "pack_odds": "1:9 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1996-97|flair|hot shots|die-cut": {
+    "season": "1996-97",
+    "brand": "Flair",
+    "theme": "Hot Shots",
+    "variant": "Die-Cut",
+    "pack_odds": "1:24 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|topps bowman's best|base set|refractor": {
+    "season": "1997-98",
+    "brand": "Topps Bowman'S Best",
+    "theme": "Base Set",
+    "variant": "Refractor",
+    "pack_odds": "1:12 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|topps bowman's best|base set|atomic refractor": {
+    "season": "1997-98",
+    "brand": "Topps Bowman'S Best",
+    "theme": "Base Set",
+    "variant": "Atomic Refractor",
+    "pack_odds": "1:24 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|topps finest|catalyst|refractor": {
+    "season": "1997-98",
+    "brand": "Topps Finest",
+    "theme": "Catalyst",
+    "variant": "Refractor",
+    "pack_odds": "1:12 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|topps finest|catalyst|embossed refractor": {
+    "season": "1997-98",
+    "brand": "Topps Finest",
+    "theme": "Catalyst",
+    "variant": "Embossed Refractor",
+    "pack_odds": "1:24 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|topps finest|force|refractor": {
+    "season": "1997-98",
+    "brand": "Topps Finest",
+    "theme": "Force",
+    "variant": "Refractor",
+    "pack_odds": "1:12 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|ultra|base set|gold medallion": {
+    "season": "1997-98",
+    "brand": "Ultra",
+    "theme": "Base Set",
+    "variant": "Gold Medallion",
+    "pack_odds": "1:1 Pack",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|ultra|base set|platinum medallion": {
+    "season": "1997-98",
+    "brand": "Ultra",
+    "theme": "Base Set",
+    "variant": "Platinum Medallion",
+    "pack_odds": "1:180 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|spx|base set|silver": {
+    "season": "1997-98",
+    "brand": "Spx",
+    "theme": "Base Set",
+    "variant": "Silver",
+    "pack_odds": "1:9 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|spx|base set|gold": {
+    "season": "1997-98",
+    "brand": "Spx",
+    "theme": "Base Set",
+    "variant": "Gold",
+    "pack_odds": "1:18 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1998-99|ultra|base set|gold medallion": {
+    "season": "1998-99",
+    "brand": "Ultra",
+    "theme": "Base Set",
+    "variant": "Gold Medallion",
+    "pack_odds": "1:1 Pack",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1998-99|ultra|base set|platinum medallion": {
+    "season": "1998-99",
+    "brand": "Ultra",
+    "theme": "Base Set",
+    "variant": "Platinum Medallion",
+    "pack_odds": "1:180 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1998-99|topps finest|base set|refractor": {
+    "season": "1998-99",
+    "brand": "Topps Finest",
+    "theme": "Base Set",
+    "variant": "Refractor",
+    "pack_odds": "1:12 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1998-99|topps finest|no protector|refractor": {
+    "season": "1998-99",
+    "brand": "Topps Finest",
+    "theme": "No Protector",
+    "variant": "Refractor",
+    "pack_odds": "1:12 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1998-99|topps bowman's best|base set|refractor": {
+    "season": "1998-99",
+    "brand": "Topps Bowman'S Best",
+    "theme": "Base Set",
+    "variant": "Refractor",
+    "pack_odds": "1:12 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1998-99|topps bowman's best|base set|atomic refractor": {
+    "season": "1998-99",
+    "brand": "Topps Bowman'S Best",
+    "theme": "Base Set",
+    "variant": "Atomic Refractor",
+    "pack_odds": "1:24 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1998-99|topps bowman's best|mirror image|refractor": {
+    "season": "1998-99",
+    "brand": "Topps Bowman'S Best",
+    "theme": "Mirror Image",
+    "variant": "Refractor",
+    "pack_odds": "1:24 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1998-99|topps bowman's best|mirror image|atomic refractor": {
+    "season": "1998-99",
+    "brand": "Topps Bowman'S Best",
+    "theme": "Mirror Image",
+    "variant": "Atomic Refractor",
+    "pack_odds": "1:48 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1998-99|topps stadium club chrome|base set|refractor": {
+    "season": "1998-99",
+    "brand": "Topps Stadium Club Chrome",
+    "theme": "Base Set",
+    "variant": "Refractor",
+    "pack_odds": "1:12 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1999-00|topps finest|base set|refractor": {
+    "season": "1999-00",
+    "brand": "Topps Finest",
+    "theme": "Base Set",
+    "variant": "Refractor",
+    "pack_odds": "1:12 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1999-00|topps finest|base set|gold refractor": {
+    "season": "1999-00",
+    "brand": "Topps Finest",
+    "theme": "Base Set",
+    "variant": "Gold Refractor",
+    "pack_odds": "1:24 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1999-00|topps finest|double feature|left refractor": {
+    "season": "1999-00",
+    "brand": "Topps Finest",
+    "theme": "Double Feature",
+    "variant": "Left Refractor",
+    "pack_odds": "1:24 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1999-00|topps finest|double feature|right refractor": {
+    "season": "1999-00",
+    "brand": "Topps Finest",
+    "theme": "Double Feature",
+    "variant": "Right Refractor",
+    "pack_odds": "1:24 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1999-00|topps finest|double feature|double refractor": {
+    "season": "1999-00",
+    "brand": "Topps Finest",
+    "theme": "Double Feature",
+    "variant": "Double Refractor",
+    "pack_odds": "1:48 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1999-00|topps chrome|base set|refractor": {
+    "season": "1999-00",
+    "brand": "Topps Chrome",
+    "theme": "Base Set",
+    "variant": "Refractor",
+    "pack_odds": "1:12 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1999-00|topps bowman's best|base set|refractor": {
+    "season": "1999-00",
+    "brand": "Topps Bowman'S Best",
+    "theme": "Base Set",
+    "variant": "Refractor",
+    "pack_odds": "1:12 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1999-00|topps bowman's best|base set|atomic refractor": {
+    "season": "1999-00",
+    "brand": "Topps Bowman'S Best",
+    "theme": "Base Set",
+    "variant": "Atomic Refractor",
+    "pack_odds": "1:24 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1999-00|ultra|base set|gold medallion": {
+    "season": "1999-00",
+    "brand": "Ultra",
+    "theme": "Base Set",
+    "variant": "Gold Medallion",
+    "pack_odds": "1:1 Pack",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1999-00|ultra|base set|platinum medallion": {
+    "season": "1999-00",
+    "brand": "Ultra",
+    "theme": "Base Set",
+    "variant": "Platinum Medallion",
+    "pack_odds": "1:180 Packs",
+    "source": "Historical Pack Odds Catalog",
+    "confidence": "VERIFIED"
+  },
+  "1997-98|skybox premium|base set|ruby": {
+    "season": "1997-98",
+    "brand": "SkyBox Premium",
+    "theme": "Base Set",
+    "variant": "Ruby",
+    "pack_odds": "1:240 Packs",
+    "source": "Alias Mapping",
+    "confidence": "AUTOMATED"
+  },
+  "1998-99|fleer brilliants|base set|24 k gold": {
+    "season": "1998-99",
+    "brand": "Fleer Brilliants",
+    "theme": "Base Set",
+    "variant": "24 K Gold",
+    "pack_odds": "1:24 Packs",
+    "source": "Alias Mapping",
+    "confidence": "AUTOMATED"
   }
 }
