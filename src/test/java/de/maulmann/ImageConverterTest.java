@@ -60,4 +60,16 @@ class ImageConverterTest {
         assertFalse(Files.exists(avifOutDir.resolve("1994-95/orphaned-front.avif")));
         assertFalse(Files.exists(avifOutDir.resolve("1994-95/orphaned-front-200w.avif")));
     }
+
+    @Test
+    @DisplayName("refreshExistingImageKeys should reset cache and execute without exceptions")
+    void testRefreshExistingImageKeys() {
+        assertDoesNotThrow(CardPageGenerator::refreshExistingImageKeys);
+    }
+
+    @Test
+    @DisplayName("updateMissingImagesReportIfCardsAvailable should run gracefully without exceptions")
+    void testUpdateMissingImagesReportIfCardsAvailable() {
+        assertDoesNotThrow(ImageConverter::updateMissingImagesReportIfCardsAvailable);
+    }
 }

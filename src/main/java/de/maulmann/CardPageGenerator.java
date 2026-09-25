@@ -98,6 +98,14 @@ public class CardPageGenerator {
 
     private static volatile Set<String> EXISTING_IMAGE_KEYS = null;
 
+    public static void refreshExistingImageKeys() {
+        synchronized (CardPageGenerator.class) {
+            EXISTING_IMAGE_KEYS = null;
+            DISK_IMAGE_CACHE.clear();
+            ORIENTATION_CACHE.clear();
+        }
+    }
+
     private static Set<String> getExistingImageKeys() {
         if (EXISTING_IMAGE_KEYS == null) {
             synchronized (CardPageGenerator.class) {
@@ -765,7 +773,7 @@ public class CardPageGenerator {
         int totalFrontMissing = 0;
         int totalBackMissing = 0;
 
-        String[] extensions = {".avif"};
+        String[] extensions = {".avif", ".jpg", ".jpeg", ".png", ".webp"};
 
         for (de.maulmann.CardData c : cards) {
             String seasonFolder = c.seasonFolder != null ? c.seasonFolder : "Unknown_Season";
@@ -836,7 +844,8 @@ public class CardPageGenerator {
         Set<String> keys = getExistingImageKeys();
         String prefix = seasonFolder.toLowerCase() + "/" + imageBaseName.toLowerCase() + "-" + side.toLowerCase();
         for (String ext : extensions) {
-            if (keys.contains(prefix + ext.toLowerCase())) {
+            String target = prefix + ext.toLowerCase();
+            if (keys.contains(target) || keys.contains(prefix + "-200w" + ext.toLowerCase())) {
                 return true;
             }
         }

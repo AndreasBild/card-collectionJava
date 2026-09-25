@@ -38,6 +38,16 @@ public class ImageConverter {
         Path sourceDir = Paths.get("images");
         Path avifOutDir = Paths.get("output/images");
 
+        boolean skipReport = false;
+        if (args != null) {
+            for (String arg : args) {
+                if ("--no-report".equalsIgnoreCase(arg)) {
+                    skipReport = true;
+                    break;
+                }
+            }
+        }
+
         long startTime = System.currentTimeMillis();
 
         try {
@@ -50,9 +60,33 @@ public class ImageConverter {
             log.info("Failed to convert:           {}", failureCount.get());
             log.info("Total execution time:        {} ms", endTime - startTime);
 
+            if (!skipReport) {
+                updateMissingImagesReportIfCardsAvailable();
+            }
+
         } catch (Exception e) {
             log.error("Critical error during processing: {}", e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    public static void updateMissingImagesReportIfCardsAvailable() {
+        try {
+            Path cardsPath = Paths.get("content/json/cards.json");
+            if (Files.exists(cardsPath)) {
+                List<CardJson> cards = CardDataLoader.loadCardsFromJson(cardsPath.toString());
+                if (cards != null && !cards.isEmpty()) {
+                    List<CardData> cardDataList = new ArrayList<>(cards.size());
+                    for (CardJson c : cards) {
+                        cardDataList.add(CardPageGenerator.computeCardData(c));
+                    }
+                    CardPageGenerator.refreshExistingImageKeys();
+                    CardPageGenerator.generateMissingImagesReport(cardDataList);
+                    log.info("Updated MissingImages.txt following image conversion.");
+                }
+            }
+        } catch (Exception e) {
+            log.warn("Could not update MissingImages.txt after image conversion: {}", e.getMessage());
         }
     }
 
