@@ -55,6 +55,7 @@ class CardMetadataRendererTest {
                 .printRun(25)
                 .isAutograph(true)
                 .isPatch(false)
+                .packOdds("1:24 Packs")
                 .build();
 
         CardData cardData = new CardData(c, "chrome-ref-100");
@@ -65,6 +66,7 @@ class CardMetadataRendererTest {
         assertTrue(aiSnapshot.contains("Refractor parallel variation"));
         assertTrue(aiSnapshot.contains("printrun of 5/25"));
         assertTrue(aiSnapshot.contains("official certified autograph"));
+        assertTrue(aiSnapshot.contains("Factory pack insertion odds: 1:24 Packs."));
     }
 
     @Test

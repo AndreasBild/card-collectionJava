@@ -580,6 +580,7 @@ public class SitemapGenerator {
             long countMem = 0;
             long countRookies = 0;
             long countGemMint = 0;
+            long countPackOdds = 0;
             Set<String> seasons = new HashSet<>();
 
             for (CardData c : inMemoryCards) {
@@ -618,6 +619,9 @@ public class SitemapGenerator {
                 if ("Yes".equalsIgnoreCase(c.get("Rookie"))) {
                     countRookies++;
                 }
+                if (c.has("Pack Odds")) {
+                    countPackOdds++;
+                }
 
                 String grade = c.get("Grade");
                 String gradingCo = c.get("Grading Co.");
@@ -637,7 +641,11 @@ public class SitemapGenerator {
             sb.append("- Certified Autographs: ").append(countAutos).append(" cards\n");
             sb.append("- Game-Used Patches & Memorabilia: ").append(countMem).append(" cards\n");
             sb.append("- Official Rookie Cards (RC): ").append(countRookies).append(" cards\n");
-            sb.append("- Gem Mint Graded (PSA 10 / BGS 9.5): ").append(countGemMint).append(" cards\n\n");
+            sb.append("- Gem Mint Graded (PSA 10 / BGS 9.5): ").append(countGemMint).append(" cards\n");
+            if (countPackOdds > 0) {
+                sb.append("- Documented Pack Odds / Tough Pulls: ").append(countPackOdds).append(" cards with factory insertion ratios\n");
+            }
+            sb.append("\n");
         } else {
             sb.append("## Collection Statistics\n");
             sb.append("- Total Unique Cards: 1,440+ cards\n");
@@ -738,6 +746,7 @@ public class SitemapGenerator {
                 if (!variant.isEmpty() && !variant.equalsIgnoreCase("Base")) specs.add("Variant: " + variant);
                 if (!number.isEmpty()) specs.add("Card #: " + number);
                 if (!printRun.isEmpty() && !printRun.equals("-")) specs.add("Serial: " + printRun);
+                if (c.has("Pack Odds")) specs.add("Pack Odds: " + c.get("Pack Odds"));
                 if (!grading.isEmpty() && !grading.equals("-")) specs.add("Grading: " + grading);
 
                 if (c.estimatedValue != null && c.estimatedValue > 0) {
@@ -1069,6 +1078,8 @@ public class SitemapGenerator {
         robots.append("User-agent: Meta-ExternalAgent\nAllow: /\n\n");
         robots.append("User-agent: Amazonbot\nAllow: /\n\n");
         robots.append("User-agent: ByteDance\nAllow: /\n\n");
+        robots.append("User-agent: OAI-SearchBot\nAllow: /\n\n");
+        robots.append("User-agent: CCBot\nAllow: /\n\n");
 
         robots.append("Sitemap: ").append(BASE_URL).append("/sitemap.xml\n");
         robots.append("Sitemap: ").append(BASE_URL).append("/llms.txt\n");

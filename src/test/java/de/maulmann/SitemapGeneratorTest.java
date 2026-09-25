@@ -100,6 +100,14 @@ class SitemapGeneratorTest {
         String cardsContent = Files.readString(sitemapCardsFile);
         assertTrue(cardsContent.contains("<priority>0.5</priority>"), "Cards sitemap must have priority 0.5");
         assertTrue(cardsContent.contains("base-card-2.html"), "Cards sitemap must contain base card");
+
+        // Check robots.txt for AI search crawlers
+        Path robotsFile = outputDir.resolve("robots.txt");
+        assertTrue(Files.exists(robotsFile), "robots.txt must exist");
+        String robotsContent = Files.readString(robotsFile);
+        assertTrue(robotsContent.contains("User-agent: OAI-SearchBot"), "robots.txt must allow OAI-SearchBot for ChatGPT Search");
+        assertTrue(robotsContent.contains("User-agent: CCBot"), "robots.txt must allow CCBot for Common Crawl");
+        assertTrue(robotsContent.contains("User-agent: PerplexityBot"), "robots.txt must allow PerplexityBot");
     }
 
     @Test
@@ -138,6 +146,7 @@ class SitemapGeneratorTest {
                 .cardNumber("220")
                 .serialNumber("5/10")
                 .printRun(10)
+                .packOdds("1:24 Packs")
                 .isAutograph(false)
                 .isPatch(false)
                 .isRookie(true)
@@ -161,6 +170,7 @@ class SitemapGeneratorTest {
         assertTrue(content.contains("Game-Used Patches & Memorabilia: 1 cards"), "Must count patches");
         assertTrue(content.contains("Official Rookie Cards (RC): 1 cards"), "Must count rookies");
         assertTrue(content.contains("Gem Mint Graded (PSA 10 / BGS 9.5): 2 cards"), "Must count gem mint graded cards");
+        assertTrue(content.contains("Documented Pack Odds / Tough Pulls: 1 cards with factory insertion ratios"), "Must count cards with pack odds");
         assertTrue(content.contains("https://www.maulmann.de/binder.html"), "Must contain binder link");
         assertTrue(content.contains("https://www.maulmann.de/rainbows.html"), "Must contain rainbows link");
     }

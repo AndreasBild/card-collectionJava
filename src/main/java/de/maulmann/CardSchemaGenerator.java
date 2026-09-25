@@ -117,7 +117,11 @@ public class CardSchemaGenerator {
             String text = isValid(printRunVal) ?
                     "This card is serially numbered " + serialVal + " out of a total print run of " + printRunVal + "." :
                     "This card is serially numbered " + serialVal + ", making it a strictly limited edition collectible.";
-            items.add(new FaqItem("How rare is this specific card?", text));
+        }
+
+        if (c.has("Pack Odds")) {
+            items.add(new FaqItem("What are the pack insertion odds for this card?",
+                    "This card features an official factory pack insertion ratio of " + c.get("Pack Odds") + ", making it a rare and coveted find from original packs."));
         }
 
         if (c.has("Rookie")) {
@@ -211,6 +215,9 @@ public class CardSchemaGenerator {
         sb.append("      \"url\": \"").append(cardUrl).append("\",\n");
         sb.append("      \"name\": \"").append(escapeJson(h1Title)).append("\",\n");
         sb.append("      \"description\": \"").append(escapeJson(desc)).append("\",\n");
+        if (c.lastSoldDate != null && !c.lastSoldDate.isBlank()) {
+            sb.append("      \"dateModified\": \"").append(escapeJson(c.lastSoldDate)).append("\",\n");
+        }
         sb.append("      \"primaryImageOfPage\": {\n");
         sb.append("        \"@type\": \"ImageObject\",\n");
         sb.append("        \"@id\": \"").append(cardUrl).append("#primaryimage\",\n");
@@ -415,6 +422,9 @@ public class CardSchemaGenerator {
             additionalProperties.add("{\"@type\": \"PropertyValue\", \"name\": \"Serial / Print Run\", \"value\": \"" + escapeJson(c.get("Serial/Print Run")) + "\"}");
         } else if (c.has("Serial")) {
             additionalProperties.add("{\"@type\": \"PropertyValue\", \"name\": \"Serial Number\", \"value\": \"" + escapeJson(c.get("Serial")) + "\"}");
+        }
+        if (c.has("Pack Odds")) {
+            additionalProperties.add("{\"@type\": \"PropertyValue\", \"name\": \"Pack Insertion Odds\", \"value\": \"" + escapeJson(c.get("Pack Odds")) + "\"}");
         }
         if (c.has("Grade")) {
             additionalProperties.add("{\"@type\": \"PropertyValue\", \"name\": \"Grade\", \"value\": \"" + escapeJson(c.get("Grade")) + "\"}");
