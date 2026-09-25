@@ -125,24 +125,24 @@ ${topNavHtml?no_esc}
                 <figure>
                     <picture>
                     <source type="image/avif"
-                            srcset="images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-200w.avif 200w,
-                                    images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-400w.avif 400w,
-                                    images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-600w.avif 600w,
-                                    images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-900w.avif 900w,
-                                    images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front.avif 1200w"
+                            srcset="images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Legendary-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-200w.avif 200w,
+                                    images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Legendary-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-400w.avif 400w,
+                                    images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Legendary-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-600w.avif 600w,
+                                    images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Legendary-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-900w.avif 900w,
+                                    images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Legendary-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front.avif 1200w"
                             sizes="(max-width: 768px) 190px, 260px">
-                    <img src="images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-400w.avif"
+                    <img src="images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Legendary-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-400w.avif"
                          width="260" height="358"
-                         alt="Juwan Howard 2018-19 Panini Panini Contenders Optic Contenders Autographs Gold Vinyl LC JWH"
+                         alt="Juwan Howard 2018-19 Panini Panini Contenders Optic Legendary Contenders Autographs Gold Vinyl LC JWH"
                          title="Juwan Howard Private Collection - 2018-19 Contenders Optic Gold Vinyl 1/1"
                          loading="lazy" decoding="async">
                 </picture>
-                    <figcaption>Juwan Howard 2018-19 Panini Panini Contenders Optic Contenders Autographs Gold Vinyl LC JWH</figcaption>
+                    <figcaption>Juwan Howard 2018-19 Panini Panini Contenders Optic Legendary Contenders Autographs Gold Vinyl LC JWH</figcaption>
                 </figure>
                 <div class="hover-overlay">
-                    <a href="cards/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-e49f9113.html"
+                    <a href="cards/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Legendary-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-6e84df93.html"
                        class="view-button"
-                       title="View details for Juwan Howard 2018-19 Panini Panini Contenders Optic Contenders Autographs Gold Vinyl LC JWH">View
+                       title="View details for Juwan Howard 2018-19 Panini Panini Contenders Optic Legendary Contenders Autographs Gold Vinyl LC JWH">View
                         Details</a>
                 </div>
             </div>
@@ -473,24 +473,24 @@ ${topNavHtml?no_esc}
                 <figure>
                     <picture>
                     <source type="image/avif"
-                            srcset="images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-200w.avif 200w,
-                                    images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-400w.avif 400w,
-                                    images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-600w.avif 600w,
-                                    images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-900w.avif 900w,
-                                    images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front.avif 1200w"
+                            srcset="images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Legendary-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-200w.avif 200w,
+                                    images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Legendary-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-400w.avif 400w,
+                                    images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Legendary-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-600w.avif 600w,
+                                    images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Legendary-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-900w.avif 900w,
+                                    images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Legendary-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front.avif 1200w"
                             sizes="(max-width: 768px) 190px, 260px">
-                    <img src="images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-400w.avif"
+                    <img src="images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Legendary-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-400w.avif"
                          width="260" height="358"
-                         alt="Juwan Howard 2018-19 Panini Panini Contenders Optic Contenders Autographs Gold Vinyl LC JWH"
+                         alt="Juwan Howard 2018-19 Panini Panini Contenders Optic Legendary Contenders Autographs Gold Vinyl LC JWH"
                          title="Juwan Howard Private Collection - 2018-19 Contenders Optic Gold Vinyl 1/1"
                          loading="lazy" decoding="async">
                 </picture>
-                    <figcaption>Juwan Howard 2018-19 Panini Panini Contenders Optic Contenders Autographs Gold Vinyl LC JWH</figcaption>
+                    <figcaption>Juwan Howard 2018-19 Panini Panini Contenders Optic Legendary Contenders Autographs Gold Vinyl LC JWH</figcaption>
                 </figure>
                 <div class="hover-overlay">
-                    <a href="cards/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-e49f9113.html"
+                    <a href="cards/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Legendary-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-6e84df93.html"
                        class="view-button"
-                       title="View details for Juwan Howard 2018-19 Panini Panini Contenders Optic Contenders Autographs Gold Vinyl LC JWH">View
+                       title="View details for Juwan Howard 2018-19 Panini Panini Contenders Optic Legendary Contenders Autographs Gold Vinyl LC JWH">View
                         Details</a>
                 </div>
             </div>
@@ -498,24 +498,24 @@ ${topNavHtml?no_esc}
                 <figure>
                     <picture>
                     <source type="image/avif"
-                            srcset="images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-200w.avif 200w,
-                                    images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-400w.avif 400w,
-                                    images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-600w.avif 600w,
-                                    images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-900w.avif 900w,
-                                    images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front.avif 1200w"
+                            srcset="images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Legendary-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-200w.avif 200w,
+                                    images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Legendary-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-400w.avif 400w,
+                                    images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Legendary-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-600w.avif 600w,
+                                    images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Legendary-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-900w.avif 900w,
+                                    images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Legendary-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front.avif 1200w"
                             sizes="(max-width: 768px) 190px, 260px">
-                    <img src="images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-400w.avif"
+                    <img src="images/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Legendary-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-front-400w.avif"
                          width="260" height="358"
-                         alt="Juwan Howard 2018-19 Panini Panini Contenders Optic Contenders Autographs Gold Vinyl LC JWH"
+                         alt="Juwan Howard 2018-19 Panini Panini Contenders Optic Legendary Contenders Autographs Gold Vinyl LC JWH"
                          title="Juwan Howard Private Collection - 2018-19 Contenders Optic Gold Vinyl 1/1"
                          loading="lazy" decoding="async">
                 </picture>
-                    <figcaption>Juwan Howard 2018-19 Panini Panini Contenders Optic Contenders Autographs Gold Vinyl LC JWH</figcaption>
+                    <figcaption>Juwan Howard 2018-19 Panini Panini Contenders Optic Legendary Contenders Autographs Gold Vinyl LC JWH</figcaption>
                 </figure>
                 <div class="hover-overlay">
-                    <a href="cards/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-e49f9113.html"
+                    <a href="cards/2018-19/Juwan-Howard-Washington-Wizards-2018-19-Panini-Panini-Contenders-Optic-Legendary-Contenders-Autographs-Gold-Vinyl-LC-JWH-sn1-6e84df93.html"
                        class="view-button"
-                       title="View details for Juwan Howard 2018-19 Panini Panini Contenders Optic Contenders Autographs Gold Vinyl LC JWH">View
+                       title="View details for Juwan Howard 2018-19 Panini Panini Contenders Optic Legendary Contenders Autographs Gold Vinyl LC JWH">View
                         Details</a>
                 </div>
             </div>

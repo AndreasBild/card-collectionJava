@@ -87,8 +87,8 @@ public class RainbowPageGenerator {
                             )
                     ),
                     Map.of(
-                            "title", "2018-19 Panini Contenders Optic Contenders Autographs #LC-JWH Rainbow",
-                            "season", "2018-19", "company", "Panini", "brand", "Panini Contenders Optic", "theme", "Contenders Autographs", "number", "LC-JWH",
+                            "title", "2018-19 Panini Contenders Optic Legendary Contenders Autographs #LC-JWH Rainbow",
+                            "season", "2018-19", "company", "Panini", "brand", "Panini Contenders Optic", "theme", "Legendary Contenders Autographs", "number", "LC-JWH",
                             "variants", List.of(
                                     Map.of("variant", "Gold Vinyl", "serial", "1/1"),
                                     Map.of("variant", "Gold", "serial", "/10"),
