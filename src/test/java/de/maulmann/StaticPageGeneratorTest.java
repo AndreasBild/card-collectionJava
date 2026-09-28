@@ -127,6 +127,20 @@ class StaticPageGeneratorTest {
             assertTrue(content.contains("Pricing Coverage"),
                     coll + ".html should contain Pricing Coverage");
 
+            // Schema.org structured data & GEO validation
+            assertTrue(content.contains("\"@type\": \"CollectionPage\""),
+                    coll + ".html should contain CollectionPage schema");
+            assertTrue(content.contains("\"@type\": \"ItemList\""),
+                    coll + ".html should contain ItemList schema");
+            assertTrue(content.contains("\"numberOfItems\": "),
+                    coll + ".html should contain numberOfItems in ItemList");
+            assertTrue(content.contains("\"itemListElement\": ["),
+                    coll + ".html should contain itemListElement in ItemList");
+            assertTrue(content.contains("\"@type\": \"ListItem\""),
+                    coll + ".html should contain ListItem entries");
+            assertTrue(content.contains("\"publisher\":"),
+                    coll + ".html should contain publisher entity");
+
             int accordionIdx = content.indexOf("analytics-accordion");
             int tableIdx = content.indexOf("<table");
             assertTrue(accordionIdx > 0 && tableIdx > 0, "Both accordion and table should exist");

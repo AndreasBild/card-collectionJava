@@ -15,6 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -195,6 +196,43 @@ public class StaticPageGenerator {
                         collBcItems.add(Map.of("name", "Home", "link", BASE_URL + "/index.html"));
                         collBcItems.add(Map.of("name", coll, "link", BASE_URL + "/" + coll + ".html"));
 
+                        Path jsonPath = Paths.get(pathSource, "json", coll.toLowerCase() + ".json");
+                        String tableHtml = "";
+                        String summaryHtml = "";
+                        List<CardJson> cardList = Collections.emptyList();
+                        if (Files.exists(jsonPath)) {
+                            cardList = CardDataLoader.loadCardsFromJson(jsonPath.toString());
+                            tableHtml = generateHtmlTableFromJson(cardList);
+                            Map<String, Object> stats = CardStatsService.computeCollectionStats(cardList);
+                            summaryHtml = generateCollectionSummaryHtml(coll, cardList, stats);
+                        }
+
+                        StringBuilder itemListSb = new StringBuilder();
+                        itemListSb.append("{\n");
+                        itemListSb.append("        \"@type\": \"ItemList\",\n");
+                        itemListSb.append("        \"name\": \"").append(CardUtils.escapeJson(title.split("\\|")[0].trim())).append(" List\",\n");
+                        itemListSb.append("        \"numberOfItems\": ").append(cardList.size());
+                        if (!cardList.isEmpty()) {
+                            itemListSb.append(",\n        \"itemListElement\": [\n");
+                            for (int i = 0; i < cardList.size(); i++) {
+                                CardJson c = cardList.get(i);
+                                CardData cd = CardPageGenerator.computeCardData(c);
+                                String cleanPlayer = CardData.cleanPlayerName(c.player());
+                                String cardTitle = cleanPlayer + " " + (c.season() != null ? c.season() : "") + " " + (c.brand() != null ? c.brand() : "") + " " + (c.variant() != null ? c.variant() : "") + " #" + (c.cardNumber() != null ? c.cardNumber() : "");
+                                String cardUrl = BASE_URL + "/" + cd.fullRelativePath.replace("../../", "");
+                                itemListSb.append("          {\n")
+                                        .append("            \"@type\": \"ListItem\",\n")
+                                        .append("            \"position\": ").append(i + 1).append(",\n")
+                                        .append("            \"name\": \"").append(CardUtils.escapeJson(cardTitle.trim())).append("\",\n")
+                                        .append("            \"url\": \"").append(CardUtils.escapeJson(cardUrl)).append("\"\n")
+                                        .append("          }").append(i < cardList.size() - 1 ? "," : "").append("\n");
+                            }
+                            itemListSb.append("        ]\n");
+                            itemListSb.append("      }");
+                        } else {
+                            itemListSb.append("\n      }");
+                        }
+
                         String jsonLd = "<script type=\"application/ld+json\">\n" +
                                 "{\n" +
                                 "  \"@context\": \"https://schema.org\",\n" +
@@ -203,27 +241,16 @@ public class StaticPageGenerator {
                                 "    {\n" +
                                 "      \"@type\": \"CollectionPage\",\n" +
                                 "      \"@id\": \"" + BASE_URL + "/" + coll + ".html\",\n" +
-                                "      \"name\": \"" + title.split("\\|")[0].trim() + "\",\n" +
-                                "      \"description\": \"" + description + "\",\n" +
-                                "      \"mainEntity\": {\n" +
-                                "        \"@type\": \"ItemList\",\n" +
-                                "        \"name\": \"" + title.split("\\|")[0].trim() + " List\"\n" +
-                                "      }\n" +
+                                "      \"name\": \"" + CardUtils.escapeJson(title.split("\\|")[0].trim()) + "\",\n" +
+                                "      \"description\": \"" + CardUtils.escapeJson(description) + "\",\n" +
+                                "      \"url\": \"" + BASE_URL + "/" + coll + ".html\",\n" +
+                                "      \"publisher\": { \"@type\": \"Person\", \"name\": \"Mauli Maulmann\", \"url\": \"" + BASE_URL + "/\" },\n" +
+                                "      \"mainEntity\": " + itemListSb + "\n" +
                                 "    }\n" +
                                 "  ]\n" +
                                 "}\n" +
                                 "</script>";
                         data.put("jsonLd", jsonLd);
-
-                        Path jsonPath = Paths.get(pathSource, "json", coll.toLowerCase() + ".json");
-                        String tableHtml = "";
-                        String summaryHtml = "";
-                        if (Files.exists(jsonPath)) {
-                            List<CardJson> cardList = CardDataLoader.loadCardsFromJson(jsonPath.toString());
-                            tableHtml = generateHtmlTableFromJson(cardList);
-                            Map<String, Object> stats = CardStatsService.computeCollectionStats(cardList);
-                            summaryHtml = generateCollectionSummaryHtml(coll, cardList, stats);
-                        }
 
                         Path sourcePath = Paths.get(pathSource, "other", coll + ".html");
                         if (Files.exists(sourcePath)) {
@@ -243,8 +270,11 @@ public class StaticPageGenerator {
                                                 "    {\n" +
                                                 "      \"@type\": \"CollectionPage\",\n" +
                                                 "      \"@id\": \"" + BASE_URL + "/" + coll + ".html\",\n" +
-                                                "      \"name\": \"" + title.split("\\|")[0].trim() + "\",\n" +
-                                                "      \"description\": \"" + description + "\"\n" +
+                                                "      \"name\": \"" + CardUtils.escapeJson(title.split("\\|")[0].trim()) + "\",\n" +
+                                                "      \"description\": \"" + CardUtils.escapeJson(description) + "\",\n" +
+                                                "      \"url\": \"" + BASE_URL + "/" + coll + ".html\",\n" +
+                                                "      \"publisher\": { \"@type\": \"Person\", \"name\": \"Mauli Maulmann\", \"url\": \"" + BASE_URL + "/\" },\n" +
+                                                "      \"mainEntity\": " + itemListSb + "\n" +
                                                 "    },\n" +
                                                 "    " + faqJson + "\n" +
                                                 "  ]\n" +
