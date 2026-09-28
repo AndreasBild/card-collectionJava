@@ -225,11 +225,11 @@ public class CardStatsService {
 
         double avgCardVal = countPriced > 0 ? totalEstimatedVal / countPriced : 0.0;
         stats.put("avgCardValue", avgCardVal);
-        stats.put("formattedAvgCardValue", String.format(Locale.US, "$%.2f", avgCardVal));
+        stats.put("formattedAvgCardValue", String.format(Locale.US, "$%,.2f", avgCardVal));
 
         double avgGradedVal = countGradedPriced > 0 ? totalGradedVal / countGradedPriced : 0.0;
         stats.put("avgGradedValue", avgGradedVal);
-        stats.put("formattedAvgGradedValue", String.format(Locale.US, "$%.2f", avgGradedVal));
+        stats.put("formattedAvgGradedValue", String.format(Locale.US, "$%,.2f", avgGradedVal));
         stats.put("totalGradedValue", totalGradedVal);
         stats.put("formattedTotalGradedValue", String.format(Locale.US, "$%,.0f", totalGradedVal));
 
