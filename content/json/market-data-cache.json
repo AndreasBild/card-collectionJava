@@ -4930,11 +4930,21 @@
     "estimatedValue": null,
     "lastSoldPrice": null,
     "lastSoldDate": null,
-    "purchasePrice": 1.25,
-    "priceHistory": [],
+    "purchasePrice": 0.69,
+    "priceHistory": [
+      {
+        "date": "2026-03-30",
+        "price": 0.69,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
-      "purchaseDate": "1/23/2026",
-      "purchaseItemId": "308199940"
+      "purchaseDate": "2026-03-30",
+      "purchaseItemId": "327064839187",
+      "ebaySeller": "tdrayzone",
+      "ebayTitle": "Juwan Howard 1 Of 10,000 Super Acrlium - Michigan",
+      "ebayShipping": 1.32
     }
   },
   "1996-97-collectors-choice-you-crash-the-game-scoring-2-redemption-silver-r29": {
@@ -16151,14 +16161,22 @@
     }
   },
   "2024-25-leaf-metal-helloween-exclusives-pre-production-proof-hi-jh2-sn1": {
-    "purchasePrice": 43.0,
+    "purchasePrice": 11.0,
     "metadata": {
-      "purchaseItemId": "365226081917",
-      "ebayTitle": "2024 Leaf Halloween Exclusive Juwan Howard Printing Plate 1/1 Set",
-      "purchaseDate": "Dec 05, 2024 07:36 PM",
-      "ebayShipping": "1",
-      "ebaySeller": "43.00"
-    }
+      "purchaseItemId": "365462650227",
+      "ebayTitle": "2024 Leaf Halloween Juwan Howard Candy Corn Super Prismatic Gold Proof 1/1",
+      "purchaseDate": "2025-05-16",
+      "ebayShipping": 4.99,
+      "ebaySeller": "throwbackswax"
+    },
+    "priceHistory": [
+      {
+        "date": "2025-05-16",
+        "price": 11.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ]
   },
   "2001-02-fleer-legacy-legacy-collection-74-sn22": {
     "purchasePrice": 4.99,
