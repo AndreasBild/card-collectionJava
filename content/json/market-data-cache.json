@@ -1019,9 +1019,22 @@
     "estimatedValue": null,
     "lastSoldPrice": null,
     "lastSoldDate": null,
-    "purchasePrice": null,
-    "priceHistory": [],
-    "metadata": {}
+    "purchasePrice": 5.5,
+    "priceHistory": [
+      {
+        "date": "2007-02-03",
+        "price": 5.5,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2007-02-03",
+      "purchaseItemId": "130074504997",
+      "ebaySeller": "fanartikelweltcom",
+      "ebayTitle": "97-98 Showcase Legacy Coll. Row 2 64 Juwan Howard",
+      "ebayShipping": 0.0
+    }
   },
   "2000-01-fleer-triple-crown-173": {
     "certNumber": null,
@@ -1441,7 +1454,11 @@
       }
     ],
     "metadata": {
-      "purchaseDate": "2010-04-21"
+      "purchaseDate": "2010-04-21",
+      "purchaseItemId": "320518653490",
+      "ebayTitle": "Juwan Howard 2004-05 Topps Finest X-Fractor G/U Jersey",
+      "ebaySeller": "socal_sportscards_and_memorabilia",
+      "ebayShipping": 2.5
     }
   },
   "1999-00-topps-finest-refractor-56": {
@@ -1464,7 +1481,11 @@
       "purchaseDate": "2006-05-25",
       "sportscardspro_ungraded": "2.97",
       "sportscardspro_id": "8325850",
-      "sportscardspro_url": "https://www.sportscardspro.com/game/basketball-cards-1999-finest/juwan-howard-refractor-56"
+      "sportscardspro_url": "https://www.sportscardspro.com/game/basketball-cards-1999-finest/juwan-howard-refractor-56",
+      "purchaseItemId": "5128024772",
+      "ebayTitle": "Juwan Howard 99/00 Finest * REFRACTOR * #56",
+      "ebaySeller": "grimloke",
+      "ebayShipping": 1.5
     }
   },
   "1999-00-topps-bowman-s-best-atomic-refractor-71-sn98": {
@@ -1504,7 +1525,11 @@
       }
     ],
     "metadata": {
-      "purchaseDate": "2009-01-14"
+      "purchaseDate": "2009-01-14",
+      "purchaseItemId": "390023679934",
+      "ebayTitle": "JUWAN HOWARD 1997/98 UPPER DECK UD3 SEASON TICKET AUTO",
+      "ebaySeller": "j-man373",
+      "ebayShipping": 2.5
     }
   },
   "1996-97-ultra-platinum-medallion-p121": {
@@ -1534,9 +1559,22 @@
     "estimatedValue": null,
     "lastSoldPrice": null,
     "lastSoldDate": null,
-    "purchasePrice": null,
-    "priceHistory": [],
-    "metadata": {}
+    "purchasePrice": 6.75,
+    "priceHistory": [
+      {
+        "date": "2007-02-03",
+        "price": 6.75,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2007-02-03",
+      "purchaseItemId": "130074505345",
+      "ebaySeller": "fanartikelweltcom",
+      "ebayTitle": "97-98 Showcase Legacy Coll. Row 3 64 Juwan Howard",
+      "ebayShipping": 0.0
+    }
   },
   "1997-98-topps-finest-catalyst-embossed-refractor-158-c8-sn45": {
     "certNumber": null,
@@ -4643,7 +4681,11 @@
       }
     ],
     "metadata": {
-      "purchaseDate": "2006-07-15"
+      "purchaseDate": "2006-07-15",
+      "purchaseItemId": "190006631532",
+      "ebayTitle": "95 CLASSIC IMAGES CLASSIC PERFORMANCES JUWAN HOWARD",
+      "ebaySeller": "2cardz",
+      "ebayShipping": 2.0
     }
   },
   "2005-06-ud-reflections-purple-37": {
@@ -7501,11 +7543,23 @@
     "estimatedValue": null,
     "lastSoldPrice": null,
     "lastSoldDate": null,
-    "purchasePrice": null,
-    "priceHistory": [],
+    "purchasePrice": 30.0,
+    "priceHistory": [
+      {
+        "date": "2007-05-01",
+        "price": 30.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
     "metadata": {
       "psaItemDescription": "FINEST MYSTERY",
-      "psaGradeRaw": "NM-MT 8"
+      "psaGradeRaw": "NM-MT 8",
+      "purchaseDate": "2007-05-01",
+      "purchaseItemId": "140111094792",
+      "ebaySeller": "kanekutter",
+      "ebayTitle": "1995 FINEST JUWAN HOWARD ORANGE BORDERED REFRACTOR",
+      "ebayShipping": 0.0
     }
   },
   "2002-03-sp-authentic-ud-promo-19": {
@@ -7651,7 +7705,11 @@
       }
     ],
     "metadata": {
-      "purchaseDate": "2013-07-02"
+      "purchaseDate": "2013-07-02",
+      "purchaseItemId": "221246239880",
+      "ebayTitle": "Topps Total Juwan Howard Printing Plate",
+      "ebaySeller": "danny8onzalez",
+      "ebayShipping": 3.0
     }
   },
   "2006-07-topps-triple-threats-relics-combos-sapphire-ttrc-55-sn2": {
@@ -7847,7 +7905,7 @@
     "estimatedValue": null,
     "lastSoldPrice": null,
     "lastSoldDate": null,
-    "purchasePrice": 2.99,
+    "purchasePrice": 0.99,
     "priceHistory": [
       {
         "date": "2006-07-14",
@@ -7857,7 +7915,11 @@
       }
     ],
     "metadata": {
-      "purchaseDate": "2006-07-14"
+      "purchaseDate": "2006-07-14",
+      "purchaseItemId": "190006278977",
+      "ebayTitle": "94 4 SPORT HIGH VOLTAGE JUWAN HOWARD 0909 of 2,995",
+      "ebaySeller": "lYLDlsl4QaO@Deleted",
+      "ebayShipping": 2.0
     }
   },
   "1998-99-ud-choice-153": {
@@ -8926,7 +8988,11 @@
       }
     ],
     "metadata": {
-      "purchaseDate": "2006-05-25"
+      "purchaseDate": "2006-05-25",
+      "purchaseItemId": "2759214360",
+      "ebayTitle": "Juwan Howard 96/97 Bowman's Best BEST CUTS",
+      "ebaySeller": "grimloke",
+      "ebayShipping": 1.5
     }
   },
   "2024-25-leaf-in-the-game-used-sports-game-used-memorabilia-autograph-platinum-holo-iga-jh2-sn1": {
@@ -16641,6 +16707,1134 @@
       "ebayTitle": "08/09 EXQUISITE FLAWLESS BRANDON ROY AUTO 38/50",
       "purchaseDate": "Jun 18, 2010 06:00 PM",
       "ebaySeller": "7dixFFJgRmG@Deleted"
+    }
+  },
+  "1997-98-topps-stadium-club-co-signers-co9": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 57.0,
+    "priceHistory": [
+      {
+        "date": "2026-06-03",
+        "price": 57.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2026-06-03",
+      "purchaseItemId": "358126615232",
+      "ebaySeller": "osu_56",
+      "ebayTitle": "1997-98 Topps Stadium Club Co-Signers Juwan Howard Clyde Drexler #CO9 Auto HOF",
+      "ebayShipping": 5.48
+    }
+  },
+  "1997-98-topps-stadium-club-co-signers-co7": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 48.0,
+    "priceHistory": [
+      {
+        "date": "2011-11-20",
+        "price": 48.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2011-11-20",
+      "purchaseItemId": "390365146658",
+      "ebaySeller": "soscard",
+      "ebayTitle": "97/98 TSC CO-SIGNERS #CO7 TIM HARDAWAY / JUWAN HOWARD /BOTH AUTOGRAPH SINGATURE",
+      "ebayShipping": 0.0
+    }
+  },
+  "1996-97-topps-bowman-s-best-honor-roll-refractor-hr9": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.49,
+    "priceHistory": [
+      {
+        "date": "2005-12-30",
+        "price": 2.49,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2005-12-30",
+      "purchaseItemId": "8743886845",
+      "ebaySeller": "miglla",
+      "ebayTitle": "GRANT HILL/JUWAN HOWARD 96 Bowman's Best Honor Roll Ref",
+      "ebayShipping": 0.0
+    }
+  },
+  "1999-00-topps-finest-double-feature-right-refractor-df13": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.5,
+    "priceHistory": [
+      {
+        "date": "2010-01-24",
+        "price": 1.5,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2010-01-24",
+      "purchaseItemId": "200372343561",
+      "ebaySeller": "accardio",
+      "ebayTitle": "Juwan Howard Mitch Richmond 1999-00 Finest Double #DF13",
+      "ebayShipping": 0.0
+    }
+  },
+  "1999-00-topps-finest-double-feature-double-refractor-df13": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 6.07,
+    "priceHistory": [
+      {
+        "date": "2006-04-22",
+        "price": 6.07,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-04-22",
+      "purchaseItemId": "8797029042",
+      "ebaySeller": "mybostonmax",
+      "ebayTitle": "Topps Finest DOUBLE REFRACTOR Juwan Howard Richmond",
+      "ebayShipping": 0.0
+    }
+  },
+  "2023-24-topps-chrome-dna-dna-3": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 2.99,
+    "priceHistory": [
+      {
+        "date": "2024-09-01",
+        "price": 2.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2024-09-01",
+      "purchaseItemId": "135222430169",
+      "ebaySeller": "jooc-9899",
+      "ebayTitle": "Jett & Juwan Howard 2023-24 Topps Chrome DMA Refractor #DNA-3",
+      "ebayShipping": 0.0
+    }
+  },
+  "2002-03-ud-championship-drive-then-and-now-jersey-tn-jh": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 3.0,
+    "priceHistory": [
+      {
+        "date": "2003-02-21",
+        "price": 3.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2003-02-21",
+      "purchaseItemId": "2711225667",
+      "ebaySeller": "mushburn08",
+      "ebayTitle": "03 UD Drive Juwan Howard Dual Game Jersey",
+      "ebayShipping": 0.0
+    }
+  },
+  "2018-19-panini-national-treasures-signatures-printing-plate-magenta-sg-jwh-sn1": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 4.25,
+    "priceHistory": [
+      {
+        "date": "2021-06-06",
+        "price": 4.25,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2021-06-06",
+      "purchaseItemId": "384199312312",
+      "ebaySeller": "lan.3",
+      "ebayTitle": "2018-19 PANINI NATIONAL TREASURES SG-JHW JUWAN HOWARD MAGENTA PLATE 1/1",
+      "ebayShipping": 10.0
+    }
+  },
+  "2018-19-panini-national-treasures-hometown-heroes-printing-plate-cyan-hh-jwh-sn1": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 29.99,
+    "priceHistory": [
+      {
+        "date": "2023-01-11",
+        "price": 29.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2023-01-11",
+      "purchaseItemId": "304763009908",
+      "ebaySeller": "h-club808",
+      "ebayTitle": "2018-19 National Treasures Juwan Howard Cyan Plate 1/1",
+      "ebayShipping": 5.0
+    }
+  },
+  "2013-14-panini-immaculate-collection-team-logos-numbers-printing-plate-yellow-93-sn1": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 5.8,
+    "priceHistory": [
+      {
+        "date": "2015-09-10",
+        "price": 5.8,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2015-09-10",
+      "purchaseItemId": "361382059644",
+      "ebaySeller": "orange-sports",
+      "ebayTitle": "2014-15 National Treasures 2013-14 Immaculate JUWAN HOWARD Team Logos PLATE 1/1",
+      "ebayShipping": 5.0
+    }
+  },
+  "2016-17-panini-flawless-patch-printing-plate-magenta-p-jhw-sn1": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 7.0,
+    "priceHistory": [
+      {
+        "date": "2018-05-14",
+        "price": 7.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2018-05-14",
+      "purchaseItemId": "202309130976",
+      "ebaySeller": "jcdctc34",
+      "ebayTitle": "2017-18 National Treasures JUWAN HOWARD Magenta Print Plate #1/1 - BLAZERS STAR",
+      "ebayShipping": 3.5
+    }
+  },
+  "2018-19-panini-flawless-legendary-scripts-printing-plate-black-ls-jwh-sn1": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 10.5,
+    "priceHistory": [
+      {
+        "date": "2020-08-12",
+        "price": 10.5,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2020-08-12",
+      "purchaseItemId": "174384145324",
+      "ebaySeller": "krakencollections",
+      "ebayTitle": "2018-19 Panini Flawless Juwan Howard Black Plate 1/1 Miami Heat",
+      "ebayShipping": 4.0
+    }
+  },
+  "2018-19-panini-flawless-legendary-scripts-printing-plate-cyan-ls-jwh-sn1": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 14.95,
+    "priceHistory": [
+      {
+        "date": "2020-10-04",
+        "price": 14.95,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2020-10-04",
+      "purchaseItemId": "284029121326",
+      "ebaySeller": "sevens-cards-and-toys",
+      "ebayTitle": "2019-20 National Treasures Juwan Howard Flawless Legendary Printing Plate #1/1",
+      "ebayShipping": 9.95
+    }
+  },
+  "2018-19-panini-flawless-distinguished-autographs-printing-plate-cyan-da-jwh-sn1": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 12.55,
+    "priceHistory": [
+      {
+        "date": "2020-06-29",
+        "price": 12.55,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2020-06-29",
+      "purchaseItemId": "143636169785",
+      "ebaySeller": "hoodyscollectibles",
+      "ebayTitle": "2019-20 Panini National Treasures 18-19 Flawless Cyan Plate Juwan Howard 1/1",
+      "ebayShipping": 3.95
+    }
+  },
+  "2018-19-panini-flawless-premium-ink-signatures-printing-plate-cyan-pi-jwh-sn1": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 19.99,
+    "priceHistory": [
+      {
+        "date": "2022-12-26",
+        "price": 19.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2022-12-26",
+      "purchaseItemId": "394386939904",
+      "ebaySeller": "hi5ahusker",
+      "ebayTitle": "2019-20 Flawless Print Plate Cyan Juwan Howard 1/1 Michigan / Dallas Mavericks",
+      "ebayShipping": 4.99
+    }
+  },
+  "2019-20-panini-certified-established-autographs-black-ea-jh-sn1": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 60.0,
+    "priceHistory": [
+      {
+        "date": "2020-02-09",
+        "price": 60.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2020-02-09",
+      "purchaseItemId": "303478673816",
+      "ebaySeller": "rom_us_eydxoy0aqc",
+      "ebayTitle": "2019 CERTIFIED JUWAN HOWARD AUTOGRAPH 1 Of 1 ON CARD ESTABLISHED SIGNATURES",
+      "ebayShipping": 4.2
+    }
+  },
+  "2024-25-leaf-metal-helloween-exclusives-printing-plate-cyan-hi-jh2-sn1": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 10.75,
+    "priceHistory": [
+      {
+        "date": "2024-12-05",
+        "price": 10.75,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2024-12-05",
+      "purchaseItemId": "365226081917",
+      "ebaySeller": "throwbackswax",
+      "ebayTitle": "2024 Leaf Halloween Exclusive Juwan Howard Printing Plate 1/1 Set",
+      "ebayShipping": 4.99
+    }
+  },
+  "2024-25-leaf-metal-helloween-exclusives-printing-plate-magenta-hi-jh2-sn1": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 10.75,
+    "priceHistory": [
+      {
+        "date": "2024-12-05",
+        "price": 10.75,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2024-12-05",
+      "purchaseItemId": "365226081917",
+      "ebaySeller": "throwbackswax",
+      "ebayTitle": "2024 Leaf Halloween Exclusive Juwan Howard Printing Plate 1/1 Set",
+      "ebayShipping": 4.99
+    }
+  },
+  "2024-25-leaf-metal-helloween-exclusives-printing-plate-yellow-hi-jh2-sn1": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 10.75,
+    "priceHistory": [
+      {
+        "date": "2024-12-05",
+        "price": 10.75,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2024-12-05",
+      "purchaseItemId": "365226081917",
+      "ebaySeller": "throwbackswax",
+      "ebayTitle": "2024 Leaf Halloween Exclusive Juwan Howard Printing Plate 1/1 Set",
+      "ebayShipping": 4.99
+    }
+  },
+  "2024-25-leaf-metal-helloween-exclusives-printing-plate-black-hi-jh2-sn1": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 10.75,
+    "priceHistory": [
+      {
+        "date": "2024-12-05",
+        "price": 10.75,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2024-12-05",
+      "purchaseItemId": "365226081917",
+      "ebaySeller": "throwbackswax",
+      "ebayTitle": "2024 Leaf Halloween Exclusive Juwan Howard Printing Plate 1/1 Set",
+      "ebayShipping": 4.99
+    }
+  },
+  "2009-10-panini-absolute-memorabilia-100": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.0,
+    "priceHistory": [
+      {
+        "date": "2011-05-08",
+        "price": 1.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2011-05-08",
+      "purchaseItemId": "370503818163",
+      "ebaySeller": "gamesandcards.com",
+      "ebayTitle": "2009-10 Absolute Memorabilia Retail #100 Juwan Howard",
+      "ebayShipping": 0.0
+    }
+  },
+  "2003-04-topps-rookie-matrix-105": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [
+      {
+        "date": "2018-08-10",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2018-08-10",
+      "purchaseItemId": "362408640835",
+      "ebaySeller": "burbanksportscards",
+      "ebayTitle": "2003-04 Topps Rookie Matrix Minis Topps #105 Juwan Howard",
+      "ebayShipping": 0.4
+    }
+  },
+  "1995-96-collectors-choice-crash-the-game-assists-rebounds-silver-c3b": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [
+      {
+        "date": "2018-08-10",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2018-08-10",
+      "purchaseItemId": "163153840399",
+      "ebaySeller": "burbanksportscards",
+      "ebayTitle": "1995-96 Collector's Choice Crash/Game Assist/Rebound Card #C3B Juwan Howard",
+      "ebayShipping": 0.4
+    }
+  },
+  "1995-96-collectors-choice-crash-the-game-assists-rebounds-silver-c3c": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [
+      {
+        "date": "2018-08-10",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2018-08-10",
+      "purchaseItemId": "312191630337",
+      "ebaySeller": "burbanksportscards",
+      "ebayTitle": "1995-96 Collector's Choice Crash/Game Assist/Rebound Card #C3C Juwan Howard",
+      "ebayShipping": 0.4
+    }
+  },
+  "1995-96-collectors-choice-crash-the-game-assists-rebounds-redemption-silver-c3": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [
+      {
+        "date": "2018-08-10",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2018-08-10",
+      "purchaseItemId": "312191629960",
+      "ebaySeller": "burbanksportscards",
+      "ebayTitle": "1995-96 Collector's Choice Crash/Game Assist/Rebound Card #C3 Juwan Howard",
+      "ebayShipping": 0.4
+    }
+  },
+  "1997-98-topps-stadium-club-first-day-issue-113": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 3.99,
+    "priceHistory": [
+      {
+        "date": "2010-01-24",
+        "price": 3.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2010-01-24",
+      "purchaseItemId": "360215747681",
+      "ebaySeller": "mikchan",
+      "ebayTitle": "1997-98 Stadium Club First Day Issue Juwan Howard",
+      "ebayShipping": 0.0
+    }
+  },
+  "1994-95-topps-finest-refractor-288-card160": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 7.5,
+    "priceHistory": [
+      {
+        "date": "2006-02-24",
+        "price": 7.5,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-02-24",
+      "purchaseItemId": "8768102345",
+      "ebaySeller": "lan.3",
+      "ebayTitle": "1994/95 FINEST RC #288 JUWAN HOWARD REFRACTOR",
+      "ebayShipping": 0.0
+    }
+  },
+  "1995-96-upper-deck-electric-court-gold-207": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [
+      {
+        "date": "2006-02-27",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-02-27",
+      "purchaseItemId": "8772903771",
+      "ebaySeller": "americanchris",
+      "ebayTitle": "1995/96 UPPER DECK JUWAN HOWARD ELECTRIC COURT GOLD",
+      "ebayShipping": 0.0
+    }
+  },
+  "2011-12-panini-gold-standard-14k-autograph-52-sn78": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 5.5,
+    "priceHistory": [
+      {
+        "date": "2012-07-29",
+        "price": 5.5,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2012-07-29",
+      "purchaseItemId": "280928674598",
+      "ebaySeller": "navyseal5",
+      "ebayTitle": "2011 2012 PANINI GOLD STANDARD JUWAN HOWARD SP AUTO - 14K GOLD CUT HEAT",
+      "ebayShipping": 0.0
+    }
+  },
+  "2009-10-upper-deck-game-materials-gj-ho-sn288": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.95,
+    "priceHistory": [
+      {
+        "date": "2011-06-15",
+        "price": 1.95,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2011-06-15",
+      "purchaseItemId": "320708467944",
+      "ebaySeller": "jos.360",
+      "ebayTitle": "JUWAN HOWARD 2009/10 UPPER DECK GAME MATERIALS JERSEY",
+      "ebayShipping": 0.0
+    }
+  },
+  "2003-04-topps-bowman-s-best-gold-refractor-6-sn37": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [
+      {
+        "date": "2006-04-08",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-04-08",
+      "purchaseItemId": "8790398826",
+      "ebaySeller": "infosystemstoday",
+      "ebayTitle": "03/04 Juwan Howard Bowman Chrome Gold Refractor #'d",
+      "ebayShipping": 0.0
+    }
+  },
+  "2003-04-topps-bowman-s-best-refractor-6-sn19": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.0,
+    "priceHistory": [
+      {
+        "date": "2007-04-09",
+        "price": 1.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2007-04-09",
+      "purchaseItemId": "230066491604",
+      "ebaySeller": "biggtimesports",
+      "ebayTitle": "JUWAN HOWARD 03-04 BOWMAN CHROME REFRACTOR #/300",
+      "ebayShipping": 0.0
+    }
+  },
+  "1998-99-skybox-e-x-century-essential-credentials-credentials-future-34-sn15": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 4.99,
+    "priceHistory": [
+      {
+        "date": "2005-08-28",
+        "price": 4.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2005-08-28",
+      "purchaseItemId": "5227290796",
+      "ebaySeller": "theeboz",
+      "ebayTitle": "Essential Credentials Future Juwan Howard Michigan Fab5",
+      "ebayShipping": 0.0
+    }
+  },
+  "2007-08-upper-deck-game-jersey-jersey-gj-ju": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [
+      {
+        "date": "2007-11-22",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2007-11-22",
+      "purchaseItemId": "290182178442",
+      "ebaySeller": "comicconnection_ca",
+      "ebayTitle": "07/08 UD JUWAN HOWARD GAME USED JERSEY",
+      "ebayShipping": 0.0
+    }
+  },
+  "1996-assets-hot-print-15": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.0,
+    "priceHistory": [
+      {
+        "date": "2010-06-13",
+        "price": 1.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2010-06-13",
+      "purchaseItemId": "330442504513",
+      "ebaySeller": "vicator_nba_cards",
+      "ebayTitle": "1995/96 Classic Assets HOT PRINT Juwan Howard RARE !",
+      "ebayShipping": 0.0
+    }
+  },
+  "2025-26-topps-chrome-mcdonald-s-all-american-83": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [
+      {
+        "date": "2026-03-13",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2026-03-13",
+      "purchaseItemId": "127737432140",
+      "ebaySeller": "supersweetsportscards_0",
+      "ebayTitle": "2025 Topps Chrome McDonald's All American #83 Juwan Howard, West",
+      "ebayShipping": 1.32
+    }
+  },
+  "2023-24-topps-chrome-pink-refractor-101": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.65,
+    "priceHistory": [
+      {
+        "date": "2025-12-07",
+        "price": 1.65,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2025-12-07",
+      "purchaseItemId": "389257034350",
+      "ebaySeller": "fts_trading_company",
+      "ebayTitle": "2023-24 Topps Chrome #101 Juwan Howard Magenta Refractors",
+      "ebayShipping": 0.0
+    }
+  },
+  "2010-11-panini-donruss-171": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.0,
+    "priceHistory": [
+      {
+        "date": "2011-05-08",
+        "price": 1.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2011-05-08",
+      "purchaseItemId": "370502223364",
+      "ebaySeller": "gamesandcards.com",
+      "ebayTitle": "2010-11 Donruss #171 Juwan Howard",
+      "ebayShipping": 0.0
+    }
+  },
+  "1999-00-topps-chrome-12": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [
+      {
+        "date": "2007-12-07",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2007-12-07",
+      "purchaseItemId": "110202892739",
+      "ebaySeller": "fronkovilla",
+      "ebayTitle": "99/00 1999/2000 TOPPS CHROME JUWAN HOWARD REFRACTOR 12",
+      "ebayShipping": 0.0
+    }
+  },
+  "2012-13-panini-momentum-monumental-marks-blue-271-sn7": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 10.0,
+    "priceHistory": [
+      {
+        "date": "2014-04-28",
+        "price": 10.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2014-04-28",
+      "purchaseItemId": "390829981532",
+      "ebaySeller": "its4salehere90",
+      "ebayTitle": "2012/13 Momentum JUWAN HOWARD AUTO SSP #07/10 Heat Monumental Marks - Damaged",
+      "ebayShipping": 0.0
+    }
+  },
+  "2023-24-panini-prizm-draft-picks-legacy-signatures-pulsar-green-ls-jhw-sn14": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 20.0,
+    "priceHistory": [
+      {
+        "date": "2023-11-25",
+        "price": 20.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2023-11-25",
+      "purchaseItemId": "166458908901",
+      "ebaySeller": "theatwellpodcast",
+      "ebayTitle": "2023 Panini Prizm Legacy Signatures Green Juwan Howard Auto /25",
+      "ebayShipping": 0.0
+    }
+  },
+  "2023-24-panini-prizm-draft-picks-legacy-signatures-pulsar-green-ls-jhw-sn3": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 8.27,
+    "priceHistory": [
+      {
+        "date": "2023-11-28",
+        "price": 8.27,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2023-11-28",
+      "purchaseItemId": "386303675283",
+      "ebaySeller": "forgottenassets",
+      "ebayTitle": "2023 Panini Prizm Legacy Signatures Green Juwan Howard Auto /25",
+      "ebayShipping": 5.05
+    }
+  },
+  "2002-03-topps-jersey-edition-copper-je-jh-sn6": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 1.99,
+    "priceHistory": [
+      {
+        "date": "2006-03-17",
+        "price": 1.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2006-03-17",
+      "purchaseItemId": "8781079203",
+      "ebaySeller": "discountcardz",
+      "ebayTitle": "02-03 TOPPS JERSEY EDITION GAME JERSEY JUWAN HOWARD",
+      "ebayShipping": 0.0
+    }
+  },
+  "1997-98-skybox-premium-autographics-century-marks-51-sn30": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 18.01,
+    "priceHistory": [
+      {
+        "date": "2003-07-07",
+        "price": 18.01,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2003-07-07",
+      "purchaseItemId": "2739507614",
+      "ebaySeller": "geb1954",
+      "ebayTitle": "97/98 AUTOGRAMM -JUWAN HOWARD -CENTURY MARK",
+      "ebayShipping": 0.0
+    }
+  },
+  "1996-97-collectors-choice-you-crash-the-game-scoring-2-17-23-feb-silver-c29": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 0.99,
+    "priceHistory": [
+      {
+        "date": "2018-10-08",
+        "price": 0.99,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2018-10-08",
+      "purchaseItemId": "362439507478",
+      "ebaySeller": "burbanksportscards",
+      "ebayTitle": "1996-97 Collector's Choice Crash the Game Scoring 2 Card #C29A Juwan Howard",
+      "ebayShipping": 0.18
+    }
+  },
+  "1999-00-topps-gold-label-class-2-black-label-27": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 7.0,
+    "priceHistory": [
+      {
+        "date": "2010-04-18",
+        "price": 7.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2010-04-18",
+      "purchaseItemId": "200278519903",
+      "ebaySeller": "evisionsusa",
+      "ebayTitle": "1999-00 Topps Gold Lable Black #27 JUWAN HOWARD C2",
+      "ebayShipping": 0.0
+    }
+  },
+  "2019-20-panini-select-signatures-prizms-tie-dye-sg-jwh-sn6": {
+    "certNumber": null,
+    "lastQueried": null,
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 11.0,
+    "priceHistory": [
+      {
+        "date": "2020-10-22",
+        "price": 11.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2020-10-22",
+      "purchaseItemId": "203149352773",
+      "ebaySeller": "sosad1966",
+      "ebayTitle": "2019-20 PANINI SELECT PRIZM ON CARD AUTO JUWAN HOWARD /25 WASHINGTON WIZARDS",
+      "ebayShipping": 4.2
     }
   }
 }
