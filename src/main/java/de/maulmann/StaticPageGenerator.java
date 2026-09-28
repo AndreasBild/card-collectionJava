@@ -217,9 +217,12 @@ public class StaticPageGenerator {
 
                         Path jsonPath = Paths.get(pathSource, "json", coll.toLowerCase() + ".json");
                         String tableHtml = "";
+                        String summaryHtml = "";
                         if (Files.exists(jsonPath)) {
                             List<CardJson> cardList = CardDataLoader.loadCardsFromJson(jsonPath.toString());
                             tableHtml = generateHtmlTableFromJson(cardList);
+                            Map<String, Object> stats = CardStatsService.computeCollectionStats(cardList);
+                            summaryHtml = generateCollectionSummaryHtml(coll, cardList, stats);
                         }
 
                         Path sourcePath = Paths.get(pathSource, "other", coll + ".html");
@@ -257,15 +260,16 @@ public class StaticPageGenerator {
                             Element mainElement = doc.selectFirst("main");
                             String processedContent;
                             if (mainElement != null) {
-                                mainElement.select("table, .table-responsive").remove();
-                                processedContent = mainElement.html() + "\n" + tableHtml;
+                                mainElement.select("table, .table-responsive, .analytics-accordion").remove();
+                                processedContent = mainElement.html() + (summaryHtml.isEmpty() ? "" : "\n" + summaryHtml) + "\n" + tableHtml;
                             } else {
-                                processedContent = rawContent + "\n" + tableHtml;
+                                processedContent = rawContent + (summaryHtml.isEmpty() ? "" : "\n" + summaryHtml) + "\n" + tableHtml;
                             }
 
                             data.put("pageContent", cleanOldPlaceholders(processedContent));
                         } else {
-                            data.put("pageContent", tableHtml.isEmpty() ? "<p>No data found for this collection yet.</p>" : tableHtml);
+                            String combined = (summaryHtml.isEmpty() ? "" : summaryHtml + "\n") + tableHtml;
+                            data.put("pageContent", combined.isEmpty() ? "<p>No data found for this collection yet.</p>" : combined);
                         }
 
                         FileGenerator.processTemplate("generic-collection.ftlh", data, pathOutput + coll + ".html");
@@ -341,6 +345,143 @@ public class StaticPageGenerator {
         }
         htmlBuilder.append("</tbody></table></div>");
         return htmlBuilder.toString();
+    }
+
+    public static String generateCollectionSummaryHtml(String collName, List<CardJson> cardList, Map<String, Object> stats) {
+        if (cardList == null || cardList.isEmpty() || stats == null) {
+            return "";
+        }
+
+        boolean isTargetCollection = collName.equalsIgnoreCase("Flawless")
+                || collName.equalsIgnoreCase("Panini")
+                || collName.equalsIgnoreCase("Baseball");
+        double totalEstimatedVal = getDouble(stats, "totalEstimatedValue", 0.0);
+        if (totalEstimatedVal <= 0.0 && !isTargetCollection) {
+            return "";
+        }
+
+        String formattedEstimatedVal = getString(stats, "formattedEstimatedValue", "$0");
+        String formattedAvgVal = getString(stats, "formattedAvgCardValue", "$0.00");
+        String totalCards = getString(stats, "totalCards", String.valueOf(cardList.size()));
+        int rawTotal = getInt(stats, "rawTotalCards", cardList.size());
+        int countPriced = getInt(stats, "countPriced", 0);
+        int marketCoveragePct = getInt(stats, "marketCoveragePct", 0);
+
+        int count1of1 = getInt(stats, "count1of1", 0);
+        int pct1of1 = getInt(stats, "pct1of1", 0);
+        int countUltraSp = getInt(stats, "countUltraSp", 0);
+        int pctUltraSp = getInt(stats, "pctUltraSp", 0);
+        int countSerialized = getInt(stats, "countSerialized", 0);
+        int pctSerialized = getInt(stats, "pctSerialized", 0);
+
+        int countAutographs = getInt(stats, "countAutographs", 0);
+        int pctAutographs = getInt(stats, "pctAutographs", 0);
+        int countPatches = getInt(stats, "countPatches", 0);
+        int pctPatches = getInt(stats, "pctPatches", 0);
+        int countRookies = getInt(stats, "countRookies", 0);
+        int pctRookies = getInt(stats, "pctRookies", 0);
+        int countGraded = getInt(stats, "countGradedTotal", 0);
+        int pctGraded = getInt(stats, "pctGradedTotal", 0);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("<details class=\"analytics-accordion context-card full-width\" id=\"analyticsAccordion\" open>\n");
+        sb.append("    <summary class=\"analytics-summary-bar\">\n");
+        sb.append("        <div class=\"summary-left\">\n");
+        sb.append("            <span class=\"summary-title\">&#x1F4C8; Vault Analytics</span>\n");
+        sb.append("        </div>\n");
+        sb.append("        <div class=\"summary-badges\">\n");
+        if (totalEstimatedVal > 0) {
+            sb.append("            <span class=\"vault-valuation-badge\" title=\"Estimated Total Collection Market Valuation\">&#x1F4B0; <strong>")
+                    .append(formattedEstimatedVal).append("</strong></span>\n");
+        }
+        sb.append("            <span class=\"vault-count-badge\"><strong>").append(totalCards).append("</strong> Cards</span>\n");
+        if (count1of1 > 0) {
+            sb.append("            <span class=\"vault-count-badge gold\"><strong>").append(count1of1).append("</strong> 1/1s</span>\n");
+        } else if (countAutographs > 0) {
+            sb.append("            <span class=\"vault-count-badge gold\"><strong>").append(countAutographs).append("</strong> Autos</span>\n");
+        }
+        sb.append("        </div>\n");
+        sb.append("        <span class=\"summary-toggle-icon\" aria-hidden=\"true\">&#x25BE;</span>\n");
+        sb.append("    </summary>\n");
+        sb.append("    <div class=\"metrics-grid\">\n");
+
+        // Metric Card 1: Valuation & Market Stats
+        sb.append("        <div class=\"metric-card\">\n");
+        sb.append("            <h3>&#x1F4B0; Valuation &amp; Market Stats</h3>\n");
+        sb.append("            <div class=\"meter-group\">\n");
+        sb.append("                <div class=\"meter-label\"><span>Estimated Total Value</span> <strong>").append(formattedEstimatedVal).append("</strong></div>\n");
+        sb.append("                <div class=\"meter-bar-track\"><div class=\"meter-bar emerald\" style=\"width: 100%;\"></div></div>\n");
+        sb.append("            </div>\n");
+        sb.append("            <div class=\"meter-group\">\n");
+        sb.append("                <div class=\"meter-label\"><span>Average Card Value</span> <strong>").append(formattedAvgVal).append("</strong></div>\n");
+        sb.append("                <div class=\"meter-bar-track\"><div class=\"meter-bar cyan\" style=\"width: 100%;\"></div></div>\n");
+        sb.append("            </div>\n");
+        sb.append("            <div class=\"meter-group\">\n");
+        sb.append("                <div class=\"meter-label\"><span>Pricing Coverage</span> <strong>").append(countPriced).append(" / ").append(rawTotal).append(" (").append(marketCoveragePct).append("%)</strong></div>\n");
+        sb.append("                <div class=\"meter-bar-track\"><div class=\"meter-bar gold\" style=\"width: ").append(marketCoveragePct).append("%;\"></div></div>\n");
+        sb.append("            </div>\n");
+        sb.append("        </div>\n");
+
+        // Metric Card 2: Attributes & Features
+        sb.append("        <div class=\"metric-card\">\n");
+        sb.append("            <h3>&#x270D;&#xFE0F; Attributes &amp; Features</h3>\n");
+        sb.append("            <div class=\"meter-group\">\n");
+        sb.append("                <div class=\"meter-label\"><span>Autographs</span> <strong>").append(countAutographs).append(" (").append(pctAutographs).append("%)</strong></div>\n");
+        sb.append("                <div class=\"meter-bar-track\"><div class=\"meter-bar green\" style=\"width: ").append(pctAutographs).append("%;\"></div></div>\n");
+        sb.append("            </div>\n");
+        sb.append("            <div class=\"meter-group\">\n");
+        sb.append("                <div class=\"meter-label\"><span>Game-Used Patch / Mem</span> <strong>").append(countPatches).append(" (").append(pctPatches).append("%)</strong></div>\n");
+        sb.append("                <div class=\"meter-bar-track\"><div class=\"meter-bar purple\" style=\"width: ").append(pctPatches).append("%;\"></div></div>\n");
+        sb.append("            </div>\n");
+        sb.append("            <div class=\"meter-group\">\n");
+        if (countGraded > 0) {
+            sb.append("                <div class=\"meter-label\"><span>Graded Cards</span> <strong>").append(countGraded).append(" (").append(pctGraded).append("%)</strong></div>\n");
+            sb.append("                <div class=\"meter-bar-track\"><div class=\"meter-bar cyan\" style=\"width: ").append(pctGraded).append("%;\"></div></div>\n");
+        } else {
+            sb.append("                <div class=\"meter-label\"><span>Rookie Cards (RC)</span> <strong>").append(countRookies).append(" (").append(pctRookies).append("%)</strong></div>\n");
+            sb.append("                <div class=\"meter-bar-track\"><div class=\"meter-bar orange\" style=\"width: ").append(pctRookies).append("%;\"></div></div>\n");
+        }
+        sb.append("            </div>\n");
+        sb.append("        </div>\n");
+
+        // Metric Card 3: Rarity Tier Breakdown
+        sb.append("        <div class=\"metric-card\">\n");
+        sb.append("            <h3>&#x1F48E; Rarity Tier Breakdown</h3>\n");
+        sb.append("            <div class=\"meter-group\">\n");
+        sb.append("                <div class=\"meter-label\"><span>1/1 Masterpieces</span> <strong>").append(count1of1).append("</strong></div>\n");
+        sb.append("                <div class=\"meter-bar-track\"><div class=\"meter-bar\" style=\"width: ").append(pct1of1).append("%;\"></div></div>\n");
+        sb.append("            </div>\n");
+        sb.append("            <div class=\"meter-group\">\n");
+        sb.append("                <div class=\"meter-label\"><span>Ultra SP (&le; 10)</span> <strong>").append(countUltraSp).append("</strong></div>\n");
+        sb.append("                <div class=\"meter-bar-track\"><div class=\"meter-bar gold\" style=\"width: ").append(pctUltraSp).append("%;\"></div></div>\n");
+        sb.append("            </div>\n");
+        sb.append("            <div class=\"meter-group\">\n");
+        sb.append("                <div class=\"meter-label\"><span>Serialized Cards</span> <strong>").append(countSerialized).append(" (").append(pctSerialized).append("%)</strong></div>\n");
+        sb.append("                <div class=\"meter-bar-track\"><div class=\"meter-bar blue\" style=\"width: ").append(pctSerialized).append("%;\"></div></div>\n");
+        sb.append("            </div>\n");
+        sb.append("        </div>\n");
+
+        sb.append("    </div>\n");
+        sb.append("</details>\n");
+
+        return sb.toString();
+    }
+
+    private static int getInt(Map<String, Object> map, String key, int def) {
+        Object val = map.get(key);
+        if (val instanceof Number n) return n.intValue();
+        return def;
+    }
+
+    private static double getDouble(Map<String, Object> map, String key, double def) {
+        Object val = map.get(key);
+        if (val instanceof Number n) return n.doubleValue();
+        return def;
+    }
+
+    private static String getString(Map<String, Object> map, String key, String def) {
+        Object val = map.get(key);
+        return val != null ? val.toString() : def;
     }
 
     public static void copyResources(String pathOutput) {
