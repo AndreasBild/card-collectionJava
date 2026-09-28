@@ -1,9 +1,6 @@
 package de.maulmann;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -25,6 +22,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Gatherers;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Service for notifying search engines via the IndexNow API protocol.

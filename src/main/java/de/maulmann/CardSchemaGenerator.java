@@ -1,10 +1,6 @@
 package de.maulmann;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
+import de.maulmann.TriviaManager.FaqItem;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,7 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import de.maulmann.TriviaManager.FaqItem;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 /**
  * Isolated service for generating JSON-LD Schema.org metadata and FAQ sections for card detail pages.

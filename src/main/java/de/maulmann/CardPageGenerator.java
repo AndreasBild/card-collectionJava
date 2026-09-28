@@ -2,9 +2,6 @@ package de.maulmann;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
@@ -26,6 +23,8 @@ import java.util.concurrent.Executors;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * High-performance Card Detail Page generator using Java Virtual Threads and FreeMarker.

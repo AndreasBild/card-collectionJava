@@ -1,15 +1,14 @@
 package de.maulmann;
 
-import com.aayushatharva.brotli4j.decoder.BrotliInputStream;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.aayushatharva.brotli4j.decoder.BrotliInputStream;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 class BrotliCompressorTest {
 

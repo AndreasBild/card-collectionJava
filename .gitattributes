@@ -1,0 +1,36 @@
+# Set default behavior to automatically handle line endings and force LF in repo
+* text=auto eol=lf
+
+# Explicitly declare text files
+*.java text diff=java eol=lf
+*.json text eol=lf
+*.xml text eol=lf
+*.ftlh text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.js text eol=lf
+*.md text eol=lf
+*.sh text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.properties text eol=lf
+*.spf text eol=lf
+*.sql text eol=lf
+
+# Maven wrapper scripts
+mvnw text eol=lf
+mvnw.cmd text eol=crlf
+
+# Binary assets
+*.jar binary
+*.class binary
+*.avif binary
+*.webp binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.gz binary
+*.br binary
+*.zip binary
