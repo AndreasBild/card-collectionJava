@@ -656,9 +656,9 @@ public class SitemapGenerator {
         sb.append("- [Juwan Howard Master Collection](").append(BASE_URL).append("/Juwan-Howard-Collection.html): Complete searchable vault of Juwan Howard trading cards with filters for PMGs, Rubies, Autographs, and Rookies.\n");
         sb.append("- [3D 9-Pocket Collector Binder](").append(BASE_URL).append("/binder.html): Interactive virtual 9-pocket trading card binder with 3D page flips and card inspection.\n");
         sb.append("- [Parallel Rainbow Tracker](").append(BASE_URL).append("/rainbows.html): Visual tracking system for completing parallel rainbows (Base, Refractor, Atomic, PMG, 1/1 Masterpiece).\n");
-        sb.append("- [Flawless Collection](").append(BASE_URL).append("/Flawless.html): Ultra-high-end Panini Flawless diamond gems, ruby parallels, and game-worn patch cards.\n");
-        sb.append("- [Panini Rarities](").append(BASE_URL).append("/Panini.html): Showcase of modern Panini National Treasures, Immaculate, Prizm, and Select cards.\n");
-        sb.append("- [Baseball Grails](").append(BASE_URL).append("/Baseball.html): Certified MLB on-card autographs and game-used relics.\n");
+        sb.append("- [Flawless Collection](").append(BASE_URL).append("/Flawless.html): 2008 Upper Deck Exquisite Flawless basketball collection featuring rare on-card autographs of Michael Jordan, Bill Russell, Kobe Bryant, and LeBron James.\n");
+        sb.append("- [Panini Rarities](").append(BASE_URL).append("/Panini.html): Debut 2012-13 Panini Flawless basketball collection featuring ruby parallels (/15), emeralds (/5), and on-card autographs of NBA legends.\n");
+        sb.append("- [Baseball Showcase](").append(BASE_URL).append("/Baseball.html): Curated gallery of 2005 Upper Deck Ultimate Signature Edition baseball cards, featuring 'Immortal Inscriptions' and rare autographs.\n");
         sb.append("- [Wantlist](").append(BASE_URL).append("/Wantlist.html): Actively sought-after holy grails and missing rainbow pieces.\n\n");
 
         sb.append("## Machine-Readable Endpoints & AI Feeds\n");
