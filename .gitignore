@@ -25,5 +25,11 @@ src/main/resources/config/firebase_config.json
 **/.DS_Store
 .vscode/
 .junie/
+.idea/workspace.xml
+.idea/shelf/
+.idea/dataSources.local.xml
+.idea/dataSources.xml
+.idea/dataSources/
+.idea/awsToolkit.xml
 .mvn/timing.properties
 

@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# .githooks/pre-commit
+# ------------------------------------------------------------------------------
+# Pre-commit hook to verify spotless formatting before committing.
+# Configured via: git config core.hooksPath .githooks
+# ==============================================================================
+
+set -e
+
+echo "🔍 Running pre-commit Spotless formatting check..."
+
+if [ -f "./mvnw" ]; then
+    ./mvnw spotless:check -q
+else
+    mvn spotless:check -q
+fi
+
+if [ $? -ne 0 ]; then
+    echo "❌ Spotless check failed. Run './mvnw spotless:apply' to fix code formatting."
+    exit 1
+fi
+
+echo "✅ Pre-commit check passed!"

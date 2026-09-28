@@ -1,9 +1,6 @@
 package de.maulmann;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.sun.net.httpserver.HttpServer;
-
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -14,6 +11,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.Executors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Fast Local Development & Preview Pipeline.

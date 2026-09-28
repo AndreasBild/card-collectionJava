@@ -1,10 +1,10 @@
 package de.maulmann;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import freemarker.template.Configuration;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("CardUtils Utility Tests")
 class CardUtilsTest {

@@ -1,12 +1,11 @@
 package de.maulmann;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.nio.file.Path;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-
-import java.nio.file.Path;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("SiteBuilderPipeline Tests")
 class SiteBuilderPipelineTest {

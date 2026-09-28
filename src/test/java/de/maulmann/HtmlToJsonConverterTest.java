@@ -1,14 +1,13 @@
 package de.maulmann;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.List;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("HtmlToJsonConverter Table Parser Tests")
 class HtmlToJsonConverterTest {
