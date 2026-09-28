@@ -7782,20 +7782,26 @@
     "estimatedValue": null,
     "lastSoldPrice": null,
     "lastSoldDate": null,
-    "purchasePrice": 70.0,
+    "purchasePrice": 50.0,
     "priceHistory": [
       {
         "date": "2007-05-01",
         "price": 70.0,
         "source": "eBay",
         "grade": "Raw"
+      },
+      {
+        "date": "2007-05-19",
+        "price": 50.0,
+        "source": "eBay",
+        "grade": "Raw"
       }
     ],
     "metadata": {
-      "purchaseDate": "2007-05-01",
-      "purchaseItemId": "130108200959",
-      "ebaySeller": "beeeradssportscards",
-      "ebayTitle": "2006-07 Triple Threads WEBBER ROSE HOWARD Jersey #2/3"
+      "purchaseDate": "2007-05-19",
+      "purchaseItemId": "220112345387",
+      "ebaySeller": "steelercrazy",
+      "ebayTitle": "2007 TRIPLE THREADS WEBBER/ROSE/HOWARD FAB 5 3X JERSEY"
     }
   },
   "2016-17-panini-flawless-patch-emerald-p-jhw-sn4": {
@@ -8085,20 +8091,27 @@
     "estimatedValue": null,
     "lastSoldPrice": null,
     "lastSoldDate": null,
-    "purchasePrice": 35.0,
+    "purchasePrice": 25.0,
     "priceHistory": [
       {
         "date": "2008-12-16",
         "price": 35.0,
         "source": "eBay",
         "grade": "Raw"
+      },
+      {
+        "date": "2007-08-20",
+        "price": 25.0,
+        "source": "eBay",
+        "grade": "Raw"
       }
     ],
     "metadata": {
-      "purchaseDate": "2008-12-16",
-      "purchaseItemId": "350138415551",
-      "ebaySeller": "elwaybronco",
-      "ebayTitle": "CHRIS WEBBER/J HOWARD/J ROSE THREADS FAB 5 JERSEY #5/18"
+      "purchaseDate": "2007-08-20",
+      "purchaseItemId": "330157494273",
+      "ebaySeller": "eh5282",
+      "ebayTitle": "2006-07 TRIPLE THREADS FAB FIVE COMBO JERSEY CARD!",
+      "secondaryPurchaseItemIds": "350138415551"
     }
   },
   "1997-98-flair-showcase-showcase-row-0-seat-64-sn1543": {
@@ -8794,7 +8807,7 @@
     "estimatedValue": null,
     "lastSoldPrice": null,
     "lastSoldDate": null,
-    "purchasePrice": 9.5,
+    "purchasePrice": 23.51,
     "priceHistory": [
       {
         "date": "2008-06-25",
@@ -8810,11 +8823,12 @@
       }
     ],
     "metadata": {
-      "purchaseDate": "2008-06-25",
-      "purchaseItemId": "250262419315",
-      "ebaySeller": "Zbgg0dEqQBi@Deleted",
-      "ebayTitle": "Juwan Howard Upper Deck Game Used 3 color Patch!",
-      "ebayShipping": "0.0"
+      "purchaseDate": "2006-06-06",
+      "purchaseItemId": "8822874591",
+      "ebaySeller": "zHVKfyAHRga@Deleted",
+      "ebayTitle": "04-05 SP GAME USED DUAL JUWAN HOWARD #2/10",
+      "ebayShipping": "0.0",
+      "secondaryPurchaseItemIds": "250262419315"
     }
   },
   "1996-signature-rookies-prime-time-powers-pt7": {
@@ -12866,17 +12880,24 @@
     "lastSoldDate": null
   },
   "2002-03-sp-game-used-edition-authentic-fabrics-jersey-mc-jh-jp-j-sn8": {
-    "purchasePrice": 15.0,
+    "purchasePrice": 4.04,
     "metadata": {
-      "purchaseDate": "2008-09-24",
-      "purchaseItemId": "220284983950",
-      "ebaySeller": "sportscards4sale2u",
-      "ebayTitle": "MCDYESS / HOWARD / POSEY 01-02 SPGU TRIPLE JERSEY #/25!"
+      "purchaseDate": "2006-09-28",
+      "purchaseItemId": "330031950984",
+      "ebaySeller": "lebron2knicks",
+      "ebayTitle": "2002/03 SP GU JUWAN HOWARD/MCDYESS/POSEY JERSEY /25",
+      "secondaryPurchaseItemIds": "220284983950"
     },
     "priceHistory": [
       {
         "date": "2008-09-24",
         "price": 15.0,
+        "source": "eBay",
+        "grade": "Raw"
+      },
+      {
+        "date": "2006-09-28",
+        "price": 4.04,
         "source": "eBay",
         "grade": "Raw"
       }
@@ -18452,6 +18473,75 @@
       "ebaySeller": "sb_addicts",
       "ebayTitle": "JUWAN HOWARD 2020-21 Absolute Retired Auto Card 16/25 SP WASHINGTON WIZARDS",
       "ebayShipping": "4.7"
+    }
+  },
+  "2025-26-leaf-glory-of-the-game-tough-as-leather-sparkle-tl-jh1-sn4": {
+    "certNumber": null,
+    "lastQueried": "2026-09-28",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 27.0,
+    "priceHistory": [
+      {
+        "date": "2026-04-12",
+        "price": 27.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2026-04-12",
+      "purchaseItemId": "168303596471",
+      "ebaySeller": "mtho1660",
+      "ebayTitle": "Juwan Howard Auto w/ \"FAB 5\" Inscription Michigan 2025Leaf Glory of the Game"
+    }
+  },
+  "2023-24-topps-cosmic-chrome-autograph-variation-red-flare-refractor-ccav-jh-sn4": {
+    "certNumber": null,
+    "lastQueried": "2026-09-28",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 40.0,
+    "priceHistory": [
+      {
+        "date": "2026-05-08",
+        "price": 40.0,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2026-05-08",
+      "purchaseItemId": "358531017706",
+      "ebaySeller": "southern_in_sportscards",
+      "ebayTitle": "2024-25 TOPPS CHROME JUWAN HOWARD RED LASER AUTO /5 JSY MATCH"
+    }
+  },
+  "1998-99-sp-authentic-authentic-memorabilia-t8": {
+    "certNumber": null,
+    "lastQueried": "2026-09-28",
+    "popReport": null,
+    "estimatedValue": null,
+    "lastSoldPrice": null,
+    "lastSoldDate": null,
+    "purchasePrice": 3.25,
+    "priceHistory": [
+      {
+        "date": "2020-03-22",
+        "price": 3.25,
+        "source": "eBay",
+        "grade": "Raw"
+      }
+    ],
+    "metadata": {
+      "purchaseDate": "2020-03-22",
+      "purchaseItemId": "383464817405",
+      "ebaySeller": "rookiestar601",
+      "ebayTitle": "Juwan Howard 1998-99 UD SP Authentic Authentics Redemption Card Expire"
     }
   }
 }
