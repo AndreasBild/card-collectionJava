@@ -23,6 +23,13 @@ src/main/resources/config/firebase_config.json
 # OS and Editor metadata
 .DS_Store
 **/.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
 .vscode/
 .junie/
 .idea/workspace.xml
