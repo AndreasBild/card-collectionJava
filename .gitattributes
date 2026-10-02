@@ -17,9 +17,12 @@
 *.spf text eol=lf
 *.sql text eol=lf
 
-# Maven wrapper scripts
+# Shell & wrapper scripts
 mvnw text eol=lf
 mvnw.cmd text eol=crlf
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.ps1 text eol=crlf
 
 # Binary assets
 *.jar binary
