@@ -6,14 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="card-collection" />
+        <module name="CardCollection" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="CardCollection" options="--enable-preview -Xlint:all -Xlint:-processing -proc:none" />
-      <module name="card-collection" options="-parameters" />
     </option>
   </component>
 </project>
