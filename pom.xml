@@ -20,7 +20,7 @@
         <org.codehaus.mojo.version>3.6.4</org.codehaus.mojo.version>
         <org.jsoup.version>1.23.2</org.jsoup.version>
         <com.yahoo.platform.yui.version>2.4.8</com.yahoo.platform.yui.version>
-        <com.google.firebase.version>9.10.0</com.google.firebase.version>
+        <com.google.firebase.version>9.11.0</com.google.firebase.version>
         <httpclient5.version>5.6.4</httpclient5.version>
         <freemarker.version>2.3.35</freemarker.version>
         <jackson.version>2.22.3</jackson.version>
