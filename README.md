@@ -39,7 +39,7 @@
 ## 🛠️ Quickstart & Execution Commands
 
 ### Prerequisites
-- **JDK 26** (with preview features enabled)
+- **JDK 27** (with preview features enabled)
 - **Maven 3.9+**
 
 ### 1. Local Development Build (Fast, Offline)

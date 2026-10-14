@@ -21,11 +21,11 @@ ${topNavHtml?no_esc}
                 <div class="master-progress-circle" aria-label="Overall Rainbow Completion Meter">
                     <svg class="progress-ring-svg" viewBox="0 0 120 120">
                         <circle class="progress-ring-bg" cx="60" cy="60" r="50" fill="none" stroke-width="10"/>
-                        <circle class="progress-ring-bar" cx="60" cy="60" r="50" fill="none" stroke-width="10" stroke-dasharray="314.159" stroke-dashoffset="0"/>
+                        <circle class="progress-ring-bar" cx="60" cy="60" r="50" fill="none" stroke-width="10" stroke-dasharray="314.159" stroke-dashoffset="${strokeDashoffset!'0'}"/>
                     </svg>
                     <div class="progress-ring-text">
-                        <span class="progress-pct-number">100%</span>
-                        <span class="progress-pct-label">TRACKED</span>
+                        <span class="progress-pct-number">${overallCompletionPct!100}%</span>
+                        <span class="progress-pct-label">COMPLETED</span>
                     </div>
                 </div>
             </div>

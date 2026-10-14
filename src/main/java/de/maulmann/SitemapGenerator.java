@@ -1079,9 +1079,10 @@ public class SitemapGenerator {
         robots.append("User-agent: OAI-SearchBot\nAllow: /\n\n");
         robots.append("User-agent: CCBot\nAllow: /\n\n");
 
-        robots.append("Sitemap: ").append(BASE_URL).append("/sitemap.xml\n");
-        robots.append("Sitemap: ").append(BASE_URL).append("/llms.txt\n");
-        robots.append("Sitemap: ").append(BASE_URL).append("/llms-full.txt\n");
+        robots.append("Sitemap: ").append(BASE_URL).append("/sitemap.xml\n\n");
+        robots.append("# LLM Manifests (Markdown / Plaintext index for AI Agents)\n");
+        robots.append("# ").append(BASE_URL).append("/llms.txt\n");
+        robots.append("# ").append(BASE_URL).append("/llms-full.txt\n");
 
         Path robotsPath = Paths.get(OUTPUT_DIR, "robots.txt");
         Files.writeString(robotsPath, robots.toString(), StandardCharsets.UTF_8);

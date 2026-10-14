@@ -29,8 +29,15 @@ public class BeckettValueCache {
 
     public BeckettValueCache() {}
 
+    private static volatile SimpleLazyConstant<BeckettValueCache> defaultCache =
+            SimpleLazyConstant.of(() -> load(DEFAULT_CACHE_PATH));
+
     public static BeckettValueCache loadDefault() {
-        return load(DEFAULT_CACHE_PATH);
+        return defaultCache.get();
+    }
+
+    public static void refreshDefault() {
+        defaultCache = SimpleLazyConstant.of(() -> load(DEFAULT_CACHE_PATH));
     }
 
     public static BeckettValueCache load(Path cachePath) {
@@ -92,5 +99,8 @@ public class BeckettValueCache {
         }
         MAPPER.writeValue(cachePath.toFile(), entriesById);
         logger.info("Saved {} Beckett value entries to {}", entriesById.size(), cachePath);
+        if (DEFAULT_CACHE_PATH.equals(cachePath)) {
+            refreshDefault();
+        }
     }
 }

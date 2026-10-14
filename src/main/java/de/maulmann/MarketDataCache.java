@@ -30,8 +30,15 @@ public class MarketDataCache {
 
     public MarketDataCache() {}
 
+    private static volatile SimpleLazyConstant<MarketDataCache> defaultCache =
+            SimpleLazyConstant.of(() -> load(DEFAULT_CACHE_PATH));
+
     public static MarketDataCache loadDefault() {
-        return load(DEFAULT_CACHE_PATH);
+        return defaultCache.get();
+    }
+
+    public static void refreshDefault() {
+        defaultCache = SimpleLazyConstant.of(() -> load(DEFAULT_CACHE_PATH));
     }
 
     public static MarketDataCache load(Path cachePath) {
@@ -131,5 +138,8 @@ public class MarketDataCache {
         }
         MAPPER.writeValue(path.toFile(), entriesById);
         logger.info("Successfully persisted {} market data entries to {}", entriesById.size(), path);
+        if (DEFAULT_CACHE_PATH.equals(path)) {
+            refreshDefault();
+        }
     }
 }
