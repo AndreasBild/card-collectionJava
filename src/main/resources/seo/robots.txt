@@ -41,5 +41,7 @@ User-agent: CCBot
 Allow: /
 
 Sitemap: https://www.maulmann.de/sitemap.xml
-Sitemap: https://www.maulmann.de/llms.txt
-Sitemap: https://www.maulmann.de/llms-full.txt
+
+# LLM Manifests (Markdown / Plaintext index for AI Agents)
+# https://www.maulmann.de/llms.txt
+# https://www.maulmann.de/llms-full.txt

@@ -439,9 +439,13 @@ public class RainbowPageGenerator {
             // Compute Master Rainbow Statistics
             int totalRainbowSets = rainbowSets.size();
             int totalRainbowCards = 0;
+            int totalRainbowExpected = 0;
             int totalRainbow1of1 = 0;
 
             for (Map<String, Object> set : rainbowSets) {
+                int setTotal = (Integer) set.getOrDefault("totalCount", 0);
+                totalRainbowExpected += setTotal;
+
                 @SuppressWarnings("unchecked")
                 List<Map<String, Object>> cards = (List<Map<String, Object>>) set.get("cards");
                 if (cards != null) {
@@ -459,9 +463,18 @@ public class RainbowPageGenerator {
                 }
             }
 
+            int overallCompletionPct = totalRainbowExpected > 0
+                    ? (int) Math.round((totalRainbowCards * 100.0) / totalRainbowExpected)
+                    : 100;
+            double circumference = 314.159; // 2 * PI * 50
+            double strokeDashoffset = Math.max(0.0, circumference - (overallCompletionPct / 100.0) * circumference);
+
             data.put("totalRainbowSets", totalRainbowSets);
             data.put("totalRainbowCards", totalRainbowCards);
+            data.put("totalRainbowExpected", totalRainbowExpected);
             data.put("totalRainbow1of1", totalRainbow1of1);
+            data.put("overallCompletionPct", overallCompletionPct);
+            data.put("strokeDashoffset", String.format(java.util.Locale.US, "%.1f", strokeDashoffset));
 
             data.put("rainbowSets", rainbowSets);
             data.put("jsonLd", CardSchemaGenerator.generateRainbowJsonLd(rainbowSets));

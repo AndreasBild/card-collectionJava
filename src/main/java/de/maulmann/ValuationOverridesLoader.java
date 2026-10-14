@@ -27,8 +27,15 @@ public class ValuationOverridesLoader {
 
     public ValuationOverridesLoader() {}
 
+    private static volatile SimpleLazyConstant<ValuationOverridesLoader> defaultLoader =
+            SimpleLazyConstant.of(() -> load(DEFAULT_PATH));
+
     public static ValuationOverridesLoader loadDefault() {
-        return load(DEFAULT_PATH);
+        return defaultLoader.get();
+    }
+
+    public static void refreshDefault() {
+        defaultLoader = SimpleLazyConstant.of(() -> load(DEFAULT_PATH));
     }
 
     public static ValuationOverridesLoader load(Path path) {

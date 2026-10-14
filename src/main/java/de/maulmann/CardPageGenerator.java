@@ -326,20 +326,12 @@ public class CardPageGenerator {
         var faqItems = CardSchemaGenerator.computeFaqItems(c);
         String faqHtml = CardSchemaGenerator.generateFaqHtml(faqItems);
         String frontImgUrl = BASE_URL + "/images/" + c.seasonFolder + "/" + resolvedImageBase + "-front.avif";
-        String cardPreload = "<link rel=\"preload\" as=\"image\" type=\"image/avif\" " +
-                "href=\"" + frontImgPath.replace(".avif", "-400w.avif") + "\" " +
-                "imagesrcset=\"" + frontImgPath.replace(".avif", "-400w.avif") + " 400w, " +
-                frontImgPath.replace(".avif", "-600w.avif") + " 600w, " +
-                frontImgPath.replace(".avif", "-900w.avif") + " 900w, " +
-                frontImgPath + " 1200w\" " +
-                "imagesizes=\"(max-width: 600px) 380px, (max-width: 1024px) 50vw, 580px\" " +
-                "fetchpriority=\"high\">";
         boolean isLandscape = isImageLandscape(c.seasonFolder, resolvedImageBase, "front");
         int ogWidth = isLandscape ? 1680 : 1200;
         int ogHeight = isLandscape ? 1200 : 1680;
         String frontAlt = generateAltText(c, "front");
 
-        data.put("headHtml", SharedTemplates.getHead(browserTitle, metaDesc, ROOT, c.fullRelativePath, frontImgUrl, cardPreload, ogWidth, ogHeight, frontAlt));
+        data.put("headHtml", SharedTemplates.getHead(browserTitle, metaDesc, ROOT, c.fullRelativePath, frontImgUrl, "", ogWidth, ogHeight, frontAlt));
         data.put("jsonLd", CardSchemaGenerator.generateJsonLd(c, metaDesc, h1Title, overviewPage, resolvedImageBase, faqItems));
         String collectionName = "Collection";
         String activeNav = "collection";
