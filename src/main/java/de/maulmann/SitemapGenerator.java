@@ -1038,7 +1038,7 @@ public class SitemapGenerator {
             Template template = fmConfig.getTemplate("sitemap.ftlh");
             File outFile = new File(OUTPUT_DIR + "/sitemap.html");
 
-            StringWriter sw = new StringWriter();
+            StringWriter sw = new StringWriter(524288);
             template.process(data, sw);
             String finalHtml = sw.toString();
 

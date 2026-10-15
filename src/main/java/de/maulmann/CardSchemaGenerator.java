@@ -116,6 +116,7 @@ public class CardSchemaGenerator {
             String text = isValid(printRunVal) ?
                     "This card is serially numbered " + serialVal + " out of a total print run of " + printRunVal + "." :
                     "This card is serially numbered " + serialVal + ", making it a strictly limited edition collectible.";
+            items.add(new FaqItem("How rare is this specific card?", text));
         }
 
         if (c.has("Pack Odds")) {

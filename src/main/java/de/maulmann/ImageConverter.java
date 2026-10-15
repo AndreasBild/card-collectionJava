@@ -111,20 +111,21 @@ public class ImageConverter {
                     String baseName = getBaseName(relativePath.getFileName().toString());
                     Path relativeParent = relativePath.getParent();
                     Path currentAvifOutDir = relativeParent != null ? avifOutDir.resolve(relativeParent) : avifOutDir;
-                    File mainAvifFile = currentAvifOutDir.resolve(baseName + ".avif").toFile();
-                    File f200 = currentAvifOutDir.resolve(baseName + "-200w.avif").toFile();
-                    File f400 = currentAvifOutDir.resolve(baseName + "-400w.avif").toFile();
-                    File f600 = currentAvifOutDir.resolve(baseName + "-600w.avif").toFile();
-                    File f900 = currentAvifOutDir.resolve(baseName + "-900w.avif").toFile();
-                    boolean avifMissing = (AVIFENC_PATH != null && (!mainAvifFile.exists() || !f200.exists() || !f400.exists() || !f600.exists() || !f900.exists()));
-
-                    if (!avifMissing && !tracker.hasChanged(file)) {
-                        skippedCount.incrementAndGet();
-                        continue;
-                    }
 
                     executor.submit(() -> {
                         try {
+                            File mainAvifFile = currentAvifOutDir.resolve(baseName + ".avif").toFile();
+                            File f200 = currentAvifOutDir.resolve(baseName + "-200w.avif").toFile();
+                            File f400 = currentAvifOutDir.resolve(baseName + "-400w.avif").toFile();
+                            File f600 = currentAvifOutDir.resolve(baseName + "-600w.avif").toFile();
+                            File f900 = currentAvifOutDir.resolve(baseName + "-900w.avif").toFile();
+                            boolean avifMissing = (AVIFENC_PATH != null && (!mainAvifFile.exists() || !f200.exists() || !f400.exists() || !f600.exists() || !f900.exists()));
+
+                            if (!avifMissing && !tracker.hasChanged(file)) {
+                                skippedCount.incrementAndGet();
+                                return;
+                            }
+
                             boolean wasConverted = convertAndSaveImageSet(file, sourceDir, avifOutDir, tracker);
                             if (wasConverted) {
                                 successCount.incrementAndGet();

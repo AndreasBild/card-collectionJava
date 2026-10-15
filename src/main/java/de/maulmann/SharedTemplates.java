@@ -20,6 +20,18 @@ public class SharedTemplates {
 
     // 1. Thread-safe in-memory cache for all templates
     private static final Map<String, String> TEMPLATE_CACHE = new ConcurrentHashMap<>();
+    private static final Map<String, String> TOPNAV_CACHE = new ConcurrentHashMap<>();
+    private static final Map<String, String> FOOTER_CACHE = new ConcurrentHashMap<>();
+    private static final Map<String, String> CONSENT_BANNER_CACHE = new ConcurrentHashMap<>();
+    private static final Map<String, String> FAVICON_CACHE = new ConcurrentHashMap<>();
+
+    public static void clearCaches() {
+        TEMPLATE_CACHE.clear();
+        TOPNAV_CACHE.clear();
+        FOOTER_CACHE.clear();
+        CONSENT_BANNER_CACHE.clear();
+        FAVICON_CACHE.clear();
+    }
 
     // 2. Pre-compiled, highly efficient, thread-safe date formatter
     private static final SimpleLazyConstant<DateTimeFormatter> TIMESTAMP_FORMATTER =
@@ -91,13 +103,19 @@ public class SharedTemplates {
     }
 
     public static String getConsentBanner(String root) {
-        String template = loadResource("/templates/consent_banner.html");
-        return template.replace("{{ROOT}}", root);
+        String safeRoot = root != null ? root : "";
+        return CONSENT_BANNER_CACHE.computeIfAbsent(safeRoot, r -> {
+            String template = loadResource("/templates/consent_banner.html");
+            return template.replace("{{ROOT}}", r);
+        });
     }
 
     public static String getFavicon(String root) {
-        String template = loadResource("/templates/favicon.html");
-        return template.replace("{{ROOT}}", root);
+        String safeRoot = root != null ? root : "";
+        return FAVICON_CACHE.computeIfAbsent(safeRoot, r -> {
+            String template = loadResource("/templates/favicon.html");
+            return template.replace("{{ROOT}}", r);
+        });
     }
 
     public static String getOpenGraph(String page, String title, String description, String imageURL) {
@@ -241,6 +259,13 @@ public class SharedTemplates {
     }
 
     public static String getTopNav(String root, String activePage) {
+        String safeRoot = root != null ? root : "";
+        String safeActivePage = activePage != null ? activePage : "";
+        String cacheKey = safeRoot + "|" + safeActivePage;
+        return TOPNAV_CACHE.computeIfAbsent(cacheKey, k -> buildTopNav(safeRoot, safeActivePage));
+    }
+
+    private static String buildTopNav(String root, String activePage) {
         String template = loadResource("/templates/topnav.html");
         if (template.isEmpty()) {
             return "<nav><a href=\"" + root + "index.html\" title=\"Home\">Home</a></nav>";
@@ -266,9 +291,12 @@ public class SharedTemplates {
     }
 
     public static String getFooter(String root) {
-        String template = loadResource("/templates/footer.html");
-        // Using a placeholder for stable timestamps that can be replaced after generation
-        return template.replace("{{ROOT}}", root).replace("{{TIME}}", "[[STABLE_TIME]]");
+        String safeRoot = root != null ? root : "";
+        return FOOTER_CACHE.computeIfAbsent(safeRoot, r -> {
+            String template = loadResource("/templates/footer.html");
+            // Using a placeholder for stable timestamps that can be replaced after generation
+            return template.replace("{{ROOT}}", r).replace("{{TIME}}", "[[STABLE_TIME]]");
+        });
     }
 
     public static String getTimestamp() {

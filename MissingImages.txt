@@ -1130,30 +1130,5 @@ Total Missing Entries: 1101 (Front: 549, Back: 552)
 
 ================================================================================
 UNLINKED / ORPHANED SOURCE IMAGES (images/ directory)
-Total Unlinked Files: 16
-Files in source images/ directory without matching cards (possible typos,
-obsolete backup files, wrong season folder, or uncataloged scans):
+Total Unlinked Files: 0 (All source images successfully match cards in collection)
 ================================================================================
-
---- FOLDER: 1996-97 (2 unlinked) ---
-[INVALID EXTENSION / BACKUP] File has invalid or backup extension: Juwan-Howard-Washington-Bullets-1996-97-Upper-Deck-SP-SPX-Force-Base-F2-PSA-7-back.jpg(OLD) -> 1996-97/Juwan-Howard-Washington-Bullets-1996-97-Upper-Deck-SP-SPX-Force-Base-F2-PSA-7-back.jpg(OLD)
-[INVALID EXTENSION / BACKUP] File has invalid or backup extension: Juwan-Howard-Washington-Bullets-1996-97-Upper-Deck-SP-SPX-Force-Base-F2-PSA-7-front.jpg(OLD) -> 1996-97/Juwan-Howard-Washington-Bullets-1996-97-Upper-Deck-SP-SPX-Force-Base-F2-PSA-7-front.jpg(OLD)
-
---- FOLDER: 2021-22 (4 unlinked) ---
-[INVALID EXTENSION / BACKUP] File has invalid or backup extension: Juwan-Howard-Washington-Bullets-2021-22-Topps-Topps-Finest-Base-Set-Red-Refractor-FA-JHW-sn2-PSA-9-back.jpg(OLD) -> 2021-22/Juwan-Howard-Washington-Bullets-2021-22-Topps-Topps-Finest-Base-Set-Red-Refractor-FA-JHW-sn2-PSA-9-back.jpg(OLD)
-[INVALID EXTENSION / BACKUP] File has invalid or backup extension: Juwan-Howard-Washington-Bullets-2021-22-Topps-Topps-Finest-Base-Set-Red-Refractor-FA-JHW-sn2-PSA-9-front.jpg(OLD) -> 2021-22/Juwan-Howard-Washington-Bullets-2021-22-Topps-Topps-Finest-Base-Set-Red-Refractor-FA-JHW-sn2-PSA-9-front.jpg(OLD)
-[INVALID EXTENSION / BACKUP] File has invalid or backup extension: Juwan-Howard-Washington-Bullets-2021-22-Topps-Topps-Finest-Base-Set-White-Refractor-37-sn4-MBA-9-back.jpg(OLD) -> 2021-22/Juwan-Howard-Washington-Bullets-2021-22-Topps-Topps-Finest-Base-Set-White-Refractor-37-sn4-MBA-9-back.jpg(OLD)
-[INVALID EXTENSION / BACKUP] File has invalid or backup extension: Juwan-Howard-Washington-Bullets-2021-22-Topps-Topps-Finest-Base-Set-White-Refractor-37-sn4-MBA-9-front.jpg(OLD) -> 2021-22/Juwan-Howard-Washington-Bullets-2021-22-Topps-Topps-Finest-Base-Set-White-Refractor-37-sn4-MBA-9-front.jpg(OLD)
-
---- FOLDER: 2023-24 (10 unlinked) ---
-[INVALID EXTENSION / BACKUP] File has invalid or backup extension: Juwan-Howard-Washington-Bullets-2023-24-Topps-Topps-Chrome-Base-Set-Frozenfractor-101-sn-4-PSA-9-back.jpg(OLD) -> 2023-24/Juwan-Howard-Washington-Bullets-2023-24-Topps-Topps-Chrome-Base-Set-Frozenfractor-101-sn-4-PSA-9-back.jpg(OLD)
-[INVALID EXTENSION / BACKUP] File has invalid or backup extension: Juwan-Howard-Washington-Bullets-2023-24-Topps-Topps-Chrome-Base-Set-Frozenfractor-101-sn-4-PSA-9-front.jpg(OLD) -> 2023-24/Juwan-Howard-Washington-Bullets-2023-24-Topps-Topps-Chrome-Base-Set-Frozenfractor-101-sn-4-PSA-9-front.jpg(OLD)
-[INVALID EXTENSION / BACKUP] File has invalid or backup extension: Juwan-Howard-Washington-Bullets-2023-24-Topps-Topps-Chrome-Base-Set-Purple-Sapphire-Refractor-101-sn1-PSA-9-back.jpg(OLD) -> 2023-24/Juwan-Howard-Washington-Bullets-2023-24-Topps-Topps-Chrome-Base-Set-Purple-Sapphire-Refractor-101-sn1-PSA-9-back.jpg(OLD)
-[INVALID EXTENSION / BACKUP] File has invalid or backup extension: Juwan-Howard-Washington-Bullets-2023-24-Topps-Topps-Chrome-Base-Set-Purple-Sapphire-Refractor-101-sn1-PSA-9-front.jpg(OLD) -> 2023-24/Juwan-Howard-Washington-Bullets-2023-24-Topps-Topps-Chrome-Base-Set-Purple-Sapphire-Refractor-101-sn1-PSA-9-front.jpg(OLD)
-[INVALID EXTENSION / BACKUP] File has invalid or backup extension: Juwan-Howard-Washington-Bullets-2023-24-Topps-Topps-Chrome-Base-Set-Superfractor-101-sn1-PSA-10-back.jpg(OLD) -> 2023-24/Juwan-Howard-Washington-Bullets-2023-24-Topps-Topps-Chrome-Base-Set-Superfractor-101-sn1-PSA-10-back.jpg(OLD)
-[INVALID EXTENSION / BACKUP] File has invalid or backup extension: Juwan-Howard-Washington-Bullets-2023-24-Topps-Topps-Chrome-Base-Set-Superfractor-101-sn1-PSA-10-front.jpg(OLD) -> 2023-24/Juwan-Howard-Washington-Bullets-2023-24-Topps-Topps-Chrome-Base-Set-Superfractor-101-sn1-PSA-10-front.jpg(OLD)
-[INVALID EXTENSION / BACKUP] File has invalid or backup extension: Juwan-Howard-Washington-Wizards-2023-24-Panini-Panini-Donruss-Elite-Impact-Impressions-Asia-Red-II-HOW-sn9-PSA-9-back.jpg(OLD) -> 2023-24/Juwan-Howard-Washington-Wizards-2023-24-Panini-Panini-Donruss-Elite-Impact-Impressions-Asia-Red-II-HOW-sn9-PSA-9-back.jpg(OLD)
-[INVALID EXTENSION / BACKUP] File has invalid or backup extension: Juwan-Howard-Washington-Wizards-2023-24-Panini-Panini-Donruss-Elite-Impact-Impressions-Asia-Red-II-HOW-sn9-PSA-9-front.jpg(OLD) -> 2023-24/Juwan-Howard-Washington-Wizards-2023-24-Panini-Panini-Donruss-Elite-Impact-Impressions-Asia-Red-II-HOW-sn9-PSA-9-front.jpg(OLD)
-[INVALID EXTENSION / BACKUP] File has invalid or backup extension: Juwan-Howard-Washington-Wizards-2023-24-Topps-Topps-Chrome-72-Topps-Autographs-Purple-Refractor-TA-JHO-sn8-PSA-10-back.jpg(OLD) -> 2023-24/Juwan-Howard-Washington-Wizards-2023-24-Topps-Topps-Chrome-72-Topps-Autographs-Purple-Refractor-TA-JHO-sn8-PSA-10-back.jpg(OLD)
-[INVALID EXTENSION / BACKUP] File has invalid or backup extension: Juwan-Howard-Washington-Wizards-2023-24-Topps-Topps-Chrome-72-Topps-Autographs-Purple-Refractor-TA-JHO-sn8-PSA-10-front.jpg(OLD) -> 2023-24/Juwan-Howard-Washington-Wizards-2023-24-Topps-Topps-Chrome-72-Topps-Autographs-Purple-Refractor-TA-JHO-sn8-PSA-10-front.jpg(OLD)
-

@@ -695,7 +695,7 @@ public class SiteBuilderPipeline {
                 FileGenerator.buildCollectionOverview();
                 FileGenerator.buildOtherCollections();
                 FileGenerator.buildStaticPages();
-                List<CardData> cards = CardPageGenerator.run();
+                List<CardData> cards = CardPageGenerator.run(false);
                 generatedCards.set(cards);
 
                 SitemapGenerator.generate(cards); // Sitemap & robots.txt now ready
