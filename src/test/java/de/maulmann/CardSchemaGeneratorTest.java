@@ -371,4 +371,44 @@ class CardSchemaGeneratorTest {
         }
         assertTrue(foundOddsProp, "Product schema additionalProperty must contain Pack Insertion Odds");
     }
+
+    @Test
+    void testStandaloneSerialGeneratesRarityFaq() {
+        CardJson c = CardJson.builder()
+                .player("Juwan Howard")
+                .season("1998-99")
+                .company("Fleer")
+                .brand("Brilliants")
+                .cardNumber("45")
+                .serialNumber("12")
+                .build();
+
+        CardData cardData = new CardData(c, "brilliants-12");
+        var faqs = CardSchemaGenerator.computeFaqItems(cardData);
+        var rarityFaq = faqs.stream()
+                .filter(f -> "How rare is this specific card?".equals(f.question()))
+                .findFirst();
+
+        assertTrue(rarityFaq.isPresent(), "Standalone Serial must generate 'How rare is this specific card?' FAQ");
+        assertEquals("This card is serially numbered 12, making it a strictly limited edition collectible.", rarityFaq.get().answer());
+
+        // Also test with print run
+        CardJson cWithPrintRun = CardJson.builder()
+                .player("Juwan Howard")
+                .season("1998-99")
+                .company("Fleer")
+                .brand("Brilliants")
+                .cardNumber("45")
+                .serialNumber("12")
+                .printRun(25)
+                .build();
+        CardData cardWithPrintRun = new CardData(cWithPrintRun, "brilliants-12-25");
+        var faqs2 = CardSchemaGenerator.computeFaqItems(cardWithPrintRun);
+        var rarityFaq2 = faqs2.stream()
+                .filter(f -> "How rare is this specific card?".equals(f.question()))
+                .findFirst();
+
+        assertTrue(rarityFaq2.isPresent(), "Serial with print run must generate rarity FAQ");
+        assertEquals("This card is serially numbered 12 out of a total print run of 25.", rarityFaq2.get().answer());
+    }
 }

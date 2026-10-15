@@ -257,7 +257,7 @@ public class FileGenerator {
 
         Template template = CardUtils.getFreeMarkerConfig().getTemplate(templateName);
 
-        StringWriter stringWriter = new StringWriter();
+        StringWriter stringWriter = new StringWriter(1048576);
         template.process(data, stringWriter);
         String finalHtml = stringWriter.toString();
 

@@ -94,6 +94,9 @@ public class CardPageGenerator {
     private static final Pattern PATTERN_ALT_BASE_NEG = Pattern.compile("-sn-(\\d+)");
     private static final Pattern PATTERN_ALT_VAR1 = Pattern.compile("-[^-]+-(\\d+|[A-Z0-9]+)$");
     private static final Pattern PATTERN_ALT_VAR2 = Pattern.compile("-[^-]+-[^-]+-(\\d+|[A-Z0-9]+)$");
+    private static final Pattern SEASON_YEAR_PATTERN = Pattern.compile("(?i)\\b((?:19|20)\\d{2}(?:-\\d{2})?)\\b");
+    private static final String[] STANDARD_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".avif", ".gif", ".bmp"};
+    private static final String[] CHECK_IMAGE_EXTENSIONS = {".avif", ".jpg", ".jpeg", ".png", ".webp"};
 
     private static volatile Set<String> EXISTING_IMAGE_KEYS = null;
 
@@ -133,6 +136,10 @@ public class CardPageGenerator {
     }
 
     public static List<de.maulmann.CardData> run() {
+        return run(true);
+    }
+
+    public static List<de.maulmann.CardData> run(boolean generateReport) {
         log.info("Starting high-speed Card Page Generation...");
         long startTime = System.currentTimeMillis();
         EXISTING_IMAGE_KEYS = null; // Refresh image cache
@@ -203,7 +210,9 @@ public class CardPageGenerator {
         }
 
         cleanOrphanedCardFiles(allProcessedCards);
-        generateMissingImagesReport(allProcessedCards);
+        if (generateReport) {
+            generateMissingImagesReport(allProcessedCards);
+        }
 
         long endTime = System.currentTimeMillis();
         log.info("All card pages generated in {} ms.", (endTime - startTime));
@@ -484,7 +493,7 @@ public class CardPageGenerator {
 
         try {
             Template template = fmConfig.getTemplate("card-detail.ftlh");
-            StringWriter sw = new StringWriter();
+            StringWriter sw = new StringWriter(131072);
             template.process(data, sw);
             String finalHtml = sw.toString();
 
@@ -584,14 +593,16 @@ public class CardPageGenerator {
     private static String resolveDiskImageBaseInternal(String seasonFolder, String imageBaseName, de.maulmann.CardData c) {
         if (checkExists(seasonFolder, imageBaseName)) return imageBaseName;
 
-        String altBase = PATTERN_ALT_BASE.matcher(imageBaseName).replaceAll("-sn$1");
-        if (checkExists(seasonFolder, altBase)) return altBase;
+        if (imageBaseName.contains("-sn")) {
+            String altBase = PATTERN_ALT_BASE.matcher(imageBaseName).replaceAll("-sn$1");
+            if (checkExists(seasonFolder, altBase)) return altBase;
 
-        String altBaseNoZero = PATTERN_ALT_BASE_NO_ZERO.matcher(altBase).replaceAll("-sn$1$2");
-        if (checkExists(seasonFolder, altBaseNoZero)) return altBaseNoZero;
+            String altBaseNoZero = PATTERN_ALT_BASE_NO_ZERO.matcher(altBase).replaceAll("-sn$1$2");
+            if (checkExists(seasonFolder, altBaseNoZero)) return altBaseNoZero;
 
-        String altBaseNegative = PATTERN_ALT_BASE_NEG.matcher(imageBaseName).replaceAll("-sn$1");
-        if (checkExists(seasonFolder, altBaseNegative)) return altBaseNegative;
+            String altBaseNegative = PATTERN_ALT_BASE_NEG.matcher(imageBaseName).replaceAll("-sn$1");
+            if (checkExists(seasonFolder, altBaseNegative)) return altBaseNegative;
+        }
 
         String altVariant1 = PATTERN_ALT_VAR1.matcher(imageBaseName).replaceAll("-Base-$1");
         if (checkExists(seasonFolder, altVariant1)) return altVariant1;
@@ -765,7 +776,7 @@ public class CardPageGenerator {
         int totalFrontMissing = 0;
         int totalBackMissing = 0;
 
-        String[] extensions = {".avif", ".jpg", ".jpeg", ".png", ".webp"};
+        String[] extensions = CHECK_IMAGE_EXTENSIONS;
         Set<String> validImageKeys = new HashSet<>();
 
         for (de.maulmann.CardData c : cards) {
@@ -836,8 +847,6 @@ public class CardPageGenerator {
         Map<String, List<String>> unlinkedByFolder = new TreeMap<>();
         int totalUnlinked = 0;
         Path imagesDir = Paths.get("images");
-        Pattern seasonPattern = Pattern.compile("(?i)\\b((?:19|20)\\d{2}(?:-\\d{2})?)\\b");
-        String[] standardExtensions = {".jpg", ".jpeg", ".png", ".webp", ".avif", ".gif", ".bmp"};
 
         if (Files.exists(imagesDir)) {
             try (Stream<Path> stream = Files.walk(imagesDir)) {
@@ -851,7 +860,7 @@ public class CardPageGenerator {
 
                     String lowerName = fileName.toLowerCase();
                     String stem = null;
-                    for (String ext : standardExtensions) {
+                    for (String ext : STANDARD_IMAGE_EXTENSIONS) {
                         if (lowerName.endsWith(ext)) {
                             // Check for consecutive dots like ..jpg
                             if (!lowerName.endsWith(".." + ext.substring(1))) {
@@ -869,7 +878,7 @@ public class CardPageGenerator {
                     } else {
                         String key = folder.toLowerCase() + "/" + stem.toLowerCase();
                         if (!validImageKeys.contains(key)) {
-                            var matcher = seasonPattern.matcher(fileName);
+                            var matcher = SEASON_YEAR_PATTERN.matcher(fileName);
                             String detectedSeason = null;
                             while (matcher.find()) {
                                 String s = matcher.group(1);
@@ -938,17 +947,19 @@ public class CardPageGenerator {
         set.add(seasonLower + "/" + baseLower + "-front");
         set.add(seasonLower + "/" + baseLower + "-back");
 
-        String altBase = PATTERN_ALT_BASE.matcher(base).replaceAll("-sn$1");
-        set.add(seasonLower + "/" + altBase.toLowerCase() + "-front");
-        set.add(seasonLower + "/" + altBase.toLowerCase() + "-back");
+        if (base.contains("-sn")) {
+            String altBase = PATTERN_ALT_BASE.matcher(base).replaceAll("-sn$1");
+            set.add(seasonLower + "/" + altBase.toLowerCase() + "-front");
+            set.add(seasonLower + "/" + altBase.toLowerCase() + "-back");
 
-        String altBaseNoZero = PATTERN_ALT_BASE_NO_ZERO.matcher(altBase).replaceAll("-sn$1$2");
-        set.add(seasonLower + "/" + altBaseNoZero.toLowerCase() + "-front");
-        set.add(seasonLower + "/" + altBaseNoZero.toLowerCase() + "-back");
+            String altBaseNoZero = PATTERN_ALT_BASE_NO_ZERO.matcher(altBase).replaceAll("-sn$1$2");
+            set.add(seasonLower + "/" + altBaseNoZero.toLowerCase() + "-front");
+            set.add(seasonLower + "/" + altBaseNoZero.toLowerCase() + "-back");
 
-        String altBaseNegative = PATTERN_ALT_BASE_NEG.matcher(base).replaceAll("-sn$1");
-        set.add(seasonLower + "/" + altBaseNegative.toLowerCase() + "-front");
-        set.add(seasonLower + "/" + altBaseNegative.toLowerCase() + "-back");
+            String altBaseNegative = PATTERN_ALT_BASE_NEG.matcher(base).replaceAll("-sn$1");
+            set.add(seasonLower + "/" + altBaseNegative.toLowerCase() + "-front");
+            set.add(seasonLower + "/" + altBaseNegative.toLowerCase() + "-back");
+        }
 
         String altVar1 = PATTERN_ALT_VAR1.matcher(base).replaceAll("-Base-$1");
         set.add(seasonLower + "/" + altVar1.toLowerCase() + "-front");

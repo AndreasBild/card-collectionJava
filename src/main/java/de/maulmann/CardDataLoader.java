@@ -9,7 +9,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +23,11 @@ public class CardDataLoader {
 
     private static final Logger log = LoggerFactory.getLogger(CardDataLoader.class);
     private static final ObjectMapper MAPPER = new ObjectMapper();
+    private static final Map<String, List<CardJson>> RAW_CARDS_CACHE = new ConcurrentHashMap<>();
+
+    public static void clearRawCardsCache() {
+        RAW_CARDS_CACHE.clear();
+    }
 
     public static List<CardJson> loadCardsFromJson(String jsonPath) {
         return loadCardsFromJson(jsonPath, MarketDataCache.loadDefault(), BeckettValueCache.loadDefault(), ValuationOverridesLoader.loadDefault());
@@ -91,12 +98,17 @@ public class CardDataLoader {
     }
 
     public static List<CardJson> loadRawCards(String jsonPath) {
+        if (jsonPath == null) return Collections.emptyList();
+        return RAW_CARDS_CACHE.computeIfAbsent(jsonPath, CardDataLoader::readRawCardsFromDisk);
+    }
+
+    private static List<CardJson> readRawCardsFromDisk(String jsonPath) {
         Path path = Paths.get(jsonPath);
 
         // 1. Try local file system path first
         if (Files.exists(path)) {
             try (InputStream is = Files.newInputStream(path)) {
-                return MAPPER.readValue(is, new TypeReference<List<CardJson>>() {});
+                return Collections.unmodifiableList(MAPPER.readValue(is, new TypeReference<List<CardJson>>() {}));
             } catch (IOException e) {
                 log.error("Failed to load cards from file path: {}", jsonPath, e);
             }
@@ -106,7 +118,7 @@ public class CardDataLoader {
         String resourcePath = jsonPath.startsWith("/") ? jsonPath : "/" + jsonPath;
         try (InputStream is = CardDataLoader.class.getResourceAsStream(resourcePath)) {
             if (is != null) {
-                return MAPPER.readValue(is, new TypeReference<List<CardJson>>() {});
+                return Collections.unmodifiableList(MAPPER.readValue(is, new TypeReference<List<CardJson>>() {}));
             }
         } catch (IOException e) {
             log.error("Failed to load cards from classpath resource: {}", jsonPath, e);
