@@ -774,7 +774,9 @@ public class SitemapGenerator {
                     paths.filter(Files::isRegularFile)
                             .filter(p -> p.toString().endsWith(".html"))
                             .forEach(allPaths::add);
-                } catch (IOException ignored) {}
+                } catch (IOException ex) {
+                    log.warn("Could not scan {} for llms-full fallback: {}", outputDirPath, ex.getMessage());
+                }
             }
             for (Path path : allPaths) {
                 String relativePath = outputDirPath.relativize(path).toString().replace("\\", "/");
@@ -921,7 +923,9 @@ public class SitemapGenerator {
                     paths.filter(Files::isRegularFile)
                             .filter(p -> p.toString().endsWith(".html"))
                             .forEach(allPaths::add);
-                } catch (IOException ignored) {}
+                } catch (IOException ex) {
+                    log.warn("Could not scan {} for RSS fallback: {}", outputDirPath, ex.getMessage());
+                }
             }
 
             for (Path path : allPaths) {
