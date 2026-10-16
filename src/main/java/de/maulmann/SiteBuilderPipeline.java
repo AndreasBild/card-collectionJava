@@ -683,8 +683,10 @@ public class SiteBuilderPipeline {
         log.info("\n[PHASE 1 & 2] Launching HTML Generation and Image AVIF Conversion in parallel...");
 
         AtomicReference<List<CardData>> generatedCards = new AtomicReference<>();
+        java.util.concurrent.Future<?> htmlPhase;
+        java.util.concurrent.Future<?> imagePhase;
         try (ExecutorService phaseExecutor = Executors.newVirtualThreadPerTaskExecutor()) {
-            phaseExecutor.submit(() -> {
+            htmlPhase = phaseExecutor.submit(() -> {
                 log.info("  -> [PHASE 1] Generating HTML files and Sitemap...");
                 FileGenerator.setTimestampTracker(timeTracker);
                 CardPageGenerator.setTimestampTracker(timeTracker);
@@ -702,11 +704,15 @@ public class SiteBuilderPipeline {
                 timeTracker.save();
             });
 
-            phaseExecutor.submit(() -> {
+            imagePhase = phaseExecutor.submit(() -> {
                 log.info("  -> [PHASE 2] Converting images to AVIF ...");
                 ImageConverter.main(new String[]{"--no-report"});
             });
         }
+
+        // The executor has drained; surface any failure instead of silently continuing with partial output.
+        awaitPhase("PHASE 1 (HTML generation)", htmlPhase);
+        awaitPhase("PHASE 2 (image conversion)", imagePhase);
 
         // --- POST-PHASE: Refresh image keys and update MissingImages.txt now that AVIF conversion is complete ---
         List<CardData> cards = generatedCards.get();
@@ -715,6 +721,18 @@ public class SiteBuilderPipeline {
             CardPageGenerator.generateMissingImagesReport(cards);
         }
         return cards;
+    }
+
+    private static void awaitPhase(String name, java.util.concurrent.Future<?> future) {
+        try {
+            future.get();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new IllegalStateException(name + " interrupted", e);
+        } catch (java.util.concurrent.ExecutionException e) {
+            log.error("{} failed", name, e.getCause());
+            throw new IllegalStateException(name + " failed", e.getCause());
+        }
     }
 
 }
