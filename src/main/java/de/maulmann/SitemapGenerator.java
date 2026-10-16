@@ -95,7 +95,7 @@ public class SitemapGenerator {
                     sitemapFiles.filter(p -> p.getFileName().toString().startsWith("sitemap") &&
                                             (p.getFileName().toString().endsWith(".gz") || p.getFileName().toString().endsWith(".xml")))
                                 .forEach(p -> {
-                                    try { Files.deleteIfExists(p); } catch (Exception ignored) {}
+                                    try { Files.deleteIfExists(p); } catch (Exception ex) { log.warn("Could not delete old sitemap file {}: {}", p, ex.getMessage()); }
                                 });
                 }
             }
@@ -592,7 +592,7 @@ public class SitemapGenerator {
 
                 int pr = 0;
                 if (CardUtils.isValidForDisplay(printRunStr)) {
-                    try { pr = Integer.parseInt(printRunStr); } catch (Exception ignored) {}
+                    try { pr = Integer.parseInt(printRunStr); } catch (NumberFormatException ex) { log.debug("Non-numeric print run '{}' treated as 0", printRunStr); }
                 }
 
                 boolean is1of1 = pr == 1 || "1/1".equalsIgnoreCase(serialStr) || variant.contains("1/1") || variant.contains("masterpiece");
@@ -828,7 +828,8 @@ public class SitemapGenerator {
                         sb.append("- Attributes: ").append(String.join(" | ", specs)).append("\n");
                     }
                     sb.append("\n");
-                } catch (Exception ignored) {
+                } catch (Exception ex) {
+                    log.debug("Could not build detailed llms-full entry for {}: {}", fileName, ex.getMessage());
                     sb.append("- ").append(fileName).append(": ").append(loc).append("\n");
                 }
             }
@@ -962,7 +963,8 @@ public class SitemapGenerator {
 
                     addedCount++;
                     if (addedCount >= itemCap) break;
-                } catch (Exception ignored) {
+                } catch (Exception ex) {
+                    log.warn("Skipping RSS item due to error: {}", ex.getMessage());
                 }
             }
         }

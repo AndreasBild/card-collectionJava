@@ -60,7 +60,7 @@ public class LocalDevPipeline {
             if ("--serve".equalsIgnoreCase(arg) || "-s".equalsIgnoreCase(arg) || "serve".equalsIgnoreCase(arg)) {
                 serve = true;
             } else if (arg.startsWith("--port=")) {
-                try { port = Integer.parseInt(arg.substring(7)); } catch (Exception ignored) {}
+                try { port = Integer.parseInt(arg.substring(7)); } catch (NumberFormatException ex) { log.warn("Invalid --port value '{}', using {}", arg.substring(7), port); }
             }
         }
 

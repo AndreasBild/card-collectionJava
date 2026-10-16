@@ -305,7 +305,8 @@ public class SportsCardsProParser {
             String sanitized = text.replaceAll("[^0-9.]", "").trim();
             if (sanitized.isEmpty()) return null;
             return Double.parseDouble(sanitized);
-        } catch (Exception ignored) {
+        } catch (NumberFormatException ex) {
+            logger.debug("Could not parse price '{}'", text);
             return null;
         }
     }
