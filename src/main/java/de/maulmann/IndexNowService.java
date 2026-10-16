@@ -146,6 +146,7 @@ public class IndexNowService {
         if (envKey != null && !envKey.isBlank()) {
             return envKey.trim();
         }
+        log.warn("INDEXNOW_API_KEY not set; falling back to the built-in default key.");
         return DEFAULT_KEY;
     }
 
