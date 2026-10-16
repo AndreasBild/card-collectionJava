@@ -48,4 +48,50 @@ class FileTrackerTest {
         assertEquals(hash, reloadedTracker.getStoredHash(testFile));
         assertFalse(reloadedTracker.hasChanged(testFile));
     }
+
+    @Test
+    @DisplayName("Unchanged size+mtime is treated as unchanged and survives save/reload")
+    void testFastPathAfterReload() throws IOException {
+        Path propsFile = tempDir.resolve("fast.properties");
+        Path file = tempDir.resolve("a.txt");
+        Files.writeString(file, "content-one");
+
+        FileTracker tracker = new FileTracker(propsFile.toString());
+        assertTrue(tracker.hasChanged(file), "unknown file counts as changed");
+        tracker.updateHash(file);
+        assertFalse(tracker.hasChanged(file));
+        tracker.save();
+
+        assertFalse(new FileTracker(propsFile.toString()).hasChanged(file));
+        assertFalse(Files.exists(tempDir.resolve("fast.properties.tmp")), "no temp file left behind");
+    }
+
+    @Test
+    @DisplayName("Changed content is detected even when the size stays the same (mtime differs)")
+    void testSameSizeContentChangeDetected() throws IOException {
+        Path propsFile = tempDir.resolve("same-size.properties");
+        Path file = tempDir.resolve("b.txt");
+        Files.writeString(file, "aaaa");
+        FileTracker tracker = new FileTracker(propsFile.toString());
+        tracker.updateHash(file);
+
+        Files.writeString(file, "bbbb");
+        Files.setLastModifiedTime(file,
+                java.nio.file.attribute.FileTime.fromMillis(System.currentTimeMillis() + 5_000));
+        assertTrue(tracker.hasChanged(file));
+    }
+
+    @Test
+    @DisplayName("Touched but identical content is not reported as changed")
+    void testTouchWithoutContentChange() throws IOException {
+        Path propsFile = tempDir.resolve("touch.properties");
+        Path file = tempDir.resolve("c.txt");
+        Files.writeString(file, "same");
+        FileTracker tracker = new FileTracker(propsFile.toString());
+        tracker.updateHash(file);
+
+        Files.setLastModifiedTime(file,
+                java.nio.file.attribute.FileTime.fromMillis(System.currentTimeMillis() + 5_000));
+        assertFalse(tracker.hasChanged(file));
+    }
 }
