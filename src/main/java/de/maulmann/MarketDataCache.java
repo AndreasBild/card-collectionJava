@@ -4,9 +4,11 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import java.io.IOException;
+import java.nio.file.AtomicMoveNotSupportedException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
@@ -59,6 +61,13 @@ public class MarketDataCache {
             }
         } catch (IOException e) {
             logger.warn("Failed to read market data cache from {}: {}", cachePath, e.getMessage());
+            // Keep the unreadable file: otherwise the next save() would overwrite it with an empty cache.
+            try {
+                Files.copy(cachePath, cachePath.resolveSibling(cachePath.getFileName() + ".corrupt"),
+                        StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException copyError) {
+                logger.warn("Could not preserve unreadable cache {}: {}", cachePath, copyError.getMessage());
+            }
         }
         return cache;
     }
@@ -136,7 +145,18 @@ public class MarketDataCache {
         if (path.getParent() != null) {
             Files.createDirectories(path.getParent());
         }
-        MAPPER.writeValue(path.toFile(), entriesById);
+        // Write to a temp file first, keep the previous version as .bak, then move atomically so a
+        // crash mid-write can never leave a truncated cache behind.
+        Path tmp = path.resolveSibling(path.getFileName() + ".tmp");
+        MAPPER.writeValue(tmp.toFile(), entriesById);
+        if (Files.exists(path)) {
+            Files.copy(path, path.resolveSibling(path.getFileName() + ".bak"), StandardCopyOption.REPLACE_EXISTING);
+        }
+        try {
+            Files.move(tmp, path, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
+        } catch (AtomicMoveNotSupportedException e) {
+            Files.move(tmp, path, StandardCopyOption.REPLACE_EXISTING);
+        }
         logger.info("Successfully persisted {} market data entries to {}", entriesById.size(), path);
         if (DEFAULT_CACHE_PATH.equals(path)) {
             refreshDefault();
