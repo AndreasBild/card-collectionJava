@@ -45,3 +45,11 @@ $RECYCLE.BIN/
 content/json/*.json.bak
 content/json/*.json.tmp
 content/json/*.json.corrupt
+
+# Credentials & secrets (never commit)
+firebase/
+.env
+.env.*
+*adminsdk*.json
+*.pem
+*.p12

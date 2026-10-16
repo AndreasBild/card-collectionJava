@@ -72,7 +72,9 @@ public class LocalDevPipeline {
     private static void startLocalServer(int port) {
         try {
             Path outputDir = Paths.get(OUTPUT_DIR).toAbsolutePath();
-            HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
+            Path realOutputDir = outputDir.toRealPath();
+            // Loopback only: the dev preview must not be reachable from the local network.
+            HttpServer server = HttpServer.create(new InetSocketAddress(java.net.InetAddress.getLoopbackAddress(), port), 0);
             server.createContext("/", exchange -> {
                 try {
                     String rawPath = exchange.getRequestURI().getPath();
@@ -81,7 +83,9 @@ public class LocalDevPipeline {
                     }
                     // Prevent path traversal
                     Path resolved = outputDir.resolve(rawPath.startsWith("/") ? rawPath.substring(1) : rawPath).normalize();
-                    if (!resolved.startsWith(outputDir) || !Files.exists(resolved) || Files.isDirectory(resolved)) {
+                    // Resolve symlinks too, so a link inside output/ cannot point outside it.
+                    Path real = Files.exists(resolved) ? resolved.toRealPath() : resolved;
+                    if (!resolved.startsWith(outputDir) || !real.startsWith(realOutputDir) || !Files.exists(resolved) || Files.isDirectory(resolved)) {
                         String notFound = "404 Not Found";
                         byte[] notFoundBytes = notFound.getBytes(StandardCharsets.UTF_8);
                         exchange.sendResponseHeaders(404, notFoundBytes.length);
