@@ -266,9 +266,24 @@ public class ImageConverter {
     private static final String AVIFENC_PATH = findAvifenc();
 
 
+    /** Caps concurrent avifenc processes (each is already multi-threaded) to avoid process/memory exhaustion. */
+    private static final int MAX_CONCURRENT_ENCODES = Math.max(1, Runtime.getRuntime().availableProcessors() / 2);
+    private static final java.util.concurrent.Semaphore ENCODE_PERMITS =
+            new java.util.concurrent.Semaphore(MAX_CONCURRENT_ENCODES);
+    private static final int AVIFENC_TIMEOUT_SECONDS = 120;
+
     private static void writeAvifViaCLI(java.awt.image.BufferedImage orig, File outputFile, int targetW, int targetH, int quality) {
         if (AVIFENC_PATH == null || orig == null) return;
+        // Temp file keeps the .avif extension (avifenc infers format from it) and lives next to the target
+        // so the final move is atomic. Leftovers are removed by cleanOrphanedAvifImages.
+        Path finalPath = outputFile.toPath();
+        Path tmpPath = finalPath.resolveSibling(".part-" + outputFile.getName());
+        boolean acquired = false;
+        Process p = null;
         try {
+            ENCODE_PERMITS.acquire();
+            acquired = true;
+
             java.awt.image.BufferedImage resized = new java.awt.image.BufferedImage(targetW, targetH, java.awt.image.BufferedImage.TYPE_INT_RGB);
             java.awt.Graphics2D g = resized.createGraphics();
             g.setRenderingHint(java.awt.RenderingHints.KEY_INTERPOLATION, java.awt.RenderingHints.VALUE_INTERPOLATION_BILINEAR);
@@ -282,23 +297,48 @@ public class ImageConverter {
                     "-s", "6",
                     "-q", String.valueOf(quality),
                     "--yuv", "420",
-                    "-j", "8",
-                    outputFile.getAbsolutePath()
+                    "-j", "2",
+                    tmpPath.toAbsolutePath().toString()
             );
-            Process p = pb.start();
+            // Never let an unread output pipe block the encoder.
+            pb.redirectErrorStream(true);
+            pb.redirectOutput(ProcessBuilder.Redirect.DISCARD);
+            p = pb.start();
             try (java.io.OutputStream os = p.getOutputStream()) {
                 ImageIO.write(resized, "png", os);
                 os.flush();
             }
-            int exitCode = p.waitFor();
+            if (!p.waitFor(AVIFENC_TIMEOUT_SECONDS, java.util.concurrent.TimeUnit.SECONDS)) {
+                p.destroyForcibly();
+                log.error("avifenc timed out after {}s for {}", AVIFENC_TIMEOUT_SECONDS, outputFile.getName());
+                Files.deleteIfExists(tmpPath);
+                return;
+            }
+            int exitCode = p.exitValue();
             if (exitCode != 0) {
                 log.warn("avifenc exited with code {} for {}", exitCode, outputFile.getName());
+                Files.deleteIfExists(tmpPath);
+                return;
+            }
+            try {
+                Files.move(tmpPath, finalPath, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
+            } catch (java.nio.file.AtomicMoveNotSupportedException e) {
+                Files.move(tmpPath, finalPath, StandardCopyOption.REPLACE_EXISTING);
             }
         } catch (InterruptedException ie) {
             Thread.currentThread().interrupt();
+            if (p != null) p.destroyForcibly();
             log.error("AVIF conversion interrupted for {}: {}", outputFile.getName(), ie.getMessage());
         } catch (Exception e) {
-            log.error("AVIF conversion error for {}: {}", outputFile.getName(), e.getMessage());
+            if (p != null && p.isAlive()) p.destroyForcibly();
+            log.error("AVIF conversion error for {}: {}", outputFile.getName(), e.getMessage(), e);
+        } finally {
+            try {
+                Files.deleteIfExists(tmpPath);
+            } catch (IOException ignored) {
+                // best effort; orphan cleanup removes stale .part files
+            }
+            if (acquired) ENCODE_PERMITS.release();
         }
     }
 
