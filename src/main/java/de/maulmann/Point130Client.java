@@ -559,7 +559,8 @@ public class Point130Client {
             try {
                 LocalDate parsed = LocalDate.parse(dateStr, DATE_PARSER);
                 return parsed.toString();
-            } catch (Exception ignored) {
+            } catch (Exception ex) {
+                logger.debug("Could not parse sale date '{}': {}", dateStr, ex.getMessage());
             }
         }
 

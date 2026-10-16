@@ -136,7 +136,9 @@ public class HtmlToJsonConverter {
                             cardBuilder.serialNumber(sn);
                             try {
                                 cardBuilder.printRun(Integer.parseInt(parts[1].trim()));
-                            } catch (Exception ignored) {}
+                            } catch (NumberFormatException ex) {
+                                log.debug("Ignoring non-numeric print run '{}'", parts[1].trim());
+                            }
                         } else {
                             String sn = val.replace("#", "").trim();
                             if ("—".equals(sn) || "-".equals(sn)) {
@@ -149,7 +151,9 @@ public class HtmlToJsonConverter {
                     case "printrun":
                         try {
                             cardBuilder.printRun(Integer.parseInt(val.trim()));
-                        } catch (Exception ignored) {}
+                        } catch (NumberFormatException ex) {
+                            log.debug("Ignoring non-numeric print run '{}'", val.trim());
+                        }
                         break;
                     case "grading company":
                     case "grading co.":

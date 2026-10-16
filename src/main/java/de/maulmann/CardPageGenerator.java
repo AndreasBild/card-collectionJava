@@ -231,7 +231,7 @@ public class CardPageGenerator {
                     .filter(p -> p.toString().endsWith(".html"))
                     .forEach(p -> {
                         if (!validPaths.contains(p.toAbsolutePath().normalize())) {
-                            try { Files.deleteIfExists(p); } catch (Exception ignored) {}
+                            try { Files.deleteIfExists(p); } catch (Exception ex) { log.warn("Could not delete stale page {}: {}", p, ex.getMessage()); }
                         }
                     });
         } catch (Exception e) {
@@ -659,7 +659,9 @@ public class CardPageGenerator {
                         if (img != null) {
                             return img.getWidth() > img.getHeight();
                         }
-                    } catch (Exception ignored) {}
+                    } catch (Exception ex) {
+                        log.debug("Could not read image dimensions for orientation check ({}): {}", p, ex.getMessage());
+                    }
                 }
             }
             return false;

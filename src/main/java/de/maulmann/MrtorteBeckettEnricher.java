@@ -36,6 +36,9 @@ public class MrtorteBeckettEnricher {
 
     private static final Pattern PATTERN_SEASON = Pattern.compile("^(\\d{4}(?:-\\d{2})?)");
     private static final Pattern PATTERN_CARD_NUM = Pattern.compile("#([A-Za-z0-9\\-/]+)");
+    private static final Pattern PATTERN_ROW = Pattern.compile("\\brow\\s*(\\d+)\\b");
+    private static final Pattern PATTERN_SEAT = Pattern.compile("\\bseat\\s*(\\d+)\\b");
+    private static final Pattern PATTERN_LEADING_DIGITS = Pattern.compile("^(\\d+)");
 
     private final HttpClient httpClient;
 
@@ -204,10 +207,10 @@ public class MrtorteBeckettEnricher {
             }
 
             // Row alignment for Flair Showcase
-            Matcher lRowM = Pattern.compile("\\brow\\s*(\\d+)\\b").matcher(clean(lc.get("Number")));
+            Matcher lRowM = PATTERN_ROW.matcher(clean(lc.get("Number")));
             if (lRowM.find()) {
                 String lRow = lRowM.group(1);
-                Matcher sRowM = Pattern.compile("\\brow\\s*(\\d+)\\b").matcher(sName);
+                Matcher sRowM = PATTERN_ROW.matcher(sName);
                 if (sRowM.find()) {
                     String sRow = sRowM.group(1);
                     if (!lRow.equals(sRow)) {
@@ -320,11 +323,11 @@ public class MrtorteBeckettEnricher {
     private static String extractNumberToken(String numStr) {
         if (numStr == null || numStr.isBlank()) return "";
         String s = numStr.trim().toLowerCase(Locale.ROOT).replace("#", "");
-        Matcher seatM = Pattern.compile("\\bseat\\s*(\\d+)\\b").matcher(s);
+        Matcher seatM = PATTERN_SEAT.matcher(s);
         if (seatM.find()) {
             return seatM.group(1);
         }
-        Matcher leadingDigits = Pattern.compile("^(\\d+)").matcher(s);
+        Matcher leadingDigits = PATTERN_LEADING_DIGITS.matcher(s);
         if (leadingDigits.find()) {
             return leadingDigits.group(1);
         }
