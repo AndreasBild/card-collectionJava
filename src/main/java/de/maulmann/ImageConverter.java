@@ -64,8 +64,9 @@ public class ImageConverter {
             }
 
         } catch (Exception e) {
-            log.error("Critical error during processing: {}", e.getMessage());
-            e.printStackTrace();
+            log.error("Critical error during processing", e);
+            // Propagate so `exec:java` exits non-zero and SiteBuilderPipeline can fail the build.
+            throw new IllegalStateException("Image processing failed", e);
         }
     }
 
@@ -140,7 +141,8 @@ public class ImageConverter {
                 }
             }
         } catch (Exception e) {
-            log.error("Critical error during parallel image processing: {}", e.getMessage());
+            log.error("Critical error during parallel image processing", e);
+            throw new IOException("Parallel image processing failed", e);
         }
 
         // Bereinigung verwaister AVIF-Bilder in output/images
