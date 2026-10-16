@@ -40,3 +40,8 @@ $RECYCLE.BIN/
 .idea/awsToolkit.xml
 .mvn/timing.properties
 
+
+# MarketDataCache safety copies
+content/json/*.json.bak
+content/json/*.json.tmp
+content/json/*.json.corrupt

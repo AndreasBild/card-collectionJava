@@ -57,6 +57,33 @@ class MarketDataCacheTest {
     }
 
     @Test
+    @DisplayName("Should save atomically, keep a .bak of the previous version and leave no .tmp")
+    void testAtomicSaveKeepsBackup(@TempDir Path tempDir) throws IOException {
+        Path cacheFile = tempDir.resolve("market-cache.json");
+        MarketDataCache cache = new MarketDataCache();
+        cache.put("card-a", MarketDataEntry.builder().estimatedValue(10.0).build());
+        cache.save(cacheFile);
+        assertFalse(Files.exists(tempDir.resolve("market-cache.json.bak")));
+
+        cache.put("card-b", MarketDataEntry.builder().estimatedValue(20.0).build());
+        cache.save(cacheFile);
+
+        assertFalse(Files.exists(tempDir.resolve("market-cache.json.tmp")));
+        assertEquals(1, MarketDataCache.load(tempDir.resolve("market-cache.json.bak")).size());
+        assertEquals(2, MarketDataCache.load(cacheFile).size());
+    }
+
+    @Test
+    @DisplayName("Should preserve an unreadable cache file as .corrupt instead of losing it")
+    void testCorruptCacheIsPreserved(@TempDir Path tempDir) throws IOException {
+        Path cacheFile = tempDir.resolve("market-cache.json");
+        Files.writeString(cacheFile, "{ not valid json");
+
+        assertEquals(0, MarketDataCache.load(cacheFile).size());
+        assertEquals("{ not valid json", Files.readString(tempDir.resolve("market-cache.json.corrupt")));
+    }
+
+    @Test
     @DisplayName("Should handle missing file gracefully when loading")
     void testLoadMissingFile(@TempDir Path tempDir) {
         Path missing = tempDir.resolve("non-existent-cache.json");
