@@ -6,6 +6,7 @@
 - **Branch Protection:** Antigravity must **NEVER** edit files or commit directly on `main`. Work strictly on isolated feature/fix/chore branches.
 - **Mandatory PR Lifecycle:** Every implementation task must conclude with staging only affected files, committing with semantic conventions, pushing to `origin`, and automatically opening a Pull Request (`gh pr create`). Never stop or finish a task without creating the Pull Request.
 - **Frontend & Assets:** Zero/Micro-JS architecture, pure AVIF image engine (`200w`, `400w`, `600w`, `900w`), synchronous `.gz` and `.br` companion generation, strict CWV budget ($\text{LCP} < 1.2\text{s}$, $\text{CLS} = 0$, $\text{INP} = 0$).
+- **URL Stability (SEO-critical):** Individual card URLs, including the hash suffix from `CardData.generateStableId`, must NEVER change. Never alter hash inputs, slug/canonical/sitemap/link generation or generated file names for existing cards. See `.agents/rules/url-stability.md`; verify file-name/sitemap lists are identical before and after any generator change.
 
 ## 2. Token Economics & Dataset Protection
 - **Massive File Invariant:** Never load large raw datasets (`content/json/cards.json` [770 KB], `market-data-cache.json` [197 KB], or generated HTML files in `output/`) into context in full. Use `grep_search` or bounded line slices (≤ 100 lines). Reference typed Java records (`CardData`, `CardJson`).
