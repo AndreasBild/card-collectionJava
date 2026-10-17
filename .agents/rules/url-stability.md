@@ -13,4 +13,5 @@ Search rankings depend on **stable individual card URLs**. Once a card page URL 
 ## Verification (required before every PR touching generators, `CardData`, or card data)
 - Snapshot/golden-master tests must stay green (`validate-snapshots` skill).
 - The set of generated card page file names and sitemap URLs before and after the change must be identical (diff the lists).
+- Automated guard: `CardUrlStabilityTest` checks that every published card URL listed in `src/test/resources/golden/card-urls.txt` is still generated unchanged and pins `CardData.generateStableId`. After ADDING cards, refresh with `mvn test -Dtest=CardUrlStabilityTest -Dgolden.update=true` and confirm the git diff of the golden file contains additions only. Editing an existing card's hash-relevant fields (Player, Team, Season, Company, Brand, Theme, Variant, Number, Serial, Print Run, Grade) changes its URL and will fail this test.
 - If a legitimate URL change is ever unavoidable, it requires explicit user approval plus 301 redirects for every old URL.
