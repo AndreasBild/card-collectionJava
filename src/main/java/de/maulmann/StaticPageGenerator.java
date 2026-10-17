@@ -8,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -520,13 +521,13 @@ public class StaticPageGenerator {
             Files.createDirectories(cssDir);
             Path cssSource = Paths.get("src/main/resources/css/main.css");
             if (Files.exists(cssSource)) {
-                Files.copy(cssSource, cssDir.resolve("main.css"), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(cssSource, cssDir.resolve("main.css"), StandardCopyOption.REPLACE_EXISTING);
             }
 
             // 2. Copy llms.txt from root
             Path llmsSource = Paths.get("llms.txt");
             if (Files.exists(llmsSource)) {
-                Files.copy(llmsSource, Paths.get(pathOutput, "llms.txt"), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(llmsSource, Paths.get(pathOutput, "llms.txt"), StandardCopyOption.REPLACE_EXISTING);
             }
 
             // 3. Copy PWA assets
@@ -543,7 +544,7 @@ public class StaticPageGenerator {
                                 content = content.replace("[[BUILD_ID]]", SharedTemplates.BUILD_ID);
                                 Files.writeString(target, content, StandardCharsets.UTF_8);
                             } else {
-                                Files.copy(source, target, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                                Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
                             }
                         } catch (IOException e) {
                             log.error("Error copying PWA asset {}: {}", source, e.getMessage());
@@ -560,7 +561,7 @@ public class StaticPageGenerator {
                         try {
                             Path target = Paths.get(pathOutput, "favicon").resolve(faviconSourceDir.relativize(source));
                             Files.createDirectories(target.getParent());
-                            Files.copy(source, target, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                            Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
                         } catch (IOException e) {
                             log.error("Error copying Favicon asset {}: {}", source, e.getMessage());
                         }
@@ -576,7 +577,7 @@ public class StaticPageGenerator {
                         try {
                             Path target = Paths.get(pathOutput).resolve(seoSourceDir.relativize(source));
                             Files.createDirectories(target.getParent());
-                            Files.copy(source, target, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                            Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
                         } catch (IOException e) {
                             log.error("Error copying SEO asset {}: {}", source, e.getMessage());
                         }
@@ -587,7 +588,7 @@ public class StaticPageGenerator {
             // 6. Copy OpenSearch definition
             Path opensearchSource = Paths.get("src/main/resources/opensearch.xml");
             if (Files.exists(opensearchSource)) {
-                Files.copy(opensearchSource, Paths.get(pathOutput, "opensearch.xml"), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(opensearchSource, Paths.get(pathOutput, "opensearch.xml"), StandardCopyOption.REPLACE_EXISTING);
             }
         } catch (IOException e) {
             log.error("Error copying resources: {}", e.getMessage());

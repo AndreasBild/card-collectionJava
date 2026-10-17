@@ -15,7 +15,10 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Stream;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -34,7 +37,7 @@ public class FirestoreRatingInjector {
     private static final String TARGET_DIR = "output/cards";
     private static final String CACHE_FILE = "output/rating-cache.properties";
 
-    private static final java.util.Properties ratingCache = new java.util.Properties();
+    private static final Properties ratingCache = new Properties();
 
     /**
      * Prefetches ratings from Firestore before page generation starts.
@@ -113,7 +116,7 @@ public class FirestoreRatingInjector {
         Path targetPath = Paths.get(TARGET_DIR);
         if (!Files.exists(targetPath)) return;
 
-        try (java.util.concurrent.ExecutorService executor = java.util.concurrent.Executors.newVirtualThreadPerTaskExecutor();
+        try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor();
              Stream<Path> paths = Files.walk(targetPath)) {
             paths.filter(Files::isRegularFile)
                     .filter(p -> p.toString().endsWith(".html"))
