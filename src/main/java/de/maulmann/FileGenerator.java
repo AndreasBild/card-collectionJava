@@ -46,21 +46,21 @@ public class FileGenerator {
     // --- 0. LATEST METADATA FÜR PWA ---
     public static void generateLatestMetadata(int totalCardCount) {
         try {
-            log.info("Generiere latest.json...");
+            log.info("Generating latest.json...");
             String json = "{\n" +
                     "  \"cardCount\": " + totalCardCount + ",\n" +
                     "  \"lastUpdate\": \"" + SharedTemplates.BUILD_ID + "\"\n" +
                     "}";
             Files.writeString(Paths.get(pathOutput, "latest.json"), json, StandardCharsets.UTF_8);
         } catch (IOException e) {
-            log.error("Fehler bei latest.json: {}", e.getMessage());
+            log.error("Error generating latest.json: {}", e.getMessage());
         }
     }
 
-    // --- 1. HAUPT-SAMMLUNG BAUEN ---
+    // --- 1. BUILD MAIN COLLECTION ---
     public static void buildCollectionOverview() {
         try {
-            log.info("Baue Juwan-Howard-Collection.html...");
+            log.info("Building Juwan-Howard-Collection.html...");
             Map<String, Object> data = SharedTemplates.createBaseData("Juwan Howard Private Collection | Juwan Howard Super Collector", "Explore the Juwan Howard Masterpiece Collection. A massive private collection featuring 1,000+ unique cards, including 1/1 Masterpieces, PMGs, Rubies, and rare 90s basketball inserts.", "Juwan-Howard-Collection.html", "collection", "");
 
             List<Map<String, String>> bcItems = new ArrayList<>();
@@ -197,7 +197,7 @@ public class FileGenerator {
 
             processTemplate("collection-overview.ftlh", data, pathOutput + "Juwan-Howard-Collection.html");
         } catch (Exception e) {
-            log.error("Fehler bei Haupt-Collection: {}", e.getMessage(), e);
+            log.error("Error generating main collection: {}", e.getMessage(), e);
             throw new RuntimeException(e);
         }
     }

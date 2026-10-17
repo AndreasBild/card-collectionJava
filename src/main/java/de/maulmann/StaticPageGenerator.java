@@ -34,7 +34,7 @@ public class StaticPageGenerator {
 
     public static void buildStaticPages(List<CardJson> allCards, TimestampTracker timestampTracker, String pathOutput) {
         try {
-            log.info("Baue index.html & error.html...");
+            log.info("Building index.html & error.html...");
 
             Map<String, Object> indexData = SharedTemplates.createBaseData(
                     "Juwan Howard Super Collector | Private Collection",
@@ -169,7 +169,7 @@ public class StaticPageGenerator {
             FileGenerator.processTemplate("error.ftlh", errorData, pathOutput + "error.html");
 
         } catch (Exception e) {
-            log.error("Fehler bei statischen Seiten: {}", e.getMessage(), e);
+            log.error("Error generating static pages: {}", e.getMessage(), e);
         }
     }
 
@@ -184,7 +184,7 @@ public class StaticPageGenerator {
                     String description = entry.getValue()[1];
 
                     try {
-                        log.info("Baue {}.html...", coll);
+                        log.info("Building {}.html...", coll);
                         Map<String, Object> data = SharedTemplates.createBaseData(title, description, coll + ".html", coll.toLowerCase(), "");
 
                         List<Map<String, String>> breadcrumbItems = new ArrayList<>();
@@ -304,7 +304,7 @@ public class StaticPageGenerator {
 
                         FileGenerator.processTemplate("generic-collection.ftlh", data, pathOutput + coll + ".html");
                     } catch (Exception e) {
-                        log.error("Fehler bei {}: {}", coll, e.getMessage());
+                        log.error("Error generating {}: {}", coll, e.getMessage());
                     }
                 });
             }

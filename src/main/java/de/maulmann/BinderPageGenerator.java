@@ -18,7 +18,7 @@ public class BinderPageGenerator {
 
     public static void buildBinderPage(List<CardJson> allCards, TimestampTracker timestampTracker, String pathOutput) {
         try {
-            log.info("Baue binder.html (3D Collector's 9-Pocket Binder View)...");
+            log.info("Building binder.html (3D Collector's 9-Pocket Binder View)...");
             Map<String, Object> data = SharedTemplates.createBaseData(
                     "3D Collector's 9-Pocket Binder | Juwan Howard Private Vault",
                     "Flip through the complete Juwan Howard card collection in an interactive 3D 9-Pocket Ultra-PRO style digital binder.",
@@ -117,7 +117,7 @@ public class BinderPageGenerator {
 
             FileGenerator.processTemplate("binder.ftlh", data, pathOutput + "binder.html");
         } catch (Exception e) {
-            log.error("Fehler bei Binder Page: {}", e.getMessage(), e);
+            log.error("Error generating binder page: {}", e.getMessage(), e);
         }
     }
 }

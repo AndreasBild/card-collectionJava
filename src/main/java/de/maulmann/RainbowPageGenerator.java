@@ -28,7 +28,7 @@ public class RainbowPageGenerator {
 
     public static void buildRainbowsPage(List<CardJson> allCards, TimestampTracker timestampTracker, String pathOutput) {
         try {
-            log.info("Baue rainbows.html (Strict Single-Card Parallel Rainbow Tracker)...");
+            log.info("Building rainbows.html (Strict Single-Card Parallel Rainbow Tracker)...");
             Map<String, Object> data = SharedTemplates.createBaseData(
                     "Parallel Rainbow Tracker & Set Checklists | Juwan Howard Private Vault",
                     "Track completion progress of Juwan Howard single-card parallel rainbows (cards with identical season, manufacturer, brand, theme, and card number).",
@@ -482,7 +482,7 @@ public class RainbowPageGenerator {
             FileGenerator.processTemplate("rainbows.ftlh", data, pathOutput + "rainbows.html");
 
         } catch (Exception e) {
-            log.error("Fehler bei Rainbows Page: {}", e.getMessage(), e);
+            log.error("Error generating rainbows page: {}", e.getMessage(), e);
         }
     }
 
