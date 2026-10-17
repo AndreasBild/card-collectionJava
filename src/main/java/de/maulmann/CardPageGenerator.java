@@ -50,31 +50,14 @@ public class CardPageGenerator {
 
     private static final Configuration fmConfig = CardUtils.getFreeMarkerConfig();
 
-    /**
-     * Preserved as a static class subclassing CardData for backwards compatibility.
-     */
-    public static class CardData extends de.maulmann.CardData {
-        public CardData(CardJson c, String uniqueId) {
-            super(c, uniqueId);
-        }
-    }
-
-    /**
-     * Preserved as a static class subclassing CardIndex for backwards compatibility.
-     */
-    public static class CardIndex extends de.maulmann.CardIndex {
-        public CardIndex(List<de.maulmann.CardData> allCards) {
-            super(allCards);
-        }
-    }
 
     // Cache for CardData objects to avoid redundant MD5 hash computation across multiple passes
-    private static final ConcurrentHashMap<String, de.maulmann.CardData> CARD_DATA_CACHE = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, CardData> CARD_DATA_CACHE = new ConcurrentHashMap<>();
 
     /**
      * Returns a cached CardData for the given CardJson, avoiding redundant attribute mapping and MD5 hashing.
      */
-    public static de.maulmann.CardData computeCardData(CardJson c) {
+    public static CardData computeCardData(CardJson c) {
         String fingerprint = (c.id() != null ? c.id() : "") + "|" +
                 (c.player() != null ? c.player() : "") + "|" +
                 (c.season() != null ? c.season() : "") + "|" +
@@ -135,11 +118,11 @@ public class CardPageGenerator {
         }
     }
 
-    public static List<de.maulmann.CardData> run() {
+    public static List<CardData> run() {
         return run(true);
     }
 
-    public static List<de.maulmann.CardData> run(boolean generateReport) {
+    public static List<CardData> run(boolean generateReport) {
         log.info("Starting high-speed Card Page Generation...");
         long startTime = System.currentTimeMillis();
         EXISTING_IMAGE_KEYS = null; // Refresh image cache
@@ -158,16 +141,16 @@ public class CardPageGenerator {
             }
         }
 
-        List<de.maulmann.CardData> allProcessedCards = new ArrayList<>();
+        List<CardData> allProcessedCards = new ArrayList<>();
 
         List<CardJson> jsonCards = CardDataLoader.loadCardsFromJson("content/json/cards.json");
         if (!jsonCards.isEmpty()) {
             log.info("Generating Juwan Howard card pages from content/json/cards.json ({} cards)...", jsonCards.size());
-            List<de.maulmann.CardData> juwanCards = new ArrayList<>();
+            List<CardData> juwanCards = new ArrayList<>();
             for (CardJson c : jsonCards) {
                 juwanCards.add(new CardData(c, null));
             }
-            List<de.maulmann.CardData> filteredJuwanCards = filterDuplicateCards(juwanCards, "content/json/cards.json");
+            List<CardData> filteredJuwanCards = filterDuplicateCards(juwanCards, "content/json/cards.json");
             allProcessedCards.addAll(filteredJuwanCards);
             log.info("Deduplication complete: {} cards queued for generation (skipped {} un-numbered duplicates).",
                     filteredJuwanCards.size(), (juwanCards.size() - filteredJuwanCards.size()));
@@ -188,11 +171,11 @@ public class CardPageGenerator {
             List<CardJson> cards = CardDataLoader.loadCardsFromJson(jsonPath);
             if (!cards.isEmpty()) {
                 log.info("Generating subpages from {} ({} cards)...", jsonPath, cards.size());
-                List<de.maulmann.CardData> cardDataList = new ArrayList<>();
+                List<CardData> cardDataList = new ArrayList<>();
                 for (CardJson c : cards) {
                     cardDataList.add(new CardData(c, null));
                 }
-                List<de.maulmann.CardData> filtered = filterDuplicateCards(cardDataList, jsonPath);
+                List<CardData> filtered = filterDuplicateCards(cardDataList, jsonPath);
                 allProcessedCards.addAll(filtered);
                 generateSubPagesMultithreaded(filtered, overviewPage);
             }
@@ -219,7 +202,7 @@ public class CardPageGenerator {
         return allProcessedCards;
     }
 
-    private static void cleanOrphanedCardFiles(List<de.maulmann.CardData> validCards) {
+    private static void cleanOrphanedCardFiles(List<CardData> validCards) {
         Path cardsDir = Paths.get(BASE_FOLDER);
         if (!Files.exists(cardsDir)) return;
         Set<Path> validPaths = validCards.stream()
@@ -243,13 +226,13 @@ public class CardPageGenerator {
         run();
     }
 
-    private static List<de.maulmann.CardData> filterDuplicateCards(List<de.maulmann.CardData> rawCards, String sourceName) {
-        List<de.maulmann.CardData> filteredCards = new ArrayList<>();
+    private static List<CardData> filterDuplicateCards(List<CardData> rawCards, String sourceName) {
+        List<CardData> filteredCards = new ArrayList<>();
         Set<String> seenFingerprints = new HashSet<>();
 
         duplicateLog.add("\n--- From " + sourceName + " ---");
 
-        for (de.maulmann.CardData card : rawCards) {
+        for (CardData card : rawCards) {
             String fingerprint = (card.get("Season") + "|" + card.get("Company") + "|" +
                     card.get("Brand") + "|" + card.get("Theme") + "|" +
                     card.get("Variant") + "|" + card.get("Number") + "|" +
@@ -278,23 +261,23 @@ public class CardPageGenerator {
     }
 
     public static String generateStableId(Map<String, String> attributes) {
-        return de.maulmann.CardData.generateStableId(attributes);
+        return CardData.generateStableId(attributes);
     }
 
-    private static void generateSubPagesMultithreaded(List<de.maulmann.CardData> allCards, String overviewPage) {
+    private static void generateSubPagesMultithreaded(List<CardData> allCards, String overviewPage) {
         Set<String> rareCardIds = allCards.stream()
                 .filter(CardMetadataRenderer::isRareParallel)
                 .map(c -> c.stableId)
                 .collect(Collectors.toSet());
 
-        de.maulmann.CardIndex cardIndex = new de.maulmann.CardIndex(allCards);
+        CardIndex cardIndex = new CardIndex(allCards);
 
         try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
             for (int i = 0; i < allCards.size(); i++) {
                 final int index = i;
-                final de.maulmann.CardData currentCard = allCards.get(index);
-                final de.maulmann.CardData prevCard = (index > 0) ? allCards.get(index - 1) : null;
-                final de.maulmann.CardData nextCard = (index < allCards.size() - 1) ? allCards.get(index + 1) : null;
+                final CardData currentCard = allCards.get(index);
+                final CardData prevCard = (index > 0) ? allCards.get(index - 1) : null;
+                final CardData nextCard = (index < allCards.size() - 1) ? allCards.get(index + 1) : null;
 
                 executor.submit(() -> {
                     try {
@@ -312,7 +295,7 @@ public class CardPageGenerator {
         }
     }
 
-    private static void createSubPage(de.maulmann.CardData c, Path path, de.maulmann.CardData prev, de.maulmann.CardData next, de.maulmann.CardIndex cardIndex, String overviewPage, Set<String> rareCardIds) {
+    private static void createSubPage(CardData c, Path path, CardData prev, CardData next, CardIndex cardIndex, String overviewPage, Set<String> rareCardIds) {
         String h1Title = generateH1(c);
         String browserTitle = generateBrowserTitle(c, overviewPage);
         String metaDesc = generateMetaDescription(c);
@@ -462,7 +445,7 @@ public class CardPageGenerator {
 
         Double growthPct = CardPricingService.calculateGrowthPct(c);
         if (growthPct != null) {
-            data.put("growthPctFormatted", String.format(java.util.Locale.US, "%s%.1f%%", growthPct >= 0 ? "+" : "", growthPct));
+            data.put("growthPctFormatted", String.format(Locale.US, "%s%.1f%%", growthPct >= 0 ? "+" : "", growthPct));
             data.put("isGrowthPositive", growthPct >= 0);
         } else {
             data.put("growthPctFormatted", "");
@@ -521,59 +504,59 @@ public class CardPageGenerator {
         }
     }
 
-    public static String generateBrowserTitle(de.maulmann.CardData c, String overviewPage) {
+    public static String generateBrowserTitle(CardData c, String overviewPage) {
         return CardMetadataRenderer.generateBrowserTitle(c, overviewPage);
     }
 
-    public static String generateH1(de.maulmann.CardData c) {
+    public static String generateH1(CardData c) {
         return CardMetadataRenderer.generateH1(c);
     }
 
-    public static String generateH1Html(de.maulmann.CardData c) {
+    public static String generateH1Html(CardData c) {
         return CardMetadataRenderer.generateH1Html(c);
     }
 
-    public static String generateMetaDescription(de.maulmann.CardData c) {
+    public static String generateMetaDescription(CardData c) {
         return CardMetadataRenderer.generateMetaDescription(c);
     }
 
-    public static String generateAltText(de.maulmann.CardData c, String view) {
+    public static String generateAltText(CardData c, String view) {
         return CardMetadataRenderer.generateAltText(c, view);
     }
 
-    public static String generateAiSnapshotText(de.maulmann.CardData c) {
+    public static String generateAiSnapshotText(CardData c) {
         return CardMetadataRenderer.generateAiSnapshotText(c);
     }
 
-    public static List<Map<String, String>> findRelatedCards(de.maulmann.CardData target, List<de.maulmann.CardData> pool, int limit, Set<String> rareCardIds) {
-        return CardMetadataRenderer.findRelatedCards(target, new de.maulmann.CardIndex(pool), limit, rareCardIds);
+    public static List<Map<String, String>> findRelatedCards(CardData target, List<CardData> pool, int limit, Set<String> rareCardIds) {
+        return CardMetadataRenderer.findRelatedCards(target, new CardIndex(pool), limit, rareCardIds);
     }
 
-    public static List<Map<String, String>> findRelatedCards(de.maulmann.CardData target, de.maulmann.CardIndex index, int limit, Set<String> rareCardIds) {
+    public static List<Map<String, String>> findRelatedCards(CardData target, CardIndex index, int limit, Set<String> rareCardIds) {
         return CardMetadataRenderer.findRelatedCards(target, index, limit, rareCardIds);
     }
 
-    public static boolean isRareParallel(de.maulmann.CardData c) {
+    public static boolean isRareParallel(CardData c) {
         return CardMetadataRenderer.isRareParallel(c);
     }
 
-    public static List<Map<String, String>> generateExternalLinks(de.maulmann.CardData c) {
+    public static List<Map<String, String>> generateExternalLinks(CardData c) {
         return CardMetadataRenderer.generateExternalLinks(c);
     }
 
-    public static String getSeasonHighlights(de.maulmann.CardData c, String overviewPage) {
+    public static String getSeasonHighlights(CardData c, String overviewPage) {
         return CardMetadataRenderer.getSeasonHighlights(c, overviewPage, triviaManager);
     }
 
-    public static String getEraContext(de.maulmann.CardData c, String overviewPage) {
+    public static String getEraContext(CardData c, String overviewPage) {
         return CardMetadataRenderer.getEraContext(c, overviewPage, triviaManager);
     }
 
     public static String cleanPlayerName(String player) {
-        return de.maulmann.CardData.cleanPlayerName(player);
+        return CardData.cleanPlayerName(player);
     }
 
-    private static String getPrimaryPlayer(de.maulmann.CardData c) {
+    private static String getPrimaryPlayer(CardData c) {
         return CardMetadataRenderer.getPrimaryPlayer(c);
     }
 
@@ -585,12 +568,12 @@ public class CardPageGenerator {
         return CardUtils.isValidForDisplay(value);
     }
 
-    public static String resolveDiskImageBase(String seasonFolder, String imageBaseName, de.maulmann.CardData c) {
+    public static String resolveDiskImageBase(String seasonFolder, String imageBaseName, CardData c) {
         String cacheKey = seasonFolder + ":" + imageBaseName;
         return DISK_IMAGE_CACHE.computeIfAbsent(cacheKey, k -> resolveDiskImageBaseInternal(seasonFolder, imageBaseName, c));
     }
 
-    private static String resolveDiskImageBaseInternal(String seasonFolder, String imageBaseName, de.maulmann.CardData c) {
+    private static String resolveDiskImageBaseInternal(String seasonFolder, String imageBaseName, CardData c) {
         if (checkExists(seasonFolder, imageBaseName)) return imageBaseName;
 
         if (imageBaseName.contains("-sn")) {
@@ -669,18 +652,18 @@ public class CardPageGenerator {
     }
 
     @SuppressWarnings("unchecked")
-    public static List<Map<String, String>> findSameBrandCards(de.maulmann.CardData currentCard, List<? extends de.maulmann.CardData> allCards, int limit) {
-        return findSameBrandCards(currentCard, new de.maulmann.CardIndex((List<de.maulmann.CardData>) allCards), limit);
+    public static List<Map<String, String>> findSameBrandCards(CardData currentCard, List<? extends CardData> allCards, int limit) {
+        return findSameBrandCards(currentCard, new CardIndex((List<CardData>) allCards), limit);
     }
 
-    public static List<Map<String, String>> findSameBrandCards(de.maulmann.CardData currentCard, de.maulmann.CardIndex index, int limit) {
+    public static List<Map<String, String>> findSameBrandCards(CardData currentCard, CardIndex index, int limit) {
         if (currentCard == null || index == null || limit <= 0) return Collections.emptyList();
         String brand = currentCard.get("Brand");
         if (!isValid(brand)) return Collections.emptyList();
 
-        List<de.maulmann.CardData> selected = findCardsByDimension(currentCard, index.getByBrand(brand), null, limit);
+        List<CardData> selected = findCardsByDimension(currentCard, index.getByBrand(brand), null, limit);
         List<Map<String, String>> result = new ArrayList<>();
-        for (de.maulmann.CardData c : selected) {
+        for (CardData c : selected) {
             String title = formatShowcaseCardTitle(c);
             String url = getRelativeCardUrl(currentCard, c);
             result.add(Map.of("title", title, "url", url, "stableId", c.stableId != null ? c.stableId : ""));
@@ -689,18 +672,18 @@ public class CardPageGenerator {
     }
 
     @SuppressWarnings("unchecked")
-    public static List<Map<String, String>> findSameCompanyCards(de.maulmann.CardData currentCard, List<? extends de.maulmann.CardData> allCards, Set<String> excludeStableIds, int limit) {
-        return findSameCompanyCards(currentCard, new de.maulmann.CardIndex((List<de.maulmann.CardData>) allCards), excludeStableIds, limit);
+    public static List<Map<String, String>> findSameCompanyCards(CardData currentCard, List<? extends CardData> allCards, Set<String> excludeStableIds, int limit) {
+        return findSameCompanyCards(currentCard, new CardIndex((List<CardData>) allCards), excludeStableIds, limit);
     }
 
-    public static List<Map<String, String>> findSameCompanyCards(de.maulmann.CardData currentCard, de.maulmann.CardIndex index, Set<String> excludeStableIds, int limit) {
+    public static List<Map<String, String>> findSameCompanyCards(CardData currentCard, CardIndex index, Set<String> excludeStableIds, int limit) {
         if (currentCard == null || index == null || limit <= 0) return Collections.emptyList();
         String company = currentCard.get("Company");
         if (!isValid(company)) return Collections.emptyList();
 
-        List<de.maulmann.CardData> selected = findCardsByDimension(currentCard, index.getByCompany(company), excludeStableIds, limit);
+        List<CardData> selected = findCardsByDimension(currentCard, index.getByCompany(company), excludeStableIds, limit);
         List<Map<String, String>> result = new ArrayList<>();
-        for (de.maulmann.CardData c : selected) {
+        for (CardData c : selected) {
             String title = formatShowcaseCardTitle(c);
             String url = getRelativeCardUrl(currentCard, c);
             result.add(Map.of("title", title, "url", url));
@@ -708,21 +691,21 @@ public class CardPageGenerator {
         return result;
     }
 
-    private static List<de.maulmann.CardData> findCardsByDimension(
-            de.maulmann.CardData currentCard,
-            List<de.maulmann.CardData> pool,
+    private static List<CardData> findCardsByDimension(
+            CardData currentCard,
+            List<CardData> pool,
             Set<String> excludeStableIds,
             int limit) {
         if (currentCard == null || pool == null || pool.isEmpty() || limit <= 0) return Collections.emptyList();
 
         String season = currentCard.get("Season");
-        List<de.maulmann.CardData> selected = new ArrayList<>();
+        List<CardData> selected = new ArrayList<>();
         Set<String> addedIds = new HashSet<>(excludeStableIds != null ? excludeStableIds : Collections.emptySet());
         if (currentCard.stableId != null) addedIds.add(currentCard.stableId);
 
         // Pass 1: Same season & same dimension
         if (isValid(season)) {
-            for (de.maulmann.CardData c : pool) {
+            for (CardData c : pool) {
                 if (selected.size() >= limit) break;
                 if (c.stableId != null && !addedIds.contains(c.stableId) && season.equalsIgnoreCase(c.get("Season"))) {
                     selected.add(c);
@@ -733,7 +716,7 @@ public class CardPageGenerator {
 
         // Pass 2: Fallback across other seasons if count < limit
         if (selected.size() < limit) {
-            for (de.maulmann.CardData c : pool) {
+            for (CardData c : pool) {
                 if (selected.size() >= limit) break;
                 if (c.stableId != null && !addedIds.contains(c.stableId)) {
                     selected.add(c);
@@ -744,7 +727,7 @@ public class CardPageGenerator {
         return selected;
     }
 
-    private static String formatShowcaseCardTitle(de.maulmann.CardData c) {
+    private static String formatShowcaseCardTitle(CardData c) {
         String cleanPlayer = cleanPlayerName(getPrimaryPlayer(c));
         String seasonText = isValid(c.get("Season")) ? c.get("Season") : "";
         String brandText = isValid(c.get("Brand")) ? c.get("Brand") : "";
@@ -763,7 +746,7 @@ public class CardPageGenerator {
         return sb.toString().trim();
     }
 
-    private static String getRelativeCardUrl(de.maulmann.CardData currentCard, de.maulmann.CardData targetCard) {
+    private static String getRelativeCardUrl(CardData currentCard, CardData targetCard) {
         if (currentCard.seasonFolder != null && currentCard.seasonFolder.equalsIgnoreCase(targetCard.seasonFolder)) {
             return targetCard.filename;
         } else {
@@ -771,7 +754,7 @@ public class CardPageGenerator {
         }
     }
 
-    public static void generateMissingImagesReport(List<de.maulmann.CardData> cards) {
+    public static void generateMissingImagesReport(List<CardData> cards) {
         if (cards == null || cards.isEmpty()) return;
 
         Map<String, List<String>> missingBySeason = new TreeMap<>();
@@ -781,7 +764,7 @@ public class CardPageGenerator {
         String[] extensions = CHECK_IMAGE_EXTENSIONS;
         Set<String> validImageKeys = new HashSet<>();
 
-        for (de.maulmann.CardData c : cards) {
+        for (CardData c : cards) {
             String seasonFolder = c.seasonFolder != null ? c.seasonFolder : "Unknown_Season";
             String rawImageBase = c.getRawImageBase();
             String resolvedImageBase = resolveDiskImageBase(seasonFolder, rawImageBase, c);

@@ -2,6 +2,8 @@ package de.maulmann;
 
 import freemarker.template.Configuration;
 import freemarker.template.TemplateExceptionHandler;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Centralized utility methods for HTML/JSON escaping and common string operations.
@@ -59,7 +61,7 @@ public final class CardUtils {
                    .replace("\t", "\\t");
     }
 
-    private static final java.util.regex.Pattern COMMA_PATTERN = java.util.regex.Pattern.compile("\\s*,\\s*");
+    private static final Pattern COMMA_PATTERN = Pattern.compile("\\s*,\\s*");
 
     /**
      * Replaces comma-separated values with " / " delimiters for display.
@@ -88,15 +90,15 @@ public final class CardUtils {
                 && !str.equalsIgnoreCase("null") && !str.equals("-");
     }
 
-    private static final java.util.regex.Pattern CARD_NUMBER_PATTERN = java.util.regex.Pattern.compile("#([A-Za-z0-9\\-]+)");
-    private static final java.util.regex.Pattern YEAR_PATTERN = java.util.regex.Pattern.compile("\\b(19\\d\\d|20\\d\\d)\\b");
+    private static final Pattern CARD_NUMBER_PATTERN = Pattern.compile("#([A-Za-z0-9\\-]+)");
+    private static final Pattern YEAR_PATTERN = Pattern.compile("\\b(19\\d\\d|20\\d\\d)\\b");
 
     /**
      * Extracts card number from title or text with '#' prefix (e.g. "#33" -> "33").
      */
     public static String extractCardNumber(String text) {
         if (text == null) return null;
-        java.util.regex.Matcher m = CARD_NUMBER_PATTERN.matcher(text);
+        Matcher m = CARD_NUMBER_PATTERN.matcher(text);
         return m.find() ? m.group(1) : null;
     }
 
@@ -105,7 +107,7 @@ public final class CardUtils {
      */
     public static String extractYear(String text) {
         if (text == null) return null;
-        java.util.regex.Matcher m = YEAR_PATTERN.matcher(text);
+        Matcher m = YEAR_PATTERN.matcher(text);
         return m.find() ? m.group(1) : null;
     }
 }

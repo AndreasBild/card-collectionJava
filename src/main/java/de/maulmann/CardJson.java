@@ -3,6 +3,8 @@ package de.maulmann;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -179,7 +181,7 @@ public record CardJson(
                 ? override.lastSoldDate()
                 : this.lastSoldDate;
 
-        java.util.List<PricePoint> updatedHistory = this.priceHistory != null ? new java.util.ArrayList<>(this.priceHistory) : new java.util.ArrayList<>();
+        List<PricePoint> updatedHistory = this.priceHistory != null ? new ArrayList<>(this.priceHistory) : new ArrayList<>();
         if (effectiveSold != null && effectiveSold > 0.0 && effectiveSoldDate != null) {
             PricePoint pp = new PricePoint(effectiveSoldDate, effectiveSold, override.source() != null ? override.source() : "Curated Override", override.grade());
             boolean exists = updatedHistory.stream().anyMatch(p -> effectiveSoldDate.equals(p.date()) && Math.abs(p.price() - effectiveSold) < 0.01);
@@ -213,7 +215,7 @@ public record CardJson(
                 .lastSoldPrice(effectiveSold)
                 .lastSoldDate(effectiveSoldDate)
                 .purchasePrice(this.purchasePrice)
-                .priceHistory(java.util.Collections.unmodifiableList(updatedHistory))
+                .priceHistory(Collections.unmodifiableList(updatedHistory))
                 .popReport(this.popReport)
                 .popTotal(this.popTotal)
                 .popHigher(this.popHigher)

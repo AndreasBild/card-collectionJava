@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,6 +25,7 @@ import java.util.Set;
 import java.util.TimeZone;
 import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -44,11 +46,11 @@ public class SitemapGenerator {
     private static final String BASE_URL = CardUtils.BASE_URL;
     private static final String OUTPUT_DIR = "output";
 
-    private static final java.util.regex.Pattern PATTERN_NON_DIGITS = java.util.regex.Pattern.compile("[^0-9]");
-    private static final java.util.regex.Pattern PATTERN_NON_SLUG_CHARS = java.util.regex.Pattern.compile("[^a-z0-9\\-]");
-    private static final java.util.regex.Pattern PATTERN_MULTI_HYPHENS = java.util.regex.Pattern.compile("-+");
-    private static final java.util.regex.Pattern PATTERN_SLUG_EDGES = java.util.regex.Pattern.compile("^-|-$");
-    private static final java.util.regex.Pattern PATTERN_HIGH_RES = java.util.regex.Pattern.compile("-\\d+w(\\.[a-zA-Z0-9]+)$");
+    private static final Pattern PATTERN_NON_DIGITS = Pattern.compile("[^0-9]");
+    private static final Pattern PATTERN_NON_SLUG_CHARS = Pattern.compile("[^a-z0-9\\-]");
+    private static final Pattern PATTERN_MULTI_HYPHENS = Pattern.compile("-+");
+    private static final Pattern PATTERN_SLUG_EDGES = Pattern.compile("^-|-$");
+    private static final Pattern PATTERN_HIGH_RES = Pattern.compile("-\\d+w(\\.[a-zA-Z0-9]+)$");
 
     public static void main(String[] args) {
         generate();
@@ -867,7 +869,7 @@ public class SitemapGenerator {
             try {
                 DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
                 LocalDateTime ldt = LocalDateTime.parse(stableTime, fmt);
-                channelPubDate = rfc822.format(java.util.Date.from(ldt.atZone(java.time.ZoneId.of("UTC")).toInstant()));
+                channelPubDate = rfc822.format(Date.from(ldt.atZone(ZoneId.of("UTC")).toInstant()));
             } catch (Exception e) {
                 channelPubDate = rfc822.format(new Date());
             }

@@ -8,6 +8,7 @@ import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.net.http.HttpTimeoutException;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -254,7 +255,7 @@ public class Point130Client {
 
                 return response.body();
             } catch (IOException e) {
-                if (e instanceof java.net.http.HttpTimeoutException || (e.getMessage() != null && e.getMessage().contains("timed out"))) {
+                if (e instanceof HttpTimeoutException || (e.getMessage() != null && e.getMessage().contains("timed out"))) {
                     logger.warn("130point query timed out for [{}] (attempt {}/{}). Retrying with backoff...", query, attempt, maxAttempts);
                 } else {
                     logger.warn("I/O error querying 130point for [{}]: {}", query, e.getMessage());

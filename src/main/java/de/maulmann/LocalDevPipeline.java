@@ -4,6 +4,7 @@ import com.sun.net.httpserver.HttpServer;
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -74,7 +75,7 @@ public class LocalDevPipeline {
             Path outputDir = Paths.get(OUTPUT_DIR).toAbsolutePath();
             Path realOutputDir = outputDir.toRealPath();
             // Loopback only: the dev preview must not be reachable from the local network.
-            HttpServer server = HttpServer.create(new InetSocketAddress(java.net.InetAddress.getLoopbackAddress(), port), 0);
+            HttpServer server = HttpServer.create(new InetSocketAddress(InetAddress.getLoopbackAddress(), port), 0);
             server.createContext("/", exchange -> {
                 try {
                     String rawPath = exchange.getRequestURI().getPath();

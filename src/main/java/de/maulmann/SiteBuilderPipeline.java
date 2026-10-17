@@ -11,11 +11,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Gatherers;
 import java.util.stream.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -451,7 +454,7 @@ public class SiteBuilderPipeline {
                 metrics.orphansSwept.set(objectsToDelete.size());
 
                 objectsToDelete.stream()
-                        .gather(java.util.stream.Gatherers.windowFixed(1000))
+                        .gather(Gatherers.windowFixed(1000))
                         .forEach(batch -> {
                             DeleteObjectsRequest deleteReq = DeleteObjectsRequest.builder()
                                     .bucket(BUCKET_NAME)
@@ -683,8 +686,8 @@ public class SiteBuilderPipeline {
         log.info("\n[PHASE 1 & 2] Launching HTML Generation and Image AVIF Conversion in parallel...");
 
         AtomicReference<List<CardData>> generatedCards = new AtomicReference<>();
-        java.util.concurrent.Future<?> htmlPhase;
-        java.util.concurrent.Future<?> imagePhase;
+        Future<?> htmlPhase;
+        Future<?> imagePhase;
         try (ExecutorService phaseExecutor = Executors.newVirtualThreadPerTaskExecutor()) {
             htmlPhase = phaseExecutor.submit(() -> {
                 log.info("  -> [PHASE 1] Generating HTML files and Sitemap...");
@@ -723,13 +726,13 @@ public class SiteBuilderPipeline {
         return cards;
     }
 
-    private static void awaitPhase(String name, java.util.concurrent.Future<?> future) {
+    private static void awaitPhase(String name, Future<?> future) {
         try {
             future.get();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             throw new IllegalStateException(name + " interrupted", e);
-        } catch (java.util.concurrent.ExecutionException e) {
+        } catch (ExecutionException e) {
             log.error("{} failed", name, e.getCause());
             throw new IllegalStateException(name + " failed", e.getCause());
         }

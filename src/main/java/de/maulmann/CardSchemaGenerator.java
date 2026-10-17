@@ -7,8 +7,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -401,10 +404,10 @@ public class CardSchemaGenerator {
         String offerPrice = "0";
         String currency = "EUR";
         if (c.estimatedValue != null && c.estimatedValue > 0.0) {
-            offerPrice = String.format(java.util.Locale.US, "%.2f", c.estimatedValue);
+            offerPrice = String.format(Locale.US, "%.2f", c.estimatedValue);
             currency = "USD";
         } else if (c.lastSoldPrice != null && c.lastSoldPrice > 0.0) {
-            offerPrice = String.format(java.util.Locale.US, "%.2f", c.lastSoldPrice);
+            offerPrice = String.format(Locale.US, "%.2f", c.lastSoldPrice);
             currency = "USD";
         }
 
@@ -467,7 +470,7 @@ public class CardSchemaGenerator {
         if (hasCachedRating) {
             double rawAverage = ratingSum / ratingCount;
             double averageRating = Math.clamp(rawAverage, 1.0, 5.0);
-            sb.append(String.format(java.util.Locale.US,
+            sb.append(String.format(Locale.US,
                     ",\n  \"aggregateRating\": {\n" +
                     "    \"@type\": \"AggregateRating\",\n" +
                     "    \"ratingValue\": %.1f,\n" +
@@ -628,11 +631,11 @@ public class CardSchemaGenerator {
         return sb.toString();
     }
 
-    private static final java.util.regex.Pattern YEAR_PATTERN = java.util.regex.Pattern.compile("\\b(19\\d{2}|20\\d{2})\\b");
+    private static final Pattern YEAR_PATTERN = Pattern.compile("\\b(19\\d{2}|20\\d{2})\\b");
 
     private static String extractYear(String season) {
         if (season == null) return null;
-        java.util.regex.Matcher matcher = YEAR_PATTERN.matcher(season);
+        Matcher matcher = YEAR_PATTERN.matcher(season);
         if (matcher.find()) {
             return matcher.group(1);
         }
