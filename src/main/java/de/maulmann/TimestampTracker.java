@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +30,7 @@ public class TimestampTracker {
     // Key: File path, Value: {hash}:{timestamp}
     private final ConcurrentHashMap<String, String> currentSessionData = new ConcurrentHashMap<>();
 
-    private static final java.util.regex.Pattern MAIN_CSS_PATTERN = java.util.regex.Pattern.compile("main\\.css\\?v=[a-fA-F0-9]+");
+    private static final Pattern MAIN_CSS_PATTERN = Pattern.compile("main\\.css\\?v=[a-fA-F0-9]+");
 
     public TimestampTracker(String filePath) {
         this.storeFile = new File(filePath);

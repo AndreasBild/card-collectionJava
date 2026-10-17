@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -46,7 +48,7 @@ public class SharedTemplates {
 
     private static String calculateBuildId() {
         try {
-            java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
+            MessageDigest md = MessageDigest.getInstance("MD5");
             String[] resourcePaths = {
                     "/css/main.css",
                     "/pwa/collector-features.js",
@@ -58,7 +60,7 @@ public class SharedTemplates {
             for (String path : resourcePaths) {
                 String content = loadResource(path);
                 if (content != null && !content.isEmpty()) {
-                    md.update(content.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+                    md.update(content.getBytes(StandardCharsets.UTF_8));
                 }
             }
             byte[] digest = md.digest();
@@ -304,7 +306,7 @@ public class SharedTemplates {
     }
 
     public static Map<String, Object> createBaseData(String title, String subTitle, String filename, String navTargetUrl, String root) {
-        Map<String, Object> data = new java.util.HashMap<>();
+        Map<String, Object> data = new HashMap<>();
 
         String absImageUrl = CardUtils.BASE_URL + "/" + FileGenerator.DEFAULT_IMAGE;
         String headHtml = getHead(title, subTitle, root, filename, absImageUrl, "", 1200, 1680, title);

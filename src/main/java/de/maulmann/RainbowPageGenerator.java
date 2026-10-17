@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -474,7 +475,7 @@ public class RainbowPageGenerator {
             data.put("totalRainbowExpected", totalRainbowExpected);
             data.put("totalRainbow1of1", totalRainbow1of1);
             data.put("overallCompletionPct", overallCompletionPct);
-            data.put("strokeDashoffset", String.format(java.util.Locale.US, "%.1f", strokeDashoffset));
+            data.put("strokeDashoffset", String.format(Locale.US, "%.1f", strokeDashoffset));
 
             data.put("rainbowSets", rainbowSets);
             data.put("jsonLd", CardSchemaGenerator.generateRainbowJsonLd(rainbowSets));

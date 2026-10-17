@@ -1,7 +1,12 @@
 package de.maulmann;
 
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.AtomicMoveNotSupportedException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -10,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 import javax.imageio.ImageIO;
@@ -227,7 +234,7 @@ public class ImageConverter {
         }
 
         // 2. Original-Bild einmalig laden
-        java.awt.image.BufferedImage orig = ImageIO.read(sourceFile.toFile());
+        BufferedImage orig = ImageIO.read(sourceFile.toFile());
         if (orig == null) {
             return false;
         }
@@ -270,11 +277,11 @@ public class ImageConverter {
 
     /** Caps concurrent avifenc processes (each is already multi-threaded) to avoid process/memory exhaustion. */
     private static final int MAX_CONCURRENT_ENCODES = Math.max(1, Runtime.getRuntime().availableProcessors() / 2);
-    private static final java.util.concurrent.Semaphore ENCODE_PERMITS =
-            new java.util.concurrent.Semaphore(MAX_CONCURRENT_ENCODES);
+    private static final Semaphore ENCODE_PERMITS =
+            new Semaphore(MAX_CONCURRENT_ENCODES);
     private static final int AVIFENC_TIMEOUT_SECONDS = 120;
 
-    private static void writeAvifViaCLI(java.awt.image.BufferedImage orig, File outputFile, int targetW, int targetH, int quality) {
+    private static void writeAvifViaCLI(BufferedImage orig, File outputFile, int targetW, int targetH, int quality) {
         if (AVIFENC_PATH == null || orig == null) return;
         // Temp file keeps the .avif extension (avifenc infers format from it) and lives next to the target
         // so the final move is atomic. Leftovers are removed by cleanOrphanedAvifImages.
@@ -286,9 +293,9 @@ public class ImageConverter {
             ENCODE_PERMITS.acquire();
             acquired = true;
 
-            java.awt.image.BufferedImage resized = new java.awt.image.BufferedImage(targetW, targetH, java.awt.image.BufferedImage.TYPE_INT_RGB);
-            java.awt.Graphics2D g = resized.createGraphics();
-            g.setRenderingHint(java.awt.RenderingHints.KEY_INTERPOLATION, java.awt.RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+            BufferedImage resized = new BufferedImage(targetW, targetH, BufferedImage.TYPE_INT_RGB);
+            Graphics2D g = resized.createGraphics();
+            g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
             g.drawImage(orig, 0, 0, targetW, targetH, null);
             g.dispose();
 
@@ -306,11 +313,11 @@ public class ImageConverter {
             pb.redirectErrorStream(true);
             pb.redirectOutput(ProcessBuilder.Redirect.DISCARD);
             p = pb.start();
-            try (java.io.OutputStream os = p.getOutputStream()) {
+            try (OutputStream os = p.getOutputStream()) {
                 ImageIO.write(resized, "png", os);
                 os.flush();
             }
-            if (!p.waitFor(AVIFENC_TIMEOUT_SECONDS, java.util.concurrent.TimeUnit.SECONDS)) {
+            if (!p.waitFor(AVIFENC_TIMEOUT_SECONDS, TimeUnit.SECONDS)) {
                 p.destroyForcibly();
                 log.error("avifenc timed out after {}s for {}", AVIFENC_TIMEOUT_SECONDS, outputFile.getName());
                 Files.deleteIfExists(tmpPath);
@@ -324,7 +331,7 @@ public class ImageConverter {
             }
             try {
                 Files.move(tmpPath, finalPath, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
-            } catch (java.nio.file.AtomicMoveNotSupportedException e) {
+            } catch (AtomicMoveNotSupportedException e) {
                 Files.move(tmpPath, finalPath, StandardCopyOption.REPLACE_EXISTING);
             }
         } catch (InterruptedException ie) {

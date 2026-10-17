@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -239,7 +240,7 @@ public class TcdbParser {
 
             MarketDataEntry updated = MarketDataEntry.builder()
                     .certNumber(existing.certNumber() != null ? existing.certNumber() : card.certNumber)
-                    .lastQueried(existing.lastQueried() != null ? existing.lastQueried() : java.time.LocalDate.now().toString())
+                    .lastQueried(existing.lastQueried() != null ? existing.lastQueried() : LocalDate.now().toString())
                     .popReport(existing.popReport())
                     .estimatedValue(existing.estimatedValue())
                     .lastSoldPrice(existing.lastSoldPrice())

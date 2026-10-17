@@ -9,6 +9,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
@@ -124,13 +127,13 @@ public class MarketDataCache {
             return true;
         }
         try {
-            java.time.Instant queriedAt = java.time.Instant.parse(entry.lastQueried());
-            java.time.Instant cutoff = java.time.Instant.now().minus(java.time.Duration.ofDays(maxAgeDays));
+            Instant queriedAt = Instant.parse(entry.lastQueried());
+            Instant cutoff = Instant.now().minus(Duration.ofDays(maxAgeDays));
             return queriedAt.isBefore(cutoff);
         } catch (Exception e) {
             try {
-                java.time.LocalDate date = java.time.LocalDate.parse(entry.lastQueried().substring(0, 10));
-                return date.plusDays(maxAgeDays).isBefore(java.time.LocalDate.now());
+                LocalDate date = LocalDate.parse(entry.lastQueried().substring(0, 10));
+                return date.plusDays(maxAgeDays).isBefore(LocalDate.now());
             } catch (Exception ignored) {
                 return true;
             }
