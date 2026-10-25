@@ -1,6 +1,6 @@
 ================================================================================
 MISSING IMAGES SUMMARY REPORT
-Total Missing Entries: 1101 (Front: 549, Back: 552)
+Total Missing Entries: 1041 (Front: 519, Back: 522)
 ================================================================================
 
 --- SEASON: 1995-96 (4 missing) ---
@@ -774,67 +774,7 @@ Total Missing Entries: 1101 (Front: 549, Back: 552)
 [MISSING FRONT] Juwan Howard - 2003-04 Finest X-Fractors #99 (sn1) (Expected: Juwan-Howard-Orlando-Magic-2003-04-Topps-Finest-Base-X-Fractors-99-sn1-front)
 [MISSING BACK]  Juwan Howard - 2003-04 Finest X-Fractors #99 (sn1) (Expected: Juwan-Howard-Orlando-Magic-2003-04-Topps-Finest-Base-X-Fractors-99-sn1-back)
 
---- SEASON: 2004-05 (128 missing) ---
-[MISSING FRONT] Juwan Howard - 2004-05 Topps Bazooka #96 (Expected: Juwan-Howard-Houston-Rockets-2004-05-Topps-Topps-Bazooka-Base-Set-Base-96-front)
-[MISSING BACK]  Juwan Howard - 2004-05 Topps Bazooka #96 (Expected: Juwan-Howard-Houston-Rockets-2004-05-Topps-Topps-Bazooka-Base-Set-Base-96-back)
-[MISSING FRONT] Juwan Howard - 2004-05 Topps Bazooka Gold #96 (Expected: Juwan-Howard-Houston-Rockets-2004-05-Topps-Topps-Bazooka-Base-Set-Gold-96-front)
-[MISSING BACK]  Juwan Howard - 2004-05 Topps Bazooka Gold #96 (Expected: Juwan-Howard-Houston-Rockets-2004-05-Topps-Topps-Bazooka-Base-Set-Gold-96-back)
-[MISSING FRONT] Juwan Howard - 2004-05 Topps Bazooka Mini #96 (Expected: Juwan-Howard-Houston-Rockets-2004-05-Topps-Topps-Bazooka-Base-Set-Mini-96-front)
-[MISSING BACK]  Juwan Howard - 2004-05 Topps Bazooka Mini #96 (Expected: Juwan-Howard-Houston-Rockets-2004-05-Topps-Topps-Bazooka-Base-Set-Mini-96-back)
-[MISSING FRONT] Juwan Howard - 2004-05 Topps Bazooka Printing Plate Cyan #96 (sn1) (Expected: Juwan-Howard-Houston-Rockets-2004-05-Topps-Topps-Bazooka-Base-Set-Printing-Plate-Cyan-96-sn1-front)
-[MISSING BACK]  Juwan Howard - 2004-05 Topps Bazooka Printing Plate Cyan #96 (sn1) (Expected: Juwan-Howard-Houston-Rockets-2004-05-Topps-Topps-Bazooka-Base-Set-Printing-Plate-Cyan-96-sn1-back)
-[MISSING FRONT] Juwan Howard - 2004-05 Topps Bazooka #5 (Expected: Juwan-Howard-Houston-Rockets-2004-05-Topps-Topps-Bazooka-4-on-1-Stickers-Base-5-front)
-[MISSING BACK]  Juwan Howard - 2004-05 Topps Bazooka #5 (Expected: Juwan-Howard-Houston-Rockets-2004-05-Topps-Topps-Bazooka-4-on-1-Stickers-Base-5-back)
-[MISSING FRONT] Juwan Howard - 2004-05 UD Black Diamond #29 (Expected: Juwan-Howard-Houston-Rockets-2004-05-Upper-Deck-UD-Black-Diamond-Base-Set-Base-29-front)
-[MISSING BACK]  Juwan Howard - 2004-05 UD Black Diamond #29 (Expected: Juwan-Howard-Houston-Rockets-2004-05-Upper-Deck-UD-Black-Diamond-Base-Set-Base-29-back)
-[MISSING FRONT] Juwan Howard - 2004-05 UD Black Diamond Red #29 (sn24) (Expected: Juwan-Howard-Houston-Rockets-2004-05-Upper-Deck-UD-Black-Diamond-Base-Set-Red-29-sn24-front)
-[MISSING BACK]  Juwan Howard - 2004-05 UD Black Diamond Red #29 (sn24) (Expected: Juwan-Howard-Houston-Rockets-2004-05-Upper-Deck-UD-Black-Diamond-Base-Set-Red-29-sn24-back)
-[MISSING FRONT] Juwan Howard - 2004-05 UD Black Diamond Green #29 (sn9) (Expected: Juwan-Howard-Houston-Rockets-2004-05-Upper-Deck-UD-Black-Diamond-Base-Set-Green-29-sn9-front)
-[MISSING BACK]  Juwan Howard - 2004-05 UD Black Diamond Green #29 (sn9) (Expected: Juwan-Howard-Houston-Rockets-2004-05-Upper-Deck-UD-Black-Diamond-Base-Set-Green-29-sn9-back)
-[MISSING FRONT] Juwan Howard - 2004-05 UD Black Diamond Black #29 (sn5) (Expected: Juwan-Howard-Houston-Rockets-2004-05-Upper-Deck-UD-Black-Diamond-Base-Set-Black-29-sn5-front)
-[MISSING BACK]  Juwan Howard - 2004-05 UD Black Diamond Black #29 (sn5) (Expected: Juwan-Howard-Houston-Rockets-2004-05-Upper-Deck-UD-Black-Diamond-Base-Set-Black-29-sn5-back)
-[MISSING FRONT] Juwan Howard - 2004-05 E-XL #56 (Expected: Juwan-Howard-Houston-Rockets-2004-05-Fleer-E-XL-Base-Set-Base-56-front)
-[MISSING BACK]  Juwan Howard - 2004-05 E-XL #56 (Expected: Juwan-Howard-Houston-Rockets-2004-05-Fleer-E-XL-Base-Set-Base-56-back)
-[MISSING FRONT] Juwan Howard - 2004-05 E-XL Credentials Future #56 (sn2) (Expected: Juwan-Howard-Houston-Rockets-2004-05-Fleer-E-XL-Base-Set-Credentials-Future-56-sn2-front)
-[MISSING BACK]  Juwan Howard - 2004-05 E-XL Credentials Future #56 (sn2) (Expected: Juwan-Howard-Houston-Rockets-2004-05-Fleer-E-XL-Base-Set-Credentials-Future-56-sn2-back)
-[MISSING FRONT] Juwan Howard - 2004-05 E-XL Credentials Now #56 (sn39) (Expected: Juwan-Howard-Houston-Rockets-2004-05-Fleer-E-XL-Base-Set-Credentials-Now-56-sn39-front)
-[MISSING BACK]  Juwan Howard - 2004-05 E-XL Credentials Now #56 (sn39) (Expected: Juwan-Howard-Houston-Rockets-2004-05-Fleer-E-XL-Base-Set-Credentials-Now-56-sn39-back)
-[MISSING FRONT] Juwan Howard - 2004-05 Topps Finest #FEF-JH (sn28) (Expected: Juwan-Howard-Houston-Rockets-2004-05-Topps-Topps-Finest-Far-East-Fabrics-Base-FEF-JH-sn28-front)
-[MISSING BACK]  Juwan Howard - 2004-05 Topps Finest #FEF-JH (sn28) (Expected: Juwan-Howard-Houston-Rockets-2004-05-Topps-Topps-Finest-Far-East-Fabrics-Base-FEF-JH-sn28-back)
-[MISSING FRONT] Juwan Howard - 2004-05 Fleer Authentix #87 (Expected: Juwan-Howard-Orlando-Magic-2004-05-Fleer-Fleer-Authentix-Base-Set-Base-87-front)
-[MISSING BACK]  Juwan Howard - 2004-05 Fleer Authentix #87 (Expected: Juwan-Howard-Orlando-Magic-2004-05-Fleer-Fleer-Authentix-Base-Set-Base-87-back)
-[MISSING FRONT] Juwan Howard - 2004-05 Fleer Authentix General Admission #87 (sn64) (Expected: Juwan-Howard-Orlando-Magic-2004-05-Fleer-Fleer-Authentix-Base-Set-General-Admission-87-sn64-front)
-[MISSING BACK]  Juwan Howard - 2004-05 Fleer Authentix General Admission #87 (sn64) (Expected: Juwan-Howard-Orlando-Magic-2004-05-Fleer-Fleer-Authentix-Base-Set-General-Admission-87-sn64-back)
-[MISSING FRONT] Juwan Howard - 2004-05 Fleer Authentix Balcony #87 (sn9) (Expected: Juwan-Howard-Orlando-Magic-2004-05-Fleer-Fleer-Authentix-Base-Set-Balcony-87-sn9-front)
-[MISSING BACK]  Juwan Howard - 2004-05 Fleer Authentix Balcony #87 (sn9) (Expected: Juwan-Howard-Orlando-Magic-2004-05-Fleer-Fleer-Authentix-Base-Set-Balcony-87-sn9-back)
-[MISSING FRONT] Juwan Howard - 2004-05 Fleer Authentix Mezzanine #87 (sn25) (Expected: Juwan-Howard-Orlando-Magic-2004-05-Fleer-Fleer-Authentix-Base-Set-Mezzanine-87-sn25-front)
-[MISSING BACK]  Juwan Howard - 2004-05 Fleer Authentix Mezzanine #87 (sn25) (Expected: Juwan-Howard-Orlando-Magic-2004-05-Fleer-Fleer-Authentix-Base-Set-Mezzanine-87-sn25-back)
-[MISSING FRONT] Juwan Howard - 2004-05 Fleer Authentix Club Box #87 (sn8) (Expected: Juwan-Howard-Orlando-Magic-2004-05-Fleer-Fleer-Authentix-Base-Set-Club-Box-87-sn8-front)
-[MISSING BACK]  Juwan Howard - 2004-05 Fleer Authentix Club Box #87 (sn8) (Expected: Juwan-Howard-Orlando-Magic-2004-05-Fleer-Fleer-Authentix-Base-Set-Club-Box-87-sn8-back)
-[MISSING FRONT] Juwan Howard - 2004-05 Fleer Authentix Standing Room #87 (sn7) (Expected: Juwan-Howard-Orlando-Magic-2004-05-Fleer-Fleer-Authentix-Base-Set-Standing-Room-87-sn7-front)
-[MISSING BACK]  Juwan Howard - 2004-05 Fleer Authentix Standing Room #87 (sn7) (Expected: Juwan-Howard-Orlando-Magic-2004-05-Fleer-Fleer-Authentix-Base-Set-Standing-Room-87-sn7-back)
-[MISSING FRONT] Juwan Howard - 2004-05 Fleer Authentix #TT-HR (sn57) (Expected: Juwan-Howard-Houston-Rockets-2004-05-Fleer-Fleer-Authentix-Tip-Off-Trios-Base-TT-HR-sn57-front)
-[MISSING BACK]  Juwan Howard - 2004-05 Fleer Authentix #TT-HR (sn57) (Expected: Juwan-Howard-Houston-Rockets-2004-05-Fleer-Fleer-Authentix-Tip-Off-Trios-Base-TT-HR-sn57-back)
-[MISSING FRONT] Juwan Howard - 2004-05 Fleer Authentix Heights Edition #TT-HR (sn10) (Expected: Juwan-Howard-Houston-Rockets-2004-05-Fleer-Fleer-Authentix-Tip-Off-Trios-Heights-Edition-TT-HR-sn10-front)
-[MISSING BACK]  Juwan Howard - 2004-05 Fleer Authentix Heights Edition #TT-HR (sn10) (Expected: Juwan-Howard-Houston-Rockets-2004-05-Fleer-Fleer-Authentix-Tip-Off-Trios-Heights-Edition-TT-HR-sn10-back)
-[MISSING FRONT] Juwan Howard - 2004-05 Fleer Tradition #168 (Expected: Juwan-Howard-Houston-Rockets-2004-05-Fleer-Fleer-Tradition-Base-Set-Base-168-front)
-[MISSING BACK]  Juwan Howard - 2004-05 Fleer Tradition #168 (Expected: Juwan-Howard-Houston-Rockets-2004-05-Fleer-Fleer-Tradition-Base-Set-Base-168-back)
-[MISSING FRONT] Juwan Howard - 2004-05 Fleer Tradition Blue #168 (Expected: Juwan-Howard-Houston-Rockets-2004-05-Fleer-Fleer-Tradition-Base-Set-Blue-168-front)
-[MISSING BACK]  Juwan Howard - 2004-05 Fleer Tradition Blue #168 (Expected: Juwan-Howard-Houston-Rockets-2004-05-Fleer-Fleer-Tradition-Base-Set-Blue-168-back)
-[MISSING FRONT] Juwan Howard - 2004-05 Fleer Tradition Green #168 (Expected: Juwan-Howard-Houston-Rockets-2004-05-Fleer-Fleer-Tradition-Base-Set-Green-168-front)
-[MISSING BACK]  Juwan Howard - 2004-05 Fleer Tradition Green #168 (Expected: Juwan-Howard-Houston-Rockets-2004-05-Fleer-Fleer-Tradition-Base-Set-Green-168-back)
-[MISSING FRONT] Juwan Howard - 2004-05 SP Authentic #28 (Expected: Juwan-Howard-Houston-Rockets-2004-05-Upper-Deck-SP-Authentic-Base-Set-Base-28-front)
-[MISSING BACK]  Juwan Howard - 2004-05 SP Authentic #28 (Expected: Juwan-Howard-Houston-Rockets-2004-05-Upper-Deck-SP-Authentic-Base-Set-Base-28-back)
-[MISSING FRONT] Juwan Howard - 2004-05 SP Authentic Limited #28 (sn14) (Expected: Juwan-Howard-Houston-Rockets-2004-05-Upper-Deck-SP-Authentic-Base-Set-Limited-28-sn14-front)
-[MISSING BACK]  Juwan Howard - 2004-05 SP Authentic Limited #28 (sn14) (Expected: Juwan-Howard-Houston-Rockets-2004-05-Upper-Deck-SP-Authentic-Base-Set-Limited-28-sn14-back)
-[MISSING FRONT] Juwan Howard - 2004-05 SP Authentic Limited Extra #28 (sn19) (Expected: Juwan-Howard-Houston-Rockets-2004-05-Upper-Deck-SP-Authentic-Base-Set-Limited-Extra-28-sn19-front)
-[MISSING BACK]  Juwan Howard - 2004-05 SP Authentic Limited Extra #28 (sn19) (Expected: Juwan-Howard-Houston-Rockets-2004-05-Upper-Deck-SP-Authentic-Base-Set-Limited-Extra-28-sn19-back)
-[MISSING FRONT] Juwan Howard - 2004-05 SP Game Used Edition #81 (Expected: Juwan-Howard-Orlando-Magic-2004-05-Upper-Deck-SP-Game-Used-Edition-Base-Set-Base-81-front)
-[MISSING BACK]  Juwan Howard - 2004-05 SP Game Used Edition #81 (Expected: Juwan-Howard-Orlando-Magic-2004-05-Upper-Deck-SP-Game-Used-Edition-Base-Set-Base-81-back)
-[MISSING FRONT] Juwan Howard - 2004-05 SP Game Used Edition Gold #81 (sn58) (Expected: Juwan-Howard-Orlando-Magic-2004-05-Upper-Deck-SP-Game-Used-Edition-Base-Set-Gold-81-sn58-front)
-[MISSING BACK]  Juwan Howard - 2004-05 SP Game Used Edition Gold #81 (sn58) (Expected: Juwan-Howard-Orlando-Magic-2004-05-Upper-Deck-SP-Game-Used-Edition-Base-Set-Gold-81-sn58-back)
-[MISSING FRONT] Juwan Howard - 2004-05 SP Game Used Edition Jersey #AF2-HG (sn86) (Expected: Juwan-Howard-Orlando-Magic-2004-05-Upper-Deck-SP-Game-Used-Edition-Authentic-Fabrics-Jersey-AF2-HG-sn86-front)
-[MISSING BACK]  Juwan Howard - 2004-05 SP Game Used Edition Jersey #AF2-HG (sn86) (Expected: Juwan-Howard-Orlando-Magic-2004-05-Upper-Deck-SP-Game-Used-Edition-Authentic-Fabrics-Jersey-AF2-HG-sn86-back)
+--- SEASON: 2004-05 (68 missing) ---
 [MISSING FRONT] Juwan Howard - 2004-05 UD Sweet Shot #30 (Expected: Juwan-Howard-Orlando-Magic-2004-05-Upper-Deck-UD-Sweet-Shot-Base-Set-Base-30-front)
 [MISSING BACK]  Juwan Howard - 2004-05 UD Sweet Shot #30 (Expected: Juwan-Howard-Orlando-Magic-2004-05-Upper-Deck-UD-Sweet-Shot-Base-Set-Base-30-back)
 [MISSING FRONT] Juwan Howard - 2004-05 Topps #104 (Expected: Juwan-Howard-Orlando-Magic-2004-05-Topps-Topps-Base-Set-Base-104-front)
@@ -1130,5 +1070,11 @@ Total Missing Entries: 1101 (Front: 549, Back: 552)
 
 ================================================================================
 UNLINKED / ORPHANED SOURCE IMAGES (images/ directory)
-Total Unlinked Files: 0 (All source images successfully match cards in collection)
+Total Unlinked Files: 1
+Files in source images/ directory without matching cards (possible typos,
+obsolete backup files, wrong season folder, or uncataloged scans):
 ================================================================================
+
+--- FOLDER: 2004-05 (1 unlinked) ---
+[INVALID EXTENSION / BACKUP] File has invalid or backup extension: Thumbs.db -> 2004-05/Thumbs.db
+

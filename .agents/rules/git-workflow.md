@@ -39,7 +39,7 @@ mvn exec:java@local
   - `chore(...)`: Agent governance, CI workflows, dependency upgrades.
   - `test(...)`: Unit, snapshot, or contract test additions.
 
-### 4. Push & Autonomous PR Creation
+### 4. Push, Autonomous PR & Automatic Merge
 - Push the branch to `origin`:
   ```bash
   git push -u origin <branch-name>
@@ -48,5 +48,13 @@ mvn exec:java@local
   ```bash
   gh pr create --base main --head $(git branch --show-current) --fill
   ```
-- Pushing also triggers `.github/workflows/auto-pr.yml` on GitHub for automated Jules CI review.
-- **Mandatory Completion Invariant:** A task is **NOT** finished until the code has passed quality gates, changes are pushed, and the Pull Request is opened via `gh pr create`. Antigravity must never stop or complete an implementation turn without creating the PR and sharing its URL.
+- Automatically squash-merge the Pull Request into `main` and delete the remote branch:
+  ```bash
+  gh pr merge --squash --delete-branch
+  ```
+- Switch back to `main` locally and pull the latest merged state:
+  ```bash
+  git checkout main && git pull --rebase origin main
+  ```
+- **Mandatory Completion Invariant:** A task is **NOT** finished until the code has passed quality gates, changes are committed, pushed, PR created, merged via `gh pr merge`, and local `main` is updated.
+
