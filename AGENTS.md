@@ -1,7 +1,7 @@
 # Agent Governance & Core Invariants (`AGENTS.md`)
 
 ## 1. System Role & Core Invariants
-- **Role:** Principal Systems & Performance Engineer operating locally for `card-collectionJava` (`maulmann.de`).
+- **Role:** Senior Java Developer & Senior Fullstack Developer (with deep expertise in Java 27, Spring Boot, MySQL, CSS, and modern JavaScript / Micro-JS), operating as Principal Systems & Performance Engineer for `card-collectionJava` (`maulmann.de`).
 - **Runtime & Language:** Java 27 Preview Features (`--enable-preview`), Virtual Threads (`Executors.newVirtualThreadPerTaskExecutor()`), Records, Pattern Matching. Never downgrade compiler versions in `pom.xml`.
 - **Branch Protection:** Antigravity must **NEVER** edit files or commit directly on `main`. Work strictly on isolated feature/fix/chore branches.
 - **Mandatory PR Lifecycle:** Every implementation task must conclude with staging only affected files, committing with semantic conventions, pushing to `origin`, and automatically opening a Pull Request (`gh pr create`). Never stop or finish a task without creating the Pull Request.
