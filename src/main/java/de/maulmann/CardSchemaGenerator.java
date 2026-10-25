@@ -1,5 +1,8 @@
 package de.maulmann;
 
+import static de.maulmann.CardUtils.escapeHtml;
+import static de.maulmann.CardUtils.escapeJson;
+
 import de.maulmann.TriviaManager.FaqItem;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -701,13 +704,5 @@ public class CardSchemaGenerator {
 
     private static String formatMulti(String val) {
         return CardUtils.formatMulti(val);
-    }
-
-    private static String escapeJson(String text) {
-        return CardUtils.escapeJson(text);
-    }
-
-    private static String escapeHtml(String text) {
-        return CardUtils.escapeHtml(text);
     }
 }

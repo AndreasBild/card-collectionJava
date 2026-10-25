@@ -71,7 +71,6 @@ public class CardPageGenerator {
         return CARD_DATA_CACHE.computeIfAbsent(fingerprint, k -> new CardData(c, null));
     }
 
-    private static final Pattern PATTERN_SPACES = Pattern.compile("\\s+");
     private static final Pattern PATTERN_ALT_BASE = Pattern.compile("-sn(-?\\d+)-\\d+");
     private static final Pattern PATTERN_ALT_BASE_NO_ZERO = Pattern.compile("-sn(-?)0(\\d+)");
     private static final Pattern PATTERN_ALT_BASE_NEG = Pattern.compile("-sn-(\\d+)");
@@ -248,7 +247,7 @@ public class CardPageGenerator {
                     String dupInfo = card.get("Season") + " " + card.get("Company") + " " +
                             card.get("Brand") + " " + card.get("Theme") + " " +
                             card.get("Variant") + " #" + card.get("Number") + " - " + card.get("Player");
-                    duplicateLog.add("[SKIPPED] " + PATTERN_SPACES.matcher(dupInfo).replaceAll(" "));
+                    duplicateLog.add("[SKIPPED] " + CardUtils.WHITESPACE_RUNS.matcher(dupInfo).replaceAll(" "));
                 } else {
                     filteredCards.add(card);
                 }
@@ -651,11 +650,6 @@ public class CardPageGenerator {
         });
     }
 
-    @SuppressWarnings("unchecked")
-    public static List<Map<String, String>> findSameBrandCards(CardData currentCard, List<? extends CardData> allCards, int limit) {
-        return findSameBrandCards(currentCard, new CardIndex((List<CardData>) allCards), limit);
-    }
-
     public static List<Map<String, String>> findSameBrandCards(CardData currentCard, CardIndex index, int limit) {
         if (currentCard == null || index == null || limit <= 0) return Collections.emptyList();
         String brand = currentCard.get("Brand");
@@ -669,11 +663,6 @@ public class CardPageGenerator {
             result.add(Map.of("title", title, "url", url, "stableId", c.stableId != null ? c.stableId : ""));
         }
         return result;
-    }
-
-    @SuppressWarnings("unchecked")
-    public static List<Map<String, String>> findSameCompanyCards(CardData currentCard, List<? extends CardData> allCards, Set<String> excludeStableIds, int limit) {
-        return findSameCompanyCards(currentCard, new CardIndex((List<CardData>) allCards), excludeStableIds, limit);
     }
 
     public static List<Map<String, String>> findSameCompanyCards(CardData currentCard, CardIndex index, Set<String> excludeStableIds, int limit) {

@@ -201,7 +201,7 @@ class FileGeneratorTest {
         CardData card2 = new CardData(c2, "id2");
         CardData card3 = new CardData(c3, "id3");
 
-        List<CardData> allCards = List.of(card1, card2, card3);
+        CardIndex allCards = new CardIndex(List.of(card1, card2, card3));
 
         List<Map<String, String>> brandCards = CardPageGenerator.findSameBrandCards(card1, allCards, 6);
         assertEquals(1, brandCards.size());
