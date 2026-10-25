@@ -22,8 +22,8 @@ Use this skill to execute the formal 6-stage development lifecycle, branch isola
    - `mvn spotless:check` (or `mvn spotless:apply`)
    - `mvn clean test` (full JUnit 5 regression suite)
    - `mvn exec:java@local` (local static site generation dry-run)
-6. **Automated PR & Review**:
-   - Stage **only** modified files related to the task (never `git add .`, never touch unrelated edits in `cards.json` or `MissingImages.txt`).
+6. **Automated PR, Merge & Sync**:
+   - Stage **only** modified files related to the task (never `git add .`, never touch unrelated edits).
    - Commit with a semantic commit message: `feat(...)`, `fix(...)`, `chore(...)`, `docs(...)`.
    - Push to `origin`:
      ```bash
@@ -33,4 +33,12 @@ Use this skill to execute the formal 6-stage development lifecycle, branch isola
      ```bash
      gh pr create --fill
      ```
-   - Handoff to Jules (Cloud PR & Test Agent) for asynchronous CI analysis.
+   - Automatically squash-merge into `main` and delete the remote branch:
+     ```bash
+     gh pr merge --squash --delete-branch
+     ```
+   - Switch back to `main` and pull the latest state locally:
+     ```bash
+     git checkout main && git pull --rebase origin main
+     ```
+
