@@ -10,19 +10,18 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.TimeZone;
 import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
@@ -45,6 +44,18 @@ public class SitemapGenerator {
     private static final Configuration fmConfig = CardUtils.getFreeMarkerConfig();
     private static final String BASE_URL = CardUtils.BASE_URL;
     private static final String OUTPUT_DIR = "output";
+
+    /** Immutable, thread-safe replacements for the former per-call SimpleDateFormat instances (all UTC, Locale.US). */
+    static final DateTimeFormatter ISO_DATE =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.US).withZone(ZoneOffset.UTC);
+    static final DateTimeFormatter RFC_822 =
+            DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US).withZone(ZoneOffset.UTC);
+    private static final DateTimeFormatter TRACKER_TIMESTAMP = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+
+    /** Converts a {@code yyyy-MM-dd} date to an RFC 822 timestamp at 00:00:00 UTC. */
+    static String isoDateToRfc822(String isoDate) {
+        return RFC_822.format(LocalDate.parse(isoDate).atStartOfDay(ZoneOffset.UTC));
+    }
 
     private static final Pattern PATTERN_NON_DIGITS = Pattern.compile("[^0-9]");
     private static final Pattern PATTERN_NON_SLUG_CHARS = Pattern.compile("[^a-z0-9\\-]");
@@ -102,9 +113,7 @@ public class SitemapGenerator {
 
             log.info("Generating sitemaps...");
 
-            SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd");
-            isoFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-            String todayIso = isoFormat.format(new Date());
+            String todayIso = ISO_DATE.format(Instant.now());
 
             List<SitemapUrlEntry> mainEntries = new ArrayList<>();
             List<SitemapUrlEntry> highlightEntries = new ArrayList<>();
@@ -133,7 +142,7 @@ public class SitemapGenerator {
                     lastModDate = timestampTracker.getIsoDate(relativePath);
                 } else {
                     try {
-                        lastModDate = isoFormat.format(new Date(Files.getLastModifiedTime(path).toMillis()));
+                        lastModDate = ISO_DATE.format(Files.getLastModifiedTime(path).toInstant());
                     } catch (Exception e) {
                         lastModDate = todayIso;
                     }
@@ -247,7 +256,7 @@ public class SitemapGenerator {
                         lastModDate = timestampTracker.getIsoDate(relativePath);
                     } else {
                         try {
-                            lastModDate = isoFormat.format(new Date(Files.getLastModifiedTime(path).toMillis()));
+                            lastModDate = ISO_DATE.format(Files.getLastModifiedTime(path).toInstant());
                         } catch (Exception e) {
                             lastModDate = todayIso;
                         }
@@ -857,21 +866,17 @@ public class SitemapGenerator {
         rss.append("    <language>en-us</language>\n");
         rss.append("    <atom:link href=\"").append(BASE_URL).append("/rss.xml\" rel=\"self\" type=\"application/rss+xml\" />\n");
 
-        SimpleDateFormat rfc822 = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
-        rfc822.setTimeZone(TimeZone.getTimeZone("UTC"));
-
         String channelPubDate;
         if (timestampTracker != null) {
             String stableTime = timestampTracker.getStableTimestamp("rss.xml", "RSS_FEED_STATIC_MARKER");
             try {
-                DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
-                LocalDateTime ldt = LocalDateTime.parse(stableTime, fmt);
-                channelPubDate = rfc822.format(Date.from(ldt.atZone(ZoneId.of("UTC")).toInstant()));
+                LocalDateTime ldt = LocalDateTime.parse(stableTime, TRACKER_TIMESTAMP);
+                channelPubDate = RFC_822.format(ldt.toInstant(ZoneOffset.UTC));
             } catch (Exception e) {
-                channelPubDate = rfc822.format(new Date());
+                channelPubDate = RFC_822.format(Instant.now());
             }
         } else {
-            channelPubDate = rfc822.format(new Date());
+            channelPubDate = RFC_822.format(Instant.now());
         }
 
         rss.append("    <pubDate>").append(channelPubDate).append("</pubDate>\n");
@@ -890,10 +895,7 @@ public class SitemapGenerator {
                 if (timestampTracker != null) {
                     String isoDate = timestampTracker.getIsoDate(relativePath);
                     try {
-                        SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-                        isoFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-                        Date d = isoFormat.parse(isoDate);
-                        pubDate = rfc822.format(d);
+                        pubDate = isoDateToRfc822(isoDate);
                     } catch (Exception e) {
                         pubDate = channelPubDate;
                     }
@@ -943,10 +945,7 @@ public class SitemapGenerator {
                     if (timestampTracker != null) {
                         String isoDate = timestampTracker.getIsoDate(relativePath);
                         try {
-                            SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-                            isoFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-                            Date d = isoFormat.parse(isoDate);
-                            pubDate = rfc822.format(d);
+                            pubDate = isoDateToRfc822(isoDate);
                         } catch (Exception e) {
                             pubDate = channelPubDate;
                         }
