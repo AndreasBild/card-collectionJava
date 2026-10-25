@@ -1,8 +1,5 @@
 package de.maulmann;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,11 +12,9 @@ import java.util.regex.Pattern;
  */
 public class CardData {
 
+    private static final Pattern PATTERN_LEADING_ZEROS = Pattern.compile("^0+");
     private static final Pattern PATTERN_CLEAN_FILENAME_CHARS = Pattern.compile("[^a-zA-Z0-9\\-_]");
-    private static final Pattern PATTERN_CLEAN_FILENAME_HYPHENS = Pattern.compile("-+");
-    private static final Pattern PATTERN_CLEAN_FILENAME_EDGES = Pattern.compile("^-|-$");
     private static final Pattern PATTERN_CLEAN_PLAYER_QUOTES = Pattern.compile("[\"“„”«»'].*?[\"“„”«»']");
-    private static final Pattern PATTERN_SPACES = Pattern.compile("\\s+");
 
     public final Map<String, String> attributes;
     public final CardJson sourceJson;
@@ -221,7 +216,7 @@ public class CardData {
     public boolean isJerseyNumberMatch() {
         String serial = get("Serial");
         if (!isValid(serial)) return false;
-        String clean = serial.trim().replace("#", "").replaceAll("^0+", "");
+        String clean = PATTERN_LEADING_ZEROS.matcher(serial.trim().replace("#", "")).replaceFirst("");
         return clean.equals("5");
     }
 
@@ -281,15 +276,15 @@ public class CardData {
         String s = PATTERN_CLEAN_PLAYER_QUOTES.matcher(name).replaceAll("");
         s = s.replace("/", "-").replace("&", "and").replace(" ", "-").replace(".", "-").replace("#", "");
         s = PATTERN_CLEAN_FILENAME_CHARS.matcher(s).replaceAll("");
-        s = PATTERN_CLEAN_FILENAME_HYPHENS.matcher(s).replaceAll("-");
-        s = PATTERN_CLEAN_FILENAME_EDGES.matcher(s).replaceAll("");
+        s = CardUtils.HYPHEN_RUNS.matcher(s).replaceAll("-");
+        s = CardUtils.EDGE_HYPHENS.matcher(s).replaceAll("");
         return s.isEmpty() ? "card" : s;
     }
 
     public static String cleanPlayerName(String player) {
         if (player == null) return "Juwan Howard";
         String p = PATTERN_CLEAN_PLAYER_QUOTES.matcher(player).replaceAll("");
-        return PATTERN_SPACES.matcher(p).replaceAll(" ").trim();
+        return CardUtils.WHITESPACE_RUNS.matcher(p).replaceAll(" ").trim();
     }
 
     public static String getTeamBySeason(String season) {
@@ -326,18 +321,7 @@ public class CardData {
             }
         }
 
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] digest = md.digest(sb.toString().getBytes(StandardCharsets.UTF_8));
-            StringBuilder hexString = new StringBuilder();
-            for (int i = 0; i < 4; i++) {
-                String hex = Integer.toHexString(0xff & digest[i]);
-                if (hex.length() == 1) hexString.append('0');
-                hexString.append(hex);
-            }
-            return hexString.toString();
-        } catch (NoSuchAlgorithmException e) {
-            return String.valueOf(sb.toString().hashCode());
-        }
+        // First 4 bytes (8 hex chars) of the MD5 digest - URL-stability critical, do not change.
+        return HashUtils.md5Hex(sb.toString()).substring(0, 8);
     }
 }

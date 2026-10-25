@@ -1,11 +1,13 @@
 package de.maulmann;
 
+import static de.maulmann.CardUtils.escapeHtml;
+import static de.maulmann.CardUtils.escapeJson;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -48,7 +50,6 @@ public class SharedTemplates {
 
     private static String calculateBuildId() {
         try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
             String[] resourcePaths = {
                     "/css/main.css",
                     "/pwa/collector-features.js",
@@ -57,18 +58,14 @@ public class SharedTemplates {
                     "/templates/card-detail.ftlh",
                     "/templates/collection-overview.ftlh"
             };
+            StringBuilder combined = new StringBuilder();
             for (String path : resourcePaths) {
                 String content = loadResource(path);
                 if (content != null && !content.isEmpty()) {
-                    md.update(content.getBytes(StandardCharsets.UTF_8));
+                    combined.append(content);
                 }
             }
-            byte[] digest = md.digest();
-            StringBuilder sb = new StringBuilder();
-            for (byte b : digest) {
-                sb.append(String.format("%02x", b));
-            }
-            return sb.substring(0, 8);
+            return HashUtils.md5Hex(combined.toString()).substring(0, 8);
         } catch (Exception e) {
             return "1.0";
         }
@@ -256,10 +253,6 @@ public class SharedTemplates {
         return sb.toString();
     }
 
-    public static String escapeJson(String text) {
-        return CardUtils.escapeJson(text);
-    }
-
     public static String getTopNav(String root, String activePage) {
         String safeRoot = root != null ? root : "";
         String safeActivePage = activePage != null ? activePage : "";
@@ -321,9 +314,5 @@ public class SharedTemplates {
         data.put("root", root);
 
         return data;
-    }
-
-    private static String escapeHtml(String text) {
-        return CardUtils.escapeHtml(text);
     }
 }

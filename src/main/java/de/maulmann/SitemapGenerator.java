@@ -48,8 +48,6 @@ public class SitemapGenerator {
 
     private static final Pattern PATTERN_NON_DIGITS = Pattern.compile("[^0-9]");
     private static final Pattern PATTERN_NON_SLUG_CHARS = Pattern.compile("[^a-z0-9\\-]");
-    private static final Pattern PATTERN_MULTI_HYPHENS = Pattern.compile("-+");
-    private static final Pattern PATTERN_SLUG_EDGES = Pattern.compile("^-|-$");
     private static final Pattern PATTERN_HIGH_RES = Pattern.compile("-\\d+w(\\.[a-zA-Z0-9]+)$");
 
     public static void main(String[] args) {
@@ -411,8 +409,7 @@ public class SitemapGenerator {
             generateRssFeed(inMemoryCards, timestampTracker);
 
         } catch (Exception e) {
-            log.error("Failed to generate Sitemap: {}", e.getMessage());
-            e.printStackTrace();
+            log.error("Failed to generate Sitemap: {}", e.getMessage(), e);
         }
     }
 
@@ -498,8 +495,8 @@ public class SitemapGenerator {
 
     private static String sanitizeFilename(String raw) {
         String step1 = PATTERN_NON_SLUG_CHARS.matcher(raw.toLowerCase()).replaceAll("-");
-        String step2 = PATTERN_MULTI_HYPHENS.matcher(step1).replaceAll("-");
-        return PATTERN_SLUG_EDGES.matcher(step2).replaceAll("");
+        String step2 = CardUtils.HYPHEN_RUNS.matcher(step1).replaceAll("-");
+        return CardUtils.EDGE_HYPHENS.matcher(step2).replaceAll("");
     }
 
     private static ChildSitemapInfo writeSubSitemap(String fileName, List<SitemapUrlEntry> entries) throws IOException {
@@ -1060,8 +1057,7 @@ public class SitemapGenerator {
             Files.writeString(outFile.toPath(), finalHtml, StandardCharsets.UTF_8);
             log.info("Sitemap.html successfully generated!");
         } catch (Exception e) {
-            log.error("Failed to generate HTML Sitemap: {}", e.getMessage());
-            e.printStackTrace();
+            log.error("Failed to generate HTML Sitemap: {}", e.getMessage(), e);
         }
     }
 
@@ -1206,11 +1202,6 @@ public class SitemapGenerator {
     }
 
     private static String escapeXml(String text) {
-        if (text == null) return "";
-        return text.replace("&", "&amp;")
-                .replace("<", "&lt;")
-                .replace(">", "&gt;")
-                .replace("\"", "&quot;")
-                .replace("'", "&apos;");
+        return CardUtils.escapeXml(text);
     }
 }

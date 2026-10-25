@@ -22,6 +22,11 @@ public final class CardUtils {
         return cfg;
     });
 
+    /** Shared precompiled patterns (stateless and thread-safe). */
+    public static final Pattern WHITESPACE_RUNS = Pattern.compile("\\s+");
+    public static final Pattern HYPHEN_RUNS = Pattern.compile("-+");
+    public static final Pattern EDGE_HYPHENS = Pattern.compile("^-|-$");
+
     private CardUtils() {}
 
     /** Returns the shared FreeMarker Configuration singleton. */
@@ -59,6 +64,18 @@ public final class CardUtils {
                    .replace("\n", "\\n")
                    .replace("\r", "\\r")
                    .replace("\t", "\\t");
+    }
+
+    /**
+     * Escapes a string for safe inclusion in XML text and attribute values (sitemaps, RSS, SVG).
+     */
+    public static String escapeXml(String text) {
+        if (text == null) return "";
+        return text.replace("&", "&amp;")
+                   .replace("<", "&lt;")
+                   .replace(">", "&gt;")
+                   .replace("\"", "&quot;")
+                   .replace("'", "&apos;");
     }
 
     private static final Pattern COMMA_PATTERN = Pattern.compile("\\s*,\\s*");

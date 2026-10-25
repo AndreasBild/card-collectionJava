@@ -4,11 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.MessageDigest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Properties;
@@ -30,6 +28,8 @@ public class TimestampTracker {
     // Key: File path, Value: {hash}:{timestamp}
     private final ConcurrentHashMap<String, String> currentSessionData = new ConcurrentHashMap<>();
 
+    private static final DateTimeFormatter ISO_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static final Pattern ISO_DATE_PREFIX = Pattern.compile("\\d{4}-\\d{2}-\\d{2}.*");
     private static final Pattern MAIN_CSS_PATTERN = Pattern.compile("main\\.css\\?v=[a-fA-F0-9]+");
 
     public TimestampTracker(String filePath) {
@@ -61,17 +61,13 @@ public class TimestampTracker {
     }
 
     public boolean isModified(String identifier, String content) {
-        String contentToHash = MAIN_CSS_PATTERN.matcher(content.replace("[[STABLE_TIME]]", ""))
-                .replaceAll("main.css?v=STABLE");
-        String currentHash = calculateHash(contentToHash);
+        String currentHash = contentHash(content);
         TimestampEntry entry = TimestampEntry.parse((String) storedData.get(identifier));
         return entry == null || !entry.hash().equals(currentHash);
     }
 
     public String getStableTimestamp(String identifier, String content) {
-        String contentToHash = MAIN_CSS_PATTERN.matcher(content.replace("[[STABLE_TIME]]", ""))
-                .replaceAll("main.css?v=STABLE");
-        String currentHash = calculateHash(contentToHash);
+        String currentHash = contentHash(content);
         TimestampEntry entry = TimestampEntry.parse((String) storedData.get(identifier));
 
         if (entry != null && entry.hash().equals(currentHash)) {
@@ -93,7 +89,7 @@ public class TimestampTracker {
      * @return ISO formatted date string (e.g. 2026-08-02).
      */
     public String getIsoDate(String identifier) {
-        return getIsoDateOrDefault(identifier, DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDateTime.now()));
+        return getIsoDateOrDefault(identifier, ISO_DATE_FORMATTER.format(LocalDateTime.now()));
     }
 
     /**
@@ -116,7 +112,7 @@ public class TimestampTracker {
                 if (dotParts.length == 3) {
                     return String.format("%s-%s-%s", dotParts[2], dotParts[1], dotParts[0]);
                 }
-            } else if (ts.matches("\\d{4}-\\d{2}-\\d{2}.*")) {
+            } else if (ISO_DATE_PREFIX.matcher(ts).matches()) {
                 return ts.substring(0, 10);
             }
         }
@@ -148,17 +144,9 @@ public class TimestampTracker {
         }
     }
 
-    private String calculateHash(String content) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] digest = md.digest(content.getBytes(StandardCharsets.UTF_8));
-            StringBuilder sb = new StringBuilder();
-            for (byte b : digest) {
-                sb.append(String.format("%02x", b));
-            }
-            return sb.toString();
-        } catch (Exception _) {
-            return String.valueOf(content.hashCode());
-        }
+    /** Hash of the page content with the volatile timestamp placeholder and CSS cache-buster neutralised. */
+    private static String contentHash(String content) {
+        return HashUtils.md5Hex(MAIN_CSS_PATTERN.matcher(content.replace("[[STABLE_TIME]]", ""))
+                .replaceAll("main.css?v=STABLE"));
     }
 }
