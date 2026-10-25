@@ -185,7 +185,7 @@ public class SiteBuilderPipeline {
                     invalidateCloudFrontCache();
                     metrics.phase6Ms = System.currentTimeMillis() - p6Start;
                 } catch (Exception e) {
-                    if (e.toString().contains("SdkClientException") || (e.getCause() != null && e.getCause().toString().contains("SdkClientException"))) {
+                    if (isSdkClientException(e)) {
                         log.info("ℹ️ Local build: AWS credentials not found. Skipping S3 upload phases.");
                     } else {
                         throw e;
@@ -224,7 +224,6 @@ public class SiteBuilderPipeline {
         Path outputDir = Paths.get(OUTPUT_DIR);
         AtomicInteger uploadCount = metrics.webFilesUploaded;
         AtomicInteger skipCount = metrics.webFilesSkipped;
-        final int BROTLI_FAST_QUALITY = 9;
 
         try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
             try (Stream<Path> paths = Files.walk(outputDir)) {
@@ -245,58 +244,12 @@ public class SiteBuilderPipeline {
 
                     executor.submit(() -> {
                         try {
-                            String ext = fileName.contains(".") ? fileName.substring(fileName.lastIndexOf('.') + 1) : "";
-                            switch (ext) {
-                                case "html" -> {
-                                    byte[] rawHtml = HTMLMinifier.minifyHTMLToBytes(file.toFile());
-                                    metrics.rawWebBytes.addAndGet(rawHtml.length);
-                                    byte[] brData = BrotliCompressor.compressBytes(rawHtml, BROTLI_FAST_QUALITY);
-                                    metrics.compressedWebBytes.addAndGet(brData.length);
-                                    uploadBytes(s3Client, s3Key, brData, "text/html; charset=utf-8", "br", CACHE_SHORT, uploadCount, tracker, file, currentHash);
-                                }
-                                case "css" -> {
-                                    byte[] rawCss = CSSMinifier.minifyCSSToBytes(file.toFile());
-                                    metrics.rawWebBytes.addAndGet(rawCss.length);
-                                    byte[] brData = BrotliCompressor.compressBytes(rawCss, BROTLI_FAST_QUALITY);
-                                    metrics.compressedWebBytes.addAndGet(brData.length);
-                                    uploadBytes(s3Client, s3Key, brData, "text/css; charset=utf-8", "br", CACHE_LONG, uploadCount, tracker, file, currentHash);
-                                }
-                                case "js" -> {
-                                    String cacheControl = fileName.equalsIgnoreCase("serviceworker.js") ? CACHE_SHORT : CACHE_LONG;
-                                    byte[] rawJs = Files.readAllBytes(file);
-                                    metrics.rawWebBytes.addAndGet(rawJs.length);
-                                    byte[] brData = BrotliCompressor.compressBytes(rawJs, BROTLI_FAST_QUALITY);
-                                    metrics.compressedWebBytes.addAndGet(brData.length);
-                                    uploadBytes(s3Client, s3Key, brData, "application/javascript; charset=utf-8", "br", cacheControl, uploadCount, tracker, file, currentHash);
-                                }
-                                case "json" -> {
-                                    byte[] rawJson = Files.readAllBytes(file);
-                                    metrics.rawWebBytes.addAndGet(rawJson.length);
-                                    byte[] brData = BrotliCompressor.compressBytes(rawJson, BROTLI_FAST_QUALITY);
-                                    metrics.compressedWebBytes.addAndGet(brData.length);
-                                    uploadBytes(s3Client, s3Key, brData, "application/json; charset=utf-8", "br", CACHE_SHORT, uploadCount, tracker, file, currentHash);
-                                }
-                                case "xml", "xsl" -> {
-                                    byte[] rawXml = Files.readAllBytes(file);
-                                    metrics.rawWebBytes.addAndGet(rawXml.length);
-                                    byte[] brData = BrotliCompressor.compressBytes(rawXml, BROTLI_FAST_QUALITY);
-                                    metrics.compressedWebBytes.addAndGet(brData.length);
-                                    uploadBytes(s3Client, s3Key, brData, "application/xml; charset=utf-8", "br", CACHE_SHORT, uploadCount, tracker, file, currentHash);
-                                }
-                                case "ico" -> {
-                                    metrics.rawWebBytes.addAndGet(Files.size(file));
-                                    metrics.compressedWebBytes.addAndGet(Files.size(file));
-                                    uploadRawFile(s3Client, file, s3Key, "image/x-icon", CACHE_LONG, uploadCount, tracker, currentHash);
-                                }
-                                case "txt" -> {
-                                    metrics.rawWebBytes.addAndGet(Files.size(file));
-                                    metrics.compressedWebBytes.addAndGet(Files.size(file));
-                                    uploadRawFile(s3Client, file, s3Key, "text/plain; charset=utf-8", CACHE_SHORT, uploadCount, tracker, currentHash);
-                                }
-                                default -> {}
+                            WebAssetSpec spec = resolveWebAsset(fileName);
+                            if (spec != null) {
+                                uploadWebAsset(s3Client, file, s3Key, spec, metrics, tracker, currentHash);
                             }
                         } catch (Exception e) {
-                            if (!e.toString().contains("SdkClientException") && (e.getCause() == null || !e.getCause().toString().contains("SdkClientException"))) {
+                            if (!isSdkClientException(e)) {
                                 log.error("Failed to process {}: {}", fileName, e.getMessage());
                             }
                         }
@@ -567,6 +520,69 @@ public class SiteBuilderPipeline {
                 backoffMs *= 2;
             }
         }
+    }
+
+    /** How a web asset is prepared before upload. */
+    enum AssetTransform { MINIFY_HTML, MINIFY_CSS, NONE }
+
+    /**
+     * Upload rules for one web asset type.
+     * {@code brotli} assets are (optionally minified and) Brotli-compressed; the others are uploaded as-is.
+     */
+    record WebAssetSpec(String contentType, String cacheControl, AssetTransform transform, boolean brotli) {}
+
+    /** Quality used for Brotli compression during uploads (speed/size trade-off for CI runs). */
+    private static final int BROTLI_UPLOAD_QUALITY = 9;
+
+    /** Returns the upload rules for a (lower-cased) file name, or null if the type is not uploaded. */
+    static WebAssetSpec resolveWebAsset(String fileName) {
+        int dot = fileName.lastIndexOf('.');
+        String ext = dot >= 0 ? fileName.substring(dot + 1) : "";
+        return switch (ext) {
+            case "html" -> new WebAssetSpec("text/html; charset=utf-8", CACHE_SHORT, AssetTransform.MINIFY_HTML, true);
+            case "css" -> new WebAssetSpec("text/css; charset=utf-8", CACHE_LONG, AssetTransform.MINIFY_CSS, true);
+            case "js" -> new WebAssetSpec("application/javascript; charset=utf-8",
+                    fileName.equals("serviceworker.js") ? CACHE_SHORT : CACHE_LONG, AssetTransform.NONE, true);
+            case "json" -> new WebAssetSpec("application/json; charset=utf-8", CACHE_SHORT, AssetTransform.NONE, true);
+            case "xml", "xsl" -> new WebAssetSpec("application/xml; charset=utf-8", CACHE_SHORT, AssetTransform.NONE, true);
+            case "ico" -> new WebAssetSpec("image/x-icon", CACHE_LONG, AssetTransform.NONE, false);
+            case "txt" -> new WebAssetSpec("text/plain; charset=utf-8", CACHE_SHORT, AssetTransform.NONE, false);
+            default -> null;
+        };
+    }
+
+    /** Prepares (minify + Brotli, or raw) and uploads one web asset, recording byte metrics. */
+    static void uploadWebAsset(S3AsyncClient s3Client, Path file, String s3Key, WebAssetSpec spec,
+                               DeploymentMetrics metrics, FileTracker tracker, String currentHash) throws Exception {
+        if (!spec.brotli()) {
+            long size = Files.size(file);
+            metrics.rawWebBytes.addAndGet(size);
+            metrics.compressedWebBytes.addAndGet(size);
+            uploadRawFile(s3Client, file, s3Key, spec.contentType(), spec.cacheControl(),
+                    metrics.webFilesUploaded, tracker, currentHash);
+            return;
+        }
+
+        byte[] raw = switch (spec.transform()) {
+            case MINIFY_HTML -> HTMLMinifier.minifyHTMLToBytes(file.toFile());
+            case MINIFY_CSS -> CSSMinifier.minifyCSSToBytes(file.toFile());
+            case NONE -> Files.readAllBytes(file);
+        };
+        metrics.rawWebBytes.addAndGet(raw.length);
+        byte[] brData = BrotliCompressor.compressBytes(raw, BROTLI_UPLOAD_QUALITY);
+        metrics.compressedWebBytes.addAndGet(brData.length);
+        uploadBytes(s3Client, s3Key, brData, spec.contentType(), "br", spec.cacheControl(),
+                metrics.webFilesUploaded, tracker, file, currentHash);
+    }
+
+    /**
+     * True if the failure is (or is directly caused by) an AWS SdkClientException, e.g. missing credentials in a
+     * local build. Kept as the original class-name match on purpose: an {@code instanceof} check would also match
+     * subclasses (timeouts etc.) and silently change production error handling.
+     */
+    static boolean isSdkClientException(Throwable e) {
+        return e.toString().contains("SdkClientException")
+                || (e.getCause() != null && e.getCause().toString().contains("SdkClientException"));
     }
 
     static void uploadBytes(S3AsyncClient s3Client, String s3Key, byte[] data, String contentType, String contentEncoding, String cacheControl, AtomicInteger counter, FileTracker tracker, Path localFile, String preCalculatedHash) {
