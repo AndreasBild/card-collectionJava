@@ -12,19 +12,19 @@ Use this skill to fetch, scrape, filter, and cache real-world sports card market
 ### A. Point130 Completed Sales Comps
 Fetches recent verified transaction data from 130point:
 ```bash
-mvn exec:java@enrich-market-data
+mvn test-compile exec:java@enrich-market-data
 ```
 
 ### B. SportsCardsPro Pricing & Tier Enrichment
 Fetches grade-based pricing (Ungraded, PSA 8, PSA 9, PSA 10):
 ```bash
-mvn exec:java@enrich-sportscardspro
+mvn test-compile exec:java@enrich-sportscardspro
 ```
 
 ### C. TCDB Checklist Verification
 Cross-references checklist numbers, print runs, and parallel variations:
 ```bash
-mvn exec:java@enrich-tcdb
+mvn test-compile exec:java@enrich-tcdb
 ```
 
 ---

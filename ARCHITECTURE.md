@@ -220,13 +220,13 @@ mvn spotless:apply
 Execute specialized ingestion and pricing enrichers without full site generation:
 ```bash
 # Enrich sales comps & cert census from Point130 / PSA
-mvn exec:java@enrich-market-data
+mvn test-compile exec:java@enrich-market-data
 
 # Enrich condition pricing from SportsCardsPro
-mvn exec:java@enrich-sportscardspro
+mvn test-compile exec:java@enrich-sportscardspro
 
 # Enrich card checklist and attributes from TCDB
-mvn exec:java@enrich-tcdb
+mvn test-compile exec:java@enrich-tcdb
 ```
 
 ---
