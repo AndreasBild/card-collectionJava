@@ -40,13 +40,16 @@ jobs:
           distribution: 'oracle'
           cache: maven
 
+      - name: Compile Project & Verify Test Sources
+        run: mvn test-compile -B
+
       - name: Run Market Data Enrichment (Tiered & Batched)
         run: |
           LIMIT="${{ github.event.inputs.limit || '50' }}"
           STALE_DAYS="${{ github.event.inputs.stale_days || '14' }}"
           SERIAL_FLAG="${{ (github.event.inputs.serial_only == 'false') && '' || '--serial-only' }}"
           echo "Executing market enrichment: limit=$LIMIT, stale_days=$STALE_DAYS, serial_only=$SERIAL_FLAG"
-          mvn exec:java@enrich-market-data -Dexec.args="--comps $SERIAL_FLAG --stale-days $STALE_DAYS --limit $LIMIT" -B
+          mvn test-compile exec:java@enrich-market-data -Dexec.args="--comps $SERIAL_FLAG --stale-days $STALE_DAYS --limit $LIMIT" -B
 
       - name: Run Spotless & Regression Tests
         run: mvn spotless:apply test -B
