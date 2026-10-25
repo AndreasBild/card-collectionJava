@@ -19,3 +19,8 @@
 - **Pre-Commit Check:** Run `mvn spotless:check`.
 - **Automatic Formatting:** Run `mvn spotless:apply` to fix formatting discrepancies automatically.
 - **Javadoc:** Provide concise Javadoc explaining *why* non-obvious architecture choices or performance optimizations were made.
+
+## 5. Senior Fullstack & Ecosystem Standards
+- **Spring Boot & MySQL (Upstream & Services):** Maintain idiomatic Spring Boot conventions, robust JPA/JDBC interactions, parameterized queries, and clean relational schemas when working with upstream data pipelines or backend services.
+- **CSS & UI Excellence:** Author semantic, modern CSS (container queries, CSS variables, subgrid, flexbox/grid) honoring the zero-CLS design system and responsive viewport budgets.
+- **Modern JavaScript:** Employ lightweight Vanilla/Micro-JS for client-side enhancement without bloating CWV or violating the Zero-JS/Micro-JS delivery model.
