@@ -112,20 +112,6 @@
       "ebayTitle" : "1999-00 Stadium Club Chrome First Day Issue Refractors #25 Juwan Howard /25"
     }
   },
-  "1994-classic-comic-printers-proof-103-sn975" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-08-29T07:20:00Z",
-    "popReport" : null,
-    "estimatedValue" : null,
-    "lastSoldPrice" : null,
-    "lastSoldDate" : null,
-    "purchasePrice" : 7.05,
-    "priceHistory" : [ ],
-    "metadata" : {
-      "purchaseDate" : "11/20/2020",
-      "purchaseItemId" : "33475104"
-    }
-  },
   "2003-04-topps-rookie-matrix-105" : {
     "certNumber" : null,
     "lastQueried" : null,
@@ -146,6 +132,20 @@
       "ebaySeller" : "burbanksportscards",
       "ebayTitle" : "2003-04 Topps Rookie Matrix Minis Topps #105 Juwan Howard",
       "ebayShipping" : "0.4"
+    }
+  },
+  "1994-classic-comic-printers-proof-103-sn975" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-08-29T07:20:00Z",
+    "popReport" : null,
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : 7.05,
+    "priceHistory" : [ ],
+    "metadata" : {
+      "purchaseDate" : "11/20/2020",
+      "purchaseItemId" : "33475104"
     }
   },
   "1998-99-topps-155" : {
@@ -218,27 +218,6 @@
       "purchaseItemId" : "215482342"
     }
   },
-  "2023-24-topps-chrome-purple-refractor-101-sn85" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-09-27T21:58:41.969664Z",
-    "popReport" : null,
-    "estimatedValue" : null,
-    "lastSoldPrice" : null,
-    "lastSoldDate" : null,
-    "purchasePrice" : 1.99,
-    "priceHistory" : [ {
-      "date" : "2025-12-08",
-      "price" : 1.99,
-      "source" : "eBay",
-      "grade" : "Raw"
-    } ],
-    "metadata" : {
-      "purchaseDate" : "2025-12-08",
-      "purchaseItemId" : "177450085581",
-      "ebaySeller" : "daycards30",
-      "ebayTitle" : "2023-24 Topps Chrome #101 Juwan Howard Purple Refractors #/349"
-    }
-  },
   "2019-20-panini-select-signatures-prizms-tie-dye-sg-jwh-sn6" : {
     "certNumber" : null,
     "lastQueried" : null,
@@ -259,6 +238,27 @@
       "ebaySeller" : "sosad1966",
       "ebayTitle" : "2019-20 PANINI SELECT PRIZM ON CARD AUTO JUWAN HOWARD /25 WASHINGTON WIZARDS",
       "ebayShipping" : "4.2"
+    }
+  },
+  "2023-24-topps-chrome-purple-refractor-101-sn85" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-09-27T21:58:41.969664Z",
+    "popReport" : null,
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : 1.99,
+    "priceHistory" : [ {
+      "date" : "2025-12-08",
+      "price" : 1.99,
+      "source" : "eBay",
+      "grade" : "Raw"
+    } ],
+    "metadata" : {
+      "purchaseDate" : "2025-12-08",
+      "purchaseItemId" : "177450085581",
+      "ebaySeller" : "daycards30",
+      "ebayTitle" : "2023-24 Topps Chrome #101 Juwan Howard Purple Refractors #/349"
     }
   },
   "2018-19-panini-flawless-distinguished-autographs-printing-plate-cyan-da-jwh-sn1" : {
@@ -608,27 +608,6 @@
       "ebayShipping" : "4.99"
     }
   },
-  "1998-99-spx-finite-star-power-spectrum-92-sn223" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-08-29T10:28:00Z",
-    "popReport" : null,
-    "estimatedValue" : null,
-    "lastSoldPrice" : null,
-    "lastSoldDate" : null,
-    "purchasePrice" : 0.99,
-    "priceHistory" : [ {
-      "date" : "2006-07-08",
-      "price" : 0.99,
-      "source" : "eBay",
-      "grade" : "Raw"
-    } ],
-    "metadata" : {
-      "purchaseDate" : "2006-07-08",
-      "purchaseItemId" : "120004046805",
-      "ebaySeller" : "bigbadmike",
-      "ebayTitle" : "1998-99 SPX FINITE SPECTRUM SP JUWAN HOWARD #223/250"
-    }
-  },
   "1998-99-topps-east-west-refractor-ew11" : {
     "certNumber" : null,
     "lastQueried" : "2026-09-15",
@@ -658,6 +637,27 @@
       "purchaseItemId" : "8810289283",
       "ebaySeller" : "inaanayna",
       "ebayTitle" : "CHRIS WEBBER/JUWAN HOWARD 98 TOPPS EAST/WEST REFRACTOR"
+    }
+  },
+  "1998-99-spx-finite-star-power-spectrum-92-sn223" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-11-08T09:53:19.032656335Z",
+    "popReport" : null,
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : 0.99,
+    "priceHistory" : [ {
+      "date" : "2006-07-08",
+      "price" : 0.99,
+      "source" : "eBay",
+      "grade" : "Raw"
+    } ],
+    "metadata" : {
+      "purchaseDate" : "2006-07-08",
+      "purchaseItemId" : "120004046805",
+      "ebaySeller" : "bigbadmike",
+      "ebayTitle" : "1998-99 SPX FINITE SPECTRUM SP JUWAN HOWARD #223/250"
     }
   },
   "2002-03-topps-chrome-refractor-50" : {
@@ -867,7 +867,7 @@
   },
   "1997-98-flair-showcase-style-legacy-collection-row-2-seat-64-sn86" : {
     "certNumber" : null,
-    "lastQueried" : "2026-11-01T10:04:38.315487007Z",
+    "lastQueried" : "2026-11-08T09:52:17.070157612Z",
     "popReport" : null,
     "estimatedValue" : null,
     "lastSoldPrice" : null,
@@ -1005,7 +1005,7 @@
   },
   "1997-98-spx-grand-finale-49-sn40" : {
     "certNumber" : null,
-    "lastQueried" : "2026-11-01T10:04:49.110242683Z",
+    "lastQueried" : "2026-11-08T09:52:27.927195457Z",
     "popReport" : null,
     "estimatedValue" : null,
     "lastSoldPrice" : null,
@@ -1022,6 +1022,26 @@
       "purchaseItemId" : "8751086970",
       "ebaySeller" : "vicator_nba_cards",
       "ebayTitle" : "Juwan Howard 97/98 SPx Grand Finale 40/50 SCARCE !"
+    }
+  },
+  "1996-97-skybox-z-force-95" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-09-15",
+    "popReport" : null,
+    "estimatedValue" : 0.99,
+    "lastSoldPrice" : 0.99,
+    "lastSoldDate" : "2026-08-30",
+    "purchasePrice" : null,
+    "priceHistory" : [ {
+      "date" : "2026-08-30",
+      "price" : 0.99,
+      "source" : "SportsCardsPro",
+      "grade" : "Raw"
+    } ],
+    "metadata" : {
+      "sportscardspro_id" : "7264097",
+      "sportscardspro_ungraded" : "0.99",
+      "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1996-skybox-z-force/juwan-howard-95"
     }
   },
   "2004-05-sp-game-used-edition-gold-81-sn58" : {
@@ -1051,24 +1071,20 @@
       "secondaryPurchaseItemIds" : "8799135468"
     }
   },
-  "1996-97-skybox-z-force-95" : {
+  "2008-exquisite-flawless-michael-cooper-flaw-mc-sn38" : {
     "certNumber" : null,
-    "lastQueried" : "2026-09-15",
+    "lastQueried" : "2026-09-28",
     "popReport" : null,
-    "estimatedValue" : 0.99,
-    "lastSoldPrice" : 0.99,
-    "lastSoldDate" : "2026-08-30",
-    "purchasePrice" : null,
-    "priceHistory" : [ {
-      "date" : "2026-08-30",
-      "price" : 0.99,
-      "source" : "SportsCardsPro",
-      "grade" : "Raw"
-    } ],
+    "estimatedValue" : 55.0,
+    "lastSoldPrice" : 55.0,
+    "lastSoldDate" : "2026-09-28",
+    "purchasePrice" : 5.5,
+    "priceHistory" : [ ],
     "metadata" : {
-      "sportscardspro_id" : "7264097",
-      "sportscardspro_ungraded" : "0.99",
-      "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1996-skybox-z-force/juwan-howard-95"
+      "purchaseItemId" : "270551770451",
+      "ebayTitle" : "08-09 EXQUISITE- MICHAEL COOPER AUTO FLAWLESS 38/50",
+      "purchaseDate" : "Mar 27, 2010 05:24 PM",
+      "ebaySeller" : "topdawgcards512"
     }
   },
   "1996-97-skybox-premium-127" : {
@@ -1087,22 +1103,6 @@
     } ],
     "metadata" : {
       "purchaseDate" : "2011-05-05"
-    }
-  },
-  "2008-exquisite-flawless-michael-cooper-flaw-mc-sn38" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-09-28",
-    "popReport" : null,
-    "estimatedValue" : 55.0,
-    "lastSoldPrice" : 55.0,
-    "lastSoldDate" : "2026-09-28",
-    "purchasePrice" : 5.5,
-    "priceHistory" : [ ],
-    "metadata" : {
-      "purchaseItemId" : "270551770451",
-      "ebayTitle" : "08-09 EXQUISITE- MICHAEL COOPER AUTO FLAWLESS 38/50",
-      "purchaseDate" : "Mar 27, 2010 05:24 PM",
-      "ebaySeller" : "topdawgcards512"
     }
   },
   "2010-11-panini-gold-standard-black-94-sn1" : {
@@ -1338,7 +1338,7 @@
   },
   "1997-98-flair-showcase-flair-legacy-collection-row-3-seat-64-sn79" : {
     "certNumber" : null,
-    "lastQueried" : "2026-11-01T10:04:39.861784718Z",
+    "lastQueried" : "2026-11-08T09:52:18.627530488Z",
     "popReport" : null,
     "estimatedValue" : null,
     "lastSoldPrice" : null,
@@ -1416,6 +1416,44 @@
       "ebayTitle" : "2025-26 Topps - Topps Notch Signatures Juwan Howard Black Holofoil 10/10 BOOKEND"
     }
   },
+  "1994-classic-4-sports-printers-proof-5" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-09-15",
+    "popReport" : null,
+    "estimatedValue" : 1.19,
+    "lastSoldPrice" : 1.19,
+    "lastSoldDate" : "2026-08-30",
+    "purchasePrice" : 0.98,
+    "priceHistory" : [ {
+      "date" : "2026-08-30",
+      "price" : 1.19,
+      "source" : "SportsCardsPro",
+      "grade" : "Raw"
+    } ],
+    "metadata" : {
+      "purchaseDate" : "11/19/2020",
+      "sportscardspro_ungraded" : "1.19",
+      "purchaseItemId" : "20124600",
+      "sportscardspro_grade9" : "9.12",
+      "sportscardspro_psa10" : "85.41",
+      "sportscardspro_id" : "82238",
+      "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1994-sp/juwan-howard-foil-5"
+    }
+  },
+  "2003-04-fleer-authentix-46" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-08-29T07:20:00Z",
+    "popReport" : null,
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : 1.06,
+    "priceHistory" : [ ],
+    "metadata" : {
+      "purchaseDate" : "11/25/2025",
+      "purchaseItemId" : "25616195"
+    }
+  },
   "1996-97-flair-showcase-showstopper-legacy-collection-row-1-seat-5-sn13" : {
     "certNumber" : null,
     "lastQueried" : "2026-11-01T10:04:24.410844921Z",
@@ -1446,44 +1484,6 @@
       "grade" : ""
     } ],
     "metadata" : { }
-  },
-  "2003-04-fleer-authentix-46" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-08-29T07:20:00Z",
-    "popReport" : null,
-    "estimatedValue" : null,
-    "lastSoldPrice" : null,
-    "lastSoldDate" : null,
-    "purchasePrice" : 1.06,
-    "priceHistory" : [ ],
-    "metadata" : {
-      "purchaseDate" : "11/25/2025",
-      "purchaseItemId" : "25616195"
-    }
-  },
-  "1994-classic-4-sports-printers-proof-5" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-09-15",
-    "popReport" : null,
-    "estimatedValue" : 1.19,
-    "lastSoldPrice" : 1.19,
-    "lastSoldDate" : "2026-08-30",
-    "purchasePrice" : 0.98,
-    "priceHistory" : [ {
-      "date" : "2026-08-30",
-      "price" : 1.19,
-      "source" : "SportsCardsPro",
-      "grade" : "Raw"
-    } ],
-    "metadata" : {
-      "purchaseDate" : "11/19/2020",
-      "sportscardspro_ungraded" : "1.19",
-      "purchaseItemId" : "20124600",
-      "sportscardspro_grade9" : "9.12",
-      "sportscardspro_psa10" : "85.41",
-      "sportscardspro_id" : "82238",
-      "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1994-sp/juwan-howard-foil-5"
-    }
   },
   "2006-07-sp-game-used-edition-authentic-fabrics-jersey-afd-mh-sn51" : {
     "certNumber" : null,
@@ -2014,6 +2014,23 @@
       "ebaySeller" : "superstarjordan"
     }
   },
+  "2010-11-panini-season-update-green-week-jersey-prime-15-sn19" : {
+    "certNumber" : null,
+    "lastQueried" : null,
+    "popReport" : null,
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : 14.99,
+    "priceHistory" : [ ],
+    "metadata" : {
+      "purchaseItemId" : "400264726091",
+      "ebayTitle" : "JUWAN HOWARD 2010-11 PANINI SEASON UPDATE GAME USED JERSEY / PATCH SP/49",
+      "purchaseDate" : "Dec 19, 2011 01:31 PM",
+      "ebayShipping" : "1",
+      "ebaySeller" : "14.99"
+    }
+  },
   "2010-11-panini-donruss-die-cut-sapphire-171-sn41" : {
     "certNumber" : null,
     "lastQueried" : "2026-09-27T21:58:41.969343Z",
@@ -2033,23 +2050,6 @@
       "purchaseItemId" : "280651165502",
       "ebaySeller" : "vendedor939",
       "ebayTitle" : "10/11 Donruss Juwan Howard *Blue Cut* 41/49 #171"
-    }
-  },
-  "2010-11-panini-season-update-green-week-jersey-prime-15-sn19" : {
-    "certNumber" : null,
-    "lastQueried" : null,
-    "popReport" : null,
-    "estimatedValue" : null,
-    "lastSoldPrice" : null,
-    "lastSoldDate" : null,
-    "purchasePrice" : 14.99,
-    "priceHistory" : [ ],
-    "metadata" : {
-      "purchaseItemId" : "400264726091",
-      "ebayTitle" : "JUWAN HOWARD 2010-11 PANINI SEASON UPDATE GAME USED JERSEY / PATCH SP/49",
-      "purchaseDate" : "Dec 19, 2011 01:31 PM",
-      "ebayShipping" : "1",
-      "ebaySeller" : "14.99"
     }
   },
   "2022-23-panini-spectra-icons-autographs-marble-ia-juw-sn4" : {
@@ -2073,6 +2073,20 @@
       "ebayTitle" : "2022-23 SPECTRA ICONS AUTO 4/5 JUWAN HOWARD JF"
     }
   },
+  "2002-03-ultra-34" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-08-29T07:20:00Z",
+    "popReport" : null,
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : 1.85,
+    "priceHistory" : [ ],
+    "metadata" : {
+      "purchaseDate" : "10/21/2018",
+      "purchaseItemId" : "20511510"
+    }
+  },
   "2008-exquisite-flawless-jerry-west-flaw-jw-sn11" : {
     "certNumber" : null,
     "lastQueried" : "2026-09-28",
@@ -2094,20 +2108,6 @@
       "ebaySeller" : "bronchoog"
     }
   },
-  "2002-03-ultra-34" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-08-29T07:20:00Z",
-    "popReport" : null,
-    "estimatedValue" : null,
-    "lastSoldPrice" : null,
-    "lastSoldDate" : null,
-    "purchasePrice" : 1.85,
-    "priceHistory" : [ ],
-    "metadata" : {
-      "purchaseDate" : "10/21/2018",
-      "purchaseItemId" : "20511510"
-    }
-  },
   "1996-97-skybox-premium-autographics-black-30" : {
     "certNumber" : null,
     "lastQueried" : "2026-08-29T12:26:00Z",
@@ -2127,20 +2127,6 @@
       "purchaseItemId" : "8814466184",
       "ebaySeller" : "simsclassicsports",
       "ebayTitle" : "1996-97 SkyBox Autographics #30 Bullets Juwan Howard"
-    }
-  },
-  "2007-08-upper-deck-electric-court-10" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-08-29T07:20:00Z",
-    "popReport" : null,
-    "estimatedValue" : null,
-    "lastSoldPrice" : null,
-    "lastSoldDate" : null,
-    "purchasePrice" : 0.9,
-    "priceHistory" : [ ],
-    "metadata" : {
-      "purchaseDate" : "12/26/2013",
-      "purchaseItemId" : "12378221"
     }
   },
   "2023-24-topps-chrome-orange-refractor-101-sn16" : {
@@ -2169,6 +2155,20 @@
       "ebayTitle" : "2023-24 Topps Cosmic Chrome - Juwan Howard Orange Raywave Refractor /25"
     }
   },
+  "2007-08-upper-deck-electric-court-10" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-08-29T07:20:00Z",
+    "popReport" : null,
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : 0.9,
+    "priceHistory" : [ ],
+    "metadata" : {
+      "purchaseDate" : "12/26/2013",
+      "purchaseItemId" : "12378221"
+    }
+  },
   "1997-98-fleer-key-ingredients-gold-4" : {
     "certNumber" : null,
     "lastQueried" : "2026-08-29T12:26:00Z",
@@ -2185,6 +2185,23 @@
     } ],
     "metadata" : {
       "purchaseDate" : "2006-08-07"
+    }
+  },
+  "2021-22-panini-donruss-optic-opti-graphs-gold-og-jwh-sn6" : {
+    "certNumber" : null,
+    "lastQueried" : null,
+    "popReport" : null,
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : 10.5,
+    "priceHistory" : [ ],
+    "metadata" : {
+      "purchaseItemId" : "166387896707",
+      "ebayTitle" : "2021-22 Donruss Optic Juwan Howard Opti-Graphs Auto Gold /10 OG-JWH Heat",
+      "purchaseDate" : "Oct 27, 2023 01:24 PM",
+      "ebayShipping" : "1",
+      "ebaySeller" : "10.50"
     }
   },
   "2000-01-fleer-authority-prominence-85-sn40" : {
@@ -2207,23 +2224,6 @@
     "metadata" : {
       "purchaseItemId" : "12304363",
       "purchaseDate" : "12/26/2013"
-    }
-  },
-  "2021-22-panini-donruss-optic-opti-graphs-gold-og-jwh-sn6" : {
-    "certNumber" : null,
-    "lastQueried" : null,
-    "popReport" : null,
-    "estimatedValue" : null,
-    "lastSoldPrice" : null,
-    "lastSoldDate" : null,
-    "purchasePrice" : 10.5,
-    "priceHistory" : [ ],
-    "metadata" : {
-      "purchaseItemId" : "166387896707",
-      "ebayTitle" : "2021-22 Donruss Optic Juwan Howard Opti-Graphs Auto Gold /10 OG-JWH Heat",
-      "purchaseDate" : "Oct 27, 2023 01:24 PM",
-      "ebayShipping" : "1",
-      "ebaySeller" : "10.50"
     }
   },
   "2023-24-topps-cosmic-chrome-autograph-variation-red-flare-refractor-ccav-jh-sn4" : {
@@ -2305,7 +2305,7 @@
   },
   "1997-98-fleer-metal-universe-championship-precious-metal-gems-11-sn32" : {
     "certNumber" : null,
-    "lastQueried" : "2026-11-01T10:04:41.398878261Z",
+    "lastQueried" : "2026-11-08T09:52:20.186626953Z",
     "popReport" : null,
     "estimatedValue" : 1850.0,
     "lastSoldPrice" : 1850.0,
@@ -2406,28 +2406,6 @@
       "ebayTitle" : "2023-24 Topps Chrome 1972 Gold Refractor #TA-JHO Juwan Howard Auto # 08/50"
     }
   },
-  "2025-26-topps-chrome-mcdonald-s-all-american-83" : {
-    "certNumber" : null,
-    "lastQueried" : null,
-    "popReport" : null,
-    "estimatedValue" : null,
-    "lastSoldPrice" : null,
-    "lastSoldDate" : null,
-    "purchasePrice" : 0.99,
-    "priceHistory" : [ {
-      "date" : "2026-03-13",
-      "price" : 0.99,
-      "source" : "eBay",
-      "grade" : "Raw"
-    } ],
-    "metadata" : {
-      "purchaseDate" : "2026-03-13",
-      "purchaseItemId" : "127737432140",
-      "ebaySeller" : "supersweetsportscards_0",
-      "ebayTitle" : "2025 Topps Chrome McDonald's All American #83 Juwan Howard, West",
-      "ebayShipping" : "1.32"
-    }
-  },
   "2012-13-panini-momentum-monumental-marks-blue-271-sn7" : {
     "certNumber" : null,
     "lastQueried" : null,
@@ -2448,6 +2426,28 @@
       "ebaySeller" : "its4salehere90",
       "ebayTitle" : "2012/13 Momentum JUWAN HOWARD AUTO SSP #07/10 Heat Monumental Marks - Damaged",
       "ebayShipping" : "0.0"
+    }
+  },
+  "2025-26-topps-chrome-mcdonald-s-all-american-83" : {
+    "certNumber" : null,
+    "lastQueried" : null,
+    "popReport" : null,
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : 0.99,
+    "priceHistory" : [ {
+      "date" : "2026-03-13",
+      "price" : 0.99,
+      "source" : "eBay",
+      "grade" : "Raw"
+    } ],
+    "metadata" : {
+      "purchaseDate" : "2026-03-13",
+      "purchaseItemId" : "127737432140",
+      "ebaySeller" : "supersweetsportscards_0",
+      "ebayTitle" : "2025 Topps Chrome McDonald's All American #83 Juwan Howard, West",
+      "ebayShipping" : "1.32"
     }
   },
   "2010-11-panini-season-update-green-week-15-sn648" : {
@@ -3052,20 +3052,6 @@
       "ebayTitle" : "2023/24 Topps Chrome JUWAN HOWARD Green Refractor63/199 UM/Wizards"
     }
   },
-  "2002-03-ud-championship-drive-21" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-08-29T07:20:00Z",
-    "popReport" : null,
-    "estimatedValue" : null,
-    "lastSoldPrice" : null,
-    "lastSoldDate" : null,
-    "purchasePrice" : 1.85,
-    "priceHistory" : [ ],
-    "metadata" : {
-      "purchaseDate" : "11/25/2025",
-      "purchaseItemId" : "59151139"
-    }
-  },
   "2004-05-topps-chrome-refractor-139" : {
     "certNumber" : null,
     "lastQueried" : "2026-08-29T10:28:00Z",
@@ -3087,30 +3073,18 @@
       "ebayTitle" : "04-05 JUWAN HOWARD TOPPS CHROME REFRACTOR # 139"
     }
   },
-  "1998-99-spx-finite-radiance-76-sn2681" : {
+  "2002-03-ud-championship-drive-21" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-29T10:28:00Z",
+    "lastQueried" : "2026-08-29T07:20:00Z",
     "popReport" : null,
     "estimatedValue" : null,
     "lastSoldPrice" : null,
     "lastSoldDate" : null,
-    "purchasePrice" : 8.0,
-    "priceHistory" : [ {
-      "date" : "2006-06-03",
-      "price" : 0.99,
-      "source" : "eBay",
-      "grade" : "Raw"
-    }, {
-      "date" : "2010-10-27",
-      "price" : 8.0,
-      "source" : "eBay",
-      "grade" : "Raw"
-    } ],
+    "purchasePrice" : 1.85,
+    "priceHistory" : [ ],
     "metadata" : {
-      "purchaseDate" : "2010-10-27",
-      "purchaseItemId" : "260469228613",
-      "ebaySeller" : "smsc1",
-      "ebayTitle" : "98-99 SPX FINITE RADIANCE JUWAN HOWARD SERIAL #'D!!!!"
+      "purchaseDate" : "11/25/2025",
+      "purchaseItemId" : "59151139"
     }
   },
   "2023-24-topps-chrome-black-refractor-101-sn10" : {
@@ -3132,6 +3106,32 @@
       "purchaseItemId" : "226423870375",
       "ebaySeller" : "77rising-collectibles",
       "ebayTitle" : "2024 Topps Chrome Basketall Juwan Howard Black #10/10 = eBay 1/1"
+    }
+  },
+  "1998-99-spx-finite-radiance-76-sn2681" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-11-08T09:53:08.219508984Z",
+    "popReport" : null,
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : 8.0,
+    "priceHistory" : [ {
+      "date" : "2006-06-03",
+      "price" : 0.99,
+      "source" : "eBay",
+      "grade" : "Raw"
+    }, {
+      "date" : "2010-10-27",
+      "price" : 8.0,
+      "source" : "eBay",
+      "grade" : "Raw"
+    } ],
+    "metadata" : {
+      "purchaseDate" : "2010-10-27",
+      "purchaseItemId" : "260469228613",
+      "ebaySeller" : "smsc1",
+      "ebayTitle" : "98-99 SPX FINITE RADIANCE JUWAN HOWARD SERIAL #'D!!!!"
     }
   },
   "2005-06-topps-total-silver-199" : {
@@ -3297,27 +3297,6 @@
       "ebaySeller" : "mswift69"
     }
   },
-  "1998-99-topps-finest-no-protector-refractor-6" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-08-29T10:28:00Z",
-    "popReport" : null,
-    "estimatedValue" : null,
-    "lastSoldPrice" : null,
-    "lastSoldDate" : null,
-    "purchasePrice" : 0.99,
-    "priceHistory" : [ {
-      "date" : "2010-02-13",
-      "price" : 0.99,
-      "source" : "eBay",
-      "grade" : "Raw"
-    } ],
-    "metadata" : {
-      "purchaseDate" : "2010-02-13",
-      "purchaseItemId" : "180466245590",
-      "ebaySeller" : "paulwm5",
-      "ebayTitle" : "98-99 Finest Protector & No Prot Refractor Juwan Howard"
-    }
-  },
   "2020-21-panini-contenders-optic-perennial-contenders-gold-pco-juw-sn1" : {
     "certNumber" : null,
     "lastQueried" : "2026-08-29T10:30:00Z",
@@ -3337,6 +3316,27 @@
       "purchaseItemId" : "146087242335",
       "ebaySeller" : "cardadvisory",
       "ebayTitle" : "JUWAN HOWARD 2020-21 CONTENDERS OPTIC PERENNIAL GOLD PRIZM AUTO 01/10"
+    }
+  },
+  "1998-99-topps-finest-no-protector-refractor-6" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-08-29T10:28:00Z",
+    "popReport" : null,
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : 0.99,
+    "priceHistory" : [ {
+      "date" : "2010-02-13",
+      "price" : 0.99,
+      "source" : "eBay",
+      "grade" : "Raw"
+    } ],
+    "metadata" : {
+      "purchaseDate" : "2010-02-13",
+      "purchaseItemId" : "180466245590",
+      "ebaySeller" : "paulwm5",
+      "ebayTitle" : "98-99 Finest Protector & No Prot Refractor Juwan Howard"
     }
   },
   "2003-04-ud-mvp-gold-131-sn15" : {
@@ -3473,7 +3473,7 @@
   },
   "1997-98-skybox-premium-autographics-century-marks-51-sn30" : {
     "certNumber" : null,
-    "lastQueried" : "2026-11-01T10:04:46.024834859Z",
+    "lastQueried" : "2026-11-08T09:52:24.835734059Z",
     "popReport" : null,
     "estimatedValue" : null,
     "lastSoldPrice" : null,
@@ -3726,32 +3726,6 @@
       "ebayTitle" : "2020-21 Panini Prizm Fast Break Autographs Gold #24 Juwan Howard #05/10"
     }
   },
-  "2017-18-panini-absolute-memorabilia-determination-autographs-orange-d-jh-sn1" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-08-29T12:26:00Z",
-    "popReport" : null,
-    "estimatedValue" : null,
-    "lastSoldPrice" : null,
-    "lastSoldDate" : null,
-    "purchasePrice" : 10.53,
-    "priceHistory" : [ {
-      "date" : "2020-06-26",
-      "price" : 10.53,
-      "source" : "eBay",
-      "grade" : "Raw"
-    }, {
-      "date" : "2020-06-27",
-      "price" : 1.5,
-      "source" : "eBay",
-      "grade" : "Raw"
-    } ],
-    "metadata" : {
-      "purchaseDate" : "2020-06-26",
-      "purchaseItemId" : "324205725968",
-      "ebaySeller" : "myboricuahostingllc",
-      "ebayTitle" : "2017-18 Absolute Memorabilia Determination Autographs Blue #18 Juwan Howard 1/5"
-    }
-  },
   "2002-03-sp-game-used-edition-authentic-fabrics-jersey-mc-jh-jp-j-sn8" : {
     "certNumber" : null,
     "lastQueried" : "2026-09-27T21:58:41.969434Z",
@@ -3777,6 +3751,32 @@
       "ebaySeller" : "lebron2knicks",
       "ebayTitle" : "2002/03 SP GU JUWAN HOWARD/MCDYESS/POSEY JERSEY /25",
       "secondaryPurchaseItemIds" : "220284983950"
+    }
+  },
+  "2017-18-panini-absolute-memorabilia-determination-autographs-orange-d-jh-sn1" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-08-29T12:26:00Z",
+    "popReport" : null,
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : 10.53,
+    "priceHistory" : [ {
+      "date" : "2020-06-26",
+      "price" : 10.53,
+      "source" : "eBay",
+      "grade" : "Raw"
+    }, {
+      "date" : "2020-06-27",
+      "price" : 1.5,
+      "source" : "eBay",
+      "grade" : "Raw"
+    } ],
+    "metadata" : {
+      "purchaseDate" : "2020-06-26",
+      "purchaseItemId" : "324205725968",
+      "ebaySeller" : "myboricuahostingllc",
+      "ebayTitle" : "2017-18 Absolute Memorabilia Determination Autographs Blue #18 Juwan Howard 1/5"
     }
   },
   "2010-11-panini-gold-standard-platinum-94-sn2" : {
@@ -4003,6 +4003,22 @@
       "ebayTitle" : "2025 Topps Chrome McDonald's All American Juwan Howard Gold 7/50 #83 MOMO"
     }
   },
+  "2012-13-flawless-signatures-julius-erving-44-sn04" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-09-28",
+    "popReport" : null,
+    "estimatedValue" : 450.0,
+    "lastSoldPrice" : 450.0,
+    "lastSoldDate" : "2026-09-28",
+    "purchasePrice" : 88.0,
+    "priceHistory" : [ ],
+    "metadata" : {
+      "purchaseItemId" : "231080910687",
+      "ebayTitle" : "JULIUS ERVING PANINI FLAWLESS 2013 AUTO RUBY 4/15",
+      "purchaseDate" : "Nov 01, 2013 06:07 PM",
+      "ebaySeller" : "jumbobearsports"
+    }
+  },
   "2018-19-panini-flawless-legendary-scripts-emerald-ls-jwh-sn4" : {
     "certNumber" : null,
     "lastQueried" : "2026-08-29T13:10:00Z",
@@ -4022,22 +4038,6 @@
       "purchaseItemId" : "193199674807",
       "ebaySeller" : "triple-double-sports",
       "ebayTitle" : "Juwan Howard 2018-19 Flawless Emerald Auto Autograph #//5 Miami Heat"
-    }
-  },
-  "2012-13-flawless-signatures-julius-erving-44-sn04" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-09-28",
-    "popReport" : null,
-    "estimatedValue" : 450.0,
-    "lastSoldPrice" : 450.0,
-    "lastSoldDate" : "2026-09-28",
-    "purchasePrice" : 88.0,
-    "priceHistory" : [ ],
-    "metadata" : {
-      "purchaseItemId" : "231080910687",
-      "ebayTitle" : "JULIUS ERVING PANINI FLAWLESS 2013 AUTO RUBY 4/15",
-      "purchaseDate" : "Nov 01, 2013 06:07 PM",
-      "ebaySeller" : "jumbobearsports"
     }
   },
   "2008-exquisite-flawless-chris-paul-flaw-cp-sn08" : {
@@ -4103,6 +4103,24 @@
       "ebayTitle" : "2019-20 Impeccable Juwan Howard Indelible Ink Autograph On Card Auto /99 Mint"
     }
   },
+  "2003-04-topps-collection-edition-59" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-08-29T10:28:00Z",
+    "popReport" : null,
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : 0.99,
+    "priceHistory" : [ {
+      "date" : "2006-11-03",
+      "price" : 0.99,
+      "source" : "eBay",
+      "grade" : "Raw"
+    } ],
+    "metadata" : {
+      "purchaseDate" : "2006-11-03"
+    }
+  },
   "2023-24-topps-chrome-frozenfractor-101-sn-4" : {
     "certNumber" : "97840205",
     "lastQueried" : "2026-08-24T10:40:53.105690Z",
@@ -4132,22 +4150,25 @@
       "ebayTitle" : "Juwan Howard 2023 Topps Chrome Frozenfractor SSP - #101 - PSA 9 MINT - POP 1"
     }
   },
-  "2003-04-topps-collection-edition-59" : {
+  "2019-20-panini-national-treasures-peerless-signatures-emerald-ps-jwh-sn5" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-29T10:28:00Z",
+    "lastQueried" : "2026-09-28T07:11:35.547426Z",
     "popReport" : null,
     "estimatedValue" : null,
     "lastSoldPrice" : null,
     "lastSoldDate" : null,
-    "purchasePrice" : 0.99,
+    "purchasePrice" : 39.99,
     "priceHistory" : [ {
-      "date" : "2006-11-03",
-      "price" : 0.99,
+      "date" : "2023-12-07",
+      "price" : 39.99,
       "source" : "eBay",
       "grade" : "Raw"
     } ],
     "metadata" : {
-      "purchaseDate" : "2006-11-03"
+      "purchaseDate" : "2023-12-07",
+      "purchaseItemId" : "166456298154",
+      "ebaySeller" : "lastshotsportsshop",
+      "ebayTitle" : "2020 National Treasures Peerless Emerald Auto Juwan Howard 5/5 EBay 1/1"
     }
   },
   "2022-23-panini-prizm-fast-break-signatures-black-fb-jhw-sn1" : {
@@ -4169,27 +4190,6 @@
       "purchaseItemId" : "155550893240",
       "ebaySeller" : "ithware13",
       "ebayTitle" : "2022-23 Panini Prizm Juwan Howard Fast Break Prizm Autographs BLACK Prizm 1/1"
-    }
-  },
-  "2019-20-panini-national-treasures-peerless-signatures-emerald-ps-jwh-sn5" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-09-28T07:11:35.547426Z",
-    "popReport" : null,
-    "estimatedValue" : null,
-    "lastSoldPrice" : null,
-    "lastSoldDate" : null,
-    "purchasePrice" : 39.99,
-    "priceHistory" : [ {
-      "date" : "2023-12-07",
-      "price" : 39.99,
-      "source" : "eBay",
-      "grade" : "Raw"
-    } ],
-    "metadata" : {
-      "purchaseDate" : "2023-12-07",
-      "purchaseItemId" : "166456298154",
-      "ebaySeller" : "lastshotsportsshop",
-      "ebayTitle" : "2020 National Treasures Peerless Emerald Auto Juwan Howard 5/5 EBay 1/1"
     }
   },
   "2004-05-e-xl-credentials-now-56-sn39" : {
@@ -4272,7 +4272,7 @@
   },
   "1998-99-spx-finite-top-flight-radiance-195-sn501" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-29T07:20:00Z",
+    "lastQueried" : "2026-11-08T09:53:12.836256690Z",
     "popReport" : null,
     "estimatedValue" : null,
     "lastSoldPrice" : null,
@@ -4362,7 +4362,7 @@
   },
   "1998-99-skybox-premium-autographics-blue-57-sn39" : {
     "certNumber" : null,
-    "lastQueried" : "2026-11-01T10:05:32.284228441Z",
+    "lastQueried" : "2026-11-08T09:53:05.125731530Z",
     "popReport" : null,
     "estimatedValue" : null,
     "lastSoldPrice" : null,
@@ -4484,6 +4484,22 @@
       "ebayTitle" : "JUWAN HOWARD 2023-24 Topps Chrome Red Geometric 1972 Auto Card 5/5 SSP JERSEY #5"
     }
   },
+  "2008-exquisite-flawless-alonzo-mourning-flaw-am-sn10" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-09-28",
+    "popReport" : null,
+    "estimatedValue" : 185.0,
+    "lastSoldPrice" : 185.0,
+    "lastSoldDate" : "2026-09-28",
+    "purchasePrice" : 66.0,
+    "priceHistory" : [ ],
+    "metadata" : {
+      "purchaseItemId" : "230386653655",
+      "ebayTitle" : "ALONZO MOURNING 08/09 EXQUISITE FLAWLESS AUTO #/25 $150",
+      "purchaseDate" : "Oct 11, 2009 11:22 AM",
+      "ebaySeller" : "bigboydsportscards3"
+    }
+  },
   "2004-05-topps-chrome-gold-refractor-139-sn8" : {
     "certNumber" : null,
     "lastQueried" : "2026-09-27T21:58:41.969317Z",
@@ -4503,22 +4519,6 @@
       "purchaseItemId" : "150944103766",
       "ebaySeller" : "sykoticproductions5150",
       "ebayTitle" : "JUWAN HOWARD 2004-05 TOPPS CHROME UNCIRCULATED XFRACTOR Serial# 008/110 #139"
-    }
-  },
-  "2008-exquisite-flawless-alonzo-mourning-flaw-am-sn10" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-09-28",
-    "popReport" : null,
-    "estimatedValue" : 185.0,
-    "lastSoldPrice" : 185.0,
-    "lastSoldDate" : "2026-09-28",
-    "purchasePrice" : 66.0,
-    "priceHistory" : [ ],
-    "metadata" : {
-      "purchaseItemId" : "230386653655",
-      "ebayTitle" : "ALONZO MOURNING 08/09 EXQUISITE FLAWLESS AUTO #/25 $150",
-      "purchaseDate" : "Oct 11, 2009 11:22 AM",
-      "ebaySeller" : "bigboydsportscards3"
     }
   },
   "2004-05-topps-bazooka-mini-96" : {
@@ -4577,27 +4577,6 @@
       "ebayTitle" : "2025 Topps Chrome McDonald's All American Legends Juwan Howard GOLD AUTO /10"
     }
   },
-  "1996-97-collectors-choice-you-crash-the-game-scoring-2-redemption-gold-r29" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-08-29T12:26:00Z",
-    "popReport" : null,
-    "estimatedValue" : null,
-    "lastSoldPrice" : null,
-    "lastSoldDate" : null,
-    "purchasePrice" : 0.99,
-    "priceHistory" : [ {
-      "date" : "2008-03-30",
-      "price" : 0.99,
-      "source" : "eBay",
-      "grade" : "Raw"
-    } ],
-    "metadata" : {
-      "purchaseDate" : "2008-03-30",
-      "purchaseItemId" : "200211493996",
-      "ebaySeller" : "leximo",
-      "ebayTitle" : "96-97 UDCC Crash Gold Redeemed Juwan Howard #R29"
-    }
-  },
   "2023-24-panini-prizm-draft-picks-legacy-signatures-red-ls-jhw-sn5" : {
     "certNumber" : null,
     "lastQueried" : "2026-09-27T21:58:41.969173Z",
@@ -4617,6 +4596,27 @@
       "purchaseItemId" : "186177292023",
       "ebaySeller" : "midwestsportsauctions",
       "ebayTitle" : "JUWAN HOWARD Michigan 2023-24 Panini Prizm Draft Picks Red Prizm AUTO # 5/149"
+    }
+  },
+  "1996-97-collectors-choice-you-crash-the-game-scoring-2-redemption-gold-r29" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-08-29T12:26:00Z",
+    "popReport" : null,
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : 0.99,
+    "priceHistory" : [ {
+      "date" : "2008-03-30",
+      "price" : 0.99,
+      "source" : "eBay",
+      "grade" : "Raw"
+    } ],
+    "metadata" : {
+      "purchaseDate" : "2008-03-30",
+      "purchaseItemId" : "200211493996",
+      "ebaySeller" : "leximo",
+      "ebayTitle" : "96-97 UDCC Crash Gold Redeemed Juwan Howard #R29"
     }
   },
   "2022-23-panini-national-treasures-game-gear-autographs-jersey-gga-jwh-sn48" : {
@@ -5350,20 +5350,6 @@
       "purchaseItemId" : "11578591"
     }
   },
-  "2009-10-panini-court-kings-silver-13-sn74" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-08-29T07:20:00Z",
-    "popReport" : null,
-    "estimatedValue" : null,
-    "lastSoldPrice" : null,
-    "lastSoldDate" : null,
-    "purchasePrice" : 2.27,
-    "priceHistory" : [ ],
-    "metadata" : {
-      "purchaseDate" : "11/29/2025",
-      "purchaseItemId" : "274262382"
-    }
-  },
   "2009-10-panini-season-update-masterpiece-117-sn1" : {
     "certNumber" : null,
     "lastQueried" : "2026-08-29T13:10:00Z",
@@ -5383,6 +5369,20 @@
       "purchaseItemId" : "330950009188",
       "ebaySeller" : "bakendave",
       "ebayTitle" : "2009-10 PANINI SEASON UPDATE #117 JUWAN HOWARD #1/1 - PORTLAND TRAILBLAZERS"
+    }
+  },
+  "2009-10-panini-court-kings-silver-13-sn74" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-08-29T07:20:00Z",
+    "popReport" : null,
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : 2.27,
+    "priceHistory" : [ ],
+    "metadata" : {
+      "purchaseDate" : "11/29/2025",
+      "purchaseItemId" : "274262382"
     }
   },
   "1998-99-skybox-premium-autographics-black-57" : {
@@ -5673,24 +5673,21 @@
       "ebayTitle" : "1995 CLASSIC Juwan Howard AUTO 92/200"
     }
   },
-  "1998-99-skybox-thunder-125" : {
+  "2002-03-fleer-platinum-platinum-40-sn61" : {
     "certNumber" : null,
-    "lastQueried" : "2026-09-15",
+    "lastQueried" : null,
     "popReport" : null,
-    "estimatedValue" : 0.17,
-    "lastSoldPrice" : 0.17,
-    "lastSoldDate" : "2026-08-30",
-    "purchasePrice" : null,
-    "priceHistory" : [ {
-      "date" : "2026-08-30",
-      "price" : 0.17,
-      "source" : "SportsCardsPro",
-      "grade" : "Raw"
-    } ],
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : 3.58,
+    "priceHistory" : [ ],
     "metadata" : {
-      "sportscardspro_id" : "6563796",
-      "sportscardspro_ungraded" : "0.17",
-      "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1998-skybox-thunder/juwan-howard-125"
+      "purchaseItemId" : "180468194003",
+      "ebayTitle" : "02-03 Flee Platinum Finish Juwan Howard #'d /100",
+      "purchaseDate" : "Feb 17, 2010 10:03 PM",
+      "ebayShipping" : "1",
+      "ebaySeller" : "3.58"
     }
   },
   "2007-08-ud-artifacts-divisional-artifacts-gold-da-jh-sn1" : {
@@ -5719,21 +5716,24 @@
       "ebayTitle" : "2007/08 NBA Artifacts JUWAN HOWARD game-worn jersey 1/1"
     }
   },
-  "2002-03-fleer-platinum-platinum-40-sn61" : {
+  "1998-99-skybox-thunder-125" : {
     "certNumber" : null,
-    "lastQueried" : null,
+    "lastQueried" : "2026-09-15",
     "popReport" : null,
-    "estimatedValue" : null,
-    "lastSoldPrice" : null,
-    "lastSoldDate" : null,
-    "purchasePrice" : 3.58,
-    "priceHistory" : [ ],
+    "estimatedValue" : 0.17,
+    "lastSoldPrice" : 0.17,
+    "lastSoldDate" : "2026-08-30",
+    "purchasePrice" : null,
+    "priceHistory" : [ {
+      "date" : "2026-08-30",
+      "price" : 0.17,
+      "source" : "SportsCardsPro",
+      "grade" : "Raw"
+    } ],
     "metadata" : {
-      "purchaseItemId" : "180468194003",
-      "ebayTitle" : "02-03 Flee Platinum Finish Juwan Howard #'d /100",
-      "purchaseDate" : "Feb 17, 2010 10:03 PM",
-      "ebayShipping" : "1",
-      "ebaySeller" : "3.58"
+      "sportscardspro_id" : "6563796",
+      "sportscardspro_ungraded" : "0.17",
+      "sportscardspro_url" : "https://www.sportscardspro.com/game/basketball-cards-1998-skybox-thunder/juwan-howard-125"
     }
   },
   "2021-22-topps-finest-gold-refractor-fa-jhw-sn13" : {
@@ -5860,20 +5860,6 @@
       "ebayShipping" : "0.0"
     }
   },
-  "1996-97-collectors-choice-you-crash-the-game-scoring-2-17-23-feb-gold-c29" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-08-29T07:20:00Z",
-    "popReport" : null,
-    "estimatedValue" : null,
-    "lastSoldPrice" : null,
-    "lastSoldDate" : null,
-    "purchasePrice" : 0.89,
-    "priceHistory" : [ ],
-    "metadata" : {
-      "purchaseDate" : "10/18/2018",
-      "purchaseItemId" : "12260675"
-    }
-  },
   "2001-02-topps-191" : {
     "certNumber" : null,
     "lastQueried" : "2026-08-29T07:20:00Z",
@@ -5886,6 +5872,20 @@
     "metadata" : {
       "purchaseDate" : "11/24/2025",
       "purchaseItemId" : "19728146"
+    }
+  },
+  "1996-97-collectors-choice-you-crash-the-game-scoring-2-17-23-feb-gold-c29" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-08-29T07:20:00Z",
+    "popReport" : null,
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : 0.89,
+    "priceHistory" : [ ],
+    "metadata" : {
+      "purchaseDate" : "10/18/2018",
+      "purchaseItemId" : "12260675"
     }
   },
   "1996-97-skybox-z-force-zuperman-176" : {
@@ -6510,27 +6510,6 @@
       "ebaySeller" : "6.00"
     }
   },
-  "1996-97-topps-stadium-club-fusion-uncut-f18" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-09-27T21:58:41.969566Z",
-    "popReport" : null,
-    "estimatedValue" : null,
-    "lastSoldPrice" : null,
-    "lastSoldDate" : null,
-    "purchasePrice" : 1.99,
-    "priceHistory" : [ {
-      "date" : "2011-06-21",
-      "price" : 1.99,
-      "source" : "eBay",
-      "grade" : "Raw"
-    } ],
-    "metadata" : {
-      "purchaseDate" : "2011-06-21",
-      "purchaseItemId" : "290577548174",
-      "ebaySeller" : "geonut",
-      "ebayTitle" : "1997 TSC FUSION UNCUT Juwan Howard Rod Strickland"
-    }
-  },
   "2017-18-panini-crown-royale-die-cuts-blue-ca-jhw-sn21" : {
     "certNumber" : null,
     "lastQueried" : "2026-09-27T21:58:41.969643Z",
@@ -6552,9 +6531,30 @@
       "ebayTitle" : "JUWAN HOWARD 2017-18 Panini CROWN ROYALE CROWN AUTO DIE CUT Blue /25 WIZARDS"
     }
   },
+  "1996-97-topps-stadium-club-fusion-uncut-f18" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-09-27T21:58:41.969566Z",
+    "popReport" : null,
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : 1.99,
+    "priceHistory" : [ {
+      "date" : "2011-06-21",
+      "price" : 1.99,
+      "source" : "eBay",
+      "grade" : "Raw"
+    } ],
+    "metadata" : {
+      "purchaseDate" : "2011-06-21",
+      "purchaseItemId" : "290577548174",
+      "ebaySeller" : "geonut",
+      "ebayTitle" : "1997 TSC FUSION UNCUT Juwan Howard Rod Strickland"
+    }
+  },
   "1997-98-topps-stadium-club-one-of-a-kind-113-sn18" : {
     "certNumber" : null,
-    "lastQueried" : "2026-11-01T10:04:50.652834882Z",
+    "lastQueried" : "2026-11-08T09:52:29.482360967Z",
     "popReport" : null,
     "estimatedValue" : null,
     "lastSoldPrice" : null,
@@ -6573,22 +6573,6 @@
     } ],
     "metadata" : {
       "purchaseDate" : "2010-02-13"
-    }
-  },
-  "1994-signature-rookies-gold-standard-24-k-gold-nno-sn1089" : {
-    "certNumber" : null,
-    "lastQueried" : "2026-08-30",
-    "popReport" : null,
-    "estimatedValue" : null,
-    "lastSoldPrice" : null,
-    "lastSoldDate" : null,
-    "purchasePrice" : null,
-    "priceHistory" : [ ],
-    "metadata" : {
-      "tcdb_print_run" : "7500",
-      "tcdb_url" : "https://www.tcdb.com/ViewCard.cfm/sid/72428/cid/5894790/1994-Signature-Rookies-Tetrad-Flip-Cards-NNO-Juwan-Howard-/-Jalen-Rose",
-      "tcdb_sid" : "72428",
-      "tcdb_cid" : "5894790"
     }
   },
   "1995-96-collectors-choice-crash-the-game-assists-rebounds-gold-c3" : {
@@ -6612,18 +6596,20 @@
       "ebayTitle" : "95-96 UDCC Crash GOLD Redeemed Juwan Howard #C3"
     }
   },
-  "2006-07-ultra-gold-medallion-53" : {
+  "1994-signature-rookies-gold-standard-24-k-gold-nno-sn1089" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-29T07:20:00Z",
+    "lastQueried" : "2026-08-30",
     "popReport" : null,
     "estimatedValue" : null,
     "lastSoldPrice" : null,
     "lastSoldDate" : null,
-    "purchasePrice" : 0.81,
+    "purchasePrice" : null,
     "priceHistory" : [ ],
     "metadata" : {
-      "purchaseDate" : "8/17/2014",
-      "purchaseItemId" : "13180756"
+      "tcdb_print_run" : "7500",
+      "tcdb_url" : "https://www.tcdb.com/ViewCard.cfm/sid/72428/cid/5894790/1994-Signature-Rookies-Tetrad-Flip-Cards-NNO-Juwan-Howard-/-Jalen-Rose",
+      "tcdb_sid" : "72428",
+      "tcdb_cid" : "5894790"
     }
   },
   "2003-04-topps-bowman-s-best-x-fractor-6-sn137" : {
@@ -6645,6 +6631,20 @@
       "purchaseItemId" : "300208402643",
       "ebaySeller" : "hoopheroes",
       "ebayTitle" : "03/04 Bowman Chrome X-Fractor Juwan Howard 137/150"
+    }
+  },
+  "2006-07-ultra-gold-medallion-53" : {
+    "certNumber" : null,
+    "lastQueried" : "2026-08-29T07:20:00Z",
+    "popReport" : null,
+    "estimatedValue" : null,
+    "lastSoldPrice" : null,
+    "lastSoldDate" : null,
+    "purchasePrice" : 0.81,
+    "priceHistory" : [ ],
+    "metadata" : {
+      "purchaseDate" : "8/17/2014",
+      "purchaseItemId" : "13180756"
     }
   },
   "2013-14-panini-timeless-treasures-timeless-talents-silver-40-sn17" : {
@@ -7144,7 +7144,7 @@
   },
   "1998-99-fleer-metal-universe-precious-metal-gems-5-sn33" : {
     "certNumber" : null,
-    "lastQueried" : "2026-11-01T10:05:30.748541021Z",
+    "lastQueried" : "2026-11-08T09:53:03.570476468Z",
     "popReport" : null,
     "estimatedValue" : 1450.0,
     "lastSoldPrice" : 1450.0,
@@ -8067,7 +8067,7 @@
   },
   "1996-97-flair-showcase-showpiece-legacy-collection-row-2-seat-5-sn22" : {
     "certNumber" : null,
-    "lastQueried" : "2026-11-01T10:04:25.961213445Z",
+    "lastQueried" : "2026-11-08T09:52:12.419318151Z",
     "popReport" : null,
     "estimatedValue" : null,
     "lastSoldPrice" : null,
@@ -8588,7 +8588,7 @@
   },
   "1998-99-ud-ionix-reciprocal-59-sn136" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-29T10:28:00Z",
+    "lastQueried" : "2026-11-08T09:53:26.754780824Z",
     "popReport" : null,
     "estimatedValue" : null,
     "lastSoldPrice" : null,
@@ -8645,7 +8645,7 @@
   },
   "1997-98-topps-stadium-club-one-of-a-kind-114-sn107" : {
     "certNumber" : null,
-    "lastQueried" : "2026-11-01T10:04:52.197309522Z",
+    "lastQueried" : "2026-11-08T09:52:31.039484967Z",
     "popReport" : null,
     "estimatedValue" : null,
     "lastSoldPrice" : null,
@@ -9024,7 +9024,7 @@
   },
   "1998-99-topps-bowman-s-best-atomic-refractor-81-sn21" : {
     "certNumber" : null,
-    "lastQueried" : "2026-11-01T10:05:09.160191306Z",
+    "lastQueried" : "2026-11-08T09:52:48.059554968Z",
     "popReport" : null,
     "estimatedValue" : null,
     "lastSoldPrice" : null,
@@ -9408,7 +9408,7 @@
   },
   "1998-99-fleer-brilliants-gold-97g-sn24" : {
     "certNumber" : null,
-    "lastQueried" : "2026-11-01T10:05:24.575248652Z",
+    "lastQueried" : "2026-11-08T09:53:00.467140180Z",
     "popReport" : null,
     "estimatedValue" : null,
     "lastSoldPrice" : null,
@@ -9904,7 +9904,7 @@
   },
   "1997-98-skybox-e-x2001-credentials-credentials-future-32-sn21" : {
     "certNumber" : null,
-    "lastQueried" : "2026-11-01T10:04:29.057297144Z",
+    "lastQueried" : "2026-11-08T09:52:13.974608474Z",
     "popReport" : null,
     "estimatedValue" : null,
     "lastSoldPrice" : null,
@@ -9946,7 +9946,7 @@
   },
   "1998-99-flair-showcase-showcase-legacy-collection-42-sn66" : {
     "certNumber" : null,
-    "lastQueried" : "2026-11-01T10:05:23.036726110Z",
+    "lastQueried" : "2026-11-08T09:52:58.922888679Z",
     "popReport" : null,
     "estimatedValue" : null,
     "lastSoldPrice" : null,
@@ -10229,7 +10229,7 @@
   },
   "1997-98-topps-finest-catalyst-embossed-refractor-158-c8-sn45" : {
     "certNumber" : null,
-    "lastQueried" : "2026-11-01T10:04:32.146144823Z",
+    "lastQueried" : "2026-11-08T09:52:15.524292033Z",
     "popReport" : null,
     "estimatedValue" : null,
     "lastSoldPrice" : null,
@@ -10839,7 +10839,7 @@
   },
   "1998-99-topps-bowman-s-best-mirror-image-atomic-refractor-mi13-sn16" : {
     "certNumber" : null,
-    "lastQueried" : "2026-11-01T10:05:15.318417729Z",
+    "lastQueried" : "2026-11-08T09:52:54.274859223Z",
     "popReport" : null,
     "estimatedValue" : null,
     "lastSoldPrice" : null,
@@ -10899,7 +10899,7 @@
   },
   "1998-99-topps-bowman-s-best-atomic-refractor-81-sn89" : {
     "certNumber" : null,
-    "lastQueried" : "2026-11-01T10:05:10.696469654Z",
+    "lastQueried" : "2026-11-08T09:52:49.612060112Z",
     "popReport" : null,
     "estimatedValue" : null,
     "lastSoldPrice" : null,
@@ -11345,7 +11345,7 @@
   },
   "1998-99-spx-finite-star-power-radiance-92-sn1998" : {
     "certNumber" : null,
-    "lastQueried" : null,
+    "lastQueried" : "2026-11-08T09:53:09.755648367Z",
     "popReport" : null,
     "estimatedValue" : null,
     "lastSoldPrice" : null,
@@ -13214,7 +13214,7 @@
   },
   "1998-99-skybox-e-x-century-essential-credentials-credentials-future-34-sn15" : {
     "certNumber" : null,
-    "lastQueried" : "2026-11-01T10:05:18.407946589Z",
+    "lastQueried" : "2026-11-08T09:52:55.824007244Z",
     "popReport" : null,
     "estimatedValue" : null,
     "lastSoldPrice" : null,
@@ -13271,7 +13271,7 @@
   },
   "1997-98-skybox-premium-ruby-58-sr-sn31" : {
     "certNumber" : null,
-    "lastQueried" : "2026-11-01T10:04:44.487580639Z",
+    "lastQueried" : "2026-11-08T09:52:23.287320493Z",
     "popReport" : null,
     "estimatedValue" : null,
     "lastSoldPrice" : null,
@@ -13512,7 +13512,7 @@
   },
   "1997-98-skybox-z-force-rave-180-sn18" : {
     "certNumber" : null,
-    "lastQueried" : "2026-11-01T10:04:58.353282898Z",
+    "lastQueried" : "2026-11-08T09:52:37.250313254Z",
     "popReport" : null,
     "estimatedValue" : null,
     "lastSoldPrice" : null,
@@ -13908,7 +13908,7 @@
   },
   "1998-99-topps-stadium-club-one-of-a-kind-183-sn98" : {
     "certNumber" : null,
-    "lastQueried" : "2026-08-29T10:28:00Z",
+    "lastQueried" : "2026-11-08T09:53:23.659775752Z",
     "popReport" : null,
     "estimatedValue" : null,
     "lastSoldPrice" : null,
@@ -14645,7 +14645,7 @@
   },
   "1998-99-fleer-brilliants-24-k-gold-97tg-sn14" : {
     "certNumber" : null,
-    "lastQueried" : "2026-11-01T10:05:26.120807066Z",
+    "lastQueried" : "2026-11-08T09:53:02.025916815Z",
     "popReport" : null,
     "estimatedValue" : null,
     "lastSoldPrice" : null,
@@ -16711,7 +16711,7 @@
   },
   "1998-99-flair-showcase-passion-legacy-collection-42-sn7" : {
     "certNumber" : null,
-    "lastQueried" : "2026-11-01T10:05:21.500992309Z",
+    "lastQueried" : "2026-11-08T09:52:57.372307447Z",
     "popReport" : null,
     "estimatedValue" : null,
     "lastSoldPrice" : null,
@@ -16964,7 +16964,7 @@
   },
   "1998-99-ud-choice-starquest-gold-sq29-sn64" : {
     "certNumber" : null,
-    "lastQueried" : "2026-09-27T21:58:41.969055Z",
+    "lastQueried" : "2026-11-08T09:53:25.210252322Z",
     "popReport" : null,
     "estimatedValue" : null,
     "lastSoldPrice" : null,
@@ -17167,7 +17167,7 @@
   },
   "1997-98-skybox-z-force-super-rave-180-sn7" : {
     "certNumber" : null,
-    "lastQueried" : "2026-11-01T10:05:01.434854823Z",
+    "lastQueried" : "2026-11-08T09:52:40.340571136Z",
     "popReport" : null,
     "estimatedValue" : null,
     "lastSoldPrice" : null,
@@ -17375,7 +17375,7 @@
   },
   "1998-99-spx-finite-top-flight-195-sn572" : {
     "certNumber" : null,
-    "lastQueried" : "2026-09-15",
+    "lastQueried" : "2026-11-08T09:53:06.662385977Z",
     "popReport" : null,
     "estimatedValue" : 1.79,
     "lastSoldPrice" : 1.79,
