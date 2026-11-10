@@ -11,10 +11,12 @@ Use this skill to audit repository rules, optimize prompt context budgets, and m
 
 When this skill is activated, run this diagnostic sequence:
 
-### Step 1: Root Rule Budget Check
+### Step 1: Root & Subtree Rule Budget Check
 - Inspect [`AGENTS.md`](../../AGENTS.md):
-  - **Invariant**: Target line count must remain $\le 60$ lines ($\le 500$ tokens).
-  - If `AGENTS.md` has grown with new step-by-step procedures, commands, or documentation, extract them into a dedicated skill in `.agents/skills/<skill-name>/SKILL.md`.
+  - **Invariant**: Target line count must remain $\le 35$ lines ($\le 300$ tokens), containing only universal invariants and zero duplicate skill router tables (since Antigravity natively auto-discovers `.agents/skills/*/SKILL.md`).
+  - Domain-specific invariants should live in directory-scoped `AGENTS.md` files (`src/main/java/de/maulmann/AGENTS.md`, `src/main/resources/AGENTS.md`) so they load only when relevant files are active.
+  - Step-by-step procedures and runbooks must live in `.agents/skills/<skill-name>/SKILL.md`.
+  - Deterministic safety guards (`main` commit block, `git add .` block, bounded `read_file` on massive files) must be enforced via `.agents/hooks.json`.
 
 ### Step 2: Progressive Disclosure Verification
 - Verify all skills in `.agents/skills/`:

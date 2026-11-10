@@ -45,12 +45,14 @@ flowchart LR
 
 ### Stage 2: Guardrail & Budget Check
 - Check if the rule belongs in:
-  - **`AGENTS.md`**: Only if it is a system-wide core invariant (1 line, ensure total file $\le 60$ lines).
-  - **`.agents/rules/<domain>.md`**: Domain-specific guidance (e.g. Java standards, compression, token efficiency).
+  - **`AGENTS.md`**: Only if it is a system-wide core invariant (1 line, ensure total file $\le 35$ lines without duplicating native `<skills>` discovery).
+  - **`src/main/.../AGENTS.md`**: Subtree-scoped invariants loaded automatically when editing Java backend or Freemarker/PWA frontend resources.
+  - **`.agents/rules/<domain>.md`**: Consolidated domain reference rules (`url-stability.md`, `coding-standards.md`, `performance-compression.md`, `security-invariants.md`, `token-and-execution-efficiency.md`).
   - **`.agents/skills/<skill-name>/SKILL.md`**: Procedural runbooks or step-by-step troubleshooting.
+  - **`.agents/hooks.json`**: Deterministic `PreToolUse` safety guards.
 
 ### Stage 3: Surgical Adaptation
-- Apply minimal, surgical diffs (`replace_file_content`).
+- Apply minimal, surgical diffs (`edit_file`).
 - Avoid rule bloat: Remove obsolete instructions when adding newer, more effective ones.
 - Keep skill frontmatter YAML metadata concise (description $\le 50$ tokens) for fast progressive loading.
 

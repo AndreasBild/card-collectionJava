@@ -29,16 +29,17 @@ Use this skill to execute the formal 6-stage development lifecycle, branch isola
      ```bash
      git push -u origin <branch-name>
      ```
-   - Create the Pull Request via GitHub CLI:
+   - Create the Pull Request via GitHub CLI (prefer prefix-matchable commands without `$(...)`):
      ```bash
-     gh pr create --fill
+     gh pr create --base main --fill
      ```
    - Automatically squash-merge into `main` and delete the remote branch:
      ```bash
      gh pr merge --squash --delete-branch
      ```
-   - Switch back to `main` and pull the latest state locally:
+   - Switch back to `main` and pull the latest state locally as separate prefix-matchable steps:
      ```bash
-     git checkout main && git pull --rebase origin main
+     git checkout main
+     git pull --rebase origin main
      ```
 

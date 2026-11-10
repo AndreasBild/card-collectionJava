@@ -1,75 +1,41 @@
 # Token Economics & Execution Efficiency Rule
 
 ## 1. Context Boundaries & Token Hygiene
-- **Massive Data Files Invariant:** Never read massive data or cache files in full into context. Specifically:
+- **Massive Data Files Invariant:** Never read massive data or cache files in full into context (enforced deterministically by `.agents/hooks.json`):
   - `content/json/cards.json` (~770 KB / ~200k tokens)
   - `content/json/market-data-cache.json` (~197 KB)
+  - `MissingImages.txt` (~174 KB)
   - Generated files under `output/*.html` or sitemaps
 - **Targeted Inspection Protocol:**
-  - Use `grep_search` with specific query terms to locate keys or entries.
-  - Use `view_file` strictly with bounded `StartLine` and `EndLine` slices (maximum 50–100 lines at a time).
+  - Use `grep` via `run_command` with specific query terms to locate keys or entries.
+  - Use `read_file` strictly with bounded `StartLine` and `EndLine` slices ($\le 100$ lines at a time).
   - Inspect Java records (`CardData`, `CardJson`, `MarketSale`) rather than raw JSON payloads whenever possible.
-- **Surgical Diffing:** Always use targeted diff tools (`replace_file_content` or `multi_replace_file_content`) with minimal necessary context lines. Never rewrite entire large Java classes or configuration files unmodified.
+- **Surgical Diffing:** Always use `edit_file` with minimal necessary target lines. Never rewrite entire large Java classes or configuration files unmodified.
 
 ## 2. Dynamic Model Tier Recommendation Protocol
-To maintain peak token efficiency and execution accuracy, agents dynamically evaluate incoming tasks and propose the appropriate model tier in implementation plans or initial scoping responses:
+To maintain peak token efficiency and execution accuracy, agents evaluate incoming tasks and propose the appropriate model tier in implementation plans or initial scoping responses:
 
 | Model Tier | Capability Profile | Typical Workflows in `card-collectionJava` |
 | :--- | :--- | :--- |
-| **Tier 1: Fast / Medium**<br>*(Latest Flash / Medium in IDE)* | High throughput, sub-second latency, optimal token economy. | • Freemarker template adjustments (`.ftlh`, CSS)<br>• Single-class JUnit 5 unit tests<br>• Market data enrichers execution (`@enrich-market-data`, `@enrich-tcdb`)<br>• Routine bug fixes, dependency bumps, and agent rules |
+| **Tier 1: Fast / Medium**<br>*(Latest Flash / Medium in IDE)* | High throughput, low latency, optimal token economy. | • Freemarker template adjustments (`.ftlh`, CSS)<br>• Single-class JUnit 5 unit tests<br>• Market data enrichers execution (`@enrich-market-data`, `@enrich-tcdb`)<br>• Routine bug fixes, dependency bumps, and agent rules |
 | **Tier 2: Deep Reasoning / Pro**<br>*(Latest Pro / Thinking in IDE)* | Multi-step reasoning, architectural synthesis, subtle edge-case detection. | • Multi-system architecture refactoring<br>• Concurrency & Virtual Thread synchronization<br>• Valuation algorithms (IQR outlier rejection, trimmed medians, comp pricing)<br>• Complex AWS S3/CloudFront sync, Firestore streaming, or IndexNow batching |
 
 *Implementation Plan Standard:* Every `implementation_plan.md` must include a `## 🎯 Recommended Execution Model` section declaring the recommended tier and rationale.
 
-## 3. Working Tree Hygiene & Unrelated Changes
-- **Preserve User Data Work:** The workspace owner frequently runs independent data scrapers or collection audits that modify `content/json/cards.json` or `MissingImages.txt`.
-- **Never Run `git add .` Blindly:** Strictly stage only files directly modified for the agent's specific task.
-- Never discard or overwrite existing uncommitted changes in `content/json/cards.json` or `MissingImages.txt` unless the task explicitly targets dataset reconciliation.
+## 3. Working Tree Hygiene & Prefix-Matchable Commands
+- **Preserve User Data Work:** Never discard or overwrite uncommitted changes in `content/json/cards.json` or `MissingImages.txt`.
+- **Never Run `git add .` or `git add -A`:** Strictly stage only files directly modified for the task (enforced by `.agents/hooks.json`).
+- **Auto-Approvable Command Shapes (`run_command`):**
+  - Avoid command substitutions (`$(...)` or backticks) and shell variable expansions (`$VAR`) in `run_command` calls so user permission grants remain prefix-matchable.
+  - Split mixed sandbox/unsandboxed command chains (`&&`, `;`) so only the command requiring network or `.git` lock access runs with `BypassSandbox: true`.
 
-## 4. Frequent Execution Shortcuts
-Always prefer targeted Maven execution profiles over full rebuilds:
-- **Local Dev Pipeline & Preview:** `mvn exec:java@local` (or `mvn exec:java@local -Dexec.args="--serve"`)
-- **Point130 & Market Comps Enricher:** `mvn exec:java@enrich-market-data`
-- **SportsCardsPro Tier Enricher:** `mvn exec:java@enrich-sportscardspro`
-- **TCDB Checklist Enricher:** `mvn exec:java@enrich-tcdb`
-- **Fast Syntax & Type Check:** `mvn test-compile`
-- **Single Test Class:** `mvn test -Dtest=TargetClassTest`
-
-## 5. Dual-Loop Execution Strategy
-Separate iteration into two distinct loops:
-
-### 5.1 Fast Inner Loop (Active Development & TDD)
-Do NOT run the entire test suite or local site generator on intermediate code changes.
-1. Incremental Compilation: `mvn test-compile`
-2. Targeted Test: `mvn test -Dtest=TargetClassTest`
-3. Style Check: `mvn spotless:check`
-
-### 5.2 Comprehensive Outer Gate (Pre-Commit / Pre-PR)
-Execute only after the inner loop passes and task logic is finalized:
-1. `mvn clean test` (runs full JUnit 5 suite).
-2. `mvn exec:java@local` (validates pipeline, Freemarker templates, and `.gz`/`.br` companions).
-3. `mvn spotless:apply` (applies Google Java Style automatically).
-
-## 6. Command Output & Log Truncation
-- Avoid commands that generate unbounded terminal output into conversation context.
-- Scope and filter Maven commands (`-Dtest=...` or `-q`).
-- Do not poll running tasks or background timers in tight loops.
-
-## 7. Cache & Timestamp Preservation
-- Respect `output/generation-timestamps.properties` and `TimestampTracker`.
-- Never delete the timestamp cache unless explicitly debugging incremental rebuild mechanics.
-
-## 8. High-Signal Communication
-- Eliminate conversational pleasantries, repetitive apologies, and generic introductions.
-- Always provide concise, actionable markdown with direct clickable `file://` links.
-
-## 9. Subagent Boundary Isolation & Delegation Protocol
-- **Offload Heavy Terminal Runs**: Offload full regression builds (`mvn test`), full static site generation (`mvn exec:java@local`), and bulk web scrapers to isolated subagents or background tasks.
-- **Context Protection**: A subagent executes with a fresh context window and does not drag the primary chat's conversation history.
-- **Executive Memo Delivery**: Subagents must return only a structured **Executive Diff Memo** (e.g., test pass/fail count, list of modified files, specific failure stacktraces) to the parent chat, never raw multi-thousand-line logs.
-
-## 10. Recursive Self-Improvement & Continuous Calibration
-- **Post-Task Reflection:** When a command fails due to obsolete flags, or when the user corrects an assumption or workflow preference, the agent must autonomously evaluate if `.agents/rules/` or `.agents/skills/` need updating.
-- **Progressive Ingestion:** Routine friction points and user tips must be distilled into the appropriate skill (or rule) via the `self-improvement` skill, ensuring the same mistake is never repeated.
-- **Non-Interference with Invariants:** System invariants (branch protection, no raw dataset dumps into context, compiler preview levels) must never be relaxed or modified during self-improvement.
-
+## 4. Dual-Loop Execution & Subagent Offloading
+- **Fast Inner Loop (Active Coding):**
+  1. Incremental Compilation: `mvn test-compile`
+  2. Targeted Test: `mvn test -Dtest=TargetClassTest`
+  3. Style Check: `mvn spotless:check`
+- **Comprehensive Outer Gate (Pre-PR):**
+  1. `mvn spotless:apply`
+  2. `mvn clean test`
+  3. `mvn exec:java@local`
+- **Subagent Delegation (`invoke_subagent`):** Offload heavy full regression builds (`mvn clean test`), full site generation (`mvn exec:java@local`), and bulk scrapers to isolated subagents returning a concise **Executive Diff Memo** (pass/fail summary, modified files, specific failure stacktraces) rather than raw multi-thousand-line logs.
