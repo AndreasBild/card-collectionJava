@@ -1,34 +1,16 @@
 # Agent Governance & Core Invariants (`AGENTS.md`)
 
 ## 1. System Role & Core Invariants
-- **Role:** Senior Java Developer & Senior Fullstack Developer (with deep expertise in Java 27, Spring Boot, MySQL, CSS, and modern JavaScript / Micro-JS), operating as Principal Systems & Performance Engineer for `card-collectionJava` (`maulmann.de`).
+- **Role:** Senior Java 27 & Fullstack Principal Performance Engineer for `card-collectionJava` (`maulmann.de`).
 - **Runtime & Language:** Java 27 Preview Features (`--enable-preview`), Virtual Threads (`Executors.newVirtualThreadPerTaskExecutor()`), Records, Pattern Matching. Never downgrade compiler versions in `pom.xml`.
-- **Branch Protection:** Antigravity must **NEVER** edit files or commit directly on `main`. Work strictly on isolated feature/fix/chore branches.
-- **Mandatory PR & Auto-Merge Lifecycle:** Every implementation task must conclude with staging only affected files, committing with semantic conventions, pushing to `origin`, creating a Pull Request (`gh pr create`), and automatically squash-merging it into `main` (`gh pr merge --squash --delete-branch`), then pulling `main` locally. Never stop without completing the PR and merge.
+- **Branch Protection:** **NEVER** edit files or commit directly on `main` (enforced by `.agents/hooks.json`). Work strictly on isolated `feat/*`, `fix/*`, or `chore/*` branches.
+- **Mandatory PR & Auto-Merge Lifecycle:** Every implementation task must conclude with staging only task-touched files, semantic commit, pushing to `origin`, creating a PR (`gh pr create --base main --fill`), squash-merging (`gh pr merge --squash --delete-branch`), and syncing local `main` (see `git-pr-workflow` skill).
 - **Frontend & Assets:** Zero/Micro-JS architecture, pure AVIF image engine (`200w`, `400w`, `600w`, `900w`), synchronous `.gz` and `.br` companion generation, strict CWV budget ($\text{LCP} < 1.2\text{s}$, $\text{CLS} = 0$, $\text{INP} = 0$).
-- **URL Stability (SEO-critical):** Individual card URLs, including the hash suffix from `CardData.generateStableId`, must NEVER change. Never alter hash inputs, slug/canonical/sitemap/link generation or generated file names for existing cards. See `.agents/rules/url-stability.md`; verify file-name/sitemap lists are identical before and after any generator change.
+- **URL Stability (SEO-critical):** Individual card URLs and the 8-char MD5 hash suffix from [`CardData.generateStableId`](file:///Users/andreasbild/IdeaProjects/card-collectionJava/src/main/java/de/maulmann/CardData.java) must NEVER change. See [`.agents/rules/url-stability.md`](file:///Users/andreasbild/IdeaProjects/card-collectionJava/.agents/rules/url-stability.md) and verify with `CardUrlStabilityTest`.
 
-## 2. Token Economics & Dataset Protection
-- **Massive File Invariant:** Never load large raw datasets (`content/json/cards.json` [770 KB], `market-data-cache.json` [197 KB], or generated HTML files in `output/`) into context in full. Use `grep_search` or bounded line slices (≤ 100 lines). Reference typed Java records (`CardData`, `CardJson`).
-- **Working Tree Hygiene:** Never run `git add .` or stage unrelated modified data files (`MissingImages.txt`, `cards.json`). Only stage files directly touched by the specific task.
-- **Surgical Diff Edits:** Use narrow replacement blocks (`replace_file_content`). Never rewrite entire large classes unmodified.
-- **Dual-Loop Execution:** Inner loop uses `mvn test-compile` and targeted `mvn test -Dtest=TargetClassTest`. Full regression (`mvn test`, `mvn exec:java@local`) is reserved for pre-PR quality gates.
-- **Dynamic Model Tier:** Recommend **Tier 1 (Fast / Medium)** for templates, styling, single tests, and scrapers; **Tier 2 (Deep Reasoning / Pro)** for concurrency, complex valuation algorithms (IQR trimming), and cloud sync pipelines.
-- **Continuous Self-Improvement:** Autonomously reflect on errors/feedback to refine `.agents/` rules and skills via `self-improvement` while preserving all core invariants.
-
-## 3. Progressive Skill Router (On-Demand Execution)
-Operational runbooks consume ~30 tokens of metadata until triggered. Use dedicated project skills in `.agents/skills/`:
-
-| Workflow | Skill Name | Description |
-| :--- | :--- | :--- |
-| **Test Suite** | `test-suite` | Run JUnit 5 unit, snapshot, and integration test suite with Java 27 preview features. |
-| **Static Analysis** | `static-analysis` | Run Spotless Google Java Style checks and Maven compiler static analysis. |
-| **Site Build** | `build-pipeline` | Execute local dev (`LocalDevPipeline`) or full production pipeline and verify companion outputs. |
-| **Schema & SEO** | `verify-schema` | Validate Schema.org JSON-LD structured data and semantic HTML metadata. |
-| **Performance Audit** | `audit-performance` | Audit Core Web Vitals, HTML/CSS minification payloads, and Brotli/Gzip ratios. |
-| **Snapshot Tests** | `validate-snapshots` | Run HTML golden master snapshot tests and dead-link asset validators. |
-| **Market Data** | `enrich-market-data` | Fetch sales comps (Point130), TCDB checklists, and apply IQR outlier filtering. |
-| **Git & PR** | `git-pr-workflow` | Execute 6-stage lifecycle, stage semantic commits, and automate `gh pr create` handoff to Jules. |
-| **Context Audit** | `optimize-context` | Audit token budgets, detect rule bloat, and adapt to new model optimizations. |
-| **Self-Improvement** | `self-improvement` | Recursive self-improvement loop: detect inefficiencies, audit invariants, and refine config. |
-
+## 2. Token Economics, Native Tooling & Contextual Architecture
+- **Massive File Invariant:** Never call `read_file` without bounded `StartLine`/`EndLine` ($\le 100$ lines) on `content/json/cards.json` (770 KB), `content/json/market-data-cache.json` (197 KB), `MissingImages.txt`, or `output/*.html` (enforced by `.agents/hooks.json`). Use `grep` via `run_command` and reference typed records (`CardData`, `CardJson`).
+- **Working Tree Hygiene:** Never run `git add .` or `git add -A`. Never stage or revert unrelated dirty files (`content/json/cards.json`, `MissingImages.txt`).
+- **Surgical Edits & Prefix-Matchable Commands:** Use `edit_file` with minimal target blocks. In `run_command`, prefer direct binary invocations without `$(...)` command substitutions or mixed sandbox/unsandboxed `&&` chains so command approvals stay prefix-matchable.
+- **Dual-Loop & Subagent Offloading:** Inner loop uses `mvn test-compile` and `mvn test -Dtest=TargetClassTest`. Offload full regression (`mvn clean test`, `mvn exec:java@local`) and batch scrapers to `invoke_subagent`, returning a concise Executive Memo.
+- **Contextual Discovery:** Subtree rules ([`src/main/java/de/maulmann/AGENTS.md`](file:///Users/andreasbild/IdeaProjects/card-collectionJava/src/main/java/de/maulmann/AGENTS.md), [`src/main/resources/AGENTS.md`](file:///Users/andreasbild/IdeaProjects/card-collectionJava/src/main/resources/AGENTS.md)) auto-load by directory scope; operational runbooks in `.agents/skills/` auto-register via native `<skills>` discovery.

@@ -34,8 +34,8 @@ mvn test-compile exec:java@enrich-tcdb
 1. **IQR Outlier Filtering**:
    - Outliers are filtered using $1.5 \times \text{IQR}$ over trimmed transaction medians to prevent misattributed reprints or altered slab sales from skewing valuations.
 2. **Context Protection**:
-   - Never load `content/json/market-data-cache.json` (~197 KB) into prompt context in full.
-   - Use `grep_search` with specific cert numbers or card IDs to inspect updates.
+   - Never load `content/json/market-data-cache.json` (~197 KB) into prompt context in full (enforced by `.agents/hooks.json`).
+   - Use `grep` via `run_command` with specific cert numbers or card IDs, or `read_file` with bounded `StartLine`/`EndLine` ($\le 100$ lines), to inspect updates.
 3. **Privacy Invariant**:
    - Private acquisition costs from internal ledgers must never be exposed in public Schema.org output or AI manifests (`llms.txt`).
 4. **Subagent Offloading**:

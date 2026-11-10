@@ -1,0 +1,17 @@
+{
+  "invariant-guard": {
+    "enabled": true,
+    "PreToolUse": [
+      {
+        "matcher": "read_file|run_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./scripts/pre-tool-guard.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}
